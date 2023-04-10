@@ -7,116 +7,26 @@
 
 import Foundation
 
+// Note you must have xcodegen brew and gem xcodeproj installed.
+
 // Replace this with your OpenAI API key
 let OPEN_AI_KEY = "sk-OPEN-AI-KEY"
+let PIXABAY_KEY = "PIXABAY_KEY"
+
+// TODO: Fix hardcoded paths.
+let xcodegenPath = "/opt/homebrew/bin/xcodegen"
+let infoPlistPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/Info.plist"
+let rubyScriptPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/add_file_to_project.rb"
+let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 
 struct GPTAction: Codable {
     let command: String
     let name: String?
-
     let fileContents: String?
 }
 
-enum XcodeCommand {
-    case openProject(name: String)
-    case createProject(name: String)
-    case closeProject(name: String)
-    case createFile(fileName: String, fileContents: String)
-    // Add other cases here
-
-    var appleScript: String {
-        switch self {
-        case .openProject(let name):
-            let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(name).xcodeproj"
-
-            return """
-            tell application "Xcode"
-                activate
-                set projectPath to "\(projectPath)"
-                open projectPath
-            end tell
-            """
-
-        case .closeProject(let name):
-            return """
-            tell application "Xcode"
-                activate
-                set projectNameToClose to "\(name)"
-
-                repeat with i from 1 to (count documents)
-                    set documentPath to path of document i
-                    if documentPath contains projectNameToClose then
-                        close document i
-                        exit repeat
-                    end if
-                end repeat
-            end tell
-            """
-        case .createProject(name:  _):
-            return ""
-        case .createFile(fileName:  _, fileContents:  _):
-            return ""
-        }
-    }
-}
-
-// Function to send a prompt to GPT via the OpenAI API
-func sendPromptToGPT(prompt: String, completion: @escaping (String) -> Void) {
-
-    let sema = DispatchSemaphore(value: 0)
-
-
-    let url = URL(string: "https://api.openai.com/v1/chat/completions")!
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-
-    // Set the required headers
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("Bearer \(OPEN_AI_KEY)", forHTTPHeaderField: "Authorization")
-
-    // Prepare the request payload
-    let requestBody: [String: Any] = [
-        "model": "gpt-3.5-turbo",
-        "messages": [
-            [
-                "role": "user",
-                "content": prompt,
-                //"max_tokens": 100,
-            ]
-        ]
-    ]
-
-    // Convert the payload to JSON data
-    let jsonData = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
-
-    request.httpBody = jsonData
-
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
-        if let error = error {
-            print("Error occurred: \(error.localizedDescription)")
-            return
-        }
-
-        guard let data  else { return print("failed to laod data") }
-
-        do {
-            if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-               let choices = jsonResponse["choices"] as? [[String: Any]],
-               let firstChoice = choices.first,
-               let message = firstChoice["message"] as? [String: Any],
-               let content = message["content"] as? String {
-                completion(content)
-                sema.signal()
-            }
-        } catch {
-            print("Error parsing JSON: \(error.localizedDescription)")
-        }
-    }
-    print("🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑")
-    task.resume()
-    sema.wait()
-}
-
+var projectName = ""
 
 // Main function to run the middleware
 func main() {
@@ -130,12 +40,10 @@ func main() {
 
     // Other optional command-line arguments, like frameworks or additional features, can be added here
 
+   // let appDesc = "that displays a text label that says."
+    let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
 
-    let appDesc = "that displays a text label that says 'Hello World!`."
-    //let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
-
-
-    // Working
+    // Working PROMPTS that generate somewhat working code.
   //  let appDesc = "that displays a label that says I love you so much! with heart emojis all around the scren in random places."
     // let appDesc = "containing a label that says 'Hello World!"
     // let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
@@ -189,6 +97,7 @@ Use these commands in your response:
      Create file {fileName} {fileContents}
 """
 /*
+ 3. Run project
  4. Build project
  5. Test project
  6. Commit changes
@@ -204,8 +113,60 @@ Use these commands in your response:
     }
 }
 
-let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
-var projectName = ""
+// Function to send a prompt to GPT via the OpenAI API
+func sendPromptToGPT(prompt: String, completion: @escaping (String) -> Void) {
+
+    let sema = DispatchSemaphore(value: 0)
+
+    let url = URL(string: apiEndpoint)!
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+
+    // Set the required headers
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("Bearer \(OPEN_AI_KEY)", forHTTPHeaderField: "Authorization")
+
+    // Prepare the request payload
+    let requestBody: [String: Any] = [
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            [
+                "role": "user",
+                "content": prompt,
+            ]
+        ]
+    ]
+
+    // Convert the payload to JSON data
+    let jsonData = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
+
+    request.httpBody = jsonData
+
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Error occurred: \(error.localizedDescription)")
+            return
+        }
+
+        guard let data  else { return print("failed to laod data") }
+
+        do {
+            if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+               let choices = jsonResponse["choices"] as? [[String: Any]],
+               let firstChoice = choices.first,
+               let message = firstChoice["message"] as? [String: Any],
+               let content = message["content"] as? String {
+                completion(content)
+                sema.signal()
+            }
+        } catch {
+            print("Error parsing JSON: \(error.localizedDescription)")
+        }
+    }
+    print("🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑")
+    task.resume()
+    sema.wait()
+}
 
 func executeXcodeCommand(_ command: XcodeCommand) {
     // Implement your logic here based on the command
@@ -232,7 +193,7 @@ func executeXcodeCommand(_ command: XcodeCommand) {
             print("missing proj, creating one")
 
             // MIssing projecr gen// create a proj
-            executeXcodeCommand(.createProject(name: "MyApp"))
+            executeXcodeCommand(.createProject(name: projectName))
         }
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName)"
         let filePath = "\(projectPath)/Sources/\(fileName)"
@@ -261,14 +222,12 @@ func executeAppleScriptCommand(_ command: XcodeCommand) {
 
 
 func parseAndExecuteGPTOutput(_ output: String) {
-//    let sanitizedOutput = output.replacingOccurrences(of: "\n\n", with: " \n\n").replacingOccurrences(of: "\n", with: "\\n")
     guard let data = output.data(using: .utf8) else {
          print("Invalid GPT output")
          return
      }
 
      do {
-         //let parsedJSON = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
          let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
          for gptAction in gptCommands {
 
@@ -301,16 +260,7 @@ func parseAndExecuteGPTOutput(_ output: String) {
      }
 }
 
-func getWorkspaceFolder() -> String {
-    guard let swiftyGPTDocumentsPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path(percentEncoded: false) else {
-        print("ERROR GETTING WORKSPACE")
-
-        return ""
-    }
-    return swiftyGPTDocumentsPath
-}
-
-
+// TODO: Fix hardcoded paths to Info.plist.
 func createNewProject(projectName: String, projectDirectory: String) {
     let projectSpec = """
     name: \(projectName)
@@ -321,21 +271,22 @@ func createNewProject(projectName: String, projectDirectory: String) {
         deploymentTarget: "14.0"
         sources: [Sources]
         info:
-          path: /Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/Info.plist
+          path: \(infoPlistPath)
           properties:
             CFBundleVersion: "1.0"
             UILaunchScreen: []
         settings:
           base:
             PRODUCT_BUNDLE_IDENTIFIER: com.example.\(projectName)
-            INFOPLIST_FILE: /Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/Info.plist
+            INFOPLIST_FILE: \(infoPlistPath)
     """
 
+    // TODO: Fix harcoded path to xcodegen.
     let projectSpecPath = "\(projectDirectory)\(projectName)/project.yml"
     let createProjectScript = """
     mkdir -p \(projectDirectory)/\(projectName)/Sources
     echo '\(projectSpec)' > \(projectSpecPath)
-    /opt/homebrew/bin/xcodegen generate --spec \(projectSpecPath) --project \(projectDirectory)
+    \(xcodegenPath) generate --spec \(projectSpecPath) --project \(projectDirectory)
     """
 
     let task = Process()
@@ -352,32 +303,7 @@ func createNewProject(projectName: String, projectDirectory: String) {
     }
 }
 
-func string(byRemovingControlCharacters inputString: String) -> String {
-    let controlChars = CharacterSet.controlCharacters
-    var range = (inputString as NSString).rangeOfCharacter(from: controlChars)
-    if range.location != NSNotFound {
-        var mutable = inputString
-        while range.location != NSNotFound {
-            if let subRange = Range<String.Index>(range, in: mutable) { mutable.removeSubrange(subRange) }
-            range = (mutable as NSString).rangeOfCharacter(from: controlChars)
-        }
-        return mutable
-    }
-    return inputString
-}
-
-//func decodeBase64String(_ base64String: String) -> String? {
-//    if let data = Data(base64Encoded: base64String) {
-//        return String(data: data, encoding: .utf8)
-//    }
-//    return nil
-//}
-
 func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
-//    guard let decodedFileContents = decodeBase64String(fileContent) else {
-//        return print("Error: Failed DECODING to add file to the project.")
-//    }
-
     print("createFile w/ contents = \(fileContent)")
 
     // Create a new Swift file
@@ -390,7 +316,8 @@ func createFile(projectPath: String, projectName: String, targetName: String, fi
     task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
     task.arguments = [
         "ruby",
-        "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/add_file_to_project.rb", // Replace with the actual path to the Ruby script
+        // TODO: Fix hardcoded path.
+        rubyScriptPath,
         projectPath,
         filePath,
         targetName

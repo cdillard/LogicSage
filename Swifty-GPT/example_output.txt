@@ -1,0 +1,65 @@
+🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑
+GPT OUTPUT =
+[
+  {
+    "command": "Create project",
+    "name": "MyApp",
+    "fileContents": ""
+  },
+  {
+    "command": "Create file",
+    "name": "ContentView.swift",
+    "fileContents": "import SwiftUI\nstruct ContentView: View {\n    var body: some View {\n        Text(\"Hello World!\")\n    }\n}\nstruct ContentView_Previews: PreviewProvider {\n    static var previews: some View {\n        ContentView()\n    }\n}\n"
+  },
+  {
+    "command": "Create file",
+    "name": "MyAppApp.swift",
+    "fileContents": "import SwiftUI\n@main\nstruct MyAppApp: App {\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}\n"
+  },
+  {
+    "command": "Open project",
+    "name": "MyApp",
+    "fileContents": ""
+  },
+  {
+    "command": "Close project",
+    "name": "MyApp",
+    "fileContents": ""
+  }
+]
+END GPT...
+Creating project with name: MyApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj
+Project created successfully
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/ContentView.swift w/ contents w length = 219 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+struct ContentView: View {
+    var body: some View {
+        Text("Hello World!")
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+File successfully added to the project.
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/MyAppApp.swift w/ contents w length = 137 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+@main
+struct MyAppApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+File successfully added to the project.
+Opening project with name: MyApp
+Executing AppleScript: openProject(name: "MyApp")
