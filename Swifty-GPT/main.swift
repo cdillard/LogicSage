@@ -8,8 +8,7 @@
 import Foundation
 
 // Replace this with your OpenAI API key
-let OPEN_AI_KEY = "sk-REDACTED"
-
+let OPEN_AI_KEY = "sk-OPEN-AI-KEY"
 
 struct GPTAction: Codable {
     let command: String
@@ -131,16 +130,42 @@ func main() {
 
     // Other optional command-line arguments, like frameworks or additional features, can be added here
 
+
+    let appDesc = "that displays a text label that says 'Hello World!`."
+    //let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
+
+
     // Working
+  //  let appDesc = "that displays a label that says I love you so much! with heart emojis all around the scren in random places."
     // let appDesc = "containing a label that says 'Hello World!"
     // let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
     // let appDesc = "containing a scrollable grid with random colors in each square."
+    //let appDesc = "containing a circle that can be moved by tapping and dragging."
+    // let appDesc = "containing a circle that can be moved by tapping and dragging and stays where you move it."
+//    let appDesc = "containing a list of hilarious jokes."
+//    let appDesc = "that displays a beautiful gradient between green and light green across the entire screen. Show a system symbol in multicolor of the palette in the center of the screen."
+  //  let appDesc = "that displays a checkers board. you can make this out of the shapes build into the SwiftUI drawing library."
 
-     let appDesc = "containing a circle that can be moved by tapping and dragging and stays where you move it."
+   //   let appDesc = "that shows a 3d scene using SceneKit. Show a beach ball in the SceneKit 3d view."
+   // let appDesc = "that displays the following text using a typewriter animation: \"You are feeling very sleepy...\nYou want to know more...\nDreams slowly take you...\""
 
+    // PARTIALLY WORKS. EXCITED TO see gpt-4
+   // let appDesc = "that displays the classic Hangman game. A random word should be chosen and the user should be able to guess by entering into the text field."
+   // let appDesc = "that implments the classic game battleships. The user should be able to play against the computer opponent."
+
+    // Should use import Accelerate ????
+    //  let appDesc = "that displays a mandelbrot set fractal in green on a black background."
+
+    // let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
+
+    //let appDesc = "that shows an wave using sin function. Animate the wave by changing the value passed to sin over time. "
+    // let appDesc = "that shows a spiral that rotates 360 degrees repeatedly."
+    // let appDesc = "that displays all the emoji related to plants and green across the screen in random locations."
 
     // borky
+//    let appDesc = "that displays an american flag. The american flag should be drawn using the built in shape drawing in SwiftUI."
     // let appDesc = "that displays a list of saved notes. The app should allow the user to create a new note."
+
     // Example GPT prompt with command-line arguments included
     let prompt = """
 You are working on a \(appType) app in the \(language) programming language named \(appName).
@@ -219,7 +244,7 @@ func executeXcodeCommand(_ command: XcodeCommand) {
 // Function to execute an high level Xcode Shell/ Ruby / AppleScript command
 func executeAppleScriptCommand(_ command: XcodeCommand) {
     if !command.appleScript.isEmpty {
-        
+
         let appleScriptCommand = command.appleScript
         let script = NSAppleScript(source: appleScriptCommand)
         var errorDict: NSDictionary? = nil
