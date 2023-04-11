@@ -11,6 +11,8 @@ enum XcodeCommand {
     case openProject(name: String)
     case createProject(name: String)
     case closeProject(name: String)
+    case buildProject(name: String)
+
     case createFile(fileName: String, fileContents: String)
     // Add other cases here
 
@@ -46,6 +48,33 @@ enum XcodeCommand {
             return ""
         case .createFile(fileName:  _, fileContents:  _):
             return ""
+        case .buildProject(name:  _):
+            return ""
         }
+    }
+}
+
+
+func buildProject(projectPath: String, scheme: String, completion: @escaping (Bool) -> Void) {
+    let task = Process()
+    task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
+
+    let projectArgument = "-project"
+    let schemeArgument = "-scheme"
+    task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "name=iPhone 14", "-verbose"]
+
+    let outputPipe = Pipe()
+    task.standardOutput = outputPipe
+
+    task.terminationHandler = { process in
+        let success = process.terminationStatus == 0
+        completion(success)
+    }
+
+    do {
+        try task.run()
+    } catch {
+        print("Error running xcodebuild: \(error)")
+        completion(false)
     }
 }
