@@ -20,6 +20,9 @@ let rubyScriptPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/add_f
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 
+let specialCode = "nrx_x_special__code_x_xnr"
+let specialCode2 = "nry_y_special__code_y_ynr"
+
 struct GPTAction: Codable {
     let command: String
     let name: String?
@@ -39,26 +42,25 @@ func main() {
     // TODO: Check workspace and delete or backup if req
     // backup workspace to file folder with suffix
     backupAndDeleteWorkspace()
-
+    
     // Other optional command-line arguments, like frameworks or additional features, can be added here
 
 //    let appDesc = "a game that uses simple shapes and colors. Develop a 2D grid-based color matching puzzle where players swap shapes to create matches, clear grid cells, and score points. Use distinct colors and geometric shapes (circles, squares, triangles) for game pieces. Utilize animations for shape swapping and cascading. Develop using Apple's built in frameworks."
 
 //    let appDesc = "that displays a matching game to the user. There should be a 2d grid of cards with concealed emojis on them, tapping a card should show the concealed emoji. If the user selects two cards with the same concealsed emoji, they get a point and those two cards are removed from the grid."
 
-    let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
+    //let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
 //    let appDesc = "that displays the following text using a typewriter animation: You are feeling very sleepy..."
     // Working PROMPTS that generate somewhat working code.
 //    let appDesc = "that displays a label that says I love you so much! with heart emojis all around the screen in random places."
     // let appDesc = "containing a label that says 'Hello World!"
 //     let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
-//     let appDesc = "that displays an infinitely scrollable grid with random colors in each square."
+//     let appDesc = "that displays an infinitely scrollable grid with random emojis and the emoji name in each square."
     //let appDesc = "containing a circle that can be moved by tapping and dragging."
 //     let appDesc = "containing a circle that can be moved by tapping and dragging and stays where you move it."
 //    let appDesc = "containing a list of hilarious jokes."
 //    let appDesc = "that displays a beautiful gradient between green and light green across the entire screen. Show a system symbol in multicolor of the palette in the center of the screen."
 
-//        let appDesc = "that implements the classic dots and boxes game."
 
 //      let appDesc = "that displays a 3d scene using SceneKit. Show a beach ball in the SceneKit 3d view."
    // let appDesc = "that displays the following text using a typewriter animation: \"You are feeling very sleepy...\nYou want to know more...\nDreams slowly take you...\""
@@ -70,15 +72,16 @@ func main() {
     // Should use import Accelerate ????
 //      let appDesc = "that displays a mandelbrot set fractal."
 
-    // let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
+//     let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
 
     //let appDesc = "that shows an wave using sin function. Animate the wave by changing the value passed to sin over time. "
-    // let appDesc = "that shows a spiral that rotates 360 degrees repeatedly."
+     let appDesc = "that displays a spinning spiral in the center of screen. It should look like a pinwheel."
     // let appDesc = "that displays all the emoji related to plants and green across the screen in random locations."
 
     // borky
 //    let appDesc = "that displays an american flag. The american flag should be drawn using the built in shape drawing in SwiftUI."
 //     let appDesc = "that displays a list of saved notes. The app should allow the user to create a new note."
+//    let appDesc = "that implements the classic dots and boxes game."
 
     // Example GPT prompt with command-line arguments included
     let prompt = """
@@ -95,8 +98,10 @@ Please keep in mind the following constraints when generating the response:
 2. It is essential you include a Swift `App` file.
 3. Focus on generating valid and properly formatted Swift code.
 4. Complete tasks in this order: Create project. Create Swift files including App file. Open project. Close project.
-
 """
+
+    //It is essential that "SWIFT_FILE_CONTENTS" be a string that can be parsed by JSONDecoder.
+
 /*
  3. Run project
  4. Build project
@@ -146,12 +151,6 @@ Please keep in mind the following constraints when generating the response:
     doPrompting()
 
     sema.wait()
-//    // Send the prompt to GPT
-//    sendPromptToGPT(prompt: prompt) { response, success in
-//        print("GPT OUTPUT =\n\(gptOutput)\nEND GPT...")
-//        // Parse GPT's output and execute the corresponding Xcode commands
-//        parseAndExecuteGPTOutput(gptOutput)
-//    }
 }
 
 func backupAndDeleteWorkspace() {
@@ -324,11 +323,18 @@ func executeAppleScriptCommand(_ command: XcodeCommand) {
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> Void) {
 
-    findInvalidEscapeSequences(in: output)
+    print("orignal GPT output = \(output)")
 
-    print("Attempt to parseAndExecute output = \(output)")
+    print("Escaping fileContents...")
+    let escapedOutput = escapeFileContents(jsonString: output) ?? output
 
-    guard let data = output.data(using: .utf8) else {
+    findInvalidEscapeSequences(in: escapedOutput)
+
+    print("Sucessfully escaped fileContents...")
+
+    print("Attempt to parseAndExecute output = \(escapedOutput)")
+
+    guard let data = escapedOutput.data(using: .utf8) else {
          print("Invalid GPT output")
          return completion(false)
      }
@@ -432,9 +438,13 @@ func createNewProject(projectName: String, projectDirectory: String) {
 func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
     print("createFile w/ contents = \(fileContent)")
 
+    let modifiedFileContent = fileContent.replacingOccurrences(of: specialCode, with: "\\.")
+                                         .replacingOccurrences(of: "\\\\.self", with: "\\.self")
+                                         .replacingOccurrences(of: specialCode2, with: "\\(")
+
 
     // Create a new Swift file
-    if let data = fileContent.data(using: .utf8) {
+    if let data = modifiedFileContent.data(using: .utf8) {
         try? data.write(to: URL(fileURLWithPath: filePath))
     }
 

@@ -50,3 +50,24 @@ func findInvalidEscapeSequences(in jsonString: String) {
         }
     }
 }
+
+func escapeFileContents(jsonString: String) -> String? {
+    let leadingMultiLineLiteralPattern = #"""(?=\s*\n)"#
+    let trailingMultiLineLiteralPattern = #""""\s*(,?)\s*\n?\s*([}\]])"#
+
+    let escapedJsonString = jsonString
+        .replacingOccurrences(of: leadingMultiLineLiteralPattern, with: "", options: .regularExpression)
+        .replacingOccurrences(of: trailingMultiLineLiteralPattern, with: "\"$1\n$2", options: .regularExpression)
+
+    return escapedJsonString
+            .replacingOccurrences(of: "\\\\.\\.", with: "\\\\\\.")
+            .replacingOccurrences(of: "\\self", with: "\\\\\\self")
+            .replacingOccurrences(of: "\\ .self", with: "\\\\ .self")
+            .replacingOccurrences(of: "\"\"\"", with: "\\\"")
+            .replacingOccurrences(of: "\\\\ .", with: specialCode)
+            .replacingOccurrences(of: "\\\\.", with: specialCode)
+            .replacingOccurrences(of: "\\ .", with: specialCode)
+            .replacingOccurrences(of: "\\.", with: specialCode)
+            .replacingOccurrences(of: "\\\\_", with: "\\_")
+            .replacingOccurrences(of: "\\(", with: specialCode2)
+    }
