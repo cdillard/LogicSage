@@ -62,13 +62,21 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     let projectArgument = "-project"
     let schemeArgument = "-scheme"
     task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "name=iPhone 14", "-verbose"]
+ //  "-IDEBuildingContinueBuildingAfterErrors=YES",
 
+    
     let outputPipe = Pipe()
     task.standardOutput = outputPipe
 
+    let errorPipe = Pipe()
+    task.standardError = errorPipe
+
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    var successful = false
     task.terminationHandler = { process in
         let success = process.terminationStatus == 0
-        completion(success)
+        successful = success
+        dispatchSemaphore.signal()
     }
 
     do {
@@ -76,5 +84,21 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     } catch {
         print("Error running xcodebuild: \(error)")
         completion(false)
+        dispatchSemaphore.signal()
     }
+
+    // Wait for the terminationHandler to be called
+    dispatchSemaphore.wait()
+
+
+    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: outputData, encoding: .utf8)
+    print("Output: \(output ?? "")")
+
+    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+    let errorOutput = String(data: errorData, encoding: .utf8)
+    print("Error: \(errorOutput ?? "")")
+
+    completion(successful)
+
 }
