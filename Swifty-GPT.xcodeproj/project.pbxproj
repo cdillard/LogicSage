@@ -29,8 +29,10 @@
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
+		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,13 +70,15 @@
 			isa = PBXGroup;
 			children = (
 				B7BACF6129E25F4B006B065B /* Info.plist */,
+				B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */,
+				B76BF95C29E4AD2800F6420E /* example_output.txt */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
-				B76BF95C29E4AD2800F6420E /* example_output.txt */,
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
