@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Workspace Utilities
+
 func getWorkspaceFolder() -> String {
     guard let swiftyGPTDocumentsPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path(percentEncoded: false) else {
         print("ERROR GETTING WORKSPACE")
@@ -15,14 +17,25 @@ func getWorkspaceFolder() -> String {
     }
     return swiftyGPTDocumentsPath
 }
+func backupAndDeleteWorkspace() {
+    print("Backing up and deleting workspace.")
 
-extension String {
-    func condenseWhitespace() -> String {
-        let components = self.components(separatedBy: .whitespacesAndNewlines)
-        return components.filter { !$0.isEmpty }.joined(separator: " ")
+    var projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)"
+
+    let backupPath = "\(projectPath)-\(Date().timeIntervalSince1970)"
+    projectPath = "\(projectPath)/"
+
+    let projectPathURL = URL(fileURLWithPath: projectPath)
+    let backupPathURL = URL(fileURLWithPath: backupPath)
+    do {
+        try FileManager.default.moveItem(at: projectPathURL, to: backupPathURL)
+    }
+    catch {
+        print(error)
     }
 }
 
+// Regex / Parsing
 
 func removeInvalidEscapeSequences(in jsonString: String) -> String {
     let pattern = #"\\[^"\\/bfnrtu]"#
@@ -97,37 +110,6 @@ func extractFileContents(_ input: String) -> (String, [String]) {
     }
     return (modifiedInput, fileContents)
 }
-
-//func extractAllFileContents(from jsonString: String) -> (updatedString: String, fileContents: [String]) {
-//    let pattern = #""fileContents"\s*:\s*(?:"{0,3}(?:[^"\\]|\\.|\\n)*"{0,3})"#
-//    let regex = try? NSRegularExpression(pattern: pattern, options: [])
-//    var fileContentsList: [String] = []
-//    var updatedString = jsonString
-//
-//    if let matches = regex?.matches(in: jsonString, options: [], range: NSRange(location: 0, length: jsonString.utf16.count)).reversed() {
-//        for match in matches {
-//            if let range = Range(match.range(at: 0), in: jsonString) {
-//                let fileContentsExpression = String(jsonString[range])
-//                let fileContentsRange = fileContentsExpression.range(of: #""{0,3}(?:[^"\\]|\\.|\\n)*"{0,3}"#, options: [.regularExpression])
-//                if let fileContentsRange = fileContentsRange {
-//                    let fileContents = String(fileContentsExpression[fileContentsRange])
-//                    let unescapedFileContents = fileContents
-//                        .replacingOccurrences(of: "\\\"", with: "\"")
-//                        .replacingOccurrences(of: "\\\\", with: "\\")
-//                        .replacingOccurrences(of: "\\n", with: "\n")
-//                        .replacingOccurrences(of: "\\r", with: "\r")
-//                        .replacingOccurrences(of: "\\t", with: "\t")
-//                        .trimmingCharacters(in: .init(charactersIn: "\""))
-//                    fileContentsList.append(unescapedFileContents)
-//
-//                    updatedString = updatedString.replacingOccurrences(of: fileContentsExpression, with: "\"fileContents\": \"\"")
-//                }
-//            }
-//        }
-//    }
-//
-//    return (updatedString, fileContentsList)
-//}
 
 extension String {
     func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {

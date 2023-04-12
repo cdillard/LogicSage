@@ -20,6 +20,8 @@ let rubyScriptPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/add_f
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 
+// Configurable settings for AI.
+let retryLimit = 10
 
 struct GPTAction: Codable {
     let command: String
@@ -101,16 +103,15 @@ Please keep in mind the following constraints when generating the response:
 
     //It is essential that "SWIFT_FILE_CONTENTS" be a string that can be parsed by JSONDecoder.
 
-/*
- 3. Run project
- 4. Build project
- 5. Test project
- 6. Commit changes
- 7. Push changes
- 8. Send Slack message
- */
+    /*
+     3. Run project
+     4. Build project
+     5. Test project
+     6. Commit changes
+     7. Push changes
+     8. Send Slack message
+     */
 
-    let retryLimit = 5
     var promptingRetryNumber = 0
 
     let sema = DispatchSemaphore(value: 0)
@@ -118,28 +119,28 @@ Please keep in mind the following constraints when generating the response:
     func doPrompting() {
         generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit) { response in
             if response != nil, let response {
-               parseAndExecuteGPTOutput(response) { success in
-                   if success {
-                       print("Parsed and executred code successfully.")
-                       print("Opening project....")
+                parseAndExecuteGPTOutput(response) { success in
+                    if success {
+                        print("Parsed and executred code successfully.")
+                        print("Opening project....")
 
-                       executeAppleScriptCommand(.openProject(name: projectName))
+                        executeAppleScriptCommand(.openProject(name: projectName))
 
-                       sema.signal()
-                   }
-                   else {
-                       print("Failed @ parsing / executing code successfully.")
-                       if promptingRetryNumber >= retryLimit {
-                           print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
-                           //completion(nil)
-                           sema.signal()
-                           return
-                       }
+                        sema.signal()
+                    }
+                    else {
+                        print("Failed @ parsing / executing code successfully.")
+                        if promptingRetryNumber >= retryLimit {
+                            print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
+                            //completion(nil)
+                            sema.signal()
+                            return
+                        }
 
-                       promptingRetryNumber += 1
+                        promptingRetryNumber += 1
 
-                       doPrompting()
-                   }
+                        doPrompting()
+                    }
                 }
             } else {
                 print("Failed to generate compilable code within the retry limit.")
@@ -150,24 +151,6 @@ Please keep in mind the following constraints when generating the response:
     doPrompting()
 
     sema.wait()
-}
-
-func backupAndDeleteWorkspace() {
-    print("Backing up and deleting workspace.")
-
-    var projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)"
-
-    let backupPath = "\(projectPath)-\(Date().timeIntervalSince1970)"
-    projectPath = "\(projectPath)/"
-
-    let projectPathURL = URL(fileURLWithPath: projectPath)
-    let backupPathURL = URL(fileURLWithPath: backupPath)
-    do {
-        try FileManager.default.moveItem(at: projectPathURL, to: backupPathURL)
-    }
-    catch {
-        print(error)
-    }
 }
 
 func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, currentRetry: Int = 0, completion: @escaping (String?) -> Void) {
@@ -255,9 +238,9 @@ func sendPromptToGPT(prompt: String, completion: @escaping (String, Bool) -> Voi
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool) -> Void) {
     switch command {
     case let .openProject(name):
-        print("SKIPPING GPT-Opening project with name: \(name)")
-//        executeAppleScriptCommand(.openProject(name: projectName))
-//        completion(true)
+        print("SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): \(name)")
+        //        executeAppleScriptCommand(.openProject(name: projectName))
+        //        completion(true)
     case let .createProject(name):
         print("Creating project with name: \(name)")
         projectName = name
@@ -270,8 +253,8 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool) -
 
     case .closeProject(name: let name):
         print("SKIPPING GPT-Closing project with name: \(name)")
-//        executeAppleScriptCommand(.closeProject(name: name))
-//        completion(true)
+        //        executeAppleScriptCommand(.closeProject(name: name))
+        //        completion(true)
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
@@ -326,138 +309,140 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
 
     let (updatedString, fileContents) = extractFileContents(output)
     print("extracted files from response = \(fileContents.count)")
+    for (index, file) in fileContents.enumerated() {
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
+        let filePath = "\(projectPath)/Sources/\(index).swift"
 
+        do
+        {
+            try FileManager.default.createDirectory(atPath: "\(projectPath)/Sources/", withIntermediateDirectories: true, attributes: nil)
+        }
+        catch let error as NSError
+        {
+            print("Unable to create directory \(error.debugDescription)")
+        }
+
+//        if FileManager.default.createFile(atPath: filePath, contents: nil, attributes: nil) {
+            writeFile(fileContent: file, filePath: filePath)
+            print("EARLY Added file: \(filePath) w/ contents w length = \(fileContents.count) to Sources...")
+//        }
+//        else {
+//            print("Unable to create early file.. failed to create file")
+//
+//        }
+
+
+    }
+    print("Tried to extract files from respone and write out in sequential Swift files 0.Swift , 1.Swift, 2.Swift , etc..")
     let sanitizedOutput =   removeInvalidEscapeSequences(in: updatedString)
 
     let doubleSanitizedOuput =  removeControlCharacters(from: sanitizedOutput)
 
     let manualRemoval = replaceFileContents(doubleSanitizedOuput)
 
-   // let removedAfterBracketText =  removeTextAfterLastClosingBracket(input: manualRemoval)
+    // let removedAfterBracketText =  removeTextAfterLastClosingBracket(input: manualRemoval)
 
     print("Attempt to parseAndExecute output = \(manualRemoval)")
 
     guard let data = manualRemoval.data(using: .utf8) else {
-         print("Invalid GPT output")
-         return completion(false)
-     }
+        print("Invalid GPT output")
+        return completion(false)
+    }
 
-     do {
-         let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
-         for (index, gptAction) in gptCommands.enumerated() {
-             let fullCommand = gptAction.command
+    var fileIndex = 0
 
-             switch fullCommand {
-             case "Create project":
-                 guard let name = gptAction.name else { return completion(false) }
+    do {
+        let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
+        for (index, gptAction) in gptCommands.enumerated() {
+            let fullCommand = gptAction.command
 
-                 executeXcodeCommand(.createProject(name: name)) { success in }
-             case "Open project":
-                 guard let name = gptAction.name else { return completion(false) }
+            switch fullCommand {
+            case "Create project":
+                guard let name = gptAction.name else { return completion(false) }
 
-                 executeXcodeCommand(.openProject(name: name)) { success in }
-//             case "Run project":
-//                 guard let name = gptAction.name else { return false }
-//
-//                 executeXcodeCommand(.openProject(name: name))
-             case "Close project":
-                 guard let name = gptAction.name else { return completion(false) }
-                 // todo: check success here
-                 executeXcodeCommand(.createProject(name: name)) { _ in  }
-             case "Create file":
-                 guard let fileName = gptAction.name  else {
-                     return
-                     //completion(false)
-                 }
+                executeXcodeCommand(.createProject(name: name)) { success in }
+            case "Open project":
+                guard let name = gptAction.name else { return completion(false) }
 
-                 var fileContents = Array(fileContents)
+                executeXcodeCommand(.openProject(name: name)) { success in }
 
-                 let foundFileContents: String
- //                if fileContents.count > index  {
-                     foundFileContents = fileContents[index - 1]
-//                 }
-//                 else  {
-//                     print("failed to find file contents. un oh!")
-//                     foundFileContents = ""//gptAction.fileContents ?? ""
-//
-//                     return completion(false)
-//                 }
-                 executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success in  }
+            case "Close project":
+                guard let name = gptAction.name else { return completion(false) }
+                // todo: check success here
+                executeXcodeCommand(.createProject(name: name)) { _ in  }
+            case "Create file":
+                guard let fileName = gptAction.name  else {
+                    return
+                    //completion(false)
+                }
 
-             default:
-                 print("Unknown command \(fullCommand)")
-                 //return completion(false)
-             }
-         }
+                var fileContents = Array(fileContents)
 
-         print("Building project...")
-         executeXcodeCommand(.buildProject(name: projectName)) { success in
-             if success {
-                 completion(true)
-             }
-             else {
-                 completion(false)
-             }
-         }
+                let foundFileContents: String
+                if fileContents.count > fileIndex {
+                    foundFileContents = fileContents[index - 1]
+                }
+                else {
+                    // check the other place
+                    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
+                    let filePath = "\(projectPath)/Sources/\(fileIndex).swift"
+
+                    if let data = FileManager.default.contents(atPath: filePath) {
+                        foundFileContents = String(decoding: data, as: UTF8.self)
+                    }
+                    else {
+                        foundFileContents = ""
+                    }
+                }
+
+                fileIndex += 1
+
+                if foundFileContents.isEmpty {
+                    return completion(false)
+                }
+
+                executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success in  }
+
+            default:
+                print("Unknown command \(fullCommand)")
+                //return completion(false)
+            }
+        }
+
+        print("Building project...")
+        executeXcodeCommand(.buildProject(name: projectName)) { success in
+            if success {
+                completion(true)
+            }
+            else {
+                completion(false)
+            }
+        }
 
     } catch {
-         print("Error decoding JSON: \(error)")
-         return completion(false)
-     }
-}
-
-// TODO: Fix hardcoded paths to Info.plist.
-func createNewProject(projectName: String, projectDirectory: String) {
-    let projectSpec = """
-    name: \(projectName)
-    targets:
-      \(projectName):
-        type: application
-        platform: iOS
-        deploymentTarget: "16.4"
-        sources: [Sources]
-        info:
-          path: \(infoPlistPath)
-          properties:
-            CFBundleVersion: "1.0"
-            UILaunchScreen: []
-        settings:
-          base:
-            PRODUCT_BUNDLE_IDENTIFIER: com.example.\(projectName)
-            INFOPLIST_FILE: \(infoPlistPath)
-    """
-
-    // TODO: Fix harcoded path to xcodegen.
-    let projectSpecPath = "\(projectDirectory)\(projectName)/project.yml"
-    let createProjectScript = """
-    mkdir -p \(projectDirectory)/\(projectName)/Sources
-    echo '\(projectSpec)' > \(projectSpecPath)
-    \(xcodegenPath) generate --spec \(projectSpecPath) --project \(projectDirectory)
-    """
-
-    let task = Process()
-    task.launchPath = "/bin/zsh"
-    task.arguments = ["-c", createProjectScript]
-    task.launch()
-    task.waitUntilExit()
-
-    let status = task.terminationStatus
-    if status == 0 {
-        print("Project created successfully")
-    } else {
-        print("Error creating project")
+        print("Error decoding JSON: \(error)")
+        return completion(false)
     }
 }
 
-func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
+func writeFile(fileContent: String, filePath: String) {
     print("createFile w/ contents = \(fileContent)")
-
 
     let modifiedFileContent = fileContent.replacingOccurrences(of: "\\n", with: "\n")
     // Create a new Swift file
     if let data = modifiedFileContent.data(using: .utf8) {
-        try? data.write(to: URL(fileURLWithPath: filePath))
+        do {
+            try data.write(to: URL(fileURLWithPath: filePath))
+        }
+        catch {
+            print("Error writing file: \(error) @ p = \(filePath)")
+        }
     }
+}
+
+func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
+
+    writeFile(fileContent: fileContent, filePath: filePath)
 
     // Add the file to the project using xcodeproj gem
     let task = Process()
