@@ -1,0 +1,158 @@
+Backing up and deleting workspace.
+Backing up and deleting workspace.
+Error Domain=NSCocoaErrorDomain Code=4 "“SwiftyGPTWorkspace” couldn’t be moved to “Documents” because either the former doesn’t exist, or the folder containing the latter doesn’t exist." UserInfo={NSSourceFilePathErrorKey=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUserStringVariant=(
+    Move
+), NSDestinationFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace-1681330521.452434, NSFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUnderlyingError=0x600000c04060 {Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"}}
+🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑
+🤖= [{"command":"Create project","name":"MyApp"},
+{"command":"Create file","name":"AppDelegate.swift","fileContents":"import UIKit\nimport NewRelic\n\n@UIApplicationMain\nclass AppDelegate: UIResponder, UIApplicationDelegate {\n\n    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {\n        NRLogger.setLogLevels(NRLogLevelAll)\n        NewRelic.start(withApplicationToken: \"YOUR_NEWRELIC_APP_TOKEN_HERE\")\n        return true\n    }\n\n}"},
+{"command":"Create file","name":"ContentView.swift","fileContents":"import SwiftUI\nimport NewRelic\n\nstruct ContentView: View {\n    var body: some View {\n        VStack {\n            Button(action: {\n                NewRelic.recordCustomEvent(\"Button 1 Tapped\", attributes: [:])\n            }, label: {\n                Text(\"Button 1\")\n            })\n            Button(action: {\n                NewRelic.recordCustomEvent(\"Button 2 Tapped\", attributes: [:])\n            }, label: {\n                Text(\"Button 2\")\n            })\n        }\n    }\n}"},
+{"command":"Create file","name":"App.swift","fileContents":"import SwiftUI\n\n@main\nstruct MyApp: App {\n    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate\n\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}"},
+{"command":"Open project","name":"MyApp"},
+{"command":"Close project","name":"MyApp"}]
+extracted files from response = 3
+createFile w/ contents = import UIKit
+import NewRelic
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        NRLogger.setLogLevels(NRLogLevelAll)
+        NewRelic.start(withApplicationToken: "YOUR_NEWRELIC_APP_TOKEN_HERE")
+        return true
+    }
+
+}
+sucess:regex:addfile /Users/sprinchar/Documents/SwiftyGPTWorkspace/x_xTempProjNamex_x/Sources/0.swift w/ w length = 3
+createFile w/ contents = import SwiftUI
+import NewRelic
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Button(action: {
+                NewRelic.recordCustomEvent("Button 1 Tapped", attributes: [:])
+            }, label: {
+                Text("Button 1")
+            })
+            Button(action: {
+                NewRelic.recordCustomEvent("Button 2 Tapped", attributes: [:])
+            }, label: {
+                Text("Button 2")
+            })
+        }
+    }
+}
+sucess:regex:addfile /Users/sprinchar/Documents/SwiftyGPTWorkspace/x_xTempProjNamex_x/Sources/1.swift w/ w length = 3
+createFile w/ contents = import SwiftUI
+
+@main
+struct MyApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+sucess:regex:addfile /Users/sprinchar/Documents/SwiftyGPTWorkspace/x_xTempProjNamex_x/Sources/2.swift w/ w length = 3
+No invalid escape sequences found.
+📜= [{"command":"Create project","name":"MyApp"},
+{"command":"Create file","name":"AppDelegate.swift","fileContents": ""},
+{"command":"Create file","name":"ContentView.swift","fileContents": ""},
+{"command":"Create file","name":"App.swift","fileContents": ""},
+{"command":"Open project","name":"MyApp"},
+{"command":"Close project","name":"MyApp"}]
+Creating project with name: MyApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj
+Project created successfully
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift w/ contents w length = 409 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import UIKit
+import NewRelic
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        NRLogger.setLogLevels(NRLogLevelAll)
+        NewRelic.start(withApplicationToken: "YOUR_NEWRELIC_APP_TOKEN_HERE")
+        return true
+    }
+
+}
+File successfully added to the project.
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/ContentView.swift w/ contents w length = 479 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+import NewRelic
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Button(action: {
+                NewRelic.recordCustomEvent("Button 1 Tapped", attributes: [:])
+            }, label: {
+                Text("Button 1")
+            })
+            Button(action: {
+                NewRelic.recordCustomEvent("Button 2 Tapped", attributes: [:])
+            }, label: {
+                Text("Button 2")
+            })
+        }
+    }
+}
+File successfully added to the project.
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/App.swift w/ contents w length = 203 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+
+@main
+struct MyApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+File successfully added to the project.
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): MyApp
+Creating project with name: MyApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: MyApp
+Build Errors: ["/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift:2:8: error: no such module \'NewRelic\'", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift:2:8: error: no such module \'NewRelic\'", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift:2:8: error: no such module \'NewRelic\'", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift:2:8: error: no such module \'NewRelic\'"]
+Error: 2023-04-12 14:15:34.853771-0600 xcodebuild[86693:12495785] DVTCoreDeviceEnabledState: DVTCoreDeviceEnabledState_Disabled set via user default (DVTEnableCoreDevice=disabled)
+2023-04-12 14:15:34.857369-0600 xcodebuild[86693:12495794] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): MobileDevice.framework version: 1533.100.57.100.2
+2023-04-12 14:15:34.868112-0600 xcodebuild[86693:12495794] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): RemotePairing.framework version: 90.2
+2023-04-12 14:15:34.873066-0600 xcodebuild[86693:12495787] Metal API Validation Enabled
+2023-04-12 14:15:34.873105-0600 xcodebuild[86693:12495794] [library] USBMuxListenerCreateFiltered:898 Created 0x600003321c20
+2023-04-12 14:15:34.873157-0600 xcodebuild[86693:12495794] AMDeviceNotificationSubscribeWithOptions (thread 0x17002b000): Subscribed for device notifications from usbmuxd.
+2023-04-12 14:15:34.873422-0600 xcodebuild[86693:12495794] [library] USBMuxHandleDictionary:1437 Adding event 0x600000351840 to changelist.
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+2023-04-12 14:15:35.320856-0600 XCBBuildService[86694:12495843] [Metadata] unable to get a dev_t for store 1795162128.
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift (in target 'MyApp' from project 'MyApp')
+	SwiftCompile normal arm64 Compiling\ AppDelegate.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/AppDelegate.swift (in target 'MyApp' from project 'MyApp')
+	SwiftCompile normal arm64 Compiling\ ContentView.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/ContentView.swift (in target 'MyApp' from project 'MyApp')
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/ContentView.swift (in target 'MyApp' from project 'MyApp')
+	SwiftCompile normal arm64 Compiling\ App.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/App.swift (in target 'MyApp' from project 'MyApp')
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/App.swift (in target 'MyApp' from project 'MyApp')
+(6 failures)
+2023-04-12 14:15:35.578198-0600 xcodebuild[86693:12495787] [client] No error handler for XPC error: Connection invalid

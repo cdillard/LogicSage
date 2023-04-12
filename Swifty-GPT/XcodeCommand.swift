@@ -91,13 +91,46 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     dispatchSemaphore.wait()
 
 
+    func getErrorLines(_ input: String) -> [String] {
+        let lines = input.split(separator: "\n")
+        let errorLinePattern = "^(\\/[^\\s]+):(\\d+):(\\d+):\\s+error:\\s+(.+)$"
+        let regex = try! NSRegularExpression(pattern: errorLinePattern, options: [])
+
+        var errorLines: [String] = []
+
+        for line in lines {
+            let nsLine = line as NSString
+            let matches = regex.matches(in: nsLine as String, options: [], range: NSRange(location: 0, length: nsLine.length))
+
+            if !matches.isEmpty {
+                errorLines.append(nsLine as String)
+            }
+        }
+
+        return errorLines
+    }
+
     let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: outputData, encoding: .utf8)
-    print("Output: \(output ?? "")")
+    let output = String(data: outputData, encoding: .utf8) ?? ""
+    let errors = getErrorLines(output)
+    if !errors.isEmpty {
+        print("Build Errors: \(  errors)")
+    }
+    else {
+        print("Build Output: \(  output)")
+    }
 
     let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-    let errorOutput = String(data: errorData, encoding: .utf8)
-    print("Error: \(errorOutput ?? "")")
+    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+    let errors2 = getErrorLines(errorOutput)
+    if !errors2.isEmpty {
+        print("Build Errors: \(  errors2)")
+    }
+    else {
+        print("Error: \(errorOutput)")
+    }
+
 
     completion(successful)
 

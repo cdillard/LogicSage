@@ -1,0 +1,320 @@
+Backing up and deleting workspace.
+Error Domain=NSCocoaErrorDomain Code=4 "“SwiftyGPTWorkspace” couldn’t be moved to “Documents” because either the former doesn’t exist, or the folder containing the latter doesn’t exist." UserInfo={NSSourceFilePathErrorKey=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUserStringVariant=(
+    Move
+), NSDestinationFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace-1681328544.576645, NSFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUnderlyingError=0x600000c04810 {Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"}}
+Backing up and deleting workspace.
+Error Domain=NSCocoaErrorDomain Code=4 "“SwiftyGPTWorkspace” couldn’t be moved to “Documents” because either the former doesn’t exist, or the folder containing the latter doesn’t exist." UserInfo={NSSourceFilePathErrorKey=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUserStringVariant=(
+    Move
+), NSDestinationFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace-1681328544.6708, NSFilePath=/Users/sprinchar/Documents/SwiftyGPTWorkspace, NSUnderlyingError=0x600000c10180 {Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"}}
+🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑
+🤖= [{"command": "Create project", "name": "MyApp"},
+{"command": "Create file", "name": "App.swift", "fileContents": "import SwiftUI
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            MandelbrotView()
+        }
+    }
+}
+"},
+{"command": "Create file", "name": "MandelbrotView.swift", "fileContents": "import SwiftUI
+
+struct MandelbrotView: View {
+    @State private var zoom: CGFloat = 1.0
+    @State private var center: CGPoint = CGPoint(x: -0.5, y: 0)
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Image(uiImage: renderFractal(size: geometry.size))
+                .interpolation(.none)
+                .gesture(MagnificationGesture()
+                            .onChanged { value in
+                                zoom *= value.magnitude
+                            }
+                            .onEnded { value in
+                                zoom *= value.magnitude
+                            }
+                )
+        }
+    }
+    
+    func renderFractal(size: CGSize) -> UIImage {
+        let frame = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let context = UIGraphicsGetCurrentContext()!
+        var buf = UnsafeMutableBufferPointer<UInt32>.allocate(capacity: Int(size.width * size.height))
+        for y in 0..<Int(size.height) {
+            for x in 0..<Int(size.width) {
+                let pixel = mandelbrotPixel(x - Int(size.width)/2, y - Int(size.height)/2, zoom, center, Int(size.width), Int(size.height))
+                buf[y * Int(size.width) + x] = pixel
+            }
+        }
+        let data = Data(buffer: buf)
+        buf.deallocate()
+        let providerRef = CGDataProvider(data: data as CFData)
+        let cgim = CGImage(width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: 4 * Int(size.width), space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue), provider: providerRef!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+        context.draw(cgim!, in: frame)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
+    func mandelbrotPixel(_ x: Int, _ y: Int, _ zoom: CGFloat, _ center: CGPoint, _ width: Int, _ height: Int) -> UInt32 {
+        let cx = CGFloat(x) / zoom + center.x
+        let cy = CGFloat(y) / zoom + center.y
+        
+        var zx = cx
+        var zy = cy
+        
+        var i: UInt32 = 0
+        while (zx*zx + zy*zy) < 4 && i < 255 {
+          let xt = zx*zx - zy*zy + cx
+          zy = 2*zx*zy + cy
+          zx = xt
+          i += 1
+        }
+        
+        let color = UIColor(hue: CGFloat(i) / 255, saturation: 1.0, brightness: i == 255 ? 0 : 1.0, alpha: 1.0)
+        return color.toUInt32()
+    }
+}
+
+extension UIColor {
+    func toUInt32() -> UInt32 {
+        var uiColorAsUInt32: UInt32 = 0
+        guard self.getRed(nil, green: nil, blue: nil, alpha: nil) else { return uiColorAsUInt32 }
+        uiColorAsUInt32 += UInt32(self.cgColor.components![0] * 255.0) << 16
+        uiColorAsUInt32 += UInt32(self.cgColor.components![1] * 255.0) << 8
+        uiColorAsUInt32 += UInt32(self.cgColor.components![2] * 255.0) << 0
+        return uiColorAsUInt32
+    }
+}
+"},
+{"command": "Open project", "name": "MyApp"},
+{"command": "Close project", "name": "MyApp"}]
+extracted files from response = 2
+createFile w/ contents = import SwiftUI
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            MandelbrotView()
+        }
+    }
+}
+
+EARLY Added file: /Users/sprinchar/Documents/SwiftyGPTWorkspace/x_xTempProjNamex_x/Sources/0.swift w/ contents w length = 2 to Sources...
+createFile w/ contents = import SwiftUI
+
+struct MandelbrotView: View {
+    @State private var zoom: CGFloat = 1.0
+    @State private var center: CGPoint = CGPoint(x: -0.5, y: 0)
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Image(uiImage: renderFractal(size: geometry.size))
+                .interpolation(.none)
+                .gesture(MagnificationGesture()
+                            .onChanged { value in
+                                zoom *= value.magnitude
+                            }
+                            .onEnded { value in
+                                zoom *= value.magnitude
+                            }
+                )
+        }
+    }
+    
+    func renderFractal(size: CGSize) -> UIImage {
+        let frame = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let context = UIGraphicsGetCurrentContext()!
+        var buf = UnsafeMutableBufferPointer<UInt32>.allocate(capacity: Int(size.width * size.height))
+        for y in 0..<Int(size.height) {
+            for x in 0..<Int(size.width) {
+                let pixel = mandelbrotPixel(x - Int(size.width)/2, y - Int(size.height)/2, zoom, center, Int(size.width), Int(size.height))
+                buf[y * Int(size.width) + x] = pixel
+            }
+        }
+        let data = Data(buffer: buf)
+        buf.deallocate()
+        let providerRef = CGDataProvider(data: data as CFData)
+        let cgim = CGImage(width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: 4 * Int(size.width), space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue), provider: providerRef!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+        context.draw(cgim!, in: frame)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
+    func mandelbrotPixel(_ x: Int, _ y: Int, _ zoom: CGFloat, _ center: CGPoint, _ width: Int, _ height: Int) -> UInt32 {
+        let cx = CGFloat(x) / zoom + center.x
+        let cy = CGFloat(y) / zoom + center.y
+        
+        var zx = cx
+        var zy = cy
+        
+        var i: UInt32 = 0
+        while (zx*zx + zy*zy) < 4 && i < 255 {
+          let xt = zx*zx - zy*zy + cx
+          zy = 2*zx*zy + cy
+          zx = xt
+          i += 1
+        }
+        
+        let color = UIColor(hue: CGFloat(i) / 255, saturation: 1.0, brightness: i == 255 ? 0 : 1.0, alpha: 1.0)
+        return color.toUInt32()
+    }
+}
+
+extension UIColor {
+    func toUInt32() -> UInt32 {
+        var uiColorAsUInt32: UInt32 = 0
+        guard self.getRed(nil, green: nil, blue: nil, alpha: nil) else { return uiColorAsUInt32 }
+        uiColorAsUInt32 += UInt32(self.cgColor.components![0] * 255.0) << 16
+        uiColorAsUInt32 += UInt32(self.cgColor.components![1] * 255.0) << 8
+        uiColorAsUInt32 += UInt32(self.cgColor.components![2] * 255.0) << 0
+        return uiColorAsUInt32
+    }
+}
+
+EARLY Added file: /Users/sprinchar/Documents/SwiftyGPTWorkspace/x_xTempProjNamex_x/Sources/1.swift w/ contents w length = 2 to Sources...
+No invalid escape sequences found.
+📜= [{"command": "Create project", "name": "MyApp"},
+{"command": "Create file", "name": "App.swift", "fileContents": ""},
+{"command": "Create file", "name": "MandelbrotView.swift", "fileContents": ""},
+{"command": "Open project", "name": "MyApp"},
+{"command": "Close project", "name": "MyApp"}]
+Creating project with name: MyApp
+set current name
+⚙️  Generating plists...
+2023-04-12 13:45:56.822611-0600 Swifty-GPT[85410:12462362] [connection] nw_read_request_report [C1] Receive failed with error "Operation timed out"
+2023-04-12 13:45:56.822878-0600 Swifty-GPT[85410:12462362] [connection] nw_read_request_report [C1] Receive failed with error "Operation timed out"
+2023-04-12 13:45:56.824835-0600 Swifty-GPT[85410:12462362] [connection] nw_read_request_report [C1] Receive failed with error "Operation timed out"
+2023-04-12 13:45:56.829143-0600 Swifty-GPT[85410:12462362] [] nw_endpoint_flow_fillout_data_transfer_snapshot copy_info() returned NULL
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj
+Project created successfully
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/App.swift w/ contents w length = 137 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            MandelbrotView()
+        }
+    }
+}
+
+File successfully added to the project.
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp/Sources/MandelbrotView.swift w/ contents w length = 3030 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp
+createFile w/ contents = import SwiftUI
+
+struct MandelbrotView: View {
+    @State private var zoom: CGFloat = 1.0
+    @State private var center: CGPoint = CGPoint(x: -0.5, y: 0)
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Image(uiImage: renderFractal(size: geometry.size))
+                .interpolation(.none)
+                .gesture(MagnificationGesture()
+                            .onChanged { value in
+                                zoom *= value.magnitude
+                            }
+                            .onEnded { value in
+                                zoom *= value.magnitude
+                            }
+                )
+        }
+    }
+    
+    func renderFractal(size: CGSize) -> UIImage {
+        let frame = CGRect(origin: .zero, size: size)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        let context = UIGraphicsGetCurrentContext()!
+        var buf = UnsafeMutableBufferPointer<UInt32>.allocate(capacity: Int(size.width * size.height))
+        for y in 0..<Int(size.height) {
+            for x in 0..<Int(size.width) {
+                let pixel = mandelbrotPixel(x - Int(size.width)/2, y - Int(size.height)/2, zoom, center, Int(size.width), Int(size.height))
+                buf[y * Int(size.width) + x] = pixel
+            }
+        }
+        let data = Data(buffer: buf)
+        buf.deallocate()
+        let providerRef = CGDataProvider(data: data as CFData)
+        let cgim = CGImage(width: Int(size.width), height: Int(size.height), bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: 4 * Int(size.width), space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue), provider: providerRef!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+        context.draw(cgim!, in: frame)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
+    func mandelbrotPixel(_ x: Int, _ y: Int, _ zoom: CGFloat, _ center: CGPoint, _ width: Int, _ height: Int) -> UInt32 {
+        let cx = CGFloat(x) / zoom + center.x
+        let cy = CGFloat(y) / zoom + center.y
+        
+        var zx = cx
+        var zy = cy
+        
+        var i: UInt32 = 0
+        while (zx*zx + zy*zy) < 4 && i < 255 {
+          let xt = zx*zx - zy*zy + cx
+          zy = 2*zx*zy + cy
+          zx = xt
+          i += 1
+        }
+        
+        let color = UIColor(hue: CGFloat(i) / 255, saturation: 1.0, brightness: i == 255 ? 0 : 1.0, alpha: 1.0)
+        return color.toUInt32()
+    }
+}
+
+extension UIColor {
+    func toUInt32() -> UInt32 {
+        var uiColorAsUInt32: UInt32 = 0
+        guard self.getRed(nil, green: nil, blue: nil, alpha: nil) else { return uiColorAsUInt32 }
+        uiColorAsUInt32 += UInt32(self.cgColor.components![0] * 255.0) << 16
+        uiColorAsUInt32 += UInt32(self.cgColor.components![1] * 255.0) << 8
+        uiColorAsUInt32 += UInt32(self.cgColor.components![2] * 255.0) << 0
+        return uiColorAsUInt32
+    }
+}
+
+File successfully added to the project.
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): MyApp
+Creating project with name: MyApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: MyApp
+Build Output: Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project /Users/sprinchar/Documents/SwiftyGPTWorkspace/MyApp.xcodeproj -scheme MyApp -sdk iphonesimulator -destination "name=iPhone 14" -verbose
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Build settings from command line:
+    SDKROOT = iphonesimulator16.4
+
+Prepare packages
+
+Computing target dependency graph and provisioning inputs
+
+Create build description
+Build description signature: c538f3e3d23a83a237f99ba4ab6def37
+Build description path: /Users/sprinchar/Library/Developer/Xcode/DerivedData/MyApp-batuhrkzdjfchfbffdnvfhlxbewo/Build/Intermediates.noindex/XCBuildData/c538f3e3d23a83a237f99ba4ab6def37.xcbuilddata
+
+
+** BUILD SUCCEEDED **
+
+Parsed and executred code successfully.
+Opening project....
+Executing AppleScript: openProject(name: "MyApp")
+2023-04-12 13:49:40.048126-0600 Swifty-GPT[85410:12462138] [threadmgrsupport] _TSGetMainThread_block_invoke():Main thread potentially initialized incorrectly, cf <rdar://problem/67741850>
+Program ended with exit code: 0

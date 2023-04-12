@@ -28,10 +28,13 @@ var rubyScriptPath:String {
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 
+// Configurable settings for AI.
+let retryLimit = 10
+
 struct GPTAction: Codable {
     let command: String
     let name: String?
-    let fileContents: String?
+    //let fileContents: String?
 }
 
 var projectName = ""
@@ -47,74 +50,75 @@ func main() {
     // TODO: Check workspace and delete or backup if req
     // backup workspace to file folder with suffix
     backupAndDeleteWorkspace()
-
+    
     // Other optional command-line arguments, like frameworks or additional features, can be added here
 
-//    let appDesc = "a game that uses simple shapes and colors. Develop a 2D grid-based color matching puzzle where players swap shapes to create matches, clear grid cells, and score points. Use distinct colors and geometric shapes (circles, squares, triangles) for game pieces. Utilize animations for shape swapping and cascading. Develop using Apple's built in frameworks."
+    //    let appDesc = "a game that uses simple shapes and colors. Develop a 2D grid-based color matching puzzle where players swap shapes to create matches, clear grid cells, and score points. Use distinct colors and geometric shapes (circles, squares, triangles) for game pieces. Utilize animations for shape swapping and cascading. Develop using Apple's built in frameworks."
 
-//    let appDesc = "that displays a matching game to the user. There should be a 2d grid of cards with concealed emojis on them, tapping a card should show the concealed emoji. If the user selects two cards with the same concealsed emoji, they get a point and those two cards are removed from the grid."
+//        let appDesc = "that displays a matching game to the user. There should be a 2d grid of cards with concealed emojis on them, tapping a card should show the concealed emoji. If the user selects two cards with the same concealsed emoji, they get a point and those two cards are removed from the grid."
 
-    let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
-//    let appDesc = "that displays the following text using a typewriter animation: You are feeling very sleepy..."
+//        let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3."
+    //    let appDesc = "that displays the following text using a typewriter animation: You are feeling very sleepy..."
     // Working PROMPTS that generate somewhat working code.
-//    let appDesc = "that displays a label that says I love you so much! with heart emojis all around the screen in random places."
-    // let appDesc = "containing a label that says 'Hello World!"
-//     let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
-//     let appDesc = "that displays an infinitely scrollable grid with random colors in each square."
+//        let appDesc = "that displays a label that says I love you so much! with heart emojis all around the screen in random places."
+    //     let appDesc = "containing a label that says 'Hello World!"
+    //     let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
+//         let appDesc = "that displays a scrollable grid with many random emojis and the emoji name in each square. Tapping an emoji should go to a new screen with facts about that emoji."
     //let appDesc = "containing a circle that can be moved by tapping and dragging."
-//     let appDesc = "containing a circle that can be moved by tapping and dragging and stays where you move it."
-//    let appDesc = "containing a list of hilarious jokes."
-//    let appDesc = "that displays a beautiful gradient between green and light green across the entire screen. Show a system symbol in multicolor of the palette in the center of the screen."
+    //     let appDesc = "containing a circle that can be moved by tapping and dragging and stays where you move it."
+    //    let appDesc = "containing a list of hilarious jokes."
+    //    let appDesc = "that displays a beautiful gradient between green and light green across the entire screen. Show a system symbol in multicolor of the palette in the center of the screen."
+//          let appDesc = "that displays a 3d scene. Show 3 spheres and a ground plane. Attach physics body to spheres so they react to gravity."
+//        let appDesc = "that displays the following text using a typewriter animation: You are feeling very sleepy..."
 
-//        let appDesc = "that implements the classic dots and boxes game."
-
-//      let appDesc = "that displays a 3d scene using SceneKit. Show a beach ball in the SceneKit 3d view."
-   // let appDesc = "that displays the following text using a typewriter animation: \"You are feeling very sleepy...\nYou want to know more...\nDreams slowly take you...\""
+//     let appDesc = "that uses emojis to displays a detailed mountain scene. Include the sky, the sun, and some animals."
 
     // PARTIALLY WORKS. EXCITED TO see gpt-4
-//    let appDesc = "that displays the classic Hangman game. A random word should be chosen and the user should be able to guess by entering into the text field."
-   // let appDesc = "that implments the classic game battleships. The user should be able to play against the computer opponent."
+    //    let appDesc = "that displays the classic Hangman game. A random word should be chosen and the user should be able to guess by entering into the text field."
+    // let appDesc = "that implments the classic game battleships. The user should be able to play against the computer opponent."
+
+    //    let appDesc = "that displays a spiraling swirling line across the entire screen. It should use colors in a color scheme that look good together."
 
     // Should use import Accelerate ????
-//      let appDesc = "that displays a mandelbrot set fractal."
 
-    // let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
+    //let appDesc = "that displays a mandelbrot set fractal. The app allows zooming into the fractal using zoom gesture."
+
+//         let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
 
     //let appDesc = "that shows an wave using sin function. Animate the wave by changing the value passed to sin over time. "
-    // let appDesc = "that shows a spiral that rotates 360 degrees repeatedly."
+//     let appDesc = "that displays an animation of three squares animating into place. One from the top of the screen, one from the left, and one from the bottom."
     // let appDesc = "that displays all the emoji related to plants and green across the screen in random locations."
 
     // borky
-//    let appDesc = "that displays an american flag. The american flag should be drawn using the built in shape drawing in SwiftUI."
-//     let appDesc = "that displays a list of saved notes. The app should allow the user to create a new note."
+    //    let appDesc = "that displays an american flag. The american flag should be drawn using the built in shape drawing in SwiftUI."
+    //     let appDesc = "that displays a list of saved notes. The app should allow the user to create a new note."
+//    let appDesc = "that implements classic dots and boxes game. Dots and Boxes is a classic pencil-and-paper game for two players. The game consists of a grid of dots, and the objective is to create more boxes than your opponent by connecting the dots with lines. Quick rules: 1.Players take turns drawing a horizontal or vertical line between adjacent dots.\n2.If a player completes a box (all 4 sides), they claim it and get a point.\nThe player who completes a box gets another turn. The game ends when all boxes are claimed. The player with the most boxes wins."
+
+
+    // Integrating Third party libraries stufff
+    let appDesc = "that integrates the New Relic for iOS SDK using Swift Package Manager. It should add an AppDelegate to the SwiftUI app and properly hook it up to the applicationDidFinishLaunching function with the required setup code for the New Relic SDK. It should display a screen with a few buttons on it. It should use the New Relic SDK to record custom events when tapping buttons."
 
     // Example GPT prompt with command-line arguments included
     let prompt = """
-You are working on a \(appType) app in the \(language) programming language named \(appName).
-
-As an AI language model, please generate \(language) code for a SwiftUI app \(appDesc). Your response should include the necessary \(language) code files. Please ensure that the generated code is valid and properly formatted. The files should be returned as a JSON array with the following structure:
-
+You are working on a \(appType) app in the \(language) programming language.
+As an AI language model, please generate \(language) code for a SwiftUI app \(appDesc). Project should be named: \(appName). Your response should include the necessary \(language) code files. Please ensure that the generated code is valid and properly formatted. The files should be returned as a JSON array with the following structure:
 It is essential you return your response as a JSON array matching the structure:. [{"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}]
-
+Example SWIFT_FILE_CONTENTS = "import SwiftUI\nstruct ContentView: View {\n    var body: some View {\n        Spinner()\n    }\n}\nstruct Spinner: View {\n\n    var body: some View {\n }\n\n}"
 Available commmands are: "Close project name" , "Create project name", "Open project name", Create file name fileContents
-
 Please keep in mind the following constraints when generating the response:
 1. It is essential you return your response as a JSON array.
 2. It is essential you include a Swift `App` file.
-3. Focus on generating valid and properly formatted Swift code.
+3. Focus on generating valid, properly formatted, and properly escaped Swift code.
 4. Complete tasks in this order: Create project. Create Swift files including App file. Open project. Close project.
-
 """
-/*
- 3. Run project
- 4. Build project
- 5. Test project
- 6. Commit changes
- 7. Push changes
- 8. Send Slack message
- */
+    /*
+     3. Run project
+     5. Test project
+     6. Commit changes
+     7. Push changes
+     8. Send Slack message
+     */
 
-    let retryLimit = 5
     var promptingRetryNumber = 0
 
     let sema = DispatchSemaphore(value: 0)
@@ -122,28 +126,28 @@ Please keep in mind the following constraints when generating the response:
     func doPrompting() {
         generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit) { response in
             if response != nil, let response {
-               parseAndExecuteGPTOutput(response) { success in
-                   if success {
-                       print("Parsed and executred code successfully.")
-                       print("Opening project....")
+                parseAndExecuteGPTOutput(response) { success in
+                    if success {
+                        print("Parsed and executred code successfully.")
+                        print("Opening project....")
 
-                       executeAppleScriptCommand(.openProject(name: projectName))
+                        executeAppleScriptCommand(.openProject(name: projectName))
 
-                       sema.signal()
-                   }
-                   else {
-                       print("Failed @ parsing / executing code successfully.")
-                       if promptingRetryNumber >= retryLimit {
-                           print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
-                           //completion(nil)
-                           sema.signal()
-                           return
-                       }
+                        sema.signal()
+                    }
+                    else {
+                        print("Failed @ parsing / executing code successfully.")
+                        if promptingRetryNumber >= retryLimit {
+                            print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
+                            //completion(nil)
+                            sema.signal()
+                            return
+                        }
 
-                       promptingRetryNumber += 1
+                        promptingRetryNumber += 1
 
-                       doPrompting()
-                   }
+                        doPrompting()
+                    }
                 }
             } else {
                 print("Failed to generate compilable code within the retry limit.")
@@ -154,30 +158,6 @@ Please keep in mind the following constraints when generating the response:
     doPrompting()
 
     sema.wait()
-//    // Send the prompt to GPT
-//    sendPromptToGPT(prompt: prompt) { response, success in
-//        print("GPT OUTPUT =\n\(gptOutput)\nEND GPT...")
-//        // Parse GPT's output and execute the corresponding Xcode commands
-//        parseAndExecuteGPTOutput(gptOutput)
-//    }
-}
-
-func backupAndDeleteWorkspace() {
-    print("Backing up and deleting workspace.")
-
-    var projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)"
-
-    let backupPath = "\(projectPath)-\(Date().timeIntervalSince1970)"
-    projectPath = "\(projectPath)/"
-
-    let projectPathURL = URL(fileURLWithPath: projectPath)
-    let backupPathURL = URL(fileURLWithPath: backupPath)
-    do {
-        try FileManager.default.moveItem(at: projectPathURL, to: backupPathURL)
-    }
-    catch {
-        print(error)
-    }
 }
 
 func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, currentRetry: Int = 0, completion: @escaping (String?) -> Void) {
@@ -265,9 +245,9 @@ func sendPromptToGPT(prompt: String, completion: @escaping (String, Bool) -> Voi
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool) -> Void) {
     switch command {
     case let .openProject(name):
-        print("SKIPPING GPT-Opening project with name: \(name)")
-//        executeAppleScriptCommand(.openProject(name: projectName))
-//        completion(true)
+        print("SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): \(name)")
+        //        executeAppleScriptCommand(.openProject(name: projectName))
+        //        completion(true)
     case let .createProject(name):
         print("Creating project with name: \(name)")
         projectName = name
@@ -280,8 +260,8 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool) -
 
     case .closeProject(name: let name):
         print("SKIPPING GPT-Closing project with name: \(name)")
-//        executeAppleScriptCommand(.closeProject(name: name))
-//        completion(true)
+        //        executeAppleScriptCommand(.closeProject(name: name))
+        //        completion(true)
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
@@ -332,67 +312,43 @@ func executeAppleScriptCommand(_ command: XcodeCommand) {
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> Void) {
 
-    findInvalidEscapeSequences(in: output)
+    print("🤖= \(output)")
 
-    print("Attempt to parseAndExecute output = \(output)")
+    let (updatedString, fileContents) = extractFileContents(output)
+    print("extracted files from response = \(fileContents.count)")
 
-    guard let data = output.data(using: .utf8) else {
-         print("Invalid GPT output")
-         return completion(false)
-     }
+    var filesWritten = 0
+    for (index, file) in fileContents.enumerated() {
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
+        let filePath = "\(projectPath)/Sources/\(index).swift"
 
-     do {
-         let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
-         for gptAction in gptCommands {
+        do
+        {
+            try FileManager.default.createDirectory(atPath: "\(projectPath)/Sources/", withIntermediateDirectories: true, attributes: nil)
+        }
+        catch let error as NSError
+        {
+            print("Unable to create directory \(error.debugDescription)")
+        }
 
-             let fullCommand = gptAction.command
+        let writtenSuccessfully = writeFile(fileContent: file, filePath: filePath)
+        if writtenSuccessfully {
+            print("sucess:regex:addfile \(filePath) w/ w length = \(fileContents.count)")
+            filesWritten += 1
+        }
+        else {
+            print("EARLY file add failed...")
+            //completion(false)
+        }
+    }
 
-             switch fullCommand {
-             case "Create project":
-                 guard let name = gptAction.name else { return completion(false) }
+    let sanitizedOutput =   removeInvalidEscapeSequences(in: updatedString)
 
-                 executeXcodeCommand(.createProject(name: name)) { success in }
-             case "Open project":
-                 guard let name = gptAction.name else { return completion(false) }
+    let doubleSanitizedOuput =  removeControlCharacters(from: sanitizedOutput)
 
-                 executeXcodeCommand(.openProject(name: name)) { success in }
-//             case "Run project":
-//                 guard let name = gptAction.name else { return false }
-//
-//                 executeXcodeCommand(.openProject(name: name))
-             case "Close project":
-                 guard let name = gptAction.name else { return completion(false) }
-                 // todo: check success here
-                 executeXcodeCommand(.createProject(name: name)) { _ in  }
-             case "Create file":
-                 guard let fileName = gptAction.name, let fileContents = gptAction.fileContents else {
-                     return
-                     //completion(false)
-                 }
+    let manualRemoval = replaceFileContents(doubleSanitizedOuput)
 
-                 executeXcodeCommand(.createFile(fileName: fileName, fileContents:fileContents)) { success in  }
-
-             default:
-                 print("Unknown command \(fullCommand)")
-                 //return completion(false)
-             }
-         }
-
-         print("Building project...")
-         executeXcodeCommand(.buildProject(name: projectName)) { success in
-             if success {
-                 completion(true)
-             }
-             else {
-                 completion(false)
-             }
-         }
-
-    } catch {
-         print("Error decoding JSON: \(error)")
-         return completion(false)
-     }
-}
+    // let removedAfterBracketText =  removeTextAfterLastClosingBracket(input: manualRemoval)
 
 func createNewProject(projectName: String, projectDirectory: String) {
     let projectSpec = """
@@ -421,29 +377,115 @@ func createNewProject(projectName: String, projectDirectory: String) {
     echo '\(projectSpec)' > \(projectSpecPath)
     \(xcodegenPath) generate --spec \(projectSpecPath) --project \(projectDirectory)
     """
+    print("📜= \(manualRemoval)")
 
-    let task = Process()
-    task.launchPath = "/bin/zsh"
-    task.arguments = ["-c", createProjectScript]
-    task.launch()
-    task.waitUntilExit()
+    guard let data = manualRemoval.data(using: .utf8) else {
+        print("Invalid GPT output")
+        return completion(false)
+    }
 
-    let status = task.terminationStatus
-    if status == 0 {
-        print("Project created successfully")
-    } else {
-        print("Error creating project")
+    var fileIndex = 0
+
+    do {
+        let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
+        for (index, gptAction) in gptCommands.enumerated() {
+            let fullCommand = gptAction.command
+
+            switch fullCommand {
+            case "Create project":
+                guard let name = gptAction.name else { return completion(false) }
+
+                executeXcodeCommand(.createProject(name: name)) { success in }
+            case "Open project":
+                guard let name = gptAction.name else { return completion(false) }
+
+                executeXcodeCommand(.openProject(name: name)) { success in }
+
+            case "Close project":
+                guard let name = gptAction.name else { return completion(false) }
+                // todo: check success here
+                executeXcodeCommand(.createProject(name: name)) { _ in  }
+            case "Create file":
+                guard let fileName = gptAction.name  else {
+                    return
+                    //completion(false)
+                }
+
+                var fileContents = Array(fileContents)
+
+                let foundFileContents: String
+                if fileContents.count > fileIndex {
+                    foundFileContents = fileContents[index - 1]
+                }
+                else {
+                    // check the other place
+                    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
+                    let filePath = "\(projectPath)/Sources/\(fileIndex).swift"
+
+                    if let data = FileManager.default.contents(atPath: filePath) {
+                        foundFileContents = String(decoding: data, as: UTF8.self)
+                    }
+                    else {
+                        foundFileContents = ""
+                    }
+                }
+
+                fileIndex += 1
+
+                if foundFileContents.isEmpty {
+                    return completion(false)
+                }
+
+                executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success in  }
+
+            default:
+                print("Unknown command \(fullCommand)")
+                //return completion(false)
+            }
+        }
+
+        if filesWritten == 0 || filesWritten != fileContents.count {
+            print("Failed to make files.. retrying...")
+            return completion(false)
+        }
+
+        print("Building project...")
+        executeXcodeCommand(.buildProject(name: projectName)) { success in
+            if success {
+                completion(true)
+            }
+            else {
+                completion(false)
+            }
+        }
+
+    } catch {
+        print("Error decoding JSON: \(error)")
+        return completion(false)
     }
 }
 
-func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
+func writeFile(fileContent: String, filePath: String) -> Bool {
     print("createFile w/ contents = \(fileContent)")
 
-
+    let modifiedFileContent = fileContent.replacingOccurrences(of: "\\n", with: "\n")
     // Create a new Swift file
-    if let data = fileContent.data(using: .utf8) {
-        try? data.write(to: URL(fileURLWithPath: filePath))
+    if let data = modifiedFileContent.data(using: .utf8) {
+        do {
+            try data.write(to: URL(fileURLWithPath: filePath))
+            return true
+        }
+        catch {
+            print("Error writing file: \(error) @ p = \(filePath)")
+            return false
+        }
     }
+    return false
+}
+
+func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
+
+    let wroteSuccessfully = writeFile(fileContent: fileContent, filePath: filePath)
 
     // Add the file to the project using xcodeproj gem
     let task = Process()
