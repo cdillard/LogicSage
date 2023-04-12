@@ -8,12 +8,7 @@
 import Foundation
 
 func getWorkspaceFolder() -> String {
-    guard let swiftyGPTDocumentsPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path(percentEncoded: false) else {
-        print("ERROR GETTING WORKSPACE")
-
-        return ""
-    }
-    return swiftyGPTDocumentsPath
+    return URL.documentsDirectory.absoluteString
 }
 
 extension String {

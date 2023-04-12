@@ -15,8 +15,16 @@ let PIXABAY_KEY = "PIXABAY_KEY"
 
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
-let infoPlistPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/Info.plist"
-let rubyScriptPath = "/Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/add_file_to_project.rb"
+var infoPlistPath:String {
+    get {
+        return getWorkspaceFolder() + "/GPT/Swifty-GPT/Swifty-GPT/Info.plist"
+    }
+}
+var rubyScriptPath:String {
+    get {
+        return getWorkspaceFolder() + "/GPT/Swifty-GPT/Swifty-GPT/add_file_to_project.rb"
+    }
+}
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 
@@ -386,7 +394,6 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
      }
 }
 
-// TODO: Fix hardcoded paths to Info.plist.
 func createNewProject(projectName: String, projectDirectory: String) {
     let projectSpec = """
     name: \(projectName)
@@ -443,7 +450,6 @@ func createFile(projectPath: String, projectName: String, targetName: String, fi
     task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
     task.arguments = [
         "ruby",
-        // TODO: Fix hardcoded path.
         rubyScriptPath,
         projectPath,
         filePath,
