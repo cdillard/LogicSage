@@ -113,12 +113,7 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
     let output = String(data: outputData, encoding: .utf8) ?? ""
     let errors = getErrorLines(output)
-    if !errors.isEmpty {
-        print("Build Errors: \(  errors)")
-    }
-    else {
-        print("Build Output: \(  output)")
-    }
+
 
     let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
     let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
@@ -128,10 +123,16 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
         print("Build Errors: \(  errors2)")
     }
     else {
-        print("Error: \(errorOutput)")
+        if !errors.isEmpty {
+            print("Error: \(errorOutput)")
+        }
+    }
+    if !errors.isEmpty {
+        print("Build ❌ : \(  errors)")
+    }
+    else {
+//        print("Build Output: \(  output)")
     }
 
-
     completion(successful)
-
 }
