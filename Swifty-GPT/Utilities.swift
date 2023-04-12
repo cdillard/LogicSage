@@ -24,15 +24,17 @@ extension String {
 }
 
 
-func findInvalidEscapeSequences(in jsonString: String) {
+func removeInvalidEscapeSequences(in jsonString: String) -> String {
     let pattern = #"\\[^"\\/bfnrtu]"#
     let regex: NSRegularExpression
+
+    var jsonString = jsonString
 
     do {
         regex = try NSRegularExpression(pattern: pattern, options: [])
     } catch {
         print("Error: Invalid regular expression.")
-        return
+        return jsonString
     }
 
     let nsRange = NSRange(jsonString.startIndex..<jsonString.endIndex, in: jsonString)
@@ -44,30 +46,105 @@ func findInvalidEscapeSequences(in jsonString: String) {
         for match in matches {
             let invalidEscapeSequence = (jsonString as NSString).substring(with: match.range)
             print("Found invalid escape sequence: \(invalidEscapeSequence) at range: \(match.range)")
+            if let delRange = jsonString.rangeFromNSRange(nsRange: match.range) {
+                jsonString.replaceSubrange(delRange, with: "\"fileContents\":\"\"")
+            }
+            else {
+                print("Failed to delete control character.")
 
-            // "\\." and "\\\n" are culprits "\\\" and "\\" and ""
-            // How can we get this Swift file to reliably escape/unescape all possible code.
+            }
         }
+    }
+    return jsonString
+}
+
+func replaceFileContents(_ input: String) -> String {
+    let pattern = #""fileContents":\s*?("""[\s\S]*?"""|"[^"]*")"#
+    let regex = try! NSRegularExpression(pattern: pattern)
+    let range = NSRange(input.startIndex..., in: input)
+    var result = input
+    regex.enumerateMatches(in: input, options: [], range: range) { (match, _, _) in
+        if let matchRange = match?.range, let range = Range(matchRange, in: input) {
+            let fileContent = String(input[range])
+            let modifiedFileContent = "\"fileContents\": \"\","
+            if let nextCommandRange = input.range(of: #" {"command":"#, range: range.upperBound..<input.endIndex) {
+                let modifiedRange = range.lowerBound..<nextCommandRange.lowerBound
+                let modifiedString = input.replacingCharacters(in: modifiedRange, with: modifiedFileContent)
+                result = result.replacingOccurrences(of: fileContent, with: modifiedString)
+            }
+        }
+    }
+    return result
+}
+
+func extractFileContents(_ input: String) -> (String, [String]) {
+    var fileContents: [String] = []
+    let pattern = #""fileContents":\s*?"((?:\\.|[^"\\]+)*)""#
+    let regex = try! NSRegularExpression(pattern: pattern)
+    let modifiedInput = regex.stringByReplacingMatches(in: input, options: [], range: NSRange(input.startIndex..., in: input), withTemplate: "\"fileContents\": \"\"")
+    let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
+    for match in matches {
+        if let fileContentRange = Range(match.range(at: 1), in: input) {
+            var fileContent = String(input[fileContentRange])
+            fileContent = fileContent.replacingOccurrences(of: #"\\("")"#, with: "\"")
+            fileContent = fileContent.replacingOccurrences(of: #"\\n"#, with: "\n")
+            fileContents.append(fileContent              .replacingOccurrences(of: "\\\"", with: "\"")
+                                                        .replacingOccurrences(of: "\\\\", with: "\\")
+                                                        .replacingOccurrences(of: "\\n", with: "\n")
+                                                        .replacingOccurrences(of: "\\r", with: "\r")
+                                                        .replacingOccurrences(of: "\\t", with: "\t"))
+        }
+    }
+    return (modifiedInput, fileContents)
+}
+
+//func extractAllFileContents(from jsonString: String) -> (updatedString: String, fileContents: [String]) {
+//    let pattern = #""fileContents"\s*:\s*(?:"{0,3}(?:[^"\\]|\\.|\\n)*"{0,3})"#
+//    let regex = try? NSRegularExpression(pattern: pattern, options: [])
+//    var fileContentsList: [String] = []
+//    var updatedString = jsonString
+//
+//    if let matches = regex?.matches(in: jsonString, options: [], range: NSRange(location: 0, length: jsonString.utf16.count)).reversed() {
+//        for match in matches {
+//            if let range = Range(match.range(at: 0), in: jsonString) {
+//                let fileContentsExpression = String(jsonString[range])
+//                let fileContentsRange = fileContentsExpression.range(of: #""{0,3}(?:[^"\\]|\\.|\\n)*"{0,3}"#, options: [.regularExpression])
+//                if let fileContentsRange = fileContentsRange {
+//                    let fileContents = String(fileContentsExpression[fileContentsRange])
+//                    let unescapedFileContents = fileContents
+//                        .replacingOccurrences(of: "\\\"", with: "\"")
+//                        .replacingOccurrences(of: "\\\\", with: "\\")
+//                        .replacingOccurrences(of: "\\n", with: "\n")
+//                        .replacingOccurrences(of: "\\r", with: "\r")
+//                        .replacingOccurrences(of: "\\t", with: "\t")
+//                        .trimmingCharacters(in: .init(charactersIn: "\""))
+//                    fileContentsList.append(unescapedFileContents)
+//
+//                    updatedString = updatedString.replacingOccurrences(of: fileContentsExpression, with: "\"fileContents\": \"\"")
+//                }
+//            }
+//        }
+//    }
+//
+//    return (updatedString, fileContentsList)
+//}
+
+extension String {
+    func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
+        return Range(nsRange, in: self)
     }
 }
 
-func escapeFileContents(jsonString: String) -> String? {
-    let leadingMultiLineLiteralPattern = #"""(?=\s*\n)"#
-    let trailingMultiLineLiteralPattern = #""""\s*(,?)\s*\n?\s*([}\]])"#
+func removeControlCharacters(from input: String) -> String {
+    let allowedCharacters = CharacterSet(charactersIn: " \t\n\r!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\"")
+    let filtered = input.unicodeScalars.filter { allowedCharacters.contains($0) }
+    return String(String.UnicodeScalarView(filtered))
+}
 
-    let escapedJsonString = jsonString
-        .replacingOccurrences(of: leadingMultiLineLiteralPattern, with: "", options: .regularExpression)
-        .replacingOccurrences(of: trailingMultiLineLiteralPattern, with: "\"$1\n$2", options: .regularExpression)
-
-    return escapedJsonString
-            .replacingOccurrences(of: "\\\\.\\.", with: "\\\\\\.")
-            .replacingOccurrences(of: "\\self", with: "\\\\\\self")
-            .replacingOccurrences(of: "\\ .self", with: "\\\\ .self")
-            .replacingOccurrences(of: "\"\"\"", with: "\\\"")
-            .replacingOccurrences(of: "\\\\ .", with: specialCode)
-            .replacingOccurrences(of: "\\\\.", with: specialCode)
-            .replacingOccurrences(of: "\\ .", with: specialCode)
-            .replacingOccurrences(of: "\\.", with: specialCode)
-            .replacingOccurrences(of: "\\\\_", with: "\\_")
-            .replacingOccurrences(of: "\\(", with: specialCode2)
+func removeTextAfterLastClosingBracket(input: String) -> String {
+    if let closingBracketIndex = input.lastIndex(of: "]") {
+        let result = input[input.startIndex...closingBracketIndex]
+        return String(result)
     }
+    return input
+}
