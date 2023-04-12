@@ -72,7 +72,8 @@ func main() {
     //    let appDesc = "that displays a spiraling swirling line across the entire screen. It should use colors in a color scheme that look good together."
 
     // Should use import Accelerate ????
-          let appDesc = "that displays a mandelbrot set fractal. The app allows zooming into the fractal using zoom gesture."
+
+    //let appDesc = "that displays a mandelbrot set fractal. The app allows zooming into the fractal using zoom gesture."
 
 //         let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
 
@@ -84,6 +85,10 @@ func main() {
     //    let appDesc = "that displays an american flag. The american flag should be drawn using the built in shape drawing in SwiftUI."
     //     let appDesc = "that displays a list of saved notes. The app should allow the user to create a new note."
 //    let appDesc = "that implements classic dots and boxes game. Dots and Boxes is a classic pencil-and-paper game for two players. The game consists of a grid of dots, and the objective is to create more boxes than your opponent by connecting the dots with lines. Quick rules: 1.Players take turns drawing a horizontal or vertical line between adjacent dots.\n2.If a player completes a box (all 4 sides), they claim it and get a point.\nThe player who completes a box gets another turn. The game ends when all boxes are claimed. The player with the most boxes wins."
+
+
+    // Integrating Third party libraries stufff
+    let appDesc = "that integrates the New Relic for iOS SDK using Swift Package Manager. It should add an AppDelegate to the SwiftUI app and properly hook it up to the applicationDidFinishLaunching function with the required setup code for the New Relic SDK. It should display a screen with a few buttons on it. It should use the New Relic SDK to record custom events when tapping buttons."
 
     // Example GPT prompt with command-line arguments included
     let prompt = """
@@ -304,6 +309,7 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
     let (updatedString, fileContents) = extractFileContents(output)
     print("extracted files from response = \(fileContents.count)")
 
+    var filesWritten = 0
     for (index, file) in fileContents.enumerated() {
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
         let filePath = "\(projectPath)/Sources/\(index).swift"
@@ -317,8 +323,15 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
             print("Unable to create directory \(error.debugDescription)")
         }
 
-        writeFile(fileContent: file, filePath: filePath)
-        print("EARLY Added file: \(filePath) w/ contents w length = \(fileContents.count) to Sources...")
+        let writtenSuccessfully = writeFile(fileContent: file, filePath: filePath)
+        if writtenSuccessfully {
+            print("sucess:regex:addfile \(filePath) w/ w length = \(fileContents.count)")
+            filesWritten += 1
+        }
+        else {
+            print("EARLY file add failed...")
+            //completion(false)
+        }
     }
 
     let sanitizedOutput =   removeInvalidEscapeSequences(in: updatedString)
@@ -396,6 +409,11 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
             }
         }
 
+        if filesWritten == 0 || filesWritten != fileContents.count {
+            print("Failed to make files.. retrying...")
+            return completion(false)
+        }
+
         print("Building project...")
         executeXcodeCommand(.buildProject(name: projectName)) { success in
             if success {
@@ -412,7 +430,7 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
     }
 }
 
-func writeFile(fileContent: String, filePath: String) {
+func writeFile(fileContent: String, filePath: String) -> Bool {
     print("createFile w/ contents = \(fileContent)")
 
     let modifiedFileContent = fileContent.replacingOccurrences(of: "\\n", with: "\n")
@@ -420,16 +438,19 @@ func writeFile(fileContent: String, filePath: String) {
     if let data = modifiedFileContent.data(using: .utf8) {
         do {
             try data.write(to: URL(fileURLWithPath: filePath))
+            return true
         }
         catch {
             print("Error writing file: \(error) @ p = \(filePath)")
+            return false
         }
     }
+    return false
 }
 
 func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) {
 
-    writeFile(fileContent: fileContent, filePath: filePath)
+    let wroteSuccessfully = writeFile(fileContent: fileContent, filePath: filePath)
 
     // Add the file to the project using xcodeproj gem
     let task = Process()
