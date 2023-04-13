@@ -55,7 +55,7 @@ enum XcodeCommand {
 }
 
 
-func buildProject(projectPath: String, scheme: String, completion: @escaping (Bool) -> Void) {
+func buildProject(projectPath: String, scheme: String, completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
 
@@ -83,7 +83,7 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
         try task.run()
     } catch {
         print("Error running xcodebuild: \(error)")
-        completion(false)
+        completion(false, [])
         dispatchSemaphore.signal()
     }
 
@@ -133,6 +133,10 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     else {
         print("Build Output: \(  output)")
     }
-
-    completion(successful)
+    var errorsCopy = Array(errors)
+    errorsCopy = errorsCopy.map {
+        $0.replacingOccurrences(of: getWorkspaceFolder(), with: "")
+    }
+    globalErrors += Array(errorsCopy)
+    completion(successful, globalErrors)
 }

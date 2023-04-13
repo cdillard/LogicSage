@@ -22,6 +22,7 @@ func createNewProject(projectName: String, projectDirectory: String) {
           properties:
             CFBundleVersion: "1.0"
             UILaunchScreen: []
+
         settings:
           base:
             PRODUCT_BUNDLE_IDENTIFIER: com.example.\(projectName)
