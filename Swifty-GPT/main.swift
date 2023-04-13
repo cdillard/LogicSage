@@ -17,12 +17,18 @@ let PIXABAY_KEY = "PIXABAY_KEY"
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
 var infoPlistPath:String {
     get {
-        return getWorkspaceFolder() + "/GPT/Swifty-GPT/Swifty-GPT/Info.plist"
+        if let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist") {
+            return plistPath
+        }
+        return ""
     }
 }
 var rubyScriptPath:String {
     get {
-        return getWorkspaceFolder() + "/GPT/Swifty-GPT/Swifty-GPT/add_file_to_project.rb"
+        if let scriptPath = Bundle.main.path(forResource: "add_file_to_project", ofType: "rb") {
+            return scriptPath
+        }
+        return ""
     }
 }
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
@@ -350,33 +356,6 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
 
     // let removedAfterBracketText =  removeTextAfterLastClosingBracket(input: manualRemoval)
 
-func createNewProject(projectName: String, projectDirectory: String) {
-    let projectSpec = """
-    name: \(projectName)
-    targets:
-      \(projectName):
-        type: application
-        platform: iOS
-        deploymentTarget: "16.4"
-        sources: [Sources]
-        info:
-          path: \(infoPlistPath)
-          properties:
-            CFBundleVersion: "1.0"
-            UILaunchScreen: []
-        settings:
-          base:
-            PRODUCT_BUNDLE_IDENTIFIER: com.example.\(projectName)
-            INFOPLIST_FILE: \(infoPlistPath)
-    """
-
-    // TODO: Fix harcoded path to xcodegen.
-    let projectSpecPath = "\(projectDirectory)\(projectName)/project.yml"
-    let createProjectScript = """
-    mkdir -p \(projectDirectory)/\(projectName)/Sources
-    echo '\(projectSpec)' > \(projectSpecPath)
-    \(xcodegenPath) generate --spec \(projectSpecPath) --project \(projectDirectory)
-    """
     print("📜= \(manualRemoval)")
 
     guard let data = manualRemoval.data(using: .utf8) else {

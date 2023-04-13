@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6129E25F4B006B065B /* Info.plist */; };
+		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
@@ -16,12 +18,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B7139CDA29E147910049ADE1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */,
+				71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -109,6 +113,8 @@
 			dependencies = (
 			);
 			name = "Swifty-GPT";
+			packageProductDependencies = (
+			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
 			productType = "com.apple.product-type.tool";
@@ -137,6 +143,8 @@
 				Base,
 			);
 			mainGroup = B7139CD329E147910049ADE1;
+			packageReferences = (
+			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

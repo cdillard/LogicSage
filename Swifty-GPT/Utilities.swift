@@ -10,8 +10,14 @@ import Foundation
 // Workspace Utilities
 
 func getWorkspaceFolder() -> String {
-    return URL.documentsDirectory.absoluteString
+    guard let swiftyGPTDocumentsPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path(percentEncoded: false) else {
+        print("ERROR GETTING WORKSPACE")
+
+        return ""
+    }
+    return swiftyGPTDocumentsPath
 }
+
 func backupAndDeleteWorkspace() {
     print("Backing up and deleting workspace.")
 
