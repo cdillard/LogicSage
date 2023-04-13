@@ -90,11 +90,11 @@ func replaceFileContents(_ input: String) -> String {
     return result
 }
 
-func extractFileContents(_ input: String) -> (String, [String]) {
+func extractFieldContents(_ input: String, field: String = "fileContents") -> (String, [String]) {
     var fileContents: [String] = []
-    let pattern = #""fileContents":\s*?"((?:\\.|[^"\\]+)*)""#
+    let pattern = #""\#(field)":\s*?"((?:\\.|[^"\\]+)*)""#
     let regex = try! NSRegularExpression(pattern: pattern)
-    let modifiedInput = regex.stringByReplacingMatches(in: input, options: [], range: NSRange(input.startIndex..., in: input), withTemplate: "\"fileContents\": \"\"")
+    let modifiedInput = regex.stringByReplacingMatches(in: input, options: [], range: NSRange(input.startIndex..., in: input), withTemplate: "\"\(field)\": \"\"")
     let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
     for match in matches {
         if let fileContentRange = Range(match.range(at: 1), in: input) {

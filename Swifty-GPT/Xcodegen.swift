@@ -15,7 +15,7 @@ func createNewProject(projectName: String, projectDirectory: String) {
       \(projectName):
         type: application
         platform: iOS
-        deploymentTarget: "16.4"
+        deploymentTarget: "16.0"
         sources: [Sources]
         info:
           path: \(infoPlistPath)

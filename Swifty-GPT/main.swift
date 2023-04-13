@@ -24,12 +24,7 @@ let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
 let retryLimit = 10
 let aiNamedProject = true
 
-struct GPTAction: Codable {
-    let command: String
-    let name: String?
-    //let fileContents: String?
-}
-
+// Globals
 var projectName = ""
 
 // Main function to run the middleware
@@ -54,7 +49,7 @@ func main() {
     //    let appDesc = "that displays the following text using a typewriter animation: You are feeling very sleepy..."
     // Working PROMPTS that generate somewhat working code.
 //        let appDesc = "that displays a label that says I love you so much! with heart emojis all around the screen in random places."
-    //     let appDesc = "containing a label that says 'Hello World!"
+//         let appDesc = "containing a label that says 'Hello World!"
     //     let appDesc = "containing a color picker and a label that says `Hi bud` which changes color based on the picker."
 //         let appDesc = "that displays a scrollable grid with many random SF Symbols and the symbol name in each square. Tapping an symbol should go to a new screen with facts about that symbol."
     //let appDesc = "containing a circle that can be moved by tapping and dragging."
@@ -68,13 +63,13 @@ func main() {
 //     let appDesc = "that uses SceneKit to display a mountain scene in 3D using emojis as the sky, trees, and animal art assets. Do not use .scnassets folders or .scnassets files or .scn files"
 
     // PARTIALLY WORKS. EXCITED TO see gpt-4
-    //    let appDesc = "that displays the classic Hangman game. A random word should be chosen and the user should be able to guess by entering into the text field."
+        let appDesc = "that displays the classic Hangman game. A random word should be chosen and the user should be able to guess by entering into the text field."
     // let appDesc = "that implments the classic game battleships. The user should be able to play against the computer opponent."
 
 //    let appDesc = "that implments a simple game that uses multitouch to see how many fingers are on the screen, add a circle to each touch point and track it, if there are two or more touch points, randomly choose one of the touch points as the winner and play an animation."
 //        let appDesc = "that displays a spiraling swirling line across the entire screen. It should use colors from a matching color palette."
 
-//    let appDesc = "that displays a mandelbrot set fractal. The app allows zooming into the fractal using zoom gesture."
+//    let appDesc = "that displays a mandelbrot set fractal. The app allows zooming into a specific point on the fractal using zoom gesture. Take special care to optimize the code so it works well on devices while zooming."
 
 //         let appDesc = "Generate Swift code for an iOS app that displays an interactive Mandelbrot set fractal. The app should allow users to zoom in and out, and pan the fractal using touch gestures. The fractal should be rendered in real-time, with adjustable color schemes. Include code for basic touch gesture handling and the fractal generation algorithm."
 
@@ -317,7 +312,16 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
 
     print("🤖= \(output)")
 
-    let (updatedString, fileContents) = extractFileContents(output)
+    let (updatedString, fileContents) = extractFieldContents(output, field: "fileContents")
+
+    let (_, nameContents) = extractFieldContents(updatedString, field: "name")
+
+    let (_, commandContents) = extractFieldContents(output, field: "command")
+
+    print("found \(nameContents) names")
+
+    print("found \(commandContents) commands")
+
     print("📁 found = \(fileContents.count)")
 
     var filesWritten = 0
@@ -345,98 +349,81 @@ func parseAndExecuteGPTOutput(_ output: String, completion: @escaping (Bool) -> 
         }
     }
 
-    let sanitizedOutput =   removeInvalidEscapeSequences(in: updatedString)
+    print("📜= \(updatedString)")
 
-    let doubleSanitizedOuput =  removeControlCharacters(from: sanitizedOutput)
+    var nameIndex = 0
+    var commandIndex = 0
+    var fileIndex = 0
 
-    let manualRemoval = replaceFileContents(doubleSanitizedOuput)
+    for gptCommandIndex in 0...commandContents.count - 1 {
+        let fullCommand = commandContents[gptCommandIndex]
+        print("🤖🔨: performing GPT command = \(fullCommand)")
 
-    // let removedAfterBracketText =  removeTextAfterLastClosingBracket(input: manualRemoval)
+        if fullCommand.hasPrefix("Create project") {
+            let name = nameContents[gptCommandIndex]
 
-    print("📜= \(manualRemoval)")
-
-    guard let data = manualRemoval.data(using: .utf8) else {
-        print("Invalid GPT output")
-        return completion(false)
-    }
-
-    var fileIndex = 1
-
-    do {
-        let gptCommands = try JSONDecoder().decode([GPTAction].self, from: data)
-        for gptAction in gptCommands {
-            let fullCommand = gptAction.command
-
-            switch fullCommand {
-            case "Create project":
-                guard let name = gptAction.name else { return completion(false) }
-
-                executeXcodeCommand(.createProject(name: name)) { success in }
-            case "Open project":
-                guard let name = gptAction.name else { return completion(false) }
-
-                executeXcodeCommand(.openProject(name: name)) { success in }
-
-            case "Close project":
-                guard let name = gptAction.name else { return completion(false) }
-                // todo: check success here
-                executeXcodeCommand(.createProject(name: name)) { _ in  }
-            case "Create file":
-                guard let fileName = gptAction.name  else {
-                    return
-                    //completion(false)
-                }
-
-                let fileContents = Array(fileContents)
-                let foundFileContents: String
-                if fileContents.count > fileIndex - 1 {
-                    foundFileContents = fileContents[fileIndex - 1]
-                }
-                else {
-                    // check the other place
-                    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
-                    let filePath = "\(projectPath)/Sources/\(fileIndex).swift"
-
-                    if let data = FileManager.default.contents(atPath: filePath) {
-                        foundFileContents = String(decoding: data, as: UTF8.self)
-                    }
-                    else {
-                        foundFileContents = ""
-                    }
-                }
-
-                fileIndex += 1
-
-                if foundFileContents.isEmpty {
-                   // return completion(false)
-                }
-
-                executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success in  }
-
-            default:
-                print("Unknown command \(fullCommand)")
-                //return completion(false)
-            }
+            executeXcodeCommand(.createProject(name: name)) { success in }
         }
+        else if fullCommand.hasPrefix("Open project") {
+            let name = nameContents[gptCommandIndex]
 
-        if filesWritten == 0 || filesWritten != fileContents.count {
-            print("Failed to make files.. retrying...")
-            return completion(false)
+            executeXcodeCommand(.openProject(name: name)) { success in }
         }
+        else if fullCommand.hasPrefix("Close project") {
+            let name = nameContents[gptCommandIndex]
 
-        print("Building project...")
-        executeXcodeCommand(.buildProject(name: projectName)) { success in
-            if success {
-                completion(true)
+
+            // todo: check success here
+            executeXcodeCommand(.createProject(name: name)) { _ in  }
+        }
+        else if fullCommand.hasPrefix("Create file") {
+            let name = nameContents[gptCommandIndex]
+
+
+            let fileContents = Array(fileContents)
+            let foundFileContents: String
+            if fileContents.count > fileIndex {
+                foundFileContents = fileContents[fileIndex]
             }
             else {
-                completion(false)
+                // check the other place
+                let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\("x_xTempProjNamex_x")"
+                let filePath = "\(projectPath)/Sources/\(fileIndex).swift"
+
+                if let data = FileManager.default.contents(atPath: filePath) {
+                    foundFileContents = String(decoding: data, as: UTF8.self)
+                }
+                else {
+                    foundFileContents = ""
+                }
             }
+
+            executeXcodeCommand(.createFile(fileName: name, fileContents:foundFileContents)) { success in  }
+
+            fileIndex += 1
+
+        }
+        else {
+            print("unknown command = \(fullCommand)")
         }
 
-    } catch {
-        print("Error decoding JSON: \(error)")
-        return completion(false)
+        nameIndex += 1
+        commandIndex += 1
+    }
+
+//        if filesWritten == 0 || filesWritten != fileContents.count {
+//            print("Failed to make files.. retrying...")
+//            return completion(false)
+//        }
+
+    print("Building project...")
+    executeXcodeCommand(.buildProject(name: projectName)) { success in
+        if success {
+            completion(true)
+        }
+        else {
+            completion(false)
+        }
     }
 }
 
