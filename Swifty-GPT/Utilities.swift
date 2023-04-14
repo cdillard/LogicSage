@@ -17,6 +17,7 @@ func getWorkspaceFolder() -> String {
     }
     return swiftyGPTDocumentsPath
 }
+
 func backupAndDeleteWorkspace() {
     print("Backing up and deleting workspace.")
 
