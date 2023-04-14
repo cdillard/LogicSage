@@ -28,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Swifty-GPT-App.swiftpm"; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
+				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7139CDD29E147910049ADE1 /* Products */,
 			);
