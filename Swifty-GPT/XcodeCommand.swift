@@ -137,6 +137,10 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     errorsCopy = errorsCopy.map {
         $0.replacingOccurrences(of: getWorkspaceFolder(), with: "")
     }
+    .map {
+        $0.replacingOccurrences(of: "\(swiftyGPTWorkspaceName)/\(projectName)/Sources/", with: "")
+    }
+    
     globalErrors += Array(errorsCopy)
     completion(successful, globalErrors)
 }

@@ -29,7 +29,7 @@ let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 
 // Globals  I know....
-var projectName = ""
+var projectName = "MyApp"
 var globalErrors = [String]()
 
 var lastFileContents = [String]()
@@ -112,7 +112,7 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         return
     }
     backupAndDeleteWorkspace()
-    projectName = ""
+    projectName = "MyApp"
     
     let swiftnewLine = """
 
@@ -121,17 +121,20 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     if !errors.isEmpty {
         prompt += fixItPrompt
         if !errors.isEmpty && currentRetry > 0 {
-            prompt += Array(Set(errors)).joined(separator: swiftnewLine)
+            prompt += Array(Set(errors)).joined(separator: "\(swiftnewLine)\(swiftnewLine)\n")
             prompt += swiftnewLine
 
             if includeSourceCodeFromPreviousRun {
-                prompt += includeFilesPrompt
-                prompt += swiftnewLine
+                var excludePromptFixIt = true
+                // Add optional mode to just send error, file contents
+                var promptToUse = excludePromptFixIt ? "" : prompt
+
+                promptToUse += includeFilesPrompt
+                promptToUse += swiftnewLine
 
                 for contents in lastFileContents {
-                    prompt += contents
-                    prompt += swiftnewLine
-                    prompt += swiftnewLine
+                    promptToUse += contents
+                    promptToUse += "\(swiftnewLine)\(swiftnewLine)\n"
                 }
             }
         }
@@ -142,8 +145,7 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
             completion(response)
         } else {
             backupAndDeleteWorkspace()
-            projectName = ""
-
+            projectName = "MyApp"
 
             print("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
             generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: globalErrors, completion: completion)
@@ -230,7 +232,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
         //        completion(true)
     case let .createProject(name):
         print("Creating project with name: \(name)")
-        projectName = name
+        projectName = name.isEmpty ? "MyApp" : name
         print("set current name")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
 
@@ -246,6 +248,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
             print("missing proj, creating one")
+            projectName = "MyApp"
 
             // MIssing projecr gen// create a proj
             executeXcodeCommand(.createProject(name: projectName)) { success, errors in }
@@ -327,7 +330,11 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         print("🤖🔨: performing GPT command = \(fullCommand)")
 
         if fullCommand.hasPrefix("Create project") {
+
             var name =  projectName
+
+            projectName = name.isEmpty ? "MyApp" : name
+
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
@@ -335,7 +342,11 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             executeXcodeCommand(.createProject(name: name)) { success, errors in }
         }
         else if fullCommand.hasPrefix("Open project") {
+
             var name =  projectName
+
+            projectName = name.isEmpty ? "MyApp" : name
+
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
@@ -343,7 +354,11 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             executeXcodeCommand(.openProject(name: name)) { success, errors in }
         }
         else if fullCommand.hasPrefix("Close project") {
+
             var name =  projectName
+
+            projectName = name.isEmpty ? "MyApp" : name
+
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
