@@ -18,8 +18,8 @@ func getWorkspaceFolder() -> String {
     return swiftyGPTDocumentsPath
 }
 
-func backupAndDeleteWorkspace() {
-    print("Backing up and deleting workspace.")
+func backupAndDeleteWorkspace() throws {
+    let fileManager = FileManager.default
 
     var projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)"
 
@@ -28,11 +28,21 @@ func backupAndDeleteWorkspace() {
 
     let projectPathURL = URL(fileURLWithPath: projectPath)
     let backupPathURL = URL(fileURLWithPath: backupPath)
-    do {
-        try FileManager.default.moveItem(at: projectPathURL, to: backupPathURL)
-    }
-    catch {
-        print(error)
+
+    var isDirectory: ObjCBool = false
+    if fileManager.fileExists(atPath: projectPathURL.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+        // Check if destination directory exists
+        if !fileManager.fileExists(atPath: backupPathURL.path, isDirectory: &isDirectory) {
+            do {
+                try fileManager.moveItem(at: projectPathURL, to: backupPathURL)
+            } catch {
+                print("Failed to move directory: \(error.localizedDescription)")
+                throw error
+            }
+        } else {
+            print("Destination directory already exists: \(backupPathURL.path)")
+            throw NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError, userInfo: nil)
+        }
     }
 }
 
@@ -58,11 +68,3 @@ func extractFieldContents(_ input: String, field: String = "fileContents") -> (S
     }
     return (modifiedInput, fileContents)
 }
-
-//func removeTextAfterLastClosingBracket(input: String) -> String {
-//    if let closingBracketIndex = input.lastIndex(of: "]") {
-//        let result = input[input.startIndex...closingBracketIndex]
-//        return String(result)
-//    }
-//    return input
-//}

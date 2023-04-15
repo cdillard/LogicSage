@@ -9,9 +9,14 @@
 /* Begin PBXBuildFile section */
 		71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6129E25F4B006B065B /* Info.plist */; };
 		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
+		B70B44D429EAD61900C45773 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D329EAD61900C45773 /* Text.swift */; };
+		B70B44D629EAD85B00C45773 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D529EAD85B00C45773 /* Files.swift */; };
+		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
 		B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */; };
+		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
+		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
@@ -33,6 +38,9 @@
 
 /* Begin PBXFileReference section */
 		B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Swifty-GPT-App.swiftpm"; sourceTree = "<group>"; };
+		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
+		B70B44D729EAD91900C45773 /* GPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
@@ -40,6 +48,9 @@
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ideas_prompts.swift; sourceTree = "<group>"; };
+		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
+		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
+		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
@@ -85,13 +96,18 @@
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
+				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
+				B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
+				B70B44D529EAD85B00C45773 /* Files.swift */,
+				B70B44D329EAD61900C45773 /* Text.swift */,
+				B75AFC4329EA8140003BA454 /* Input.swift */,
+				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */,
-				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
-				B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */,
 				B740F56529E7B891007ADED8 /* CommonErrors.txt */,
 			);
 			path = "Swifty-GPT";
@@ -103,6 +119,7 @@
 				B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */,
 				B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */,
 				B76BF95C29E4AD2800F6420E /* example_output.txt */,
+				B75AFC4029EA7207003BA454 /* lsystem_output */,
 			);
 			path = exampleOutput;
 			sourceTree = "<group>";
@@ -170,10 +187,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */,
+				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
+				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
+				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
+				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
+				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

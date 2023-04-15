@@ -32,7 +32,7 @@ var rubyScriptPath:String {
     }
 }
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
-let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace"
+let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace/Workspace"
 
 // Configurable settings for AI.
 let retryLimit = 10
@@ -41,10 +41,14 @@ let fixItRetryLimit = 3
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
+let interactiveMode = true
+
+let spinner = LoadingSpinner(columnCount: 5)
 
 // Globals  I know....
 var projectName = "MyApp"
 var globalErrors = [String]()
+var manualPromptString = ""
 
 var lastFileContents = [String]()
 var lastNameContents = [String]()
@@ -55,6 +59,13 @@ var language = ""
 
 // Main function to run the middleware
 func main() {
+    refreshPrompt()
+
+    if interactiveMode {
+        print(openingLine)
+        showOnce = false
+    }
+
     // Parse command-line arguments
     let arguments = CommandLine.arguments
     appName = arguments.contains("--name") ? arguments[arguments.firstIndex(of: "--name")! + 1] : "MyApp"
@@ -63,7 +74,12 @@ func main() {
 
     // TODO: Check workspace and delete or backup if req
     // backup workspace to file folder with suffix
-    backupAndDeleteWorkspace()
+    do {
+        try backupAndDeleteWorkspace()
+    }
+    catch {
+        print("file error = \(error)")
+    }
 
     // Reset the global stuff
     globalErrors.removeAll()
@@ -79,44 +95,54 @@ func main() {
      8. Send Slack message
      */
 
-    var promptingRetryNumber = 0
+    if interactiveMode {
 
-    let sema = DispatchSemaphore(value: 0)
+        handleUserInput()
+    }
+    else {
+        doPrompting()
+    }
 
-    func doPrompting(_ errors: [String] = []) {
-        generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
-            if response != nil, let response {
-                parseAndExecuteGPTOutput(response, errors) { success, errors in
-                    if success {
-                        print("Parsed and executed code successfully. Opening project...")
+    sema.wait()
+}
 
-                        executeAppleScriptCommand(.openProject(name: projectName))
+var promptingRetryNumber = 0
 
+let sema = DispatchSemaphore(value: 0)
+
+func doPrompting(_ errors: [String] = []) {
+    generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
+        if response != nil, let response {
+            parseAndExecuteGPTOutput(response, errors) { success, errors in
+                if success {
+                    print("Parsed and executed code successfully. Opening project...")
+
+                    executeAppleScriptCommand(.openProject(name: projectName))
+
+                    // sema.signal()
+                }
+                else {
+
+                    print(afterBuildFailedLine)
+
+                    if promptingRetryNumber >= retryLimit {
+                        print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
+                        //completion(nil)
                         sema.signal()
+                        return
                     }
-                    else {
-                        print("Failed @ parsing / executing code successfully.")
-                        if promptingRetryNumber >= retryLimit {
-                            print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
-                            //completion(nil)
-                            sema.signal()
-                            return
-                        }
 
-                        promptingRetryNumber += 1
+                    promptingRetryNumber += 1
 
+                    if !interactiveMode {
                         doPrompting(errors)
                     }
                 }
-            } else {
-                print("Failed to generate compilable code within the retry limit.")
             }
+        } else {
+            print("Failed to generate compilable code within the retry limit.")
         }
     }
-
-    doPrompting()
-
-    sema.wait()
 }
 
 func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, currentRetry: Int, errors: [String] = [], completion: @escaping (String?) -> Void) {
@@ -125,9 +151,7 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         completion(nil)
         return
     }
-    backupAndDeleteWorkspace()
-    projectName = "MyApp"
-    
+
     let swiftnewLine = """
 
     """
@@ -139,16 +163,13 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
             prompt += swiftnewLine
 
             if includeSourceCodeFromPreviousRun {
-                var excludePromptFixIt = true
                 // Add optional mode to just send error, file contents
-                var promptToUse = excludePromptFixIt ? "" : prompt
-
-                promptToUse += includeFilesPrompt
-                promptToUse += swiftnewLine
+                prompt += includeFilesPrompt
+                prompt += swiftnewLine
 
                 for contents in lastFileContents {
-                    promptToUse += contents
-                    promptToUse += "\(swiftnewLine)\(swiftnewLine)\n"
+                    prompt += contents
+                    prompt += "\(swiftnewLine)\(swiftnewLine)\n"
                 }
             }
         }
@@ -158,8 +179,13 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         if success {
             completion(response)
         } else {
-            backupAndDeleteWorkspace()
-            projectName = "MyApp"
+
+            do {
+                try backupAndDeleteWorkspace()
+            }
+            catch {
+                print("file error = \(error)")
+            }
 
             print("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
             generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: globalErrors, completion: completion)
@@ -167,76 +193,6 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
-// Function to send a prompt to GPT via the OpenAI API
-func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, completion: @escaping (String, Bool) -> Void) {
-
-    let url = URL(string: apiEndpoint)!
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-
-    // Set the required headers
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("Bearer \(OPEN_AI_KEY)", forHTTPHeaderField: "Authorization")
-
-    // Prepare the request payload
-    let requestBody: [String: Any] = [
-        "model": "gpt-3.5-turbo",
-        "messages": [
-            [
-                "role": "user",
-                "content": prompt,
-            ]
-        ]
-    ]
-    do {
-        // Convert the payload to JSON data
-        let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
-
-        request.httpBody = jsonData
-
-        if currentRetry == 0 {
-            print("👨 = \(prompt)")
-        }
-        else if isFix {
-            print("💚 Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
-
-        }
-        else {
-            print("👨 Retry same prompt: \(currentRetry) / \(retryLimit)")
-        }
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error occurred: \(error.localizedDescription)")
-                completion("Failed networking w/ error = \(error)", false)
-                return
-            }
-
-            guard let data  else {
-                completion("Failed networking w/ error = \(error)", false)
-                return print("failed to laod data")
-            }
-
-            do {
-                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let choices = jsonResponse["choices"] as? [[String: Any]],
-                   let firstChoice = choices.first,
-                   let message = firstChoice["message"] as? [String: Any],
-                   let content = message["content"] as? String {
-                    completion(content, true)
-                }
-            } catch {
-                print("Error parsing JSON: \(error.localizedDescription)")
-                completion("Failed parsing JSON w/ error = \(error)",false)
-            }
-        }
-        print("🐑🧠🧠🧠 THINKING... 🧠🧠🧠🐑")
-        task.resume()
-    }
-    catch {
-        return completion("Failed parsing w/ error = \(error)", false)
-    }
-}
 
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
     switch command {
@@ -281,6 +237,18 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
 
             if success {
                 completion(true, [])
+
+
+                // PROJECT BUILD SUCCESS WAIT FOR INPUT???
+//                // This isn't right spot for this
+//                if let choice = promptUserInput(message: "What would you like to do?: (1) Enter a new prompt? (2) Fix bugs in this project. 3.) Add a new feature to this project. 4. Add tests to this project?") {
+//                    print("You chose \(choice) --- awesome!")
+//                } else {
+//                    print("No input was provided.")
+//                }
+
+                print(afterSuccessLine)
+
             } else {
                 completion(false, errors)
             }
@@ -309,7 +277,7 @@ func executeAppleScriptCommand(_ command: XcodeCommand) {
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completion: @escaping (Bool, [String]) -> Void) {
 
-    print("🤖= \(output)")
+    print("🤖: \(output)")
 
     let (updatedString, fileContents) = extractFieldContents(output, field: "fileContents")
     lastFileContents = Array(fileContents)
@@ -427,61 +395,6 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         else {
             completion(false, errors)
         }
-    }
-}
-
-func writeFile(fileContent: String, filePath: String) -> Bool {
-
-    let modifiedFileContent = fileContent.replacingOccurrences(of: "\\n", with: "\n")
-    // Create a new Swift file
-    if let data = modifiedFileContent.data(using: .utf8) {
-        do {
-            try data.write(to: URL(fileURLWithPath: filePath))
-            return true
-        }
-        catch {
-            print("Error writing file: \(error) @ p = \(filePath)")
-            return false
-        }
-    }
-    return false
-}
-
-func createFile(projectPath: String, projectName: String, targetName: String, filePath: String, fileContent: String) -> Bool {
-
-    let wroteSuccessfully = writeFile(fileContent: fileContent, filePath: filePath)
-
-    if !wroteSuccessfully {
-        print ("failed to write file when adding it.")
-        return false
-    }
-
-    // Add the file to the project using xcodeproj gem
-    let task = Process()
-    task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-    task.arguments = [
-        "ruby",
-        rubyScriptPath,
-        projectPath,
-        filePath,
-        targetName
-    ]
-
-    do {
-        try task.run()
-        task.waitUntilExit()
-
-        if task.terminationStatus != 0 {
-            print("Error: Failed to add file to the project.")
-            return false
-        } else {
-            print("File successfully added to the project.")
-            return true
-        }
-    } catch {
-        print("Error: \(error.localizedDescription)")
-        return false
-
     }
 }
 
