@@ -17,21 +17,31 @@ var commands = """
 func generatedOpenLine() -> String {
     """
 
-    \(openLinePrintCount == 0 ? "\(logoAscii2)\n 🚀🔥 Welcome to Swifty GPT 🧠💥\n" : "")
+    \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to Swifty GPT 🧠💥" : "")
 
-
+    🔹 0. 🗣️🎮🎨📲 Use voice command
     🔹 1. ✨ Run appDesc GPT prompt
     🔹 2. 🚀 Show loaded prompt
     🔹 3. 📂 Open project
 
     \(commands)
 
-    🔍 Please choose an option [1-3, gpt:, xcode:, idea:, exit]:
+    🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
 
     """
 }
 
+func randomAscii() -> String {
+    let index = Int.random(in: 0..<3)
 
+    switch index {
+    case 0: return logoAscii2
+    case 1: return logoAscii
+    case 2: return logoAscii3
+    default: return logoAscii2
+    }
+
+}
 
 var openLinePrintCount = 0
 
@@ -46,6 +56,7 @@ func updateOpeningLine() {
 let afterBuildFailedLine = """
 Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
 
+🔹 0. 🗣️🎮🎨📲 Use voice command
 🔹 1. ✨   Run appDesc GPT prompt
 🔹 2. 🚀   Show loaded prompt
 🔹 3. 📂   Open project
@@ -64,6 +75,7 @@ Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. U
 let afterSuccessLine = """
 Project creation success. Project should have auto openned.
 
+🔹 0. 🗣️🎮🎨📲 Use voice command
 🔹 1. ✨   Run appDesc GPT prompt
 🔹 2. 🚀   Show loaded prompt
 🔹 3. 📂   Open project
@@ -73,6 +85,6 @@ Project creation success. Project should have auto openned.
 
 \(commands)
 
-🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
+🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
 
 """

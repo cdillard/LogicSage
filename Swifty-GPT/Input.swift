@@ -48,6 +48,12 @@ func handleUserInput() {
 
             }
             // Run appDesc GPT prompt
+            else if input.lowercased().hasPrefix("0") {
+                // doPrompting()
+
+                // start voice capture
+            }
+            // Run appDesc GPT prompt
             else if input.lowercased().hasPrefix("1") {
                 doPrompting()
             }
