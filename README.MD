@@ -1,6 +1,7 @@
 ![Shiwfty](Swifty-GPT/assets/Swifty-Logo.png)
 
 ## Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
+With a little help from my GPT. Thank you Open AI.
 
 # Swifty-GPT is a great tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs. Plus, it can do a lot of the work for you, like adding the right code, so you can focus on making your app amazing. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
 

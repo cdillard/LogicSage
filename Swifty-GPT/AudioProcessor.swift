@@ -15,6 +15,8 @@ class AudioInputHandler: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate 
     private let captureSession = AVCaptureSession()
     private var audioFile: AVAudioFile?
 
+    var isRunning = false
+
     init(outputFileURL: URL) {
         super.init()
 
@@ -36,10 +38,13 @@ class AudioInputHandler: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate 
     }
 
     func start() {
+        isRunning = true
         captureSession.startRunning()
     }
 
     func stop() {
+        isRunning = false
+
         captureSession.stopRunning()
         audioFile = nil
     }
@@ -77,7 +82,7 @@ class AudioInputHandler: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate 
 
 // SPEAK
 func runTest() {
-    textToSpeech(text: "Hello, this is a test.")
+    textToSpeech(text: "Hi! Welcome to Swifty-GPT. You look nice.")
 }
 
 func textToSpeech(text: String) {
@@ -90,5 +95,15 @@ func textToSpeech(text: String) {
         task.waitUntilExit()
     } catch {
         print("Error running text-to-speech: \(error)")
+    }
+}
+
+import AVFoundation
+
+func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
+    AVCaptureDevice.requestAccess(for: .audio) { granted in
+        DispatchQueue.main.async {
+            completion(granted)
+        }
     }
 }

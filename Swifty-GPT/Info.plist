@@ -20,5 +20,7 @@
 	<string>1.0</string>
 	<key>UILaunchScreen</key>
 	<array/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Uses your microphone to capture your voice commands</string>
 </dict>
 </plist>

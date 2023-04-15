@@ -42,10 +42,13 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
+let asciAnimations = true
 
 var spinner: LoadingSpinner = LoadingSpinner(columnCount: 5)
 
 let animator = TextAnimator(asciiArt: loadingText, animationDuration: 20)
+
+var audioProcessor: AudioInputHandler?
 
 // Globals  I know....
 var projectName = "MyApp"
@@ -113,6 +116,24 @@ func main() {
     else {
         doPrompting()
     }
+
+
+    if let audioOut = URL(string: "\(getWorkspaceFolder())audio.caf") {
+
+        audioProcessor = AudioInputHandler(outputFileURL: audioOut)
+    }
+
+    requestMicrophoneAccess { granted in
+        if granted {
+            print("Microphone access granted.")
+            // Start audio capture or other operations that require microphone access.
+        } else {
+            print("Microphone access denied.")
+            // Handle the case where microphone access is denied.
+        }
+    }
+    runTest()
+
 
     sema.wait()
 }

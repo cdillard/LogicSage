@@ -46,26 +46,33 @@ func handleUserInput() {
 
                 doPrompting(overridePrompt: newPrompt)
 
-            }
-            // Run appDesc GPT prompt
-            else if input.lowercased().hasPrefix("0") {
+            } else if input.hasPrefix("0") {
                 // doPrompting()
 
                 // start voice capture
+                if audioProcessor?.isRunning == false {
+                    print("Start voice capturer")
+
+                    audioProcessor?.start()
+                } else if audioProcessor?.isRunning == true {
+                    audioProcessor?.stop()
+
+                }
+
             }
             // Run appDesc GPT prompt
-            else if input.lowercased().hasPrefix("1") {
+            else if input.hasPrefix("1") {
                 doPrompting()
             }
             // show loaded prompt
-            else if input.lowercased().hasPrefix("2") {
+            else if input.hasPrefix("2") {
                 print("\n \(prompt) \n")
 
                 refreshPrompt(appDesc: appDesc)
                 print(openingLine)
             }
             // Open Project
-            else if input.lowercased().hasPrefix("3") {
+            else if input.hasPrefix("3") {
                 executeAppleScriptCommand(.openProject(name: projectName))
                 refreshPrompt(appDesc: appDesc)
                 print(generatedOpenLine())
@@ -73,11 +80,11 @@ func handleUserInput() {
 
             }
             // Close Proj
-            else if input.lowercased().hasPrefix("4") {
+            else if input.hasPrefix("4") {
                 executeAppleScriptCommand(.closeProject(name: projectName))
             }
             // Fix errors
-            else if input.lowercased().hasPrefix("5") {
+            else if input.hasPrefix("5") {
 
                 let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
 
@@ -85,7 +92,7 @@ func handleUserInput() {
 
             }
             // Feature dev
-            else if input.lowercased().hasPrefix("6") {
+            else if input.hasPrefix("6") {
                 // executeAppleScriptCommand(.closeProject(name: projectName))
 
                 // execute fix it prompt
