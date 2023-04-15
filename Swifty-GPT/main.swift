@@ -43,7 +43,9 @@ let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
 
-let spinner = LoadingSpinner(columnCount: 5)
+var spinner: LoadingSpinner = LoadingSpinner(columnCount: 5)
+
+let animator = TextAnimator(asciiArt: loadingText, animationDuration: 20)
 
 // Globals  I know....
 var projectName = "MyApp"
@@ -53,17 +55,26 @@ var manualPromptString = ""
 var lastFileContents = [String]()
 var lastNameContents = [String]()
 
-var appName = ""
-var appType = ""
-var language = ""
+var appName = "MyApp"
+var appType = "iOS"
+var language = "Swift"
 
 // Main function to run the middleware
 func main() {
-    refreshPrompt()
+//    var def = 5
+//    if let terminalWidth = getTerminalWidth() {
+//        def = terminalWidth
+//    }
+//    spinner?.stop()
+//    spinner = LoadingSpinner(columnCount: def)
+
+    refreshPrompt(appDesc: appDesc)
 
     if interactiveMode {
-        print(openingLine)
-        showOnce = false
+        
+        print(generatedOpenLine())
+        openLinePrintCount += 1
+        refreshPrompt(appDesc: appDesc)
     }
 
     // Parse command-line arguments
@@ -110,7 +121,10 @@ var promptingRetryNumber = 0
 
 let sema = DispatchSemaphore(value: 0)
 
-func doPrompting(_ errors: [String] = []) {
+func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
+    if !overridePrompt.isEmpty {
+        prompt = overridePrompt
+    }
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
         if response != nil, let response {
             parseAndExecuteGPTOutput(response, errors) { success, errors in
@@ -145,6 +159,41 @@ func doPrompting(_ errors: [String] = []) {
     }
 }
 
+func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
+    let swiftnewLine = """
+
+    """
+
+    var newPrompt = prompt
+    if !errors.isEmpty {
+        newPrompt += fixItPrompt
+        if !errors.isEmpty { //currentRetry > 0 {
+            newPrompt += Array(Set(errors)).joined(separator: "\(swiftnewLine)\(swiftnewLine)\n")
+            newPrompt += swiftnewLine
+
+            if includeSourceCodeFromPreviousRun {
+                // Add optional mode to just send error, file contents
+                newPrompt += includeFilesPrompt
+                newPrompt += swiftnewLine
+
+                for contents in lastFileContents {
+                    newPrompt += contents
+                    newPrompt += "\(swiftnewLine)\(swiftnewLine)\n"
+                }
+            }
+        }
+    }
+    return newPrompt
+}
+
+func createIdeaPrompt(command: String) -> String {
+    appDesc = command
+    refreshPrompt(appDesc: command)
+
+    var newPrompt = promptText()
+    return newPrompt
+}
+
 func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, currentRetry: Int, errors: [String] = [], completion: @escaping (String?) -> Void) {
     if currentRetry >= retryLimit {
         print("Retry limit reached, stopping the process.")
@@ -152,30 +201,10 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         return
     }
 
-    let swiftnewLine = """
 
-    """
-    var prompt = prompt
-    if !errors.isEmpty {
-        prompt += fixItPrompt
-        if !errors.isEmpty && currentRetry > 0 {
-            prompt += Array(Set(errors)).joined(separator: "\(swiftnewLine)\(swiftnewLine)\n")
-            prompt += swiftnewLine
+    //let prompt = createFixItPrompt(errors: errors, currentRetry: 0)
 
-            if includeSourceCodeFromPreviousRun {
-                // Add optional mode to just send error, file contents
-                prompt += includeFilesPrompt
-                prompt += swiftnewLine
-
-                for contents in lastFileContents {
-                    prompt += contents
-                    prompt += "\(swiftnewLine)\(swiftnewLine)\n"
-                }
-            }
-        }
-    }
-
-    sendPromptToGPT(prompt: prompt, currentRetry: currentRetry, isFix: !globalErrors.isEmpty) { response, success in
+    sendPromptToGPT(prompt: prompt, currentRetry: currentRetry, isFix: !errors.isEmpty) { response, success in
         if success {
             completion(response)
         } else {
@@ -188,11 +217,10 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
             }
 
             print("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
-            generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: globalErrors, completion: completion)
+            generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)
         }
     }
 }
-
 
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
     switch command {

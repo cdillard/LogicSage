@@ -28,43 +28,69 @@ func handleUserInput() {
                 sendPromptToGPT(prompt: prompt, currentRetry: 0) { content, success in
                     print("\n\n🤖: \(content)")
 
-                    refreshPrompt()
+                    refreshPrompt(appDesc: appDesc)
 
-                    print(openingLine)
+                    print(generatedOpenLine())
+                    openLinePrintCount += 1
+
                 }
             } else if input.lowercased().hasPrefix("xcode:") {
                 let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
                // runXcodeCommand(command: command)
             } else if input.lowercased().hasPrefix("idea:") {
                 let command = String(input.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
+
                 appDesc = command
 
-                refreshPrompt()
+                let newPrompt = createIdeaPrompt(command: command)
 
-
-                doPrompting()
+                doPrompting(overridePrompt: newPrompt)
 
             }
+            // Run appDesc GPT prompt
             else if input.lowercased().hasPrefix("1") {
                 doPrompting()
             }
+            // show loaded prompt
             else if input.lowercased().hasPrefix("2") {
-                print("\n\(appDesc) \n \(prompt)")
+                print("\n \(prompt) \n")
 
-                refreshPrompt()
+                refreshPrompt(appDesc: appDesc)
                 print(openingLine)
             }
+            // Open Project
             else if input.lowercased().hasPrefix("3") {
                 executeAppleScriptCommand(.openProject(name: projectName))
-                refreshPrompt()
-                print(openingLine)
+                refreshPrompt(appDesc: appDesc)
+                print(generatedOpenLine())
+                openLinePrintCount += 1
 
             }
+            // Close Proj
             else if input.lowercased().hasPrefix("4") {
                 executeAppleScriptCommand(.closeProject(name: projectName))
             }
+            // Fix errors
+            else if input.lowercased().hasPrefix("5") {
+
+                let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
+
+                doPrompting(globalErrors, overridePrompt: newPrompt)
+
+            }
+            // Feature dev
+            else if input.lowercased().hasPrefix("6") {
+                // executeAppleScriptCommand(.closeProject(name: projectName))
+
+                // execute fix it prompt
+//
+//                let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
+//
+//                doPrompting(overridePrompt:newPrompt)
+
+            }
             else {
-                print("Unknown command. Please start your command with 'gpt:' or 'xcode:'.")
+                print("Unknown command. Please start your command with valid command.")
             }
         }
     }

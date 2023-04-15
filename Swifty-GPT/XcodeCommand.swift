@@ -131,7 +131,7 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
         print("Build ❌ : \(  errors)")
     }
     else {
-        print("Build Output: \(  output)")
+       // print("Build Output: \(  output)")
     }
     var errorsCopy = Array(errors)
     errorsCopy = errorsCopy.map {

@@ -7,65 +7,56 @@
 
 import Foundation
 
-var showOnce = true
-
-var openingLine = """
-
-\(showOnce ? logoAscii : "")
-
-🚀🔥 Welcome to Swifty GPT 🧠💥
-
-🔹 1. ✨ Run appDesc GPT prompt
-🔹 2. 🚀 Show loaded prompt
-🔹 3. 📂 Open project
-
-🔹 idea: 💡 New appDesc prompt
-🔹 gpt: 🧠 Talk to GPT
+var commands = """
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations
-🔹 exit: 🚪 Close the program
-
-🔍 Please choose an option [1-3, gpt:, xcode:]:
-
+🔹 exit:  🚪 Close the program
 """
 
-func updateOpeningLine() {
-    openingLine = """
+func generatedOpenLine() -> String {
+    """
 
-    \(showOnce ? logoAscii : "")
+    \(openLinePrintCount == 0 ? "\(logoAscii2)\n 🚀🔥 Welcome to Swifty GPT 🧠💥\n" : "")
 
-    🚀🔥 Welcome to Swifty GPT 🧠💥
 
     🔹 1. ✨ Run appDesc GPT prompt
     🔹 2. 🚀 Show loaded prompt
     🔹 3. 📂 Open project
 
-    🔹 idea: 💡 New appDesc prompt
-    🔹 gpt: 🧠 Talk to GPT
-    🔹 xcode: 🛠️ Run Xcode operations
-    🔹 exit: 🚪 Close the program
+    \(commands)
 
-    🔍 Please choose an option [1-3, gpt:, xcode:]:
+    🔍 Please choose an option [1-3, gpt:, xcode:, idea:, exit]:
 
     """
 }
 
 
+
+var openLinePrintCount = 0
+
+var openingLine = generatedOpenLine()
+
+func updateOpeningLine() {
+
+    openingLine = generatedOpenLine()
+}
+
+
 let afterBuildFailedLine = """
-Project creation failed. Check the Xcode project for simple mistakes. 🤔
+Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
 
 🔹 1. ✨   Run appDesc GPT prompt
 🔹 2. 🚀   Show loaded prompt
 🔹 3. 📂   Open project
 🔹 4. 🚪📂 Close project
 🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
 
-🔹 idea: 💡 New appDesc prompt
-🔹 gpt: 🧠 Talk to GPT
-🔹 xcode: 🛠️ Run Xcode operations
-🔹 exit: 🚪 Close the program
+\(commands)
 
 ❓ What would you like to do:
-🔍 Please choose an option [1-5, gpt:, xcode:]:
+🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
 
 """
 
@@ -78,45 +69,10 @@ Project creation success. Project should have auto openned.
 🔹 3. 📂   Open project
 🔹 4. 🚪📂 Close project
 🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
 
-🔹 idea: 💡 New appDesc prompt
-🔹 gpt: 🧠 Talk to GPT
-🔹 xcode: 🛠️ Run Xcode operations
-🔹 exit: 🚪 Close the program
+\(commands)
 
-🔍 Please choose an option [1-5, gpt:, xcode:]:
-
-"""
-
-
-let logoAscii = """
-
- $$$$$$\\                $$\\  $$$$$$\\    $$\\                        $$$$$$\\  $$$$$$$\\ $$$$$$$$\\
-$$  __$$\\               \\__|$$  __$$\\   $$ |                      $$  __$$\\ $$  __$$\\\\__$$  __|
-$$ /  \\__|$$\\  $$\\  $$\\ $$\\ $$ /  \\__|$$$$$$\\   $$\\   $$\\         $$ /  \\__|$$ |  $$ |  $$ |
-\\$$$$$$\\  $$ | $$ | $$ |$$ |$$$$\\     \\_$$  _|  $$ |  $$ |$$$$$$\\ $$ |$$$$\\ $$$$$$$  |  $$ |
- \\____$$\\ $$ | $$ | $$ |$$ |$$  _|      $$ |    $$ |  $$ |\\______|$$ |\\_$$ |$$  ____/   $$ |
-$$\\   $$ |$$ | $$ | $$ |$$ |$$ |        $$ |$$\\ $$ |  $$ |        $$ |  $$ |$$ |        $$ |
-\\$$$$$$  |\\$$$$$\\$$$$  |$$ |$$ |        \\$$$$  |\\$$$$$$$ |        \\$$$$$$  |$$ |        $$ |
- \\______/  \\_____\\____/ \\__|\\__|         \\____/  \\____$$ |         \\______/ \\__|        \\__|
-                                                $$\\   $$ |
-                                                \\$$$$$$  |
-                                                 \\______/
-
-"""
-
-
-let loadingText = """
-
- o                   o                              o
-O                   O  o                           O                             o
-o                   o                              o                                  O
-O                   o                              O                                 oOo
-o  .oOo. .oOoO' .oOoO  O  'OoOo. .oOoO       .oOo. o  ooOO       'o     O .oOoO' O    o
-O  O   o O   o  o   O  o   o   O o   O       O   o O    o         O  o  o O   o  o    O
-o  o   O o   O  O   o  O   O   o O   o       o   O o   O          o  O  O o   O  O    o
-Oo `OoO' `OoO'o `OoO'o o'  o   O `OoOo       oOoO' Oo OooO        `Oo'oO' `OoO'o o'   `oO
-                                     O       O
-                                  OoO'       o'
+🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
 
 """
