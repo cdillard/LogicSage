@@ -14,11 +14,8 @@
 		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
 		B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DA29EAF9B500C45773 /* Terminal.swift */; };
 		B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DC29EAFBFE00C45773 /* AsciiText.swift */; };
-		B70FD6B529EBB2CA0099A0D1 /* SwiftWhisper in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B429EBB2CA0099A0D1 /* SwiftWhisper */; };
 		B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */; };
 		B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B929EBB44D0099A0D1 /* AudioKit */; };
-		B70FD6BC29EBB4F20099A0D1 /* ggml-large.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B70FD6BB29EBB4C90099A0D1 /* ggml-large.bin */; };
-		B70FD6BF29EBBDD50099A0D1 /* ggml-large-v1.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B70FD6BD29EBB99B0099A0D1 /* ggml-large-v1.bin */; };
 		B70FD6C029EBBDD50099A0D1 /* ggml-medium.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B70FD6BE29EBB99B0099A0D1 /* ggml-medium.en.bin */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
@@ -32,9 +29,14 @@
 		B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9B29EB3F8500B8A9E4 /* AudioToolbox.framework */; };
 		B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
+		B77237C629EBD12600E3BC8F /* ggml-small.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B77237C429EBCF2800E3BC8F /* ggml-small.en.bin */; };
+		B77237C829EBD12600E3BC8F /* ggml-base.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B77237C329EBCF0E00E3BC8F /* ggml-base.en.bin */; };
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
+		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
+		B7E576CB29EBE74300CB6A10 /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C729EBE74300CB6A10 /* ggml.c */; };
+		B7E576CC29EBE74300CB6A10 /* whisper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7E576CA29EBE74300CB6A10 /* whisper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,11 +44,11 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 6;
 			files = (
-				B70FD6BF29EBBDD50099A0D1 /* ggml-large-v1.bin in CopyFiles */,
+				B77237C629EBD12600E3BC8F /* ggml-small.en.bin in CopyFiles */,
+				B77237C829EBD12600E3BC8F /* ggml-base.en.bin in CopyFiles */,
 				B70FD6C029EBBDD50099A0D1 /* ggml-medium.en.bin in CopyFiles */,
-				B70FD6BC29EBB4F20099A0D1 /* ggml-large.bin in CopyFiles */,
 				71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */,
 				71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */,
 			);
@@ -63,8 +65,6 @@
 		B70B44DA29EAF9B500C45773 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		B70B44DC29EAFBFE00C45773 /* AsciiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWWrapper.swift; sourceTree = "<group>"; };
-		B70FD6BB29EBB4C90099A0D1 /* ggml-large.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-large.bin"; sourceTree = SOURCE_ROOT; };
-		B70FD6BD29EBB99B0099A0D1 /* ggml-large-v1.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-large-v1.bin"; sourceTree = "<group>"; };
 		B70FD6BE29EBB99B0099A0D1 /* ggml-medium.en.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-medium.en.bin"; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioVideoBridging.framework; path = System/Library/Frameworks/AudioVideoBridging.framework; sourceTree = SDKROOT; };
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B77237C329EBCF0E00E3BC8F /* ggml-base.en.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-base.en.bin"; sourceTree = "<group>"; };
+		B77237C429EBCF2800E3BC8F /* ggml-small.en.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-small.en.bin"; sourceTree = "<group>"; };
 		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = createAppWithLibary_output.txt; sourceTree = "<group>"; };
@@ -91,6 +93,12 @@
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7E15E6D29E6F8920056A325 /* Xcodegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodegen.swift; sourceTree = "<group>"; };
+		B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibWhisper.swift; sourceTree = "<group>"; };
+		B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swifty-GPT-Bridging-Header.h"; sourceTree = "<group>"; };
+		B7E576C729EBE74300CB6A10 /* ggml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ggml.c; path = whisper.cpp/ggml.c; sourceTree = "<group>"; };
+		B7E576C829EBE74300CB6A10 /* whisper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = whisper.h; path = whisper.cpp/whisper.h; sourceTree = "<group>"; };
+		B7E576C929EBE74300CB6A10 /* ggml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ggml.h; path = whisper.cpp/ggml.h; sourceTree = "<group>"; };
+		B7E576CA29EBE74300CB6A10 /* whisper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = whisper.cpp; path = whisper.cpp/whisper.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +110,6 @@
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
-				B70FD6B529EBB2CA0099A0D1 /* SwiftWhisper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +137,8 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B7E576C529EBE70F00CB6A10 /* whisper.cpp */,
+				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B758DCFC29EBCBF300A35D83 /* Speak.swift */,
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
@@ -148,8 +157,8 @@
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B70FD6BD29EBB99B0099A0D1 /* ggml-large-v1.bin */,
-				B70FD6BB29EBB4C90099A0D1 /* ggml-large.bin */,
+				B77237C429EBCF2800E3BC8F /* ggml-small.en.bin */,
+				B77237C329EBCF0E00E3BC8F /* ggml-base.en.bin */,
 				B70FD6BE29EBB99B0099A0D1 /* ggml-medium.en.bin */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
@@ -183,6 +192,18 @@
 			path = exampleOutput;
 			sourceTree = "<group>";
 		};
+		B7E576C529EBE70F00CB6A10 /* whisper.cpp */ = {
+			isa = PBXGroup;
+			children = (
+				B7E576C729EBE74300CB6A10 /* ggml.c */,
+				B7E576C929EBE74300CB6A10 /* ggml.h */,
+				B7E576CA29EBE74300CB6A10 /* whisper.cpp */,
+				B7E576C829EBE74300CB6A10 /* whisper.h */,
+				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
+			);
+			name = whisper.cpp;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -200,7 +221,6 @@
 			);
 			name = "Swifty-GPT";
 			packageProductDependencies = (
-				B70FD6B429EBB2CA0099A0D1 /* SwiftWhisper */,
 				B70FD6B929EBB44D0099A0D1 /* AudioKit */,
 			);
 			productName = "Swifty-GPT";
@@ -233,7 +253,6 @@
 			);
 			mainGroup = B7139CD329E147910049ADE1;
 			packageReferences = (
-				B70FD6B329EBB2CA0099A0D1 /* XCRemoteSwiftPackageReference "SwiftWhisper" */,
 				B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
@@ -252,13 +271,16 @@
 			files = (
 				B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */,
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
+				B7E576CC29EBE74300CB6A10 /* whisper.cpp in Sources */,
 				B758DCFD29EBCBF300A35D83 /* Speak.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
+				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
+				B7E576CB29EBE74300CB6A10 /* ggml.c in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
@@ -394,6 +416,7 @@
 		B7139CE429E147910049ADE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPT.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -405,6 +428,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -412,6 +437,7 @@
 		B7139CE529E147910049ADE1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPT.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -423,6 +449,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -451,14 +478,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B70FD6B329EBB2CA0099A0D1 /* XCRemoteSwiftPackageReference "SwiftWhisper" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exPHAT/SwiftWhisper.git";
-			requirement = {
-				kind = revision;
-				revision = 6ed3484c5cf449041b5c9bcb3ac82455d6a586d7;
-			};
-		};
 		B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AudioKit/AudioKit.git";
@@ -470,11 +489,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B70FD6B429EBB2CA0099A0D1 /* SwiftWhisper */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B70FD6B329EBB2CA0099A0D1 /* XCRemoteSwiftPackageReference "SwiftWhisper" */;
-			productName = SwiftWhisper;
-		};
 		B70FD6B929EBB44D0099A0D1 /* AudioKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */;

@@ -46,13 +46,14 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = false
+let asciAnimations = true
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 
-var spinner: LoadingSpinner = LoadingSpinner(columnCount: 5)
-//let animator = TextAnimator(asciiArt: loadingText, animationDuration: 20)
+var termColSize = 5
+var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize)
+let animator = TextAnimator(text: loadingText, animationDuration: 4)
 
 var audioRecorder: AudioRecorder?
 
@@ -72,9 +73,8 @@ var language = "Swift"
 func main() {
     print("Swifty-GPT is loading... enjoy the show")
     spinner.start()
-//    var def = 5
 //    if let terminalWidth = getTerminalWidth() {
-//        def = terminalWidth
+//        termColSize = terminalWidth
 //    }
 
 
@@ -369,6 +369,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     for gptCommandIndex in 0...commandContents.count - 1 {
         let fullCommand = commandContents[gptCommandIndex]
         print("🤖🔨: performing GPT command = \(fullCommand)")
+        textToSpeech(text: fullCommand)
 
         if fullCommand.hasPrefix("Create project") {
 

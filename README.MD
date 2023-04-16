@@ -22,3 +22,5 @@ youll need
  ggml-large.bin,
  ggml-medium.en.bin,
  ggml-large-v1.bin
+ ggml-base.en.bin
+ ggml-small.en.bn

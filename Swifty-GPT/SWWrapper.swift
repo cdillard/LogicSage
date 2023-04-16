@@ -7,7 +7,7 @@
 
 import Foundation
 
-let modelName = "ggml-medium.en"
+let modelName = "ggml-base.en"
 
 //.package(url: "https://github.com/exPHAT/SwiftWhisper.git", revision: "6ed3484c5cf449041b5c9bcb3ac82455d6a586d7"),
 
@@ -15,8 +15,33 @@ let modelName = "ggml-medium.en"
 // Download https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large.bin
 
 
-import SwiftWhisper
 
+
+//class SWWrapper:WhisperDelegate {
+//    static let instance = SWWrapper()
+//
+//    func whisper(_ aWhisper: Whisper, didUpdateProgress progress: Double) {
+//        print("whisper=\(aWhisper) progress = \(progress)")
+//
+//
+//    }
+//
+//    // Any time a new segments of text have been transcribed
+//    func whisper(_ aWhisper: Whisper, didProcessNewSegments segments: [Segment], atIndex index: Int) {
+//        print(segments)
+//    }
+//
+//    // Finished transcribing, includes all transcribed segments of text
+//    func whisper(_ aWhisper: Whisper, didCompleteWithSegments segments: [Segment]) {
+//        print(segments)
+//
+//    }
+//
+//    // Error with transcription
+//    func whisper(_ aWhisper: Whisper, didErrorWith error: Error) {
+//        print(error)
+//    }
+//}
 
 var modalPath:String {
     get {
@@ -27,16 +52,26 @@ var modalPath:String {
     }
 }
 
+var whisperContext: WhisperContext?
+
 func doTranscription(on audioFileURL:URL) async {
 
     convertAudioFileToPCMArray(fileURL: audioFileURL) { result in
         Task {
             switch result {
             case .success(let frames):
-                let whisper = Whisper(fromFileURL:URL(fileURLWithPath: modalPath))
-                let segments = try await whisper.transcribe(audioFrames:frames)
 
-                print("Transcribed audio:", segments.map(\.text).joined())
+                whisperContext = try WhisperContext.createContext(path: modalPath)
+
+                await whisperContext?.fullTranscribe(samples: frames)
+
+                let text = await whisperContext?.getTranscription()
+                if let text = text {
+                    gptCommand(input: text)
+                }
+                else {
+                    print("failed")
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -61,18 +96,41 @@ func convertAudioFileToPCMArray(fileURL: URL, completionHandler: @escaping (Resu
             completionHandler(.failure(error))
             return
         }
+        do {
+            let data = try Data(contentsOf: tempURL) // Handle error here
 
-        let data = try! Data(contentsOf: tempURL) // Handle error here
+            let floats = stride(from: 44, to: data.count, by: 2).map {
+                return data[$0..<$0 + 2].withUnsafeBytes {
+                    let short = Int16(littleEndian: $0.load(as: Int16.self))
+                    return max(-1.0, min(Float(short) / 32767.0, 1.0))
+                }
+            }
+            do {
+                try FileManager.default.removeItem(at: tempURL)
 
-        let floats = stride(from: 44, to: data.count, by: 2).map {
-            return data[$0..<$0 + 2].withUnsafeBytes {
-                let short = Int16(littleEndian: $0.load(as: Int16.self))
-                return max(-1.0, min(Float(short) / 32767.0, 1.0))
+                completionHandler(.success(floats))
+            }
+            catch {
+                print("great fails")
             }
         }
+        catch {
+            print("greater fails")
 
-        try? FileManager.default.removeItem(at: tempURL)
-
-        completionHandler(.success(floats))
+        }
     }
 }
+
+/*
+
+ func decodeWaveFile(_ url: URL) throws -> [Float] {
+     let data = try Data(contentsOf: url)
+     let floats = stride(from: 44, to: data.count, by: 2).map {
+         return data[$0..<$0 + 2].withUnsafeBytes {
+             let short = Int16(littleEndian: $0.load(as: Int16.self))
+             return max(-1.0, min(Float(short) / 32767.0, 1.0))
+         }
+     }
+     return floats
+ }
+ */

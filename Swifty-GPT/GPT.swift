@@ -50,23 +50,21 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-  //      let randomNumber = Double.random(in: 0...1)
-  //      if randomNumber == 0 {
+        let randomNumber = Int.random(in: 0...1)
+        if randomNumber == 0 && asciAnimations  {
+            animator.start()
+
+        }
+        else {
             spinner.start()
-//        }
-//        else if asciAnimations {
-//            animator.start()
-//        }
+        }
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
-   //         if randomNumber == 0 {
 
-                spinner.stop()
-//            }
-//            else {
-//                animator.stop()
-//            }
+            spinner.stop()
+
+            if asciAnimations { animator.stop() }
 
             if let error = error {
                 print("Error occurred: \(error.localizedDescription)")
