@@ -52,7 +52,9 @@ func zeroCommand(input: String) {
 
         guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
 
-        doTranscription(on: path)
+        Task {
+            await doTranscription(on: path)
+        }
 
     }
 }

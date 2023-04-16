@@ -18,10 +18,7 @@ func generatedOpenLine() -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to Swifty GPT 🧠💥" : "")
 
-    🔹 0. 🗣️🎮🎨📲 Use voice command
-    🔹 1. ✨ Run appDesc GPT prompt
-    🔹 2. 🚀 Show loaded prompt
-    🔹 3. 📂 Open project
+    \(sharedCommands)
     \(commandsText)
 
     🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
@@ -70,12 +67,17 @@ Project creation success. Project should have auto openned.
 
 """
 
+let sharedCommands = """
+🔹 0. 🗣️🎮🎨📲 Use voice command: Tap 0 to start, Tap 0 to end
+🔹 1. ✨ Run loaded prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+"""
+
 let numericalCommands = """
-🔹 0. 🗣️🎮🎨📲 Use voice command
-🔹 1. ✨   Run appDesc GPT prompt
-🔹 2. 🚀   Show loaded prompt
-🔹 3. 📂   Open project
+\(sharedCommands)
 🔹 4. 🚪📂 Close project
 🔹 5. 🖥️🔧 Fix errors w/ GPT
 🔹 6. 🆕   Continue implementation
 """
+

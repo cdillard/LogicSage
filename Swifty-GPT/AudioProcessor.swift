@@ -121,8 +121,15 @@ class AudioRecorder {
 // Only say Swifty-GPT the fist time they open
 
 // SPEAK
+
+
 func runTest() {
-    textToSpeech(text: "Hi! Welcome. I'm \(voice()) and I'll be your debugging assistant this session.")
+    let date = Date()
+    let calendar = Calendar.current
+
+    let hour = calendar.component(.hour, from: date)
+    let minutes = calendar.component(.minute, from: date)
+    textToSpeech(text: "Hi! Welcome It's about \(hour):\(minutes). I'm \(voice()) and I'll be your A.I.")
 }
 
 func textToSpeech(text: String) {

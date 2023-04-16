@@ -1,0 +1,845 @@
+      _╕           __     _                              _ ______    __._,_
+    _╔█░__     _╓╓╗█m__▄▓▀Ö░__ _▄▄▓╗▄╦__╔Φ_           _▄█Ñ░K██╬█Ü;,▄▄╔▄███▒
+   ┌▄█╬▒░░H__▄_▐Ñ▒▒█╬░░╠╬╠▄ñ▀▀▓██╬╬Ü╙▒╙╦╟Ñ░         _,█Ñ╝╩▒Ü╟█╨^███╬╬Ñ██▓╩`
+    `╚¼█▒░Ü╔██╠█▒Ü▒█╬▒▐██ÑÜ```╬╟█╬Ü  ╙███╬░        ,╓█╬.╔██╬µ███╬╩╙^╚░██╬`
+    ,▄█Ñ╬Ü╠█Ñ╬██╬Ü▓█╠╠██╬Ü`   ▀██╬`   [█ÑÜ\╓▄▄▄▄▄╗╤Φ███████▓╟█╬╬╙`   ▒██╬
+    ╙Ñ╚╙`  '```╙``└└`└```      ╚Ñ^    '╙``   ```````╙╙╩╩╟█╩╩██╩`     ▀▀ÑÜ
+ 🚀🔥 Welcome to Swifty GPT 🧠💥
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+Microphone access granted.
+2023-04-15 21:07:14.209517-0600 say[1574:19893] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000020c5e0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:07:14.224167-0600 say[1574:19893]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:07:14.224182-0600 say[1574:19893]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+gpt2023-04-15 21:07:19.526546-0600 say[1574:19926] [AXTTSCommon] Speech processing error: [Hi! Welcome. I'm Trinoids and I'll be your debugging assistant this session.] / mark: 1 / range: 73, 3
+:gpt: im chris ill be your bud
+👨: gpggpt: im chris ill be you rr busd
+○🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◔◑◕●○◔◑◕●○◔◑◕●○◔
+🤖: I'm sorry, I do not understand your message. Can you please rephrase or provide more information? Thank you.
+2023-04-15 21:07:31.659954-0600 say[1582:20116] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x6000002141c0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:07:31.677543-0600 say[1582:20116]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:07:31.677565-0600 say[1582:20116]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+gpt: help me write code that uses SFSpeechRecognizer(locale: Locale(identifier: "en-US")) it won't work for me
+Invalid command. Please try again:
+gpt: help me write code that uses SFSpeechRecognizer(locale: Locale(identifier: "en-US")) it won't work for me
+👨: me write code that uses SFSpeechRecognizer(locale: Locale(identifier: en-US)) it won't work for me
+◑🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●
+🤖: As an AI language model, I don't have the context of your entire code, so here's an example of how to use SFSpeechRecognizer(locale: Locale(identifier: en-US)) in Swift:
+
+```swift
+import Speech
+
+let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+```
+
+Note that you need to import the Speech framework before using SFSpeechRecognizer.
+
+If the code still doesn't work for you, please provide more details about the error or issue you're facing, so I can assist you better.
+2023-04-15 21:08:20.333912-0600 say[1612:20869] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600000203ca0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:08:20.356603-0600 say[1612:20869]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:08:20.356621-0600 say[1612:20869]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+2023-04-15 21:08:58.987089-0600 say[1612:20921] [AXTTSCommon] Speech processing error: [As an AI language model, I don't have the context of your entire code, so here's an example of how to use SFSpeechRecognizer(locale: Locale(identifier: en-US)) in Swift:
+
+```swift
+import Speech
+
+let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
+```
+
+Note that you need to import the Speech framework before using SFSpeechRecognizer.
+
+If the code still doesn't work for you, please provide more details about the error or issue you're facing, so I can assist you better.] / mark: 1 / range: 493, 5
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+0
+👨: seeing an error 0
+○🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕
+🤖: I'm sorry, I cannot see the error as there are only question marks and squares displayed. Can you please provide more information or context about the error you are experiencing?
+2023-04-15 21:09:33.696058-0600 say[1637:21654] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x6000002101e0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:09:33.718406-0600 say[1637:21654]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:09:33.718428-0600 say[1637:21654]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+2023-04-15 21:09:44.577195-0600 say[1637:21726] [AXTTSCommon] Speech processing error: [I'm sorry, I cannot see the error as there are only question marks and squares displayed. Can you please provide more information or context about the error you are experiencing?] / mark: 1 / range: 170, 8
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+0
+Invalid command. Please try again:
+0Start voice capturer
+2023-04-15 21:10:09.028425-0600 say[1641:21945] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600000210220> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:10:09.047884-0600 say[1641:21945]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:10:09.047905-0600 say[1641:21945]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+
+
+2023-04-15 21:10:10.205708-0600 Swifty-GPT[1572:19890] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x6000002239a0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:10:10.220805-0600 Swifty-GPT[1572:19890]   HALC_ProxyObjectMap.cpp:153    HALC_ProxyObjectMap::_CopyObjectByObjectID: failed to create the local object
+2023-04-15 21:10:10.220897-0600 Swifty-GPT[1572:19890]      HALC_ShellDevice.cpp:2606   HALC_ShellDevice::RebuildControlList: couldn't find the control object
+2023-04-15 21:10:10.418728-0600 Swifty-GPT[1572:21983] throwing -10877
+2023-04-15 21:10:10.424009-0600 Swifty-GPT[1572:21983] throwing -10877
+2023-04-15 21:10:10.438824-0600 Swifty-GPT[1572:21795] throwing -10877
+2023-04-15 21:10:10.440915-0600 Swifty-GPT[1572:21795] throwing -10877
+2023-04-15 21:10:10.441946-0600 Swifty-GPT[1572:21795] throwing -10877
+2023-04-15 21:10:10.442648-0600 Swifty-GPT[1572:21795] throwing -10877
+2023-04-15 21:10:10.445041-0600 Swifty-GPT[1572:22052] throwing -10877
+2023-04-15 21:10:10.445559-0600 Swifty-GPT[1572:22052] throwing -10877
+2023-04-15 21:10:10.446053-0600 Swifty-GPT[1572:22052] throwing -10877
+2023-04-15 21:10:10.446648-0600 Swifty-GPT[1572:22052] throwing -10877
+0Stop voice capturer
+2023-04-15 21:10:14.789127-0600 say[1647:22153] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600000214220> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2023-04-15 21:10:14.814607-0600 Swifty-GPT[1572:22165] [AQ]      AudioQueueObject.cpp:2784  Error (-4) getting reporterIDs
+Recording finished successfully
+2023-04-15 21:10:18.712981-0600 Swifty-GPT[1572:22224] [AQ]      AudioQueueObject.cpp:2784  Error (-4) getting reporterIDs
+gpt: "2023-04-15 21:10:18.712981-0600 Swifty-GPT[1572:22224] [AQ]      AudioQueueObject.cpp:2784  Error (-4) getting reporterIDs
+👨: -04-15 21:10:18.712981-0600 Swifty-GPT[1572:22224] [AQ]      AudioQueueObject.cpp:2784  Error (-4) getting reporterIDs
+●🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔
+🤖: This is a log message from the AudioQueueObject class of the Core Audio framework. It indicates that an error occurred during the process of getting reporter IDs, and the error code is -4. This could possibly be caused by a hardware or software issue, or it could be a coding error. More information would be needed to determine the exact cause of the error.
+2023-04-15 21:10:33.059457-0600 say[1652:22302] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000020c220> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+gpt: "Can you check the internet for any other folks out there who have had issues with SFSpeechRecognizer recognitionTask on Mac OS?"
+👨: ohouyou check the internet  for any other poeple efolks abouoit tut ther e who have had issues with  SFSpeechRecognizer recognitionTask on Mac OS ?
+◑🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑
+🤖: As an AI language model, I don't browse the internet. However, I suggest searching for related forum communities or online discussions on platforms such as Apple Developer forums, Reddit, or GitHub to see if other people have similar issues with SFSpeechRecognizer recognitionTask on Mac OS. You may find helpful insights or solutions from those who have encountered similar problems.
+2023-04-15 21:11:49.281496-0600 say[1657:22767] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600000214220> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+gpt: ""2023-04-15 21:12:16.078301-0600 say[1657:22819] [AXTTSCommon] Speech processing error: [As an AI language model, I don't browse the internet. However, I suggest searching for related forum communities or online discussions on platforms such as Apple Developer forums, Reddit, or GitHub to see if other people have similar issues with SFSpeechRecognizer recognitionTask on Mac OS. You may find helpful insights or solutions from those who have encountered similar problems.] / mark: 1 / range: 380, 4
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+gpt: "Is there any built in alternatives in the Mac OS system for speech to text transcription?"
+👨: ïïgpt:: ïIs there any built in alternatives in the Mac OS ysystem for speech to text transcription ?
+◕🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑
+🤖: Yes, Mac OS X has a built-in feature called "Dictation" that allows for speech-to-text transcription. To use it, go to System Preferences > Keyboard > Dictation and turn it on. You can then activate it by pressing the function key twice or by selecting the microphone icon on the keyboard. Alternatively, you can use external software such as Dragon Professional Individual for Mac or TranscribeMe for more advanced transcription features.
+2023-04-15 21:13:04.642745-0600 say[1661:23187] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x600000203a60> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+gpt: "Can you 
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+gpt: "Can you suggest another programmatic framework available on MacOS that I could use for converting a m4a file of spoken word to text?"
+👨: we Can oyou gpt: CNan you suggest another programmatic gfreamwamework aavvailable on iOS MAaxcOS that I wcould ise foruse for converting a m4a file of spoken word to stext?
+◕🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔
+🤖: One possible programming framework you could use for converting a m4a file of spoken word to text on iOS or macOS is the Speech Recognition API provided by Apple. This API allows you to transcribe spoken audio into text in real time or from pre-recorded audio files. You can use it within your own applications or integrate it into a software suite for voice-based transcription or dictation. Another option is the OpenEars framework, which provides speech recognition and text-to-speech capabilities for iOS apps.
+2023-04-15 21:14:16.325580-0600 say[1664:23596] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000020c220> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+gpt: "I need it to work great in the professional environment on mac os x. What is the best option? It seems like Apples built in Frameworks will NOT work."
+👨: neI I need it to work great in the professional eenvironment on mac os x. What is the best option? It seems like Apples build t in Framewokrs don;trks woill NOT work.
+🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○
+🤖: Based on your requirements, the best option for a professional environment on Mac OS X would be Adobe Creative Cloud. This suite of applications includes Photoshop, Illustrator, InDesign, Premiere Pro, After Effects, and many other programs that are commonly used in professional settings. Adobe Creative Cloud is optimized for Mac OS X and is compatible with the latest operating systems. Additionally, Adobe offers regular updates and user support to ensure that their software is always working at its best.
+2023-04-15 21:15:32.715602-0600 say[1670:24094] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000020c440> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+
+
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨ Run appDesc GPT prompt
+🔹 2. 🚀 Show loaded prompt
+🔹 3. 📂 Open project
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+
+idea: "app that displays the periodic table."
+👨: Develop an iOS app in Swift for a SwiftUI-based n you app that showdisplays the periodic table.. Name it a unique name. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "UniqueName"},{"command": "Close project", "name": "UniqueName"}]
+Example SWIFT_FILE_CONTENTS = "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }". Follow this order: Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
+1. It is essential you return your response as a JSON array.
+2. It is essential you include a Swift `App` file.
+3. Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
+
+◔🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●🤖: [
+  {
+    "command": "Create project",
+    "name": "PeriodicTableApp"
+  },
+  {
+    "command": "Create file",
+    "name": "PeriodicTableApp.swift",
+    "fileContents": "import SwiftUI\n@main\nstruct PeriodicTableApp: App {\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}"
+  },
+  {
+    "command": "Create file",
+    "name": "ContentView.swift",
+    "fileContents": "import SwiftUI\nstruct ContentView: View {\n    var body: some View {\n        Text(\"Periodic Table\")\n    }\n}"
+  },
+  {
+    "command": "Open project",
+    "name": "PeriodicTableApp"
+  },
+  {
+    "command": "Close project",
+    "name": "PeriodicTableApp"
+  }
+]
+found ["PeriodicTableApp", "PeriodicTableApp.swift", "ContentView.swift", "PeriodicTableApp", "PeriodicTableApp"] names
+found ["Create project", "Create file", "Create file", "Open project", "Close project"] commands
+📁 found = 2
+📜= [
+  {
+    "command": "Create project",
+    "name": "PeriodicTableApp"
+  },
+  {
+    "command": "Create file",
+    "name": "PeriodicTableApp.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Create file",
+    "name": "ContentView.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Open project",
+    "name": "PeriodicTableApp"
+  },
+  {
+    "command": "Close project",
+    "name": "PeriodicTableApp"
+  }
+]
+🤖🔨: performing GPT command = Create project
+Creating project with name: PeriodicTableApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp.xcodeproj
+Project created successfully
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp/Sources/PeriodicTableApp.swift w/ contents w length = 144 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp/Sources/PeriodicTableApp.swift w/ contents w length = 106 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp
+File successfully added to the project.
+🤖🔨: performing GPT command = Open project
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): PeriodicTableApp
+🤖🔨: performing GPT command = Close project
+Creating project with name: PeriodicTableApp
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/PeriodicTableApp.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: PeriodicTableApp
+Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨   Run appDesc GPT prompt
+🔹 2. 🚀   Show loaded prompt
+🔹 3. 📂   Open project
+🔹 4. 🚪📂 Close project
+🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+❓ What would you like to do:
+🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
+
+1prompt=Develop an iOS app in Swift for a SwiftUI-based n you app that showdisplays the periodic table.. Name it a unique name. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "UniqueName"},{"command": "Close project", "name": "UniqueName"}]
+Example SWIFT_FILE_CONTENTS = "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }". Follow this order: Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
+1. It is essential you return your response as a JSON array.
+2. It is essential you include a Swift `App` file.
+3. Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
+
+👨: Retry same prompt: 1 / 10
+○🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔🤖: [{"command": "Create project","name": "Elemental"}, {"command": "Create file","name": "Element.swift","fileContents": "import Foundation\n\nstruct Element {\n    let symbol: String\n    let name: String\n    let atomicNumber: Int\n}\n"}, {"command": "Create file","name": "PeriodicTable.swift","fileContents": "import Foundation\n\nstruct PeriodicTable {\n    static let elements = [\n        Element(symbol: \"H\", name: \"Hydrogen\", atomicNumber: 1),\n        Element(symbol: \"He\", name: \"Helium\", atomicNumber: 2),\n        Element(symbol: \"Li\", name: \"Lithium\", atomicNumber: 3),\n        Element(symbol: \"Be\", name: \"Beryllium\", atomicNumber: 4),\n        Element(symbol: \"B\", name: \"Boron\", atomicNumber: 5),\n        Element(symbol: \"C\", name: \"Carbon\", atomicNumber: 6),\n        Element(symbol: \"N\", name: \"Nitrogen\", atomicNumber: 7),\n        Element(symbol: \"O\", name: \"Oxygen\", atomicNumber: 8),\n        Element(symbol: \"F\", name: \"Fluorine\", atomicNumber: 9),\n        Element(symbol: \"Ne\", name: \"Neon\", atomicNumber: 10)\n    ]\n}\n"}, {"command": "Create file","name": "ContentView.swift","fileContents": "import SwiftUI\n\nstruct ContentView: View {\n    var body: some View {\n        VStack {\n            Text(\"Periodic Table\")\n                .font(.largeTitle)\n                .padding()\n            List(PeriodicTable.elements) { element in\n                HStack {\n                    Text(element.symbol)\n                        .font(.headline)\n                    Spacer()\n                    Text(element.name)\n                        .font(.subheadline)\n                        .foregroundColor(.secondary)\n                    Spacer()\n                    Text(String(element.atomicNumber))\n                }\n            }\n        }\n    }\n}\n"}, {"command": "Create file","name": "App.swift","fileContents": "import SwiftUI\n\n@main\nstruct ElementalApp: App {\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}\n"}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+found ["Elemental", "Element.swift", "PeriodicTable.swift", "ContentView.swift", "App.swift", "Elemental", "Elemental"] names
+found ["Create project", "Create file", "Create file", "Create file", "Create file", "Open project", "Close project"] commands
+📁 found = 4
+📜= [{"command": "Create project","name": "Elemental"}, {"command": "Create file","name": "Element.swift","fileContents": ""}, {"command": "Create file","name": "PeriodicTable.swift","fileContents": ""}, {"command": "Create file","name": "ContentView.swift","fileContents": ""}, {"command": "Create file","name": "App.swift","fileContents": ""}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+🤖🔨: performing GPT command = Create project
+Creating project with name: Elemental
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental.xcodeproj
+Project created successfully
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift w/ contents w length = 108 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Element.swift w/ contents w length = 719 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/PeriodicTable.swift w/ contents w length = 643 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift w/ contents w length = 142 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Open project
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): Elemental
+🤖🔨: performing GPT command = Close project
+Creating project with name: Elemental
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: Elemental
+Error: 2023-04-15 21:17:33.075934-0600 xcodebuild[1746:25207] DVTCoreDeviceEnabledState: DVTCoreDeviceEnabledState_Disabled set via user default (DVTEnableCoreDevice=disabled)
+2023-04-15 21:17:33.077033-0600 xcodebuild[1746:25217] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): MobileDevice.framework version: 1533.100.57.100.2
+2023-04-15 21:17:33.078644-0600 xcodebuild[1746:25217] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): RemotePairing.framework version: 90.2
+2023-04-15 21:17:33.079038-0600 xcodebuild[1746:25217] [library] USBMuxListenerCreateFiltered:898 Created 0x60000330e6c0
+2023-04-15 21:17:33.085496-0600 xcodebuild[1746:25217] AMDeviceNotificationSubscribeWithOptions (thread 0x17002b000): Subscribed for device notifications from usbmuxd.
+2023-04-15 21:17:33.086529-0600 xcodebuild[1746:25219] Metal API Validation Enabled
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+2023-04-15 21:17:33.243221-0600 xcodebuild[1746:25255] [Metadata] unable to get a dev_t for store 1795162192.
+2023-04-15 21:17:33.522187-0600 XCBBuildService[1750:25287] [Metadata] unable to get a dev_t for store 1795162192.
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/PeriodicTable.swift (in target 'Elemental' from project 'Elemental')
+	SwiftCompile normal arm64 Compiling\ PeriodicTable.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/PeriodicTable.swift (in target 'Elemental' from project 'Elemental')
+(2 failures)
+2023-04-15 21:17:34.906312-0600 xcodebuild[1746:25219] [client] No error handler for XPC error: Connection invalid
+
+Build ❌ : ["/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/PeriodicTable.swift:9:13: error: initializer \'init(_:rowContent:)\' requires that \'Element\' conform to \'Identifiable\'"]
+Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨   Run appDesc GPT prompt
+🔹 2. 🚀   Show loaded prompt
+🔹 3. 📂   Open project
+🔹 4. 🚪📂 Close project
+🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+❓ What would you like to do:
+🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
+
+5💚: Try fix prompt: 2 / 10 \n Develop an iOS app in Swift for a SwiftUI-based n you app that showdisplays the periodic table.. Name it a unique name. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "UniqueName"},{"command": "Close project", "name": "UniqueName"}]
+Example SWIFT_FILE_CONTENTS = "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }". Follow this order: Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
+1. It is essential you return your response as a JSON array.
+2. It is essential you include a Swift `App` file.
+3. Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
+
+Review the following Swift source code:
+PeriodicTable.swift:9:13: error: initializer 'init(_:rowContent:)' requires that 'Element' conform to 'Identifiable'
+Please suggest improvements and corrections to fix the errors and optimize the code. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create Project","name": "Elemental"}, {"command": "Create file","name": "Filename.swift","fileContents": "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }"}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+
+Available commands: Create files, Open project, Close project. Minimize command usage.
+
+Source Code:
+import Foundation
+
+struct Element {
+    let symbol: String
+    let name: String
+    let atomicNumber: Int
+}
+
+import Foundation
+
+struct PeriodicTable {
+    static let elements = [
+        Element(symbol: "H", name: "Hydrogen", atomicNumber: 1),
+        Element(symbol: "He", name: "Helium", atomicNumber: 2),
+        Element(symbol: "Li", name: "Lithium", atomicNumber: 3),
+        Element(symbol: "Be", name: "Beryllium", atomicNumber: 4),
+        Element(symbol: "B", name: "Boron", atomicNumber: 5),
+        Element(symbol: "C", name: "Carbon", atomicNumber: 6),
+        Element(symbol: "N", name: "Nitrogen", atomicNumber: 7),
+        Element(symbol: "O", name: "Oxygen", atomicNumber: 8),
+        Element(symbol: "F", name: "Fluorine", atomicNumber: 9),
+        Element(symbol: "Ne", name: "Neon", atomicNumber: 10)
+    ]
+}
+
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Periodic Table")
+                .font(.largeTitle)
+                .padding()
+            List(PeriodicTable.elements) { element in
+                HStack {
+                    Text(element.symbol)
+                        .font(.headline)
+                    Spacer()
+                    Text(element.name)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(String(element.atomicNumber))
+                }
+            }
+        }
+    }
+}
+
+import SwiftUI
+
+@main
+struct ElementalApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+
+🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑🤖: [{"command": "Create Project","name": "Elemental"}, {"command": "Create file","name": "Element.swift","fileContents": "struct Element: Identifiable {\n    let id = UUID()\n    let symbol: String\n    let name: String\n    let atomicNumber: Int\n}\n\nstruct PeriodicTable {\n    static let elements = [\n        Element(symbol: \"H\", name: \"Hydrogen\", atomicNumber: 1),\n        Element(symbol: \"He\", name: \"Helium\", atomicNumber: 2),\n        Element(symbol: \"Li\", name: \"Lithium\", atomicNumber: 3),\n        Element(symbol: \"Be\", name: \"Beryllium\", atomicNumber: 4),\n        Element(symbol: \"B\", name: \"Boron\", atomicNumber: 5),\n        Element(symbol: \"C\", name: \"Carbon\", atomicNumber: 6),\n        Element(symbol: \"N\", name: \"Nitrogen\", atomicNumber: 7),\n        Element(symbol: \"O\", name: \"Oxygen\", atomicNumber: 8),\n        Element(symbol: \"F\", name: \"Fluorine\", atomicNumber: 9),\n        Element(symbol: \"Ne\", name: \"Neon\", atomicNumber: 10)\n    ]\n}\n"}, {"command": "Create file","name": "ContentView.swift","fileContents": "import SwiftUI\n\nstruct ContentView: View {\n    let elements = PeriodicTable.elements\n    var body: some View {\n        NavigationView {\n            List(elements) { element in\n                NavigationLink(destination: ElementView(element: element)) {\n                    HStack {\n                        Text(element.symbol)\n                            .font(.headline)\n                        Spacer()\n                        VStack(alignment: .trailing) {\n                            Text(element.name)\n                                .font(.subheadline)\n                                .foregroundColor(.secondary)\n                            Text(\"\(element.atomicNumber)\")\n                        }\n                    }\n                }\n            }\n            .navigationTitle(\"Periodic Table\")\n        }\n    }\n}\n\nstruct ElementView: View {\n    let element: Element\n    var body: some View {\n        VStack {\n            Text(element.symbol)\n                .font(.largeTitle)\n                .padding()\n            Text(element.name)\n                .font(.headline)\n            Text(\"\(element.atomicNumber)\")\n        }\n    }\n}\n\nstruct ContentView_Previews: PreviewProvider {\n    static var previews: some View {\n        ContentView()\n    }\n}\n"}, {"command": "Create file","name": "ElementalApp.swift","fileContents": "import SwiftUI\n\n@main\nstruct ElementalApp: App {\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}\n"}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+found ["Elemental", "Element.swift", "ContentView.swift", "ElementalApp.swift", "Elemental", "Elemental"] names
+found ["Create Project", "Create file", "Create file", "Create file", "Open project", "Close project"] commands
+📁 found = 3
+📜= [{"command": "Create Project","name": "Elemental"}, {"command": "Create file","name": "Element.swift","fileContents": ""}, {"command": "Create file","name": "ContentView.swift","fileContents": ""}, {"command": "Create file","name": "ElementalApp.swift","fileContents": ""}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+🤖🔨: performing GPT command = Create Project
+unknown command = Create Project
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift w/ contents w length = 824 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Element.swift w/ contents w length = 1257 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift w/ contents w length = 142 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Open project
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): Elemental
+🤖🔨: performing GPT command = Close project
+Creating project with name: Elemental
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: Elemental
+Error: 2023-04-15 21:18:16.920745-0600 xcodebuild[1802:25891] DVTCoreDeviceEnabledState: DVTCoreDeviceEnabledState_Disabled set via user default (DVTEnableCoreDevice=disabled)
+2023-04-15 21:18:16.921829-0600 xcodebuild[1802:25896] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): MobileDevice.framework version: 1533.100.57.100.2
+2023-04-15 21:18:16.923529-0600 xcodebuild[1802:25896] _MobileDeviceLibraryInitRoutine (thread 0x17002b000): RemotePairing.framework version: 90.2
+2023-04-15 21:18:16.923892-0600 xcodebuild[1802:25896] [library] USBMuxListenerCreateFiltered:898 Created 0x60000331c0a0
+2023-04-15 21:18:16.930909-0600 xcodebuild[1802:25896] AMDeviceNotificationSubscribeWithOptions (thread 0x17002b000): Subscribed for device notifications from usbmuxd.
+2023-04-15 21:18:16.931263-0600 xcodebuild[1802:25906] Metal API Validation Enabled
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+{ platform:iOS Simulator, id:DE41144F-A465-4BF9-86F4-630B0126B748, OS:16.4, name:iPhone 14 }
+2023-04-15 21:18:17.366247-0600 XCBBuildService[1806:25957] [Metadata] unable to get a dev_t for store 1795162192.
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftEmitModule normal arm64 Emitting\ module\ for\ Elemental (in target 'Elemental' from project 'Elemental')
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift (in target 'Elemental' from project 'Elemental')
+	SwiftCompile normal arm64 Compiling\ Elemental.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift (in target 'Elemental' from project 'Elemental')
+	SwiftCompile normal arm64 Compiling\ ContentView.swift /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift (in target 'Elemental' from project 'Elemental')
+	SwiftCompile normal arm64 /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift (in target 'Elemental' from project 'Elemental')
+(5 failures)
+2023-04-15 21:18:17.577990-0600 xcodebuild[1802:25892] [client] No error handler for XPC error: Connection invalid
+
+Build ❌ : ["/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift:2:14: error: cannot find \'UUID\' in scope", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Element.swift:3:8: error: invalid redeclaration of \'ContentView\'", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift:2:14: error: cannot find \'UUID\' in scope", "/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift:7:13: error: ambiguous use of \'init()\'"]
+Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨   Run appDesc GPT prompt
+🔹 2. 🚀   Show loaded prompt
+🔹 3. 📂   Open project
+🔹 4. 🚪📂 Close project
+🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+❓ What would you like to do:
+🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
+
+5💚: Try fix prompt: 3 / 10 \n Develop an iOS app in Swift for a SwiftUI-based n you app that showdisplays the periodic table.. Name it a unique name. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "UniqueName"},{"command": "Close project", "name": "UniqueName"}]
+Example SWIFT_FILE_CONTENTS = "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }". Follow this order: Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
+1. It is essential you return your response as a JSON array.
+2. It is essential you include a Swift `App` file.
+3. Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
+
+Review the following Swift source code:
+PeriodicTable.swift:9:13: error: initializer 'init(_:rowContent:)' requires that 'Element' conform to 'Identifiable'
+Please suggest improvements and corrections to fix the errors and optimize the code. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create Project","name": "Elemental"}, {"command": "Create file","name": "Filename.swift","fileContents": "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }"}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+
+Available commands: Create files, Open project, Close project. Minimize command usage.
+
+Source Code:
+import Foundation
+
+struct Element {
+    let symbol: String
+    let name: String
+    let atomicNumber: Int
+}
+
+import Foundation
+
+struct PeriodicTable {
+    static let elements = [
+        Element(symbol: "H", name: "Hydrogen", atomicNumber: 1),
+        Element(symbol: "He", name: "Helium", atomicNumber: 2),
+        Element(symbol: "Li", name: "Lithium", atomicNumber: 3),
+        Element(symbol: "Be", name: "Beryllium", atomicNumber: 4),
+        Element(symbol: "B", name: "Boron", atomicNumber: 5),
+        Element(symbol: "C", name: "Carbon", atomicNumber: 6),
+        Element(symbol: "N", name: "Nitrogen", atomicNumber: 7),
+        Element(symbol: "O", name: "Oxygen", atomicNumber: 8),
+        Element(symbol: "F", name: "Fluorine", atomicNumber: 9),
+        Element(symbol: "Ne", name: "Neon", atomicNumber: 10)
+    ]
+}
+
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Periodic Table")
+                .font(.largeTitle)
+                .padding()
+            List(PeriodicTable.elements) { element in
+                HStack {
+                    Text(element.symbol)
+                        .font(.headline)
+                    Spacer()
+                    Text(element.name)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text(String(element.atomicNumber))
+                }
+            }
+        }
+    }
+}
+
+import SwiftUI
+
+@main
+struct ElementalApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+
+Review the following Swift source code:
+PeriodicTable.swift:9:13: error: initializer 'init(_:rowContent:)' requires that 'Element' conform to 'Identifiable'
+Element.swift:3:8: error: invalid redeclaration of 'ContentView'
+ContentView.swift:7:13: error: ambiguous use of 'init()'
+Elemental.swift:2:14: error: cannot find 'UUID' in scope
+Please suggest improvements and corrections to fix the errors and optimize the code. Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [{"command": "Create Project","name": "Elemental"}, {"command": "Create file","name": "Filename.swift","fileContents": "import SwiftUI\nstruct UniqueGameView: View { var body: some View { Spinner() } }
+struct Spinner: View { var body: some View {a } }"}, {"command": "Open project", "name": "Elemental"},{"command": "Close project", "name": "Elemental"}]
+
+Available commands: Create files, Open project, Close project. Minimize command usage.
+
+Source Code:
+struct Element: Identifiable {
+    let id = UUID()
+    let symbol: String
+    let name: String
+    let atomicNumber: Int
+}
+
+struct PeriodicTable {
+    static let elements = [
+        Element(symbol: "H", name: "Hydrogen", atomicNumber: 1),
+        Element(symbol: "He", name: "Helium", atomicNumber: 2),
+        Element(symbol: "Li", name: "Lithium", atomicNumber: 3),
+        Element(symbol: "Be", name: "Beryllium", atomicNumber: 4),
+        Element(symbol: "B", name: "Boron", atomicNumber: 5),
+        Element(symbol: "C", name: "Carbon", atomicNumber: 6),
+        Element(symbol: "N", name: "Nitrogen", atomicNumber: 7),
+        Element(symbol: "O", name: "Oxygen", atomicNumber: 8),
+        Element(symbol: "F", name: "Fluorine", atomicNumber: 9),
+        Element(symbol: "Ne", name: "Neon", atomicNumber: 10)
+    ]
+}
+
+import SwiftUI
+
+struct ContentView: View {
+    let elements = PeriodicTable.elements
+    var body: some View {
+        NavigationView {
+            List(elements) { element in
+                NavigationLink(destination: ElementView(element: element)) {
+                    HStack {
+                        Text(element.symbol)
+                            .font(.headline)
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Text(element.name)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Text("\(element.atomicNumber)")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Periodic Table")
+        }
+    }
+}
+
+struct ElementView: View {
+    let element: Element
+    var body: some View {
+        VStack {
+            Text(element.symbol)
+                .font(.largeTitle)
+                .padding()
+            Text(element.name)
+                .font(.headline)
+            Text("\(element.atomicNumber)")
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+import SwiftUI
+
+@main
+struct ElementalApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+
+🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑
+◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○◔◑◕●○🤖: [
+  {
+    "command": "Create Project",
+    "name": "Elemental"
+  },
+  {
+    "command": "Create file",
+    "name": "Element.swift",
+    "fileContents": "import Foundation\nimport SwiftUI\n\nstruct Element: Identifiable {\n    let id = UUID()\n    let symbol: String\n    let name: String\n    let atomicNumber: Int\n}\n"
+  },
+  {
+    "command": "Create file",
+    "name": "PeriodicTable.swift",
+    "fileContents": "import Foundation\n\nstruct PeriodicTable {\n    static let elements = [\n        Element(symbol: \"H\", name: \"Hydrogen\", atomicNumber: 1),\n        Element(symbol: \"He\", name: \"Helium\", atomicNumber: 2),\n        Element(symbol: \"Li\", name: \"Lithium\", atomicNumber: 3),\n        Element(symbol: \"Be\", name: \"Beryllium\", atomicNumber: 4),\n        Element(symbol: \"B\", name: \"Boron\", atomicNumber: 5),\n        Element(symbol: \"C\", name: \"Carbon\", atomicNumber: 6),\n        Element(symbol: \"N\", name: \"Nitrogen\", atomicNumber: 7),\n        Element(symbol: \"O\", name: \"Oxygen\", atomicNumber: 8),\n        Element(symbol: \"F\", name: \"Fluorine\", atomicNumber: 9),\n        Element(symbol: \"Ne\", name: \"Neon\", atomicNumber: 10)\n    ]\n}\n"
+  },
+  {
+    "command": "Create file",
+    "name": "ContentView.swift",
+    "fileContents": "import SwiftUI\n\nstruct ContentView: View {\n    let elements = PeriodicTable.elements\n    var body: some View {\n        NavigationView {\n            List(elements) { element in\n                NavigationLink(destination: ElementView(element: element)) {\n                    HStack {\n                        Text(element.symbol)\n                            .font(.headline)\n                        Spacer()\n                        VStack(alignment: .trailing) {\n                            Text(element.name)\n                                .font(.subheadline)\n                                .foregroundColor(.secondary)\n                            Text(\"\(element.atomicNumber)\")\n                        }\n                    }\n                }\n            }\n            .navigationTitle(\"Periodic Table\")\n        }\n    }\n}\n\nstruct ElementView: View {\n    let element: Element\n    var body: some View {\n        VStack {\n            Text(element.symbol)\n                .font(.largeTitle)\n                .padding()\n            Text(element.name)\n                .font(.headline)\n            Text(\"\(element.atomicNumber)\")\n        }\n    }\n}\n\nstruct ContentView_Previews: PreviewProvider {\n    static var previews: some View {\n        ContentView()\n    }\n}\n"
+  },
+  {
+    "command": "Create file",
+    "name": "ElementalApp.swift",
+    "fileContents": "import SwiftUI\n\n@main\nstruct ElementalApp: App {\n    var body: some Scene {\n        WindowGroup {\n            ContentView()\n        }\n    }\n}"
+  },
+  {
+    "command": "Open project",
+    "name": "Elemental"
+  },
+  {
+    "command": "Close project",
+    "name": "Elemental"
+  }
+]
+found ["Elemental", "Element.swift", "PeriodicTable.swift", "ContentView.swift", "ElementalApp.swift", "Elemental", "Elemental"] names
+found ["Create Project", "Create file", "Create file", "Create file", "Create file", "Open project", "Close project"] commands
+📁 found = 4
+📜= [
+  {
+    "command": "Create Project",
+    "name": "Elemental"
+  },
+  {
+    "command": "Create file",
+    "name": "Element.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Create file",
+    "name": "PeriodicTable.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Create file",
+    "name": "ContentView.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Create file",
+    "name": "ElementalApp.swift",
+    "fileContents": ""
+  },
+  {
+    "command": "Open project",
+    "name": "Elemental"
+  },
+  {
+    "command": "Close project",
+    "name": "Elemental"
+  }
+]
+🤖🔨: performing GPT command = Create Project
+unknown command = Create Project
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Elemental.swift w/ contents w length = 157 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/Element.swift w/ contents w length = 719 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/PeriodicTable.swift w/ contents w length = 1257 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Create file
+Adding file w/ path: /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental/Sources/ContentView.swift w/ contents w length = 141 to p=/Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental
+File successfully added to the project.
+🤖🔨: performing GPT command = Open project
+SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): Elemental
+🤖🔨: performing GPT command = Close project
+Creating project with name: Elemental
+set current name
+⚙️  Generating plists...
+⚙️  Generating project...
+⚙️  Writing project...
+Created project at /Users/sprinchar/Documents/SwiftyGPTWorkspace/Workspace/Elemental.xcodeproj
+Project created successfully
+Building project...
+buildProject project with name: Elemental
+Parsed and executed code successfully. Opening project...
+Executing AppleScript: openProject(name: "Elemental")
+2023-04-15 21:18:50.601552-0600 Swifty-GPT[1572:26158] [threadmgrsupport] _TSGetMainThread_block_invoke():Main thread potentially initialized incorrectly, cf <rdar://problem/67741850>
+Project creation success. Project should have auto openned.
+🔹 0. 🗣️🎮🎨📲 Use voice command
+🔹 1. ✨   Run appDesc GPT prompt
+🔹 2. 🚀   Show loaded prompt
+🔹 3. 📂   Open project
+🔹 4. 🚪📂 Close project
+🔹 5. 🖥️🔧 Fix errors w/ GPT
+🔹 6. 🆕   Continue implementation
+🔹 idea:  💡 New appDesc prompt
+🔹 gpt:   🧠 Talk to GPT
+🔹 xcode: 🛠️ Run Xcode operations
+🔹 exit:  🚪 Close the program
+
+🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
+
