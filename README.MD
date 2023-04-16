@@ -8,3 +8,9 @@ With a little help from my GPT. Thank you Open AI.
 # Instructions: Set OPEN_AI_KEY. Have fun!
 
 Swifty-GPT is not just for game development. Its powerful capabilities make it a versatile tool that can be used for any business application, including realtor apps and e-commerce apps. Swifty-GPT automates the process of app development, creating high-quality iOS applications with ease. It can import the necessary libraries and work with all Apple APIs, making it the ideal tool for business use cases. With Swifty-GPT, you can create iOS applications for your business in a fraction of the time, without sacrificing quality or functionality.
+
+
+
+# Voice Command
+
+Pick your voice after trying them out with voice_test.sh `swift voice_test.swift` inside Swifty-GPT folder.

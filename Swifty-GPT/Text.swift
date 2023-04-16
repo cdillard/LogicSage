@@ -7,7 +7,7 @@
 
 import Foundation
 
-var commands = """
+var commandsText = """
 🔹 idea:  💡 New appDesc prompt
 🔹 gpt:   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations

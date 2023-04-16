@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFAudio
 
 // Note you must have xcodegen brew and gem xcodeproj installed.
 
@@ -32,7 +33,10 @@ var rubyScriptPath:String {
     }
 }
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
-let swiftyGPTWorkspaceName = "SwiftyGPTWorkspace/Workspace"
+
+let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
+
+let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // Configurable settings for AI.
 let retryLimit = 10
@@ -116,9 +120,11 @@ func main() {
     else {
         doPrompting()
     }
+    let index = Int.random(in: 0..<90000)
 
-
-    if let audioOut = URL(string: "\(getWorkspaceFolder())audio.caf") {
+    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
+    let audioFilePath = "\(projectPath)/audio-\(index).wav"
+    if let audioOut = URL(string: audioFilePath) {
 
         audioProcessor = AudioInputHandler(outputFileURL: audioOut)
     }
@@ -132,6 +138,7 @@ func main() {
             // Handle the case where microphone access is denied.
         }
     }
+    // Intro ....
     runTest()
 
 

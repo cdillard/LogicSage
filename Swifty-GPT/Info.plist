@@ -18,9 +18,9 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>UILaunchScreen</key>
-	<array/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Uses your microphone to capture your voice commands</string>
+	<key>UILaunchScreen</key>
+	<array/>
 </dict>
 </plist>
