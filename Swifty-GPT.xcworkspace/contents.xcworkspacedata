@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/sprinchar/Swifty-GPT-github/Swifty-GPT/Speak.swift">
-   </FileRef>
-   <FileRef
       location = "group:Swifty-GPT.xcodeproj">
    </FileRef>
 </Workspace>
