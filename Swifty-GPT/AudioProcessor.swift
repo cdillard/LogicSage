@@ -57,6 +57,18 @@ class AudioRecorder {
     }
 
     func startRecording() {
+
+        let index = Int.random(in: 0..<90000)
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
+        let audioFilePath = "\(projectPath)/audio-\(index)\(audioRecordingFileFormat)"
+        let audioOut = URL(fileURLWithPath: audioFilePath)
+        self.outputFileURL = audioOut
+        
+        let index2 = Int.random(in: 0..<90000)
+        let tempAudioPath = "\(projectPath)/audio-\(index2)\(tempAudioRecordingFileFormat)"
+        self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
+
+
         // SEEMS LIKE CRASH OCCURS IF YOU TRY TO TALK WHEN THEY ARE
         // 2023-04-15 20:37:07.713005-0600 Swifty-GPT[64119:16301563] *** Terminating app due to uncaught exception 'com.apple.coreaudio.avfaudio', reason: 'required condition is false: format.sampleRate == hwFormat.sampleRate' wtf
         let inputNode = audioEngine.inputNode
@@ -88,7 +100,7 @@ class AudioRecorder {
         }
     }
 
-    func stopRecording() {
+    func stopRecording(completion: @escaping (Bool) -> Void) {
         isRunning = false
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
@@ -106,19 +118,20 @@ class AudioRecorder {
             switch exportSession.status {
             case .completed:
                 print("Recording finished successfully")
+                completion(true)
+
             case .failed:
                 print("Export failed: \(String(describing: exportSession.error))")
+                completion(false)
             case .cancelled:
                 print("Export cancelled")
+                completion(false)
             default:
-                break
+                completion(false)
             }
         }
     }
 }
-
-
-
 
 import AVFoundation
 

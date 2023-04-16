@@ -86,6 +86,7 @@ func handleUserInput() {
         while let char = readChar() {
             if char >= "0" && char <= "6" {
                 command = String(char)
+                print("attmpt to parse cmd name = \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {
@@ -103,7 +104,8 @@ func handleUserInput() {
                         parameter.append(nextChar)
                     }
                 }
-
+                // attempt to parse cmd named
+                print("attmpt to parse cmd name = \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {
@@ -113,6 +115,7 @@ func handleUserInput() {
                 command = ""
                 parameter = ""
             } else if char == "\n" {
+                print("attmpt to parse cmd name = \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {

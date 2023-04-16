@@ -1,5 +1,5 @@
- ggml-large.bin,
- ggml-medium.en.bin,
- ggml-large-v1.bin
- ggml-base.en.bin
- ggml-small.en.bn
+Swifty-GPT/model/ggml-large.bin
+Swifty-GPT/model/ggml-medium.en.bin
+Swifty-GPT/model/ggml-large-v1.bin
+Swifty-GPT/model/ggml-base.en.bin
+Swifty-GPT/model/ggml-small.en.bin

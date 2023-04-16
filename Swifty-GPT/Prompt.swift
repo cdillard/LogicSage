@@ -8,7 +8,7 @@
 
 //var appDesc = "app that displays 200 spheres with physics bodies in a circular area and a ground plane"
 
-//var appDesc = "app that displays 200 squares with physics bodies in a circular area and a ground plane"
+var appDesc = "app that displays 200 squares with physics bodies in a circular area and a ground plane"
 
 
 //var appDesc = "app that displays a breathtaking 3D scene with towering mountains, lush forests, and a majestic waterfall cascading into a crystal-clear lake. The scene should be bathed in the warm glow of a setting sun, with the sky awash in pink and orange hues.  max 10,000 polygons and texture resolution of 1024x1024. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files"
@@ -20,7 +20,7 @@
 //let appDesc = "that implements an L-System for displaying 3d text objects in 3D. Use Swift and SceneKit and the SCNText object to display the created obejcts. Do not use .scnassets folders or .scnassets files or .scn files."
 //let appDesc = "that displays a text label that says 'Hello World! with text color that randomly changes to a random color every random number of seconds between 1-3"
 
-var appDesc = "app that displays a spiraling swirling line across the entire screen. It should use colors from a matching color palette."
+//var appDesc = "app that displays a spiraling swirling line across the entire screen. It should use colors from a matching color palette."
 
 //let appDesc = "app that displays a mandelbrot set fractal. The app allows zooming into a specific point on the fractal using zoom gesture. Take special care to optimize the code so it works well on devices while zooming."
 

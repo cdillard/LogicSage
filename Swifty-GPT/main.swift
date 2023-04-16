@@ -10,6 +10,9 @@ import AVFAudio
 
 // Note you must have xcodegen brew and gem xcodeproj installed.
 
+// Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
+// I'm looking into it with GPT.
+
 // Replace this with your OpenAI API key
 let OPEN_AI_KEY = "sk-OPEN_AI_KEY"
 let PIXABAY_KEY = "PIXABAY_KEY"
@@ -46,14 +49,14 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = true
+let asciAnimations = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 
 var termColSize = 5
 var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize)
-let animator = TextAnimator(text: loadingText, animationDuration: 4)
+let animator = TextAnimator(text: loadingText)
 
 var audioRecorder: AudioRecorder?
 
@@ -71,7 +74,7 @@ var language = "Swift"
 
 // Main function to run the middleware
 func main() {
-    print("Swifty-GPT is loading... enjoy the show")
+    print("Swifty-GPT is loading...")
     spinner.start()
 //    if let terminalWidth = getTerminalWidth() {
 //        termColSize = terminalWidth
@@ -136,10 +139,10 @@ func main() {
     }
     // Intro ....
     // SHOULD Add, hasHeardInto check
-    if (voiceOutputEnabled) {
-        runTest()
-    }
+    runTest()
+
     spinner.stop()
+
     if interactiveMode {
 
         print(generatedOpenLine())
@@ -369,13 +372,14 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     for gptCommandIndex in 0...commandContents.count - 1 {
         let fullCommand = commandContents[gptCommandIndex]
         print("🤖🔨: performing GPT command = \(fullCommand)")
-        textToSpeech(text: fullCommand)
 
         if fullCommand.hasPrefix("Create project") {
 
             var name =  projectName
 
             projectName = name.isEmpty ? "MyApp" : name
+
+            textToSpeech(text: "Create project " + name + ".")
 
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
@@ -389,6 +393,8 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
             projectName = name.isEmpty ? "MyApp" : name
 
+            textToSpeech(text: "Open project " + projectName + ".")
+
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
@@ -400,6 +406,8 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             var name =  projectName
 
             projectName = name.isEmpty ? "MyApp" : name
+
+            textToSpeech(text: "Close project " + projectName + ".")
 
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
@@ -428,6 +436,8 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             else {
                 foundFileContents = ""
             }
+            let speech = "\(fullCommand) \(fileName) with length \(fileContents.count)."
+            textToSpeech(text: speech)
 
             // todo: check success here
             executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success, errors in   }
@@ -450,6 +460,8 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 //        }
 
     print("Building project...")
+    textToSpeech(text: "Building project \(projectName)...")
+
     executeXcodeCommand(.buildProject(name: projectName)) { success, errors in
         if success {
             completion(true, errors)

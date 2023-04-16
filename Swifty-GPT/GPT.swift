@@ -33,11 +33,11 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
         request.httpBody = jsonData
-
-        if currentRetry == 0 {
-            print("👨: \(prompt)")
-        }
-        else if isFix {
+//
+//        if currentRetry == 0 {
+//            print("👨: \(prompt)")
+//        }
+        if isFix {
             print("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
 
         }

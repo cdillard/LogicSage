@@ -11,7 +11,7 @@ var commandsText = """
 🔹 idea:  💡 New appDesc prompt
 🔹 gpt:   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations
-🔹 exit:  🚪 Close the program
+🔹 exit  🚪 Close the program
 """
 
 func generatedOpenLine() -> String {
@@ -35,7 +35,6 @@ func randomAscii() -> String {
     case 2: return logoAscii3
     default: return logoAscii2
     }
-
 }
 
 var openLinePrintCount = 0
@@ -72,6 +71,8 @@ let sharedCommands = """
 🔹 1. ✨ Run loaded prompt
 🔹 2. 🚀 Show loaded prompt
 🔹 3. 📂 Open project
+🔹 X. 📂 Voice settings
+
 """
 
 let numericalCommands = """

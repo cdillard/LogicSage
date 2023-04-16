@@ -30,9 +30,8 @@ var commandTable: [String: (String) -> Void] = [
 
 
 func ideaCommand(input: String) {
-    let command = String(input.dropFirst(5)).trimmingCharacters(in: .whitespacesAndNewlines)
 
-    let newPrompt = createIdeaPrompt(command: command)
+    let newPrompt = createIdeaPrompt(command: input)
 
     doPrompting(overridePrompt: newPrompt)
 }
@@ -47,7 +46,9 @@ func zeroCommand(input: String) {
     } else if audioRecorder?.isRunning == true {
         print("Stop voice capturer")
 
-        audioRecorder?.stopRecording()
+        audioRecorder?.stopRecording() { success in
+
+        }
         textToSpeech(text: "captured")
 
         guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
@@ -59,9 +60,8 @@ func zeroCommand(input: String) {
 }
 
 func gptCommand(input: String) {
-    let prompt = String(input.dropFirst(4)).trimmingCharacters(in: .whitespacesAndNewlines)
-    manualPromptString = prompt
-    sendPromptToGPT(prompt: prompt, currentRetry: 0) { content, success in
+    manualPromptString = input
+    sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
         print("\n🤖: \(content)")
 
         textToSpeech(text: content)
