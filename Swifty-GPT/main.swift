@@ -70,6 +70,7 @@ var language = "Swift"
 
 // Main function to run the middleware
 func main() {
+    spinner.start()
 //    var def = 5
 //    if let terminalWidth = getTerminalWidth() {
 //        def = terminalWidth
@@ -78,13 +79,6 @@ func main() {
 //    spinner = LoadingSpinner(columnCount: def)
 
     refreshPrompt(appDesc: appDesc)
-
-    if interactiveMode {
-        
-        print(generatedOpenLine())
-        openLinePrintCount += 1
-        refreshPrompt(appDesc: appDesc)
-    }
 
     // Parse command-line arguments
     let arguments = CommandLine.arguments
@@ -144,6 +138,14 @@ func main() {
     // SHOULD Add, hasHeardInto check
     if (voiceOutputEnabled) {
         runTest()
+    }
+    spinner.stop()
+    
+    if interactiveMode {
+
+        print(generatedOpenLine())
+        openLinePrintCount += 1
+        refreshPrompt(appDesc: appDesc)
     }
 
     // END AUDIO PROCESSING

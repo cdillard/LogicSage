@@ -14,7 +14,7 @@ Swifty-GPT is not just for game development. Its powerful capabilities make it a
 # Voice Command
 
 
-Pick your voice after trying them out with voice_test.sh `swift voice_test.swift` inside Swifty-GPT folder.
+Pick your voice after trying them out with voice_test `swift voice_test.swift` inside Swifty-GPT folder.
 
 
 For Voice Command you must download dataset you desire to use from https://huggingface.co/ggerganov/whisper.cpp/tree/main.

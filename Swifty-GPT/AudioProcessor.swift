@@ -124,12 +124,17 @@ class AudioRecorder {
 
 
 func runTest() {
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "h:mm a"
+    let currentTime = dateFormatter.string(from: Date())
+
     let date = Date()
     let calendar = Calendar.current
 
     let hour = calendar.component(.hour, from: date)
     let minutes = calendar.component(.minute, from: date)
-    textToSpeech(text: "Hi! Welcome It's about \(hour):\(minutes). I'm \(voice()) and I'll be your A.I.")
+    textToSpeech(text: "\((Int.random(in: 0...1) != 0) ? "Hi" : "Hello")! Welcome! It's about \(currentTime). I'm \(voice()) and I'll be your A.I.")
 }
 
 func textToSpeech(text: String) {
