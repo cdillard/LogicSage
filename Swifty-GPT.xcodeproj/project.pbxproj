@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6129E25F4B006B065B /* Info.plist */; };
 		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
+		B705316729EBC445004DC3B3 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B705316629EBC445004DC3B3 /* Speak.swift */; };
 		B70B44D429EAD61900C45773 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D329EAD61900C45773 /* Text.swift */; };
 		B70B44D629EAD85B00C45773 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D529EAD85B00C45773 /* Files.swift */; };
 		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Swifty-GPT-App.swiftpm"; sourceTree = "<group>"; };
+		B705316629EBC445004DC3B3 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Speak.swift; path = "/Users/sprinchar/Swifty-GPT-github/Swifty-GPT/Speak.swift"; sourceTree = "<absolute>"; };
 		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		B70B44D729EAD91900C45773 /* GPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B705316629EBC445004DC3B3 /* Speak.swift */,
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
@@ -263,6 +266,7 @@
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
+				B705316729EBC445004DC3B3 /* Speak.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

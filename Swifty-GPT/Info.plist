@@ -22,6 +22,12 @@
 	<string>Uses your microphone to capture your voice commands</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Uses Speech recognition so you can talk to the robots</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>NSSupportsSuddenTermination</key>
+	<false/>
+	<key>NSSupportsAutomaticTermination</key>
+	<false/>
 	<key>UILaunchScreen</key>
 	<array/>
 </dict>

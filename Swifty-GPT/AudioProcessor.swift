@@ -118,39 +118,7 @@ class AudioRecorder {
 }
 
 
-// Only say Swifty-GPT the fist time they open
 
-// SPEAK
-
-
-func runTest() {
-
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "h:mm a"
-    let currentTime = dateFormatter.string(from: Date())
-
-    let date = Date()
-    let calendar = Calendar.current
-
-    let hour = calendar.component(.hour, from: date)
-    let minutes = calendar.component(.minute, from: date)
-    textToSpeech(text: "\((Int.random(in: 0...1) != 0) ? "Hi" : "Hello")! Welcome! It's about \(currentTime). I'm \(voice()) and I'll be your A.I.")
-}
-
-func textToSpeech(text: String) {
-    if !voiceOutputEnabled { return }
-    
-    let task = Process()
-    task.executableURL = URL(fileURLWithPath: "/usr/bin/say")
-    task.arguments = [text, "-v", voice()]
-
-    do {
-        try task.run()
-        task.waitUntilExit()
-    } catch {
-        print("Error running text-to-speech: \(error)")
-    }
-}
 
 import AVFoundation
 

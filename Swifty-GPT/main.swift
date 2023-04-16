@@ -70,13 +70,13 @@ var language = "Swift"
 
 // Main function to run the middleware
 func main() {
+    print("Swifty-GPT is loading... enjoy the show")
     spinner.start()
 //    var def = 5
 //    if let terminalWidth = getTerminalWidth() {
 //        def = terminalWidth
 //    }
-//    spinner?.stop()
-//    spinner = LoadingSpinner(columnCount: def)
+
 
     refreshPrompt(appDesc: appDesc)
 
@@ -140,7 +140,6 @@ func main() {
         runTest()
     }
     spinner.stop()
-    
     if interactiveMode {
 
         print(generatedOpenLine())
@@ -225,7 +224,7 @@ func createIdeaPrompt(command: String) -> String {
     appDesc = command
     refreshPrompt(appDesc: command)
 
-    var newPrompt = promptText()
+    let newPrompt = promptText()
     return newPrompt
 }
 

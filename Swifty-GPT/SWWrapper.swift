@@ -7,7 +7,7 @@
 
 import Foundation
 
-let modelName = "ggml-large-v1"
+let modelName = "ggml-medium.en"
 
 //.package(url: "https://github.com/exPHAT/SwiftWhisper.git", revision: "6ed3484c5cf449041b5c9bcb3ac82455d6a586d7"),
 

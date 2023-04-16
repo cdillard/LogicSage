@@ -55,7 +55,6 @@ func zeroCommand(input: String) {
         Task {
             await doTranscription(on: path)
         }
-
     }
 }
 
@@ -76,7 +75,9 @@ func gptCommand(input: String) {
 
 // TODO:
 func xcodeCommand(input: String) {
-    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
+
+    print("Xcode commands could be used for all sorts of things")
+//    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
    // runXcodeCommand(command: command)
 }
 

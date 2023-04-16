@@ -75,7 +75,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             }
 
             guard let data  else {
-                completion("Failed networking w/ error = \(error)", false)
+                completion("Failed networking w/ error = \(String(describing: error))", false)
                 return print("failed to laod data")
             }
 
