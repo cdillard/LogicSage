@@ -50,17 +50,17 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-        let randomNumber = Double.random(in: 0...1)
-        if randomNumber == 0 {
+  //      let randomNumber = Double.random(in: 0...1)
+  //      if randomNumber == 0 {
             spinner.start()
-        }
-        else if asciAnimations {
-            animator.start()
-        }
+//        }
+//        else if asciAnimations {
+//            animator.start()
+//        }
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
-      //      if randomNumber == 0 {
+   //         if randomNumber == 0 {
 
                 spinner.stop()
 //            }

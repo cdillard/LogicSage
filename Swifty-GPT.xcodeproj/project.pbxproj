@@ -25,7 +25,9 @@
 		B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9B29EB3F8500B8A9E4 /* AudioToolbox.framework */; };
 		B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
+		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
+		B7C35B0B29EB946D00DFA8BC /* Transcribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C35B0A29EB946D00DFA8BC /* Transcribe.swift */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +50,7 @@
 		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		B70B44D729EAD91900C45773 /* GPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
-		B70B44D929EAF0E400C45773 /* physicsSceneOutput.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = physicsSceneOutput.txt; path = exampleOutput/physicsSceneOutput.txt; sourceTree = "<group>"; };
+		B70B44D929EAF0E400C45773 /* physicsSceneOutput.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = physicsSceneOutput.txt; sourceTree = "<group>"; };
 		B70B44DA29EAF9B500C45773 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		B70B44DC29EAFBFE00C45773 /* AsciiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,11 +70,13 @@
 		B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioVideoBridging.framework; path = System/Library/Frameworks/AudioVideoBridging.framework; sourceTree = SDKROOT; };
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = createAppWithLibary_output.txt; sourceTree = "<group>"; };
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7C35B0A29EB946D00DFA8BC /* Transcribe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcribe.swift; sourceTree = "<group>"; };
 		B7E15E6D29E6F8920056A325 /* Xcodegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodegen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,28 +115,27 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B7139CDF29E147910049ADE1 /* main.swift */,
+				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
-				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
+				B7C35B0A29EB946D00DFA8BC /* Transcribe.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
-				B7139CDF29E147910049ADE1 /* main.swift */,
-				B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B70B44D329EAD61900C45773 /* Text.swift */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
-				B70B44D929EAF0E400C45773 /* physicsSceneOutput.txt */,
+				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
-				B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */,
-				B740F56529E7B891007ADED8 /* CommonErrors.txt */,
+				B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -150,6 +153,9 @@
 		B7A4404A29E7499000E7C065 /* exampleOutput */ = {
 			isa = PBXGroup;
 			children = (
+				B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */,
+				B740F56529E7B891007ADED8 /* CommonErrors.txt */,
+				B70B44D929EAF0E400C45773 /* physicsSceneOutput.txt */,
 				B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */,
 				B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */,
 				B76BF95C29E4AD2800F6420E /* example_output.txt */,
@@ -222,11 +228,13 @@
 			files = (
 				B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
+				B7C35B0B29EB946D00DFA8BC /* Transcribe.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
+				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
@@ -368,6 +376,7 @@
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -385,6 +394,7 @@
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -22,7 +22,7 @@ func generatedOpenLine() -> String {
     🔹 1. ✨ Run appDesc GPT prompt
     🔹 2. 🚀 Show loaded prompt
     🔹 3. 📂 Open project
-    \(commands)
+    \(commandsText)
 
     🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
 
@@ -53,23 +53,24 @@ func updateOpeningLine() {
 
 let afterBuildFailedLine = """
 Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
-🔹 0. 🗣️🎮🎨📲 Use voice command
-🔹 1. ✨   Run appDesc GPT prompt
-🔹 2. 🚀   Show loaded prompt
-🔹 3. 📂   Open project
-🔹 4. 🚪📂 Close project
-🔹 5. 🖥️🔧 Fix errors w/ GPT
-🔹 6. 🆕   Continue implementation
-\(commands)
+\(numericalCommands)
+\(commandsText)
 
 ❓ What would you like to do:
 🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
 
 """
 
-
 let afterSuccessLine = """
 Project creation success. Project should have auto openned.
+\(numericalCommands)
+\(commandsText)
+
+🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
+
+"""
+
+let numericalCommands = """
 🔹 0. 🗣️🎮🎨📲 Use voice command
 🔹 1. ✨   Run appDesc GPT prompt
 🔹 2. 🚀   Show loaded prompt
@@ -77,8 +78,4 @@ Project creation success. Project should have auto openned.
 🔹 4. 🚪📂 Close project
 🔹 5. 🖥️🔧 Fix errors w/ GPT
 🔹 6. 🆕   Continue implementation
-\(commands)
-
-🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
-
 """

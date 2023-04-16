@@ -13,7 +13,7 @@ class TextAnimator {
     private let animationDuration: TimeInterval
     private var characterDelays: [[TimeInterval]]
     private var displayGrid: [[Character]]
-    private let animationInterval: TimeInterval = 0.1
+    private let animationInterval: TimeInterval = 0.05
     private let startTime: TimeInterval
     private var timer: Timer?
 
@@ -27,10 +27,14 @@ class TextAnimator {
         self.characterDelays = Array(repeating: Array(repeating: 0.0, count: columnCount), count: rowCount)
         self.displayGrid = Array(repeating: Array(repeating: " ", count: columnCount), count: rowCount)
 
+        let totalCharacters = self.asciiArt.map { $0.count }.reduce(0, +)
+        let delayStep = animationDuration / TimeInterval(totalCharacters)
+        var currentDelay: TimeInterval = 0
+
         for (rowIndex, row) in self.asciiArt.enumerated() {
             for (columnIndex, _) in row.enumerated() {
-                let delay = TimeInterval.random(in: 0..<animationDuration)
-                self.characterDelays[rowIndex][columnIndex] = delay
+                self.characterDelays[rowIndex][columnIndex] = currentDelay
+                currentDelay += delayStep
             }
         }
     }

@@ -5,6 +5,11 @@
 //  Created by Chris Dillard on 4/15/23.
 //
 
+import Foundation
+import AVFoundation
+import os.log
+import AVFoundation
+import CoreMedia
 
 var chosenVoice: String?
 
@@ -17,104 +22,112 @@ func voice() -> String {
 
 func randomVoice() -> String {
     // SERIOUS VOICES
-   // ["TingTing","Karen", "Zarvox", "Yuna", "Trinoids", "Rishi", "Kanya"].randomElement()!
+    ["Karen", "Zarvox", "Trinoids", "Rishi"].randomElement()!
 
     // FUN VOICES
-    ["Jester", "Good News", "Bubbles", "Boing", "Bad News"].randomElement()!
+//    ["Jester", "Good News", "Bubbles", "Boing", "Bad News"].randomElement()!
 }
 
 // LISTEN
-import Foundation
-import AVFoundation
-import os.log
 
 let avFoundationLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "AVFoundation")
 
-class AudioInputHandler: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
-    private let captureSession = AVCaptureSession()
-    private var audioFile: AVAudioFile?
-    private var outputFileURL: URL
+let audioRecordingFileFormat = ".m4a"
+let tempAudioRecordingFileFormat = ".caf"
 
+class AudioRecorder {
+    var audioEngine: AVAudioEngine!
+    var outputFileURL: URL!
+    var outputTempFileURL: URL!
+
+    var audioFile: AVAudioFile!
+    
     var isRunning = false
 
     init(outputFileURL: URL) {
-        os_log(.info, log: avFoundationLog, "Audio subsytem initialization.")
+        self.audioEngine = AVAudioEngine()
+
         self.outputFileURL = outputFileURL
-        super.init()
 
-        do {
-            let captureDevice = AVCaptureDevice.default(for: .audio)
-            let captureDeviceInput = try AVCaptureDeviceInput(device: captureDevice!)
-            captureSession.addInput(captureDeviceInput)
+        let index = Int.random(in: 0..<90000)
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
+        let tempAudioPath = "\(projectPath)/audio-\(index)\(tempAudioRecordingFileFormat)"
 
-            let captureAudioDataOutput = AVCaptureAudioDataOutput()
-            let queue = DispatchQueue(label: "audioQueue")
-            captureAudioDataOutput.setSampleBufferDelegate(self, queue: queue)
-            captureSession.addOutput(captureAudioDataOutput)
-        } catch {
-            print("Error initializing audio capture: \(error)")
-        }
+        self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
     }
 
-    func start() {
-        print("&&&&&&&&&& STARTING CAPTURE SESSION &&&&")
-
+    func startRecording() {
+        // SEEMS LIKE CRASH OCCURS IF YOU TRY TO TALK WHEN THEY ARE
+        // 2023-04-15 20:37:07.713005-0600 Swifty-GPT[64119:16301563] *** Terminating app due to uncaught exception 'com.apple.coreaudio.avfaudio', reason: 'required condition is false: format.sampleRate == hwFormat.sampleRate' wtf
+        let inputNode = audioEngine.inputNode
+        let inputFormat = inputNode.inputFormat(forBus: 0)
         isRunning = true
-        captureSession.startRunning()
-    }
-
-    func stop() {
-        print("&&&&&&&&&& STOPPING CAPTURE SESSION &&&&")
-        isRunning = false
-        captureSession.stopRunning()
-       // audioFile = nil
-    }
-
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        let format = AVAudioFormat(commonFormat: .pcmFormatInt16, sampleRate: 44100, channels: 1, interleaved: false)
-        guard let settin = format?.settings else { return  print("Error initializing audio file")}
         do {
-            audioFile = try AVAudioFile(forWriting: outputFileURL, settings: settin)
+            audioFile = try AVAudioFile(forWriting: outputTempFileURL, settings: inputFormat.settings)
         } catch {
             print("Error initializing audio file: \(error)")
             return
         }
 
-        guard let audioFile = audioFile else { return }
+        inputNode.installTap(onBus: 0, bufferSize: 4096, format: inputFormat) { [weak self] (buffer, _) in
+            guard let strongSelf = self else { return }
 
-        var blockBuffer: CMBlockBuffer?
-        var audioBufferList = AudioBufferList()
-        CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(
-            sampleBuffer,
-            bufferListSizeNeededOut: nil,
-            bufferListOut: &audioBufferList,
-            bufferListSize: MemoryLayout<AudioBufferList>.size,
-            blockBufferAllocator: nil,
-            blockBufferMemoryAllocator: nil,
-            flags: 0,
-            blockBufferOut: &blockBuffer
-        )
+            do {
+                try strongSelf.audioFile.write(from: buffer)
+            } catch {
+                print("Error writing to audio file: \(error)")
+            }
+        }
 
-        let buffer: AudioBuffer = audioBufferList.mBuffers
-
+        audioEngine.prepare()
         do {
-            let audioBuffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat, frameCapacity: UInt32(buffer.mDataByteSize) / audioFile.processingFormat.streamDescription.pointee.mBytesPerFrame)!
-            audioBuffer.frameLength = UInt32(buffer.mDataByteSize) / audioFile.processingFormat.streamDescription.pointee.mBytesPerFrame
-            memcpy(audioBuffer.mutableAudioBufferList.pointee.mBuffers.mData, buffer.mData, Int(buffer.mDataByteSize))
-            try audioFile.write(from: audioBuffer)
+            try audioEngine.start()
         } catch {
-            print("Error writing to audio file: \(error)")
+            print("Error starting audio engine: \(error)")
+            return
+        }
+    }
+
+    func stopRecording() {
+        isRunning = false
+        audioEngine.stop()
+        audioEngine.inputNode.removeTap(onBus: 0)
+
+        let asset = AVAsset(url: outputTempFileURL)
+        guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
+            print("Failed to create export session")
+            return
+        }
+
+        exportSession.outputURL = outputFileURL
+        exportSession.outputFileType = .m4a
+
+        exportSession.exportAsynchronously {
+            switch exportSession.status {
+            case .completed:
+                print("Recording finished successfully")
+            case .failed:
+                print("Export failed: \(String(describing: exportSession.error))")
+            case .cancelled:
+                print("Export cancelled")
+            default:
+                break
+            }
         }
     }
 }
 
 
+// Only say Swifty-GPT the fist time they open
+
 // SPEAK
 func runTest() {
-    textToSpeech(text: "Hi! Welcome to Swifty-GPT. I'm your debugging assistant \(voice()).")
+    textToSpeech(text: "Hi! Welcome. I'm \(voice()) and I'll be your debugging assistant this session.")
 }
 
 func textToSpeech(text: String) {
+    if !voiceOutputEnabled { return }
+    
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/say")
     task.arguments = [text, "-v", voice()]

@@ -46,13 +46,15 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = true
+let asciAnimations = false
+
+let voiceOutputEnabled = true
+let voiceInputEnabled = true
 
 var spinner: LoadingSpinner = LoadingSpinner(columnCount: 5)
+//let animator = TextAnimator(asciiArt: loadingText, animationDuration: 20)
 
-let animator = TextAnimator(asciiArt: loadingText, animationDuration: 20)
-
-var audioProcessor: AudioInputHandler?
+var audioRecorder: AudioRecorder?
 
 // Globals  I know....
 var projectName = "MyApp"
@@ -120,14 +122,14 @@ func main() {
     else {
         doPrompting()
     }
+
+    // BEGIN AUDIO PROCESSING
+
     let index = Int.random(in: 0..<90000)
-
     let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-    let audioFilePath = "\(projectPath)/audio-\(index).wav"
-    if let audioOut = URL(string: audioFilePath) {
-
-        audioProcessor = AudioInputHandler(outputFileURL: audioOut)
-    }
+    let audioFilePath = "\(projectPath)/audio-\(index)\(audioRecordingFileFormat)"
+    let audioOut = URL(fileURLWithPath: audioFilePath)
+    audioRecorder = AudioRecorder(outputFileURL: audioOut)
 
     requestMicrophoneAccess { granted in
         if granted {
@@ -139,9 +141,12 @@ func main() {
         }
     }
     // Intro ....
-    runTest()
+    // SHOULD Add, hasHeardInto check
+    if (voiceOutputEnabled) {
+        runTest()
+    }
 
-
+    // END AUDIO PROCESSING
     sema.wait()
 }
 
@@ -228,9 +233,6 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         completion(nil)
         return
     }
-
-
-    //let prompt = createFixItPrompt(errors: errors, currentRetry: 0)
 
     sendPromptToGPT(prompt: prompt, currentRetry: currentRetry, isFix: !errors.isEmpty) { response, success in
         if success {
@@ -425,6 +427,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 foundFileContents = ""
             }
 
+            // todo: check success here
             executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success, errors in   }
 
 
@@ -438,6 +441,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         commandIndex += 1
     }
 
+    // todo: check to make sure the files were written
 //        if filesWritten == 0 || filesWritten != fileContents.count {
 //            print("Failed to make files.. retrying...")
 //            return completion(false)
