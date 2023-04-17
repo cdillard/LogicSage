@@ -33,7 +33,7 @@ func runTest() {
     let currentTime = dateFormatter.string(from: Date())
     let greeting = welcomeWord()
 
-    textToSpeech(text: "\(greeting). Welcome! It's \(currentTime). I'm \(voice()) and I'm your A.I.")
+    textToSpeech(text: "\(greeting). Welcome! It's \(currentTime). I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm your A.I.")
 }
 
 func textToSpeech(text: String) {
@@ -71,6 +71,8 @@ func textToSpeech(text: String) {
 
         let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
         let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+        print("sayText: \(output), errorOutput: \(errorOutput)")
 
     } catch {
         print("Error running text-to-speech: \(error)")

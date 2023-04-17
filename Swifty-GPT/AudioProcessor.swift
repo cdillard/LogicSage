@@ -22,7 +22,7 @@ func voice() -> String {
 
 func randomVoice() -> String {
     // SERIOUS VOICES
-    ["Karen", "Zarvox", "Trinoids", "Rishi"].randomElement()!
+    ["Karen"].randomElement()! //"Zarvox", "Trinoids", "Rishi"].randomElement()!
 
     // FUN VOICES
 //    ["Jester", "Good News", "Bubbles", "Boing", "Bad News"].randomElement()!

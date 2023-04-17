@@ -11,34 +11,32 @@ func promptUserInput(message: String) -> String? {
     print(message, terminator: "")
     return readLine()
 }
+let validCharacterSet = CharacterSet(charactersIn: UnicodeScalar(0x20)!...UnicodeScalar(0x7E)!)
 
 import Foundation
 import Darwin
 
-func setRawMode(file: UnsafeMutablePointer<FILE>) {
+func enableRawMode(fileDescriptor: Int32) -> termios {
     var raw: termios = termios()
-    tcgetattr(fileno(file), &raw)
+
+    tcgetattr(fileDescriptor, &raw)
+    let original = raw
+
+    // Apply raw mode flags
     raw.c_lflag &= ~(UInt(ECHO | ICANON))
-    tcsetattr(fileno(file), TCSAFLUSH, &raw)
+    raw.c_cc.16 = 1 // VMIN
+    raw.c_cc.17 = 0 // VTIME
+
+    tcsetattr(fileDescriptor, TCSAFLUSH, &raw)
+
+    return original
 }
 
-func unsetRawMode(file: UnsafeMutablePointer<FILE>) {
-    var raw: termios = termios()
-    tcgetattr(fileno(file), &raw)
-    raw.c_lflag |= (UInt(ECHO | ICANON))
-    tcsetattr(fileno(file), TCSAFLUSH, &raw)
+func disableRawMode(fileDescriptor: Int32, originalTermios: termios) {
+    var term = originalTermios
+    tcsetattr(fileDescriptor, TCSAFLUSH, &term)
 }
 
-//func readCharacter() -> Character? {
-//    setRawMode(file: stdin)
-//    let c = fgetc(stdin)
-//    unsetRawMode(file: stdin)
-//
-//    if c == EOF {
-//        return nil
-//    }
-//    return Character(UnicodeScalar(UInt32(bitPattern: c))!)
-//}
 
 func setupTermios() -> termios {
     var term = termios()
@@ -75,15 +73,55 @@ func readChar() -> Character? {
     return nil
 }
 
-
+let BACKSPACE: UInt8 = 0x7F // ASCII value of the backspace character
 func handleUserInput() {
     var command = ""
     var parameter = ""
 
     let inputQueue = DispatchQueue(label: "inputQueue")
 
+    let STDIN_FILENO = FileHandle.standardInput.fileDescriptor
+    let BACKSPACE: UInt8 = 0x7F // ASCII value of the backspace character
+
+    let originalTermios = enableRawMode(fileDescriptor: STDIN_FILENO)
+    defer {
+        disableRawMode(fileDescriptor: STDIN_FILENO, originalTermios: originalTermios)
+    }
+
     inputQueue.async {
-        while let char = readChar() {
+        while true {
+            guard let char = readChar() else {
+                continue
+            }
+
+            if char == Character(UnicodeScalar(BACKSPACE)) {
+                if !parameter.isEmpty {
+                    // Remove the last character from the parameter
+                    parameter.removeLast()
+                } else if !command.isEmpty {
+                    // Remove the last character from the command
+                    command.removeLast()
+                }
+                print("\r", terminator: "")
+                fflush(stdout)
+
+                // Remove the last character from the parameter or command
+                if !parameter.isEmpty {
+                    parameter.removeLast()
+                } else if !command.isEmpty {
+                    command.removeLast()
+                }
+
+                // Reprint the updated command and parameter
+                let validCommand = command.unicodeScalars.filter { validCharacterSet.contains($0) }
+                let validParameter = parameter.unicodeScalars.filter { validCharacterSet.contains($0) }
+                print(String(validCommand) + "" + String(validParameter), terminator: "")
+                fflush(stdout)
+
+                continue
+            }
+
+
             if char >= "0" && char <= "6" {
                 command = String(char)
                 print("attmpt to parse cmd name = \(command)")

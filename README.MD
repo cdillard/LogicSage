@@ -1,7 +1,8 @@
 ![Shiwfty](Swifty-GPT/assets/Swifty-Logo.png)
 
-## Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
+Join me on [Discord](https://discord.gg/6hbDDqf8SX), or not.
 
+## Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 
 - With a little help from my GPT🤖. Thank you Open AI.
@@ -29,6 +30,9 @@ youll need
  ggml-small.en.bn,
 
 Put them folders in Swifty-GPT/Swifty-GPT/Model
+
+
+IF you ever have robot voices getting away from you, `killall say` in the terminal will stop them.
 
 # Voice Command
 
@@ -86,5 +90,9 @@ iPad and iOS support coming soon!
 
 # Credits
 SwiftWhisper: https://github.com/exPHAT/SwiftWhisper
+
 SwiftyTessarect: https://github.com/SwiftyTesseract/SwiftyTesseract 
+
 OpenAI GPT-4, GPT-3.5 turbo APIs: www.openai.com 
+
+AudioKit:  https://github.com/AudioKit/AudioKit
