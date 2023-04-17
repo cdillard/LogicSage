@@ -14,8 +14,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "390"
-            endingLineNumber = "390"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -122,8 +122,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -215,8 +215,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -231,8 +231,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "executeXcodeCommand(_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -354,8 +354,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "executeXcodeCommand(_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -432,8 +432,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "executeXcodeCommand(_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -503,240 +503,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swifty-GPT/main.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "sendPromptToGPT(prompt:currentRetry:isFix:completion:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C - 81ba8570fd11f095"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "216"
-                  endingLineNumber = "216"
-                  offsetFromSymbolStart = "3020">
-               </Location>
-               <Location
-                  uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C - 5d69e4c0145ed2ef"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "217"
-                  endingLineNumber = "217"
-                  offsetFromSymbolStart = "224">
-               </Location>
-               <Location
-                  uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C - 5d69e4c0145ed2ef"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "217"
-                  endingLineNumber = "217"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C - 81ba8570fd11f038"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "221"
-                  endingLineNumber = "221"
-                  offsetFromSymbolStart = "2964">
-               </Location>
-               <Location
-                  uuid = "C3211DE9-BB40-4502-8BA1-9F67AC1E482C - 5d69e4c0145ed380"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "220">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DE4BADFC-1824-43C3-B587-CC8FA2BD8CCD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swifty-GPT/main.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "sendPromptToGPT(prompt:currentRetry:isFix:completion:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "DE4BADFC-1824-43C3-B587-CC8FA2BD8CCD - 5d69e4c0145ed05d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "235"
-                  endingLineNumber = "235"
-                  offsetFromSymbolStart = "3008">
-               </Location>
-               <Location
-                  uuid = "DE4BADFC-1824-43C3-B587-CC8FA2BD8CCD - 5d69e4c0145ed05d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "235"
-                  endingLineNumber = "235"
-                  offsetFromSymbolStart = "3128">
-               </Location>
-               <Location
-                  uuid = "DE4BADFC-1824-43C3-B587-CC8FA2BD8CCD - 5d69e4c0145ed1f6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "240"
-                  endingLineNumber = "240"
-                  offsetFromSymbolStart = "3100">
-               </Location>
-               <Location
-                  uuid = "DE4BADFC-1824-43C3-B587-CC8FA2BD8CCD - 5d69e4c0145ed134"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "242"
-                  endingLineNumber = "242"
-                  offsetFromSymbolStart = "3100">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2329622F-D7D2-49B2-B318-7DCCD2FE4EC3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Swifty-GPT/main.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "sendPromptToGPT(prompt:currentRetry:isFix:completion:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "2329622F-D7D2-49B2-B318-7DCCD2FE4EC3 - 5d69e4c0145ed3a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "223"
-                  endingLineNumber = "223"
-                  offsetFromSymbolStart = "268">
-               </Location>
-               <Location
-                  uuid = "2329622F-D7D2-49B2-B318-7DCCD2FE4EC3 - 5d69e4c0145ed3a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "223"
-                  endingLineNumber = "223"
-                  offsetFromSymbolStart = "276">
-               </Location>
-               <Location
-                  uuid = "2329622F-D7D2-49B2-B318-7DCCD2FE4EC3 - 5d69e4c0145ed37a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Swifty_GPT.sendPromptToGPT(prompt: Swift.String, completion: (Swift.String, Swift.Bool) -&gt; ()) -&gt; ()"
-                  moduleName = "Swifty-GPT"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sprinchar/Documents/GPT/Swifty-GPT/Swifty-GPT/main.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "228"
-                  endingLineNumber = "228"
-                  offsetFromSymbolStart = "264">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3A8204E5-2C8E-48A1-9105-75028B892A0A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -744,8 +510,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -807,9 +573,9 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
+            landmarkName = "executeAppleScriptCommand(_:)"
             landmarkType = "9">
             <Locations>
                <Location
@@ -870,8 +636,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -933,8 +699,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "384"
-            endingLineNumber = "384"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1056,8 +822,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
+            startingLineNumber = "432"
+            endingLineNumber = "432"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1293,8 +1059,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1309,8 +1075,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1325,8 +1091,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1403,8 +1169,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1481,8 +1247,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1529,8 +1295,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1637,8 +1403,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "412"
+            endingLineNumber = "412"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1715,8 +1481,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1763,8 +1529,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1811,8 +1577,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1859,8 +1625,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1907,8 +1673,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -1955,8 +1721,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -2003,8 +1769,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "413"
+            endingLineNumber = "413"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -2051,8 +1817,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>
@@ -2099,8 +1865,8 @@
             filePath = "Swifty-GPT/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
             landmarkName = "parseAndExecuteGPTOutput(_:_:completion:)"
             landmarkType = "9">
             <Locations>

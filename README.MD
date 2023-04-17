@@ -45,6 +45,9 @@ brew install xdotool
 
 defaults write org.x.X11 enable_test_extensions -boolean true
 
+
+Xcode: File -> Packages -> Reset Package Contents
+
 $ startx -- :1
 
 

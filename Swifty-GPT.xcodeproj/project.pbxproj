@@ -16,6 +16,8 @@
 		B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DC29EAFBFE00C45773 /* AsciiText.swift */; };
 		B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */; };
 		B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B929EBB44D0099A0D1 /* AudioKit */; };
+		B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
+		B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B719B22729ECB888003358C2 /* AssisAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22629ECB888003358C2 /* AssisAI.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
@@ -43,23 +45,6 @@
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B719B24629ECE380003358C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B719B23829ECE380003358C2;
-			remoteInfo = xTermRunner;
-		};
-		B719B24829ECEEBC003358C2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B719B23729ECE380003358C2;
-			remoteInfo = xTermRunner;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		B7139CDA29E147910049ADE1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -67,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */,
 				B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */,
 				B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */,
 				B7D6518429EC88EF00ED8BAE /* ggml-medium.en.bin in CopyFiles */,
@@ -87,13 +73,13 @@
 		B70B44DA29EAF9B500C45773 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		B70B44DC29EAFBFE00C45773 /* AsciiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWWrapper.swift; sourceTree = "<group>"; };
+		B713384D29ED80F000020CC9 /* app_screenshot.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = app_screenshot.applescript; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22629ECB888003358C2 /* AssisAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = SOURCE_ROOT; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
 		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "/Users/sprinchar/Swifty-GPT-github/Swifty-GPT/Model/tessdata_fast-main"; sourceTree = "<absolute>"; };
-		B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xTermRunner.xcodeproj; path = xTermRunner/xTermRunner.xcodeproj; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -148,7 +134,6 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
-				B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */,
 				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7139CDD29E147910049ADE1 /* Products */,
@@ -167,6 +152,7 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
 				B719B22629ECB888003358C2 /* AssisAI.swift */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
@@ -200,14 +186,6 @@
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 			);
 			path = "Swifty-GPT";
-			sourceTree = "<group>";
-		};
-		B719B24329ECE380003358C2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B719B24729ECE380003358C2 /* xTermRunner */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B768CE9929EB3F8500B8A9E4 /* Frameworks */ = {
@@ -261,7 +239,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B719B24929ECEEBC003358C2 /* PBXTargetDependency */,
 			);
 			name = "Swifty-GPT";
 			packageProductDependencies = (
@@ -303,28 +280,12 @@
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B719B24329ECE380003358C2 /* Products */;
-					ProjectRef = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B719B24729ECE380003358C2 /* xTermRunner */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = xTermRunner;
-			remoteRef = B719B24629ECE380003358C2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B7139CD829E147910049ADE1 /* Sources */ = {
@@ -336,6 +297,7 @@
 				B758DCFD29EBCBF300A35D83 /* Speak.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
+				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
@@ -358,14 +320,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B719B24929ECEEBC003358C2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = xTermRunner;
-			targetProxy = B719B24829ECEEBC003358C2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B7139CE129E147910049ADE1 /* Debug */ = {
@@ -489,13 +443,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPT.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPTDebug.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
@@ -511,12 +469,16 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPT.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;

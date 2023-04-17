@@ -28,6 +28,10 @@
 	<false/>
 	<key>NSSupportsAutomaticTermination</key>
 	<false/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Uses apple events to control your computer</string>
+	<key>NSSystemAdministrationUsageDescription</key>
+	<string>Uses administrator rights to take screenshots</string>
 	<key>UILaunchScreen</key>
 	<array/>
 </dict>

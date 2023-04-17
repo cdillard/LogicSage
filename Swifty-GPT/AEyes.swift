@@ -8,6 +8,7 @@
 import Foundation
 import Vision
 import SwiftyTesseract
+import CoreGraphics
 
 let tessaRectTrainingFileLoc = "tessdata_fast-main"
 class CustomBundle: LanguageModelDataSource {
@@ -15,6 +16,8 @@ class CustomBundle: LanguageModelDataSource {
      "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/\(tessaRectTrainingFileLoc)"
   }
 }
+
+let lookInterval: TimeInterval = 30.0
 
 let eyes = AEyes()
 
@@ -24,187 +27,186 @@ class AEyes{
 
 import SwiftyTesseract
 
-func takeScreenshotOfAppWindows(named appName: String, windowName: String? = nil) -> [String] {
-    let task = Process()
-    let pipe = Pipe()
-    guard let xtermrunnerURL = Bundle.main.url(forResource: "xTermRunner", withExtension: "") else {  print("FAILEd at xTermrunn"); return []  }
+var extractedTexts: [String] = []
+func startEyes() {
 
-    task.executableURL = xtermrunnerURL
+    // doAccessiblity(procID: getpid())
 
-    //exectute command
-    //
-//    let comArr = ["-c", "/opt/X11/bin/xwininfo", "-tree", "-root"]
-//    print(comArr)
-    //task.arguments = ["arg1", "arg2"]
+    let inputQueue = DispatchQueue(label: "capturerQueue")
 
-    task.standardOutput = pipe
-    task.standardError = pipe
+    inputQueue.async {
+        //let image = captureWindowWithTitle("Xcode")
+        " Swifty-GPT — AEyes.swift"
+        let title = "Swifty-GPT — AEyes.swift"
 
-    task.environment = ProcessInfo.processInfo.environment
-    task.environment?["DISPLAY"] = ":0"
+//        (*App: Xcode, Window title: Swifty-GPT — AEyes.swift*)
 
-    if let xquartzPath = ProcessInfo.processInfo.environment["PATH"]?.split(separator: ":").first(where: { $0.hasSuffix("/XQuartz.app/Contents/MacOS") }) {
-        task.environment?["PATH"] = "\(xquartzPath):\(task.environment?["PATH"] ?? "")"
+
+        let output = runAppleScript("app_screenshot", withParameter: title)
+        print("Screenshot saved at:", output)
+
+
+
+        if output.hasPrefix("Error") {
+            print("Error occurred: \(output)")
+        } else if output == "Window not found." {
+            print("Window with title '\(title)' not found.")
+        } else {
+            let filePath = output
+            print("Screenshot saved at:", filePath)
+
+            if let cgImage = filePathToCGImage(filePath) {
+                print("Successfully converted file path to CGImage.")
+                // Do something with the CGImage
+
+                let customData = CustomBundle()
+
+                let swiftyTesseract = SwiftyTesseract.Tesseract(language: .english, dataSource: customData, engineMode: .lstmOnly)
+
+                var extractedTexts: [String] = []
+
+
+                guard let pngCont = cgImage.png else { return print("fail")}
+
+                let result = swiftyTesseract.performOCR(on:pngCont)
+                switch result {
+                case .success(let extractedText):
+                    extractedTexts.append(extractedText)
+                    print("extracted text = \(extractedText)")
+                case .failure(let error):
+                    print("Error performing OCR: \(error.localizedDescription)")
+                }
+
+
+            } else {
+                print("Failed to convert file path to CGImage.")
+            }
+        }
+
+        Thread.sleep(forTimeInterval: lookInterval)
+    }
+}
+private var thread: Thread?
+
+func captureWindowWithTitle(_ title: String) -> CGImage? {
+    let windowListInfo = CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as? [[String: Any]]
+
+    if let windowInfoList = windowListInfo {
+        for windowInfo in windowInfoList {
+            if let windowTitle = windowInfo[kCGWindowOwnerName as String] as? String, windowTitle == title {
+                if let windowNumber = windowInfo[kCGWindowNumber as String] as? NSNumber {
+                    let windowID = CGWindowID(windowNumber.uintValue)
+                    let windowBoundsRect = CGRect(dictionaryRepresentation: windowInfo[kCGWindowBounds as String] as! CFDictionary)!
+                    let image = CGWindowListCreateImage(windowBoundsRect, .optionIncludingWindow, windowID, .bestResolution)
+                    return image
+                }
+            }
+        }
     }
 
-        task.launch()
-        task.waitUntilExit()
+    return nil
+}
+
+extension CGImage {
+    var png: Data? {
+        guard let mutableData = CFDataCreateMutable(nil, 0),
+            let destination = CGImageDestinationCreateWithData(mutableData, "public.png" as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, self, nil)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        return mutableData as Data
+    }
+}
+
+
+import Foundation
+import AppKit
+//
+//func runAppleScript(_ scriptName: String, withParameter parameter: String) -> String {
+//
+//
+//    let kASAppleScriptSuite: OSType = 0x61736372 // 'ascr'
+//    let kASSubroutineEvent: OSType = 0x70736420 // 'psd '
+//    let kAutoGenerateReturnID: Int32 = -1
+//    let kAnyTransactionID: Int32 = 0
+//    let keyASSubroutineName: OSType = 0x73636E61 // 'scna'
+//    let keyDirectObject: OSType = 0x2d2d2d2d // '----'
+//
+//    let scriptURL = Bundle.main.url(forResource: scriptName, withExtension: "scpt")!
+//    let appleScript = try! NSUserAppleScriptTask(url: scriptURL)
+//
+//    let event = NSAppleEventDescriptor(eventClass: UInt32(kASAppleScriptSuite), eventID: UInt32(kASSubroutineEvent), targetDescriptor: nil, returnID: Int16(kAutoGenerateReturnID), transactionID: AETransactionID(Int16(kAnyTransactionID)))
+//    event.setParam(NSAppleEventDescriptor(string: "capture_window_by_title"), forKeyword: UInt32(keyASSubroutineName))
+//
+//    let parameters = NSAppleEventDescriptor.list()
+//    parameters.insert(NSAppleEventDescriptor(string: parameter), at: 0)
+//    event.setParam(parameters, forKeyword: UInt32(keyDirectObject))
+//
+//    appleScript.execute(withAppleEvent: event) {
+//        (result, err) in
+//           if let err = err {
+//               print("Error executing AppleScript: \(err)")
+//           } else if let result = result {
+//               print("Result: \(result.stringValue ?? "No result")")
+//           }
+//           exit(0)
+//       }
+//
+//
+//
+//
+//    RunLoop.main.run()
+//    return ""
+//}
+
+func runAppleScript(_ scriptName: String, withParameter parameter: String) -> String {
+    let scriptURL = Bundle.main.url(forResource: scriptName, withExtension: "applescript")!
+    let task = Process()
+    task.launchPath = "/usr/bin/osascript"
+    task.arguments = [scriptURL.path, parameter]
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+
+    task.launch()
+    task.waitUntilExit()
 
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    guard !data.isEmpty else {
-        return[""]
+
+    guard let stringData = String(data: data, encoding: .utf8) else {
+        print("fail") ; return ""
 
     }
-    guard let output = String(data: data, encoding: .utf8) else {
-        print("Error: Unable to get window information")
-        return []
+
+    let output = stringData.trimmingCharacters(in: .whitespacesAndNewlines)
+
+ 
+    return output
+}
+
+func filePathToCGImage(_ filePath: String) -> CGImage? {
+    let fileURL = URL(fileURLWithPath: filePath)
+    if let imageSource = CGImageSourceCreateWithURL(fileURL as CFURL, nil),
+       let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) {
+        return image
     }
+    return nil
+}
 
-    print("xq: \(output)")
-    let windowPairs = extractWindowInfo(from: output)
+import Foundation
+import ApplicationServices
+
+func doAccessiblity(procID: pid_t) {
+    let targetApp = AXUIElementCreateApplication(1234) // Replace with target app's process ID
+    var appRef: AXUIElement?
 
 
-    //et matches = regex.matches(in: output, options: [], range: NSRange(location: 0, length: output.count))
-  //  var windowIDs: [String] = []
+//    AXUIElementCopyAttributeValue(targetApp, kAXFocusedApplicationAttribute as CFString, appRef as AnyObject? as! UnsafeMutablePointer<CFTypeRef?>)
 //
-//    for match in matches {
-//        let windowIDRange = match.1
-//        let windowID = (output as NSString).substring(with: windowIDRange)
-//        windowIDs.append(windowID)
+//    if let appRef = appRef {
+//        var titleRef: CFTypeRef?
+//        AXUIElementCopyAttributeValue(appRef, kAXTitleAttribute as CFString, &titleRef)
+//        if let titleRef = titleRef as? String {
+//            print(titleRef)
+//        }
 //    }
-    let customData = CustomBundle()
-
-    let swiftyTesseract = SwiftyTesseract.Tesseract(language: .english, dataSource: customData, engineMode: .lstmOnly)
-
-    var extractedTexts: [String] = []
-
-    // namwe look like Swifty-GPT -- SWifty-GPT.xcodepoj
-    print("windowPairs = \(windowPairs)")
-    for windowPair in windowPairs {
-        let index = Int.random(in: 0..<90000)
-        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-
-        let screenShot = "\(projectPath)/picture-\(index)\(".png")"
-
-        let tempFile = URL(fileURLWithPath: screenShot)
-
-        if (windowPair.isEmpty){ continue}
-        print("windowPair = \(windowPair), loading screenshot = \(tempFile)")
-        let contents = executeXwininfoScreencapture(windowID: windowPair[0], tempFile: tempFile)
-        guard let contents = contents else { continue  }
-//            let imageData = try Data(contentsOf: URL(fileURLWithPath: contents))
-
-            guard let data = contents.data(using: .utf8) else { continue }
-            let result = swiftyTesseract.performOCR(on: data)
-            switch result {
-            case .success(let extractedText):
-                extractedTexts.append(extractedText)
-            case .failure(let error):
-                print("Error performing OCR: \(error.localizedDescription)")
-            }
-            do {
-                try FileManager.default.removeItem(at: tempFile)
-            }
-            catch {
-                print("fail")
-            }
-
-    }
-
-    return extractedTexts
-}
-
-func executeXwininfoScreencapture(windowID: String, tempFile: URL) -> String? {
-    let task = Process()
-    let pipe = Pipe()
-
-    guard let xtermrunnerURL = Bundle.main.url(forResource: "xTermRunner", withExtension: "") else {  print("FAILEd at xTermrunn"); return ""  }
-
-    task.executableURL = xtermrunnerURL
-    //
-    //    let comArr = ["-c", "/opt/X11/bin/xwininfo", "-id", "\(windowID)", "-root", "-tree", "-all", "-frame", "-shape" ,"-extents", "-size" ,"-stats", "-wm", "-events", "-version"] //["-c", "/opt/X11/bin/xwininfo", "-tree", "-root"]
-    // print(comArr)
-
-    if (!windowID.isEmpty) {
-        task.arguments = ["\(windowID)"]
-    }
-    task.standardOutput = pipe
-    task.environment = ProcessInfo.processInfo.environment
-    task.environment?["DISPLAY"] = ":0"
-
-    if let xquartzPath = ProcessInfo.processInfo.environment["PATH"]?.split(separator: ":").first(where: { $0.hasSuffix("/XQuartz.app/Contents/MacOS") }) {
-        task.environment?["PATH"] = "\(xquartzPath):\(task.environment?["PATH"] ?? "")"
-    }
-
-    do {
-        try task.run()
-        task.waitUntilExit()
-
-        let outputData = pipe.fileHandleForReading.readDataToEndOfFile()
-
-        let outputString = String(data: outputData, encoding: .utf8)
-
-        if !windowID.isEmpty {
-            let imageTask = Process()
-            imageTask.executableURL = URL(fileURLWithPath: "/opt/homebrew/bin/import")
-            imageTask.arguments = ["-window", "\(windowID)", tempFile.path]
-
-            
-            try imageTask.run()
-            imageTask.waitUntilExit()
-            print("Screenshot saved to: \(tempFile.path)")
-        }
-
-        return outputString
-    } catch {
-        print("Error: \(error.localizedDescription)")
-        return nil
-    }
-}
-
-
-func startEyes() {
-    let appName = "Xcode"
-    let specificWindowName = "Swifty-GPT -- Swifty-GPT.xcodepoj"
-//    let projectName = "Swifty-GPT"
-
-    let texts = takeScreenshotOfAppWindows(named: appName, windowName: specificWindowName)
-
-    print("Texts from app windows named '\(appName)' ")
-    print("Texts from app windows named '\(appName)' with specific window name '\(specificWindowName)':")
-    for (index, text) in texts.enumerated() {
-        print("Window \(index + 1):")
-        print(text)
-    }
-
-}
-
-func extractWindowInfo(from outputString: String) -> [[String]] {
-    var ids: [String] = []
-    var names: [String] = []
-
-    let lines = outputString.split(separator: "\n")
-    let windowIDRegex = try! NSRegularExpression(pattern: "^\\s*0x([0-9a-fA-F]+)\\s+")
-    let windowNameRegex = try! NSRegularExpression(pattern: "^\\s*\\\"(.*)\\\"$")
-
-    for line in lines {
-        if let lineString = String(line).removingPercentEncoding {
-            let idMatches = windowIDRegex.matches(in: lineString, options: [], range: NSRange(location: 0, length: lineString.count))
-            let nameMatches = windowNameRegex.matches(in: lineString, options: [], range: NSRange(location: 0, length: lineString.count))
-
-            if let idMatch = idMatches.first, idMatch.numberOfRanges == 2 {
-                let idRange = idMatch.range(at: 1)
-                let id = (lineString as NSString).substring(with: idRange)
-                ids.append(id)
-            }
-
-            if let nameMatch = nameMatches.first, nameMatch.numberOfRanges == 2 {
-                let nameRange = nameMatch.range(at: 1)
-                let name = (lineString as NSString).substring(with: nameRange)
-                names.append(name)
-            }
-        }
-    }
-
-    return [ids, names]
 }
