@@ -10,9 +10,7 @@
 
 # Instructions: Set OPEN_AI_KEY. Have fun!
 
-OCR models u need
-
-you need https://www.xquartz.org/
+1. OCR models you need:
 
 https://github.com/tesseract-ocr/tessdata_fast
 
@@ -22,51 +20,21 @@ https://github.com/tesseract-ocr/tessdata_best
 
 Put them in ../SwiftyGPTWorkspace/tessdata_fast-main
 
-brew install imagemagick --with-x11
+2. For Voice Command you must download dataset you desire to use from https://huggingface.co/ggerganov/whisper.cpp/tree/main.
+youll need
+ ggml-large.bin,
+ ggml-medium.en.bin,
+ ggml-large-v1.bin,
+ ggml-base.en.bin,
+ ggml-small.en.bn,
 
-brew install --build-from-source ./imagemagick-x11.rb
-
-Open Xquartz terminal
-
-
-brew uninstall imagemagick  # without X11 support
-
-brew install --cask xquartz
-
-brew install tlk/imagemagick-x11/imagemagick
-
-src: https://github.com/tlk/homebrew-imagemagick-x11
-
-https://www.cs.dartmouth.edu/~cs50/Resources/XQuartz/
-
-sudo xinit /usr/bin/xterm  -e "su $(whoami) -c pekwm"  $* -- :1
-
-brew install xdotool
-
-defaults write org.x.X11 enable_test_extensions -boolean true
-
-
-Xcode: File -> Packages -> Reset Package Contents
-
-$ startx -- :1
-
+Put them in Swifty-GPT/Swifty-GPT/Model
 
 # Voice Command
 
 
 Pick your voice after trying them out with voice_test `swift voice_test.swift` inside Swifty-GPT folder.
 
-
-For Voice Command you must download dataset you desire to use from https://huggingface.co/ggerganov/whisper.cpp/tree/main.
-youll need
- ggml-large.bin,
- ggml-medium.en.bin,
- ggml-large-v1.bin
- ggml-base.en.bin
- ggml-small.en.bn
-
-
-Swifty-GPT is not just for game development. Its powerful capabilities make it a versatile tool that can be used for any business application, including realtor apps and e-commerce apps. Swifty-GPT automates the process of app development, creating high-quality iOS applications with ease. It can import the necessary libraries and work with all Apple APIs, making it the ideal tool for business use cases. With Swifty-GPT, you can create iOS applications for your business in a fraction of the time, without sacrificing quality or functionality.
 
  # Troubleshoot
 
@@ -79,3 +47,37 @@ Run app XQuartz
 
 
  If you are seeing "would like to use your Microphone", "Would like to send events to other applications" dialogs, please blindly accept them.
+
+
+ # Thesis
+The Ultimate AI Integration for Xcode: Where GPT Can Hear You and See Your Code!
+
+Are you tired of spending hours writing code and debugging errors? Do you wish you had a tool that could automate nearly all tasks in Xcode? Look no further than our AI integration, the ultimate solution for software developers!
+
+Overview
+
+AI integration is a marvel of technology, capable of analyzing code and suggesting optimizations, detecting errors and automatically fixing them, and even generating new code based on user input. But that's not all! Our integration has a revolutionary new feature: the ability for GPT to HEAR you and SEE your code.
+
+Our AI integration also utilizes a consciousness module to store past memories from coding sessions, including all the text from open Xcode windows and context based on conversation in natural language with the Swift or Apple device developer. This allows our integration to become even more personalized to each individual user, and can greatly improve efficiency and accuracy.
+
+Features
+
+Our AI integration includes a wide range of features to make software development faster and more efficient. Here are just a few of the highlights:
+
+Code analysis and optimization
+Error detection and correction
+Voice-activated GPT integration
+Real-time code suggestions
+Powerful debugging tool
+Integration with Apple's built-in text-to-speech software
+Personalized memory storage using a consciousness module
+
+Challenges and Solutions
+
+As AI integration becames more popular, we'll faced some challenges. The sheer volume of data that our integration was processing was overwhelming, and the servers that supported it were struggling to keep up.
+
+Conclusion
+
+In the end, I hope this AI integration helps this level of AI integration became the gold standard for software development, used by companies all over the world to write code faster and more efficiently than ever before. Our integration had truly changed the world of software development, where GPT can HEAR you and SEE your code!
+
+iPad and iOS support coming soon!
