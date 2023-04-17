@@ -13,13 +13,14 @@ import Foundation
 
 let wpm = "200"
 
+let concurrentVoicesLimit = 2
+var concurrentVoices = 0
 
 let customFemaleName = "Sage"
 let customMaleName = "Data"
 
 var sayProcess = Process()
 
-var hasSpoken = false
 func stopSayProcess() {
     // Send the signal to the process
     kill(sayProcess.processIdentifier, SIGTERM)
@@ -39,7 +40,7 @@ func textToSpeech(text: String) {
 
     if !voiceOutputEnabled { return }
 
-    if  hasSpoken {
+    if  concurrentVoices > concurrentVoicesLimit {
         stopSayProcess()
     }
 
@@ -57,10 +58,13 @@ func textToSpeech(text: String) {
     
     do {
         try sayProcess.run()
-        hasSpoken = true
+        concurrentVoices += 1
         sayProcess.waitUntilExit()
 
+        sayProcess.terminationHandler =  { result in
+            concurrentVoices -= 1
 
+        }
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: outputData, encoding: .utf8) ?? ""
 
