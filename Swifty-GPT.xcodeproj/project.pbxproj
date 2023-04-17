@@ -17,6 +17,10 @@
 		B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */; };
 		B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B929EBB44D0099A0D1 /* AudioKit */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
+		B719B22729ECB888003358C2 /* AssisAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22629ECB888003358C2 /* AssisAI.swift */; };
+		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
+		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
+		B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */ = {isa = PBXBuildFile; fileRef = B719B22D29ECBCC1003358C2 /* tessdata_fast-main */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
 		B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */; };
 		B758DCFD29EBCBF300A35D83 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B758DCFC29EBCBF300A35D83 /* Speak.swift */; };
@@ -39,13 +43,31 @@
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B719B24629ECE380003358C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B719B23829ECE380003358C2;
+			remoteInfo = xTermRunner;
+		};
+		B719B24829ECEEBC003358C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B719B23729ECE380003358C2;
+			remoteInfo = xTermRunner;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		B7139CDA29E147910049ADE1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstSubfolderSpec = 16;
 			files = (
+				B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */,
 				B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */,
 				B7D6518429EC88EF00ED8BAE /* ggml-medium.en.bin in CopyFiles */,
 				B7D6518529EC88EF00ED8BAE /* ggml-small.en.bin in CopyFiles */,
@@ -68,6 +90,10 @@
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
+		B719B22629ECB888003358C2 /* AssisAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = SOURCE_ROOT; };
+		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
+		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "/Users/sprinchar/Swifty-GPT-github/Swifty-GPT/Model/tessdata_fast-main"; sourceTree = "<absolute>"; };
+		B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = xTermRunner.xcodeproj; path = xTermRunner/xTermRunner.xcodeproj; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -110,6 +136,7 @@
 			files = (
 				B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */,
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
+				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -121,6 +148,7 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
+				B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */,
 				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7139CDD29E147910049ADE1 /* Products */,
@@ -139,6 +167,8 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B719B22629ECB888003358C2 /* AssisAI.swift */,
+				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
@@ -172,6 +202,14 @@
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
 		};
+		B719B24329ECE380003358C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B719B24729ECE380003358C2 /* xTermRunner */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B768CE9929EB3F8500B8A9E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +237,7 @@
 		B7D6517B29EC88C000ED8BAE /* MOdel */ = {
 			isa = PBXGroup;
 			children = (
+				B719B22D29ECBCC1003358C2 /* tessdata_fast-main */,
 				B7D6517C29EC88D200ED8BAE /* ggml-base.en.bin */,
 				B7D6518029EC88D200ED8BAE /* ggml-large-v1.bin */,
 				B7D6517E29EC88D200ED8BAE /* ggml-large.bin */,
@@ -222,10 +261,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				B719B24929ECEEBC003358C2 /* PBXTargetDependency */,
 			);
 			name = "Swifty-GPT";
 			packageProductDependencies = (
 				B70FD6B929EBB44D0099A0D1 /* AudioKit */,
+				B719B22B29ECBA24003358C2 /* SwiftyTesseract */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -258,15 +299,32 @@
 			mainGroup = B7139CD329E147910049ADE1;
 			packageReferences = (
 				B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */,
+				B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B719B24329ECE380003358C2 /* Products */;
+					ProjectRef = B719B24229ECE380003358C2 /* xTermRunner.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B719B24729ECE380003358C2 /* xTermRunner */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = xTermRunner;
+			remoteRef = B719B24629ECE380003358C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B7139CD829E147910049ADE1 /* Sources */ = {
@@ -288,6 +346,8 @@
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
+				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
+				B719B22729ECB888003358C2 /* AssisAI.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
@@ -298,6 +358,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B719B24929ECEEBC003358C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = xTermRunner;
+			targetProxy = B719B24829ECEEBC003358C2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B7139CE129E147910049ADE1 /* Debug */ = {
@@ -490,6 +558,14 @@
 				kind = branch;
 			};
 		};
+		B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyTesseract/SwiftyTesseract.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -497,6 +573,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */;
 			productName = AudioKit;
+		};
+		B719B22B29ECBA24003358C2 /* SwiftyTesseract */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
+			productName = SwiftyTesseract;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

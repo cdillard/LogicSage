@@ -53,6 +53,7 @@ let asciAnimations = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
+let enableAEyes = false
 
 var termColSize = 5
 var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize)
@@ -80,6 +81,9 @@ func main() {
 //        termColSize = terminalWidth
 //    }
 
+
+    //  ceheck for whisper files
+    // check for tessarect training files
 
     refreshPrompt(appDesc: appDesc)
 
@@ -148,6 +152,10 @@ func main() {
         print(generatedOpenLine())
         openLinePrintCount += 1
         refreshPrompt(appDesc: appDesc)
+    }
+
+    if enableAEyes {
+        startEyes()
     }
 
     // END AUDIO PROCESSING
@@ -472,4 +480,27 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     }
 }
 
+func getDirectory() -> String {
+    let arguments = CommandLine.arguments
+
+    guard arguments.count > 1 else {
+        print("Please provide the folder path as an argument.")
+        return ""
+
+    }
+
+    let folderPath = arguments[1]
+
+    let fileManager = FileManager.default
+    let folderURL = URL(fileURLWithPath: folderPath)
+
+    var isDirectory: ObjCBool = false
+    guard fileManager.fileExists(atPath: folderURL.path, isDirectory: &isDirectory), isDirectory.boolValue else {
+        print("The provided path does not exist or is not a directory.")
+       return ""
+    }
+    return folderURL.path
+}
+
 main()
+

@@ -101,3 +101,23 @@ let logoAscii3 = """
                                    `"╙╙╝╝╝╬╬╬╬╬╬╬╬╬╬╝╝╚╙^`                       ╚╬
 
  """
+
+let logoAscii5 = """
+               __
+
+                  @L$P\"^---
+            p@_  ($LLw
+          ,NP P !LLL@$b,_
+           0b _.@@@EETPP65@p.        Hi , I'm Sage. Welcoe to SwiftSage.
+          .$@@E@M\"`  ,:,]\"^^^\"
+            `VE\"_` `    ,
+              B Z       [Ww_
+             , ,A        @B@b
+           ;E@@E_        BB@@L
+           0@N#@p   `` ,$BB@@L
+              BEB@_   @NEN0@@P
+              BNBBBBBBB@@@@@@P
+              BBBBBBBBBBB@@@P
+              BBBBBBBBBBBbBB
+              \"\"\"\"\"\"\"\"\"\"\"\"\"
+"""

@@ -8,6 +8,24 @@
         "branch" : "main",
         "revision" : "91ab307ca9ffebefeddc90ce01cb4747e0bc8fb0"
       }
+    },
+    {
+      "identity" : "libtesseract",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyTesseract/libtesseract.git",
+      "state" : {
+        "revision" : "214a36e04d740795d7ba2f07c6108944d0136f8a",
+        "version" : "0.2.0"
+      }
+    },
+    {
+      "identity" : "swiftytesseract",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "3ac7ac98cb7ce5ac8eb3107b41cdbf9d38899a5c"
+      }
     }
   ],
   "version" : 2

@@ -10,7 +10,42 @@
 
 # Instructions: Set OPEN_AI_KEY. Have fun!
 
-Swifty-GPT is not just for game development. Its powerful capabilities make it a versatile tool that can be used for any business application, including realtor apps and e-commerce apps. Swifty-GPT automates the process of app development, creating high-quality iOS applications with ease. It can import the necessary libraries and work with all Apple APIs, making it the ideal tool for business use cases. With Swifty-GPT, you can create iOS applications for your business in a fraction of the time, without sacrificing quality or functionality.
+OCR models u need
+
+you need https://www.xquartz.org/
+
+https://github.com/tesseract-ocr/tessdata_fast
+
+https://github.com/tesseract-ocr/tessdata
+
+https://github.com/tesseract-ocr/tessdata_best
+
+Put them in ../SwiftyGPTWorkspace/tessdata_fast-main
+
+brew install imagemagick --with-x11
+
+brew install --build-from-source ./imagemagick-x11.rb
+
+Open Xquartz terminal
+
+
+brew uninstall imagemagick  # without X11 support
+
+brew install --cask xquartz
+
+brew install tlk/imagemagick-x11/imagemagick
+
+src: https://github.com/tlk/homebrew-imagemagick-x11
+
+https://www.cs.dartmouth.edu/~cs50/Resources/XQuartz/
+
+sudo xinit /usr/bin/xterm  -e "su $(whoami) -c pekwm"  $* -- :1
+
+brew install xdotool
+
+defaults write org.x.X11 enable_test_extensions -boolean true
+
+$ startx -- :1
 
 
 # Voice Command
@@ -28,7 +63,13 @@ youll need
  ggml-small.en.bn
 
 
+Swifty-GPT is not just for game development. Its powerful capabilities make it a versatile tool that can be used for any business application, including realtor apps and e-commerce apps. Swifty-GPT automates the process of app development, creating high-quality iOS applications with ease. It can import the necessary libraries and work with all Apple APIs, making it the ideal tool for business use cases. With Swifty-GPT, you can create iOS applications for your business in a fraction of the time, without sacrificing quality or functionality.
+
  # Troubleshoot
+
+Run `export DISPLAY=:0`
+
+Run app XQuartz
 
 
 ![Shiwfty](Swifty-GPT/assets/MicAccess.png)

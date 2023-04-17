@@ -27,12 +27,14 @@ func generatedOpenLine() -> String {
 }
 
 func randomAscii() -> String {
-    let index = Int.random(in: 0..<3)
+    let index = Int.random(in: 0..<4)
 
     switch index {
     case 0: return logoAscii2
     case 1: return logoAscii
     case 2: return logoAscii3
+    case 3: return logoAscii5
+
     default: return logoAscii2
     }
 }
