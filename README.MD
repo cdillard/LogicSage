@@ -8,7 +8,7 @@
 
 # Swifty-GPT is a great tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs. Plus, it can do a lot of the work for you, like adding the right code, so you can focus on making your app amazing. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
 
-# Instructions: Set OPEN_AI_KEY. Have fun!
+# Instructions: Open Swifty-GPT.xcworkspace, Set OPEN_AI_KEY. Have fun!
 
 1. OCR models you need:
 
