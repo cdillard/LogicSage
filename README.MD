@@ -18,7 +18,7 @@ https://github.com/tesseract-ocr/tessdata
 
 https://github.com/tesseract-ocr/tessdata_best
 
-Put them in ../SwiftyGPTWorkspace/tessdata_fast-main
+Put the testdata_fast directory contents into  ../SwiftyGPTWorkspace/tessdata_fast-main
 
 2. For Voice Command you must download dataset you desire to use from https://huggingface.co/ggerganov/whisper.cpp/tree/main.
 youll need
@@ -28,7 +28,7 @@ youll need
  ggml-base.en.bin,
  ggml-small.en.bn,
 
-Put them in Swifty-GPT/Swifty-GPT/Model
+Put them folders in Swifty-GPT/Swifty-GPT/Model
 
 # Voice Command
 
@@ -74,10 +74,17 @@ Personalized memory storage using a consciousness module
 
 Challenges and Solutions
 
-As AI integration becames more popular, we'll faced some challenges. The sheer volume of data that our integration was processing was overwhelming, and the servers that supported it were struggling to keep up.
+As AI becomes more possible we'll face challenges the sheer amount of data is overwhelming!
+
 
 Conclusion
 
 In the end, I hope this AI integration helps this level of AI integration became the gold standard for software development, used by companies all over the world to write code faster and more efficiently than ever before. Our integration had truly changed the world of software development, where GPT can HEAR you and SEE your code!
 
 iPad and iOS support coming soon!
+
+
+# Credits
+SwiftWhisper: https://github.com/exPHAT/SwiftWhisper
+SwiftyTessarect: https://github.com/SwiftyTesseract/SwiftyTesseract 
+OpenAI GPT-4, GPT-3.5 turbo APIs: www.openai.com 
