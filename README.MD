@@ -11,6 +11,23 @@ Join me on [Discord](https://discord.gg/6hbDDqf8SX), or not.
 
 # Instructions: Open Swifty-GPT.xcworkspace, Set OPEN_AI_KEY. Have fun!
 
+brew install xcodegen 
+
+brew install xcodeproj
+
+Yoy may need to change to 
+```
+let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"
+```
+vs
+```
+let xcodegenPath = "/opt/homebrew/bin/xcodegen"
+```
+
+If you get ruby errors follow the steps here: https://stackoverflow.com/a/31250347
+
+Ask on [Discord](https://discord.gg/6hbDDqf8SX) if you get stuck, or not.
+
 1. OCR models you need:
 
 https://github.com/tesseract-ocr/tessdata_fast
