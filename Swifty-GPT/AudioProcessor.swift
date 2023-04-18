@@ -49,23 +49,20 @@ class AudioRecorder {
 
         self.outputFileURL = outputFileURL
 
-        let index = Int.random(in: 0..<90000)
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-        let tempAudioPath = "\(projectPath)/audio-\(index)\(tempAudioRecordingFileFormat)"
+        let tempAudioPath = "\(projectPath)/audio-\(UUID())\(tempAudioRecordingFileFormat)"
 
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
     }
 
     func startRecording() {
 
-        let index = Int.random(in: 0..<90000)
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-        let audioFilePath = "\(projectPath)/audio-\(index)\(audioRecordingFileFormat)"
+        let audioFilePath = "\(projectPath)/audio-\(UUID())\(audioRecordingFileFormat)"
         let audioOut = URL(fileURLWithPath: audioFilePath)
         self.outputFileURL = audioOut
         
-        let index2 = Int.random(in: 0..<90000)
-        let tempAudioPath = "\(projectPath)/audio-\(index2)\(tempAudioRecordingFileFormat)"
+        let tempAudioPath = "\(projectPath)/audio-\(UUID())\(tempAudioRecordingFileFormat)"
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
 
 
@@ -136,6 +133,10 @@ class AudioRecorder {
 import AVFoundation
 
 func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
+    if AVCaptureDevice.authorizationStatus(for: .audio) == .authorized {
+        return     completion(true)
+    }
+
     AVCaptureDevice.requestAccess(for: .audio) { granted in
         DispatchQueue.main.async {
             completion(granted)

@@ -26,7 +26,34 @@ var commandTable: [String: (String) -> Void] = [
    // "7": blarg,
 
     "exit": exitCommand,
+    "stop": stopCommand,
+    "random": randomCommand,
+    "prompts": promptsCommand,
+
 ]
+
+func promptsCommand(input: String) {
+    PromptLibrary.promptLib.forEach {
+        print($0)
+    }
+}
+
+func randomCommand(input: String) {
+
+
+    guard let prompt = PromptLibrary.promptLib.randomElement() else {
+        return print("fail prompt")
+    }
+    appDesc = prompt
+    refreshPrompt(appDesc: appDesc)
+
+    doPrompting()
+}
+
+func stopCommand(input: String) {
+    killAllVoices()
+    spinner.stop()
+}
 
 
 func ideaCommand(input: String) {

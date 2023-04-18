@@ -24,7 +24,6 @@
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */ = {isa = PBXBuildFile; fileRef = B719B22D29ECBCC1003358C2 /* tessdata_fast-main */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
-		B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
@@ -34,6 +33,7 @@
 		B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
+		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7D6517529EC847E00ED8BAE /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517029EC847E00ED8BAE /* ggml.c */; };
@@ -83,7 +83,6 @@
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
-		B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ideas_prompts.swift; sourceTree = "<group>"; };
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
 		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
 		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
@@ -95,6 +94,7 @@
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptLibrary.swift; sourceTree = "<group>"; };
 		B791552C29EDBB0300DE34FC /* Speak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = createAppWithLibary_output.txt; sourceTree = "<group>"; };
@@ -169,7 +169,6 @@
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
-				B74486DF29E7AE67002D1D5A /* Ideas_prompts.swift */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
@@ -184,6 +183,7 @@
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
+				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -292,7 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B74486E029E7AE67002D1D5A /* Ideas_prompts.swift in Sources */,
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
@@ -309,6 +308,7 @@
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
+				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B719B22729ECB888003358C2 /* AssisAI.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,

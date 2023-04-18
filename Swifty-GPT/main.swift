@@ -125,10 +125,8 @@ func main() {
     }
 
     // BEGIN AUDIO PROCESSING
-
-    let index = Int.random(in: 0..<90000)
     let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-    let audioFilePath = "\(projectPath)/audio-\(index)\(audioRecordingFileFormat)"
+    let audioFilePath = "\(projectPath)/audio-\(UUID())(audioRecordingFileFormat)"
     let audioOut = URL(fileURLWithPath: audioFilePath)
     audioRecorder = AudioRecorder(outputFileURL: audioOut)
 
@@ -176,9 +174,8 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                 if success {
                     print("Parsed and executed code successfully. Opening project...")
 
+                    textToSpeech(text: "Opening project...")
                     executeAppleScriptCommand(.openProject(name: projectName))
-
-                    // sema.signal()
                 }
                 else {
 
@@ -472,9 +469,15 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
     executeXcodeCommand(.buildProject(name: projectName)) { success, errors in
         if success {
+            print("Build successful.")
+            textToSpeech(text: "Build successful.")
+
             completion(true, errors)
         }
         else {
+            print("Build failed.")
+            textToSpeech(text: "Build failed.")
+
             completion(false, errors)
         }
     }

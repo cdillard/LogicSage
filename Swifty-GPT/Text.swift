@@ -8,10 +8,15 @@
 import Foundation
 
 var commandsText = """
-🔹 idea:  💡 New appDesc prompt
-🔹 gpt:   🧠 Talk to GPT
+🔹 idea: "Your app idea"  💡 New appDesc prompt
+🔹 gpt: "Hi GPT. Tell me something interesting about technology."   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations
+🔹 random  Build app from random premade prompt
+🔹 prompts  List built in prompts
+
+🔹 stop  🛑 Stop any voices or Commands
 🔹 exit  🚪 Close the program
+
 """
 
 func generatedOpenLine() -> String {

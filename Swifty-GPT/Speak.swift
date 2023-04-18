@@ -11,7 +11,7 @@
 
 import Foundation
 
-let wpm = "200"
+let wpm = "244"
 
 let concurrentVoicesLimit = 2
 var concurrentVoices = 0
@@ -29,11 +29,41 @@ func stopSayProcess() {
 func runTest() {
 
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "h:mm a"
-    let currentTime = dateFormatter.string(from: Date())
+    dateFormatter.dateFormat = "h"
+    let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
     let greeting = welcomeWord()
 
-    textToSpeech(text: "\(greeting). Welcome! It's \(currentTime). I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm your A.I.")
+    textToSpeech(text: "\(greeting). Welcome! It's about \(currentTime). I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
+}
+
+func noun() -> String {
+    switch Int.random(in: 0...5)
+    {
+    case 0:
+       return  "your A.I."
+    case 1:
+        return "online."
+    case 2:
+        return "ready."
+    case 3:
+        return "in the mood to code."
+    case 4:
+        return "here to help."
+    default:
+        return "here."
+    }
+}
+
+public extension Date {
+
+     func round(precision: TimeInterval) -> Date {
+        return round(precision: precision, rule: .toNearestOrAwayFromZero)
+    }
+    
+    private func round(precision: TimeInterval, rule: FloatingPointRoundingRule) -> Date {
+        let seconds = (self.timeIntervalSinceReferenceDate / precision).rounded(rule) *  precision;
+        return Date(timeIntervalSinceReferenceDate: seconds)
+    }
 }
 
 func textToSpeech(text: String) {
@@ -43,7 +73,6 @@ func textToSpeech(text: String) {
     if  concurrentVoices > concurrentVoicesLimit {
         stopSayProcess()
     }
-
 
     sayProcess = Process()
     sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
@@ -72,7 +101,7 @@ func textToSpeech(text: String) {
         let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
         let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
 
-        print("sayText: \(output), errorOutput: \(errorOutput)")
+       // print("sayText: \(output), errorOutput: \(errorOutput)")
 
     } catch {
         print("Error running text-to-speech: \(error)")
@@ -87,3 +116,29 @@ func welcomeWord() -> String {
         return "Hello"
     }
 }
+
+func killAllVoices() {
+
+    stopSayProcess()
+
+    let killProcess = Process()
+    killProcess.launchPath = "/bin/zsh"
+
+    killProcess.arguments = ["-c", "killall", "say"]
+
+    let outputPipe = Pipe()
+    killProcess.standardOutput = outputPipe
+
+    let errorPipe = Pipe()
+    killProcess.standardError = errorPipe
+
+
+    do {
+        try killProcess.run()
+    }
+    catch {
+        print("error = \(error)")
+    }
+}
+
+
