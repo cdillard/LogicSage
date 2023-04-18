@@ -29,6 +29,10 @@ func enableRawMode(fileDescriptor: Int32) -> termios {
 
     tcsetattr(fileDescriptor, TCSAFLUSH, &raw)
 
+//    tcgetattr(STDIN_FILENO, &raw);
+//    raw.c_lflag &= ~UInt((ICANON | ECHO));
+//    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+
     return original
 }
 
@@ -145,7 +149,7 @@ func handleUserInput() {
                 // attempt to parse cmd named
                 print("attmpt to parse cmd name = \(command)")
                 if let selectedCommand = commandTable[command] {
-                    selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
+                    selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
                 } else {
                     print("Invalid command. Please try again:")
                 }
