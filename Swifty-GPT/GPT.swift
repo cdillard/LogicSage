@@ -7,6 +7,8 @@
 
 import Foundation
 
+let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
+
 // Function to send a prompt to GPT via the OpenAI API
 func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  completion: @escaping (String, Bool) -> Void) {
 
@@ -20,7 +22,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
 
     // Prepare the request payload
     let requestBody: [String: Any] = [
-        "model": "gpt-3.5-turbo",
+        "model": "\(gptModel)",
         "messages": [
             [
                 "role": "user",
@@ -58,6 +60,8 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         else {
             spinner.start()
         }
+
+        textToSpeech(text: "Exec prompt length \(prompt.count)", overrideWpm: "242")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 

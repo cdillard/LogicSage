@@ -29,7 +29,10 @@ var commandTable: [String: (String) -> Void] = [
     "stop": stopCommand,
     "random": randomCommand,
     "prompts": promptsCommand,
-    "sing": singCommand
+    "sing": singCommand,
+
+
+    "google": googleCommand,
 
 ]
 
@@ -144,6 +147,10 @@ func zeroCommand(input: String) {
 func gptCommand(input: String) {
     manualPromptString = input
     sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
+        if !success {
+            textToSpeech(text: "API error, try again.", overrideWpm: "243")
+        }
+
         print("\n🤖: \(content)")
 
         textToSpeech(text: content)
@@ -193,4 +200,14 @@ func openProjectCommand(input: String) {
     refreshPrompt(appDesc: appDesc)
     print(generatedOpenLine())
     openLinePrintCount += 1
+}
+
+
+func googleCommand(input: String) {
+
+}
+
+
+func imageCommand(input: String) {
+
 }
