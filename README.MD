@@ -13,7 +13,7 @@ Join me on [Discord](https://discord.gg/6hbDDqf8SX), or not.
 
 brew install xcodegen 
 
-brew install xcodeproj
+gem install xcodeproj
 
 Yoy may need to change to 
 ```
@@ -23,6 +23,13 @@ vs
 ```
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
 ```
+depending on oyour config
+
+run
+`which xcodeproj`
+and 
+`which xcodegen` 
+to discover your paths and issues.
 
 If you get ruby errors follow the steps here: https://stackoverflow.com/a/31250347
 
