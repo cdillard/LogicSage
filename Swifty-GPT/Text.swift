@@ -72,9 +72,9 @@ Project creation success. Project should have auto openned.
 🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
 
 """
-
+// 🎮🎨📲
 let sharedCommands = """
-🔹 0. 🗣️🎮🎨📲 Use voice command: Tap 0 to start, Tap 0 to end
+🔹 0. 🗣️ Use voice command: Tap 0 to start, Tap 0 to end
 🔹 1. ✨ Run loaded prompt
 🔹 2. 🚀 Show loaded prompt
 🔹 3. 📂 Open project
