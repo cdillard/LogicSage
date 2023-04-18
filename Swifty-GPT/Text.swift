@@ -14,7 +14,10 @@ var commandsText = """
 🔹 random  Build app from random premade prompt
 🔹 prompts  List built in prompts
 
+
 🔹 stop  🛑 Stop any voices or Commands
+🔹 sing  🎵 Sing a built in song
+
 🔹 exit  🚪 Close the program
 
 """

@@ -27,20 +27,29 @@ func stopSayProcess() {
 }
 
 func runTest() {
+    let hour = Calendar.current.component(.hour, from: Date())
+    var greeting1 = "Welcome"
+    switch hour {
+    case 6..<12 : greeting1 = "Good Morning"
+    case 12 : greeting1 = "It's Noon"
+    case 13..<17 : greeting1 = "Good Afternoon"
+    case 17..<22 : greeting1 = "Good Evening"
+    default: greeting1 = "Good Night"
+    }
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "h"
     let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
     let greeting = welcomeWord()
-
-    textToSpeech(text: "\(greeting). Welcome! It's about \(currentTime). I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
+    //It's about \(currentTime)
+    textToSpeech(text: "\(greeting). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
 }
 
 func noun() -> String {
     switch Int.random(in: 0...5)
     {
     case 0:
-       return  "your A.I."
+        return  "your A.I."
     case 1:
         return "online."
     case 2:
@@ -56,7 +65,7 @@ func noun() -> String {
 
 public extension Date {
 
-     func round(precision: TimeInterval) -> Date {
+    func round(precision: TimeInterval) -> Date {
         return round(precision: precision, rule: .toNearestOrAwayFromZero)
     }
     
@@ -66,7 +75,7 @@ public extension Date {
     }
 }
 
-func textToSpeech(text: String) {
+func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
 
     if !voiceOutputEnabled { return }
 
@@ -76,8 +85,20 @@ func textToSpeech(text: String) {
 
     sayProcess = Process()
     sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
-    sayProcess.arguments = ["[[rate \(wpm)]]\(text)", "-v", voice(), "-r", wpm]
 
+
+    var voice = voice()
+    if overrideVoice != nil && overrideVoice?.isEmpty == false {
+        voice = overrideVoice!
+    }
+    var useWpm = wpm
+    if overrideWpm != nil && overrideWpm?.isEmpty == false {
+        useWpm = overrideWpm!
+    }
+
+    sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
+
+    print("say: \(text)")
     let outputPipe = Pipe()
     sayProcess.standardOutput = outputPipe
 
@@ -101,7 +122,7 @@ func textToSpeech(text: String) {
         let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
         let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
 
-       // print("sayText: \(output), errorOutput: \(errorOutput)")
+        // print("sayText: \(output), errorOutput: \(errorOutput)")
 
     } catch {
         print("Error running text-to-speech: \(error)")
@@ -140,5 +161,3 @@ func killAllVoices() {
         print("error = \(error)")
     }
 }
-
-
