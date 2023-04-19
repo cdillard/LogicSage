@@ -19,6 +19,8 @@
 		B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17B29F07ACD00993AAF /* Loding.swift */; };
 		B70CF17E29F07E2400993AAF /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17D29F07E2400993AAF /* Globals.swift */; };
 		B70CF18029F08C7C00993AAF /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17F29F08C7C00993AAF /* Regex.swift */; };
+		B70CF18229F0980800993AAF /* SageWare.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF18129F0980800993AAF /* SageWare.swift */; };
+		B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */; };
 		B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */; };
 		B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B929EBB44D0099A0D1 /* AudioKit */; };
 		B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
@@ -86,6 +88,8 @@
 		B70CF17B29F07ACD00993AAF /* Loding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loding.swift; sourceTree = "<group>"; };
 		B70CF17D29F07E2400993AAF /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		B70CF17F29F08C7C00993AAF /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		B70CF18129F0980800993AAF /* SageWare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageWare.swift; sourceTree = "<group>"; };
+		B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplescriptCommand.swift; sourceTree = "<group>"; };
 		B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWWrapper.swift; sourceTree = "<group>"; };
 		B713384D29ED80F000020CC9 /* app_screenshot.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = app_screenshot.applescript; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +176,7 @@
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
+				B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */,
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
@@ -195,6 +200,8 @@
 				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
+				B70CF17F29F08C7C00993AAF /* Regex.swift */,
+				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
@@ -208,7 +215,6 @@
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -322,6 +328,7 @@
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
+				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
@@ -341,6 +348,7 @@
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
+				B70CF18229F0980800993AAF /* SageWare.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,

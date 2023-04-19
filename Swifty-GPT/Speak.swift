@@ -39,10 +39,8 @@ func runTest() {
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "h"
-    let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
-    let greeting = welcomeWord()
-    //It's about \(currentTime)
-    textToSpeech(text: "\(greeting). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
+    // presise time setting let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
+    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
 }
 
 func noun() -> String {
@@ -76,56 +74,8 @@ public extension Date {
 }
 
 func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
-
-    if !voiceOutputEnabled { return }
-
-    if  concurrentVoices > concurrentVoicesLimit {
-        stopSayProcess()
-    }
-
-    sayProcess = Process()
-    sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
-
-
-    var voice = voice()
-    if overrideVoice != nil && overrideVoice?.isEmpty == false {
-        voice = overrideVoice!
-    }
-    var useWpm = wpm
-    if overrideWpm != nil && overrideWpm?.isEmpty == false {
-        useWpm = overrideWpm!
-    }
-
-    sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
-
-    print("say: \(text)")
-    let outputPipe = Pipe()
-    sayProcess.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    sayProcess.standardError = errorPipe
-
-    
-    do {
-        try sayProcess.run()
-        concurrentVoices += 1
-        sayProcess.waitUntilExit()
-
-        sayProcess.terminationHandler =  { result in
-            concurrentVoices -= 1
-
-        }
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: outputData, encoding: .utf8) ?? ""
-
-
-        let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-        // print("sayText: \(output), errorOutput: \(errorOutput)")
-
-    } catch {
-        print("Error running text-to-speech: \(error)")
+    Task {
+        await addSpeakTask(text: text, overrideVoice: overrideVoice, overrideWpm: overrideWpm)
     }
 }
 
@@ -160,4 +110,66 @@ func killAllVoices() {
     catch {
         print("error = \(error)")
     }
+}
+
+
+func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) async {
+    // Create a background task group
+//    await withTaskGroup(of: Void.self) { group in
+//        // Add tasks to the group
+//        group.addTask(priority: .background) {
+
+            if !voiceOutputEnabled { return }
+
+            if  concurrentVoices > concurrentVoicesLimit {
+                stopSayProcess()
+            }
+
+            sayProcess = Process()
+            sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
+
+
+            var voice = voice()
+            if overrideVoice != nil && overrideVoice?.isEmpty == false {
+                voice = overrideVoice!
+            }
+            var useWpm = wpm
+            if overrideWpm != nil && overrideWpm?.isEmpty == false {
+                useWpm = overrideWpm!
+            }
+
+            sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
+
+            print("say: \(text)")
+            let outputPipe = Pipe()
+            sayProcess.standardOutput = outputPipe
+
+            let errorPipe = Pipe()
+            sayProcess.standardError = errorPipe
+
+
+            do {
+                try sayProcess.run()
+                concurrentVoices += 1
+
+                sayProcess.terminationHandler =  { result in
+                    concurrentVoices -= 1
+
+                }
+                let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: outputData, encoding: .utf8) ?? ""
+
+
+                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+                // print("sayText: \(output), errorOutput: \(errorOutput)")
+
+            } catch {
+                print("Error running text-to-speech: \(error)")
+            }
+
+
+       // }
+   // }
 }

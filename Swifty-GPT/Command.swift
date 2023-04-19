@@ -35,6 +35,8 @@ var commandTable: [String: (String) -> Void] = [
     "prompts": promptsCommand,
     "sing": singCommand,
     "reset": resetCommand,
+
+    "encourage":encourageCommand,
 ]
 
 var presentMode = true
@@ -52,6 +54,8 @@ func resetCommand(input: String) {
      appName = "MyApp"
      appType = "iOS"
      language = "Swift"
+
+    print("🔁🔄♻️ Reset.")
 }
 
 func singCommand(input: String) {
@@ -146,7 +150,9 @@ func exitCommand(input: String) {
 }
 
 func closeCommand(input: String) {
-    executeAppleScriptCommand(.closeProject(name: projectName))
+    executeAppleScriptCommand(.closeProject(name: projectName)) { sucess, error in
+
+    }
 }
 
 func fixItCommand(input: String) {
@@ -167,7 +173,7 @@ func showLoadedPrompt(input: String) {
 }
 
 func openProjectCommand(input: String) {
-    executeAppleScriptCommand(.openProject(name: projectName))
+    executeAppleScriptCommand(.openProject(name: projectName)) { success, error in }
     refreshPrompt(appDesc: appDesc)
     print(generatedOpenLine())
     openLinePrintCount += 1
@@ -184,7 +190,6 @@ func googleCommand(input: String) {
         }
 
         // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-       // doPrompting(overridePrompt: "\(promptText())\(searchResultHeading)\n\(resultText)")
         searchResultHeadingGlobal = "\(promptText())\(searchResultHeading)\n\(resultText)"
     }
 }
@@ -203,7 +208,6 @@ func gptVoiceCommand(input: String) {
         let promper = comps[0]
 
         let gptVoiceCommandOverrideVoice = comps[1].replacingOccurrences(of: "--voice ", with: "")
-
 
         manualPromptString = promper
         sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
@@ -226,4 +230,30 @@ func gptVoiceCommand(input: String) {
         print("failed use of gptVoice command.")
     }
 
+}
+
+func encourageCommand(input: String) {
+    let il = """
+1. You are capable of greatness.
+2. Keep pushing forward, even when it's hard.
+3. Believe in yourself and your abilities.
+4. There's a solution to every problem - keep looking.
+5. You can do anything you set your mind to.
+6. Trust the journey and have faith in yourself.
+7. You are valuable and important.
+8. Keep trying, even if you fail.
+9. Success is achieved through persistence and hard work.
+10. Believe in your dreams - they can become a reality.
+say: 1. You are capable of greatness.
+2. Keep pushing forward, even when it's hard.
+3. Believe in yourself and your abilities.
+4. There's a solution to every problem - keep looking.
+5. You can do anything you set your mind to.
+6. Trust the journey and have faith in yourself.
+7. You are valuable and important.
+8. Keep trying, even if you fail.
+9. Success is achieved through persistence and hard work.
+10. Believe in your dreams - they can become a reality.
+"""
+    textToSpeech(text: il)
 }

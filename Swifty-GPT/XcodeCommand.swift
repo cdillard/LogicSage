@@ -54,7 +54,6 @@ enum XcodeCommand {
     }
 }
 
-
 func buildProject(projectPath: String, scheme: String, completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
@@ -89,7 +88,6 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
 
     // Wait for the terminationHandler to be called
     dispatchSemaphore.wait()
-
 
     func getErrorLines(_ input: String) -> [String] {
         let lines = input.split(separator: "\n")
@@ -143,4 +141,80 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     
     globalErrors += Array(errorsCopy)
     completion(successful, globalErrors)
+}
+
+
+func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
+    switch command {
+    case let .openProject(name):
+        print("SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): \(name)")
+        //        executeAppleScriptCommand(.openProject(name: projectName))
+        //        completion(true)
+    case let .createProject(name):
+        print("Creating project with name: \(name)")
+        projectName = name.isEmpty ? "MyApp" : name
+        projectName = preprocessStringForFilename(projectName)
+        print("set current name")
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
+
+        // Call the createNewWorkspace function directly
+        createNewProject(projectName: name, projectDirectory: projectPath) { success in
+
+            completion(success, [])
+
+        }
+
+    case .closeProject(name: let name):
+        print("SKIPPING GPT-Closing project with name: \(name)")
+        //        executeAppleScriptCommand(.closeProject(name: name))
+        //        completion(true)
+
+    case .createFile(fileName: let fileName, fileContents: let fileContents):
+        if projectName.isEmpty {
+            print("missing proj, creating one")
+            projectName = "MyApp"
+
+            // MIssing projecr gen// create a proj
+            executeXcodeCommand(.createProject(name: projectName)) { success, errors in
+                if success {
+                   // completion(true, [])
+
+                } else {
+                    print("createProject failed")
+
+                    completion(false, errors)
+                }
+            }
+        }
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName)"
+        let filePath = "\(projectPath)/Sources/\(fileName)"
+        print("Adding file w/ path: \(filePath) w/ contents w length = \(fileContents.count) to p=\(projectPath)")
+        let added = createFile(projectPath: "\(projectPath).xcodeproj", projectName: projectName, targetName: projectName, filePath: filePath, fileContent: fileContents)
+        completion(added, [])
+
+    case .buildProject(name: let name):
+        print("buildProject project with name: \(name)")
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName).xcodeproj"
+
+        buildProject(projectPath: projectPath, scheme: projectName) { success, errors in
+
+            if success {
+                completion(true, [])
+
+
+//                // PROJECT BUILD SUCCESS WAIT FOR INPUT???
+//                // This isn't right spot for this
+//                if let choice = promptUserInput(message: "What would you like to do?: (1) Enter a new prompt? (2) Fix bugs in this project. 3.) Add a new feature to this project. 4. Add tests to this project?") {
+//                    print("You chose \(choice) --- awesome!")
+//                } else {
+//                    print("No input was provided.")
+//                }
+
+                print(afterSuccessLine)
+
+            } else {
+                completion(false, errors)
+            }
+        }
+    }
 }

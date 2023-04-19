@@ -117,12 +117,28 @@ func handleUserInput() {
                 continue
             }
             if blockingInput {
-                print("input disabled. PLease file a github Issue. *with logs or else*")
+                print("input disabled (you can `stop`). Plese file a github Issue. *with logs or else (shakesfist)*")
 
-                // ONLY capture "quit"
+
+                var input = ""
+                while let char = readChar(), char != "\n" {
+                    input += String(char)
+                }
+
+               if input == "sstop" {
+                    print("\nYou've entered the special word!")
+                    stopCommand(input: "")
+
+                    // Execute the desired command
+                } else {
+                    print("\nIncorrect special word.")
+                }
+
+                // ONLY capture "quit" or "stop"
                 continue
 
             }
+
             if char == Character(UnicodeScalar(BACKSPACE)) {
                 if !parameter.isEmpty {
                     // Remove the last character from the parameter
@@ -194,7 +210,7 @@ func handleUserInput() {
             } else {
                 command.append(char)
             }
+
         }
     }
 }
-
