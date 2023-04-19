@@ -46,50 +46,27 @@ func backupAndDeleteWorkspace() throws {
     }
 }
 
-// Regex / Parsing
+func getDirectory() -> String {
+    let arguments = CommandLine.arguments
 
-func extractFieldContents(_ input: String, field: String = "fileContents") -> (String, [String]) {
-    var fileContents: [String] = []
-    let pattern = #""\#(field)":\s*?"((?:\\.|[^"\\]+)*)""#
-    let regex = try! NSRegularExpression(pattern: pattern)
-    let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
+    guard arguments.count > 1 else {
+        print("Please provide the folder path as an argument.")
+        return ""
 
-    for match in matches {
-        if let fileContentRange = Range(match.range(at: 1), in: input) {
-            var fileContent = String(input[fileContentRange])
-            fileContent = fileContent.replacingOccurrences(of: #"\\("")"#, with: "\"")
-            fileContent = fileContent.replacingOccurrences(of: #"\\n"#, with: "\n")
-            fileContents.append(fileContent.replacingOccurrences(of: "\\\"", with: "\"")
-                                           .replacingOccurrences(of: "\\\\", with: "\\")
-                                           .replacingOccurrences(of: "\\n", with: "\n")
-                                           .replacingOccurrences(of: "\\r", with: "\r")
-                                           .replacingOccurrences(of: "\\t", with: "\t"))
-        }
     }
 
-    // Remove the matched strings from the input
-    let modifiedInput = regex.stringByReplacingMatches(in: input, options: [], range: NSRange(input.startIndex..., in: input), withTemplate: "\"\(field)\": \"\"")
+    let folderPath = arguments[1]
 
-    return (modifiedInput, fileContents)
+    let fileManager = FileManager.default
+    let folderURL = URL(fileURLWithPath: folderPath)
+
+    var isDirectory: ObjCBool = false
+    guard fileManager.fileExists(atPath: folderURL.path, isDirectory: &isDirectory), isDirectory.boolValue else {
+        print("The provided path does not exist or is not a directory.")
+       return ""
+    }
+    return folderURL.path
 }
 
-//func extractFieldContents(_ input: String, field: String = "fileContents") -> (String, [String]) {
-//    var fileContents: [String] = []
-//    let pattern = #""\#(field)":\s*?"((?:\\.|[^"\\]+)*)""#
-//    let regex = try! NSRegularExpression(pattern: pattern)
-//    let modifiedInput = regex.stringByReplacingMatches(in: input, options: [], range: NSRange(input.startIndex..., in: input), withTemplate: "\"\(field)\": \"\"")
-//    let matches = regex.matches(in: input, options: [], range: NSRange(input.startIndex..., in: input))
-//    for match in matches {
-//        if let fileContentRange = Range(match.range(at: 1), in: input) {
-//            var fileContent = String(input[fileContentRange])
-//            fileContent = fileContent.replacingOccurrences(of: #"\\("")"#, with: "\"")
-//            fileContent = fileContent.replacingOccurrences(of: #"\\n"#, with: "\n")
-//            fileContents.append(fileContent              .replacingOccurrences(of: "\\\"", with: "\"")
-//                                                        .replacingOccurrences(of: "\\\\", with: "\\")
-//                                                        .replacingOccurrences(of: "\\n", with: "\n")
-//                                                        .replacingOccurrences(of: "\\r", with: "\r")
-//                                                        .replacingOccurrences(of: "\\t", with: "\t"))
-//        }
-//    }
-//    return (modifiedInput, fileContents)
-//}
+// Regex / Parsing
+

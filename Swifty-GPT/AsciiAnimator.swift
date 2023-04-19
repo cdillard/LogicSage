@@ -18,12 +18,14 @@ class TextAnimator {
     }
 
     func start() {
+        blockingInput = true
         stopped = false
         animateAscii()
     }
 
     func stop() {
         stopped = true
+        blockingInput = false
     }
 
     func animateAscii(frameDelay: TimeInterval = 0.03, repetitions: Int = 1, consoleHeight: Int = 25) {

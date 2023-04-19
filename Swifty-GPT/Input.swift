@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Darwin.POSIX.termios
 
 func promptUserInput(message: String) -> String? {
     print(message, terminator: "")
@@ -29,12 +30,29 @@ func enableRawMode(fileDescriptor: Int32) -> termios {
 
     tcsetattr(fileDescriptor, TCSAFLUSH, &raw)
 
-//    tcgetattr(STDIN_FILENO, &raw);
-//    raw.c_lflag &= ~UInt((ICANON | ECHO));
-//    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-
     return original
 }
+
+/*
+ func setRawMode() -> termios {
+     var raw = termios()
+     tcgetattr(STDIN_FILENO, &raw)
+
+     let original = raw
+
+     raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON)
+     raw.c_oflag &= ~OPOST
+     raw.c_cflag |= CS8
+     raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG)
+     raw.c_cc.16 = UInt8(1)
+     raw.c_cc.17 = UInt8(0)
+
+     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw)
+     return original
+ }
+
+ */
+
 
 func disableRawMode(fileDescriptor: Int32, originalTermios: termios) {
     var term = originalTermios
@@ -94,11 +112,17 @@ func handleUserInput() {
 
     inputQueue.async {
         while true {
-            if blockingInput { continue }
+
             guard let char = readChar() else {
                 continue
             }
+            if blockingInput {
+                print("input disabled. PLease file a github Issue. *with logs or else*")
 
+                // ONLY capture "quit"
+                continue
+
+            }
             if char == Character(UnicodeScalar(BACKSPACE)) {
                 if !parameter.isEmpty {
                     // Remove the last character from the parameter

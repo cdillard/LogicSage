@@ -8,7 +8,7 @@
 import Foundation
 
 // TODO: Fix hardcoded paths to Info.plist.
-func createNewProject(projectName: String, projectDirectory: String) {
+func createNewProject(projectName: String, projectDirectory: String, completion: @escaping (Bool) -> Void) {
     let projectSpec = """
     name: \(projectName)
     targets:
@@ -46,7 +46,9 @@ func createNewProject(projectName: String, projectDirectory: String) {
     let status = task.terminationStatus
     if status == 0 {
         print("Project created successfully")
+        completion(true)
     } else {
         print("Error creating project")
+        completion(false)
     }
 }

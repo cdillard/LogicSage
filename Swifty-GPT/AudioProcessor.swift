@@ -12,6 +12,7 @@ import AVFoundation
 import CoreMedia
 
 var chosenVoice: String?
+var audioRecorder: AudioRecorder?
 
 func voice() -> String {
     if chosenVoice == nil {

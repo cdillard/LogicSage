@@ -13,98 +13,15 @@ import AVFAudio
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
 // I'm looking into it with GPT.
 
-func keyForName(name: String) -> String {
-    guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
-    return apiKey
-}
-
-// Add your Open AI key to the GPT-Info.plist file
-var OPEN_AI_KEY:String {
-    get {
-        keyForName(name: "OPEN_AI_KEY")
-    }
-}
-var PIXABAY_KEY:String {
-    get {
-        keyForName(name: "PIXABAY_KEY")
-    }
-}
-var GOOGLE_KEY:String {
-    get {
-        keyForName(name: "GOOGLE_KEY")
-    }
-}
-var GOOGLE_ID:String {
-    get {
-        keyForName(name: "GOOGLE_SEARCH_ID")
-    }
-}
-
-// TODO: Fix hardcoded paths.
-let xcodegenPath = "/opt/homebrew/bin/xcodegen"
-var infoPlistPath:String {
-    get {
-        if let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist") {
-            return plistPath
-        }
-        return ""
-    }
-}
-var rubyScriptPath:String {
-    get {
-        if let scriptPath = Bundle.main.path(forResource: "add_file_to_project", ofType: "rb") {
-            return scriptPath
-        }
-        return ""
-    }
-}
-let apiEndpoint = "https://api.openai.com/v1/chat/completions"
-
-let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
-
-let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
-
-// Configurable settings for AI.
-let retryLimit = 10
-let fixItRetryLimit = 3
-
-let aiNamedProject = true
-let tryToFixCompileErrors = true
-let includeSourceCodeFromPreviousRun = true
-let interactiveMode = true
-let asciAnimations = false
-
-let voiceOutputEnabled = true
-let voiceInputEnabled = true
-let enableAEyes = false
-
-var termColSize = 5
-var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize)
-let animator = TextAnimator(text: loadingText)
-
-var audioRecorder: AudioRecorder?
-
-// Globals  I know....
-var projectName = "MyApp"
-var globalErrors = [String]()
-var manualPromptString = ""
-var blockingInput = true
-
-var lastFileContents = [String]()
-var lastNameContents = [String]()
-var searchResultHeadingGlobal: String?
-
-var appName = "MyApp"
-var appType = "iOS"
-var language = "Swift"
-
 // Main function to run the middleware
 func main() {
     print("Swifty-GPT is loading...")
-    spinner.start()
+    startRandomSpinner()
 
+    // TODOD:
     // check for whisper files
     // check for tessarect training files
+    // cause a more elegant failure if issues are detected wit xcodegen or xcodeproj
 
     refreshPrompt(appDesc: appDesc)
 
@@ -160,11 +77,10 @@ func main() {
             // Handle the case where microphone access is denied.
         }
     }
-    // Intro ....
-    // SHOULD Add, hasHeardInto check
+    // Intro .... should add a check so it only plays once and doesn't annoy anyone.
     runTest()
 
-    spinner.stop()
+    stopRandomSpinner()
 
     if interactiveMode {
 
@@ -296,12 +212,16 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
     case let .createProject(name):
         print("Creating project with name: \(name)")
         projectName = name.isEmpty ? "MyApp" : name
+        projectName = preprocessStringForFilename(projectName)
         print("set current name")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
 
         // Call the createNewWorkspace function directly
-        createNewProject(projectName: name, projectDirectory: projectPath)
-        completion(true, [])
+        createNewProject(projectName: name, projectDirectory: projectPath) { success in
+            
+            completion(success, [])
+
+        }
 
     case .closeProject(name: let name):
         print("SKIPPING GPT-Closing project with name: \(name)")
@@ -341,7 +261,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
                 completion(true, [])
 
 
-                // PROJECT BUILD SUCCESS WAIT FOR INPUT???
+//                // PROJECT BUILD SUCCESS WAIT FOR INPUT???
 //                // This isn't right spot for this
 //                if let choice = promptUserInput(message: "What would you like to do?: (1) Enter a new prompt? (2) Fix bugs in this project. 3.) Add a new feature to this project. 4. Add tests to this project?") {
 //                    print("You chose \(choice) --- awesome!")
@@ -424,6 +344,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             var name =  projectName
 
             projectName = name.isEmpty ? "MyApp" : name
+            projectName = preprocessStringForFilename(projectName)
 
             textToSpeech(text: "Create project " + name + ".")
 
@@ -431,13 +352,19 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 name = nameContents[gptCommandIndex]
             }
 
-            executeXcodeCommand(.createProject(name: name)) { success, errors in }
+            executeXcodeCommand(.createProject(name: name)) { success, errors in
+
+                if !success {
+                    completion(success, errors)
+                }
+            }
         }
         else if fullCommand.hasPrefix(openProjectPrefix) {
 
             var name =  projectName
 
             projectName = name.isEmpty ? "MyApp" : name
+            projectName = preprocessStringForFilename(projectName)
 
             textToSpeech(text: "Open project " + projectName + ".")
 
@@ -445,15 +372,21 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 name = nameContents[gptCommandIndex]
             }
 
-            executeXcodeCommand(.openProject(name: name)) { success, errors in }
+            executeXcodeCommand(.openProject(name: name)) { success, errors in
+
+                if !success {
+                    completion(success, errors)
+                }
+            }
         }
         else if fullCommand.hasPrefix(closeProjectPrefix) {
 
             var name =  projectName
 
             projectName = name.isEmpty ? "MyApp" : name
+            projectName = preprocessStringForFilename(projectName)
 
-            textToSpeech(text: "Close project " + projectName + ".")
+            //textToSpeech(text: "Close project " + projectName + ".")
 
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
@@ -461,7 +394,13 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
 
             // todo: check success here
-            executeXcodeCommand(.createProject(name: name)) { _ , _ in  }
+            executeXcodeCommand(.createProject(name: name)) { success , errors in
+                print("unknown command = \(fullCommand)")
+
+//                if !success {
+//                    completion(success, errors)
+//                }
+            }
         }
         else if fullCommand.hasPrefix(createFilePrefix) {
             var fileName =  UUID().uuidString
@@ -485,7 +424,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 foundFileContents = ""
             }
             let speech = "\(fullCommand) \(fileName) with length \(fileContents.count)."
-            textToSpeech(text: speech)
+            // textToSpeech(text: speech)
 
             // todo: check success here
             executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) {
@@ -500,6 +439,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             }
 
         }
+        // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
         else if fullCommand.hasPrefix(googlePrefix) {
             var query =  ""
 
@@ -507,6 +447,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 query = nameContents[fileIndex]
             }
 
+            textToSpeech(text: "Googling \(query)...", overrideWpm: "250")
 
             googleCommand(input: query)
         }
@@ -519,10 +460,10 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     }
 
     // todo: check to make sure the files were written
-//        if filesWritten == 0 || filesWritten != fileContents.count {
-//            print("Failed to make files.. retrying...")
-//            return completion(false)
-//        }
+    if fileIndex == 0 || fileIndex != fileContents.count {
+        print("Failed to make files.. retrying...")
+        return completion(false, globalErrors)
+    }
 
     print("Building project...")
     textToSpeech(text: "Building project \(projectName)...")
@@ -543,27 +484,4 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     }
 }
 
-func getDirectory() -> String {
-    let arguments = CommandLine.arguments
-
-    guard arguments.count > 1 else {
-        print("Please provide the folder path as an argument.")
-        return ""
-
-    }
-
-    let folderPath = arguments[1]
-
-    let fileManager = FileManager.default
-    let folderURL = URL(fileURLWithPath: folderPath)
-
-    var isDirectory: ObjCBool = false
-    guard fileManager.fileExists(atPath: folderURL.path, isDirectory: &isDirectory), isDirectory.boolValue else {
-        print("The provided path does not exist or is not a directory.")
-       return ""
-    }
-    return folderURL.path
-}
-
 main()
-

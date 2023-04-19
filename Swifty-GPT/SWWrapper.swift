@@ -25,7 +25,7 @@ var whisperContext: WhisperContext?
 
 func doTranscription(on audioFileURL:URL) async {
     print("Using Swift Whisper to transcribe recorded audio at \(audioFileURL)... please wait...")
-    spinner.start()
+    startRandomSpinner()
     convertAudioFileToPCMArray(fileURL: audioFileURL) { result in
         Task {
             switch result {
@@ -37,10 +37,8 @@ func doTranscription(on audioFileURL:URL) async {
 
                 let text = await whisperContext?.getTranscription()
                 if let text = text {
-                   // DispatchQueue.main.async {
-                        spinner.stop()
+                        stopRandomSpinner()
                         gptCommand(input: text)
-                   // }
                 }
                 else {
                     print("failed")

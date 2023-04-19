@@ -35,10 +35,11 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
         request.httpBody = jsonData
-//
-//        if currentRetry == 0 {
-//            print("👨: \(prompt)")
-//        }
+
+
+        if currentRetry == 0 {
+            print("👨: \(prompt)")
+        }
         if isFix {
             print("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
 
@@ -47,28 +48,20 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             print("👨: \(manualPrompt)")
 
         }
+        // Look into a better way to handle prompts..... 3
         else {
             print("prompt=\(prompt)")
             print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-        let randomNumber = Int.random(in: 0...1)
-        if randomNumber == 0 && asciAnimations  {
-            animator.start()
-
-        }
-        else {
-            spinner.start()
-        }
+        startRandomSpinner()
 
         textToSpeech(text: "Exec prompt length \(prompt.count)", overrideWpm: "242")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
 
-            spinner.stop()
-
-            if asciAnimations { animator.stop() }
+            stopRandomSpinner()
 
             if let error = error {
                 print("Error occurred: \(error.localizedDescription)")

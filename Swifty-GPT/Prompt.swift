@@ -70,3 +70,12 @@ let searchResultHeading = """
 Search Results:
 
 """
+
+
+// Nex't w'll consider adding source code summarization when passing it back and forth aka
+
+// fileContents is substituted with this format placeholder.
+
+// [SymbolDetail.swift source code]
+
+// [Symbol.swift source code]

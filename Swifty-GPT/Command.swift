@@ -29,16 +29,11 @@ var commandTable: [String: (String) -> Void] = [
     "google:": googleCommand,
     "image:": imageCommand,
 
-
     "exit": exitCommand,
     "stop": stopCommand,
     "random": randomCommand,
     "prompts": promptsCommand,
     "sing": singCommand,
-
-
-
-
 ]
 
 var presentMode = true
@@ -54,8 +49,6 @@ func promptsCommand(input: String) {
 }
 
 func randomCommand(input: String) {
-
-
     guard let prompt = PromptLibrary.promptLib.randomElement() else {
         return print("fail prompt")
     }
@@ -67,9 +60,8 @@ func randomCommand(input: String) {
 
 func stopCommand(input: String) {
     killAllVoices()
-    spinner.stop()
+    stopRandomSpinner()
 }
-
 
 func ideaCommand(input: String) {
 
@@ -106,6 +98,7 @@ func gptCommand(input: String) {
     sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
         if !success {
             textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+            return
         }
 
         print("\n🤖: \(content)")
@@ -123,6 +116,8 @@ func gptCommand(input: String) {
 func xcodeCommand(input: String) {
 
     print("Xcode commands could be used for all sorts of things")
+    print("but for now, not implemented.")
+
 //    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
    // runXcodeCommand(command: command)
 }
@@ -178,6 +173,7 @@ func googleCommand(input: String) {
 
 
 func imageCommand(input: String) {
+    print("not implemented")
 
 }
 
@@ -196,11 +192,12 @@ func gptVoiceCommand(input: String) {
         sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
             if !success {
                 textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+                return
             }
 
             print("\n🤖: \(content)")
-
-            textToSpeech(text: content, overrideVoice: gptVoiceCommandOverrideVoice)
+            let modContent = content.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted)
+            textToSpeech(text: modContent, overrideVoice: gptVoiceCommandOverrideVoice)
 
             refreshPrompt(appDesc: appDesc)
 
