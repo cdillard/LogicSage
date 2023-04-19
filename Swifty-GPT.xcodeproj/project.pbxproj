@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		71FD626929E848B900C6EC34 /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6129E25F4B006B065B /* Info.plist */; };
 		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
+		71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FD62B129EF75AC00C6EC34 /* plistHelper.swift */; };
+		71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 71FD62B029EF739900C6EC34 /* GPT-Info.plist */; };
 		B70B44D429EAD61900C45773 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D329EAD61900C45773 /* Text.swift */; };
 		B70B44D629EAD85B00C45773 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D529EAD85B00C45773 /* Files.swift */; };
 		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
@@ -52,6 +54,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */,
 				B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */,
 				B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */,
 				B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */,
@@ -65,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		71FD62B029EF739900C6EC34 /* GPT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GPT-Info.plist"; sourceTree = "<group>"; };
+		71FD62B129EF75AC00C6EC34 /* plistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = plistHelper.swift; sourceTree = "<group>"; };
 		B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Swifty-GPT-App.swiftpm"; sourceTree = "<group>"; };
 		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
@@ -179,8 +184,10 @@
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
+				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
@@ -299,6 +306,7 @@
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
+				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,

@@ -13,8 +13,13 @@ import AVFAudio
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
 // I'm looking into it with GPT.
 
-// Replace this with your OpenAI API key
-let OPEN_AI_KEY = "sk-OPEN_AI_KEY"
+// Add your Open AI key to the GPT-Info.plist file
+var OPEN_AI_KEY:String {
+    get {
+        guard let apiKey = plistHelper.objectFor(key: "OPEN_AI_KEY", plist: "GPT-Info") as? String else { return "" }
+        return apiKey
+    }
+}
 let PIXABAY_KEY = "PIXABAY_KEY"
 
 // TODO: Fix hardcoded paths.
