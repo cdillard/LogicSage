@@ -79,7 +79,7 @@
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22629ECB888003358C2 /* AssisAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = SOURCE_ROOT; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
-		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "/Users/sprinchar/Swifty-GPT-github/Swifty-GPT/Model/tessdata_fast-main"; sourceTree = "<absolute>"; };
+		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "Model/tessdata_fast-main"; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
