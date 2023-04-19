@@ -92,6 +92,8 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             } catch {
                 print("Error parsing JSON: \(error.localizedDescription)")
                 completion("Failed parsing JSON w/ error = \(error)",false)
+                completion("", false)
+
             }
         }
         print("🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑")

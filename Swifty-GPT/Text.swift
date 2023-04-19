@@ -14,6 +14,7 @@ var commandsText = """
 🔹 random  Build app from random premade prompt
 🔹 prompts  List built in prompts
 
+🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice
 
 🔹 stop  🛑 Stop any voices or Commands
 🔹 sing  🎵 Sing a built in song

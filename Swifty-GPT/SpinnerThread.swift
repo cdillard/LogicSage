@@ -38,10 +38,14 @@ class LoadingSpinner {
                 Thread.sleep(forTimeInterval: 0.1)
             }
         }
+        blockingInput = true
         thread?.start()
     }
 
     func stop() {
+        guard thread != nil else { return }
+        
+        blockingInput = false
         thread?.cancel()
         thread = nil
     }

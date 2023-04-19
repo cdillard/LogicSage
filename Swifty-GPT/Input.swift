@@ -94,6 +94,7 @@ func handleUserInput() {
 
     inputQueue.async {
         while true {
+            if blockingInput { continue }
             guard let char = readChar() else {
                 continue
             }

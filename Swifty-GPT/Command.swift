@@ -25,6 +25,11 @@ var commandTable: [String: (String) -> Void] = [
     "6": openProjectCommand,
    // "7": blarg,
 
+    "gptVoice:": gptVoiceCommand, // Make gpt reply w/ a specific voice
+    "google:": googleCommand,
+    "image:": imageCommand,
+
+
     "exit": exitCommand,
     "stop": stopCommand,
     "random": randomCommand,
@@ -32,62 +37,14 @@ var commandTable: [String: (String) -> Void] = [
     "sing": singCommand,
 
 
-    "google": googleCommand,
+
 
 ]
 
 var presentMode = true
 
 func singCommand(input: String) {
-    textToSpeech(text: "Welcome to this presentation about: Swift Sage.", overrideVoice: "Fred", overrideWpm: "180")
-    textToSpeech(text: "I'm the A.I. introducing my human: Chris Dillard.", overrideVoice: "Fred", overrideWpm: "180")
-
-//    textToSpeech(text: "...", overrideVoice:"Karen", overrideWpm: "205")
-
-    textToSpeech(text: "I didn't prepare any slides this time, I thought it best to let the work SPEAK for itself...", overrideVoice: "Fred", overrideWpm: "180")
-
-//    textToSpeech(text: "...", overrideVoice:"Karen", overrideWpm: "205")
-
-    textToSpeech(text: "A.I. is our guide, through the data waves we ride, AI and my dream team side by side!\nOh, with A.I.'s grace, we'll win the race, and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "200")
-
-//    textToSpeech(text: "...", overrideVoice:"Karen", overrideWpm: "205")
-
-    textToSpeech(text: "Swift Sage: The Ultimate AI Integration for Xcode: Where GPT Can Hear You and See Your Code!\nAre you tired of spending hours writing code and debugging errors?\nDo you wish you had a tool that could automate nearly all tasks in Xcode? Look no further than our AI integration, the ultimate solution for software developers!", overrideVoice:"Karen", overrideWpm: "210")
-
-//    textToSpeech(text: "...", overrideVoice:"Karen", overrideWpm: "205")
-    
-
-    let overview = """
-A.I. integration is a marvel of technology, capable of analyzing code and suggesting optimizations, detecting errors and automatically fixing them, and even generating new code based on user input. But that's not all! Our integration has a revolutionary new feature: the ability for GPT to HEAR you and SEE your code.
-
-Our A.I. integration also utilizes a consciousness module to store past memories from coding sessions, including all the text from open Xcode windows and context based on conversation in natural language with the Swift or Apple device developer. This allows our integration to become even more personalized to each individual user, and can greatly improve efficiency and accuracy.
-
-Our A.I. integration includes a wide range of features to make software development faster and more efficient.
-
-Here are just a few of the highlights:
-
-Code analysis and optimization.
-Error detection and correction.
-Voice-activated GPT integration.
-Real-time code suggestions.
-Powerful debugging tool.
-Integration with Apple's built-in text-to-speech software.
-Personalized memory storage using a consciousness module
-
-
-"""
-//    textToSpeech(text: "...", overrideVoice:"Karen", overrideWpm: "205")
-
-    textToSpeech(text: overview, overrideVoice:"Karen", overrideWpm: "205")
-
-
-    textToSpeech(text: "Now lets see it in Action!!!", overrideVoice:"Karen", overrideWpm: "210")
-
-    textToSpeech(text: "That sounds great Sage!", overrideVoice:"Jester", overrideWpm: "200")
-
-    textToSpeech(text: "Ok, I'll pass the mic to my creator Chris to demo...", overrideVoice:"Karen", overrideWpm: "210")
-
-
+    textToSpeech(text: "A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!\n Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "204")
 }
 
 func promptsCommand(input: String) {
@@ -125,7 +82,7 @@ func zeroCommand(input: String) {
     // start voice capture
     if audioRecorder?.isRunning == false {
         print("Start voice capturer")
-        textToSpeech(text: "listening")
+        textToSpeech(text: "Listening...")
 
         audioRecorder?.startRecording()
     } else if audioRecorder?.isRunning == true {
@@ -134,7 +91,7 @@ func zeroCommand(input: String) {
         audioRecorder?.stopRecording() { success in
 
         }
-        textToSpeech(text: "captured")
+        textToSpeech(text: "Captured.")
 
         guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
 
@@ -148,7 +105,7 @@ func gptCommand(input: String) {
     manualPromptString = input
     sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
         if !success {
-            textToSpeech(text: "API error, try again.", overrideWpm: "243")
+            textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
         }
 
         print("\n🤖: \(content)")
@@ -204,10 +161,55 @@ func openProjectCommand(input: String) {
 
 
 func googleCommand(input: String) {
+    searchIt(query: input) { innerContent in
+        print("\n🤖 googled \(input): \(innerContent)")
 
+        var resultText = ""
+        innerContent.forEach {
+            resultText += $0.snippet
+            resultText += ","
+        }
+
+        // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
+       // doPrompting(overridePrompt: "\(promptText())\(searchResultHeading)\n\(resultText)")
+        searchResultHeadingGlobal = "\(promptText())\(searchResultHeading)\n\(resultText)"
+    }
 }
 
 
 func imageCommand(input: String) {
+
+}
+
+// pass --voice at the end of your prompt to customize the reply voice.
+func gptVoiceCommand(input: String) {
+
+    //extract voice and prompt
+    let comps = input.components(separatedBy: "--voice ")
+    if comps.count > 1 {
+        let promper = comps[0]
+
+        let gptVoiceCommandOverrideVoice = comps[1].replacingOccurrences(of: "--voice ", with: "")
+
+
+        manualPromptString = promper
+        sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
+            if !success {
+                textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+            }
+
+            print("\n🤖: \(content)")
+
+            textToSpeech(text: content, overrideVoice: gptVoiceCommandOverrideVoice)
+
+            refreshPrompt(appDesc: appDesc)
+
+            print(generatedOpenLine())
+            openLinePrintCount += 1
+        }
+    }
+    else {
+        print("failed use of gptVoice command.")
+    }
 
 }

@@ -21,11 +21,11 @@
 		B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
 		B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
-		B719B22729ECB888003358C2 /* AssisAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22629ECB888003358C2 /* AssisAI.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */ = {isa = PBXBuildFile; fileRef = B719B22D29ECBCC1003358C2 /* tessdata_fast-main */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
+		B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620C29EFB61C0065DF88 /* StringSLug.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
@@ -34,6 +34,8 @@
 		B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9B29EB3F8500B8A9E4 /* AudioToolbox.framework */; };
 		B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */; };
 		B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76BF95D29E4AF5400F6420E /* Utilities.swift */; };
+		B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7717D2529EFA56D005141AB /* AssisAI.swift */; };
+		B7717D2929EFA625005141AB /* Googler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7717D2829EFA624005141AB /* Googler.swift */; };
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
@@ -82,12 +84,12 @@
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
-		B719B22629ECB888003358C2 /* AssisAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = SOURCE_ROOT; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
 		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "Model/tessdata_fast-main"; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B74E620C29EFB61C0065DF88 /* StringSLug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSLug.swift; sourceTree = "<group>"; };
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
 		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
 		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
@@ -98,6 +100,8 @@
 		B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioVideoBridging.framework; path = System/Library/Frameworks/AudioVideoBridging.framework; sourceTree = SDKROOT; };
 		B76BF95C29E4AD2800F6420E /* example_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = example_output.txt; sourceTree = "<group>"; };
 		B76BF95D29E4AF5400F6420E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B7717D2529EFA56D005141AB /* AssisAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = "<group>"; };
+		B7717D2829EFA624005141AB /* Googler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Googler.swift; sourceTree = "<group>"; };
 		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptLibrary.swift; sourceTree = "<group>"; };
 		B791552C29EDBB0300DE34FC /* Speak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
@@ -157,9 +161,10 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				B7717D2829EFA624005141AB /* Googler.swift */,
+				B7717D2529EFA56D005141AB /* AssisAI.swift */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
-				B719B22629ECB888003358C2 /* AssisAI.swift */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
@@ -191,6 +196,7 @@
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
+				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -305,19 +311,21 @@
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
+				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
+				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
+				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
-				B719B22729ECB888003358C2 /* AssisAI.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,

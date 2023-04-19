@@ -13,14 +13,32 @@ import AVFAudio
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
 // I'm looking into it with GPT.
 
+func keyForName(name: String) -> String {
+    guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
+    return apiKey
+}
+
 // Add your Open AI key to the GPT-Info.plist file
 var OPEN_AI_KEY:String {
     get {
-        guard let apiKey = plistHelper.objectFor(key: "OPEN_AI_KEY", plist: "GPT-Info") as? String else { return "" }
-        return apiKey
+        keyForName(name: "OPEN_AI_KEY")
     }
 }
-let PIXABAY_KEY = "PIXABAY_KEY"
+var PIXABAY_KEY:String {
+    get {
+        keyForName(name: "PIXABAY_KEY")
+    }
+}
+var GOOGLE_KEY:String {
+    get {
+        keyForName(name: "GOOGLE_KEY")
+    }
+}
+var GOOGLE_ID:String {
+    get {
+        keyForName(name: "GOOGLE_SEARCH_ID")
+    }
+}
 
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
@@ -70,9 +88,11 @@ var audioRecorder: AudioRecorder?
 var projectName = "MyApp"
 var globalErrors = [String]()
 var manualPromptString = ""
+var blockingInput = true
 
 var lastFileContents = [String]()
 var lastNameContents = [String]()
+var searchResultHeadingGlobal: String?
 
 var appName = "MyApp"
 var appType = "iOS"
@@ -82,12 +102,8 @@ var language = "Swift"
 func main() {
     print("Swifty-GPT is loading...")
     spinner.start()
-//    if let terminalWidth = getTerminalWidth() {
-//        termColSize = terminalWidth
-//    }
 
-
-    //  ceheck for whisper files
+    // check for whisper files
     // check for tessarect training files
 
     refreshPrompt(appDesc: appDesc)
@@ -173,6 +189,11 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
     if !overridePrompt.isEmpty {
         prompt = overridePrompt
     }
+    else if let searchResultPrompt = searchResultHeadingGlobal {
+        prompt = searchResultPrompt
+        searchResultHeadingGlobal = nil
+    }
+    
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
         if response != nil, let response {
             parseAndExecuteGPTOutput(response, errors) { success, errors in
@@ -220,7 +241,7 @@ func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
 
             if includeSourceCodeFromPreviousRun {
                 // Add optional mode to just send error, file contents
-                newPrompt += includeFilesPrompt
+                newPrompt += includeFilesPrompt()
                 newPrompt += swiftnewLine
 
                 for contents in lastFileContents {
@@ -293,7 +314,16 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
             projectName = "MyApp"
 
             // MIssing projecr gen// create a proj
-            executeXcodeCommand(.createProject(name: projectName)) { success, errors in }
+            executeXcodeCommand(.createProject(name: projectName)) { success, errors in
+                if success {
+                   // completion(true, [])
+
+                } else {
+                    print("createProject failed")
+
+                    completion(false, errors)
+                }
+            }
         }
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName)"
         let filePath = "\(projectPath)/Sources/\(fileName)"
@@ -383,7 +413,13 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         let fullCommand = commandContents[gptCommandIndex]
         print("🤖🔨: performing GPT command = \(fullCommand)")
 
-        if fullCommand.hasPrefix("Create project") {
+        let createProjectPrefix = "Create project"
+        let openProjectPrefix = "Open project"
+        let closeProjectPrefix = "Close project"
+        let createFilePrefix = "Create file"
+        let googlePrefix = "Google"
+
+        if fullCommand.hasPrefix(createProjectPrefix) {
 
             var name =  projectName
 
@@ -397,7 +433,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
             executeXcodeCommand(.createProject(name: name)) { success, errors in }
         }
-        else if fullCommand.hasPrefix("Open project") {
+        else if fullCommand.hasPrefix(openProjectPrefix) {
 
             var name =  projectName
 
@@ -411,7 +447,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
             executeXcodeCommand(.openProject(name: name)) { success, errors in }
         }
-        else if fullCommand.hasPrefix("Close project") {
+        else if fullCommand.hasPrefix(closeProjectPrefix) {
 
             var name =  projectName
 
@@ -427,16 +463,18 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             // todo: check success here
             executeXcodeCommand(.createProject(name: name)) { _ , _ in  }
         }
-        else if fullCommand.hasPrefix("Create file") {
+        else if fullCommand.hasPrefix(createFilePrefix) {
             var fileName =  UUID().uuidString
 
             if nameContents.count > fileIndex {
                 fileName = nameContents[fileIndex]
             }
 
+            // Fix to handle all file types , not just .swift?
             if !fileName.lowercased().hasSuffix(".swift") {
                 fileName += ".swift"
             }
+            fileName = preprocessStringForFilename(fileName)
 
             let fileContents = Array(fileContents)
             let foundFileContents: String
@@ -450,10 +488,27 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             textToSpeech(text: speech)
 
             // todo: check success here
-            executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) { success, errors in   }
+            executeXcodeCommand(.createFile(fileName: fileName, fileContents:foundFileContents)) {
+                success, errors in
+                if success {
+                    fileIndex += 1
+                    // completion(true, globalErrors)
+                }
+                else {
+                    return completion(false, globalErrors)
+                }
+            }
+
+        }
+        else if fullCommand.hasPrefix(googlePrefix) {
+            var query =  ""
+
+            if nameContents.count > fileIndex {
+                query = nameContents[fileIndex]
+            }
 
 
-            fileIndex += 1
+            googleCommand(input: query)
         }
         else {
             print("unknown command = \(fullCommand)")
