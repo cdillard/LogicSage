@@ -34,9 +34,25 @@ var commandTable: [String: (String) -> Void] = [
     "random": randomCommand,
     "prompts": promptsCommand,
     "sing": singCommand,
+    "reset": resetCommand,
 ]
 
 var presentMode = true
+
+func resetCommand(input: String) {
+     projectName = "MyApp"
+     globalErrors = [String]()
+     manualPromptString = ""
+     blockingInput = false
+
+     lastFileContents = [String]()
+     lastNameContents = [String]()
+     searchResultHeadingGlobal = nil
+
+     appName = "MyApp"
+     appType = "iOS"
+     language = "Swift"
+}
 
 func singCommand(input: String) {
     textToSpeech(text: "A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!\n Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "204")
@@ -81,14 +97,17 @@ func zeroCommand(input: String) {
         print("Stop voice capturer")
 
         audioRecorder?.stopRecording() { success in
+            guard success else {
+                textToSpeech(text: "Failed to capture.")
+                return
+            }
+            textToSpeech(text: "Captured.")
 
-        }
-        textToSpeech(text: "Captured.")
+            guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
 
-        guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
-
-        Task {
-            await doTranscription(on: path)
+            Task {
+                await doTranscription(on: path)
+            }
         }
     }
 }
@@ -154,7 +173,6 @@ func openProjectCommand(input: String) {
     openLinePrintCount += 1
 }
 
-
 func googleCommand(input: String) {
     searchIt(query: input) { innerContent in
         print("\n🤖 googled \(input): \(innerContent)")
@@ -170,7 +188,6 @@ func googleCommand(input: String) {
         searchResultHeadingGlobal = "\(promptText())\(searchResultHeading)\n\(resultText)"
     }
 }
-
 
 func imageCommand(input: String) {
     print("not implemented")

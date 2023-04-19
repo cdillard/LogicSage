@@ -18,6 +18,7 @@
 		B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DC29EAFBFE00C45773 /* AsciiText.swift */; };
 		B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17B29F07ACD00993AAF /* Loding.swift */; };
 		B70CF17E29F07E2400993AAF /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17D29F07E2400993AAF /* Globals.swift */; };
+		B70CF18029F08C7C00993AAF /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17F29F08C7C00993AAF /* Regex.swift */; };
 		B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */; };
 		B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B70FD6B929EBB44D0099A0D1 /* AudioKit */; };
 		B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */ = {isa = PBXBuildFile; fileRef = B713384D29ED80F000020CC9 /* app_screenshot.applescript */; };
@@ -84,6 +85,7 @@
 		B70B44DC29EAFBFE00C45773 /* AsciiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B70CF17B29F07ACD00993AAF /* Loding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loding.swift; sourceTree = "<group>"; };
 		B70CF17D29F07E2400993AAF /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		B70CF17F29F08C7C00993AAF /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWWrapper.swift; sourceTree = "<group>"; };
 		B713384D29ED80F000020CC9 /* app_screenshot.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = app_screenshot.applescript; sourceTree = "<group>"; };
 		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +208,7 @@
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
+				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
