@@ -150,7 +150,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                 }
                 else {
 
-                    print(afterBuildFailedLine)
+                    print(afterBuildFailedLine())
 
                     if promptingRetryNumber >= retryLimit {
                         print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
