@@ -72,7 +72,7 @@ let voiceOutputEnabled = true
 let voiceInputEnabled = true
 let enableAEyes = false
 
-let logV: LogVerbosity = .verbose
+var logV: LogVerbosity = .verbose
 
 enum LogVerbosity {
     case verbose

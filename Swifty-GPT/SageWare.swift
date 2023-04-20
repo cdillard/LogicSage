@@ -58,6 +58,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         let closeProjectPrefix = "Close project"
         let createFilePrefix = "Create file"
         let googlePrefix = "Google"
+        let linkPrefix = "Link"
 
         if fullCommand.hasPrefix(createProjectPrefix) {
 

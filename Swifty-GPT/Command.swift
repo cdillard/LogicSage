@@ -23,7 +23,7 @@ var commandTable: [String: (String) -> Void] = [
     "4": closeCommand,
     "5": fixItCommand,
     "6": openProjectCommand,
-   // "7": blarg,
+    // "7": blarg,
 
     "gptVoice:": gptVoiceCommand, // Make gpt reply w/ a specific voice
     "google:": googleCommand,
@@ -36,31 +36,33 @@ var commandTable: [String: (String) -> Void] = [
     "sing": singCommand,
     "reset": resetCommand,
     "commands": commandsCommand,
-
+    
     "encourage":encourageCommand,
 ]
 
 var presentMode = true
 
 func resetCommand(input: String) {
-     projectName = "MyApp"
-     globalErrors = [String]()
-     manualPromptString = ""
-     blockingInput = false
+    projectName = "MyApp"
+    globalErrors = [String]()
+    manualPromptString = ""
+    blockingInput = false
 
-     lastFileContents = [String]()
-     lastNameContents = [String]()
-     searchResultHeadingGlobal = nil
+    lastFileContents = [String]()
+    lastNameContents = [String]()
+    searchResultHeadingGlobal = nil
 
-     appName = "MyApp"
-     appType = "iOS"
-     language = "Swift"
+    appName = "MyApp"
+    appType = "iOS"
+
+    appDesc = builtInAppDesc
+    language = "Swift"
 
     print("🔁🔄♻️ Reset.")
 }
 
 func singCommand(input: String) {
-    textToSpeech(text: "A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!\n Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "204")
+    textToSpeech(text: "A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!\n Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "224")
 }
 
 func promptsCommand(input: String) {
@@ -142,8 +144,8 @@ func xcodeCommand(input: String) {
     print("Xcode commands could be used for all sorts of things")
     print("but for now, not implemented.")
 
-//    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
-   // runXcodeCommand(command: command)
+    //    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
+    // runXcodeCommand(command: command)
 }
 
 func exitCommand(input: String) {
@@ -159,6 +161,17 @@ func closeCommand(input: String) {
 func fixItCommand(input: String) {
     let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
 
+
+    // To create you must destroy
+
+    // Hmm?
+    do {
+        try backupAndDeleteWorkspace()
+    }
+    catch {
+        print("file error = \(error)")
+    }
+    
     doPrompting(globalErrors, overridePrompt: newPrompt)
 }
 
@@ -235,7 +248,7 @@ func gptVoiceCommand(input: String) {
 
 
 func commandsCommand(input: String) {
-print(generatedOpenLine(overrideV: true))
+    print(generatedOpenLine(overrideV: true))
 }
 
 func encourageCommand(input: String) {

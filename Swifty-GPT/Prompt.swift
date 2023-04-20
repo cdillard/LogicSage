@@ -5,7 +5,8 @@
 //  Created by Chris Dillard on 4/12/23.
 //
 
-var appDesc = "that grabs the latest headlines from nytimes.com via google results and displays them in aesthetically pleasing arranged views"
+var builtInAppDesc = "that grabs the latest headlines from nytimes.com via google results and displays them in aesthetically pleasing arranged views"
+var appDesc = builtInAppDesc
 
 func promptText(noGoogle: Bool = false) -> String {
 

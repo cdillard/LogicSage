@@ -125,10 +125,26 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                             textToSpeech(text: "Failed to open project.")
 
                             print("failed to open")
+
+                            // Hmm? // double check this one...
+                            do {
+                                try backupAndDeleteWorkspace()
+                            }
+                            catch {
+                                print("file error = \(error)")
+                            }
                         }
                     }
                 }
                 else {
+                    // The cyclce of life
+                    // Hmm? // double check this one...
+                    do {
+                        try backupAndDeleteWorkspace()
+                    }
+                    catch {
+                        print("file error = \(error)")
+                    }
 
                     print(afterBuildFailedLine)
 
@@ -198,13 +214,6 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         if success {
             completion(response)
         } else {
-
-            do {
-                try backupAndDeleteWorkspace()
-            }
-            catch {
-                print("file error = \(error)")
-            }
 
             print("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
             generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)

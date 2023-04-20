@@ -44,7 +44,6 @@ func randomAscii() -> String {
     case 1: return logoAscii
     case 2: return logoAscii3
     case 3: return logoAscii5
-
     default: return logoAscii2
     }
 }
@@ -57,7 +56,6 @@ func updateOpeningLine() {
 
     openingLine = generatedOpenLine()
 }
-
 
 func afterBuildFailedLine() -> String {
 """
