@@ -39,6 +39,9 @@ var commandTable: [String: (String) -> Void] = [
     "b": buildCommand,
     "delete": deleteCommand,
     "encourage":encourageCommand,
+
+
+    "link:":linkCommand
 ]
 
 var presentMode = true
@@ -208,25 +211,25 @@ func openProjectCommand(input: String) {
 
 func googleCommand(input: String) {
     searchIt(query: input) { innerContent in
-        print("\n🤖 googled \(input): \(innerContent)")
+        if let innerContent = innerContent {
 
-//        var resultText = ""
-//        innerContent.forEach {
-//            resultText += $0.snippet
-//            resultText += ","
-//        }
+            print("\n🤖 googled \(input): \(innerContent)")
 
-        // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-        searchResultHeadingGlobal = "\(promptText(noGoogle: true))\n\(searchResultHeading)\n\(innerContent)"
+            // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
+            searchResultHeadingGlobal = "\(promptText())\n\(searchResultHeading)\n\(innerContent)"
 
-        if let results = searchResultHeadingGlobal {
-            print("give 🤖 search results")
+            if let results = searchResultHeadingGlobal {
+                print("give 🤖 search results")
 
-            doPrompting(overridePrompt: results)
-            return
+                doPrompting(overridePrompt: results)
+                return
+            }
+            else {
+                print("FAILED to give results")
+            }
         }
         else {
-            print("FAILED to give results")
+            print("failed to get search results.")
         }
     }
 }
@@ -284,6 +287,31 @@ func buildCommand(input: String) {
 
 func commandsCommand(input: String) {
     print(generatedOpenLine(overrideV: true))
+}
+
+func linkCommand(input: String) {
+    linkIt(link: input) { innerContent in
+        if let innerContent = innerContent {
+
+            print("\n🤖 attempt to link to  content for GPT... \(input): \(innerContent)")
+
+            // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
+            linkResultGlobal = "link: \(input)\ncontent: \(innerContent)"
+
+            if let results = linkResultGlobal {
+                print("give 🤖 search results")
+
+                doPrompting(overridePrompt: results)
+                return
+            }
+            else {
+                print("FAILED to give results")
+            }
+        }
+        else {
+            print("failed to get search results.")
+        }
+    }
 }
 
 func encourageCommand(input: String) {

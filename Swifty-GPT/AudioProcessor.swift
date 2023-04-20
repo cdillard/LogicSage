@@ -21,9 +21,15 @@ func voice() -> String {
     return chosenVoice!
 }
 
+var defaultVoice = "Rishi"
+// var defaultVoice = "Karen"
+
+
 func randomVoice() -> String {
     // SERIOUS VOICES
-    ["Karen"].randomElement()! //"Zarvox", "Trinoids", "Rishi"].randomElement()!
+    [defaultVoice].randomElement()! //"Zarvox", "Trinoids", "Rishi"].randomElement()!
+
+   // ["Karen"].randomElement()!
 
     // FUN VOICES
 //    ["Jester", "Good News", "Bubbles", "Boing", "Bad News"].randomElement()!

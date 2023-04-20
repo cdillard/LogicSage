@@ -57,7 +57,6 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     var commandIndex = 0
     var fileIndex = 0
 
-
     for gptCommandIndex in 0...commandContents.count - 1 {
         let fullCommand = commandContents[gptCommandIndex]
         print("🤖🔨: performing GPT command = \(fullCommand)")
@@ -173,6 +172,21 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             textToSpeech(text: "Googling \(query)...", overrideWpm: "250")
 
             googleCommand(input: query)
+
+            // This should work if GPT keeps Google command first?
+            return
+        }
+        // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
+        else if fullCommand.hasPrefix(linkPrefix) {
+            var query =  ""
+
+            if nameContents.count > fileIndex {
+                query = nameContents[fileIndex]
+            }
+
+            textToSpeech(text: "tapping linkn...", overrideWpm: "250")
+
+            linkCommand(input: query)
 
             // This should work if GPT keeps Google command first?
             return

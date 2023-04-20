@@ -15,6 +15,7 @@ var blockingInput = true
 var lastFileContents = [String]()
 var lastNameContents = [String]()
 var searchResultHeadingGlobal: String?
+var linkResultGlobal: String?
 
 var appName = "MyApp"
 var appType = "iOS"

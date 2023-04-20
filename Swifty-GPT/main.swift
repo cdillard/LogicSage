@@ -109,11 +109,11 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
     if !overridePrompt.isEmpty {
         prompt = overridePrompt
     }
-    else if let searchResultPrompt = searchResultHeadingGlobal, overridePrompt.isEmpty {
-        prompt = "\(prompt)\n\(searchResultPrompt)"
-        searchResultHeadingGlobal = nil
-    }
-    
+//    else if let searchResultPrompt = searchResultHeadingGlobal, overridePrompt.isEmpty {
+//        prompt = "\(prompt)\n\(searchResultPrompt)"
+//        searchResultHeadingGlobal = nil
+//    }
+//
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
 
         // Generations
@@ -131,7 +131,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {
                             print("opened successfully")
-                            print(afterSuccessLine)
+                            print(afterSuccessLine())
                         }
                         else {
                             textToSpeech(text: "Failed to open project.")

@@ -7,6 +7,7 @@
 	<key>OPEN_AI_KEY</key>
 	<string></string>
 	<key>GOOGLE_SEARCH_ID</key>
+	<string></string>
 	<key>NYTIMES_KEY</key>
 	<string></string>
 	<key>NYTIMES_SECRET</key>

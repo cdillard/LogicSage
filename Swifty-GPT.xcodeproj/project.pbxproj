@@ -46,6 +46,9 @@
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
+		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
+		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
+		B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B7D2FD3129F18202003EBCA9 /* SwiftSoup */; };
 		B7D6517529EC847E00ED8BAE /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517029EC847E00ED8BAE /* ggml.c */; };
 		B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */; };
 		B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D6517C29EC88D200ED8BAE /* ggml-base.en.bin */; };
@@ -122,6 +125,8 @@
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
+		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
 		B7D6517029EC847E00ED8BAE /* ggml.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ggml.c; sourceTree = "<group>"; };
 		B7D6517129EC847E00ED8BAE /* ggml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ggml.h; sourceTree = "<group>"; };
 		B7D6517329EC847E00ED8BAE /* whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = whisper.h; sourceTree = "<group>"; };
@@ -146,6 +151,7 @@
 				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
+				B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +221,8 @@
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
+				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -275,6 +283,7 @@
 			packageProductDependencies = (
 				B70FD6B929EBB44D0099A0D1 /* AudioKit */,
 				B719B22B29ECBA24003358C2 /* SwiftyTesseract */,
+				B7D2FD3129F18202003EBCA9 /* SwiftSoup */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -308,6 +317,7 @@
 			packageReferences = (
 				B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */,
 				B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */,
+				B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
@@ -340,6 +350,7 @@
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
+				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
@@ -353,6 +364,7 @@
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
+				B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
@@ -570,6 +582,14 @@
 				kind = branch;
 			};
 		};
+		B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -582,6 +602,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
 			productName = SwiftyTesseract;
+		};
+		B7D2FD3129F18202003EBCA9 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

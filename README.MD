@@ -84,6 +84,19 @@ Head to the Swifty-GPT folder and run this on the entitlements fil with your App
 
 If you see dialogs such as "would like to use your Microphone" or "Would like to send events to other applications," please accept them.
 
+
+Sometimes GPT will refuse to make apps....
+```
+Response non nil, another generation...
+🤖: Sorry, as an AI language model, I am not able to develop an iOS app. My capabilities are limited to generating human-like text based on the given prompts.
+found [] names
+found [] commands
+📁 found = 0
+No names found... failing..
+(Function)
+```
+If this happens just try again and it _usually_ clears right up.
+
 ### Stopping Robot Voices
 If you ever have robot voices getting away from you, run `killall say` in the terminal to stop them.
 
@@ -102,6 +115,9 @@ Swifty-GPT offers a range of features to make software development faster and mo
 - [SwiftyTessarect](https://github.com/SwiftyTesseract/SwiftyTesseract)
 - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com)
 - [AudioKit](https://github.com/AudioKit/AudioKit)
+
+- [SwiftSoup]
+- [SwiftNLC]
 
 ## Contact
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)

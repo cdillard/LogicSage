@@ -8,7 +8,7 @@
 var builtInAppDesc = "that grabs the latest headlines from nytimes.com via google results and displays them in aesthetically pleasing arranged views"
 var appDesc = builtInAppDesc
 
-func promptText(noGoogle: Bool = true) -> String {
+func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
 
     let googleStringInclude = !noGoogle ? "{\"command\": \"Google\",\"name\": \"EXC_BAD_ACCESS\"}," : ""
 
@@ -17,12 +17,18 @@ func promptText(noGoogle: Bool = true) -> String {
     - The Google query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. (In the example above EXC_BAD_ACCESS represents the search term you want more info for or the failing line you are trying to fix. I will reply with a message containing the search results in a JSON array below "Search Results:"
     """
 
+    let linkStringInclude = !noLink ? "{\"command\": \"Link\",\"name\": \"www.nytimes.com\"}," : ""
+    let linkString =
+    """
+    - The Link url command can be used to get more information by accessing a link. Pass the link: {\"command\": \"Link\",\"name\": \"www.nytimes.com\"}. I will reply with a message containing the text from the link.
+    """
     return """
-    Develop an iOS app in \(language) for a SwiftUI-based \(appDesc). Name it \(aiNamedProject ? "a unique name" : appName). Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [\(googleStringInclude){"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "\(aiNamedProject ? "UniqueName" : appName)"},{"command": "Close project", "name": "UniqueName"}]
-    Example SWIFT_FILE_CONTENTS = "import SwiftUI\\nstruct UniqueGameView: View { var body: some View { Spinner() } }\nstruct Spinner: View { var body: some View {a } }". Follow this order: Google, Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
+    Develop an iOS app in \(language) for a SwiftUI-based \(appDesc). Name it \(aiNamedProject ? "a unique name" : appName). Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [\(googleStringInclude)\(linkStringInclude){"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "\(aiNamedProject ? "UniqueName" : appName)"},{"command": "Close project", "name": "UniqueName"}]
+    Example SWIFT_FILE_CONTENTS = "import SwiftUI\\nstruct UniqueGameView: View { var body: some View { Spinner() } }\nstruct Spinner: View { var body: some View {a } }". Follow this order: Google, Link, Create project, Create Swift files (including App file), Open project, Close project. Minimize command usage.
     - It is essential you return your response as a JSON array.
     - It is essential you include a Swift `App` file.
     \(!noGoogle ? googleString : "")
+    \(!noLink ? linkString : "")
     - Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
 
     """
