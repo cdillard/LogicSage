@@ -55,6 +55,9 @@ SET API KEYS: You'll need to track down the following keys to fully experience S
 	<string></string>
 ```
 
+Check Config.swift for the config.
+
+You can turn on asciiAnimations for fun or turn them off for fun. Your choice.
 
 ### OCR Models
 Download the necessary OCR models and place them in the corresponding directories:

@@ -66,7 +66,7 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = false
+let asciAnimations = true
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true

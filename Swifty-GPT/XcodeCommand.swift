@@ -149,7 +149,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
     case let .openProject(name):
         print("SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): \(name)")
         //        executeAppleScriptCommand(.openProject(name: projectName))
-        //        completion(true)
+        completion(true, globalErrors)
     case let .createProject(name):
         print("Creating project with name: \(name)")
         projectName = name.isEmpty ? "MyApp" : name
@@ -166,8 +166,8 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
 
     case .closeProject(name: let name):
         print("SKIPPING GPT-Closing project with name: \(name)")
-        //        executeAppleScriptCommand(.closeProject(name: name))
-        //        completion(true)
+               // executeAppleScriptCommand(.closeProject(name: name))
+        completion(true, globalErrors)
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
