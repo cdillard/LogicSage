@@ -7,7 +7,8 @@
 
 import Foundation
 
-var commandsText = """
+func commandsText() -> String {
+"""
 🔹 idea: "Your app idea"  💡 New appDesc prompt
 🔹 gpt: "Hi GPT. Tell me something interesting about technology."   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations
@@ -25,13 +26,14 @@ var commandsText = """
 🔹 exit  🚪 Close the program
 
 """
+}
 
-func generatedOpenLine() -> String {
+func generatedOpenLine(overrideV: Bool = false) -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to Swifty GPT 🧠💥" : "")
 
-    \(sharedCommands)
-    \(commandsText)
+    \((logV == .verbose || overrideV) ? sharedCommands() : "")
+    \((logV == .verbose || overrideV) ? commandsText() : "")
 
     🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
 
@@ -61,26 +63,31 @@ func updateOpeningLine() {
 }
 
 
-let afterBuildFailedLine = """
+func afterBuildFailedLine() -> String {
+"""
 Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
-\(numericalCommands)
-\(commandsText)
+\(logV == .verbose ? numericalCommands() : "")
+\(logV == .verbose ? commandsText() : "")
 
 ❓ What would you like to do:
 🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
 
 """
+}
 
-let afterSuccessLine = """
+func afterSuccessLine() -> String {
+"""
 Project creation success. Project should have auto openned.
-\(numericalCommands)
-\(commandsText)
+\(logV == .verbose ? numericalCommands() : "")
+\(logV == .verbose ? commandsText() : "")
 
 🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
 
 """
+}
 // 🎮🎨📲
-let sharedCommands = """
+func sharedCommands() -> String {
+"""
 🔹 0. 🗣️ Use voice command: Tap 0 to start, Tap 0 to end
 🔹 1. ✨ Run loaded prompt
 🔹 2. 🚀 Show loaded prompt
@@ -88,11 +95,14 @@ let sharedCommands = """
 🔹 X. 📂 Voice settings
 
 """
+}
 
-let numericalCommands = """
-\(sharedCommands)
+func numericalCommands() -> String {
+"""
+\(logV == .verbose ? sharedCommands() : "")
 🔹 4. 🚪📂 Close project
 🔹 5. 🖥️🔧 Fix errors w/ GPT
 🔹 6. 🆕   Continue implementation
 """
+}
 

@@ -191,7 +191,27 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     executeXcodeCommand(.buildProject(name: projectName)) { success, errors in
         if success {
             print("Build successful.")
-            textToSpeech(text: "Build successful.")
+
+            func sucessWord() -> String {
+                switch Int.random(in: 0...5)
+                {
+                case 0:
+                    return  "Build successful"
+                case 1:
+                    return "Build success"
+                case 2:
+                    return "Build worked"
+                case 3:
+                    return "Successful build"
+                case 4:
+                    return "Successfully built"
+                default:
+                    return ""
+                }
+            }
+
+
+            textToSpeech(text: sucessWord())
 
             completion(true, errors)
         }

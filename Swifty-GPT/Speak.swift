@@ -74,9 +74,8 @@ public extension Date {
 }
 
 func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
-    Task {
-        await addSpeakTask(text: text, overrideVoice: overrideVoice, overrideWpm: overrideWpm)
-    }
+
+    addSpeakTask(text: text, overrideVoice: overrideVoice, overrideWpm: overrideWpm)
 }
 
 func welcomeWord() -> String {
@@ -113,11 +112,7 @@ func killAllVoices() {
 }
 
 
-func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) async {
-    // Create a background task group
-//    await withTaskGroup(of: Void.self) { group in
-//        // Add tasks to the group
-//        group.addTask(priority: .background) {
+func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
 
             if !voiceOutputEnabled { return }
 
@@ -168,8 +163,4 @@ func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: Strin
             } catch {
                 print("Error running text-to-speech: \(error)")
             }
-
-
-       // }
-   // }
 }

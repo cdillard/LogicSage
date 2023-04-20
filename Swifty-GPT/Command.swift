@@ -35,6 +35,7 @@ var commandTable: [String: (String) -> Void] = [
     "prompts": promptsCommand,
     "sing": singCommand,
     "reset": resetCommand,
+    "commands": commandsCommand,
 
     "encourage":encourageCommand,
 ]
@@ -232,19 +233,14 @@ func gptVoiceCommand(input: String) {
 
 }
 
+
+func commandsCommand(input: String) {
+print(generatedOpenLine(overrideV: true))
+}
+
 func encourageCommand(input: String) {
     let il = """
 1. You are capable of greatness.
-2. Keep pushing forward, even when it's hard.
-3. Believe in yourself and your abilities.
-4. There's a solution to every problem - keep looking.
-5. You can do anything you set your mind to.
-6. Trust the journey and have faith in yourself.
-7. You are valuable and important.
-8. Keep trying, even if you fail.
-9. Success is achieved through persistence and hard work.
-10. Believe in your dreams - they can become a reality.
-say: 1. You are capable of greatness.
 2. Keep pushing forward, even when it's hard.
 3. Believe in yourself and your abilities.
 4. There's a solution to every problem - keep looking.

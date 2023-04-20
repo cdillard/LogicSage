@@ -71,3 +71,10 @@ let asciAnimations = false
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 let enableAEyes = false
+
+let logV: LogVerbosity = .verbose
+
+enum LogVerbosity {
+    case verbose
+    case none
+}
