@@ -17,8 +17,6 @@ struct SearchItem: Codable {
     let snippet: String
 }
 
-
-
 func search(query: String, apiKey: String, searchEngineId: String, completion: @escaping (Result<[SearchItem], Error>) -> Void) {
     var urlComponents = URLComponents(string: "https://www.googleapis.com/customsearch/v1")
     urlComponents?.queryItems = [

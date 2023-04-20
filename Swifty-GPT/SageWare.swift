@@ -210,7 +210,6 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 }
             }
 
-
             textToSpeech(text: sucessWord())
 
             completion(true, errors)

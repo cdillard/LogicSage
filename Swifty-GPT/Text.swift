@@ -12,17 +12,13 @@ func commandsText() -> String {
 🔹 idea: "Your app idea"  💡 New appDesc prompt
 🔹 gpt: "Hi GPT. Tell me something interesting about technology."   🧠 Talk to GPT
 🔹 xcode: 🛠️ Run Xcode operations
-🔹 random  Build app from random premade prompt
-🔹 prompts  List built in prompts
-
+🔹 random 💥  Build app from random premade prompt
+🔹 prompts 🧠  List built in prompts
+🔹 commands 📲 List Commands
 🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice
-
 🔹 stop  🛑 Stop any voices or Commands
 🔹 sing  🎵 Sing a built in song
-
 🔹 reset  🔁🔄♻️ Reset prompt state
-
-
 🔹 exit  🚪 Close the program
 
 """

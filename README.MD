@@ -70,6 +70,8 @@ Run `export DISPLAY=:0`
 
 Run app XQuartz
 
+Head to the Swifty-GPT folder and run this on the entitlements fil with your Apple Development account. This will stop the Mic POPUP.
+ `codesign --entitlements Swifty-GPT.entitlements --force --sign "Apple Development: yourdevemail@gmail.com (YOUTEAXZM)" ../Xcode/DerivedData/Swifty-GPT-fsilcclqupwxmwfxejzmbhescakg/Build/Products/Release/Swifty-GPT`
 
 ![Shiwfty](Swifty-GPT/assets/MicAccess.png)
 

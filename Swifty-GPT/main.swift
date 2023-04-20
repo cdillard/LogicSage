@@ -105,8 +105,8 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
     if !overridePrompt.isEmpty {
         prompt = overridePrompt
     }
-    else if let searchResultPrompt = searchResultHeadingGlobal {
-        prompt = searchResultPrompt
+    if let searchResultPrompt = searchResultHeadingGlobal {
+        prompt = "\(prompt)\n\(searchResultPrompt)"
         searchResultHeadingGlobal = nil
     }
     
