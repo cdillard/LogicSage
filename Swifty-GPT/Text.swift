@@ -19,6 +19,7 @@ func commandsText() -> String {
 🔹 stop  🛑 Stop any voices or Commands
 🔹 sing  🎵 Sing a built in song
 🔹 reset  🔁🔄♻️ Reset prompt state
+🔹 delete 🗑️ Backup and delete workspace
 🔹 exit  🚪 Close the program
 
 """

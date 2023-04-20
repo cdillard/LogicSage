@@ -1,124 +1,113 @@
-![Shiwfty](Swifty-GPT/assets/Swifty-Logo.png)
+![Swifty-GPT](Swifty-GPT/assets/Swifty-Logo.png)
 
-Join me on [Discord](https://discord.gg/6hbDDqf8SX), or not.
+# Swifty-GPT: The Ultimate AI Integration for Xcode
 
-## Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
+Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
 
+Join the [Discord community](https://discord.gg/6hbDDqf8SX) for support and discussions.
 
-- With a little help from my GPT🤖. Thank you Open AI.
+## Table of Contents
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
+- [Features](#features)
+- [Credits](#credits)
+- [Contact](#contact)
 
-# Swifty-GPT is a great tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs. Plus, it can do a lot of the work for you, like adding the right code, so you can focus on making your app amazing. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
+## Getting Started
+1. Clone the repository: `git clone https://github.com/username/Swifty-GPT.git`
+2. Navigate to the project directory: `cd Swifty-GPT`
+3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
 
-# Instructions: Open Swifty-GPT.xcworkspace, Set OPEN_AI_KEY. Have fun!
+## Installation
+### Dependencies
+- [Homebrew](https://brew.sh/)
+- [Ruby](https://www.ruby-lang.org/en/)
+- [Xcode](https://developer.apple.com/xcode/)
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
+- [Xcodeproj](https://github.com/CocoaPods/Xcodeproj)
 
-brew install xcodegen 
+#### Installing Homebrew and Ruby
+If you don't have Homebrew and Ruby installed, follow these steps:
+1. Install Homebrew by running: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. Install Ruby by running: `brew install ruby`
 
-gem install xcodeproj
+#### Installing XcodeGen and Xcodeproj
+1. Install XcodeGen: `brew install xcodegen`
+2. Install Xcodeproj: `gem install xcodeproj`
 
-Yoy may need to change to 
-```
-let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"
-```
-vs
-```
-let xcodegenPath = "/opt/homebrew/bin/xcodegen"
-```
-depending on oyour config
+### OCR Models
+Download the necessary OCR models and place them in the corresponding directories:
+1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
+2. [tessdata](https://github.com/tesseract-ocr/tessdata)
+3. [tessdata_best](https://github.com/tesseract-ocr/tessdata_best)
 
-run
-`which xcodeproj`
-and 
-`which xcodegen` 
-to discover your paths and issues.
+### Voice Command
+Download the desired datasets from [Hugging Face](https://huggingface.co/ggerganov/whisper.cpp/tree/main) and place them in `Swifty-GPT/Swifty-GPT/Model`:
+- ggml-large.bin
+- ggml-medium.en.bin
+- ggml-large-v1.bin
+- ggml-base.en.bin
+- ggml-small.en.bn
 
-If you get ruby errors follow the steps here: https://stackoverflow.com/a/31250347
+## Configuration
+1. Open `Swifty-GPT.xcworkspace`.
+2. Set `OPEN_AI_KEY`.
+3. Enjoy!
 
-Ask on [Discord](https://discord.gg/6hbDDqf8SX) if you get stuck, or not.
+### Path Configuration
+You may need to change the `xcodegenPath` variable depending on your configuration:
+- Option 1: `let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"`
+- Option 2: `let xcodegenPath = "/opt/homebrew/bin/xcodegen"`
 
-1. OCR models you need:
+To discover your paths and issues, run:
+- `which xcodeproj`
+- `which xcodegen`
 
-https://github.com/tesseract-ocr/tessdata_fast
+If you encounter Ruby errors, follow the steps here:
 
-https://github.com/tesseract-ocr/tessdata
+If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
 
-https://github.com/tesseract-ocr/tessdata_best
+If you get stuck, ask for help on [Discord](https://discord.gg/6hbDDqf8SX).
 
-Put the testdata_fast directory contents into  ../SwiftyGPTWorkspace/tessdata_fast-main
-
-2. For Voice Command you must download dataset you desire to use from https://huggingface.co/ggerganov/whisper.cpp/tree/main.
-youll need
- ggml-large.bin,
- ggml-medium.en.bin,
- ggml-large-v1.bin,
- ggml-base.en.bin,
- ggml-small.en.bn,
-
-Put them folders in Swifty-GPT/Swifty-GPT/Model
-
-
-IF you ever have robot voices getting away from you, `killall say` in the terminal will stop them.
-
-# Voice Command
-
-
-Pick your voice after trying them out with voice_test `swift voice_test.swift` inside Swifty-GPT folder.
-
-
- # Troubleshoot
-
-Run `export DISPLAY=:0`
-
-Run app XQuartz
-
+## Troubleshooting
+### Microphone Access
+If you experience issues with microphone access, follow these steps:
+1. Run `export DISPLAY=:0`.
+2. Run the XQuartz app.
+3. Head to the Swifty-GPT folder and run the following command with your Apple Development account to stop the Mic popup:
 Head to the Swifty-GPT folder and run this on the entitlements fil with your Apple Development account. This will stop the Mic POPUP.
  `codesign --entitlements Swifty-GPT.entitlements --force --sign "Apple Development: yourdevemail@gmail.com (YOUTEAXZM)" ../Xcode/DerivedData/Swifty-GPT-fsilcclqupwxmwfxejzmbhescakg/Build/Products/Release/Swifty-GPT`
 
-![Shiwfty](Swifty-GPT/assets/MicAccess.png)
+![Microphone Access](Swifty-GPT/assets/MicAccess.png)
 
+If you see dialogs such as "would like to use your Microphone" or "Would like to send events to other applications," please accept them.
 
- If you are seeing "would like to use your Microphone", "Would like to send events to other applications" dialogs, please blindly accept them.
+### Stopping Robot Voices
+If you ever have robot voices getting away from you, run `killall say` in the terminal to stop them.
 
+## Features
+Swifty-GPT offers a range of features to make software development faster and more efficient:
+- Code analysis and optimization
+- Error detection and correction
+- Voice-activated GPT integration
+- Real-time code suggestions
+- Powerful debugging tool
+- Integration with Apple's built-in text-to-speech software
+- Personalized memory storage using a consciousness module
 
- # Thesis
-The Ultimate AI Integration for Xcode: Where GPT Can Hear You and See Your Code!
+## Credits
+- [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
+- [SwiftyTessarect](https://github.com/SwiftyTesseract/SwiftyTesseract)
+- [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com)
+- [AudioKit](https://github.com/AudioKit/AudioKit)
 
-Are you tired of spending hours writing code and debugging errors? Do you wish you had a tool that could automate nearly all tasks in Xcode? Look no further than our AI integration, the ultimate solution for software developers!
+## Contact
+Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
-Overview
+- With a little help from my GPT🤖. Thank you, OpenAI!
 
-AI integration is a marvel of technology, capable of analyzing code and suggesting optimizations, detecting errors and automatically fixing them, and even generating new code based on user input. But that's not all! Our integration has a revolutionary new feature: the ability for GPT to HEAR you and SEE your code.
+Feel free to reach out on [Discord](https://discord.gg/6hbDDqf8SX) if you have any questions or need support.
 
-Our AI integration also utilizes a consciousness module to store past memories from coding sessions, including all the text from open Xcode windows and context based on conversation in natural language with the Swift or Apple device developer. This allows our integration to become even more personalized to each individual user, and can greatly improve efficiency and accuracy.
-
-Features
-
-Our AI integration includes a wide range of features to make software development faster and more efficient. Here are just a few of the highlights:
-
-Code analysis and optimization
-Error detection and correction
-Voice-activated GPT integration
-Real-time code suggestions
-Powerful debugging tool
-Integration with Apple's built-in text-to-speech software
-Personalized memory storage using a consciousness module
-
-Challenges and Solutions
-
-As AI becomes more possible we'll face challenges the sheer amount of data is overwhelming!
-
-
-Conclusion
-
-In the end, I hope this AI integration helps this level of AI integration became the gold standard for software development, used by companies all over the world to write code faster and more efficiently than ever before. Our integration had truly changed the world of software development, where GPT can HEAR you and SEE your code!
-
-iPad and iOS support coming soon!
-
-
-# Credits
-SwiftWhisper: https://github.com/exPHAT/SwiftWhisper
-
-SwiftyTessarect: https://github.com/SwiftyTesseract/SwiftyTesseract 
-
-OpenAI GPT-4, GPT-3.5 turbo APIs: www.openai.com 
-
-AudioKit:  https://github.com/AudioKit/AudioKit
+**Note:** iPad and iOS support is coming soon!

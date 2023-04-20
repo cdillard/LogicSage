@@ -37,7 +37,7 @@ var commandTable: [String: (String) -> Void] = [
     "reset": resetCommand,
     "commands": commandsCommand,
     "b": buildCommand,
-
+    "delete": deleteCommand,
     "encourage":encourageCommand,
 ]
 
@@ -60,6 +60,12 @@ func resetCommand(input: String) {
     language = "Swift"
 
     print("🔁🔄♻️ Reset.")
+
+
+}
+
+func deleteCommand(input: String) {
+    print("backing up and deleting SwiftSage workspace, as requested")
 
     do {
         try backupAndDeleteWorkspace()

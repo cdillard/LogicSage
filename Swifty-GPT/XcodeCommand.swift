@@ -210,7 +210,6 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
 //                    print("No input was provided.")
 //                }
 
-                print(afterSuccessLine)
 
             } else {
                 completion(false, errors)

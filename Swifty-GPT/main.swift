@@ -117,8 +117,11 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
 
         // Generations
+        print("Retry another generation...?")
 
         if response != nil, let response {
+
+            print("Response non nil, another generation...")
 
             parseAndExecuteGPTOutput(response, errors) { success, errors in
                 if success {
@@ -128,6 +131,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {
                             print("opened successfully")
+                            print(afterSuccessLine)
                         }
                         else {
                             textToSpeech(text: "Failed to open project.")

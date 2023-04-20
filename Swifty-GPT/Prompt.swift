@@ -8,13 +8,13 @@
 var builtInAppDesc = "that grabs the latest headlines from nytimes.com via google results and displays them in aesthetically pleasing arranged views"
 var appDesc = builtInAppDesc
 
-func promptText(noGoogle: Bool = false) -> String {
+func promptText(noGoogle: Bool = true) -> String {
 
     let googleStringInclude = !noGoogle ? "{\"command\": \"Google\",\"name\": \"EXC_BAD_ACCESS\"}," : ""
 
     let googleString =
     """
-        - The Google query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. (In the example above EXC_BAD_ACCESS represents the search term you want more info for or the failing line you are trying to fix. I will reply with a message containing the search results in a JSON array below "Search Results:"
+    - The Google query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. (In the example above EXC_BAD_ACCESS represents the search term you want more info for or the failing line you are trying to fix. I will reply with a message containing the search results in a JSON array below "Search Results:"
     """
 
     return """

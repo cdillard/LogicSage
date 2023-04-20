@@ -193,7 +193,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
     buildIt() { success, errrors in
             // open it?
-            completion(success, errors)
+        completion(success, errors)
 
     }
 }
