@@ -40,7 +40,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         if currentRetry == 0 {
             print("👨: \(prompt)")
         }
-        if isFix {
+        else if isFix {
             print("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
 
         }

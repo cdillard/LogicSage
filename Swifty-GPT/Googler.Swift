@@ -56,6 +56,7 @@ func search(query: String, apiKey: String, searchEngineId: String, completion: @
 
 
 func searchIt(query: String, completion: @escaping ([SearchItem]) -> Void) {
+    print("Searching it... \(query)")
     search(query: query, apiKey: GOOGLE_KEY, searchEngineId: GOOGLE_ID) { result in
         switch result {
         case .success(let searchItems):

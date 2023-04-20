@@ -36,7 +36,8 @@ var commandTable: [String: (String) -> Void] = [
     "sing": singCommand,
     "reset": resetCommand,
     "commands": commandsCommand,
-    
+    "b": buildCommand,
+
     "encourage":encourageCommand,
 ]
 
@@ -59,6 +60,13 @@ func resetCommand(input: String) {
     language = "Swift"
 
     print("🔁🔄♻️ Reset.")
+
+    do {
+        try backupAndDeleteWorkspace()
+    }
+    catch {
+        print("file error = \(error)")
+    }
 }
 
 func singCommand(input: String) {
@@ -163,14 +171,13 @@ func fixItCommand(input: String) {
 
 
     // To create you must destroy
-
-    // Hmm?
-    do {
-        try backupAndDeleteWorkspace()
-    }
-    catch {
-        print("file error = \(error)")
-    }
+//    // Hmm?
+//    do {
+//        try backupAndDeleteWorkspace()
+//    }
+//    catch {
+//        print("file error = \(error)")
+//    }
     
     doPrompting(globalErrors, overridePrompt: newPrompt)
 }
@@ -197,14 +204,24 @@ func googleCommand(input: String) {
     searchIt(query: input) { innerContent in
         print("\n🤖 googled \(input): \(innerContent)")
 
-        var resultText = ""
-        innerContent.forEach {
-            resultText += $0.snippet
-            resultText += ","
-        }
+//        var resultText = ""
+//        innerContent.forEach {
+//            resultText += $0.snippet
+//            resultText += ","
+//        }
 
         // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-        searchResultHeadingGlobal = "\(promptText())\(searchResultHeading)\n\(resultText)"
+        searchResultHeadingGlobal = "\(promptText(noGoogle: true))\n\(searchResultHeading)\n\(innerContent)"
+
+        if let results = searchResultHeadingGlobal {
+            print("give 🤖 search results")
+
+            doPrompting(overridePrompt: results)
+            return
+        }
+        else {
+            print("FAILED to give results")
+        }
     }
 }
 
@@ -245,7 +262,19 @@ func gptVoiceCommand(input: String) {
     }
 
 }
+func buildCommand(input: String) {
+    buildIt() { success, errrors in
+            // open it?
+           // completion(success, errors)
+        if success {
+            print("built")
+        }
+        else {
+            print("did not build")
+        }
+    }
 
+}
 
 func commandsCommand(input: String) {
     print(generatedOpenLine(overrideV: true))

@@ -16,6 +16,14 @@ import Foundation
 
 import Foundation
 
+
+let createProjectPrefix = "Create project"
+let openProjectPrefix = "Open project"
+let closeProjectPrefix = "Close project"
+let createFilePrefix = "Create file"
+let googlePrefix = "Google"
+let linkPrefix = "Link"
+
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completion: @escaping (Bool, [String]) -> Void) {
 
@@ -49,16 +57,10 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     var commandIndex = 0
     var fileIndex = 0
 
+
     for gptCommandIndex in 0...commandContents.count - 1 {
         let fullCommand = commandContents[gptCommandIndex]
         print("🤖🔨: performing GPT command = \(fullCommand)")
-
-        let createProjectPrefix = "Create project"
-        let openProjectPrefix = "Open project"
-        let closeProjectPrefix = "Close project"
-        let createFilePrefix = "Create file"
-        let googlePrefix = "Google"
-        let linkPrefix = "Link"
 
         if fullCommand.hasPrefix(createProjectPrefix) {
 
@@ -171,6 +173,9 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             textToSpeech(text: "Googling \(query)...", overrideWpm: "250")
 
             googleCommand(input: query)
+
+            // This should work if GPT keeps Google command first?
+            return
         }
         else {
             print("unknown command = \(fullCommand)")
@@ -186,6 +191,15 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         return completion(false, globalErrors)
     }
 
+    buildIt() { success, errrors in
+            // open it?
+            completion(success, errors)
+
+    }
+}
+
+
+func buildIt(completion: @escaping (Bool, [String]) -> Void) {
     print("Building project...")
     textToSpeech(text: "Building project \(projectName)...")
 
@@ -222,4 +236,5 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             completion(false, errors)
         }
     }
+
 }

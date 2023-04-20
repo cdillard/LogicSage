@@ -33,6 +33,8 @@ func main() {
 
     // TODO: Check workspace and delete or backup if req
     // backup workspace to file folder with suffix
+
+    // Maybe we shouldn't blow the worksspace away when you open the app?
     do {
         try backupAndDeleteWorkspace()
     }
@@ -102,16 +104,22 @@ var promptingRetryNumber = 0
 let sema = DispatchSemaphore(value: 0)
 
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
+
+    // Nasty duplicate prompt bu
     if !overridePrompt.isEmpty {
         prompt = overridePrompt
     }
-    if let searchResultPrompt = searchResultHeadingGlobal {
+    else if let searchResultPrompt = searchResultHeadingGlobal, overridePrompt.isEmpty {
         prompt = "\(prompt)\n\(searchResultPrompt)"
         searchResultHeadingGlobal = nil
     }
     
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
+
+        // Generations
+
         if response != nil, let response {
+
             parseAndExecuteGPTOutput(response, errors) { success, errors in
                 if success {
                     print("Parsed and executed code successfully. Opening project...")
@@ -137,20 +145,22 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     }
                 }
                 else {
-                    // The cyclce of life
-                    // Hmm? // double check this one...
-                    do {
-                        try backupAndDeleteWorkspace()
-                    }
-                    catch {
-                        print("file error = \(error)")
-                    }
 
                     print(afterBuildFailedLine)
 
                     if promptingRetryNumber >= retryLimit {
                         print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
                         //completion(nil)
+
+                        // The cyclce of life
+                        // Hmm? // double check this one...
+                        do {
+                            try backupAndDeleteWorkspace()
+                        }
+                        catch {
+                            print("file error = \(error)")
+                        }
+
                         sema.signal()
                         return
                     }
@@ -160,6 +170,14 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     if !interactiveMode {
                         doPrompting(errors)
                     }
+//                    // The cyclce of life
+//                    // Hmm? // double check this one...
+//                    do {
+//                        try backupAndDeleteWorkspace()
+//                    }
+//                    catch {
+//                        print("file error = \(error)")
+//                    }
                 }
             }
         } else {

@@ -86,6 +86,8 @@ func sharedCommands() -> String {
 🔹 1. ✨ Run loaded prompt
 🔹 2. 🚀 Show loaded prompt
 🔹 3. 📂 Open project
+🔹 B. 🏗️ Build Project
+
 🔹 X. 📂 Voice settings
 
 """
