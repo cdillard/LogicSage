@@ -221,7 +221,7 @@ func createIdeaPrompt(command: String) -> String {
     appDesc = command
     refreshPrompt(appDesc: command)
 
-    let newPrompt = promptText()
+    let newPrompt = promptText(noGoogle: !enableGoogle, noLink: !enableLink)
     return newPrompt
 }
 

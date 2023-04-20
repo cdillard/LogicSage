@@ -67,7 +67,7 @@ func refreshPrompt(appDesc: String) {
 
 func updatePrompt(appDesc2: String) {
     appDesc = appDesc2
-    prompt = promptText()
+    prompt = promptText(noGoogle: !enableGoogle, noLink: !enableLink)
 }
 
 

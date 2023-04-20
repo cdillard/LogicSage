@@ -40,7 +40,7 @@ func runTest() {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "h"
     // presise time setting let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
-    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
+    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customMaleName.isEmpty ? customMaleName : voice()) and I'm \(noun()).")
 }
 
 func noun() -> String {

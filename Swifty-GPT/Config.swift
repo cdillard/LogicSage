@@ -70,7 +70,12 @@ let asciAnimations = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
+
+// EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+
 let enableAEyes = false
+let enableGoogle = false
+let enableLink = false
 
 var logV: LogVerbosity = .verbose
 

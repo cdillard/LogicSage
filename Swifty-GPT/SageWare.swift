@@ -162,7 +162,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             }
         }
         // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
-        else if fullCommand.hasPrefix(googlePrefix) {
+        else if fullCommand.hasPrefix(googlePrefix) && enableGoogle {
             var query =  ""
 
             if nameContents.count > fileIndex {
@@ -177,7 +177,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             return
         }
         // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
-        else if fullCommand.hasPrefix(linkPrefix) {
+        else if fullCommand.hasPrefix(linkPrefix) && enableLink {
             var query =  ""
 
             if nameContents.count > fileIndex {
