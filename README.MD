@@ -37,6 +37,25 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 1. Install XcodeGen: `brew install xcodegen`
 2. Install Xcodeproj: `gem install xcodeproj`
 
+
+SET API KEYS: You'll need to track down the following keys to fully experience SwiftSage.
+
+```
+	<key>GOOGLE_KEY</key>
+	<string></string>
+	<key>OPEN_AI_KEY</key>
+	<string></string>
+	<key>GOOGLE_SEARCH_ID</key>
+	<string></string>
+	<key>NYTIMES_KEY</key>
+	<string></string>
+	<key>NYTIMES_SECRET</key>
+	<string></string>
+	<key>PIXABAY_KEY</key>
+	<string></string>
+```
+
+
 ### OCR Models
 Download the necessary OCR models and place them in the corresponding directories:
 1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
