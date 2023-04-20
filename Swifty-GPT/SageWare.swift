@@ -185,7 +185,6 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         commandIndex += 1
     }
 
-    // todo: check to make sure the files were written
     if fileIndex == 0 || fileIndex != fileContents.count {
         print("Failed to make files.. retrying...")
         return completion(false, globalErrors)
@@ -203,7 +202,10 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
     print("Building project...")
     textToSpeech(text: "Building project \(projectName)...")
 
+    startRandomSpinner()
     executeXcodeCommand(.buildProject(name: projectName)) { success, errors in
+        stopRandomSpinner()
+
         if success {
             print("Build successful.")
 
@@ -231,7 +233,26 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
         }
         else {
             print("Build failed.")
-            textToSpeech(text: "Build failed.")
+
+            func failWord() -> String {
+                switch Int.random(in: 0...5)
+                {
+                case 0:
+                    return "Failed build"
+                case 1:
+                    return "Build failed"
+                case 2:
+                    return "Build failed, for now..."
+                case 3:
+                    return "Build broke"
+                case 4:
+                    return "Failed to build"
+                default:
+                    return ""
+                }
+            }
+
+            textToSpeech(text: failWord())
 
             completion(false, errors)
         }

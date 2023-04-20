@@ -131,13 +131,7 @@ class AudioRecorder {
     }
 }
 
-import AVFoundation
-
 func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
-    if AVCaptureDevice.authorizationStatus(for: .audio) == .authorized {
-        return     completion(true)
-    }
-
     AVCaptureDevice.requestAccess(for: .audio) { granted in
         DispatchQueue.main.async {
             completion(granted)

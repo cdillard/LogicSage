@@ -56,7 +56,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
 
         startRandomSpinner()
 
-        textToSpeech(text: "Exec prompt length \(prompt.count)", overrideWpm: "242")
+        textToSpeech(text: "Exec prompt length \(prompt.count)", overrideVoice:"Zarvox", overrideWpm: "262")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 

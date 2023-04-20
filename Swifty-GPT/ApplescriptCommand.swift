@@ -22,7 +22,11 @@ func executeAppleScriptCommand(_ command: XcodeCommand, completion: @escaping (B
             print("AppleScript Error: \(error)")
             completion(false,[error.description])
         }
+        else {
+            completion(true, [])
+        }
     } else {
         print("Unsupported command")
+        completion(false, globalErrors)
     }
 }

@@ -277,9 +277,9 @@ func buildCommand(input: String) {
         }
         else {
             print("did not build")
+            doPrompting()
         }
     }
-
 }
 
 func commandsCommand(input: String) {
