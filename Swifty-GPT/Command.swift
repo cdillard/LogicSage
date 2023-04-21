@@ -51,6 +51,7 @@ func resetCommand(input: String) {
     globalErrors = [String]()
     manualPromptString = ""
     blockingInput = false
+    promptingRetryNumber = 0
 
     lastFileContents = [String]()
     lastNameContents = [String]()

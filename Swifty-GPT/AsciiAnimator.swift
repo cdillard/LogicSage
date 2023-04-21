@@ -62,7 +62,9 @@ class TextAnimator {
         }
 
         func generateRandomCharacter() -> String {
-            let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+            let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻﾜﾂｵﾘçｱｸﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾘﾈｽﾀﾇﾍｦｲｸｺçｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝｲｸﾁﾄﾉﾌﾍﾖﾙﾚﾛﾝ "
+            let characters = useMatrixLettrs
             let randomIndex = Int(arc4random_uniform(UInt32(characters.count)))
             let randomCharacter = characters[characters.index(characters.startIndex, offsetBy: randomIndex)]
             return String(randomCharacter)
@@ -87,7 +89,7 @@ class TextAnimator {
             guard !isRunning else { return }
             isRunning = true
 
-            let delay: TimeInterval = 0.25
+            let delay: TimeInterval = 0.175
 
             timer.schedule(deadline: .now(), repeating: delay)
             timer.setEventHandler { [weak self] in

@@ -33,27 +33,6 @@ func enableRawMode(fileDescriptor: Int32) -> termios {
     return original
 }
 
-/*
- func setRawMode() -> termios {
-     var raw = termios()
-     tcgetattr(STDIN_FILENO, &raw)
-
-     let original = raw
-
-     raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON)
-     raw.c_oflag &= ~OPOST
-     raw.c_cflag |= CS8
-     raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG)
-     raw.c_cc.16 = UInt8(1)
-     raw.c_cc.17 = UInt8(0)
-
-     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw)
-     return original
- }
-
- */
-
-
 func disableRawMode(fileDescriptor: Int32, originalTermios: termios) {
     var term = originalTermios
     tcsetattr(fileDescriptor, TCSAFLUSH, &term)

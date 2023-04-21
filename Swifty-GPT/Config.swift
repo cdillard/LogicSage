@@ -66,13 +66,16 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = true
+let asciAnimations = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+let enableGoogle = true
+let enableLink = true
 
+// DO NOT USE
 let enableAEyes = false
 
 var logV: LogVerbosity = .verbose

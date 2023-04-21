@@ -13,6 +13,7 @@ let animator = TextAnimator(text: loadingText)
 
 var spinnerInt: Int = 1
 func startRandomSpinner() {
+    
     spinnerInt = Int.random(in: 0...1)
     if spinnerInt == 0 && asciAnimations  {
         animator.start()
@@ -28,3 +29,4 @@ func stopRandomSpinner() {
 
     if asciAnimations { animator.stop() }
 }
+

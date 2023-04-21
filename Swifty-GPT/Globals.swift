@@ -11,6 +11,7 @@ var projectName = "MyApp"
 var globalErrors = [String]()
 var manualPromptString = ""
 var blockingInput = true
+var promptingRetryNumber = 0
 
 var lastFileContents = [String]()
 var lastNameContents = [String]()

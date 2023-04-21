@@ -31,10 +31,6 @@ func main() {
     appType = arguments.contains("--type") ? arguments[arguments.firstIndex(of: "--type")! + 1] : "iOS"
     language = arguments.contains("--language") ? arguments[arguments.firstIndex(of: "--language")! + 1] : "Swift"
 
-    // TODO: Check workspace and delete or backup if req
-    // backup workspace to file folder with suffix
-
-    // Maybe we shouldn't blow the worksspace away when you open the app?
     do {
         try backupAndDeleteWorkspace()
     }
@@ -99,21 +95,14 @@ func main() {
     sema.wait()
 }
 
-var promptingRetryNumber = 0
-
 let sema = DispatchSemaphore(value: 0)
 
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
-    // Nasty duplicate prompt bu
     if !overridePrompt.isEmpty {
         prompt = overridePrompt
     }
-//    else if let searchResultPrompt = searchResultHeadingGlobal, overridePrompt.isEmpty {
-//        prompt = "\(prompt)\n\(searchResultPrompt)"
-//        searchResultHeadingGlobal = nil
-//    }
-//
+
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
 
         // Generations
@@ -147,10 +136,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
                     if promptingRetryNumber >= retryLimit {
                         print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
-                        //completion(nil)
 
-                        // The cyclce of life
-                        // Hmm? // double check this one...
                         do {
                             try backupAndDeleteWorkspace()
                         }
@@ -167,14 +153,6 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     if !interactiveMode {
                         doPrompting(errors)
                     }
-//                    // The cyclce of life
-//                    // Hmm? // double check this one...
-//                    do {
-//                        try backupAndDeleteWorkspace()
-//                    }
-//                    catch {
-//                        print("file error = \(error)")
-//                    }
                 }
             }
         } else {
