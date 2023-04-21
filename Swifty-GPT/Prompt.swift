@@ -5,7 +5,8 @@
 //  Created by Chris Dillard on 4/12/23.
 //
 
-var builtInAppDesc = "that grabs the latest headlines from nytimes.com via google results and displays them in aesthetically pleasing arranged views"
+
+
 var appDesc = builtInAppDesc
 
 func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
@@ -30,7 +31,7 @@ func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
     - It is essential you include a Swift `App` file.
     \(!noGoogle ? googleString : "")
     \(!noLink ? linkString : "")
-    - Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn files.
+    - Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn ot .dae files.
 
     """
 }

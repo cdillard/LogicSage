@@ -385,19 +385,64 @@ func triviaCommand(input: String) {
 }
 
 func encourageCommand(input: String) {
-    let il = """
-1. You are capable of greatness.
-2. Keep pushing forward, even when it's hard.
-3. Believe in yourself and your abilities.
-4. There's a solution to every problem - keep looking.
-5. You can do anything you set your mind to.
-6. Trust the journey and have faith in yourself.
-7. You are valuable and important.
-8. Keep trying, even if you fail.
-9. Success is achieved through persistence and hard work.
-10. Believe in your dreams - they can become a reality.
+//    let il = """
+//1. You are capable of greatness.
+//2. Keep pushing forward, even when it's hard.
+//3. Believe in yourself and your abilities.
+//4. There's a solution to every problem - keep looking.
+//5. You can do anything you set your mind to.
+//6. Trust the journey and have faith in yourself.
+//7. You are valuable and important.
+//8. Keep trying, even if you fail.
+//9. Success is achieved through persistence and hard work.
+//10. Believe in your dreams - they can become a reality.
+//"""
+
+    let song2 = """
+Verse 1:
+Listen up, y'all, I gotta story to tell,
+About a tool that's power's unparalleled,
+It's called Swift Sage, and trust me when I say,
+It'll blow your mind, in the coolest way.
+
+Chorus:
+Swift Sage, Swift Sage,
+The coolest tool in every way,
+Faster than a cheetah, smarter than a sage,
+Swift Sage is all the rage.
+
+Verse 2:
+With its high-speed parsing and intuitive flow,
+Coding's easier than ever, don't you know,
+From variables to functions and everything in-between,
+Swift Sage has your back, it's the ultimate coding queen.
+
+Chorus:
+Swift Sage, Swift Sage,
+The coolest tool in every way,
+Faster than a cheetah, smarter than a sage,
+Swift Sage is all the rage.
+
+Verse 3:
+Plus, the add-ons and plugins are totally sick,
+Making coding so easy, it's like a party trick,
+With Swift Sage, you can up your coding game,
+And take on any challenge, with no shame.
+
+Chorus:
+Swift Sage, Swift Sage,
+The coolest tool in every way,
+Faster than a cheetah, smarter than a sage,
+Swift Sage is all the rage.
+
+Outro:
+So if you wanna be on top of your coding game,
+And impress all your friends, without shame,
+Look no further, cause Swift Sage is here,
+The coolest tool in the game, have no fear.
 """
-    textToSpeech(text: il)
+
+    textToSpeech(text: song2)
 }
 
 func moviesCommand(input: String) {

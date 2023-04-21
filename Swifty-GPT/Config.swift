@@ -13,6 +13,9 @@ import Foundation
 // var defaultVoice = "Rishi"
 var defaultVoice = "Karen"
 
+// Set builtInAppDesc
+let builtInAppDesc = "that displays a 3d scene. Show 3 spheres and a ground plane. Attach physics body to spheres so they react to gravity"  // a Towering Skyscraper and a bridge
+
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
 
@@ -71,26 +74,27 @@ var rubyScriptPath:String {
     }
 }
 
-
 // Configurable settings for AI.
 let retryLimit = 10
 let fixItRetryLimit = 3
 
+// set to false and it should go til successful build automatically using built in prompt, if it actually does anything good or not is up to chance though.
+let interactiveMode = true
+
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
-let interactiveMode = true
-let asciAnimations = true
+let asciAnimations = false
 
 let triviaEnabledSwift = true
-let triviaEnabledObjc = true
+let triviaEnabledObjc = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = true
-let enableLink = true
+let enableGoogle = false
+let enableLink = false
 
 // DO NOT USE
 let enableAEyes = false
@@ -103,6 +107,6 @@ enum LogVerbosity {
 }
 
 // IF the movie is TOO big/blurry for you and your tastes try manually setting your Xcode console font to 2 or 3 and then  turn movie width up :).
-let movieWidth = 200
-let matrixScreenWidth = 200
+let movieWidth = 60
+let matrixScreenWidth = 100
 
