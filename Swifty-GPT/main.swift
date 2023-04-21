@@ -62,21 +62,12 @@ func main() {
 
     // BEGIN AUDIO PROCESSING
     let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
-    let audioFilePath = "\(projectPath)/audio-\(UUID())(audioRecordingFileFormat)"
+    let audioFilePath = "\(projectPath)/audio-\(UUID())\(audioRecordingFileFormat)"
     let audioOut = URL(fileURLWithPath: audioFilePath)
     audioRecorder = AudioRecorder(outputFileURL: audioOut)
 
-    requestMicrophoneAccess { granted in
-        if granted {
-            print("Microphone access granted.")
-            // Start audio capture or other operations that require microphone access.
-        } else {
-            print("Microphone access denied.")
-            // Handle the case where microphone access is denied.
-        }
-    }
-    // Intro .... should add a check so it only plays once and doesn't annoy anyone.
-    runTest()
+    // Lets just disable it by default...
+    if intro { runTest() }
 
     stopRandomSpinner()
 

@@ -9,7 +9,7 @@ import Foundation
 import PNG
 // Define ASCII character set
 let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻﾜﾂｵﾘçｱｸﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾘﾈｽﾀﾇﾍｦｲｸｺçｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝｲｸﾁﾄﾉﾌﾍﾖﾙﾚﾛﾝ"
-// + Array(logoAscii5) + Array(useMatrixLettrs)
+
 let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
 

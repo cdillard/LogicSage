@@ -28,7 +28,6 @@
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
-		B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */ = {isa = PBXBuildFile; fileRef = B719B22D29ECBCC1003358C2 /* tessdata_fast-main */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
 		B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = B74A169329F1FA54006A0605 /* SourceKittenFramework */; };
 		B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A169529F1FA63006A0605 /* SrcCat.swift */; };
@@ -89,7 +88,6 @@
 				B7D1609429F2571700244188 /* InputText in CopyFiles */,
 				71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */,
 				B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */,
-				B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */,
 				B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */,
 				B7D6518429EC88EF00ED8BAE /* ggml-medium.en.bin in CopyFiles */,
 				B7D6518529EC88EF00ED8BAE /* ggml-small.en.bin in CopyFiles */,
@@ -121,7 +119,6 @@
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
-		B719B22D29ECBCC1003358C2 /* tessdata_fast-main */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tessdata_fast-main"; path = "Model/tessdata_fast-main"; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
@@ -329,7 +326,6 @@
 		B7D6517B29EC88C000ED8BAE /* MOdel */ = {
 			isa = PBXGroup;
 			children = (
-				B719B22D29ECBCC1003358C2 /* tessdata_fast-main */,
 				B7D6517C29EC88D200ED8BAE /* ggml-base.en.bin */,
 				B7D6518029EC88D200ED8BAE /* ggml-large-v1.bin */,
 				B7D6517E29EC88D200ED8BAE /* ggml-large.bin */,

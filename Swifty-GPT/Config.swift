@@ -14,7 +14,7 @@ import Foundation
 var defaultVoice = "Karen"
 
 // Set builtInAppDesc
-let builtInAppDesc = "that displays a 3d scene. Show 3 spheres and a ground plane. Attach physics body to spheres so they react to gravity"  // a Towering Skyscraper and a bridge
+let builtInAppDesc = "that displays 3 spheres and a ground plane. Attach physics body to spheres so they react to gravity"  // a Towering Skyscraper and a bridge
 
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
@@ -90,7 +90,10 @@ let triviaEnabledSwift = true
 let triviaEnabledObjc = false
 
 let voiceOutputEnabled = true
-let voiceInputEnabled = true
+let voiceInputEnabled = false
+
+let intro = false
+
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
 let enableGoogle = false
@@ -107,6 +110,6 @@ enum LogVerbosity {
 }
 
 // IF the movie is TOO big/blurry for you and your tastes try manually setting your Xcode console font to 2 or 3 and then  turn movie width up :).
-let movieWidth = 60
+let movieWidth = 120
 let matrixScreenWidth = 100
 

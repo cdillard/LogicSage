@@ -75,7 +75,6 @@ func updatePrompt(appDesc2: String) {
 
 
 let searchResultHeading = """
-
 Search Results:
 
 """

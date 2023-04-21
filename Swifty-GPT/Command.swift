@@ -129,28 +129,44 @@ func ideaCommand(input: String) {
 }
 
 func zeroCommand(input: String) {
-    // start voice capture
-    if audioRecorder?.isRunning == false {
-        print("Start voice capturer")
-        textToSpeech(text: "Listening...")
 
-        audioRecorder?.startRecording()
-    } else if audioRecorder?.isRunning == true {
-        print("Stop voice capturer")
-
-        audioRecorder?.stopRecording() { success in
-            guard success else {
-                textToSpeech(text: "Failed to capture.")
-                return
-            }
-            textToSpeech(text: "Captured.")
-
-            guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
-
-            Task {
-                await doTranscription(on: path)
+    if voiceInputEnabled {
+        requestMicrophoneAccess { granted in
+            if granted {
+                print("Microphone access granted.")
+                // Start audio capture or other operations that require microphone access.
+            } else {
+                print("Microphone access denied.")
+                // Handle the case where microphone access is denied.
             }
         }
+
+        // start voice capture
+        if audioRecorder?.isRunning == false {
+            print("Start voice capturer")
+            textToSpeech(text: "Listening...")
+
+            audioRecorder?.startRecording()
+        } else if audioRecorder?.isRunning == true {
+            print("Stop voice capturer")
+
+            audioRecorder?.stopRecording() { success in
+                guard success else {
+                    textToSpeech(text: "Failed to capture.")
+                    return
+                }
+                textToSpeech(text: "Captured.")
+
+                guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
+
+                Task {
+                    await doTranscription(on: path)
+                }
+            }
+        }
+    }
+    else {
+        print("voice input disabled.")
     }
 }
 
