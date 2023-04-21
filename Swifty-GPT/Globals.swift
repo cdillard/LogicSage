@@ -15,7 +15,6 @@ var globalErrors = [String]()
 var manualPromptString = ""
 var blockingInput = true
 var promptingRetryNumber = 0
-var chosenTQ: TriviaQuestion?
 
 var lastFileContents = [String]()
 var lastNameContents = [String]()
@@ -25,3 +24,8 @@ var linkResultGlobal: String?
 var appName = "MyApp"
 var appType = "iOS"
 var language = "Swift"
+
+
+// Trivia
+var chosenTQ: TriviaQuestion?
+var streak = 0

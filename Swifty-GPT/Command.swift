@@ -45,6 +45,7 @@ var commandTable: [String: (String) -> Void] = [
     "delete": deleteCommand,
     "encourage":encourageCommand,
     "sage":sageCommand,
+    "alien":alienCommand,
 
     "trivia":triviaCommand,
     "globals": globalsCommand,
@@ -70,6 +71,9 @@ func resetCommand(input: String) {
 
     appDesc = builtInAppDesc
     language = "Swift"
+
+    streak = 0
+    chosenTQ = nil
 
     print("🔁🔄♻️ Reset.")
 
@@ -370,7 +374,9 @@ func globalsCommand(input: String) {
 func sageCommand(input: String) {
     print(Int.random(in: 0...1) == 0 ? sage2 : sage3)
 }
-
+func alienCommand(input: String) {
+    print(alien)
+}
 func triviaCommand(input: String) {
     printRandomUnusedTrivia()
 }

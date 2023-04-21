@@ -124,9 +124,23 @@ func handleUserInput() {
                 if char >= "1" && char <= "8" {
                     if Int(String(char)) ?? 0  == tq.correctOptionIndex + 1 {
                         print(" was correct! YAY")
+                        streak += 1
+                        printRandomUnusedTrivia()
                     }
                     else {
-                        print("Incorrect! Keep studying...")
+                        if streak > 1 {
+                            print("Incorrect! You better keep studying... you had a \(streak) q winning run!!!! GONE")
+
+                        }
+                        else if streak > 0 {
+                            print("Incorrect! Keep studying...")
+
+                        }
+                        else {
+                            print("Incorrect! Keep studying...")
+                        }
+                        streak = 0
+
 
                     }
                     chosenTQ = nil
