@@ -96,6 +96,7 @@ func readChar() -> Character? {
 }
 
 let BACKSPACE: UInt8 = 0x7F // ASCII value of the backspace character
+
 func handleUserInput() {
     var command = ""
     var parameter = ""
@@ -117,7 +118,7 @@ func handleUserInput() {
                 continue
             }
             if blockingInput {
-                print("input disabled (you can `stop`). Plese file a github Issue. *with logs or else (shakesfist)*")
+                print("input disabled (you can `q`). Plese file a github Issue. *with logs or else (shakesfist)*")
 
 
                 var input = ""
@@ -125,16 +126,16 @@ func handleUserInput() {
                     input += String(char)
                 }
 
-               if input == "sstop" {
-                    print("\nYou've entered the special word!")
+               if input == "q" {
+                    print("\nYou've entered the special lettr!")
                     stopCommand(input: "")
 
                     // Execute the desired command
                 } else {
-                    print("\nIncorrect special word.")
+                    print("\nIncorrect special lettr.")
                 }
 
-                // ONLY capture "quit" or "stop"
+                // ONLY capture "q"
                 continue
 
             }

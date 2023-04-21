@@ -110,6 +110,7 @@ func killAllVoices() {
 }
 
 func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
+    print("say: \(text)")
 
     if !voiceOutputEnabled { return }
 
@@ -131,7 +132,6 @@ func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: Strin
 
     sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
 
-    print("say: \(text)")
     let outputPipe = Pipe()
     sayProcess.standardOutput = outputPipe
 

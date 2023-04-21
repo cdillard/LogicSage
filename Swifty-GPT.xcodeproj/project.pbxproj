@@ -48,6 +48,7 @@
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
+		B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */; };
 		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
 		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
 		B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B7D2FD3129F18202003EBCA9 /* SwiftSoup */; };
@@ -128,6 +129,8 @@
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7C3889229F224FE0074659D /* SwiftyGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyGPTTests.swift; sourceTree = "<group>"; };
 		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
 		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
 		B7D6517029EC847E00ED8BAE /* ggml.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ggml.c; sourceTree = "<group>"; };
@@ -159,6 +162,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C3888F29F224FE0074659D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -167,6 +177,7 @@
 			children = (
 				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
+				B7C3889329F224FE0074659D /* SwiftyGPTTests */,
 				B7139CDD29E147910049ADE1 /* Products */,
 				B768CE9929EB3F8500B8A9E4 /* Frameworks */,
 			);
@@ -176,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B7139CDC29E147910049ADE1 /* Swifty-GPT */,
+				B7C3889229F224FE0074659D /* SwiftyGPTTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -256,6 +268,14 @@
 			path = exampleOutput;
 			sourceTree = "<group>";
 		};
+		B7C3889329F224FE0074659D /* SwiftyGPTTests */ = {
+			isa = PBXGroup;
+			children = (
+				B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */,
+			);
+			path = SwiftyGPTTests;
+			sourceTree = "<group>";
+		};
 		B7D6517B29EC88C000ED8BAE /* MOdel */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +303,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B7C3889C29F225740074659D /* PBXTargetDependency */,
 			);
 			name = "Swifty-GPT";
 			packageProductDependencies = (
@@ -294,6 +315,24 @@
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
 			productType = "com.apple.product-type.tool";
+		};
+		B7C3889129F224FE0074659D /* SwiftyGPTTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7C3889829F224FE0074659D /* Build configuration list for PBXNativeTarget "SwiftyGPTTests" */;
+			buildPhases = (
+				B7C3888E29F224FE0074659D /* Sources */,
+				B7C3888F29F224FE0074659D /* Frameworks */,
+				B7C3889029F224FE0074659D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7C3889A29F2256E0074659D /* PBXTargetDependency */,
+			);
+			name = SwiftyGPTTests;
+			productName = SwiftyGPTTests;
+			productReference = B7C3889229F224FE0074659D /* SwiftyGPTTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -308,6 +347,9 @@
 					B7139CDB29E147910049ADE1 = {
 						CreatedOnToolsVersion = 14.3;
 						LastSwiftMigration = 1430;
+					};
+					B7C3889129F224FE0074659D = {
+						CreatedOnToolsVersion = 14.3;
 					};
 				};
 			};
@@ -331,9 +373,20 @@
 			projectRoot = "";
 			targets = (
 				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
+				B7C3889129F224FE0074659D /* SwiftyGPTTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B7C3889029F224FE0074659D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B7139CD829E147910049ADE1 /* Sources */ = {
@@ -379,7 +432,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C3888E29F224FE0074659D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B7C3889A29F2256E0074659D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B7C3889929F2256E0074659D /* SourceKittenFramework */;
+		};
+		B7C3889C29F225740074659D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B7C3889B29F225740074659D /* SourceKittenFramework */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B7139CE129E147910049ADE1 /* Debug */ = {
@@ -550,6 +622,38 @@
 			};
 			name = Release;
 		};
+		B7C3889629F224FE0074659D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = chrisswiftygpt.SwiftyGPTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B7C3889729F224FE0074659D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = chrisswiftygpt.SwiftyGPTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -567,6 +671,15 @@
 			buildConfigurations = (
 				B7139CE429E147910049ADE1 /* Debug */,
 				B7139CE529E147910049ADE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7C3889829F224FE0074659D /* Build configuration list for PBXNativeTarget "SwiftyGPTTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7C3889629F224FE0074659D /* Debug */,
+				B7C3889729F224FE0074659D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -620,6 +733,16 @@
 			productName = SwiftyTesseract;
 		};
 		B74A169329F1FA54006A0605 /* SourceKittenFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
+			productName = SourceKittenFramework;
+		};
+		B7C3889929F2256E0074659D /* SourceKittenFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
+			productName = SourceKittenFramework;
+		};
+		B7C3889B29F225740074659D /* SourceKittenFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
 			productName = SourceKittenFramework;

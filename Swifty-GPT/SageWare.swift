@@ -83,59 +83,62 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             }
         }
         else if fullCommand.hasPrefix(openProjectPrefix) {
-
-            var name =  projectName
-
-            projectName = name.isEmpty ? "MyApp" : name
-            projectName = preprocessStringForFilename(projectName)
-
-            textToSpeech(text: "Open project " + projectName + ".")
-
-            if nameContents.count > gptCommandIndex {
-                name = nameContents[gptCommandIndex]
-            }
-            name = preprocessStringForFilename(name)
-
-            executeXcodeCommand(.openProject(name: name)) { success, errors in
-
-                if !success {
-                  //  completion(success, errors)
-                }
-            }
+            print("SKIPPING GPT PROJECT OPENNING FOR NOW")
+//            var name =  projectName
+//
+//            projectName = name.isEmpty ? "MyApp" : name
+//            projectName = preprocessStringForFilename(projectName)
+//
+//            textToSpeech(text: "Open project " + projectName + ".")
+//
+//            if nameContents.count > gptCommandIndex {
+//                name = nameContents[gptCommandIndex]
+//            }
+//            name = preprocessStringForFilename(name)
+//
+//            executeXcodeCommand(.openProject(name: name)) { success, errors in
+//
+//                if !success {
+//                  //  completion(success, errors)
+//                }
+//            }
         }
         else if fullCommand.hasPrefix(buildProjectPrefix) {
-            buildIt() { success, errrors in
-                if !success {
-                    completion(success, errors)
-                }
-            }
+            print("SKIPPING GPT PROJECT BUILDING FOR NOW")
+
+//            buildIt() { success, errrors in
+//                if !success {
+//                    completion(success, errors)
+//                }
+//            }
 //            return
         }
         else if fullCommand.hasPrefix(closeProjectPrefix) {
+            print("SKIPPING GPT PROJECT CLOSING FOR NOW")
 
-            var name =  projectName
-
-            projectName = name.isEmpty ? "MyApp" : name
-            projectName = preprocessStringForFilename(projectName)
-
-            //textToSpeech(text: "Close project " + projectName + ".")
-
-            if nameContents.count > gptCommandIndex {
-                name = nameContents[gptCommandIndex]
-            }
-
-            name = preprocessStringForFilename(name)
-
-            executeXcodeCommand(.closeProject(name: name)) { success , errors in
-                print("unknown command = \(fullCommand)")
-
-                if !success {
-                    print("failed to close, e=\(errors) ")
-
-                }
-                completion(success, errors)
-
-            }
+//            var name =  projectName
+//
+//            projectName = name.isEmpty ? "MyApp" : name
+//            projectName = preprocessStringForFilename(projectName)
+//
+//            //textToSpeech(text: "Close project " + projectName + ".")
+//
+//            if nameContents.count > gptCommandIndex {
+//                name = nameContents[gptCommandIndex]
+//            }
+//
+//            name = preprocessStringForFilename(name)
+//
+//            executeXcodeCommand(.closeProject(name: name)) { success , errors in
+//                print("unknown command = \(fullCommand)")
+//
+//                if !success {
+//                    print("failed to close, e=\(errors) ")
+//
+//                }
+//                completion(success, errors)
+//
+//            }
         }
         else if fullCommand.hasPrefix(createFilePrefix) {
             var fileName =  UUID().uuidString

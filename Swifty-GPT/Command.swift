@@ -101,6 +101,7 @@ func randomCommand(input: String) {
 func stopCommand(input: String) {
     killAllVoices()
     stopRandomSpinner()
+    // TODO: Figure out a way to make this invalidate the potential GPTs requests and Google APIs requests.
 }
 
 func ideaCommand(input: String) {
@@ -144,7 +145,7 @@ func gptCommand(input: String) {
             return
         }
 
-        print("\n🤖: \(content)")
+        // print("\n🤖: \(content)")
 
         textToSpeech(text: content)
 
@@ -160,9 +161,6 @@ func xcodeCommand(input: String) {
 
     print("Xcode commands could be used for all sorts of things")
     print("but for now, not implemented.")
-
-    //    let command = String(input.dropFirst(6)).trimmingCharacters(in: .whitespacesAndNewlines)
-    // runXcodeCommand(command: command)
 }
 
 func exitCommand(input: String) {
