@@ -44,6 +44,7 @@ var commandTable: [String: (String) -> Void] = [
     "commands": commandsCommand,
     "b": buildCommand,
     "delete": deleteCommand,
+    "globals": globalsCommand,
 
     // Experimental
     "trivia":triviaCommand,
@@ -52,7 +53,8 @@ var commandTable: [String: (String) -> Void] = [
     "encourage":encourageCommand,
     "sage":sageCommand,
     "alien":alienCommand,
-    "globals": globalsCommand,
+    "movies":moviesCommand,
+
 ]
 
 var presentMode = true
@@ -369,10 +371,9 @@ func globalsCommand(input: String) {
     print("appName = \(appName)")
     print("appType = \(appType)")
     print("language = \(language)")
-
-
 }
 
+// EGG LAND
 func sageCommand(input: String) {
     print(Int.random(in: 0...1) == 0 ? sage2 : sage3)
 }
@@ -397,4 +398,8 @@ func encourageCommand(input: String) {
 10. Believe in your dreams - they can become a reality.
 """
     textToSpeech(text: il)
+}
+
+func moviesCommand(input: String) {
+    goToMovies()
 }

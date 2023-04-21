@@ -49,9 +49,6 @@ class TextAnimator {
         }
     }
 
-
-
-
     class MatrixAnimation {
         private let timer: DispatchSourceTimer
         private var isRunning: Bool
@@ -63,7 +60,6 @@ class TextAnimator {
 
         func generateRandomCharacter() -> String {
 
-            let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻﾜﾂｵﾘçｱｸﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾘﾈｽﾀﾇﾍｦｲｸｺçｿﾁﾄﾉﾌﾔﾖﾙﾚﾛﾝｲｸﾁﾄﾉﾌﾍﾖﾙﾚﾛﾝ "
             let characters = useMatrixLettrs
             let randomIndex = Int(arc4random_uniform(UInt32(characters.count)))
             let randomCharacter = characters[characters.index(characters.startIndex, offsetBy: randomIndex)]

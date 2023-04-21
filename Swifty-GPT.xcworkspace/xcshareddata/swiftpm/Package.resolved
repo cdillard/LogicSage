@@ -37,6 +37,24 @@
       }
     },
     {
+      "identity" : "swift-hash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kelvin13/swift-hash",
+      "state" : {
+        "revision" : "7475de0872c71f1b8dc69ac2e395f9ede42356b2",
+        "version" : "0.4.6"
+      }
+    },
+    {
+      "identity" : "swift-png",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kelvin13/swift-png",
+      "state" : {
+        "branch" : "master",
+        "revision" : "7360c8ef433cea3d5e2b949a7b2d7b7fcb1b94d5"
+      }
+    },
+    {
       "identity" : "swiftsoup",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup.git",

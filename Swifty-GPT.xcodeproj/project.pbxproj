@@ -46,6 +46,7 @@
 		B7717D2929EFA625005141AB /* Googler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7717D2829EFA624005141AB /* Googler.swift */; };
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
+		B78C6C2729F3129300AA568A /* PNG in Frameworks */ = {isa = PBXBuildFile; productRef = B78C6C2629F3129300AA568A /* PNG */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */; };
@@ -56,6 +57,11 @@
 		B7D1609829F2B48C00244188 /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1609729F2B48C00244188 /* Trivia.swift */; };
 		B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */; };
 		B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609929F2B4CC00244188 /* swift-quiz.md */; };
+		B7D160A229F30D1800244188 /* IMG_5563.PNG in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D160A029F30D0A00244188 /* IMG_5563.PNG */; };
+		B7D160A329F30D1800244188 /* IMG_5564.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D160A129F30D0A00244188 /* IMG_5564.png */; };
+		B7D160A429F30D1800244188 /* IMG_5565.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609E29F30D0A00244188 /* IMG_5565.png */; };
+		B7D160A529F30D1800244188 /* IMG_5566.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609F29F30D0A00244188 /* IMG_5566.png */; };
+		B7D160A729F30D4900244188 /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D160A629F30D4900244188 /* Movies.swift */; };
 		B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B7D2FD3129F18202003EBCA9 /* SwiftSoup */; };
 		B7D6517529EC847E00ED8BAE /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517029EC847E00ED8BAE /* ggml.c */; };
 		B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */; };
@@ -73,6 +79,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				B7D160A229F30D1800244188 /* IMG_5563.PNG in CopyFiles */,
+				B7D160A329F30D1800244188 /* IMG_5564.png in CopyFiles */,
+				B7D160A429F30D1800244188 /* IMG_5565.png in CopyFiles */,
+				B7D160A529F30D1800244188 /* IMG_5566.png in CopyFiles */,
 				B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */,
 				B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */,
 				B7D1609629F2B07400244188 /* IdeaText in CopyFiles */,
@@ -148,6 +158,11 @@
 		B7D1609729F2B48C00244188 /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
 		B7D1609929F2B4CC00244188 /* swift-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "swift-quiz.md"; sourceTree = "<group>"; };
 		B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "objective-c-quiz.md"; sourceTree = "<group>"; };
+		B7D1609E29F30D0A00244188 /* IMG_5565.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IMG_5565.png; path = assets/IMG_5565.png; sourceTree = "<group>"; };
+		B7D1609F29F30D0A00244188 /* IMG_5566.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IMG_5566.png; path = assets/IMG_5566.png; sourceTree = "<group>"; };
+		B7D160A029F30D0A00244188 /* IMG_5563.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IMG_5563.PNG; path = assets/IMG_5563.PNG; sourceTree = "<group>"; };
+		B7D160A129F30D0A00244188 /* IMG_5564.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IMG_5564.png; path = assets/IMG_5564.png; sourceTree = "<group>"; };
+		B7D160A629F30D4900244188 /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		B7D6517029EC847E00ED8BAE /* ggml.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ggml.c; sourceTree = "<group>"; };
 		B7D6517129EC847E00ED8BAE /* ggml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ggml.h; sourceTree = "<group>"; };
 		B7D6517329EC847E00ED8BAE /* whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = whisper.h; sourceTree = "<group>"; };
@@ -167,6 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78C6C2729F3129300AA568A /* PNG in Frameworks */,
 				B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */,
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
 				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
@@ -237,6 +253,8 @@
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
+				B7D1609D29F30CF300244188 /* movies */,
+				B7D160A629F30D4900244188 /* Movies.swift */,
 				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
@@ -297,6 +315,17 @@
 			path = SwiftyGPTTests;
 			sourceTree = "<group>";
 		};
+		B7D1609D29F30CF300244188 /* movies */ = {
+			isa = PBXGroup;
+			children = (
+				B7D160A029F30D0A00244188 /* IMG_5563.PNG */,
+				B7D160A129F30D0A00244188 /* IMG_5564.png */,
+				B7D1609E29F30D0A00244188 /* IMG_5565.png */,
+				B7D1609F29F30D0A00244188 /* IMG_5566.png */,
+			);
+			name = movies;
+			sourceTree = "<group>";
+		};
 		B7D6517B29EC88C000ED8BAE /* MOdel */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +361,7 @@
 				B719B22B29ECBA24003358C2 /* SwiftyTesseract */,
 				B7D2FD3129F18202003EBCA9 /* SwiftSoup */,
 				B74A169329F1FA54006A0605 /* SourceKittenFramework */,
+				B78C6C2629F3129300AA568A /* PNG */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -388,6 +418,7 @@
 				B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */,
 				B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */,
+				B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
@@ -430,6 +461,7 @@
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
+				B7D160A729F30D4900244188 /* Movies.swift in Sources */,
 				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
 				B7D1609829F2B48C00244188 /* Trivia.swift in Sources */,
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
@@ -741,6 +773,14 @@
 				kind = branch;
 			};
 		};
+		B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kelvin13/swift-png";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
@@ -766,6 +806,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
 			productName = SourceKittenFramework;
+		};
+		B78C6C2629F3129300AA568A /* PNG */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */;
+			productName = PNG;
 		};
 		B7C3889929F2256E0074659D /* SourceKittenFramework */ = {
 			isa = XCSwiftPackageProductDependency;
