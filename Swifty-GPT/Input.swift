@@ -146,7 +146,6 @@ func handleUserInput() {
                 continue
             }
 
-
             if char >= "0" && char <= "6" {
                 command = String(char)
                 print("attmpt to parse cmd name = \(command)")

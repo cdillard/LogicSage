@@ -87,6 +87,11 @@ func main() {
         refreshPrompt(appDesc: appDesc)
     }
 
+    if triviaEnabledSwift || triviaEnabledObjc {
+        loadTriviaSystem()
+        //printRandomUnusedTrivia()
+    }
+
     if enableAEyes {
         startEyes()
     }

@@ -142,6 +142,7 @@ Swifty-GPT offers a range of features to make software development faster and mo
 
 - [SwiftSoup]
 - [SwiftNLC]
+- [SourceKitten]
 
 ## Contact
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)

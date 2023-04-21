@@ -68,6 +68,9 @@ let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
 let asciAnimations = false
 
+let triviaEnabledSwift = true
+let triviaEnabledObjc = true
+
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
 

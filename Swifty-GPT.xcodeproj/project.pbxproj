@@ -51,6 +51,11 @@
 		B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */; };
 		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
 		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
+		B7D1609429F2571700244188 /* InputText in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609229F2562000244188 /* InputText */; };
+		B7D1609629F2B07400244188 /* IdeaText in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609529F2AA4000244188 /* IdeaText */; };
+		B7D1609829F2B48C00244188 /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1609729F2B48C00244188 /* Trivia.swift */; };
+		B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */; };
+		B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609929F2B4CC00244188 /* swift-quiz.md */; };
 		B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B7D2FD3129F18202003EBCA9 /* SwiftSoup */; };
 		B7D6517529EC847E00ED8BAE /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517029EC847E00ED8BAE /* ggml.c */; };
 		B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */; };
@@ -68,6 +73,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */,
+				B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */,
+				B7D1609629F2B07400244188 /* IdeaText in CopyFiles */,
+				B7D1609429F2571700244188 /* InputText in CopyFiles */,
 				71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */,
 				B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */,
 				B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */,
@@ -133,6 +142,12 @@
 		B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyGPTTests.swift; sourceTree = "<group>"; };
 		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
 		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
+		B7D1609129F2497200244188 /* Gitstar */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gitstar; sourceTree = "<group>"; };
+		B7D1609229F2562000244188 /* InputText */ = {isa = PBXFileReference; lastKnownFileType = text; path = InputText; sourceTree = "<group>"; };
+		B7D1609529F2AA4000244188 /* IdeaText */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IdeaText; sourceTree = "<group>"; };
+		B7D1609729F2B48C00244188 /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
+		B7D1609929F2B4CC00244188 /* swift-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "swift-quiz.md"; sourceTree = "<group>"; };
+		B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "objective-c-quiz.md"; sourceTree = "<group>"; };
 		B7D6517029EC847E00ED8BAE /* ggml.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ggml.c; sourceTree = "<group>"; };
 		B7D6517129EC847E00ED8BAE /* ggml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ggml.h; sourceTree = "<group>"; };
 		B7D6517329EC847E00ED8BAE /* whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = whisper.h; sourceTree = "<group>"; };
@@ -213,13 +228,16 @@
 				B7717D2829EFA624005141AB /* Googler.swift */,
 				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
+				B7D1609529F2AA4000244188 /* IdeaText */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
+				B7D1609229F2562000244188 /* InputText */,
 				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
+				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
@@ -227,19 +245,21 @@
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
+				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
+				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
 				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
 				B70B44D329EAD61900C45773 /* Text.swift */,
+				B7D1609729F2B48C00244188 /* Trivia.swift */,
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7D6517329EC847E00ED8BAE /* whisper.h */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -264,6 +284,7 @@
 				B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */,
 				B76BF95C29E4AD2800F6420E /* example_output.txt */,
 				B75AFC4029EA7207003BA454 /* lsystem_output */,
+				B7D1609129F2497200244188 /* Gitstar */,
 			);
 			path = exampleOutput;
 			sourceTree = "<group>";
@@ -410,6 +431,7 @@
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
+				B7D1609829F2B48C00244188 /* Trivia.swift in Sources */,
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
@@ -588,9 +610,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
+				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -614,9 +638,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
+				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -629,11 +655,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = chrisswiftygpt.SwiftyGPTTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -645,11 +673,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = chrisswiftygpt.SwiftyGPTTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

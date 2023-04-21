@@ -16,24 +16,23 @@ func commandsText() -> String {
 🔹 prompts 🧠  List built in prompts
 🔹 commands 📲 List Commands
 🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice
+🔹 gptFile: Run "InputText" as gpt: prompt.
+🔹 ideaFile: Run "IdeaText" as idea: prompt.
 🔹 stop  🛑 Stop any voices or Commands
 🔹 sing  🎵 Sing a built in song
+🔹 trivia 🎤📺🎉 Play an iOS development trivia game
 🔹 reset  🔁🔄♻️ Reset prompt state
 🔹 delete 🗑️ Backup and delete workspace
 🔹 exit  🚪 Close the program
-
 """
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to Swifty GPT 🧠💥" : "")
-
     \((logV == .verbose || overrideV) ? sharedCommands() : "")
     \((logV == .verbose || overrideV) ? commandsText() : "")
-
     🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
-
     """
 }
 
@@ -63,10 +62,8 @@ func afterBuildFailedLine() -> String {
 Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
 \(logV == .verbose ? numericalCommands() : "")
 \(logV == .verbose ? commandsText() : "")
-
 ❓ What would you like to do:
 🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
-
 """
 }
 
@@ -75,9 +72,7 @@ func afterSuccessLine() -> String {
 Project creation success. Project should have auto openned.
 \(logV == .verbose ? numericalCommands() : "")
 \(logV == .verbose ? commandsText() : "")
-
 🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
-
 """
 }
 // 🎮🎨📲
@@ -88,9 +83,7 @@ func sharedCommands() -> String {
 🔹 2. 🚀 Show loaded prompt
 🔹 3. 📂 Open project
 🔹 B. 🏗️ Build Project
-
 🔹 X. 📂 Voice settings
-
 """
 }
 

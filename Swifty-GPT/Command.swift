@@ -15,6 +15,7 @@ import CoreMedia
 var commandTable: [String: (String) -> Void] = [
     "0": zeroCommand,
     "gpt:": gptCommand,
+
     "xcode:": xcodeCommand,
     "idea:": ideaCommand,
     "1": runAppDesc,
@@ -29,6 +30,9 @@ var commandTable: [String: (String) -> Void] = [
     "google:": googleCommand,
     "image:": imageCommand,
 
+    "gptFile": gptFileCommand, // Run the prompt in InputText file.
+    "ideaFile": ideaFileCommand, // Run the prompt in InputText file.
+
     "exit": exitCommand,
     "stop": stopCommand,
     "random": randomCommand,
@@ -39,7 +43,9 @@ var commandTable: [String: (String) -> Void] = [
     "b": buildCommand,
     "delete": deleteCommand,
     "encourage":encourageCommand,
+    "sage":sageCommand,
 
+    "trivia":triviaCommand,
 
     "link:":linkCommand
 ]
@@ -137,6 +143,35 @@ func zeroCommand(input: String) {
         }
     }
 }
+
+func gptFileCommand(input: String) {
+    if let path = Bundle.main.path(forResource: "InputText", ofType: ""), let text = readFile(path: path) {
+        gptCommand(input: text)
+    }
+    else {
+        print("no InputText....")
+    }
+}
+
+func readFile(path: String) -> String? {
+    do {
+        let content = try String(contentsOfFile: path, encoding: .utf8)
+        return content
+    } catch {
+        print("Error reading file: \(error)")
+        return nil
+    }
+}
+
+func ideaFileCommand(input: String) {
+    if let path = Bundle.main.path(forResource: "IdeaText", ofType: ""), let text = readFile(path: path) {
+        ideaCommand(input: text)
+    }
+    else {
+        print("no IdeaText....")
+    }
+}
+
 
 func gptCommand(input: String) {
     manualPromptString = input
@@ -308,6 +343,14 @@ func linkCommand(input: String) {
             print("failed to get search results.")
         }
     }
+}
+
+func sageCommand(input: String) {
+    print(sage)
+}
+
+func triviaCommand(input: String) {
+    printRandomUnusedTrivia()
 }
 
 func encourageCommand(input: String) {

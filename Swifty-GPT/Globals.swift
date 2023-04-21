@@ -12,6 +12,7 @@ var globalErrors = [String]()
 var manualPromptString = ""
 var blockingInput = true
 var promptingRetryNumber = 0
+var chosenTQ: TriviaQuestion?
 
 var lastFileContents = [String]()
 var lastNameContents = [String]()
