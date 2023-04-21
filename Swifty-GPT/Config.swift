@@ -102,6 +102,7 @@ enum LogVerbosity {
     case none
 }
 
-let movieWidth = 140
+// IF the movie is TOO big/blurry for you and your tastes try manually setting your Xcode console font to 2 or 3 and then  turn movie width up :).
+let movieWidth = 200
 let matrixScreenWidth = 200
 
