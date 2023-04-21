@@ -15,15 +15,16 @@ import CoreMedia
 var commandTable: [String: (String) -> Void] = [
     "0": zeroCommand,
 
-    "xcode:": xcodeCommand,
-    "idea:": ideaCommand,
+
     "1": runAppDesc,
     "2": showLoadedPrompt,
     "3": openProjectCommand,
     "4": closeCommand,
     "5": fixItCommand,
     "6": openProjectCommand,
-    // "7": blarg,
+
+    "xcode:": xcodeCommand,
+    "idea:": ideaCommand,
 
     "google:": googleCommand,
     "link:":linkCommand,
@@ -43,14 +44,15 @@ var commandTable: [String: (String) -> Void] = [
     "commands": commandsCommand,
     "b": buildCommand,
     "delete": deleteCommand,
+
+    // Experimental
+    "trivia":triviaCommand,
+
+    // eggs
     "encourage":encourageCommand,
     "sage":sageCommand,
     "alien":alienCommand,
-
-    "trivia":triviaCommand,
     "globals": globalsCommand,
-
-
 ]
 
 var presentMode = true
