@@ -16,18 +16,19 @@ import Foundation
 
 import Foundation
 
-
 let createProjectPrefix = "Create project"
 let openProjectPrefix = "Open project"
 let closeProjectPrefix = "Close project"
 let createFilePrefix = "Create file"
+let buildProjectPrefix = "Build project"
+
 let googlePrefix = "Google"
 let linkPrefix = "Link"
 
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completion: @escaping (Bool, [String]) -> Void) {
 
-    print("🤖: \(output)")
+    if logV == .verbose { print("🤖: \(output)") }
 
     let (updatedString, fileContents) = extractFieldContents(output, field: "fileContents")
     lastFileContents = Array(fileContents)
@@ -64,18 +65,17 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         if fullCommand.hasPrefix(createProjectPrefix) {
 
             var name =  projectName
-
-            projectName = name.isEmpty ? "MyApp" : name
-            projectName = preprocessStringForFilename(projectName)
-
-            textToSpeech(text: "Create project " + name + ".")
-
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
-            name = preprocessStringForFilename(name)
+            projectName = name.isEmpty ? "MyApp" : name
 
-            executeXcodeCommand(.createProject(name: name)) { success, errors in
+            projectName = preprocessStringForFilename(projectName)
+
+
+            textToSpeech(text: "Create project " + projectName + ".")
+
+            executeXcodeCommand(.createProject(name: projectName)) { success, errors in
 
                 if !success {
                     completion(success, errors)
@@ -99,9 +99,17 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             executeXcodeCommand(.openProject(name: name)) { success, errors in
 
                 if !success {
+                  //  completion(success, errors)
+                }
+            }
+        }
+        else if fullCommand.hasPrefix(buildProjectPrefix) {
+            buildIt() { success, errrors in
+                if !success {
                     completion(success, errors)
                 }
             }
+//            return
         }
         else if fullCommand.hasPrefix(closeProjectPrefix) {
 
@@ -205,10 +213,10 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     }
 
     buildIt() { success, errrors in
-            // open it?
-        completion(success, errors)
+              // open it?
+          completion(success, errors)
 
-    }
+      }
 }
 
 

@@ -28,6 +28,8 @@ Join the [Discord community](https://discord.gg/6hbDDqf8SX) for support and disc
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 - [Xcodeproj](https://github.com/CocoaPods/Xcodeproj)
 
+- [Swift Toolchain Xcode 14.3](https://www.swift.org/download/)
+
 #### Installing Homebrew and Ruby
 If you don't have Homebrew and Ruby installed, follow these steps:
 1. Install Homebrew by running: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`

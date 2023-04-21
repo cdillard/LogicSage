@@ -66,7 +66,7 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = true
+let asciAnimations = false
 
 let voiceOutputEnabled = true
 let voiceInputEnabled = true
@@ -83,3 +83,6 @@ enum LogVerbosity {
     case verbose
     case none
 }
+
+// var defaultVoice = "Rishi"
+var defaultVoice = "Karen"

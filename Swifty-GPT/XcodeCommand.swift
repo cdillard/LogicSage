@@ -147,9 +147,10 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
     switch command {
     case let .openProject(name):
-        print("SKIPPING GPT-Opening project with name (we auto open project after gpt commands now): \(name)")
-        //        executeAppleScriptCommand(.openProject(name: projectName))
-        completion(true, globalErrors)
+        executeAppleScriptCommand(.openProject(name: projectName)) {
+            success, errors in
+            completion(success, globalErrors)
+        }
     case let .createProject(name):
         print("Creating project with name: \(name)")
         projectName = name.isEmpty ? "MyApp" : name
@@ -157,28 +158,25 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
         print("set current name")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
 
-        // Call the createNewWorkspace function directly
         createNewProject(projectName: name, projectDirectory: projectPath) { success in
-
-            completion(success, [])
-
+            completion(success, globalErrors)
         }
 
     case .closeProject(name: let name):
-        print("SKIPPING GPT-Closing project with name: \(name)")
-               // executeAppleScriptCommand(.closeProject(name: name))
+        executeAppleScriptCommand(.closeProject(name: name)) { success, errors in
+
+        }
         completion(true, globalErrors)
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
-            print("missing proj, creating one")
+            print("missing proj, creating one... ****danger****")
             projectName = "MyApp"
 
             // MIssing projecr gen// create a proj
             executeXcodeCommand(.createProject(name: projectName)) { success, errors in
                 if success {
-                   // completion(true, [])
-
+                    completion(true, [])
                 } else {
                     print("createProject failed")
 
@@ -197,20 +195,8 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName).xcodeproj"
 
         buildProject(projectPath: projectPath, scheme: projectName) { success, errors in
-
             if success {
                 completion(true, [])
-
-
-//                // PROJECT BUILD SUCCESS WAIT FOR INPUT???
-//                // This isn't right spot for this
-//                if let choice = promptUserInput(message: "What would you like to do?: (1) Enter a new prompt? (2) Fix bugs in this project. 3.) Add a new feature to this project. 4. Add tests to this project?") {
-//                    print("You chose \(choice) --- awesome!")
-//                } else {
-//                    print("No input was provided.")
-//                }
-
-
             } else {
                 completion(false, errors)
             }

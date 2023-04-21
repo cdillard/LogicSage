@@ -38,6 +38,8 @@
 	<true/>
 	<key>com.apple.security.device.microphone</key>
 	<true/>
+	<key>com.apple.security.application-groups</key>
+	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
 </dict>

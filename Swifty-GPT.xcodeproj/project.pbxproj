@@ -30,6 +30,8 @@
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B719B22E29ECC4B4003358C2 /* tessdata_fast-main in CopyFiles */ = {isa = PBXBuildFile; fileRef = B719B22D29ECBCC1003358C2 /* tessdata_fast-main */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
+		B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = B74A169329F1FA54006A0605 /* SourceKittenFramework */; };
+		B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A169529F1FA63006A0605 /* SrcCat.swift */; };
 		B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620C29EFB61C0065DF88 /* StringSLug.swift */; };
 		B74E620F29F03EB90065DF88 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620E29F03EB90065DF88 /* Config.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
@@ -103,6 +105,7 @@
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B74A169529F1FA63006A0605 /* SrcCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SrcCat.swift; sourceTree = "<group>"; };
 		B74E620C29EFB61C0065DF88 /* StringSLug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSLug.swift; sourceTree = "<group>"; };
 		B74E620E29F03EB90065DF88 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
+				B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */,
 				B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +204,7 @@
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
+				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
@@ -219,10 +224,10 @@
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7D6517329EC847E00ED8BAE /* whisper.h */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
+				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
-				B7CB60B329F1884F006BFF8D /* Linker.swift */,
+				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				B70FD6B929EBB44D0099A0D1 /* AudioKit */,
 				B719B22B29ECBA24003358C2 /* SwiftyTesseract */,
 				B7D2FD3129F18202003EBCA9 /* SwiftSoup */,
+				B74A169329F1FA54006A0605 /* SourceKittenFramework */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -318,6 +324,7 @@
 				B70FD6B829EBB44D0099A0D1 /* XCRemoteSwiftPackageReference "AudioKit" */,
 				B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */,
 				B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
@@ -368,6 +375,7 @@
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
+				B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +590,14 @@
 				kind = branch;
 			};
 		};
+		B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/SourceKitten.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
@@ -602,6 +618,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
 			productName = SwiftyTesseract;
+		};
+		B74A169329F1FA54006A0605 /* SourceKittenFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
+			productName = SourceKittenFramework;
 		};
 		B7D2FD3129F18202003EBCA9 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

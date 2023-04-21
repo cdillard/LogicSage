@@ -128,23 +128,16 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     print("Parsed and executed code successfully. Opening project...")
 
                     textToSpeech(text: "Opening project...")
+
+
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {
                             print("opened successfully")
-                            print(afterSuccessLine())
                         }
                         else {
                             textToSpeech(text: "Failed to open project.")
 
                             print("failed to open")
-
-                            // Hmm? // double check this one...
-                            do {
-                                try backupAndDeleteWorkspace()
-                            }
-                            catch {
-                                print("file error = \(error)")
-                            }
                         }
                     }
                 }

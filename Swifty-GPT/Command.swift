@@ -177,17 +177,7 @@ func closeCommand(input: String) {
 
 func fixItCommand(input: String) {
     let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
-
-
-    // To create you must destroy
-//    // Hmm?
-//    do {
-//        try backupAndDeleteWorkspace()
-//    }
-//    catch {
-//        print("file error = \(error)")
-//    }
-    
+    // create file should check if the file already exists
     doPrompting(globalErrors, overridePrompt: newPrompt)
 }
 
@@ -203,7 +193,14 @@ func showLoadedPrompt(input: String) {
 }
 
 func openProjectCommand(input: String) {
-    executeAppleScriptCommand(.openProject(name: projectName)) { success, error in }
+    executeAppleScriptCommand(.openProject(name: projectName)) { success, error in
+        if success {
+            print("project opened successfully")
+        }
+        else {
+            print("project failed to open.")
+        }
+    }
     refreshPrompt(appDesc: appDesc)
     print(generatedOpenLine())
     openLinePrintCount += 1

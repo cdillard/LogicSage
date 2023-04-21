@@ -20,7 +20,10 @@ class TextAnimator {
     func start() {
         blockingInput = true
         stopped = false
+
+        // Randomly choose between ASCII gifs
         //animateAscii()
+
         matrixAnim = MatrixAnimation()
         matrixAnim?.start()
     }

@@ -12,10 +12,8 @@
 import Foundation
 
 let wpm = "244"
-
 let concurrentVoicesLimit = 2
 var concurrentVoices = 0
-
 let customFemaleName = "Sage"
 let customMaleName = "Data"
 
@@ -40,7 +38,7 @@ func runTest() {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "h"
     // presise time setting let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
-    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customMaleName.isEmpty ? customMaleName : voice()) and I'm \(noun()).")
+    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
 }
 
 func noun() -> String {
@@ -53,7 +51,7 @@ func noun() -> String {
     case 2:
         return "ready."
     case 3:
-        return "in the mood to code."
+        return "in the mood to code.."
     case 4:
         return "here to help."
     default:
@@ -111,56 +109,54 @@ func killAllVoices() {
     }
 }
 
-
 func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
 
-            if !voiceOutputEnabled { return }
+    if !voiceOutputEnabled { return }
 
-            if  concurrentVoices > concurrentVoicesLimit {
-                stopSayProcess()
-            }
+    if  concurrentVoices > concurrentVoicesLimit {
+        stopSayProcess()
+    }
 
-            sayProcess = Process()
-            sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
+    sayProcess = Process()
+    sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
 
+    var voice = voice()
+    if overrideVoice != nil && overrideVoice?.isEmpty == false {
+        voice = overrideVoice!
+    }
+    var useWpm = wpm
+    if overrideWpm != nil && overrideWpm?.isEmpty == false {
+        useWpm = overrideWpm!
+    }
 
-            var voice = voice()
-            if overrideVoice != nil && overrideVoice?.isEmpty == false {
-                voice = overrideVoice!
-            }
-            var useWpm = wpm
-            if overrideWpm != nil && overrideWpm?.isEmpty == false {
-                useWpm = overrideWpm!
-            }
+    sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
 
-            sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
+    print("say: \(text)")
+    let outputPipe = Pipe()
+    sayProcess.standardOutput = outputPipe
 
-            print("say: \(text)")
-            let outputPipe = Pipe()
-            sayProcess.standardOutput = outputPipe
-
-            let errorPipe = Pipe()
-            sayProcess.standardError = errorPipe
-
-
-            do {
-                try sayProcess.run()
-                concurrentVoices += 1
-
-                sayProcess.terminationHandler =  { result in
-                    concurrentVoices -= 1
-
-                }
-                let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(data: outputData, encoding: .utf8) ?? ""
+    let errorPipe = Pipe()
+    sayProcess.standardError = errorPipe
 
 
-                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-                let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+    do {
+        try sayProcess.run()
+        concurrentVoices += 1
 
-                // print("sayText: \(output), errorOutput: \(errorOutput)")
+        sayProcess.terminationHandler =  { result in
+            concurrentVoices -= 1
 
-            } catch {
-                print("Error running text-to-speech: \(error)")
-            }
+        }
+        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(data: outputData, encoding: .utf8) ?? ""
+
+
+        let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+        // print("sayText: \(output), errorOutput: \(errorOutput)")
+
+    } catch {
+        print("Error running text-to-speech: \(error)")
+    }
 }

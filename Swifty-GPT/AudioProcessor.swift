@@ -21,8 +21,7 @@ func voice() -> String {
     return chosenVoice!
 }
 
-var defaultVoice = "Rishi"
-// var defaultVoice = "Karen"
+
 
 
 func randomVoice() -> String {
