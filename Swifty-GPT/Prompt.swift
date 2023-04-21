@@ -31,7 +31,7 @@ func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
     - It is essential you include a Swift `App` file.
     \(!noGoogle ? googleString : "")
     \(!noLink ? linkString : "")
-    - Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn ot .dae files.
+    - Implement all needed code. Do not use files other than .swift files. Use Swift and SceneKit. Do not use .scnassets folders or .scnassets files or .scn or .dae files.
 
     """
 }
