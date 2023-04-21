@@ -14,7 +14,6 @@ import CoreMedia
 
 var commandTable: [String: (String) -> Void] = [
     "0": zeroCommand,
-    "gpt:": gptCommand,
 
     "xcode:": xcodeCommand,
     "idea:": ideaCommand,
@@ -26,10 +25,12 @@ var commandTable: [String: (String) -> Void] = [
     "6": openProjectCommand,
     // "7": blarg,
 
-    "gptVoice:": gptVoiceCommand, // Make gpt reply w/ a specific voice
     "google:": googleCommand,
-    "image:": imageCommand,
+    "link:":linkCommand,
 
+    "image:": imageCommand,
+    "gpt:": gptCommand,
+    "gptVoice:": gptVoiceCommand, // Make gpt reply w/ a specific voice
     "gptFile": gptFileCommand, // Run the prompt in InputText file.
     "ideaFile": ideaFileCommand, // Run the prompt in InputText file.
 
@@ -46,8 +47,9 @@ var commandTable: [String: (String) -> Void] = [
     "sage":sageCommand,
 
     "trivia":triviaCommand,
+    "globals": globalsCommand,
 
-    "link:":linkCommand
+
 ]
 
 var presentMode = true
@@ -345,8 +347,28 @@ func linkCommand(input: String) {
     }
 }
 
+
+func globalsCommand(input: String) {
+    print("projectName = \(projectName)")
+    print("globalErrors = \(globalErrors)")
+    print("manualPromptString = \(manualPromptString)")
+    print("projectName = \(projectName)")
+    print("BlockingInput = \(blockingInput)")
+    print("promptingRetryNumber = \(promptingRetryNumber)")
+    print("chosenTQ = \(chosenTQ.debugDescription)")
+    print("lastFileContents = \(lastFileContents)")
+    print("lastNameContents = \(lastNameContents)")
+    print("searchResultHeadingGlobal = \(searchResultHeadingGlobal ?? "none")")
+    print("linkResultGlobal = \(linkResultGlobal ?? "none")")
+    print("appName = \(appName)")
+    print("appType = \(appType)")
+    print("language = \(language)")
+
+
+}
+
 func sageCommand(input: String) {
-    print(sage)
+    print(Int.random(in: 0...1) == 0 ? sage2 : sage3)
 }
 
 func triviaCommand(input: String) {

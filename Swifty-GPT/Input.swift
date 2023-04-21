@@ -119,6 +119,31 @@ func handleUserInput() {
 
             }
 
+            if let tq = chosenTQ {
+                // Appearenlty questions have up to 8 multiple choice options.
+                if char >= "1" && char <= "8" {
+                    if Int(String(char)) ?? 0  == tq.correctOptionIndex + 1 {
+                        print(" was correct! YAY")
+                    }
+                    else {
+                        print("Incorrect! Keep studying...")
+
+                    }
+                    chosenTQ = nil
+
+                }
+                else if char == "q" {
+                    print("Exiting trivia...")
+
+                    chosenTQ = nil
+                }
+                else {
+                    print("You are in trivia mode... exit with `q`")
+
+                }
+                continue
+            }
+
             if char == Character(UnicodeScalar(BACKSPACE)) {
                 if !parameter.isEmpty {
                     // Remove the last character from the parameter
@@ -148,7 +173,7 @@ func handleUserInput() {
 
             if char >= "0" && char <= "6" {
                 command = String(char)
-                print("attmpt to parse cmd name = \(command)")
+                print("SWIFTSAGE: \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {
@@ -167,7 +192,7 @@ func handleUserInput() {
                     }
                 }
                 // attempt to parse cmd named
-                print("attmpt to parse cmd name = \(command)")
+                print("SWIFTSAGE: \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
                 } else {
@@ -177,7 +202,7 @@ func handleUserInput() {
                 command = ""
                 parameter = ""
             } else if char == "\n" {
-                print("attmpt to parse cmd name = \(command)")
+                print("SWIFTSAGE: \(command)")
                 if let selectedCommand = commandTable[command] {
                     selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 } else {

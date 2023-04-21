@@ -14,7 +14,6 @@ struct TriviaQuestion {
     let reference: String
 }
 
-
 func printRandomUnusedTrivia() {
     guard !trivialQs.isEmpty else { print("nope no qs") ; return }
     let randDex = Int.random(in: 0...trivialQs.count - 1)
@@ -26,19 +25,26 @@ func printRandomUnusedTrivia() {
 }
 
 func printTrivia(_ trivia: TriviaQuestion, index: Int) {
-    print("\nTrivia \(index + 1):")
     print("---------\n")
-    print("Question:")
+    print("Trivia Question:")
     print(trivia.question)
+
+    if trivia.code?.isEmpty == false {
+        print("\nCode:")
+        print(trivia.code ?? "")
+    }
+
     print("\nOptions:")
 
     for (optionIndex, option) in trivia.options.enumerated() {
         print("\(optionIndex + 1). \(option)")
     }
-
-    print("\nReference:")
-    print(trivia.reference)
-    print("\n---------\n")
+    if !trivia.reference.isEmpty {
+        print("\nReference:")
+        print(trivia.reference)
+    }
+    print("---------")
+    print("Choose correct answer [1-4], or quit w/ `q`?")
 }
 
 func parseMarkdown(_ content: String) -> [TriviaQuestion] {
@@ -80,14 +86,20 @@ func parseMarkdown(_ content: String) -> [TriviaQuestion] {
             let option = line.replacingOccurrences(of: "- [", with: "").replacingOccurrences(of: "]", with: "").trimmingCharacters(in: .whitespaces)
             if option.hasPrefix("x") {
                 currentCorrectOptionIndex = currentOptions.count
+                currentOptions.append(option.replacingOccurrences(of: "x", with: "").trimmingCharacters(in: .whitespaces))
+            } else {
+                currentOptions.append(option.trimmingCharacters(in: .whitespaces))
             }
-            currentOptions.append(option.replacingOccurrences(of: "x", with: "").trimmingCharacters(in: .whitespaces))
         } else if insideCodeBlock {
             currentCode! += line + "\n"
         } else if insideReferenceBlock {
+            if line.isEmpty { continue }
             currentReference! += line + "\n"
         }
     }
+
+    // Debugging quiz parsing
+    //    print(questions)
 
     return questions
 }

@@ -100,8 +100,6 @@ func main() {
     sema.wait()
 }
 
-let sema = DispatchSemaphore(value: 0)
-
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
     if !overridePrompt.isEmpty {
