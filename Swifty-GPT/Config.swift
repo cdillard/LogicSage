@@ -7,6 +7,26 @@
 
 import Foundation
 
+
+// VOICE SETTINGS
+
+// var defaultVoice = "Rishi"
+var defaultVoice = "Karen"
+
+// TODO: Fix hardcoded paths.
+let xcodegenPath = "/opt/homebrew/bin/xcodegen"
+
+// WORKSPACE SETTING
+let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
+
+let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
+
+// OPEN AI SETTIN
+let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
+let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+
+// PLIST SETTINGS
+
 func keyForName(name: String) -> String {
     guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
     return apiKey
@@ -34,8 +54,6 @@ var GOOGLE_ID:String {
     }
 }
 
-// TODO: Fix hardcoded paths.
-let xcodegenPath = "/opt/homebrew/bin/xcodegen"
 var infoPlistPath:String {
     get {
         if let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist") {
@@ -52,11 +70,7 @@ var rubyScriptPath:String {
         return ""
     }
 }
-let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
-let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
-
-let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // Configurable settings for AI.
 let retryLimit = 10
@@ -66,7 +80,7 @@ let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 let interactiveMode = true
-let asciAnimations = false
+let asciAnimations = true
 
 let triviaEnabledSwift = true
 let triviaEnabledObjc = true
@@ -88,5 +102,6 @@ enum LogVerbosity {
     case none
 }
 
-// var defaultVoice = "Rishi"
-var defaultVoice = "Karen"
+let movieWidth = 140
+let matrixScreenWidth = 200
+

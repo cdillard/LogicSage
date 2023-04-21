@@ -7,8 +7,6 @@
 
 import Foundation
 
-let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
-
 // Function to send a prompt to GPT via the OpenAI API
 func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  completion: @escaping (String, Bool) -> Void) {
 
@@ -35,7 +33,6 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
 
         request.httpBody = jsonData
-
 
         if currentRetry == 0 {
             print("👨: \(prompt)")

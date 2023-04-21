@@ -12,30 +12,31 @@ let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻ
 // + Array(logoAscii5) + Array(useMatrixLettrs)
 let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
+
 func goToMovies() {
     if let path = Bundle.main.path(forResource: "IMG_5563", ofType: "PNG") {
-        let ascii = imageToAscii(imagePath: path, width: 320)
+        let ascii = imageToAscii(imagePath: path, width: movieWidth)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5564", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 320)
+        let ascii = imageToAscii(imagePath: path, width: movieWidth)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5565", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 320)
+        let ascii = imageToAscii(imagePath: path, width: movieWidth)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5566", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 320)
+        let ascii = imageToAscii(imagePath: path, width: movieWidth)
         print(ascii)
     }
     else {
@@ -50,7 +51,6 @@ func imageToAscii(imagePath: String, width: Int) -> String {
 
         }
 
-        // TODO: FIX SQUASHED IMAGES
         let asciiImage = convertToAscii(image: image, newWidth: width)
         return asciiImage
     }

@@ -67,10 +67,9 @@ class TextAnimator {
         }
 
         func generateMatrixLine() -> String {
-            let screenWidth = 160
             var line = ""
 
-            for _ in 0..<screenWidth {
+            for _ in 0..<matrixScreenWidth {
                 if arc4random_uniform(100) < 10 {
                     line += generateRandomCharacter()
                 } else {

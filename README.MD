@@ -39,8 +39,9 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 1. Install XcodeGen: `brew install xcodegen`
 2. Install Xcodeproj: `gem install xcodeproj`
 
-
 SET API KEYS: You'll need to track down the following keys to fully experience SwiftSage.
+
+NOTE: NYTIMES,PIXABAY, and GOOGLE are not required (yet) but be sure that the feat flags for those features are disabled in your Config for now if not using please.
 
 ```
 	<key>GOOGLE_KEY</key>
@@ -99,7 +100,6 @@ If you get stuck, ask for help on [Discord](https://discord.gg/6hbDDqf8SX).
 
 ### Xcode build
 `tessdata_fast-main` should be deleted from the Xcode project. It will be added to the SwiftyGPTWorkspace folder in your Documents dir.
-
 
 ### Microphone Access
 If you experience issues with microphone access, follow these steps:
