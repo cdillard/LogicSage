@@ -14,28 +14,28 @@ let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ","
 
 func goToMovies() {
     if let path = Bundle.main.path(forResource: "IMG_5563", ofType: "PNG") {
-        let ascii = imageToAscii(imagePath: path, width: 160)
+        let ascii = imageToAscii(imagePath: path, width: 320)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5564", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 160)
+        let ascii = imageToAscii(imagePath: path, width: 320)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5565", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 160)
+        let ascii = imageToAscii(imagePath: path, width: 320)
         print(ascii)
     }
     else {
         print("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5566", ofType: "png") {
-        let ascii = imageToAscii(imagePath: path, width: 160)
+        let ascii = imageToAscii(imagePath: path, width: 320)
         print(ascii)
     }
     else {
@@ -50,26 +50,29 @@ func imageToAscii(imagePath: String, width: Int) -> String {
 
         }
 
-           // let resizedImage = resizeImage(image: image, newWidth: width)
-            let asciiImage = convertToAscii(image: image)
-            return asciiImage
+        // TODO: FIX SQUASHED IMAGES
+        let asciiImage = convertToAscii(image: image, newWidth: width)
+        return asciiImage
     }
     catch {
         return "errormovvin  e=\(error)"
     }
 }
 
-func convertToAscii(image: PNG.Data.Rectangular) -> String {
-        let rgba:[PNG.RGBA<UInt8>] = image.unpack(as: PNG.RGBA<UInt8>.self),
-            size:(x:Int, y:Int)    = image.size
+func convertToAscii(image: PNG.Data.Rectangular, newWidth: Int) -> String {
+    let rgba: [PNG.RGBA<UInt8>] = image.unpack(as: PNG.RGBA<UInt8>.self),
+        size: (x: Int, y: Int) = image.size
 
     let width = Int(size.x)
     let height = Int(size.y)
+    let newHeight = height * newWidth / width
 
     var asciiArt = ""
 
-    for y in 0..<height {
-        for x in 0..<width {
+    for newY in 0..<newHeight {
+        for newX in 0..<newWidth {
+            let x = newX * width / newWidth
+            let y = newY * height / newHeight
             let pixelColor = getPixel(x: x, y: y, width: width, rgb: rgba)
             let grayScaleValue = 0.299 * Double(pixelColor.red) + 0.587 * Double(pixelColor.green) + 0.114 * Double(pixelColor.blue)
             let index = Int(grayScaleValue / 255.0 * Double(ASCII_CHARS.count))
@@ -79,8 +82,6 @@ func convertToAscii(image: PNG.Data.Rectangular) -> String {
     }
     return asciiArt
 }
-
-
 
 func getPixel(x: Int, y: Int, width: Int, rgb: [PNG.RGBA<UInt8>]) -> (red: UInt8, green: UInt8, blue: UInt8, alpha: UInt8) {
     let index = y * width + x

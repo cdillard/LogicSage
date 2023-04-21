@@ -98,7 +98,7 @@ If you get stuck, ask for help on [Discord](https://discord.gg/6hbDDqf8SX).
 ## Troubleshooting
 
 ### Xcode build
-tessdata_fast-main should be deleted from the Xcode project. It will be added to the SwiftyGPTWorkspace folder in your Documents dir.
+`tessdata_fast-main` should be deleted from the Xcode project. It will be added to the SwiftyGPTWorkspace folder in your Documents dir.
 
 
 ### Microphone Access
