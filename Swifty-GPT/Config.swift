@@ -7,7 +7,7 @@
 
 import Foundation
 
-var loadMode = LoadMode.dots
+var loadMode = LoadMode.matrix
 
 enum LoadMode {
     case none
@@ -96,7 +96,7 @@ let triviaEnabledSwift = true
 let triviaEnabledObjc = false
 
 let voiceOutputEnabled = true
-let voiceInputEnabled = false
+let voiceInputEnabled = true
 
 let intro = false
 

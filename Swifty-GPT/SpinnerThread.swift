@@ -17,9 +17,9 @@ func spinners() -> [[String]] {
     case .bar:
         return [["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"]]
     case .matrix:
-        return [[]]
+        return [["."]]
     case .none:
-        return [[]]
+        return [["."]]
     }
 }
 

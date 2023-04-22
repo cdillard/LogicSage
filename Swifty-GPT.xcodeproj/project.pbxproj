@@ -197,10 +197,10 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
-				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7C3889329F224FE0074659D /* SwiftyGPTTests */,
 				B7139CDD29E147910049ADE1 /* Products */,
+				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
 				B768CE9929EB3F8500B8A9E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -341,6 +341,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B7225D7929F3A8AD001FCE33 /* PBXTargetDependency */,
 				B7C3889C29F225740074659D /* PBXTargetDependency */,
 			);
 			name = "Swifty-GPT";
@@ -485,6 +486,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B7225D7929F3A8AD001FCE33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B7225D7829F3A8AD001FCE33 /* StatusBar */;
+		};
 		B7C3889A29F2256E0074659D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = B7C3889929F2256E0074659D /* SourceKittenFramework */;
@@ -789,6 +794,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
 			productName = SwiftyTesseract;
+		};
+		B7225D7829F3A8AD001FCE33 /* StatusBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StatusBar;
 		};
 		B74A169329F1FA54006A0605 /* SourceKittenFramework */ = {
 			isa = XCSwiftPackageProductDependency;

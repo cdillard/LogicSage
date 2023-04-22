@@ -133,8 +133,7 @@ func loadTriviaSystem() {
 //            print("Failed to add objc-c qs....")
 //
 //        }
-
-        print("Parsed \(trivialQs.count) iOS trivia qs...")
+ //       print("Parsed \(trivialQs.count) iOS trivia qs...")
     }
     else {
         print("Failed to add Swift qs..")

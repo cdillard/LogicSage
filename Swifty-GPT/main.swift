@@ -1,13 +1,18 @@
 //
 //  main.swift
-//  Swifty-GPT
+//  SwiftSage
 //
 //  Created by Chris Dillard on 4/8/23.
 //
 
 import Foundation
 import AVFAudio
-
+import AppKit
+//
+//let statusBar = SwiftSageStatusBar()
+////SwiftSageStatusBar.setupStatusBar()
+//
+//statusBar.setupStatusBar()
 // Note you must have xcodegen brew and gem xcodeproj installed.
 
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
@@ -15,9 +20,9 @@ import AVFAudio
 
 // Main function to run the middleware
 func main() {
-    print("Swifty-GPT is loading...")
-    startRandomSpinner()
 
+    print("SwiftSage is loading...")
+    startRandomSpinner()
     // TODOD:
     // check for whisper files
     // check for tessarect training files

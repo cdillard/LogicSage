@@ -108,10 +108,8 @@ If you get stuck, ask for help on [Discord](https://discord.gg/6hbDDqf8SX).
 NOTE: To enable the mic head to Config.swift and turn on `let voiceInputEnabled = true`
 
 
-If you experience issues with microphone access, follow these steps:
-1. Run `export DISPLAY=:0`.
-2. Run the XQuartz app.
-3. Head to the Swifty-GPT folder and run the following command with your Apple Development account to stop the Mic popup:
+If you experience issues with microphone access/MIC POPUP, follow these steps:
+1. Head to the Swifty-GPT folder and run the following command with your Apple Development account to stop the Mic popup:
 Head to the Swifty-GPT folder and run this on the entitlements fil with your Apple Development account. This will stop the Mic POPUP.
  `codesign --entitlements Swifty-GPT.entitlements --force --sign "Apple Development: yourdevemail@gmail.com (YOUTEAXZM)" ../Xcode/DerivedData/Swifty-GPT-fsilcclqupwxmwfxejzmbhescakg/Build/Products/Release/Swifty-GPT`
 

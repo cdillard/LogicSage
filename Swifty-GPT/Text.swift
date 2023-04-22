@@ -7,31 +7,44 @@
 
 import Foundation
 
+
+// 4. 🚪📂 Close project
+
 func commandsText() -> String {
 """
-🔹 idea: "Your app idea"  💡 New appDesc prompt
-🔹 gpt: "Hi GPT. Tell me something interesting about technology."   🧠 Talk to GPT
-🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice 🔹 xcode: 🛠️ Run Xcode operations (Disabled)
-🔹 random 💥  Build app from random premade prompt, 🔹 prompts 🧠  List built in prompts
-🔹 commands 📲 List Commands, 🔹 gptFile Run "InputText" as gpt: prompt., 🔹 ideaFile Run "IdeaText" as idea: prompt.
-🔹 stop  🛑 Stop any voices or Commands
-🔹 sing  🎵 Sing a built in song
-🔹 trivia 🎤📺🎉 Play an iOS development trivia game (Experimental)
-🔹 reset  🔁🔄♻️ Reset prompt state
-🔹 delete 🗑️ Backup and delete workspace
-🔹 exit  🚪 Close the program
+🔸 Project Management:
+  1. ✨ Run loaded prompt (r)
+  2. 🚀 Show loaded prompt (s)
+  3. 📂 Open project (o)
+  B. 🏗️ Build Project (b)
+  X. 📂 Voice settings (x)
+🔸 GPT Interaction:
+  idea: "Your app idea"  💡 (i)
+  gpt: "Hi GPT. Tell me a you're Mom joke!"  🧠 Talk to GPT (g)
+  gptVoice: $PROMPT --voice "Good news"  🧠 (gv)
+🔸 Miscellaneous:
+  random 💥 Build app from random premade prompt (rand)
+  prompts 🧠 List built-in prompts (p)
+  commands 📲 List Commands (c)
+  gptFile Run "InputText" as gpt: prompt (gf)
+  ideaFile Run "IdeaText" as idea: prompt (if)
+  stop 🛑 Stop any voices or Commands (st)
+  sing 🎵 Sing a built-in song (sn)
+  trivia 🎤📺🎉 Play an iOS development trivia game (t)
+  reset 🔁🔄♻️ Reset prompt state (rs)
+  delete 🗑️ Backup and delete workspace (del)
+  exit 🚪 Close the program (e)
 """
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
     """
-    \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to Swifty GPT 🧠💥" : "")
+    \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
     \((logV == .verbose || overrideV) ? sharedCommands() : "")
     \((logV == .verbose || overrideV) ? commandsText() : "")
-    🔍 Please choose an option [0-3, gpt:, xcode:, idea:, exit]:
+    🔍 Please choose an option [1-3, B, X, i, g, gv, ...]:
     """
 }
-
 func randomAscii() -> String {
     let index = Int.random(in: 0..<4)
 
@@ -43,7 +56,6 @@ func randomAscii() -> String {
     default: return logoAscii2
     }
 }
-
 var openLinePrintCount = 0
 
 var openingLine = generatedOpenLine()
@@ -59,7 +71,7 @@ Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. U
 \(logV == .verbose ? numericalCommands() : "")
 \(logV == .verbose ? commandsText() : "")
 ❓ What would you like to do:
-🔍 Please choose an option [1-6, gpt:, xcode:, idea:, exit]:
+🔍 Please choose an option [1-3, B, X, i, g, gv, ...]:
 """
 }
 

@@ -21,7 +21,7 @@ var lastNameContents = [String]()
 var searchResultHeadingGlobal: String?
 var linkResultGlobal: String?
 
-var appName = "MyApp"
+var appName: String? = "MyApp"
 var appType = "iOS"
 var language = "Swift"
 
