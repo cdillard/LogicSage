@@ -61,11 +61,6 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
                 let synthesizer = AVSpeechSynthesizer()
                 synthesizer.delegate = self
                 synthesizers.append(synthesizer)
-
-                print("replenishing synths")
-
-                print("synth count = \(synthesizers.count) and index=\(count)")
-
         }
     }
 
@@ -79,23 +74,16 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
         DispatchQueue.global(qos: .background).async { [self] in
             let readySynth = synthesizers[count % synthesizers.count]
 
+            print("say: " + text)
             let utterance = AVSpeechUtterance(string: text)
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
             utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
 
             readySynth.speak(utterance)
 
-            print("synth count = \(synthesizers.count) and index=\(count)")
-
             self.count += 1
         }
     }
-}
-private func estimatedDuration(for utterance: AVSpeechUtterance) -> TimeInterval {
-    let wordsPerMinute: Double = 180 // Adjust this value based on the desired words per minute
-    let wordsInText = utterance.speechString.split(separator: " ").count
-    let minutes = Double(wordsInText) / wordsPerMinute
-    return minutes * 60
 }
 
 func stopSayProcess() {
