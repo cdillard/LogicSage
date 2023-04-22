@@ -82,10 +82,13 @@ func main() {
         }
     }
 
-    // Lets just disable it by default...
-    if intro { runTest() }
-
     stopRandomSpinner()
+
+
+        // Lets just disable it by default...
+        if intro { runTest() }
+
+
 
     if interactiveMode {
 
@@ -103,7 +106,9 @@ func main() {
     }
 
     // Roight time?
-    runMacSage()
+    if enableMacSage {
+        runMacSage()
+    }
 
     // END AUDIO PROCESSING
     sema.wait()

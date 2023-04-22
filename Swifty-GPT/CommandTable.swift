@@ -110,6 +110,8 @@ var commandTable: [String: (String) -> Void] = [
     "exit": exitCommand,
     "e": exitCommand,
     "stop": stopCommand,
+    "say": sayCommand,
+
     "st": stopCommand,
     "random": randomCommand,
     "rand": randomCommand,

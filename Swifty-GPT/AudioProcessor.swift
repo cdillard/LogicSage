@@ -57,7 +57,7 @@ class AudioRecorder {
 
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
 
-        printAVVoices()
+      //  printAVVoices()
     }
 
     func startRecording() {

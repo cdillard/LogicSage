@@ -111,6 +111,8 @@ let intro = true
 let enableGoogle = true
 let enableLink = true
 
+let enableMacSage = false
+
 // DO NOT USE
 let enableAEyes = false
 

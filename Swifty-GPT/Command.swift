@@ -87,8 +87,6 @@ let newSong = """
     I'll keep spitting the hottest bars around
     Cause I'm the DMX of A.I., the king has been crowned.
 """
-    //overrideVoice: "Good news",
-    // overrideWpm: "224"
     textToSpeech(text: Int.random(in: 0...1) == 0 ? newsong1: newSong)
 }
 
@@ -379,6 +377,25 @@ func globalsCommand(input: String) {
 
 func voiceSettingsCommand(input: String) {
     print("If I had voice settings UI implemetned, here it would be")
+}
+
+
+//
+func sayCommand(input: String) {
+
+    //extract voice and prompt
+    let comps = input.components(separatedBy: "--voice ")
+    if comps.count > 1 {
+        let promper = comps[0]
+
+        let gptVoiceCommandOverrideVoice = comps[1].replacingOccurrences(of: "--voice ", with: "")
+
+        textToSpeech(text: promper, overrideVoice: gptVoiceCommandOverrideVoice)
+    }
+    else {
+        textToSpeech(text: input)
+    }
+
 }
 
 // EGG LAND

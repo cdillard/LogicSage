@@ -19,59 +19,89 @@ let customFemaleName = "Sage"
 let customMaleName = "Data"
 let rateScale: Float = 0.1
 
+let shared = Speak()
 
 class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
-    static let shared = Speak()
-
-    let synthesizer1 = AVSpeechSynthesizer()
-    let synthesizer2 = AVSpeechSynthesizer()
-    let synthesizer3 = AVSpeechSynthesizer()
-
-    let synthesizers: [AVSpeechSynthesizer]
-    let speechSemaphore: DispatchSemaphore
+    var synthesizers: [AVSpeechSynthesizer] = []
+    let synthesizerQueue = DispatchQueue(label: "com.chrisswiftygpt.SwiftSage")
+    let initialSynthesizersCount = 25
+    let minimumSynthesizersCount = 5
+    let batchSynthesizersCount = 10
+    private var timer: RepeatingTimer?
 
     override init() {
-        synthesizers = [synthesizer1, synthesizer2, synthesizer3]
-        speechSemaphore = DispatchSemaphore(value: synthesizers.count)
+
         super.init()
 
         synthesizers.forEach { $0.delegate = self }
+
+        // Create the specified number of synthesizers upfront
+         for _ in 0..<initialSynthesizersCount {
+             let synthesizer = AVSpeechSynthesizer()
+             synthesizer.delegate = self
+             synthesizers.append(synthesizer)
+         }
+
+        // Start the timer
+        startReplenishTimer()
     }
 
-    internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        speechSemaphore.signal()
+    private func startReplenishTimer() {
+
+        timer = RepeatingTimer(interval: 5) {
+            self.replenishSynthesizersIfNeeded()
+        }
+        timer?.start()
+
     }
 
+    private func replenishSynthesizersIfNeeded() {
+        if count + minimumSynthesizersCount >= synthesizers.count {
+                let synthesizer = AVSpeechSynthesizer()
+                synthesizer.delegate = self
+                synthesizers.append(synthesizer)
 
-    func speakText(_ text: String, _ voice: String, _ wpm: Int) {
-        speechSemaphore.wait()
+                print("replenishing synths")
 
-        DispatchQueue.global().async {
-            if let availableSynthesizer = self.synthesizers.first(where: { !$0.isSpeaking }) {
-                let utterance = AVSpeechUtterance(string: text)
-                utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
+                print("synth count = \(synthesizers.count) and index=\(count)")
 
-                availableSynthesizer.speak(utterance)
-            } else {
-                print("All synthesizers are busy.")
-            }
         }
     }
 
+    internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        print("finished speech")
+    }
+
+    var count = 0
+
+    func speakText(_ text: String, _ voice: String, _ wpm: Int) {
+        DispatchQueue.global(qos: .background).async { [self] in
+            let readySynth = synthesizers[count % synthesizers.count]
+
+            let utterance = AVSpeechUtterance(string: text)
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
+
+            readySynth.speak(utterance)
+
+            print("synth count = \(synthesizers.count) and index=\(count)")
+
+            self.count += 1
+        }
+    }
+}
+private func estimatedDuration(for utterance: AVSpeechUtterance) -> TimeInterval {
+    let wordsPerMinute: Double = 180 // Adjust this value based on the desired words per minute
+    let wordsInText = utterance.speechString.split(separator: " ").count
+    let minutes = Double(wordsInText) / wordsPerMinute
+    return minutes * 60
 }
 
-// var sayProcess = Process()
-// other way
-
 func stopSayProcess() {
-    // Send the signal to the process
-    //kill(sayProcess.processIdentifier, SIGTERM)
-    // TODO: Reimplement to stop ALL utterance = AVSpeechUtterance out ther ein the synth
-    Speak.shared.synthesizer1.stopSpeaking(at: .immediate)
-    Speak.shared.synthesizer2.stopSpeaking(at: .immediate)
-    Speak.shared.synthesizer3.stopSpeaking(at: .immediate)
-
+    shared.synthesizers.forEach {
+        $0.stopSpeaking(at: .immediate)
+    }
 }
 
 func runTest() {
@@ -123,10 +153,21 @@ public extension Date {
 
 func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
 
+    //    var voice = voice()
+    //    if overrideVoice != nil && overrideVoice?.isEmpty == false {
+    //        voice = overrideVoice!
+    //    }
+    //    var useWpm = wpm
+    //    if overrideWpm != nil && overrideWpm?.isEmpty == false {
+    //        useWpm = overrideWpm!
+    //    }
+    //    print("using v = \(voice) and wpm = \(useWpm)")
+
+
     let useVoice = overrideVoice ?? defaultVoice
     let useWpm = Int(overrideWpm ?? "") ?? 200
     print("speakk wit \(useVoice) and \(useWpm)")
-    Speak.shared.speakText(text,  useVoice,  useWpm)
+    shared.speakText(text,  useVoice,  useWpm)
 }
 
 func welcomeWord() -> String {
@@ -139,34 +180,26 @@ func welcomeWord() -> String {
 }
 
 func killAllVoices() {
-    // REIMPLMENT WITH AV AUDIO VOICES
-    // TODO;
     stopSayProcess()
 }
-//
-//func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
-//
-//
-//    var voice = voice()
-//    if overrideVoice != nil && overrideVoice?.isEmpty == false {
-//        voice = overrideVoice!
-//    }
-//    var useWpm = wpm
-//    if overrideWpm != nil && overrideWpm?.isEmpty == false {
-//        useWpm = overrideWpm!
-//    }
-//    print("using v = \(voice) and wpm = \(useWpm)")
-// //   DispatchQueue.speechQueue.async {
-//
-//        print("say: \(text)")
-//
-//        if !voiceOutputEnabled { return }
-//
-//
-//        Speak.shared.speakText(text, voice, Int(useWpm) ?? 200)
-//   // }
-//}
 
-//extension DispatchQueue {
-//    static let speechQueue = DispatchQueue(label: "speechQueue")
-//}
+
+class RepeatingTimer {
+    private let timer: DispatchSourceTimer
+    private let interval: TimeInterval
+
+    init(interval: TimeInterval, handler: @escaping () -> Void) {
+        self.interval = interval
+        timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+        timer.setEventHandler(handler: handler)
+    }
+
+    func start() {
+        timer.schedule(deadline: .now() + interval, repeating: interval)
+        timer.resume()
+    }
+
+    func stop() {
+        timer.cancel()
+    }
+}

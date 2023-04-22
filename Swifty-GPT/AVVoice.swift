@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import AVFoundation
+
 let avVoices = [
 "com.apple.eloquence.en-US.Flo",
 "com.apple.speech.synthesis.voice.Bahh",
@@ -38,3 +40,13 @@ let avVoices = [
 "com.apple.speech.synthesis.voice.Junior",
 "com.apple.speech.synthesis.voice.Ralph"
 ]
+func  aiVoiceArray() -> [AVSpeechSynthesisVoice]  {
+    var ret = [AVSpeechSynthesisVoice]()
+    avVoices.forEach {
+        guard let v = AVSpeechSynthesisVoice(identifier: $0) else { print("fail voice") ; return}
+
+        ret.append(v)
+
+    }
+    return ret
+}
