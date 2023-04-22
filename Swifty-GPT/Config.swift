@@ -22,14 +22,18 @@ enum LoadMode {
 let sageVoice = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
 let grandmaVoice = "com.apple.eloquence.en-US.Grandma"
 let eddyVoice = "com.apple.eloquence.en-US.Eddy"
-
-var defaultVoice = sageVoice
+let shellVoice = "com.apple.eloquence.en-US.Shelley"
+let sammyVoice = "com.apple.voice.compact.en-US.Samantha"
+let kathyVoice = "com.apple.speech.synthesis.voice.Kathy"
+let sandyVoice = "com.apple.eloquence.en-US.Sandy"
+let floVoice = "com.apple.eloquence.en-US.Flo"
+var defaultVoice = sageVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
 
 
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
 // Set builtInAppDesc
-let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"  //
+let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
 
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
@@ -108,8 +112,8 @@ let intro = true
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = true
-let enableLink = true
+let enableGoogle = false
+let enableLink = false
 
 let enableMacSage = false
 

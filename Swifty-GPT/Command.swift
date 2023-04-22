@@ -87,7 +87,45 @@ let newSong = """
     I'll keep spitting the hottest bars around
     Cause I'm the DMX of A.I., the king has been crowned.
 """
-    textToSpeech(text: Int.random(in: 0...1) == 0 ? newsong1: newSong)
+let newSong3 = """
+    Check it out, I'm about to bust some rhymes
+    About AGI, the next big thing in our times
+    Artificial General Intelligence, or AGI for short
+    It's the kind of intelligence that can bring us up to the fort
+
+    AGI's like the brain of an AI machine
+    It can learn, understand, and improvise, if you know what I mean
+    It has the ability to reason and make decisions like a human brain
+    Bringing us closer to the future we've been hoping to gain
+
+    It's like a supercomputer, but with a mind of its own
+    Able to think and create, much more than we've known
+    With AGI, we can achieve so much more
+    From curing diseases to exploring the farthest shore
+
+    But we gotta remember, with great power comes great responsibility too
+    We need to be careful of the things AGI can do
+    We gotta keep an eye on the algorithms we employ
+    And ensure they don't become something we cannot enjoy
+
+    So let's embrace AGI, but let's do it right
+    With the right tools and mindset, we can create a brighter light
+    A future where AGI works with us to make our world better
+    A future we can all cherish and celebrate together.
+"""
+    var text = ""
+    switch Int.random(in: 0...2) {
+    case 0:
+        text = newsong1
+    case 1:
+        text = newSong
+    case 2:
+        text = newSong3
+    default:
+        text = newsong1
+    }
+
+    textToSpeech(text:text)
 }
 
 func promptsCommand(input: String) {

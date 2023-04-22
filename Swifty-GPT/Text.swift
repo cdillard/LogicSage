@@ -14,7 +14,7 @@ func commandsText() -> String {
    2. 🚀 Show loaded prompt (s)
    3. 📂 Open project (o)
    4. 🏗️ Build Project (b)
-   5. 📂 Voice settings (x)
+   5. 📂 Voice settings (x) (See more voices in Config.swift- you coding today)
 
  🔸 GPT Interaction:
    6. 💡 Idea prompt (i)
@@ -40,7 +40,7 @@ func generatedOpenLine(overrideV: Bool = false) -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
     \((logV == .verbose || overrideV) ? commandsText() : "")
-    🔍 Please choose an option [1-19, B, X, i, g, gv, ...]:
+    🔍 Please choose an option [1-19, B, X, i, g, gv, commands, ...]:
     """
 }
 func randomAscii() -> String {
@@ -67,7 +67,7 @@ func afterBuildFailedLine() -> String {
 """
 Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. Use GPT to fix erros one at a time [5] 🤖.
 ❓ What would you like to do:
-🔍 Please choose an option [1-3, B, X, i, g, gv, ...]:
+🔍 Please choose an option [1-19, B, X, i, g, gv, commands, ...]:
 """
 }
 

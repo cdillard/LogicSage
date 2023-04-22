@@ -79,7 +79,12 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
             utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
 
-            readySynth.speak(utterance)
+            // Quite nice for Flow (lol)
+           //  utterance.pitchMultiplier = 0.75
+
+            if voiceOutputEnabled {
+                readySynth.speak(utterance)
+            }
 
             self.count += 1
         }
@@ -154,7 +159,7 @@ func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: Strin
 
     let useVoice = overrideVoice ?? defaultVoice
     let useWpm = Int(overrideWpm ?? "") ?? 200
-    print("speakk wit \(useVoice) and \(useWpm)")
+//    print("speakk wit \(useVoice) and \(useWpm)")
     shared.speakText(text,  useVoice,  useWpm)
 }
 

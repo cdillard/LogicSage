@@ -83,7 +83,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             }
         }
         else if fullCommand.hasPrefix(openProjectPrefix) {
-            print("SKIPPING GPT PROJECT OPENNING FOR NOW")
+            print("SKIPPING GPT PROJECT OPENING FOR NOW")
 //            var name =  projectName
 //
 //            projectName = name.isEmpty ? "MyApp" : name
