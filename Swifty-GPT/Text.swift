@@ -11,13 +11,9 @@ func commandsText() -> String {
 """
 🔹 idea: "Your app idea"  💡 New appDesc prompt
 🔹 gpt: "Hi GPT. Tell me something interesting about technology."   🧠 Talk to GPT
-🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice
-🔹 xcode: 🛠️ Run Xcode operations (Disabled)
-🔹 random 💥  Build app from random premade prompt
-🔹 prompts 🧠  List built in prompts
-🔹 commands 📲 List Commands
-🔹 gptFile Run "InputText" as gpt: prompt.
-🔹 ideaFile Run "IdeaText" as idea: prompt.
+🔹 gptVoice: $PROMPT --voice "Good news"   🧠 reply with passed voice 🔹 xcode: 🛠️ Run Xcode operations (Disabled)
+🔹 random 💥  Build app from random premade prompt, 🔹 prompts 🧠  List built in prompts
+🔹 commands 📲 List Commands, 🔹 gptFile Run "InputText" as gpt: prompt., 🔹 ideaFile Run "IdeaText" as idea: prompt.
 🔹 stop  🛑 Stop any voices or Commands
 🔹 sing  🎵 Sing a built in song
 🔹 trivia 🎤📺🎉 Play an iOS development trivia game (Experimental)
@@ -78,21 +74,15 @@ Project creation success. Project should have auto openned.
 // 🎮🎨📲
 func sharedCommands() -> String {
 """
-🔹 0. 🗣️ Use voice command: Tap 0 to start, Tap 0 to end
-🔹 1. ✨ Run loaded prompt
-🔹 2. 🚀 Show loaded prompt
-🔹 3. 📂 Open project
-🔹 B. 🏗️ Build Project
-🔹 X. 📂 Voice settings
+🔹 0. 🗣️ Use voice command: "0" to start/end
+🔹 1. ✨ Run loaded prompt, 2. 🚀 Show loaded prompt, 3. 📂 Open project,  B. 🏗️ Build Project, X. 📂 Voice settings
 """
 }
 
 func numericalCommands() -> String {
 """
 \(logV == .verbose ? sharedCommands() : "")
-🔹 4. 🚪📂 Close project
-🔹 5. 🖥️🔧 Fix errors w/ GPT
-🔹 6. 🆕   Continue implementation
+🔹 4. 🚪📂 Close project,  5. 🖥️🔧 Fix errors w/ GPT, 6. 🆕   Continue implementation
 """
 }
 
