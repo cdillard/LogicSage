@@ -59,7 +59,7 @@ func updateOpeningLine() {
 
 func afterBuildFailedLine() -> String {
 """
-Project creation failed. Check the Xcode project for simple mistakes [4] 🤔. Use GPT to fix it [5] 🤖.
+Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. Use GPT to fix erros one at a time [5] 🤖.
 \(logV == .verbose ? numericalCommands() : "")
 \(logV == .verbose ? commandsText() : "")
 ❓ What would you like to do:

@@ -8,11 +8,25 @@ import Foundation
 
 import Foundation
 
+func spinners() -> [[String]] {
+    switch loadMode {
+    case .dots:
+        return [["."]]
+    case .waves:
+        return [["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"]]
+    case .bar:
+        return [["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"]]
+    case .matrix:
+        return [[]]
+    case .none:
+        return [[]]
+    }
+}
+
 class LoadingSpinner {
-    static let spinners: [[String]] = [
-        ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"],
-        ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"],
-    ]
+
+
+
 
     private var spinner: [String]
     private var index = 0
@@ -20,8 +34,8 @@ class LoadingSpinner {
     private let columnCount: Int
 
     init(columnCount: Int) {
-        let index = Int.random(in: 0..<Self.spinners.count)
-        self.spinner = Self.spinners[index]
+        let index = Int.random(in: 0..<spinners().count)
+        self.spinner = spinners()[index]
         self.columnCount = columnCount
     }
 

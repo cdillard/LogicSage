@@ -51,8 +51,6 @@
 		B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */; };
 		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
 		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
-		B7D1609429F2571700244188 /* InputText in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609229F2562000244188 /* InputText */; };
-		B7D1609629F2B07400244188 /* IdeaText in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609529F2AA4000244188 /* IdeaText */; };
 		B7D1609829F2B48C00244188 /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1609729F2B48C00244188 /* Trivia.swift */; };
 		B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */; };
 		B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D1609929F2B4CC00244188 /* swift-quiz.md */; };
@@ -84,8 +82,6 @@
 				B7D160A529F30D1800244188 /* IMG_5566.png in CopyFiles */,
 				B7D1609B29F2B4D700244188 /* objective-c-quiz.md in CopyFiles */,
 				B7D1609C29F2B4D700244188 /* swift-quiz.md in CopyFiles */,
-				B7D1609629F2B07400244188 /* IdeaText in CopyFiles */,
-				B7D1609429F2571700244188 /* InputText in CopyFiles */,
 				71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */,
 				B713384F29ED810200020CC9 /* app_screenshot.applescript in CopyFiles */,
 				B7D6518129EC88EF00ED8BAE /* ggml-base.en.bin in CopyFiles */,
@@ -150,8 +146,6 @@
 		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
 		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
 		B7D1609129F2497200244188 /* Gitstar */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gitstar; sourceTree = "<group>"; };
-		B7D1609229F2562000244188 /* InputText */ = {isa = PBXFileReference; lastKnownFileType = text; path = InputText; sourceTree = "<group>"; };
-		B7D1609529F2AA4000244188 /* IdeaText */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IdeaText; sourceTree = "<group>"; };
 		B7D1609729F2B48C00244188 /* Trivia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivia.swift; sourceTree = "<group>"; };
 		B7D1609929F2B4CC00244188 /* swift-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "swift-quiz.md"; sourceTree = "<group>"; };
 		B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "objective-c-quiz.md"; sourceTree = "<group>"; };
@@ -241,10 +235,8 @@
 				B7717D2829EFA624005141AB /* Googler.swift */,
 				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
-				B7D1609529F2AA4000244188 /* IdeaText */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
-				B7D1609229F2562000244188 /* InputText */,
 				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,

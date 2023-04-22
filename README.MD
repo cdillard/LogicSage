@@ -81,6 +81,8 @@ Download the desired datasets from [Hugging Face](https://huggingface.co/ggergan
 2. Set `OPEN_AI_KEY`.
 3. Enjoy!
 
+-More : Move InputText and IdeaText to your `~Documents/SwiftyGPTWorkspace/`, this will be your primary entry point for idea and gpt prompts. The xcode terminal does not support pasting multiple lines of code so this is the best way. Use gptFile, ideaFile to execute.
+
 ### Path Configuration
 You may need to change the `xcodegenPath` variable depending on your configuration:
 - Option 1: `let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"`

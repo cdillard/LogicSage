@@ -7,6 +7,15 @@
 
 import Foundation
 
+var loadMode = LoadMode.dots
+
+enum LoadMode {
+    case none
+    case dots
+    case bar
+    case waves
+    case matrix
+}
 
 // VOICE SETTINGS
 
@@ -14,7 +23,7 @@ import Foundation
 var defaultVoice = "Karen"
 
 // Set builtInAppDesc
-let builtInAppDesc = "that displays 3 spheres and a ground plane. Attach physics body to spheres so they react to gravity"  // a Towering Skyscraper and a bridge
+let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"  //
 
 // TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
@@ -29,12 +38,10 @@ let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
 // PLIST SETTINGS
-
 func keyForName(name: String) -> String {
     guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
     return apiKey
 }
-
 // Add your Open AI key to the GPT-Info.plist file
 var OPEN_AI_KEY:String {
     get {
@@ -56,7 +63,6 @@ var GOOGLE_ID:String {
         keyForName(name: "GOOGLE_SEARCH_ID")
     }
 }
-
 var infoPlistPath:String {
     get {
         if let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist") {
@@ -84,7 +90,7 @@ let interactiveMode = true
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
-let asciAnimations = false
+let asciAnimations = loadMode == .matrix
 
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false
@@ -96,8 +102,8 @@ let intro = false
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = false
-let enableLink = false
+let enableGoogle = true
+let enableLink = true
 
 // DO NOT USE
 let enableAEyes = false

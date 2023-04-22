@@ -46,7 +46,8 @@ func search(query: String, apiKey: String, searchEngineId: String, completion: @
 
         do {
             let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
-            completion(.success(searchResult.items))
+            // TODO : Double check this prefixing, its just to test less serach results now
+            completion(.success(Array(searchResult.items.prefix(2))))
         } catch {
             completion(.failure(error))
         }

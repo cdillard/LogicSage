@@ -49,6 +49,11 @@ var commandTable: [String: (String) -> Void] = [
     // Experimental
     "trivia":triviaCommand,
 
+
+    // tesitng
+    "testLoad": testLoadCommand,
+
+
     // eggs
     "encourage":encourageCommand,
     "sage":sageCommand,
@@ -171,7 +176,11 @@ func zeroCommand(input: String) {
 }
 
 func gptFileCommand(input: String) {
-    if let path = Bundle.main.path(forResource: "InputText", ofType: ""), let text = readFile(path: path) {
+    // You'll have to create this InputText file yourself in the SwiftyGPT worksspace.
+    let pathToInputTextFile: String =
+       "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/InputText"
+
+    if let text = readFile(path: pathToInputTextFile) {
         gptCommand(input: text)
     }
     else {
@@ -190,14 +199,17 @@ func readFile(path: String) -> String? {
 }
 
 func ideaFileCommand(input: String) {
-    if let path = Bundle.main.path(forResource: "IdeaText", ofType: ""), let text = readFile(path: path) {
+    // You'll have to create this IdeaText file yourself in the SwiftyGPT worksspace.
+    let pathToInputTextFile: String =
+       "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/IdeaText"
+
+    if let text = readFile(path: pathToInputTextFile) {
         ideaCommand(input: text)
     }
     else {
         print("no IdeaText....")
     }
 }
-
 
 func gptCommand(input: String) {
     manualPromptString = input
@@ -463,4 +475,8 @@ The coolest tool in the game, have no fear.
 
 func moviesCommand(input: String) {
     goToMovies()
+}
+
+func testLoadCommand(input: String) {
+    startRandomSpinner()
 }
