@@ -13,6 +13,8 @@ let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻ
 let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
 
+let heightProp: CGFloat = 0.92
+
 func goToMovies() {
     if let path = Bundle.main.path(forResource: "IMG_5563", ofType: "PNG") {
         let ascii = imageToAscii(imagePath: path, width: movieWidth)
@@ -58,15 +60,13 @@ func imageToAscii(imagePath: String, width: Int) -> String {
         return "errormovvin  e=\(error)"
     }
 }
-
 func convertToAscii(image: PNG.Data.Rectangular, newWidth: Int) -> String {
     let rgba: [PNG.RGBA<UInt8>] = image.unpack(as: PNG.RGBA<UInt8>.self),
         size: (x: Int, y: Int) = image.size
 
     let width = Int(size.x)
     let height = Int(size.y)
-    let newHeight = height * newWidth / width
-
+    let newHeight = Int(CGFloat((height * newWidth / (width * 2))) * heightProp)
     var asciiArt = ""
 
     for newY in 0..<newHeight {

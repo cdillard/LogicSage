@@ -13,24 +13,8 @@ struct MacSageAppApp: App {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    executeStatusBar()
+                   // executeStatusBar()
                 }
         }
     }
-}
-
-func executeStatusBar() {
-    do {
-        let task = Process()
-        let extPath = commandLineToolExecutablePath
-        let url = URL(fileURLWithPath: extPath)
-        task.executableURL = url
-        try task.run()
-        task.waitUntilExit()
-    }
-    catch {
-        print("error status bar e=\(error)")
-    }
-
-
 }

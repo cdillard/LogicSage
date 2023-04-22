@@ -29,10 +29,12 @@
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
+		B74746A829F40FCD00075010 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74746A729F40FCD00075010 /* CommandTable.swift */; };
 		B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = B74A169329F1FA54006A0605 /* SourceKittenFramework */; };
 		B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A169529F1FA63006A0605 /* SrcCat.swift */; };
 		B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620C29EFB61C0065DF88 /* StringSLug.swift */; };
 		B74E620F29F03EB90065DF88 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620E29F03EB90065DF88 /* Config.swift */; };
+		B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7538D1F29F41FA000243E9B /* AVVoice.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
@@ -67,6 +69,9 @@
 		B7D6518529EC88EF00ED8BAE /* ggml-small.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D6517F29EC88D200ED8BAE /* ggml-small.en.bin */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
+		B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */; };
+		B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */; };
+		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +81,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */,
+				B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */,
 				B7D160A229F30D1800244188 /* IMG_5563.PNG in CopyFiles */,
 				B7D160A329F30D1800244188 /* IMG_5564.png in CopyFiles */,
 				B7D160A429F30D1800244188 /* IMG_5565.png in CopyFiles */,
@@ -118,9 +125,11 @@
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B74746A729F40FCD00075010 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
 		B74A169529F1FA63006A0605 /* SrcCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SrcCat.swift; sourceTree = "<group>"; };
 		B74E620C29EFB61C0065DF88 /* StringSLug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSLug.swift; sourceTree = "<group>"; };
 		B74E620E29F03EB90065DF88 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		B7538D1F29F41FA000243E9B /* AVVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVVoice.swift; sourceTree = "<group>"; };
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
 		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
 		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
@@ -166,6 +175,9 @@
 		B7E15E6D29E6F8920056A325 /* Xcodegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodegen.swift; sourceTree = "<group>"; };
 		B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibWhisper.swift; sourceTree = "<group>"; };
 		B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swifty-GPT-Bridging-Header.h"; sourceTree = "<group>"; };
+		B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageStatusBarXFace.swift; sourceTree = "<group>"; };
+		B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SwiftSageStatusBar; sourceTree = "<group>"; };
+		B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftSageStatusBar.swiftmodule; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +237,9 @@
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
 				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
+				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
+				B74746A729F40FCD00075010 /* CommandTable.swift */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
@@ -255,6 +269,9 @@
 				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
 				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
+				B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */,
+				B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */,
+				B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
 				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
@@ -446,6 +463,7 @@
 				B70CF17E29F07E2400993AAF /* Globals.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
+				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
@@ -461,7 +479,9 @@
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
+				B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
+				B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */,
 				B70CF18229F0980800993AAF /* SageWare.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,

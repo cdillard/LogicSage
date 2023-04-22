@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.button?.image = coloredImage
 
         let menu = NSMenu()
-        menu.addItem(withTitle: "SwiftSage", action: #selector(doNothing), keyEquivalent: "")
+        menu.addItem(withTitle: "✨SwiftSage🧠💥", action: #selector(doNothing), keyEquivalent: "")
 
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
         statusItem?.menu = menu
@@ -38,8 +38,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func createColoredImage(color: NSColor, size: NSSize) -> NSImage {
         let image = NSImage(size: size)
         image.lockFocus()
-        color.setFill()
-        NSBezierPath.fill(NSRect(origin: .zero, size: size))
+
+        // Set the color
+        color.setStroke()
+
+        // Create the S shape using NSBezierPath
+        let sPath = NSBezierPath()
+        sPath.lineWidth = 2.0 // Adjust the line width as needed
+
+        // Define points for the S shape
+        let p1 = NSPoint(x: size.width * 0.2, y: size.height * 0.8)
+        let p2 = NSPoint(x: size.width * 0.8, y: size.height * 0.8)
+        let p3 = NSPoint(x: size.width * 0.2, y: size.height * 0.5)
+        let p4 = NSPoint(x: size.width * 0.8, y: size.height * 0.5)
+        let p5 = NSPoint(x: size.width * 0.2, y: size.height * 0.2)
+        let p6 = NSPoint(x: size.width * 0.8, y: size.height * 0.2)
+
+        // Draw the S shape
+        sPath.move(to: p1)
+        sPath.curve(to: p3, controlPoint1: p2, controlPoint2: p2)
+        sPath.curve(to: p5, controlPoint1: p4, controlPoint2: p4)
+        sPath.line(to: p6)
+
+        // Stroke the path
+        sPath.stroke()
+
         image.unlockFocus()
         return image
     }

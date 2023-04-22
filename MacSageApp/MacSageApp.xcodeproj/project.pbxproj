@@ -12,7 +12,7 @@
 		B73580B629F3B34C00291393 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B73580B529F3B34C00291393 /* Assets.xcassets */; };
 		B73580C129F3B3EA00291393 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B73580C029F3B3EA00291393 /* Info.plist */; };
 		B73580C929F3B4CB00291393 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73580C829F3B4CB00291393 /* main.swift */; };
-		B73580D129F3B77E00291393 /* GeneratedPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73580D029F3B77E00291393 /* GeneratedPath.swift */; };
+		B7F50A6829F3BEB900A8485C /* SwiftSageStatusBar in Resources */ = {isa = PBXBuildFile; fileRef = B73580C629F3B4CB00291393 /* SwiftSageStatusBar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +46,6 @@
 		B73580C029F3B3EA00291393 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		B73580C629F3B4CB00291393 /* SwiftSageStatusBar */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftSageStatusBar; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73580C829F3B4CB00291393 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		B73580D029F3B77E00291393 /* GeneratedPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedPath.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +87,6 @@
 		B73580B029F3B34B00291393 /* MacSageApp */ = {
 			isa = PBXGroup;
 			children = (
-				B73580D029F3B77E00291393 /* GeneratedPath.swift */,
 				B73580C029F3B3EA00291393 /* Info.plist */,
 				B73580B129F3B34B00291393 /* MacSageAppApp.swift */,
 				B73580B329F3B34B00291393 /* ContentView.swift */,
@@ -116,7 +114,6 @@
 				B73580AA29F3B34B00291393 /* Sources */,
 				B73580AB29F3B34B00291393 /* Frameworks */,
 				B73580AC29F3B34B00291393 /* Resources */,
-				B73580CF29F3B6EC00291393 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -187,32 +184,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7F50A6829F3BEB900A8485C /* SwiftSageStatusBar in Resources */,
 				B73580C129F3B3EA00291393 /* Info.plist in Resources */,
 				B73580B629F3B34C00291393 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B73580CF29F3B6EC00291393 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ngenerated_path_file=\"${SRCROOT}/GeneratedPath.swift\"\necho \"import Foundation\" > \"$generated_path_file\"\necho \"let commandLineToolExecutablePath = \\\"${BUILT_PRODUCTS_DIR}/${CONFIGURATION}/myCommandLineTool\\\"\" >> \"$generated_path_file\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B73580AA29F3B34B00291393 /* Sources */ = {
@@ -221,7 +199,6 @@
 			files = (
 				B73580B429F3B34B00291393 /* ContentView.swift in Sources */,
 				B73580B229F3B34B00291393 /* MacSageAppApp.swift in Sources */,
-				B73580D129F3B77E00291393 /* GeneratedPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +346,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -398,7 +375,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
+				ENABLE_PREVIEWS = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";

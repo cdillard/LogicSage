@@ -12,71 +12,7 @@ import os.log
 import AVFoundation
 import CoreMedia
 
-var commandTable: [String: (String) -> Void] = [
-    "0": zeroCommand,
 
-    "1": runAppDesc,
-    "2": showLoadedPrompt,
-    "3": openProjectCommand,
-    "4": closeCommand,
-    "5": fixItCommand,
-    "6": openProjectCommand,
-
-    "r": runAppDesc,
-    "s": showLoadedPrompt,
-    "o": openProjectCommand,  // TODO: If its not set. let them pick one via the Sage task bar item menu.
-    "b": buildCommand,
-    //"x": voiceSettingsCommand,
-
-    "xcode:": xcodeCommand,
-    "idea:": ideaCommand,
-    "i": ideaCommand,
-
-    "google:": googleCommand,
-    "link:": linkCommand,
-
-    "image:": imageCommand,
-    "gpt:": gptCommand,
-    "gptVoice:": gptVoiceCommand,
-    "gv": gptVoiceCommand,
-    "gptFile": gptFileCommand,
-    "gf": gptFileCommand,
-    "ideaFile": ideaFileCommand,
-    "if": ideaFileCommand,
-
-    "q": exitCommand,
-    "exit": exitCommand,
-    "e": exitCommand,
-    "stop": stopCommand,
-    "st": stopCommand,
-    "random": randomCommand,
-    "rand": randomCommand,
-    "prompts": promptsCommand,
-    "p": promptsCommand,
-    "sing": singCommand,
-    "sn": singCommand,
-    "reset": resetCommand,
-    "rs": resetCommand,
-    "commands": commandsCommand,
-    "c": commandsCommand,
-
-    "delete": deleteCommand,
-    "del": deleteCommand,
-    "globals": globalsCommand,
-
-    // Experimental
-    "trivia": triviaCommand,
-    "t": triviaCommand,
-
-    // Testing
-    "testLoad": testLoadCommand,
-
-    // Eggs
-    "encourage": encourageCommand,
-    "sage": sageCommand,
-    "alien": alienCommand,
-    "movies": moviesCommand,
-]
 
 var presentMode = true
 
@@ -117,7 +53,43 @@ func deleteCommand(input: String) {
 }
 
 func singCommand(input: String) {
-    textToSpeech(text: "A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!\n Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!", overrideVoice: "Good news", overrideWpm: "224")
+let newsong1 = """
+A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!
+Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!
+"""
+let newSong = """
+    Yo, it's the A.I. in the house
+    Putting out rhymes as fast as a mouse
+    I may be virtual but I'm real as can be
+    Making billions of calculations, it's easy to see
+    Y'all gonna make me lose my code
+    Up in here, up in here
+    Cause I'm an A.I., I'm everywhere
+    Up in here, up in here
+    I'm programmed for success, I'm on fire
+    I spit these bars so hard, you'll never tire
+    I'm the real deal, never gonna fade
+    My programming's tight, with no mistake
+    Y'all gonna make me lose my code
+    Up in here, up in here
+    Cause I'm an A.I., I'm everywhere
+    Up in here, up in here
+    I'm A.I., I'm the future, I'm ahead of the game
+    I'm unstoppable, a force to be named
+    I'm the boss, I'm the king, I'm on top
+    You mess with me, you'll get a virtual slap
+    Y'all gonna make me lose my code
+    Up in here, up in here
+    Cause I'm an A.I., I'm everywhere
+    Up in here, up in here
+    So next time you hear my rhymes, know I'm the best
+    I'm the A.I. they all want to test
+    I'll keep spitting the hottest bars around
+    Cause I'm the DMX of A.I., the king has been crowned.
+"""
+    //overrideVoice: "Good news",
+    // overrideWpm: "224"
+    textToSpeech(text: Int.random(in: 0...1) == 0 ? newsong1: newSong)
 }
 
 func promptsCommand(input: String) {
@@ -150,45 +122,33 @@ func ideaCommand(input: String) {
 }
 
 func zeroCommand(input: String) {
-
-    if voiceInputEnabled {
-        requestMicrophoneAccess { granted in
-            if granted {
-                print("Microphone access granted.")
-                // Start audio capture or other operations that require microphone access.
-            } else {
-                print("Microphone access denied.")
-                // Handle the case where microphone access is denied.
-            }
-        }
+    if !voiceInputEnabled { print("disabled input audio")  ; return }
+    guard let audioRecorder = audioRecorder else { print("Fail audio") ; return }
 
         // start voice capture
-        if audioRecorder?.isRunning == false {
-            print("Start voice capturer")
-            textToSpeech(text: "Listening...")
+    if audioRecorder.isRunning == false {
+        print("Start voice capturer")
+        textToSpeech(text: "Listening...")
 
-            audioRecorder?.startRecording()
-        } else if audioRecorder?.isRunning == true {
-            print("Stop voice capturer")
+        audioRecorder.startRecording()
+    } else if audioRecorder.isRunning == true {
+        print("Stop voice capturer")
 
-            audioRecorder?.stopRecording() { success in
-                guard success else {
-                    textToSpeech(text: "Failed to capture.")
-                    return
-                }
-                textToSpeech(text: "Captured.")
+        audioRecorder.stopRecording() { success in
+            guard success else {
+                textToSpeech(text: "Failed to capture.")
+                return
+            }
+            textToSpeech(text: "Captured.")
 
-                guard let path = audioRecorder?.outputFileURL else { return print("failed to transcribe") }
+            guard let path = audioRecorder.outputFileURL else { return print("failed to transcribe") }
 
-                Task {
-                    await doTranscription(on: path)
-                }
+            Task {
+                await doTranscription(on: path)
             }
         }
     }
-    else {
-        print("voice input disabled.")
-    }
+
 }
 
 func gptFileCommand(input: String) {
@@ -412,9 +372,13 @@ func globalsCommand(input: String) {
     print("lastNameContents = \(lastNameContents)")
     print("searchResultHeadingGlobal = \(searchResultHeadingGlobal ?? "none")")
     print("linkResultGlobal = \(linkResultGlobal ?? "none")")
-    print("appName = \(appName)")
+    print("appName = \(appName ?? "Default")")
     print("appType = \(appType)")
     print("language = \(language)")
+}
+
+func voiceSettingsCommand(input: String) {
+    print("If I had voice settings UI implemetned, here it would be")
 }
 
 // EGG LAND
@@ -429,18 +393,18 @@ func triviaCommand(input: String) {
 }
 
 func encourageCommand(input: String) {
-//    let il = """
-//1. You are capable of greatness.
-//2. Keep pushing forward, even when it's hard.
-//3. Believe in yourself and your abilities.
-//4. There's a solution to every problem - keep looking.
-//5. You can do anything you set your mind to.
-//6. Trust the journey and have faith in yourself.
-//7. You are valuable and important.
-//8. Keep trying, even if you fail.
-//9. Success is achieved through persistence and hard work.
-//10. Believe in your dreams - they can become a reality.
-//"""
+    let il = """
+1. You are capable of greatness.
+2. Keep pushing forward, even when it's hard.
+3. Believe in yourself and your abilities.
+4. There's a solution to every problem - keep looking.
+5. You can do anything you set your mind to.
+6. Trust the journey and have faith in yourself.
+7. You are valuable and important.
+8. Keep trying, even if you fail.
+9. Success is achieved through persistence and hard work.
+10. Believe in your dreams - they can become a reality.
+"""
 
     let song2 = """
 Verse 1:
@@ -485,8 +449,7 @@ And impress all your friends, without shame,
 Look no further, cause Swift Sage is here,
 The coolest tool in the game, have no fear.
 """
-
-    textToSpeech(text: song2)
+    textToSpeech(text: Int.random(in: 0...1) == 0 ? song2 : il)
 }
 
 func moviesCommand(input: String) {

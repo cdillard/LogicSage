@@ -25,9 +25,6 @@ func spinners() -> [[String]] {
 
 class LoadingSpinner {
 
-
-
-
     private var spinner: [String]
     private var index = 0
     private var thread: Thread?
@@ -53,6 +50,9 @@ class LoadingSpinner {
             }
         }
         blockingInput = true
+
+        if loadMode == .none { return }
+
         thread?.start()
     }
 

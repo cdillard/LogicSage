@@ -10,18 +10,68 @@
 // SPEAK
 
 import Foundation
+import AVFoundation
 
 let wpm = "244"
 let concurrentVoicesLimit = 2
 var concurrentVoices = 0
 let customFemaleName = "Sage"
 let customMaleName = "Data"
+let rateScale: Float = 0.1
 
-var sayProcess = Process()
+
+class Speak: NSObject, AVSpeechSynthesizerDelegate {
+
+    static let shared = Speak()
+
+    let synthesizer1 = AVSpeechSynthesizer()
+    let synthesizer2 = AVSpeechSynthesizer()
+    let synthesizer3 = AVSpeechSynthesizer()
+
+    let synthesizers: [AVSpeechSynthesizer]
+    let speechSemaphore: DispatchSemaphore
+
+    override init() {
+        synthesizers = [synthesizer1, synthesizer2, synthesizer3]
+        speechSemaphore = DispatchSemaphore(value: synthesizers.count)
+        super.init()
+
+        synthesizers.forEach { $0.delegate = self }
+    }
+
+    internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        speechSemaphore.signal()
+    }
+
+
+    func speakText(_ text: String, _ voice: String, _ wpm: Int) {
+        speechSemaphore.wait()
+
+        DispatchQueue.global().async {
+            if let availableSynthesizer = self.synthesizers.first(where: { !$0.isSpeaking }) {
+                let utterance = AVSpeechUtterance(string: text)
+                utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
+
+                availableSynthesizer.speak(utterance)
+            } else {
+                print("All synthesizers are busy.")
+            }
+        }
+    }
+
+}
+
+// var sayProcess = Process()
+// other way
 
 func stopSayProcess() {
     // Send the signal to the process
-    kill(sayProcess.processIdentifier, SIGTERM)
+    //kill(sayProcess.processIdentifier, SIGTERM)
+    // TODO: Reimplement to stop ALL utterance = AVSpeechUtterance out ther ein the synth
+    Speak.shared.synthesizer1.stopSpeaking(at: .immediate)
+    Speak.shared.synthesizer2.stopSpeaking(at: .immediate)
+    Speak.shared.synthesizer3.stopSpeaking(at: .immediate)
+
 }
 
 func runTest() {
@@ -73,7 +123,10 @@ public extension Date {
 
 func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
 
-    addSpeakTask(text: text, overrideVoice: overrideVoice, overrideWpm: overrideWpm)
+    let useVoice = overrideVoice ?? defaultVoice
+    let useWpm = Int(overrideWpm ?? "") ?? 200
+    print("speakk wit \(useVoice) and \(useWpm)")
+    Speak.shared.speakText(text,  useVoice,  useWpm)
 }
 
 func welcomeWord() -> String {
@@ -86,77 +139,34 @@ func welcomeWord() -> String {
 }
 
 func killAllVoices() {
-
+    // REIMPLMENT WITH AV AUDIO VOICES
+    // TODO;
     stopSayProcess()
-
-    let killProcess = Process()
-    killProcess.launchPath = "/bin/zsh"
-
-    killProcess.arguments = ["-c", "killall", "say"]
-
-    let outputPipe = Pipe()
-    killProcess.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    killProcess.standardError = errorPipe
-
-
-    do {
-        try killProcess.run()
-    }
-    catch {
-        print("error = \(error)")
-    }
 }
+//
+//func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
+//
+//
+//    var voice = voice()
+//    if overrideVoice != nil && overrideVoice?.isEmpty == false {
+//        voice = overrideVoice!
+//    }
+//    var useWpm = wpm
+//    if overrideWpm != nil && overrideWpm?.isEmpty == false {
+//        useWpm = overrideWpm!
+//    }
+//    print("using v = \(voice) and wpm = \(useWpm)")
+// //   DispatchQueue.speechQueue.async {
+//
+//        print("say: \(text)")
+//
+//        if !voiceOutputEnabled { return }
+//
+//
+//        Speak.shared.speakText(text, voice, Int(useWpm) ?? 200)
+//   // }
+//}
 
-func addSpeakTask(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil){
-    print("say: \(text)")
-
-    if !voiceOutputEnabled { return }
-
-    if  concurrentVoices > concurrentVoicesLimit {
-        stopSayProcess()
-    }
-
-    sayProcess = Process()
-    sayProcess.executableURL = URL(fileURLWithPath: "/usr/bin/say")
-
-    var voice = voice()
-    if overrideVoice != nil && overrideVoice?.isEmpty == false {
-        voice = overrideVoice!
-    }
-    var useWpm = wpm
-    if overrideWpm != nil && overrideWpm?.isEmpty == false {
-        useWpm = overrideWpm!
-    }
-
-    sayProcess.arguments = ["[[rate \(useWpm)]]\(text)", "-v", voice, "-r", useWpm]
-
-    let outputPipe = Pipe()
-    sayProcess.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    sayProcess.standardError = errorPipe
-
-
-    do {
-        try sayProcess.run()
-        concurrentVoices += 1
-
-        sayProcess.terminationHandler =  { result in
-            concurrentVoices -= 1
-
-        }
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: outputData, encoding: .utf8) ?? ""
-
-
-        let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-        // print("sayText: \(output), errorOutput: \(errorOutput)")
-
-    } catch {
-        print("Error running text-to-speech: \(error)")
-    }
-}
+//extension DispatchQueue {
+//    static let speechQueue = DispatchQueue(label: "speechQueue")
+//}

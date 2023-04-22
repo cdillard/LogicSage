@@ -7,7 +7,7 @@
 
 import Foundation
 
-var loadMode = LoadMode.matrix
+var loadMode = LoadMode.dots
 
 enum LoadMode {
     case none
@@ -19,8 +19,14 @@ enum LoadMode {
 
 // VOICE SETTINGS
 
-// var defaultVoice = "Rishi"
-var defaultVoice = "Karen"
+let sageVoice = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
+let grandmaVoice = "com.apple.eloquence.en-US.Grandma"
+let eddyVoice = "com.apple.eloquence.en-US.Eddy"
+
+var defaultVoice = sageVoice
+
+
+var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
 // Set builtInAppDesc
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"  //
@@ -96,9 +102,9 @@ let triviaEnabledSwift = true
 let triviaEnabledObjc = false
 
 let voiceOutputEnabled = true
-let voiceInputEnabled = true
+var voiceInputEnabled = false
 
-let intro = false
+let intro = true
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
@@ -116,6 +122,6 @@ enum LogVerbosity {
 }
 
 // IF the movie is TOO big/blurry for you and your tastes try manually setting your Xcode console font to 2 or 3 and then  turn movie width up :).
-let movieWidth = 120
+let movieWidth = 95
 let matrixScreenWidth = 100
 

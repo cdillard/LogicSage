@@ -21,9 +21,6 @@ func voice() -> String {
     return chosenVoice!
 }
 
-
-
-
 func randomVoice() -> String {
     // SERIOUS VOICES
     [defaultVoice].randomElement()! //"Zarvox", "Trinoids", "Rishi"].randomElement()!
@@ -59,6 +56,8 @@ class AudioRecorder {
         let tempAudioPath = "\(projectPath)/audio-\(UUID())\(tempAudioRecordingFileFormat)"
 
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
+
+        printAVVoices()
     }
 
     func startRecording() {
@@ -132,6 +131,13 @@ class AudioRecorder {
             default:
                 completion(false)
             }
+        }
+    }
+
+    func printAVVoices() {
+        AVSpeechSynthesisVoice.speechVoices().forEach {
+            if $0.language != "en-US" { return }
+            print($0)
         }
     }
 }

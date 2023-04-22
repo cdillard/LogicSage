@@ -76,6 +76,7 @@ func readChar() -> Character? {
 
 let BACKSPACE: UInt8 = 0x7F // ASCII value of the backspace character
 
+// HERE BE DRAGONS OF C INPUT HANDLING :*(
 func handleUserInput() {
     var command = ""
     var parameter = ""
@@ -184,15 +185,12 @@ func handleUserInput() {
 
                 continue
             }
-
-            if char >= "0" && char <= "6" {
+            // HANDLE 0 COMMAND
+            if char >= "0" && char <= "0" {
                 command = String(char)
                 print("SWIFTSAGE: \(command)")
-                if let selectedCommand = commandTable[command] {
-                    selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
-                } else {
-                    print("Invalid command. Please try again:")
-                }
+                callCommandCommand(command,
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 command = ""
                 parameter = ""
             } else if char == " " {
@@ -207,28 +205,36 @@ func handleUserInput() {
                 }
                 // attempt to parse cmd named
                 print("SWIFTSAGE: \(command)")
-                if let selectedCommand = commandTable[command] {
-                    selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
-                } else {
-                    print("Invalid command. Please try again:")
-                }
 
+                callCommandCommand(command,
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
                 command = ""
                 parameter = ""
             } else if char == "\n" {
                 print("SWIFTSAGE: \(command)")
-                if let selectedCommand = commandTable[command] {
-                    selectedCommand(parameter.trimmingCharacters(in: .whitespacesAndNewlines))
-                } else {
-                    print("Invalid command. Please try again:")
-                }
 
+                callCommandCommand(command,
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 command = ""
                 parameter = ""
             } else {
                 command.append(char)
             }
-
         }
+    }
+}
+
+func callCommandCommand(_ command: String, _ arg: String) {
+    DispatchQueue.global(qos: .userInitiated).async {
+
+//        DispatchQueue.main.async {
+            print("SWIFTSAGE: \(command)")
+            if let selectedCommand = commandTable[command] {
+                selectedCommand(arg)
+
+            } else {
+                print("Invalid command. Please try again:")
+            }
+  //      }
     }
 }

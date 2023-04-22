@@ -7,42 +7,40 @@
 
 import Foundation
 
-
-// 4. 🚪📂 Close project
-
 func commandsText() -> String {
 """
-🔸 Project Management:
-  1. ✨ Run loaded prompt (r)
-  2. 🚀 Show loaded prompt (s)
-  3. 📂 Open project (o)
-  B. 🏗️ Build Project (b)
-  X. 📂 Voice settings (x)
-🔸 GPT Interaction:
-  idea: "Your app idea"  💡 (i)
-  gpt: "Hi GPT. Tell me a you're Mom joke!"  🧠 Talk to GPT (g)
-  gptVoice: $PROMPT --voice "Good news"  🧠 (gv)
-🔸 Miscellaneous:
-  random 💥 Build app from random premade prompt (rand)
-  prompts 🧠 List built-in prompts (p)
-  commands 📲 List Commands (c)
-  gptFile Run "InputText" as gpt: prompt (gf)
-  ideaFile Run "IdeaText" as idea: prompt (if)
-  stop 🛑 Stop any voices or Commands (st)
-  sing 🎵 Sing a built-in song (sn)
-  trivia 🎤📺🎉 Play an iOS development trivia game (t)
-  reset 🔁🔄♻️ Reset prompt state (rs)
-  delete 🗑️ Backup and delete workspace (del)
-  exit 🚪 Close the program (e)
+ 🔸 Project Management:
+   1. ✨ Run loaded prompt (r)
+   2. 🚀 Show loaded prompt (s)
+   3. 📂 Open project (o)
+   4. 🏗️ Build Project (b)
+   5. 📂 Voice settings (x)
+
+ 🔸 GPT Interaction:
+   6. 💡 Idea prompt (i)
+   7. 🧠 Talk to GPT (g)
+   8. 🧠 GPT Voice (gv) `gv Bad luck and extreme misfortune will infest your pathetic soul for all eternity. --voice com.apple.eloquence.en-US.Rocko`
+
+ 🔸 Miscellaneous:
+   9. 💥 Build random app (rand)
+  10. 🧠 List built-in prompts (p)
+  11. 📲 List Commands (c)
+  12. 🧠 Run GPT from file (gf)
+  13. 💡 Run Idea from file (if)
+  14. 🛑 Stop voices/commands (st)
+  15. 🎵 Sing a built-in song (sn)
+  16. 🎤 Play iOS dev trivia (t)
+  17. 🔁 Reset prompt state (rs)
+  18. 🗑️ Backup & delete workspace (del)
+  19. 🚪 Exit the program (e)
 """
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
-    \((logV == .verbose || overrideV) ? sharedCommands() : "")
     \((logV == .verbose || overrideV) ? commandsText() : "")
-    🔍 Please choose an option [1-3, B, X, i, g, gv, ...]:
+    🔍 Please choose an option [1-19, B, X, i, g, gv, ...]:
     """
 }
 func randomAscii() -> String {
@@ -68,33 +66,31 @@ func updateOpeningLine() {
 func afterBuildFailedLine() -> String {
 """
 Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. Use GPT to fix erros one at a time [5] 🤖.
-\(logV == .verbose ? numericalCommands() : "")
-\(logV == .verbose ? commandsText() : "")
 ❓ What would you like to do:
 🔍 Please choose an option [1-3, B, X, i, g, gv, ...]:
 """
 }
 
-func afterSuccessLine() -> String {
-"""
-Project creation success. Project should have auto openned.
-\(logV == .verbose ? numericalCommands() : "")
-\(logV == .verbose ? commandsText() : "")
-🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
-"""
-}
-// 🎮🎨📲
-func sharedCommands() -> String {
-"""
-🔹 0. 🗣️ Use voice command: "0" to start/end
-🔹 1. ✨ Run loaded prompt, 2. 🚀 Show loaded prompt, 3. 📂 Open project,  B. 🏗️ Build Project, X. 📂 Voice settings
-"""
-}
+//func afterSuccessLine() -> String {
+//"""
+//Project creation success. Project should have auto openned.
+//\(logV == .verbose ? numericalCommands() : "")
+//\(logV == .verbose ? commandsText() : "")
+//🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
+//"""
+//}
+//// 🎮🎨📲
+//func sharedCommands() -> String {
+//"""
+//🔹 0. 🗣️ Use voice command: "0" to start/end
+//🔹 1. ✨ Run loaded prompt, 2. 🚀 Show loaded prompt, 3. 📂 Open project,  B. 🏗️ Build Project, X. 📂 Voice settings
+//"""
+//}
 
-func numericalCommands() -> String {
-"""
-\(logV == .verbose ? sharedCommands() : "")
-🔹 4. 🚪📂 Close project,  5. 🖥️🔧 Fix errors w/ GPT, 6. 🆕   Continue implementation
-"""
-}
+//func numericalCommands() -> String {
+//"""
+//\(logV == .verbose ? sharedCommands() : "")
+//🔹 4. 🚪📂 Close project,  5. 🖥️🔧 Fix errors w/ GPT, 6. 🆕   Continue implementation
+//"""
+//}
 
