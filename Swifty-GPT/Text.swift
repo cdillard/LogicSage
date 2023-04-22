@@ -19,7 +19,7 @@ func commandsText() -> String {
  🔸 GPT Interaction:
    6. 💡 Idea prompt (i)
    7. 🧠 Talk to GPT (g)
-   8. 🧠 GPT Voice (gv) `gv Bad luck and extreme misfortune will infest your pathetic soul for all eternity. --voice com.apple.eloquence.en-US.Rocko`
+   8. 🧠 GPT Voice (gv) `gv I'm Bubbles, I like Kitties. --voice com.apple.speech.synthesis.voice.Bubbles`
 
  🔸 Miscellaneous:
    9. 💥 Build random app (rand)
