@@ -28,13 +28,11 @@ func resetCommand(input: String) {
 
     appDesc = builtInAppDesc
     language = "Swift"
-
+    
     streak = 0
     chosenTQ = nil
     debateMode = false
     print("🔁🔄♻️ Reset.")
-
-
 }
 
 func deleteCommand(input: String) {

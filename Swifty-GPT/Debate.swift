@@ -11,6 +11,11 @@ var depthLimit = 11 // turn it up too
 let personalityA = aaronVoice // male voice
 let personalityB = sageVoice // female voice
 
+
+let debatePrompt8 = """
+Broad subject: Technology, Narrowed down issue: The impact of artificial intelligence on employment, Clear statement: "Artificial intelligence poses a significant threat to the job market and will lead to mass unemployment.", Different perspectives: Participants can either argue in favor of the statement, supporting the idea that AI will cause job loss, or argue against it, stating that AI will create new job opportunities and boost the economy. Personality A believes that A.G.I will lead to a more enlightened society where people can learn anything and their only limits are their imagination, while Personality B opposes Artificial Intelligence and thinks that acheiving A.G.I would be horrible and a doomsday scenario. Engage in a civil and respectful debate on the ethics of artificial intelligence and Artificial General Intelligence, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message. Do not use the new line character in your responses
+"""
+
 let debatePrompt7 = """
 Prompt: "Personality A believes that assisted suicide is a compassionate option for terminally ill patients who are suffering, while Personality B opposes assisted suicide on ethical and moral grounds. Engage in a civil and respectful debate on the ethics of assisted suicide, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message. Do not use the new line character in your responses.
 """
@@ -39,9 +44,8 @@ Prompt: "Personality A believes that A.G.I will lead to a more enlightened socie
 """
 
 
-
 func randomDebate() -> String {
-    debatePrompt0
+    debatePrompt8
     //    switch Int.random(in: 0...6) {
     //    case 0:
     //        return debatePrompt
