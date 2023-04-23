@@ -45,7 +45,7 @@ Prompt: "Aaron believes that A.G.I will lead to a more enlightened society where
 
 
 func randomDebate() -> String {
-    debatePrompt0
+    debatePrompt5
     //    switch Int.random(in: 0...6) {
     //    case 0:
     //        return debatePrompt
@@ -141,8 +141,8 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
 
         let personalityPrefix = personality == "Aaron" ?  "Sage: " : "Aaron: "
         let newResponse = newPrompt
-            .replacingOccurrences(of: "Aaron:", with: "")
-            .replacingOccurrences(of: "Sage:", with: "")
+//            .replacingOccurrences(of: "Aaron:", with: "")
+//            .replacingOccurrences(of: "Sage:", with: "")
 
 
         // avg loading for prompt duration for session.... (MIGHT BE 1 righ???)
