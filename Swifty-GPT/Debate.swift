@@ -7,9 +7,9 @@
 
 import Foundation
 
-var depthLimit = 20
-var personalityA = aaronVoice
-var personalityB = sageVoice
+var depthLimit = 11 // turn it up too
+let personalityA = aaronVoice // male voice
+let personalityB = sageVoice // female voice
 
 let debatePrompt7 = """
 Prompt: "Personality A believes that assisted suicide is a compassionate option for terminally ill patients who are suffering, while Personality B opposes assisted suicide on ethical and moral grounds. Engage in a civil and respectful debate on the ethics of assisted suicide, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message. Do not use the new line character in your responses.
@@ -42,31 +42,31 @@ Prompt: "Personality A believes that A.G.I will lead to a more enlightened socie
 
 func randomDebate() -> String {
     debatePrompt0
-//    switch Int.random(in: 0...6) {
-//    case 0:
-//        return debatePrompt
-//    case 1:
-//        return debatePrompt2
-//
-//    case 2:
-//        return debatePrompt3
-//
-//    case 3:
-//        return debatePrompt4
-//
-//    case 4:
-//        return debatePrompt5
-//
-//    case 5:
-//        return debatePrompt6
-//
-//    case 6:
-//        return debatePrompt7
-//
-//    default:
-//        return debatePrompt
-//
-//    }
+    //    switch Int.random(in: 0...6) {
+    //    case 0:
+    //        return debatePrompt
+    //    case 1:
+    //        return debatePrompt2
+    //
+    //    case 2:
+    //        return debatePrompt3
+    //
+    //    case 3:
+    //        return debatePrompt4
+    //
+    //    case 4:
+    //        return debatePrompt5
+    //
+    //    case 5:
+    //        return debatePrompt6
+    //
+    //    case 6:
+    //        return debatePrompt7
+    //
+    //    default:
+    //        return debatePrompt
+    //
+    //    }
 }
 
 func debateCommand(input: String) {
@@ -82,6 +82,8 @@ func deepConversation(currentPersonality: String, initialPrompt: String, depth: 
         return
     }
 
+    print("debate depth: \(depth)")
+
     let array = initialPrompt.components(separatedBy: "\n")
     guard !array.isEmpty else {
         print("Failed to think deeply")
@@ -90,11 +92,23 @@ func deepConversation(currentPersonality: String, initialPrompt: String, depth: 
 
     let newPrompt = array[0]
 
-     print("*** Check for persona: Debate p = \(newPrompt)")
 
     sendPromptWithPersonality(prompt: newPrompt, currentRetry: 0, personality: currentPersonality) { content, success in
         if success {
-            let nextPersonality = currentPersonality == personalityA ? personalityB : personalityA
+            //let nextPersonality = currentPersonality == personalityA ? "Personality B:" : "Personality A:"
+
+            print("*** Check for persona: Debate p = \(newPrompt) and reply = \(content)")
+
+
+            var nextPersonality = personalityB
+
+            if currentPersonality == personalityA {
+                nextPersonality = personalityB
+            } else {
+                nextPersonality = personalityA
+            }
+
+
             deepConversation(currentPersonality: nextPersonality, initialPrompt: content, depth: depth - 1)
         } else {
             print("Failed to think deeply")
@@ -110,23 +124,19 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
             return
         }
 
-        let name = personality == personalityA ? "Personality A:" : "Personality B:"
         print("Debate personality = \(personality), p = \(prompt)")
 
-        let array = content.components(separatedBy: "\n")
-        guard !array.isEmpty else {
-            print("Failed to think deeply")
-            return
-        }
-        print("*** Check for persona: Debate p = \(array[0])")
+        let personalityPrefix = personality == personalityA ? "Personality A: " : "Personality B: "
+        let newResponse = content
+            .replacingOccurrences(of: "Personality A:", with: "")
+            .replacingOccurrences(of: "Personality B:", with: "")
 
-        let newResponse = array[0]
-                            .replacingOccurrences(of: "Personality A:", with: "")
-                            .replacingOccurrences(of: "Personality B:", with: "")
-        let duration = textToSpeech(text: newResponse, overrideVoice: personality)
+
+        // avg loading for prompt duration for session.... (MIGHT BE 1 righ???)
+        let duration = textToSpeech(text: newResponse, overrideVoice: personality) - 1
 
         DispatchQueue.global().asyncAfter(deadline: .now() + duration) {
-            completionHandler(name + ": " + array[0], true)
+            completionHandler(personalityPrefix + content, true)
         }
     }
 }

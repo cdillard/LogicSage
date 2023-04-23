@@ -136,6 +136,7 @@ var commandTable: [String: (String) -> Void] = [
     // Testing
     "testLoad": testLoadCommand,
 
+    "ethics": ethicsCommand,
     // Eggs
     "encourage": encourageCommand,
     "sage": sageCommand,
