@@ -120,43 +120,7 @@ extension CGImage {
 
 import Foundation
 import AppKit
-//
-//func runAppleScript(_ scriptName: String, withParameter parameter: String) -> String {
-//
-//
-//    let kASAppleScriptSuite: OSType = 0x61736372 // 'ascr'
-//    let kASSubroutineEvent: OSType = 0x70736420 // 'psd '
-//    let kAutoGenerateReturnID: Int32 = -1
-//    let kAnyTransactionID: Int32 = 0
-//    let keyASSubroutineName: OSType = 0x73636E61 // 'scna'
-//    let keyDirectObject: OSType = 0x2d2d2d2d // '----'
-//
-//    let scriptURL = Bundle.main.url(forResource: scriptName, withExtension: "scpt")!
-//    let appleScript = try! NSUserAppleScriptTask(url: scriptURL)
-//
-//    let event = NSAppleEventDescriptor(eventClass: UInt32(kASAppleScriptSuite), eventID: UInt32(kASSubroutineEvent), targetDescriptor: nil, returnID: Int16(kAutoGenerateReturnID), transactionID: AETransactionID(Int16(kAnyTransactionID)))
-//    event.setParam(NSAppleEventDescriptor(string: "capture_window_by_title"), forKeyword: UInt32(keyASSubroutineName))
-//
-//    let parameters = NSAppleEventDescriptor.list()
-//    parameters.insert(NSAppleEventDescriptor(string: parameter), at: 0)
-//    event.setParam(parameters, forKeyword: UInt32(keyDirectObject))
-//
-//    appleScript.execute(withAppleEvent: event) {
-//        (result, err) in
-//           if let err = err {
-//               print("Error executing AppleScript: \(err)")
-//           } else if let result = result {
-//               print("Result: \(result.stringValue ?? "No result")")
-//           }
-//           exit(0)
-//       }
-//
-//
-//
-//
-//    RunLoop.main.run()
-//    return ""
-//}
+
 
 func runAppleScript(_ scriptName: String, withParameter parameter: String) -> String {
     let scriptURL = Bundle.main.url(forResource: scriptName, withExtension: "applescript")!
@@ -199,14 +163,4 @@ func doAccessiblity(procID: pid_t) {
     let targetApp = AXUIElementCreateApplication(1234) // Replace with target app's process ID
     var appRef: AXUIElement?
 
-
-//    AXUIElementCopyAttributeValue(targetApp, kAXFocusedApplicationAttribute as CFString, appRef as AnyObject? as! UnsafeMutablePointer<CFTypeRef?>)
-//
-//    if let appRef = appRef {
-//        var titleRef: CFTypeRef?
-//        AXUIElementCopyAttributeValue(appRef, kAXTitleAttribute as CFString, &titleRef)
-//        if let titleRef = titleRef as? String {
-//            print(titleRef)
-//        }
-//    }
 }

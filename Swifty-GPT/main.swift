@@ -10,7 +10,7 @@ import AVFAudio
 import AppKit
 
 // Note you must have xcodegen brew and gem xcodeproj installed.
-
+// https://github.com/f/awesome-chatgpt-prompts
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
 // I'm looking into it with GPT.
 
