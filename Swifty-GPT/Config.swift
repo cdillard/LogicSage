@@ -27,7 +27,8 @@ let sammyVoice = "com.apple.voice.compact.en-US.Samantha"
 let kathyVoice = "com.apple.speech.synthesis.voice.Kathy"
 let sandyVoice = "com.apple.eloquence.en-US.Sandy"
 let floVoice = "com.apple.eloquence.en-US.Flo"
-var defaultVoice = sageVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
+let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
+var defaultVoice = aaronVoice//floVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
 
 
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
@@ -109,6 +110,7 @@ let voiceOutputEnabled = true
 var voiceInputEnabled = false
 
 let intro = true
+let intro = false
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!

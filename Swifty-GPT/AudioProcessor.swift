@@ -69,10 +69,6 @@ class AudioRecorder {
         
         let tempAudioPath = "\(projectPath)/audio-\(UUID())\(tempAudioRecordingFileFormat)"
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
-
-
-        // SEEMS LIKE CRASH OCCURS IF YOU TRY TO TALK WHEN THEY ARE
-        // 2023-04-15 20:37:07.713005-0600 Swifty-GPT[64119:16301563] *** Terminating app due to uncaught exception 'com.apple.coreaudio.avfaudio', reason: 'required condition is false: format.sampleRate == hwFormat.sampleRate' wtf
         let inputNode = audioEngine.inputNode
         let inputFormat = inputNode.inputFormat(forBus: 0)
         isRunning = true
@@ -134,14 +130,14 @@ class AudioRecorder {
         }
     }
 
-    func printAVVoices() {
-        AVSpeechSynthesisVoice.speechVoices().forEach {
-            if $0.language != "en-US" { return }
-            print($0)
-        }
+
+}
+func printAVVoices() {
+    AVSpeechSynthesisVoice.speechVoices().forEach {
+        if $0.language != "en-US" { return }
+        print($0)
     }
 }
-
 func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
     AVCaptureDevice.requestAccess(for: .audio) { granted in
         DispatchQueue.main.async {

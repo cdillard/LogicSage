@@ -40,7 +40,7 @@ func generatedOpenLine(overrideV: Bool = false) -> String {
     """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
     \((logV == .verbose || overrideV) ? commandsText() : "")
-    🔍 Please choose an option [1-19, B, X, i, g, gv, commands, ...]:
+    🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
     """
 }
 func randomAscii() -> String {
@@ -67,7 +67,7 @@ func afterBuildFailedLine() -> String {
 """
 Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. Use GPT to fix erros one at a time [5] 🤖.
 ❓ What would you like to do:
-🔍 Please choose an option [1-19, B, X, i, g, gv, commands, ...]:
+🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
 """
 }
 

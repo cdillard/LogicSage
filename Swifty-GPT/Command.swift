@@ -415,13 +415,11 @@ func globalsCommand(input: String) {
 
 func voiceSettingsCommand(input: String) {
     print("If I had voice settings UI implemetned, here it would be")
+    print("But look at all the voices to choose from...")
+    printAVVoices()
 }
 
-
-//
 func sayCommand(input: String) {
-
-    //extract voice and prompt
     let comps = input.components(separatedBy: "--voice ")
     if comps.count > 1 {
         let promper = comps[0]
@@ -433,7 +431,6 @@ func sayCommand(input: String) {
     else {
         textToSpeech(text: input)
     }
-
 }
 
 // EGG LAND

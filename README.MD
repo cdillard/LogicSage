@@ -7,6 +7,7 @@ Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, M
 Join the [Discord community](https://discord.gg/6hbDDqf8SX) for support and discussions.
 
 ## Table of Contents
+- News, Changelog
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -14,6 +15,16 @@ Join the [Discord community](https://discord.gg/6hbDDqf8SX) for support and disc
 - [Features](#features)
 - [Credits](#credits)
 - [Contact](#contact)
+
+DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY. THIS IS JUST AN EXPERIMENT.
+
+## News, Changelog
+----
+04-22-2023
+
+SwiftSage has evolved. realtime voice synthesis and google command gives super powers to your SwiftSage `i` and `if` and `gf` commands.
+
+AGI is imminent. (NOT THIS PROJECT LOL) We might get some funny apps tho...
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/username/Swifty-GPT.git`
