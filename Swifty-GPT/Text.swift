@@ -33,7 +33,7 @@ func commandsText() -> String {
   17. 🔁 Reset prompt state (rs)
   18. 🗑️ Backup & delete workspace (del)
   19. 🚪 Exit the program (e)
-  20. 👥 Debate (debate)
+  20. 👥 Debate (debate) [  MORE: ethics, movies, and encourage ]
 """
 }
 
