@@ -101,23 +101,6 @@ func stopSayProcess() {
     }
 }
 
-func runTest() {
-    let hour = Calendar.current.component(.hour, from: Date())
-    var greeting1 = "Welcome"
-    switch hour {
-    case 6..<12 : greeting1 = "Good Morning"
-    case 12 : greeting1 = "It's Noon"
-    case 13..<17 : greeting1 = "Good Afternoon"
-    case 17..<22 : greeting1 = "Good Evening"
-    default: greeting1 = "Good Night"
-    }
-
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "h"
-    // presise time setting let currentTime = dateFormatter.string(from: Date().round(precision: 60 * 60))
-    textToSpeech(text: "\(welcomeWord()). \(greeting1)! I'm \( !customFemaleName.isEmpty ? customFemaleName : voice()) and I'm \(noun()).")
-}
-
 func noun() -> String {
     switch Int.random(in: 0...5)
     {

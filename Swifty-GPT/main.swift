@@ -84,12 +84,6 @@ func main() {
 
     stopRandomSpinner()
 
-
-        // Lets just disable it by default...
-        if intro { runTest() }
-
-
-
     if interactiveMode {
 
         print(generatedOpenLine())

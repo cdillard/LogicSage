@@ -11,25 +11,7 @@ import os.log
 import AVFoundation
 import CoreMedia
 
-var chosenVoice: String?
 var audioRecorder: AudioRecorder?
-
-func voice() -> String {
-    if chosenVoice == nil {
-        chosenVoice = randomVoice()
-    }
-    return chosenVoice!
-}
-
-func randomVoice() -> String {
-    // SERIOUS VOICES
-    [defaultVoice].randomElement()! //"Zarvox", "Trinoids", "Rishi"].randomElement()!
-
-   // ["Karen"].randomElement()!
-
-    // FUN VOICES
-//    ["Jester", "Good News", "Bubbles", "Boing", "Bad News"].randomElement()!
-}
 
 // LISTEN
 

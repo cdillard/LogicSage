@@ -7,7 +7,7 @@
 
 import Foundation
 
-var loadMode = LoadMode.waves
+var loadMode = LoadMode.dots
 
 enum LoadMode {
     case none
@@ -107,8 +107,6 @@ let triviaEnabledObjc = false
 
 let voiceOutputEnabled = true
 var voiceInputEnabled = false
-
-let intro = false
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
