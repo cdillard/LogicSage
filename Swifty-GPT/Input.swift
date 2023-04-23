@@ -188,7 +188,6 @@ func handleUserInput() {
             // HANDLE 0 COMMAND
             if char >= "0" && char <= "0" {
                 command = String(char)
-                print("SWIFTSAGE: \(command)")
                 callCommandCommand(command,
                                    parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 command = ""
@@ -204,15 +203,11 @@ func handleUserInput() {
                     }
                 }
                 // attempt to parse cmd named
-                print("SWIFTSAGE: \(command)")
-
                 callCommandCommand(command,
                                    parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
                 command = ""
                 parameter = ""
             } else if char == "\n" {
-                print("SWIFTSAGE: \(command)")
-
                 callCommandCommand(command,
                                    parameter.trimmingCharacters(in: .whitespacesAndNewlines))
                 command = ""
