@@ -69,6 +69,7 @@
 		B7D6518529EC88EF00ED8BAE /* ggml-small.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D6517F29EC88D200ED8BAE /* ggml-small.en.bin */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
+		B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EE1FC129F4E351007A7B6B /* Debate.swift */; };
 		B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */; };
 		B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */; };
 		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
@@ -175,6 +176,7 @@
 		B7E15E6D29E6F8920056A325 /* Xcodegen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcodegen.swift; sourceTree = "<group>"; };
 		B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibWhisper.swift; sourceTree = "<group>"; };
 		B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swifty-GPT-Bridging-Header.h"; sourceTree = "<group>"; };
+		B7EE1FC129F4E351007A7B6B /* Debate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debate.swift; sourceTree = "<group>"; };
 		B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageStatusBarXFace.swift; sourceTree = "<group>"; };
 		B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SwiftSageStatusBar; sourceTree = "<group>"; };
 		B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftSageStatusBar.swiftmodule; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				B70CF17E29F07E2400993AAF /* Globals.swift in Sources */,
+				B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,

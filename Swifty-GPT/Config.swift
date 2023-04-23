@@ -7,7 +7,7 @@
 
 import Foundation
 
-var loadMode = LoadMode.dots
+var loadMode = LoadMode.waves
 
 enum LoadMode {
     case none
@@ -29,7 +29,6 @@ let sandyVoice = "com.apple.eloquence.en-US.Sandy"
 let floVoice = "com.apple.eloquence.en-US.Flo"
 let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
 var defaultVoice = aaronVoice//floVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
-
 
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
@@ -109,15 +108,14 @@ let triviaEnabledObjc = false
 let voiceOutputEnabled = true
 var voiceInputEnabled = false
 
-let intro = true
 let intro = false
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = false
-let enableLink = false
+let enableGoogle = true
+let enableLink = true
 
-let enableMacSage = false
+let enableMacSage = true
 
 // DO NOT USE
 let enableAEyes = false

@@ -9,10 +9,10 @@ import Foundation
 import AppKit
 
 import Cocoa
-
+var tickCount = 0
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
-
+    private var timer: Timer?
     func applicationDidFinishLaunching(_ notification: Notification) {
         let statusBar = NSStatusBar.system
         statusItem = statusBar.statusItem(withLength: NSStatusItem.squareLength)
@@ -20,12 +20,49 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let coloredImage = createColoredImage(color: .green, size: NSSize(width: 18, height: 18))
         statusItem?.button?.image = coloredImage
 
+        statusItem?.button?.title = "."
         let menu = NSMenu()
         menu.addItem(withTitle: "✨SwiftSage🧠💥", action: #selector(doNothing), keyEquivalent: "")
 
+        let switchMenuItem = NSMenuItem(title: "Toggle Switch", action: #selector(toggleSwitch(_:)), keyEquivalent: "")
+        switchMenuItem.state = .off
+        menu.addItem(switchMenuItem)
+
+
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
         statusItem?.menu = menu
+        // we can adjust this to convey more effort occur by the toool.
+        let timerInterval = 3.2
+        timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
+
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(handleNotification(_:)), name: NSNotification.Name(rawValue: "com.example.yourapp.notification"), object: nil)
     }
+
+    @objc func handleNotification(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        if let buttonTapped = userInfo["buttonTapped"] as? Bool {
+            print("Button tapped: \(buttonTapped)")
+        }
+
+        if let switchChanged = userInfo["switchChanged"] as? Bool {
+            print("Switch changed: \(switchChanged)")
+        }
+    }
+
+
+    @objc func updateTitle() {
+          let dateFormatter = DateFormatter()
+          dateFormatter.dateFormat = "HH:mm:ss"
+//          let currentTime = dateFormatter.string(from: Date())
+
+        if tickCount > 2 {
+            tickCount = 0
+        }
+
+        statusItem?.button?.title = "\(String(Array(repeating: ".", count: tickCount)))"
+
+        tickCount += 1
+      }
 
     @objc func quit() {
         NSApp.terminate(nil)
@@ -33,6 +70,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func doNothing() {
 
+    }
+
+    
+
+    @objc func toggleSwitch(_ sender: NSMenuItem) {
+        if sender.state == .on {
+            sender.state = .off
+        } else {
+            sender.state = .on
+        }
+        // Perform any additional actions based on the state of the switch
     }
 
     func createColoredImage(color: NSColor, size: NSSize) -> NSImage {
@@ -44,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create the S shape using NSBezierPath
         let sPath = NSBezierPath()
-        sPath.lineWidth = 2.0 // Adjust the line width as needed
+        sPath.lineWidth = 0.2 // Adjust the line width as needed
 
         // Define points for the S shape
         let p1 = NSPoint(x: size.width * 0.2, y: size.height * 0.8)

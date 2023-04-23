@@ -226,15 +226,12 @@ func handleUserInput() {
 
 func callCommandCommand(_ command: String, _ arg: String) {
     DispatchQueue.global(qos: .userInitiated).async {
+        print("SWIFTSAGE: \(command)")
+        if let selectedCommand = commandTable[command] {
+            selectedCommand(arg)
 
-//        DispatchQueue.main.async {
-            print("SWIFTSAGE: \(command)")
-            if let selectedCommand = commandTable[command] {
-                selectedCommand(arg)
-
-            } else {
-                print("Invalid command. Please try again:")
-            }
-  //      }
+        } else {
+            print("Invalid command. Please try again:")
+        }
     }
 }

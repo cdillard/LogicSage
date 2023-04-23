@@ -8,7 +8,7 @@
 import Foundation
 
 // Function to send a prompt to GPT via the OpenAI API
-func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  completion: @escaping (String, Bool) -> Void) {
+func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  voiceOverride: String? = nil, disableSpinner: Bool = false, completion: @escaping (String, Bool) -> Void) {
 
     let url = URL(string: apiEndpoint)!
     var request = URLRequest(url: url)
@@ -51,14 +51,17 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-        startRandomSpinner()
+        if !disableSpinner {
+            startRandomSpinner()
+        }
 
-        textToSpeech(text: "Exec prompt length \(prompt.count)", overrideVoice:defaultMachineVoice, overrideWpm: "262")
+        // textToSpeech(text: "Exec prompt length \(prompt.count)", overrideVoice:defaultMachineVoice, overrideWpm: "262")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
-
-            stopRandomSpinner()
+            if !disableSpinner {
+                stopRandomSpinner()
+            }
 
             if let error = error {
                 print("Error occurred: \(error.localizedDescription)")

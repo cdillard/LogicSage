@@ -135,7 +135,6 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
                     textToSpeech(text: "Opening project...")
 
-
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {
                             print("opened successfully")
@@ -182,7 +181,6 @@ func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
     let swiftnewLine = """
 
     """
-
     var newPrompt = prompt
     if !errors.isEmpty {
         newPrompt += fixItPrompt

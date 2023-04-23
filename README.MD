@@ -4,8 +4,6 @@
 
 Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
 
-Join the [Discord community](https://discord.gg/6hbDDqf8SX) for support and discussions.
-
 ## Table of Contents
 - News, Changelog
 - [Getting Started](#getting-started)
@@ -107,7 +105,6 @@ If you encounter Ruby errors, follow the steps here:
 
 If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
 
-If you get stuck, ask for help on [Discord](https://discord.gg/6hbDDqf8SX).
 
 ## Troubleshooting
 

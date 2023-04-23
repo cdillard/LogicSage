@@ -123,6 +123,7 @@ var commandTable: [String: (String) -> Void] = [
     "rs": resetCommand,
     "commands": commandsCommand,
     "c": commandsCommand,
+    "debate": debateCommand,
 
     "delete": deleteCommand,
     "del": deleteCommand,

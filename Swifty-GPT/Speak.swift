@@ -70,12 +70,14 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
     var count = 0
 
-    func speakText(_ text: String, _ voice: String, _ wpm: Int) {
+    func speakText(_ text: String, _ voice: String, _ wpm: Int) -> TimeInterval {
+
+        let utterance = AVSpeechUtterance(string: text)
         DispatchQueue.global(qos: .background).async { [self] in
             let readySynth = synthesizers[count % synthesizers.count]
 
             print("say: " + text)
-            let utterance = AVSpeechUtterance(string: text)
+
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
             utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
 
@@ -88,6 +90,8 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
             self.count += 1
         }
+        return estimatedDuration(for: utterance)
+
     }
 }
 
@@ -144,23 +148,19 @@ public extension Date {
     }
 }
 
-func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) {
+ func estimatedDuration(for utterance: AVSpeechUtterance) -> TimeInterval {
+    let wordsPerMinute: Double = 180 // Adjust this value based on the desired words per minute
+    let wordsInText = utterance.speechString.split(separator: " ").count
+    let minutes = Double(wordsInText) / wordsPerMinute
+    return minutes * 60
+}
 
-    //    var voice = voice()
-    //    if overrideVoice != nil && overrideVoice?.isEmpty == false {
-    //        voice = overrideVoice!
-    //    }
-    //    var useWpm = wpm
-    //    if overrideWpm != nil && overrideWpm?.isEmpty == false {
-    //        useWpm = overrideWpm!
-    //    }
-    //    print("using v = \(voice) and wpm = \(useWpm)")
-
+@discardableResult
+func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) -> TimeInterval {
 
     let useVoice = overrideVoice ?? defaultVoice
     let useWpm = Int(overrideWpm ?? "") ?? 200
-//    print("speakk wit \(useVoice) and \(useWpm)")
-    shared.speakText(text,  useVoice,  useWpm)
+    return shared.speakText(text,  useVoice,  useWpm)
 }
 
 func welcomeWord() -> String {

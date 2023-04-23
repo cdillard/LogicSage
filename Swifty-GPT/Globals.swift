@@ -29,3 +29,6 @@ var language = "Swift"
 // Trivia
 var chosenTQ: TriviaQuestion?
 var streak = 0
+
+// Debate
+var debateMode = false

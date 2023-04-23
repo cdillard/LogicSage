@@ -12,10 +12,6 @@ import os.log
 import AVFoundation
 import CoreMedia
 
-
-
-var presentMode = true
-
 func resetCommand(input: String) {
     projectName = "MyApp"
     globalErrors = [String]()
@@ -35,7 +31,7 @@ func resetCommand(input: String) {
 
     streak = 0
     chosenTQ = nil
-
+    debateMode = false
     print("🔁🔄♻️ Reset.")
 
 
@@ -394,7 +390,6 @@ func linkCommand(input: String) {
         }
     }
 }
-
 
 func globalsCommand(input: String) {
     print("projectName = \(projectName)")
