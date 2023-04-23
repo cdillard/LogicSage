@@ -110,10 +110,10 @@ var voiceInputEnabled = false
 
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = true
-let enableLink = true
+let enableGoogle = false
+let enableLink = false
 
-let enableMacSage = true
+let enableMacSage = false
 
 // DO NOT USE
 let enableAEyes = false

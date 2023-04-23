@@ -17,6 +17,12 @@ Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, M
 DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY. THIS IS JUST AN EXPERIMENT.
 
 ## News, Changelog
+
+----
+04-23-2023
+
+DEBATE MODE🗣️💬👥
+
 ----
 04-22-2023
 
