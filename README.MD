@@ -165,7 +165,3 @@ Swifty-GPT offers a range of features to make software development faster and mo
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
-
-Feel free to reach out on [Discord](https://discord.gg/6hbDDqf8SX) if you have any questions or need support.
-
-**Note:** iPad and iOS support is coming soon!
