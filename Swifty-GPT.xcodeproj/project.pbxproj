@@ -243,6 +243,7 @@
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
+				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
@@ -286,7 +287,6 @@
 				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";

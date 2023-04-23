@@ -12,7 +12,7 @@ var personalityA = aaronVoice
 var personalityB = sageVoice
 
 let debatePrompt7 = """
-Prompt: "Personality A believes that assisted suicide is a compassionate option for terminally ill patients who are suffering, while Personality B opposes assisted suicide on ethical and moral grounds. Engage in a civil and respectful debate on the ethics of assisted suicide, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message.
+Prompt: "Personality A believes that assisted suicide is a compassionate option for terminally ill patients who are suffering, while Personality B opposes assisted suicide on ethical and moral grounds. Engage in a civil and respectful debate on the ethics of assisted suicide, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message. Do not use the new line character in your responses.
 """
 
 let debatePrompt6 = """
@@ -34,32 +34,39 @@ let debatePrompt = """
 Personality A supports capital punishment as a necessary means of justice, while Personality B opposes it on moral and ethical grounds. Engage in a civil debate discussing the moral, ethical, and practical implications of capital punishment. Personality A and Personality B are having a debate. Please provide a single response for one personality per message.
 """
 
+let debatePrompt0 = """
+Prompt: "Personality A believes that A.G.I will lead to a more enlightened society where people can learn anything and their only limits are their imagination, while Personality B opposes Artificial Intelligence and thinks that acheiving A.G.I would be horrible and a doomsday scenario. Engage in a civil and respectful debate on the ethics of artificial intelligence and Artificial General Intelligence, discussing its potential benefits, risks, and the moral implications. Personality A and Personality B are having a debate. Please provide a single response for one personality per message. Do not use the new line character in your responses.
+"""
+
+
+
 func randomDebate() -> String {
-    switch Int.random(in: 0...6) {
-    case 0:
-        return debatePrompt
-    case 1:
-        return debatePrompt2
-
-    case 2:
-        return debatePrompt3
-
-    case 3:
-        return debatePrompt4
-
-    case 4:
-        return debatePrompt5
-
-    case 5:
-        return debatePrompt6
-
-    case 6:
-        return debatePrompt7
-
-    default:
-        return debatePrompt
-
-    }
+    debatePrompt0
+//    switch Int.random(in: 0...6) {
+//    case 0:
+//        return debatePrompt
+//    case 1:
+//        return debatePrompt2
+//
+//    case 2:
+//        return debatePrompt3
+//
+//    case 3:
+//        return debatePrompt4
+//
+//    case 4:
+//        return debatePrompt5
+//
+//    case 5:
+//        return debatePrompt6
+//
+//    case 6:
+//        return debatePrompt7
+//
+//    default:
+//        return debatePrompt
+//
+//    }
 }
 
 func debateCommand(input: String) {
@@ -70,6 +77,8 @@ func debateCommand(input: String) {
 
 func deepConversation(currentPersonality: String, initialPrompt: String, depth: Int) {
     if depth <= 0 {
+        textToSpeech(text: "This concludes the debate.", overrideVoice: personalityA)
+
         return
     }
 
@@ -81,7 +90,7 @@ func deepConversation(currentPersonality: String, initialPrompt: String, depth: 
 
     let newPrompt = array[0]
 
-    print("Debate p = \(newPrompt)")
+     print("*** Check for persona: Debate p = \(newPrompt)")
 
     sendPromptWithPersonality(prompt: newPrompt, currentRetry: 0, personality: currentPersonality) { content, success in
         if success {
@@ -109,6 +118,7 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
             print("Failed to think deeply")
             return
         }
+        print("*** Check for persona: Debate p = \(array[0])")
 
         let newResponse = array[0]
                             .replacingOccurrences(of: "Personality A:", with: "")
@@ -116,7 +126,7 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
         let duration = textToSpeech(text: newResponse, overrideVoice: personality)
 
         DispatchQueue.global().asyncAfter(deadline: .now() + duration) {
-            completionHandler(newResponse, true)
+            completionHandler(name + ": " + array[0], true)
         }
     }
 }
