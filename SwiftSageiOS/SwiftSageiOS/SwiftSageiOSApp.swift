@@ -16,6 +16,10 @@ import Starscream
 //    static var defaultSagePhoneDisplayName: String { "iOSAppPeerID" }
 //
 //}
+
+let defaultTerminalFontSize: CGFloat = 12.666
+
+
 @main
 struct SwiftSageiOSApp: App {
     init() {
@@ -25,7 +29,12 @@ struct SwiftSageiOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                Color.purple
+                    .ignoresSafeArea()
+                ContentView()
+            }
+
         }
     }
 }

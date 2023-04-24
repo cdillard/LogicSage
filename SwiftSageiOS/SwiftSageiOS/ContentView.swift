@@ -30,6 +30,9 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
 
             Text("🚀🔥 Welcome to SwiftSage 🧠💥")
+                .foregroundColor(.black)
+                .font(.largeTitle)
+                .fontWeight(.heavy)
 
         }
         .padding()

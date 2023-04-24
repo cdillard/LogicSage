@@ -207,7 +207,7 @@ class ResizeController {
     var initialHeight = CGFloat.zero
     
     static let kMinConsoleHeight: CGFloat = 108
-    static let kMaxConsoleHeight: CGFloat = 346
+    static let kMaxConsoleHeight: CGFloat = 1000
     
     var verticalPanner_frameRateRequestID: UUID?
     
@@ -481,6 +481,7 @@ class PlatterView: UIView {
         button.layer.cornerCurve = .continuous
         
         button.addAction(UIAction(handler: { _ in
+            // DO THIS ON TAP OUTSIDE OF RESIZE VC
             ResizeController.shared.isActive = false
             self.dismiss()
         }), for: .touchUpInside)
@@ -592,8 +593,8 @@ class PlatterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var possibleEndpoints: [CGPoint] { return [CGPoint(x: 0, y: (UIScreen.hasRoundedCorners ? 44 : -8) + 63),
-                                               CGPoint(x: 0, y: LCManager.shared.consoleViewController.view.frame.size.height + 5)]
+    var possibleEndpoints: [CGPoint] { return [CGPoint(x: 0, y: (UIScreen.hasRoundedCorners ? 44 : -8) + 700),
+                                               CGPoint(x: 0, y: LCManager.shared.consoleViewController.view.frame.size.height + 800)]
     }
     
     var initialPlatterOriginY = CGFloat.zero

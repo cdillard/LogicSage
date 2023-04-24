@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 
+
 var GLOBAL_BORDER_TRACKERS: [BorderManager] = []
 
 @available(iOSApplicationExtension, unavailable)
@@ -16,7 +17,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     public static let shared = LCManager()
     
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
-    public var fontSize: CGFloat = 8 {
+    public var fontSize: CGFloat =  defaultTerminalFontSize{
         didSet {
             guard fontSize >= 4 else { fontSize = 4; return }
             guard fontSize <= 20 else { fontSize = 20; return }
@@ -44,7 +45,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
     }
     
-    let defaultConsoleSize = CGSize(width: 240, height: 148)
+    let defaultConsoleSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     
     lazy var borderView = UIView()
     
@@ -849,7 +850,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
-            .foregroundColor: UIColor.white,
+            .foregroundColor: UIColor.green,
             .font: UIFont.systemFont(ofSize: fontSize, weight: .semibold, design: .monospaced)
         ]
         

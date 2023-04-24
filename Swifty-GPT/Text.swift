@@ -15,12 +15,13 @@ func commandsText() -> String {
    3. 📂 Open project (o)
    4. 🏗️ Build Project (b)
    5. 📂 Voice settings (x) (See more voices in Config.swift- you coding today)
-
  🔸 GPT Interaction:
    6. 💡 Idea prompt (i)
    7. 🧠 Talk to GPT (g)
    8. 🧠 GPT Voice (gv) `gv I'm Bubbles, I like Kitties. --voice com.apple.speech.synthesis.voice.Bubbles`
-
+ 🔸 Speak:
+  \(voiceInputEnabled == false ? "" :" -  🗣️: tap 0 to start listening, tap 0 to capture." )
+   -  💬 `say anything`
  🔸 Miscellaneous:
    9. 💥 Build random app (rand)
   10. 🧠 List built-in prompts (p)

@@ -5,3 +5,8 @@ Swifty-GPT/model/ggml-base.en.bin
 Swifty-GPT/model/ggml-small.en.bin
 Swifty-GPT/Model/tessdata_fast-main
 WebSocketServer/.build
+Swifty-GPT/assets/.DS_Store
+.DS_Store
+Swifty-GPT.xcworkspace/xcuserdata
+SwiftSageiOS/SwiftSageiOS.xcodeproj/xcuserdata
+SwiftSageiOS/SwiftSageiOS.xcodeproj/project.xcworkspace/xcuserdata
