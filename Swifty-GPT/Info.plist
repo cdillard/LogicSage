@@ -34,5 +34,11 @@
 	<string>Uses administrator rights to take screenshots</string>
 	<key>UILaunchScreen</key>
 	<array/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_websocket._tcp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Uses local network to communicate with SwiftSage</string>
 </dict>
 </plist>

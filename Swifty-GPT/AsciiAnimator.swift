@@ -39,13 +39,13 @@ class TextAnimator {
     func animateAscii(frameDelay: TimeInterval = 0.03, repetitions: Int = 1, consoleHeight: Int = 25) {
         for _ in 0..<repetitions {
             for char in text {
-                print(char, terminator: "")
+                multiPrinter(char, terminator: "")
                 fflush(stdout)
                 usleep(useconds_t(frameDelay * 1_000_000))
 
                 if stopped { return }
             }
-            print(String(repeating: "\n", count: consoleHeight))
+            multiPrinter(String(repeating: "\n", count: consoleHeight))
         }
     }
 
@@ -95,7 +95,7 @@ class TextAnimator {
                 }
 
                 let line = self.generateMatrixLine()
-                print("\(line)")
+                multiPrinter("\(line)")
             }
 
             timer.resume()

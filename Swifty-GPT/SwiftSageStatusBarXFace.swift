@@ -16,7 +16,7 @@ func runMacSage() {
         do {
             let mainBundle = Bundle.main
             guard let macosAppURL = mainBundle.url(forResource: "SwiftSageStatusBar", withExtension: "") else {
-                return print("Failed to locate the bundled macOS app.")
+                return multiPrinter("Failed to locate the bundled macOS app.")
             }
 
             let task = Process()
@@ -51,30 +51,30 @@ func runMacSage() {
 
 
             task.terminationHandler = { success in
-                print("terminated w \(success)")
+                multiPrinter("terminated w \(success)")
 
             }
             // Read the output data
             let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
             if let outputString = String(data: outputData, encoding: .utf8) {
-                print("Output: \(outputString)")
+                multiPrinter("Output: \(outputString)")
                 // This being printed seems to indicate the EOL for the taskbar app
             }
             
             // Read the error output data
             let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
             if let errorString = String(data: errorData, encoding: .utf8) {
-                print("Error: \(errorString)")
+                multiPrinter("Error: \(errorString)")
             }
 
             //task.waitUntilExit()
         }
         catch {
-            print("failure w e=\(error)")
+            multiPrinter("failure w e=\(error)")
         }
     }
     else {
-        print("status bar alreadt rybbub")
+        multiPrinter("status bar alreadt rybbub")
     }
 }
 func sendNotification(buttonTapped: Bool? = nil, switchChanged: Bool? = nil) {

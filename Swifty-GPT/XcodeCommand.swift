@@ -81,7 +81,7 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     do {
         try task.run()
     } catch {
-        print("Error running xcodebuild: \(error)")
+        multiPrinter("Error running xcodebuild: \(error)")
         completion(false, [])
         dispatchSemaphore.signal()
     }
@@ -118,18 +118,18 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
 
     let errors2 = getErrorLines(errorOutput)
     if !errors2.isEmpty {
-        print("Build Errors: \(  errors2)")
+        multiPrinter("Build Errors: \(  errors2)")
     }
     else {
         if !errors.isEmpty {
-            print("Error: \(errorOutput)")
+            multiPrinter("Error: \(errorOutput)")
         }
     }
     if !errors.isEmpty {
-        print("Build ❌ : \(  errors)")
+        multiPrinter("Build ❌ : \(  errors)")
     }
     else {
-       // print("Build Output: \(  output)")
+       // multiPrinter("Build Output: \(  output)")
     }
     var errorsCopy = Array(errors)
     errorsCopy = errorsCopy.map {
@@ -152,10 +152,10 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
             completion(success, globalErrors)
         }
     case let .createProject(name):
-        print("Creating project with name: \(name)")
+        multiPrinter("Creating project with name: \(name)")
         projectName = name.isEmpty ? "MyApp" : name
         projectName = preprocessStringForFilename(projectName)
-        print("set current name")
+        multiPrinter("set current name")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
 
         createNewProject(projectName: name, projectDirectory: projectPath) { success in
@@ -170,7 +170,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
         if projectName.isEmpty {
-            print("missing proj, creating one... ****danger****")
+            multiPrinter("missing proj, creating one... ****danger****")
             projectName = "MyApp"
 
             // MIssing projecr gen// create a proj
@@ -178,7 +178,7 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
                 if success {
                     completion(true, [])
                 } else {
-                    print("createProject failed")
+                    multiPrinter("createProject failed")
 
                     completion(false, errors)
                 }
@@ -186,12 +186,12 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
         }
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName)"
         let filePath = "\(projectPath)/Sources/\(fileName)"
-        print("Adding file w/ path: \(filePath) w/ contents w length = \(fileContents.count) to p=\(projectPath)")
+        multiPrinter("Adding file w/ path: \(filePath) w/ contents w length = \(fileContents.count) to p=\(projectPath)")
         let added = createFile(projectPath: "\(projectPath).xcodeproj", projectName: projectName, targetName: projectName, filePath: filePath, fileContent: fileContents)
         completion(added, [])
 
     case .buildProject(name: let name):
-        print("buildProject project with name: \(name)")
+        multiPrinter("buildProject project with name: \(name)")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName).xcodeproj"
 
         buildProject(projectPath: projectPath, scheme: projectName) { success, errors in

@@ -17,7 +17,7 @@ func writeFile(fileContent: String, filePath: String) -> Bool {
             return true
         }
         catch {
-            print("Error writing file: \(error) @ p = \(filePath)")
+            multiPrinter("Error writing file: \(error) @ p = \(filePath)")
             return false
         }
     }
@@ -49,14 +49,14 @@ func createFile(projectPath: String, projectName: String, targetName: String, fi
         task.waitUntilExit()
 
         if task.terminationStatus != 0 {
-            print("Error: Failed to add file to the project.")
+            multiPrinter("Error: Failed to add file to the project.")
             return false
         } else {
-            print("File successfully added to the project.")
+            multiPrinter("File successfully added to the project.")
             return true
         }
     } catch {
-        print("Error: \(error.localizedDescription)")
+        multiPrinter("Error: \(error.localizedDescription)")
         return false
 
     }

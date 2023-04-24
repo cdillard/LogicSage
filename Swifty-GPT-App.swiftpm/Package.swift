@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "com.chrozzla.MyApp",
+    name: "com.chrisSwiftSage.MyApp",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "com.chrozzla.MyApp",
+            name: "com.chrisSwiftSage.MyApp",
             targets: ["AppModule"],
             bundleIdentifier: "com.chrozzla.MyApp",
             teamIdentifier: "72WEN2C47N",
@@ -34,9 +34,15 @@ let package = Package(
             ]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/duraidabdul/LocalConsole", .branch("main"))
+    ],
     targets: [
         .executableTarget(
             name: "AppModule",
+            dependencies: [
+                .product(name: "LocalConsole", package: "localconsole")
+            ],
             path: "."
         )
     ]

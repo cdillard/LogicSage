@@ -35,20 +35,20 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         request.httpBody = jsonData
 
         if currentRetry == 0 {
-            print("👨: \(prompt)")
+            multiPrinter("👨: \(prompt)")
         }
         else if isFix {
-            print("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
+            multiPrinter("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
 
         }
         else if manualPrompt {
-            print("👨: \(manualPrompt)")
+            multiPrinter("👨: \(manualPrompt)")
 
         }
         // Look into a better way to handle prompts..... 3
         else {
-            print("prompt=\(prompt)")
-            print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
+            multiPrinter("prompt=\(prompt)")
+            multiPrinter("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
         if !disableSpinner {
@@ -64,14 +64,14 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             }
 
             if let error = error {
-                print("Error occurred: \(error.localizedDescription)")
+                multiPrinter("Error occurred: \(error.localizedDescription)")
                 completion("Failed networking w/ error = \(error)", false)
                 return
             }
 
             guard let data  else {
                 completion("Failed networking w/ error = \(String(describing: error))", false)
-                return print("failed to laod data")
+                return multiPrinter("failed to laod data")
             }
 
             do {
@@ -83,13 +83,13 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
                     completion(content, true)
                 }
             } catch {
-                print("Error parsing JSON: \(error.localizedDescription)")
+                multiPrinter("Error parsing JSON: \(error.localizedDescription)")
                 completion("Failed parsing JSON w/ error = \(error)",false)
                 completion("", false)
 
             }
         }
-        print("🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑")
+        multiPrinter("🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑")
         task.resume()
     }
     catch {

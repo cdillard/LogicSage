@@ -18,38 +18,38 @@ let heightProp: CGFloat = 0.92
 func goToMovies() {
     if let path = Bundle.main.path(forResource: "IMG_5563", ofType: "PNG") {
         let ascii = imageToAscii(imagePath: path, width: movieWidth)
-        print(ascii)
+        multiPrinter(ascii)
     }
     else {
-        print("no movie 4 u....")
+        multiPrinter("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5564", ofType: "png") {
         let ascii = imageToAscii(imagePath: path, width: movieWidth)
-        print(ascii)
+        multiPrinter(ascii)
     }
     else {
-        print("no movie 4 u....")
+        multiPrinter("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5565", ofType: "png") {
         let ascii = imageToAscii(imagePath: path, width: movieWidth)
-        print(ascii)
+        multiPrinter(ascii)
     }
     else {
-        print("no movie 4 u....")
+        multiPrinter("no movie 4 u....")
     }
     if let path = Bundle.main.path(forResource: "IMG_5566", ofType: "png") {
         let ascii = imageToAscii(imagePath: path, width: movieWidth)
-        print(ascii)
+        multiPrinter(ascii)
     }
     else {
-        print("no movie 4 u....")
+        multiPrinter("no movie 4 u....")
     }
 }
 
 func imageToAscii(imagePath: String, width: Int) -> String {
     do {
         guard let image:PNG.Data.Rectangular = try .decompress(path: imagePath) else {
-            print("fail") ; return ""
+            multiPrinter("fail") ; return ""
 
         }
 

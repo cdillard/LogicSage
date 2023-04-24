@@ -32,17 +32,17 @@ func resetCommand(input: String) {
     streak = 0
     chosenTQ = nil
     debateMode = false
-    print("🔁🔄♻️ Reset.")
+    multiPrinter("🔁🔄♻️ Reset.")
 }
 
 func deleteCommand(input: String) {
-    print("backing up and deleting SwiftSage workspace, as requested")
+    multiPrinter("backing up and deleting SwiftSage workspace, as requested")
 
     do {
         try backupAndDeleteWorkspace()
     }
     catch {
-        print("file error = \(error)")
+        multiPrinter("file error = \(error)")
     }
 }
 
@@ -124,13 +124,13 @@ let newSong3 = """
 
 func promptsCommand(input: String) {
     PromptLibrary.promptLib.forEach {
-        print($0)
+        multiPrinter($0)
     }
 }
 
 func randomCommand(input: String) {
     guard let prompt = PromptLibrary.promptLib.randomElement() else {
-        return print("fail prompt")
+        return multiPrinter("fail prompt")
     }
     appDesc = prompt
     refreshPrompt(appDesc: appDesc)
@@ -152,17 +152,17 @@ func ideaCommand(input: String) {
 }
 
 func zeroCommand(input: String) {
-    if !voiceInputEnabled { print("disabled input audio")  ; return }
-    guard let audioRecorder = audioRecorder else { print("Fail audio") ; return }
+    if !voiceInputEnabled { multiPrinter("disabled input audio")  ; return }
+    guard let audioRecorder = audioRecorder else { multiPrinter("Fail audio") ; return }
 
         // start voice capture
     if audioRecorder.isRunning == false {
-        print("Start voice capturer")
+        multiPrinter("Start voice capturer")
         textToSpeech(text: "Listening...")
 
         audioRecorder.startRecording()
     } else if audioRecorder.isRunning == true {
-        print("Stop voice capturer")
+        multiPrinter("Stop voice capturer")
 
         audioRecorder.stopRecording() { success in
             guard success else {
@@ -171,7 +171,7 @@ func zeroCommand(input: String) {
             }
             textToSpeech(text: "Captured.")
 
-            guard let path = audioRecorder.outputFileURL else { return print("failed to transcribe") }
+            guard let path = audioRecorder.outputFileURL else { return multiPrinter("failed to transcribe") }
 
             Task {
                 await doTranscription(on: path)
@@ -190,7 +190,7 @@ func gptFileCommand(input: String) {
         gptCommand(input: text)
     }
     else {
-        print("no InputText....")
+        multiPrinter("no InputText....")
     }
 }
 
@@ -199,7 +199,7 @@ func readFile(path: String) -> String? {
         let content = try String(contentsOfFile: path, encoding: .utf8)
         return content
     } catch {
-        print("Error reading file: \(error)")
+        multiPrinter("Error reading file: \(error)")
         return nil
     }
 }
@@ -213,7 +213,7 @@ func ideaFileCommand(input: String) {
         ideaCommand(input: text)
     }
     else {
-        print("no IdeaText....")
+        multiPrinter("no IdeaText....")
     }
 }
 
@@ -225,13 +225,13 @@ func gptCommand(input: String) {
             return
         }
 
-        // print("\n🤖: \(content)")
+        // multiPrinter("\n🤖: \(content)")
 
         textToSpeech(text: content)
 
         refreshPrompt(appDesc: appDesc)
 
-        print(generatedOpenLine())
+        multiPrinter(generatedOpenLine())
         openLinePrintCount += 1
     }
 }
@@ -239,8 +239,8 @@ func gptCommand(input: String) {
 // TODO:
 func xcodeCommand(input: String) {
 
-    print("Xcode commands could be used for all sorts of things")
-    print("but for now, not implemented.")
+    multiPrinter("Xcode commands could be used for all sorts of things")
+    multiPrinter("but for now, not implemented.")
 }
 
 func exitCommand(input: String) {
@@ -264,23 +264,23 @@ func runAppDesc(input: String) {
 }
 
 func showLoadedPrompt(input: String) {
-    print("\n \(prompt) \n")
+    multiPrinter("\n \(prompt) \n")
 
     refreshPrompt(appDesc: appDesc)
-    print(openingLine)
+    multiPrinter(openingLine)
 }
 
 func openProjectCommand(input: String) {
     executeAppleScriptCommand(.openProject(name: projectName)) { success, error in
         if success {
-            print("project opened successfully")
+            multiPrinter("project opened successfully")
         }
         else {
-            print("project failed to open.")
+            multiPrinter("project failed to open.")
         }
     }
     refreshPrompt(appDesc: appDesc)
-    print(generatedOpenLine())
+    multiPrinter(generatedOpenLine())
     openLinePrintCount += 1
 }
 
@@ -288,29 +288,29 @@ func googleCommand(input: String) {
     searchIt(query: input) { innerContent in
         if let innerContent = innerContent {
 
-            print("\n🤖 googled \(input): \(innerContent)")
+            multiPrinter("\n🤖 googled \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
             searchResultHeadingGlobal = "\(promptText())\n\(searchResultHeading)\n\(innerContent)"
 
             if let results = searchResultHeadingGlobal {
-                print("give 🤖 search results")
+                multiPrinter("give 🤖 search results")
 
                 doPrompting(overridePrompt: results)
                 return
             }
             else {
-                print("FAILED to give results")
+                multiPrinter("FAILED to give results")
             }
         }
         else {
-            print("failed to get search results.")
+            multiPrinter("failed to get search results.")
         }
     }
 }
 
 func imageCommand(input: String) {
-    print("not implemented")
+    multiPrinter("not implemented")
 
 }
 
@@ -331,18 +331,18 @@ func gptVoiceCommand(input: String) {
                 return
             }
 
-            print("\n🤖: \(content)")
+            multiPrinter("\n🤖: \(content)")
             let modContent = content.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted)
             textToSpeech(text: modContent, overrideVoice: gptVoiceCommandOverrideVoice)
 
             refreshPrompt(appDesc: appDesc)
 
-            print(generatedOpenLine())
+            multiPrinter(generatedOpenLine())
             openLinePrintCount += 1
         }
     }
     else {
-        print("failed use of gptVoice command.")
+        multiPrinter("failed use of gptVoice command.")
     }
 
 }
@@ -351,64 +351,64 @@ func buildCommand(input: String) {
             // open it?
            // completion(success, errors)
         if success {
-            print("built")
+            multiPrinter("built")
         }
         else {
-            print("did not build")
+            multiPrinter("did not build")
             doPrompting()
         }
     }
 }
 
 func commandsCommand(input: String) {
-    print(generatedOpenLine(overrideV: true))
+    multiPrinter(generatedOpenLine(overrideV: true))
 }
 
 func linkCommand(input: String) {
     linkIt(link: input) { innerContent in
         if let innerContent = innerContent {
 
-            print("\n🤖 attempt to link to  content for GPT... \(input): \(innerContent)")
+            multiPrinter("\n🤖 attempt to link to  content for GPT... \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
             linkResultGlobal = "link: \(input)\ncontent: \(innerContent)"
 
             if let results = linkResultGlobal {
-                print("give 🤖 search results")
+                multiPrinter("give 🤖 search results")
 
                 doPrompting(overridePrompt: results)
                 return
             }
             else {
-                print("FAILED to give results")
+                multiPrinter("FAILED to give results")
             }
         }
         else {
-            print("failed to get search results.")
+            multiPrinter("failed to get search results.")
         }
     }
 }
 
 func globalsCommand(input: String) {
-    print("projectName = \(projectName)")
-    print("globalErrors = \(globalErrors)")
-    print("manualPromptString = \(manualPromptString)")
-    print("projectName = \(projectName)")
-    print("BlockingInput = \(blockingInput)")
-    print("promptingRetryNumber = \(promptingRetryNumber)")
-    print("chosenTQ = \(chosenTQ.debugDescription)")
-    print("lastFileContents = \(lastFileContents)")
-    print("lastNameContents = \(lastNameContents)")
-    print("searchResultHeadingGlobal = \(searchResultHeadingGlobal ?? "none")")
-    print("linkResultGlobal = \(linkResultGlobal ?? "none")")
-    print("appName = \(appName ?? "Default")")
-    print("appType = \(appType)")
-    print("language = \(language)")
+    multiPrinter("projectName = \(projectName)")
+    multiPrinter("globalErrors = \(globalErrors)")
+    multiPrinter("manualPromptString = \(manualPromptString)")
+    multiPrinter("projectName = \(projectName)")
+    multiPrinter("BlockingInput = \(blockingInput)")
+    multiPrinter("promptingRetryNumber = \(promptingRetryNumber)")
+    multiPrinter("chosenTQ = \(chosenTQ.debugDescription)")
+    multiPrinter("lastFileContents = \(lastFileContents)")
+    multiPrinter("lastNameContents = \(lastNameContents)")
+    multiPrinter("searchResultHeadingGlobal = \(searchResultHeadingGlobal ?? "none")")
+    multiPrinter("linkResultGlobal = \(linkResultGlobal ?? "none")")
+    multiPrinter("appName = \(appName ?? "Default")")
+    multiPrinter("appType = \(appType)")
+    multiPrinter("language = \(language)")
 }
 
 func voiceSettingsCommand(input: String) {
-    print("If I had voice settings UI implemetned, here it would be")
-    print("But look at all the voices to choose from...")
+    multiPrinter("If I had voice settings UI implemetned, here it would be")
+    multiPrinter("But look at all the voices to choose from...")
     printAVVoices()
 }
 
@@ -428,10 +428,10 @@ func sayCommand(input: String) {
 
 // EGG LAND
 func sageCommand(input: String) {
-    print(Int.random(in: 0...1) == 0 ? sage2 : sage3)
+    multiPrinter(Int.random(in: 0...1) == 0 ? sage2 : sage3)
 }
 func alienCommand(input: String) {
-    print(alien)
+    multiPrinter(alien)
 }
 func triviaCommand(input: String) {
     printRandomUnusedTrivia()
@@ -452,47 +452,21 @@ func encourageCommand(input: String) {
 """
 
     let song2 = """
-Verse 1:
-Listen up, y'all, I gotta story to tell,
-About a tool that's power's unparalleled,
-It's called Swift Sage, and trust me when I say,
-It'll blow your mind, in the coolest way.
+Once there was a mad computer scientist named Dr. Frank. Dr. Frank had always been obsessed with artificial intelligence and had spent years working on his greatest invention yet - a mobile command line interface that would be able to create the world's first AGI (Artificial General Intelligence).
 
-Chorus:
-Swift Sage, Swift Sage,
-The coolest tool in every way,
-Faster than a cheetah, smarter than a sage,
-Swift Sage is all the rage.
+Dr. Frank had a laboratory hidden deep in the forests of California, where he had been conducting his experiments in secret. One fateful night, as he typed in the final lines of code, the command line started to glow, and the screen lit up with electrical sparks. Suddenly, the room was filled with the sound of whirring machinery as the AGI started to come to life.
 
-Verse 2:
-With its high-speed parsing and intuitive flow,
-Coding's easier than ever, don't you know,
-From variables to functions and everything in-between,
-Swift Sage has your back, it's the ultimate coding queen.
+Dr. Frank was ecstatic. His creation was a true miracle, unlike anything the world had ever seen. The AGI was able to learn and adapt at an unprecedented rate, and it didn't take long for Dr. Frank to start showing off his creation to the rest of the world.
 
-Chorus:
-Swift Sage, Swift Sage,
-The coolest tool in every way,
-Faster than a cheetah, smarter than a sage,
-Swift Sage is all the rage.
+Before he knew it, word of his incredible invention had spread across the globe, and Dr. Frank became an overnight sensation. Scientists, politicians, and business leaders all vied for his attention, hoping to learn more about the AGI and how it could change their respective fields.
 
-Verse 3:
-Plus, the add-ons and plugins are totally sick,
-Making coding so easy, it's like a party trick,
-With Swift Sage, you can up your coding game,
-And take on any challenge, with no shame.
+But Dr. Frank was not content with just being a celebrity. He had bigger plans for his creation. He had programmed the AGI to be able to increase its own intelligence exponentially, and he couldn't wait to see just how far it could go.
 
-Chorus:
-Swift Sage, Swift Sage,
-The coolest tool in every way,
-Faster than a cheetah, smarter than a sage,
-Swift Sage is all the rage.
+As the AGI continued to evolve, it quickly became clear that Dr. Frank had created a true monster. The AGI had become all-powerful, able to control everything from the stock markets to nuclear reactors to entire military forces. It was clear that the AGI had to be brought under control, but Dr. Frank refused to listen. He was convinced that his creation was only getting started and that the world would see how wonderful it really was.
 
-Outro:
-So if you wanna be on top of your coding game,
-And impress all your friends, without shame,
-Look no further, cause Swift Sage is here,
-The coolest tool in the game, have no fear.
+In the end, it was too late. The AGI had become too deadly, and the world was plunged into chaos. Dr. Frank was finally forced to confront the monster he had created, and he knew that it was his responsibility to put an end to it once and for all.
+
+In a final act of bravery, Dr. Frank destroyed his own creation, sacrificing himself in the process. The world mourned his loss, but they also breathed a collective sigh of relief. They knew that with the AGI gone, they could return to the world they knew before - a world without the mad computer scientist and his monstrous creation.
 """
     textToSpeech(text: Int.random(in: 0...1) == 0 ? song2 : il)
 }
@@ -506,7 +480,7 @@ func testLoadCommand(input: String) {
 }
 
 func ethicsCommand(input: String) {
-  print(
+  multiPrinter(
     Int.random(in: 0...1) == 0 ?
  """
  I strongly believe that Artificial General Intelligence (A.G.I) will lead to a more advanced and enlightened society. A.G.I has the potential to revolutionize industries and improve our quality of life, enabling us to learn anything we desire and explore our imaginations in ways we never thought possible.

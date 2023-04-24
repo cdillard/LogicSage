@@ -1,0 +1,126 @@
+CereProc(TM) CereVoice(TM) Speech Synthesis SDK
+
+CereProc Ltd
+Codebase
+3 Lady Lawson Street
+Edinburgh
+EH3 9DR
+UK
+
+http://www.cereproc.com
+
+Copyright (c) 2013-2018 CereProc Ltd.
+
+See the accompanying LICENSE file for terms of use.
+
+================================================================================
+
+ CereVoice Engine SDK Quick Start
+
+================================================================================
+
+This is the quick start guide for the Engine SDK, see the
+'CereVoiceSdkGuide.pdf' file for more extensive documentation.
+
+ Prerequisites
+^^^^^^^^^^^^^^^
+
+First, ensure that at least one voice file (eg
+'cerevoice_heather_5.0.0_48k.voice') has been downloaded, and that the
+license key for the voice has been saved to a file.
+
+If you do not have access to a voice or a license key, please use the
+support request link below to contact CereProc:
+http://www.cereproc.com/support/support_request
+
+
+ Generating TTS Output
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+To quickly generate some synthetic speech, use the applications in the
+'examples/basictts' directory.
+
+Synthesise an XML file with 'basictts', output audio is played:
+basictts speaker.voice license.lic myinput.xml
+
+Synthesise an XML file with 'basictts', output audio is saved to disk:
+basictts speaker.voice -o myoutput.wav license.lic myinput.xml
+
+If the audio playback libraries are not available, use the 'txt2wav'
+example application:
+txt2wav speaker.voice license.lic myinput.xml myoutput.xml
+
+ Low Latency TTS Output
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The 'tts_callback' program processes input files incrementally, and
+outputs audio one phrase at a time.  This allows for low latency
+processing of large documents.
+
+Synthesise with audio playback, playback begins before the large
+document is fully processed:
+tts_callback speaker.voice license.lic largefile.xml
+
+ Python Examples
+^^^^^^^^^^^^^^^^^
+
+Python examples can be found in 'examples/python', ensure that the
+'cerevoice_eng/pylib' directory is on the Python path.  For audio
+playback with 'tts_callback.py', ensure that the path also contains
+'cerevoice_aud/pylib'.
+
+ React Native Example Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To run the TtsExample app, make sure the licence and voice files are
+placed in 'android/app/src/main/assets/' and 'ios/'. Also for ios these
+files and 'app.config.json' should be copied as bundle resources. Make
+sure your 'app.config.json' files has licence and voice file names. The
+'app.config.json' files can be found in main directory and in android
+assets directory.
+
+The application uses 'react-native-cerevoice-eng' module for synthesis.
+It also uses 'react-native-cerevoice-play' module for playing the
+synthesised output. This module is not tested and only acts as an
+example. It is highly recommended to not use this module.
+
+To use 'react-native-cerevoice-eng' module in your application copy 
+the built files from 'cerevoice_eng/rnlib' to 'react-native-cerevoice-eng'
+directory in your desired path. Before installing add 
+'"react-native-cerevoice-eng": "file:/path/to/react-native-cerevoice-eng"'
+to your package.json file. Then run
+'npm install react-native-cerevoice-eng; react-native link react-native-cerevoice-eng'
+to install and link the module.
+
+================================================================================
+
+ Application Integration
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All of the example applications are supplied with C source code in the
+files 'basictts.c', 'txt2wav.c' and 'tts_callback.c'.  This code can
+be used as the basis of an application integration.
+
+The example application makefiles ('Makefile.cygwin', Makefile.linux'
+and 'Makefile.osx') can be used to build the applications, and as a
+reference for the required library dependencies.  The 'LIBS' variable
+contains TTS library dependencies. The 'AUDIOLIBS' variable contains
+the audio playback dependencies.  Some applications will not need to
+use the audio library functionality.
+
+Full documentation for the 'cerevoice_eng.h' and
+'cerevoice_eng_simp.h' header files can be found by loading:
+docs/cerevoice_eng/index.html
+
+Full documentation for the 'cerevoice_aud.h' header file can be found
+by loading:
+docs/cerevoice_aud/index.html
+
+The LICENSE_3RDPARTY information must be supplied with any
+applications based on this SDK.
+
+================================================================================
+
+See the 'CereVoiceSdkGuide.pdf' file for more extensive documentation.
+
+================================================================================

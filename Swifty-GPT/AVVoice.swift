@@ -43,7 +43,7 @@ let avVoices = [
 func  aiVoiceArray() -> [AVSpeechSynthesisVoice]  {
     var ret = [AVSpeechSynthesisVoice]()
     avVoices.forEach {
-        guard let v = AVSpeechSynthesisVoice(identifier: $0) else { print("fail voice") ; return}
+        guard let v = AVSpeechSynthesisVoice(identifier: $0) else { multiPrinter("fail voice") ; return}
 
         ret.append(v)
 

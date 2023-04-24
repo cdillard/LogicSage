@@ -57,15 +57,15 @@ func search(query: String, apiKey: String, searchEngineId: String, completion: @
 
 
 func searchIt(query: String, completion: @escaping (String?) -> Void) {
-    print("Searching it... \(query)")
+    multiPrinter("Searching it... \(query)")
     search(query: query, apiKey: GOOGLE_KEY, searchEngineId: GOOGLE_ID) { result in
         switch result {
         case .success(let searchItems):
             for item in searchItems {
-                print("Title: \(item.title)")
-                print("Link: \(item.link)")
-                print("Snippet: \(item.snippet)")
-                print("\n")
+                multiPrinter("Title: \(item.title)")
+                multiPrinter("Link: \(item.link)")
+                multiPrinter("Snippet: \(item.snippet)")
+                multiPrinter("\n")
             }
 
             func searchItemsToJSONString(_ searchItems: [SearchItem]) -> String? {
@@ -78,7 +78,7 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
                         return jsonString
                     }
                 } catch {
-                    print("Error encoding SearchItem array to JSON: \(error.localizedDescription)")
+                    multiPrinter("Error encoding SearchItem array to JSON: \(error.localizedDescription)")
                 }
 
                 return nil
@@ -86,7 +86,7 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
 
             completion(searchItemsToJSONString(searchItems))
         case .failure(let error):
-            print("Error: \(error.localizedDescription)")
+            multiPrinter("Error: \(error.localizedDescription)")
             completion(nil)
         }
     }

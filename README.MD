@@ -17,6 +17,10 @@ Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, M
 DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY. THIS IS JUST AN EXPERIMENT.
 
 ## News, Changelog
+----
+04-24-2023
+
+iOS Swift Sage??? Whattttt??? Yep.
 
 ----
 04-23-2023
@@ -34,6 +38,29 @@ AGI is imminent. (NOT THIS PROJECT LOL) We might get some funny apps tho...
 1. Clone the repository: `git clone https://github.com/username/Swifty-GPT.git`
 2. Navigate to the project directory: `cd Swifty-GPT`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
+
+
+---
+## MAKING YOUR VOICES THE BEST THEY VAN BE  (Not needed)
+
+-MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
+
+WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
+```
+// What YOU don't like the goofy robotic voices built in to Mac OS????
+// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
+```
+let cereprocVoicesEnabled = false
+
+BUY CEREPROC DEVELOPER ACCESS
+
+FIND/BUY/INSTALL THE VOICE YOU FANCY.
+https://www.cereproc.com
+
+Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
+Turn on `let cereprocVoicesEnabled = true`
+
+
 
 ## Installation
 ### Dependencies
@@ -54,6 +81,8 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 1. Install XcodeGen: `brew install xcodegen`
 2. Install Xcodeproj: `gem install xcodeproj`
 
+
+## SET API KEYS
 SET API KEYS: You'll need to track down the following keys to fully experience SwiftSage.
 
 NOTE: NYTIMES,PIXABAY, and GOOGLE are not required (yet) but be sure that the feat flags for those features are disabled in your Config for now if not using please.
@@ -76,6 +105,25 @@ NOTE: NYTIMES,PIXABAY, and GOOGLE are not required (yet) but be sure that the fe
 Check Config.swift for the config.
 
 You can turn on asciiAnimations for fun or turn them off for fun. Your choice.
+
+## SWIFT SAGE IOS INSTRUCTIONS: (Not needed)
+
+UPDATE the feat flag
+`let swiftSageIOSEnabled = true`
+
+If u have issues: `rm -rf WebSocketServer/.build`
+
+TURN OFF YOUR FIREWALLS ON ALL USED DEVICES
+
+1. Install Vapor: `brew install vapor`
+
+```
+cd  WebSocketServer
+vapor build
+vapor run
+```
+## MAC SAGE INSTRUCTIONS:
+TBD
 
 ### OCR Models
 Download the necessary OCR models and place them in the corresponding directories:
@@ -144,28 +192,32 @@ No names found... failing..
 ```
 If this happens just try again and it _usually_ clears right up.
 
-### Stopping Robot Voices
-If you ever have robot voices getting away from you, run `killall say` in the terminal to stop them.
-
 ## Features
 Swifty-GPT offers a range of features to make software development faster and more efficient:
+- iOS REMOTE FOR SWIFT-SAGE [IN-PROGRESS]
+	- It's freaking cool!!!!
 - Code analysis and optimization
-- Error detection and correction
+- Error detection and correction [IN-PROGRESS]
 - Voice-activated GPT integration
-- Real-time code suggestions
-- Powerful debugging tool
+- Real-time code suggestions [IN-PROGRESS]
+- Powerful debugging tool [IN-PROGRESS]
 - Integration with Apple's built-in text-to-speech software
-- Personalized memory storage using a consciousness module
+- Personalized memory storage using a consciousness module [IN-PROGRESS]
 
 ## Credits
 - [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
-- [SwiftyTessarect](https://github.com/SwiftyTesseract/SwiftyTesseract)
+- [SwiftyTesseract](https://github.com/SwiftyTesseract/SwiftyTesseract)
 - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com)
 - [AudioKit](https://github.com/AudioKit/AudioKit)
+- [SwiftSoup](https://github.com/scinfu/SwiftSoup)
+- [SwiftNLC](https://github.com/JacopoMangiavacchi/SwiftNLC)
+- [SourceKitten](https://github.com/jpsim/SourceKitten)
+- [MultiPeerKit](https://github.com/insidegui/MultiPeerKit)
+- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
+- [Starscream]
+- [Vapor]
 
-- [SwiftSoup]
-- [SwiftNLC]
-- [SourceKitten]
+Thanks to Mike Bruin for keeping the Plist safe.
 
 ## Contact
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)

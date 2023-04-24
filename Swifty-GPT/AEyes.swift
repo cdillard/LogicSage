@@ -43,20 +43,20 @@ func startEyes() {
 
 
         let output = runAppleScript("app_screenshot", withParameter: title)
-        print("Screenshot saved at:", output)
+        multiPrinter("Screenshot saved at:", output)
 
 
 
         if output.hasPrefix("Error") {
-            print("Error occurred: \(output)")
+            multiPrinter("Error occurred: \(output)")
         } else if output == "Window not found." {
-            print("Window with title '\(title)' not found.")
+            multiPrinter("Window with title '\(title)' not found.")
         } else {
             let filePath = output
-            print("Screenshot saved at:", filePath)
+            multiPrinter("Screenshot saved at:", filePath)
 
             if let cgImage = filePathToCGImage(filePath) {
-                print("Successfully converted file path to CGImage.")
+                multiPrinter("Successfully converted file path to CGImage.")
                 // Do something with the CGImage
 
                 let customData = CustomBundle()
@@ -66,20 +66,20 @@ func startEyes() {
                 var extractedTexts: [String] = []
 
 
-                guard let pngCont = cgImage.png else { return print("fail")}
+                guard let pngCont = cgImage.png else { return multiPrinter("fail")}
 
                 let result = swiftyTesseract.performOCR(on:pngCont)
                 switch result {
                 case .success(let extractedText):
                     extractedTexts.append(extractedText)
-                    print("extracted text = \(extractedText)")
+                    multiPrinter("extracted text = \(extractedText)")
                 case .failure(let error):
-                    print("Error performing OCR: \(error.localizedDescription)")
+                    multiPrinter("Error performing OCR: \(error.localizedDescription)")
                 }
 
 
             } else {
-                print("Failed to convert file path to CGImage.")
+                multiPrinter("Failed to convert file path to CGImage.")
             }
         }
 
@@ -137,7 +137,7 @@ func runAppleScript(_ scriptName: String, withParameter parameter: String) -> St
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
 
     guard let stringData = String(data: data, encoding: .utf8) else {
-        print("fail") ; return ""
+        multiPrinter("fail") ; return ""
 
     }
 

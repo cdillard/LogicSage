@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let statusBar = NSStatusBar.system
         statusItem = statusBar.statusItem(withLength: NSStatusItem.squareLength)
 
-        let coloredImage = createColoredImage(color: .green, size: NSSize(width: 18, height: 18))
+        let coloredImage = createColoredImage(size: NSSize(width: 18, height: 18))
         statusItem?.button?.image = coloredImage
 
         statusItem?.button?.title = "."
@@ -83,37 +83,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Perform any additional actions based on the state of the switch
     }
 
-    func createColoredImage(color: NSColor, size: NSSize) -> NSImage {
+    func createColoredImage(size: NSSize) -> NSImage {
         let image = NSImage(size: size)
         image.lockFocus()
 
-        // Set the color
-        color.setStroke()
+        // Define green colors
+        let lightGreen = NSColor(calibratedRed: 0.5, green: 0.9, blue: 0.5, alpha: 1.0)
+        let darkGreen = NSColor(calibratedRed: 0.2, green: 0.6, blue: 0.2, alpha: 1.0)
 
-        // Create the S shape using NSBezierPath
-        let sPath = NSBezierPath()
-        sPath.lineWidth = 0.2 // Adjust the line width as needed
+        // Create the bird body shape
+        let bodyPath = NSBezierPath()
+        bodyPath.lineWidth = 2.0
+        let bodyRect = NSRect(x: size.width * 0.2, y: size.height * 0.2, width: size.width * 0.6, height: size.height * 0.6)
+        bodyPath.appendOval(in: bodyRect)
+        let bodyGradient = NSGradient(starting: lightGreen, ending: darkGreen)
+        bodyGradient?.draw(in: bodyPath, angle: -45.0)
 
-        // Define points for the S shape
-        let p1 = NSPoint(x: size.width * 0.2, y: size.height * 0.8)
-        let p2 = NSPoint(x: size.width * 0.8, y: size.height * 0.8)
-        let p3 = NSPoint(x: size.width * 0.2, y: size.height * 0.5)
-        let p4 = NSPoint(x: size.width * 0.8, y: size.height * 0.5)
-        let p5 = NSPoint(x: size.width * 0.2, y: size.height * 0.2)
-        let p6 = NSPoint(x: size.width * 0.8, y: size.height * 0.2)
+        // Create the bird head shape
+        let headPath = NSBezierPath()
+        headPath.lineWidth = 2.0
+        let headRect = NSRect(x: size.width * 0.6, y: size.height * 0.57, width: size.width * 0.23, height: size.height * 0.3)
+        headPath.appendOval(in: headRect)
+        let headGradient = NSGradient(starting: lightGreen, ending: darkGreen)
+        headGradient?.draw(in: headPath, angle: -45.0)
 
-        // Draw the S shape
-        sPath.move(to: p1)
-        sPath.curve(to: p3, controlPoint1: p2, controlPoint2: p2)
-        sPath.curve(to: p5, controlPoint1: p4, controlPoint2: p4)
-        sPath.line(to: p6)
-
-        // Stroke the path
-        sPath.stroke()
+        // Create the bird beak shape
+        let beakPath = NSBezierPath()
+        beakPath.lineWidth = 1.0
+        let beakTriangle = [
+            NSPoint(x: size.width * 0.9, y: size.height * 0.65),
+            NSPoint(x: size.width * 0.95, y: size.height * 0.6),
+            NSPoint(x: size.width * 0.9, y: size.height * 0.55)
+        ]
+        beakPath.move(to: beakTriangle[0])
+        beakPath.line(to: beakTriangle[1])
+        beakPath.line(to: beakTriangle[2])
+        darkGreen.setFill()
+        beakPath.fill()
 
         image.unlockFocus()
         return image
     }
+
 }
 
 autoreleasepool {

@@ -16,7 +16,7 @@ func startPurring(filePath: String, cursorOffset: Int) {
     //    // Prepare a code completion request for the SourceKit service
 
     guard let fileContent = try? String(contentsOfFile: filePath, encoding: .utf8) else {
-        print("Error: Unable to read the Swift file")
+        multiPrinter("Error: Unable to read the Swift file")
         return
     }
 
@@ -25,11 +25,11 @@ func startPurring(filePath: String, cursorOffset: Int) {
         let response = try request.send()
         for item in response {
 
-            print(item)
+            multiPrinter(item)
 
         }
     } catch {
-        print("Error: Unable to get completion suggestions")
+        multiPrinter("Error: Unable to get completion suggestions")
     }
 
 }

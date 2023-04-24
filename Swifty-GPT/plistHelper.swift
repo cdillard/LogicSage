@@ -17,7 +17,7 @@ class plistHelper {
                     return dict[key]
                 }
             } catch {
-                print(error)
+                multiPrinter(error)
             }
         }
         return nil

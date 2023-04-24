@@ -16,9 +16,18 @@ import AppKit
 
 // Main function to run the middleware
 func main() {
+    // Try to preload voice synth
+    textToSpeech(text: "  ", overrideVoice: defaultVoice, skipLog: true)
 
-    print("SwiftSage is loading...")
+
+    // Tesitn when best time to initialize websock log
+    UserDefaults.resetStandardUserDefaults()
+    print(LocalPeerConsole.webSocketClient.websocket)
+
+    multiPrinter("SwiftSage is loading...")
+
     startRandomSpinner()
+
     // TODOD:
     // check for whisper files
     // check for tessarect training files
@@ -36,7 +45,7 @@ func main() {
         try backupAndDeleteWorkspace()
     }
     catch {
-        print("file error = \(error)")
+        multiPrinter("file error = \(error)")
     }
 
     // Reset the global stuff
@@ -72,36 +81,39 @@ func main() {
     if voiceInputEnabled {
         requestMicrophoneAccess { granted in
             if granted {
-                print("Microphone access granted.")
+                multiPrinter("Microphone access granted.")
                 // Start audio capture or other operations that require microphone access.
             } else {
-                print("Microphone access denied.")
+                multiPrinter("Microphone access denied.")
                 voiceInputEnabled = false
                 // Handle the case where microphone access is denied.
             }
         }
     }
 
-    stopRandomSpinner()
+    DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 
-    if interactiveMode {
+        stopRandomSpinner()
 
-        print(generatedOpenLine())
-        openLinePrintCount += 1
-        refreshPrompt(appDesc: appDesc)
-    }
+        if interactiveMode {
 
-    if triviaEnabledSwift || triviaEnabledObjc {
-        loadTriviaSystem()
-    }
+            multiPrinter(generatedOpenLine())
+            openLinePrintCount += 1
+            refreshPrompt(appDesc: appDesc)
+        }
 
-    if enableAEyes {
-        startEyes()
-    }
+        if triviaEnabledSwift || triviaEnabledObjc {
+            loadTriviaSystem()
+        }
 
-    // Roight time?
-    if enableMacSage {
-        runMacSage()
+        if enableAEyes {
+            startEyes()
+        }
+
+        // Roight time?
+        if enableMacSage {
+            runMacSage()
+        }
     }
 
     // END AUDIO PROCESSING
@@ -117,41 +129,41 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
 
         // Generations
-        print("Retry another generation...?")
+        multiPrinter("Retry another generation...?")
 
         if response != nil, let response {
 
-            print("Response non nil, another generation...")
+            multiPrinter("Response non nil, another generation...")
 
             parseAndExecuteGPTOutput(response, errors) { success, errors in
                 if success {
-                    print("Parsed and executed code successfully. Opening project...")
+                    multiPrinter("Parsed and executed code successfully. Opening project...")
 
                     textToSpeech(text: "Opening project...")
 
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {
-                            print("opened successfully")
+                            multiPrinter("opened successfully")
                         }
                         else {
                             textToSpeech(text: "Failed to open project.")
 
-                            print("failed to open")
+                            multiPrinter("failed to open")
                         }
                     }
                 }
                 else {
 
-                    print(afterBuildFailedLine())
+                    multiPrinter(afterBuildFailedLine())
 
                     if promptingRetryNumber >= retryLimit {
-                        print("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
+                        multiPrinter("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
 
                         do {
                             try backupAndDeleteWorkspace()
                         }
                         catch {
-                            print("file error = \(error)")
+                            multiPrinter("file error = \(error)")
                         }
 
                         sema.signal()
@@ -166,7 +178,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                 }
             }
         } else {
-            print("Failed to generate compilable code within the retry limit.")
+            multiPrinter("Failed to generate compilable code within the retry limit.")
         }
     }
 }
@@ -207,7 +219,7 @@ func createIdeaPrompt(command: String) -> String {
 
 func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, currentRetry: Int, errors: [String] = [], completion: @escaping (String?) -> Void) {
     if currentRetry >= retryLimit {
-        print("Retry limit reached, stopping the process.")
+        multiPrinter("Retry limit reached, stopping the process.")
         completion(nil)
         return
     }
@@ -217,7 +229,7 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
             completion(response)
         } else {
 
-            print("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
+            multiPrinter("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
             generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)
         }
     }

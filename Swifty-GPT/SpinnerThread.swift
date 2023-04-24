@@ -43,7 +43,7 @@ class LoadingSpinner {
             while !Thread.current.isCancelled {
                 let columnIndex = self.index % self.columnCount
                 _ = String(repeating: " ", count: columnIndex)
-                print("\(self.spinner[self.index % self.spinner.count])", terminator: "")
+                multiPrinter("\(self.spinner[self.index % self.spinner.count])", terminator: "")
                 fflush(stdout)
                 self.index = (self.index + 1) % (self.spinner.count * self.columnCount)
                 Thread.sleep(forTimeInterval: 0.1)

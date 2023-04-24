@@ -1,0 +1,700 @@
+================================================================================
+
+LICENSES FOR EXTERNAL PACKAGES USED BY CEREPROC
+
+================================================================================
+
+The Speex library is included under the terms of the license below:
+
+(C) 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+    * Neither the name of the Xiph.org Foundation nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the foundation
+or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+
+Homepage: http://www.speex.org.
+
+================================================================================
+
+The Celt library is included under the terms of the license below:
+
+Copyright 2001-2009 Jean-Marc Valin, Timothy B. Terriberry,
+                    CSIRO, and other contributors
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+================================================================================
+
+This source code is part of the BIGDIGITS multiple-precision
+arithmetic library Version 2.1 originally written by David Ireland,
+copyright (c) 2001-6 D.I. Management Services Pty Limited, all rights
+reserved. You are permitted to use compiled versions of this code at
+no charge as part of your own executable files and to distribute
+unlimited copies of such executable files for any purposes including
+commercial ones provided you agree to these terms and conditions and
+keep the copyright notices intact in the source code and you ensure
+that the following characters remain in any object or executable files
+you distribute AND clearly in any accompanying documentation:
+
+"Contains BIGDIGITS multiple-precision arithmetic code originally
+written by David Ireland, copyright (c) 2001-6 by D.I. Management
+Services Pty Limited <www.di-mgt.com.au>, and is used with
+permission."
+
+David Ireland and DI Management Services Pty Limited make no
+representations concerning either the merchantability of this software
+or the suitability of this software for any particular purpose. It is
+provided "as is" without express or implied warranty of any kind. Our
+liability will be limited exclusively to the refund of the money you
+paid us for the software, namely nothing. By using the software you
+expressly agree to such a waiver. If you do not agree to the terms, do
+not use the software.
+
+Please forward any comments and bug reports to <www.di-mgt.com.au>.
+The latest version of the source code can be downloaded from
+<www.di-mgt.com.au/bigdigits.html>.
+
+Last updated: 19 August 2006.
+
+================================================================================
+
+PCRE is provided under the terms of the license below, see
+http://sourceforge.net/projects/pcre/ for more information:
+
+THE BASIC LIBRARY FUNCTIONS
+---------------------------
+
+Written by:       Philip Hazel
+Email local part: ph10
+Email domain:     cam.ac.uk
+
+University of Cambridge Computing Service,
+Cambridge, England.
+
+Copyright (c) 1997-2008 University of Cambridge
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the University of Cambridge nor the name of Google
+      Inc. nor the names of their contributors may be used to endorse or
+      promote products derived from this software without specific prior
+      written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+================================================================================
+
+PortAudio is provided under the terms of the license below, see
+http://www.portaudio.com/ for more information:
+
+Copyright (c) 1999-2002 Ross Bencina and Phil Burk
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+================================================================================
+
+Kiss FFT is provided under the terms of the license below, see
+http://kissfft.sourceforge.net/ for more information:
+
+Copyright (c) 2003-2010 Mark Borgerding
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+    * Neither the author nor the names of any contributors may be used
+      to endorse or promote products derived from this software
+      without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+================================================================================
+
+The libxml2, zlib, and mingwm libraries may also be provided.  These
+libaries do not require their copyright notices to be reproduced in
+full with binary releases.
+
+================================================================================
+
+Freeverb - Free, studio-quality reverb SOURCE CODE in the public domain
+
+Written by Jezar at Dreampoint - http://www.dreampoint.co.uk
+
+This software and source code is given away for free, without any warranties
+of any kind. It has been given away to the internet community as a free gift,
+so please treat it in the same spirit.
+
+================================================================================
+
+simd_math_prims License
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Jacques-Henri Jourdan <jourgun@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+
+Opus Licensing
+
+(= Implementation =)
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+- Neither the name of Internet Society, IETF or IETF Trust, nor the
+names of specific contributors, may be used to endorse or promote
+products derived from this software without specific prior written
+permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+(= Patents =)
+
+A. Xiph.org patent terms
+
+License Grant. Xiph.Org Foundation (“Xiph”) hereby grants to you a
+perpetual, worldwide, non-exclusive, no-charge, royalty-free,
+irrevocable (except as stated in this license) license under Licensed
+Patents to make, have made, use, offer to sell, sell, import,
+transfer, and otherwise run, modify (in a way that still complies with
+the Specification), and reproduce any Implementation.
+
+Definitions. Specification means, and includes the following, both
+individually and collectively, (a) any standard specification of the
+Opus codec adopted by the IETF Codec Working Group (“Standard”) and
+(b) any reference implementation (each, a “Reference Implementation”)
+published by the IETF Codec Working Group in the request for comments
+(“RFC”) issued by the IETF for the Specification draft for which this
+License is issued, or any RFC that is issued as an update or new
+version thereof. An Implementation means any Reference Implementation,
+or another implementation that complies with the
+Specification. Licensed Patents means all patents currently owned by
+Xiph or acquired hereafter that Xiph has the right to license as set
+forth above and that are necessarily infringed by the Specification,
+where “necessarily infringed” means: in the case of (a) above, there
+is no commercially viable means of implementing the Specification
+without infringing such patent; in the case of (b) above, use of the
+reference implementation to the extent it infringes such patent.
+
+Termination. If you, directly or indirectly via controlled affiliate
+or subsidiary, agent, or exclusive licensee, file a Claim for patent
+infringement against any entity alleging that an Implementation in
+whole or in part constitutes direct or contributory patent
+infringement, or inducement of patent infringement (a “Claim”),
+provided that a Reference Implementation also infringes the patents
+asserted in the Claim, then any patent rights granted to you under
+this License shall automatically terminate retroactively as of the
+date you first received the grant. Claims made against an
+Implementation in part will only trigger termination if the
+Implementation in part was done for the purpose of combining it with
+other technology that complies with the Specification so that the
+technology’s ultimate use will be consistent with the Standard as a
+whole.
+
+B. Broadcom patent terms
+
+License Grant. Broadcom Corporation (“Broadcom”) hereby grants to you
+a perpetual, worldwide, non-exclusive, no-charge, royalty-free,
+irrevocable (except as stated in this license) license under Licensed
+Patents to make, have made, use, offer to sell, sell, import,
+transfer, and otherwise run, modify (in a way that still complies with
+the Specification), and reproduce any Implementation.
+
+Definitions. Specification means, and includes the following, both
+individually and collectively, (a) any standard specification of the
+Opus codec adopted by the IETF Codec Working Group (“Standard”) and
+(b) any reference implementation (each, a “Reference Implementation”)
+published by the IETF Codec Working Group in the request for comments
+(“RFC”) issued by the IETF for the Specification draft for which this
+License is issued, or any RFC that is issued as an update or new
+version thereof. An Implementation means any Reference Implementation,
+or another implementation that complies with the
+Specification. Licensed Patents means all patents currently owned by
+Broadcom or acquired hereafter that Broadcom has the right to license
+as set forth above and that are necessarily infringed by the
+Specification, where “necessarily infringed” means: in the case of (a)
+above, there is no commercially viable means of implementing the
+Specification without infringing such patent; in the case of (b)
+above, use of the reference implementation to the extent it infringes
+such patent.
+
+Termination. If you, directly or indirectly via controlled affiliate
+or subsidiary, agent, or exclusive licensee, file a Claim for patent
+infringement against any entity alleging that an Implementation in
+whole or in part constitutes direct or contributory patent
+infringement, or inducement of patent infringement (a “Claim”),
+provided that a Reference Implementation also infringes the patents
+asserted in the Claim, then any patent rights granted to you under
+this License shall automatically terminate retroactively as of the
+date you first received the grant. Claims made against an
+Implementation in part will only trigger termination if the
+Implementation in part was done for the purpose of combining it with
+other technology that complies with the Specification so that the
+technology’s ultimate use will be consistent with the Standard as a
+whole.
+
+C. Microsoft Opus Patent Terms
+
+11-7-2012
+
+1. Patent Terms.
+
+1.1. Specification License. Subject to all the terms and conditions of
+this Agreement, I, on behalf of myself and my successors in interest
+and assigns, hereby grant you a non-sublicensable, perpetual,
+worldwide, non-exclusive, no-charge, royalty-free, irrevocable license
+to my Necessary Decoder Claims for your Specification Implementation.
+
+1.2. Code License. Subject to all the terms and conditions of this
+Agreement, I, on behalf of myself and my successors in interest and
+assigns, hereby grant you a non-sublicensable, perpetual, worldwide,
+non-exclusive, no-charge, royalty-free, irrevocable patent license to
+my Necessary Reference Implementation Claims to make, use, sell, offer
+for sale, import or distribute a Code Implementation.
+
+1.3. Conditions.
+
+1.3.1. Availability. If you own or control Necessary Claims, the
+licenses set forth in Section 1 are subject to and will become
+effective starting on the date that you make a binding public
+irrevocable commitment to license, on reasonable and
+non-discriminatory royalty-free licensing terms 1) your Necessary
+Decoder Claims to all implementers for Specification Implementations,
+and 2) your Necessary Reference Implementation Claims to all
+implementers for Code Implementations, where the terms of this
+Agreement satisfy any reciprocity requirements in your reasonable and
+non-discriminatory royalty-free licensing terms. The promises set
+forth in Section 1 will remain in effect so long as you continue to
+make such claims available for Specification Implementations and Code
+Implementations under reasonable and non-discriminatory royalty-free
+licensing terms. In addition, as a condition of the licenses set forth
+in Section 1, you acknowledge and agree that you have not and will not
+knowingly take any action for the purpose of circumventing the
+conditions in this Section 1. Notwithstanding the foregoing, you are
+not required to make the commitments set forth in this Section 1.3.1
+as a result of merely using a Specification Implementation or a Code
+Implementation as an end-user.
+
+1.3.2. Additional Conditions. This license is directly from me to you
+and you acknowledge as a condition of benefiting from it that no
+rights from me are received from suppliers, distributors, or otherwise
+in connection with this license. This license is not an assurance (i)
+that any of my issued patent claims covers a Specification
+Implementation or Code Implementation or are enforceable or (ii) that
+a Specification Implementation or Code Implementation would not
+infringe intellectual property rights of any third party.
+
+1.4. Termination. All rights, grants, and promises made by me to you
+under Section 1 are immediately terminated if you or your agent file,
+maintain, or voluntarily participate in a lawsuit against me or any
+person or entity asserting that a Specification Implementation
+infringes Necessary Decoder Claims or a Code Implementation infringes
+Necessary Reference Implementation Claims, unless that suit was in
+response to a corresponding suit regarding a Specification
+Implementation or Code Implementation first brought against you. In
+addition, all rights, grants, and promises made by me to you under
+Section 1 are terminated if you, your agent, or successor in interest
+seek to license Necessary Decoder Claims for Specification
+Implementations or Necessary Reference Implementations Claims for Code
+Implementations on a royalty-bearing basis, unless that
+royalty-bearing licensing activity is in addition to, and not in lieu
+of, reasonable and non-discriminatory royalty-free licensing terms for
+Necessary Decoder Claims for Specification Implementations or
+Necessary Reference Implementation Claims for Code
+Implementations. This Agreement may also be terminated, including back
+to the date of non-compliance, because of non-compliance with any
+other term or condition of this Agreement.
+
+2. Patent License Commitment. On behalf of me and my successors in
+interest and assigns, I agree to offer alternative reasonable and
+non-discriminatory royalty-bearing licensing terms 1) to my Necessary
+Decoder Claims solely for your Specification Implementation and 2) to
+my Necessary Reference Implementations Claims solely for your Code
+Implementation.
+
+3. Past Skype Declarations. You may, at your option, continue to rely
+on the terms set forth in Skype’s past declarations made to the IETF
+for the Opus Audio Codec, subject to the terms of those declarations
+and in lieu of the terms of this Agreement solely for the patents set
+forth in those declarations.
+
+4. Good Faith Obligations. I agree that I have not and will not
+knowingly take any action for the purpose of circumventing my
+obligations under this Agreement. In addition, I will not 1) seek an
+injunction or exclusion order against a) Code Implementations for
+Necessary Reference Implementation Claims or b) Specification
+Implementations for Necessary Decoder Claims or 2) require that an
+implementer license its patents back to me, except for Necessary
+Reference Implementation Claims for Code Implementations and Necessary
+Decoder Claims for Specification Implementations. I will not transfer
+Necessary Reference Implementation Claims or Necessary Decoder Claims
+unless the transferee is subject to these obligations.
+
+5. Disclaimers. I expressly disclaim any warranties (express, implied,
+or otherwise), including implied warranties of merchantability,
+non-infringement, fitness for a particular purpose, or title, related
+to the Specification or Reference Implementation. The entire risk as
+to implementing or otherwise using the Specification, Specification
+Implementation, or Code Implementation is assumed by the implementer
+and user. IN NO EVENT WILL ANY PARTY BE LIABLE TO ANY OTHER PARTY FOR
+LOST PROFITS OR ANY FORM OF INDIRECT, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES OF ANY CHARACTER FROM ANY CAUSES OF ACTION OF
+ANY KIND WITH RESPECT TO THIS AGREEMENT, WHETHER BASED ON BREACH OF
+CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, AND WHETHER OR
+NOT THE OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE. Nothing in this Agreement requires me to undertake a patent
+search.
+
+6. Definitions.
+
+6.1. Agreement. “Agreement” means this document, which sets forth the
+rights, grants, limitations, conditions, obligations, and disclaimers
+made available for the particular Specification.
+
+6.2. Code Implementation. “Code Implementation” means making, using,
+selling, offering for sale, importing or distributing 1) the Reference
+Implementation, or 2) an implementation that, in the case of an
+encoder, produces a bitstream that can be decoded by a Specification
+Implementation solely to the extent it produces such a bitstream, and,
+in the case of decoder, is a Specification Implementation, where that
+Specification Implementation may also infringe Necessary Reference
+Implementation Claims.
+
+6.3. Control. “Control” means direct or indirect control of more than
+50% of the voting power to elect directors of that corporation, or for
+any other entity, the power to direct management of such entity.
+
+6.4. I, Me, or My. “I,” “me,” or “my” refers to the party making this
+declaration, and any entity that I Control.
+
+6.5. Necessary Claims. “Necessary Claims” means Necessary Decoder
+Claims and Necessary Reference Implementation Claims.
+
+6.6. Necessary Decoder Claims. “Necessary Decoder Claims” are those
+patent claims that a party owns or controls, including those claims
+acquired after the date of this declaration, that are necessarily
+infringed by an implementation of the required portions (including the
+required elements of optional portions) of the decoder Specification
+that are described in detail and not merely referenced in the
+Specification.
+
+6.7. Necessary Reference Implementation Claims. “Necessary Reference
+Implementation Claims” are those patent claims that a party owns or
+controls, including those claims acquired after the date of this
+declaration, that are necessarily infringed by the Reference
+Implementation. Necessary Reference Implementation Claims do not
+include claims that would be infringed only as a consequence of
+further modification of the Reference Implementation.
+
+6.8. Reference Implementation. “Reference Implementation” means the
+implementation of the Opus encoder and/or decoder code extracted from
+Appendix A of the Specification.
+
+6.9. Specification. “Specification” means IETF RFC 6716 dated
+September 2012.
+
+6.10. Specification Implementation. “Specification Implementation”
+means making, using, selling, offering for sale, importing or
+distributing any conformant implementation of the decoder set forth in
+the Specification 1) only to the extent it implements the
+Specification and 2) so long as all required portions of the
+Specification are implemented. Specification Implementation also
+includes any implementation of a decoder included in subsequent
+versions of RFC 6716 1) only to the extent that it implements the
+decoder Specification, and 2) so long as all required portions of the
+decoder Specification are implemented.
+
+6.11. You or Your. “You,” “you,” or “your” means any person or entity
+who exercises patent rights granted under this Agreement, and any
+person or entity you Control.
+
+================================================================================
+
+
+The Fastest Fourier Transform in the South
+
+ Copyright (c) 2012, 2013 Anthony M. Blake <amb@anthonix.com>
+
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+        * Redistributions of source code must retain the above copyright
+                notice, this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution.
+        * Neither the name of the organization nor the
+          names of its contributors may be used to endorse or promote products
+                derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL ANTHONY M. BLAKE BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+================================================================================
+
+
+AWS C SDK for Internet of Things Service
+Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+Apache License
+Version 2.0, January 2004
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+"License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+"Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+"Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+"Object" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.
+"Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).
+"Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+"Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a Contribution."
+"Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.
+2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.
+3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.
+4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:
+   1.   You must give any other recipients of the Work or Derivative Works a copy of this License; and
+   2.   You must cause any modified files to carry prominent notices stating that You changed the files; and
+   3.   You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and
+   4.   If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.
+You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.
+5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
+7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
+8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.
+9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+================================================================================
+
+Embedded C MQTT Client
+
+Components are made available under the terms of the Eclipse Public License v1.0
+and Eclipse Distribution License v1.0 which accompany this distribution.
+
+The Eclipse Public License is available at
+  http://www.eclipse.org/legal/epl-v10.html
+and the Eclipse Distribution License is available at
+  http://www.eclipse.org/org/documents/edl-v10.php.
+
+
+================================================================================
+
+mbedTLS
+Copyright (C) 2012, iSEC Partners.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+================================================================================
+
+ cURL
+                                 _   _ ____  _
+ Project                     ___| | | |  _ \| |
+                            / __| | | | |_) | |
+                           | (__| |_| |  _ <| |___
+                            \___|\___/|_| \_\_____|
+
+Copyright (C) 1998 - 2011, Daniel Stenberg, <daniel@haxx.se>, et al.
+
+This software is licensed as described in the file COPYING, which
+you should have received as part of this distribution. The terms
+are also available at http://curl.haxx.se/docs/copyright.html.
+
+You may opt to use, copy, modify, merge, publish, distribute and/or sell
+copies of the Software, and permit persons to whom the Software is
+furnished to do so, under the terms of the COPYING file.
+
+This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+KIND, either express or implied.
+
+
+================================================================================
+
+jsmn
+Copyright (c) 2010 Serge A. Zaitsev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+================================================================================
+
+
+

@@ -3,3 +3,7 @@
 //
 
 #import "whisper.h"
+
+// IF CEREPROC VOICES ARE ENABLED
+#import "cerevoice_eng_simp.h"
+#import "cerevoice_aud.h"

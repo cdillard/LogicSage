@@ -11,7 +11,7 @@ import Foundation
 
 func getWorkspaceFolder() -> String {
     guard let swiftyGPTDocumentsPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path(percentEncoded: false) else {
-        print("ERROR GETTING WORKSPACE")
+        multiPrinter("ERROR GETTING WORKSPACE")
 
         return ""
     }
@@ -36,11 +36,11 @@ func backupAndDeleteWorkspace() throws {
             do {
                 try fileManager.moveItem(at: projectPathURL, to: backupPathURL)
             } catch {
-                print("Failed to move directory: \(error.localizedDescription)")
+                multiPrinter("Failed to move directory: \(error.localizedDescription)")
                 throw error
             }
         } else {
-            print("Destination directory already exists: \(backupPathURL.path)")
+            multiPrinter("Destination directory already exists: \(backupPathURL.path)")
             throw NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError, userInfo: nil)
         }
     }
@@ -50,7 +50,7 @@ func getDirectory() -> String {
     let arguments = CommandLine.arguments
 
     guard arguments.count > 1 else {
-        print("Please provide the folder path as an argument.")
+        multiPrinter("Please provide the folder path as an argument.")
         return ""
 
     }
@@ -62,7 +62,7 @@ func getDirectory() -> String {
 
     var isDirectory: ObjCBool = false
     guard fileManager.fileExists(atPath: folderURL.path, isDirectory: &isDirectory), isDirectory.boolValue else {
-        print("The provided path does not exist or is not a directory.")
+        multiPrinter("The provided path does not exist or is not a directory.")
        return ""
     }
     return folderURL.path

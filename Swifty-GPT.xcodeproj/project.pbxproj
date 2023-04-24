@@ -11,6 +11,16 @@
 		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
 		71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FD62B129EF75AC00C6EC34 /* plistHelper.swift */; };
 		71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 71FD62B029EF739900C6EC34 /* GPT-Info.plist */; };
+		B70971EC29F62DC6008ED803 /* MultipeerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */; };
+		B70971ED29F62DC6008ED803 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E029F62DC6008ED803 /* MultipeerMessage.swift */; };
+		B70971EE29F62DC6008ED803 /* MCPeerID+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */; };
+		B70971EF29F62DC6008ED803 /* MultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E329F62DC6008ED803 /* MultipeerConnection.swift */; };
+		B70971F029F62DC6008ED803 /* MultipeerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E429F62DC6008ED803 /* MultipeerKit.swift */; };
+		B70971F129F62DC6008ED803 /* MockMultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */; };
+		B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */; };
+		B70971F329F62DC6008ED803 /* MultipeerTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */; };
+		B70971F429F62DC6008ED803 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971EA29F62DC6008ED803 /* Peer.swift */; };
+		B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */; };
 		B70B44D429EAD61900C45773 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D329EAD61900C45773 /* Text.swift */; };
 		B70B44D629EAD85B00C45773 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D529EAD85B00C45773 /* Files.swift */; };
 		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
@@ -29,7 +39,10 @@
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
+		B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */; };
+		B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */; };
 		B74746A829F40FCD00075010 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74746A729F40FCD00075010 /* CommandTable.swift */; };
+		B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */; };
 		B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = B74A169329F1FA54006A0605 /* SourceKittenFramework */; };
 		B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A169529F1FA63006A0605 /* SrcCat.swift */; };
 		B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620C29EFB61C0065DF88 /* StringSLug.swift */; };
@@ -37,6 +50,7 @@
 		B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7538D1F29F41FA000243E9B /* AVVoice.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
+		B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
 		B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */; };
 		B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9A29EB3F8500B8A9E4 /* AudioUnit.framework */; };
@@ -51,6 +65,9 @@
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7C3889529F224FE0074659D /* SwiftyGPTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */; };
+		B7CA779929F6A5EB00A9DBE6 /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779829F6A5EB00A9DBE6 /* Vapor */; };
+		B7CA779C29F6A63900A9DBE6 /* WebSocketKit in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779B29F6A63900A9DBE6 /* WebSocketKit */; };
+		B7CA77A229F6A84500A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA77A129F6A84500A9DBE6 /* Starscream */; };
 		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
 		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
 		B7D1609829F2B48C00244188 /* Trivia.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D1609729F2B48C00244188 /* Trivia.swift */; };
@@ -69,11 +86,22 @@
 		B7D6518529EC88EF00ED8BAE /* ggml-small.en.bin in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7D6517F29EC88D200ED8BAE /* ggml-small.en.bin */; };
 		B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E15E6D29E6F8920056A325 /* Xcodegen.swift */; };
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
+		B7E7EE7229F6C86600EF2B25 /* NetService in Frameworks */ = {isa = PBXBuildFile; productRef = B7E7EE7129F6C86600EF2B25 /* NetService */; };
 		B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EE1FC129F4E351007A7B6B /* Debate.swift */; };
 		B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */; };
 		B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */; };
 		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B746DFE029F5E78A002804EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B746DFCA29F5E789002804EB;
+			remoteInfo = SwiftSageiOS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B7139CDA29E147910049ADE1 /* CopyFiles */ = {
@@ -105,7 +133,16 @@
 /* Begin PBXFileReference section */
 		71FD62B029EF739900C6EC34 /* GPT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GPT-Info.plist"; sourceTree = "<group>"; };
 		71FD62B129EF75AC00C6EC34 /* plistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = plistHelper.swift; sourceTree = "<group>"; };
-		B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "Swifty-GPT-App.swiftpm"; sourceTree = "<group>"; };
+		B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerProtocol.swift; sourceTree = "<group>"; };
+		B70971E029F62DC6008ED803 /* MultipeerMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
+		B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MCPeerID+Me.swift"; sourceTree = "<group>"; };
+		B70971E329F62DC6008ED803 /* MultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConnection.swift; sourceTree = "<group>"; };
+		B70971E429F62DC6008ED803 /* MultipeerKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerKit.swift; sourceTree = "<group>"; };
+		B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMultipeerConnection.swift; sourceTree = "<group>"; };
+		B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerDataSource.swift; sourceTree = "<group>"; };
+		B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerTransceiver.swift; sourceTree = "<group>"; };
+		B70971EA29F62DC6008ED803 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
+		B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConfiguration.swift; sourceTree = "<group>"; };
 		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		B70B44D729EAD91900C45773 /* GPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
@@ -126,7 +163,10 @@
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSageiOS.xcodeproj; path = SwiftSageiOS/SwiftSageiOS.xcodeproj; sourceTree = "<group>"; };
 		B74746A729F40FCD00075010 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
+		B748C2F029F5EA62000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPeerConsole.swift; sourceTree = "<group>"; };
 		B74A169529F1FA63006A0605 /* SrcCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SrcCat.swift; sourceTree = "<group>"; };
 		B74E620C29EFB61C0065DF88 /* StringSLug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSLug.swift; sourceTree = "<group>"; };
 		B74E620E29F03EB90065DF88 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -134,6 +174,11 @@
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
 		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
 		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CereprocWrapper.swift; sourceTree = "<group>"; };
+		B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cerevoice_sdk_6.1.0; sourceTree = "<group>"; };
+		B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_eng.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a"; sourceTree = "<group>"; };
+		B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_aud.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a"; sourceTree = "<group>"; };
+		B75FC59D29F5D58000A75EAF /* libcerevoice_eng.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libcerevoice_eng.dylib; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat/libcerevoice_eng.dylib"; sourceTree = "<group>"; };
 		B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
 		B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProcessor.swift; sourceTree = "<group>"; };
 		B768CE9A29EB3F8500B8A9E4 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
@@ -187,14 +232,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7CA779929F6A5EB00A9DBE6 /* Vapor in Frameworks */,
+				B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */,
+				B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */,
 				B78C6C2729F3129300AA568A /* PNG in Frameworks */,
 				B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */,
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
 				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
+				B7E7EE7229F6C86600EF2B25 /* NetService in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
 				B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */,
 				B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */,
+				B7CA77A229F6A84500A9DBE6 /* Starscream in Frameworks */,
+				B7CA779C29F6A63900A9DBE6 /* WebSocketKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,13 +259,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B70971DC29F62DC6008ED803 /* MultipeerKit */ = {
+			isa = PBXGroup;
+			children = (
+				B70971DD29F62DC6008ED803 /* Internal API */,
+				B70971E629F62DC6008ED803 /* Public API */,
+			);
+			path = MultipeerKit;
+			sourceTree = SOURCE_ROOT;
+		};
+		B70971DD29F62DC6008ED803 /* Internal API */ = {
+			isa = PBXGroup;
+			children = (
+				B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */,
+				B70971DF29F62DC6008ED803 /* Models */,
+				B70971E129F62DC6008ED803 /* Extensions */,
+				B70971E329F62DC6008ED803 /* MultipeerConnection.swift */,
+				B70971E429F62DC6008ED803 /* MultipeerKit.swift */,
+				B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */,
+			);
+			path = "Internal API";
+			sourceTree = "<group>";
+		};
+		B70971DF29F62DC6008ED803 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B70971E029F62DC6008ED803 /* MultipeerMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B70971E129F62DC6008ED803 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B70971E629F62DC6008ED803 /* Public API */ = {
+			isa = PBXGroup;
+			children = (
+				B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */,
+				B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */,
+				B70971E929F62DC6008ED803 /* Models */,
+				B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */,
+			);
+			path = "Public API";
+			sourceTree = "<group>";
+		};
+		B70971E929F62DC6008ED803 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B70971EA29F62DC6008ED803 /* Peer.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7C3889329F224FE0074659D /* SwiftyGPTTests */,
 				B7139CDD29E147910049ADE1 /* Products */,
-				B70153F229E996D900B6152E /* Swifty-GPT-App.swiftpm */,
+				B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */,
 				B768CE9929EB3F8500B8A9E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -240,6 +348,8 @@
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
 				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
 				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
+				B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */,
+				B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */,
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
@@ -256,11 +366,13 @@
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
+				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D1609D29F30CF300244188 /* movies */,
 				B7D160A629F30D4900244188 /* Movies.swift */,
+				B70971DC29F62DC6008ED803 /* MultipeerKit */,
 				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
@@ -291,9 +403,21 @@
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
 		};
+		B746DFDD29F5E78A002804EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B746DFE129F5E78A002804EB /* SwiftSageiOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B768CE9929EB3F8500B8A9E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B748C2F029F5EA62000F5F14 /* MultipeerConnectivity.framework */,
+				B75FC59D29F5D58000A75EAF /* libcerevoice_eng.dylib */,
+				B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */,
+				B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */,
 				B768CE9B29EB3F8500B8A9E4 /* AudioToolbox.framework */,
 				B768CE9A29EB3F8500B8A9E4 /* AudioUnit.framework */,
 				B768CE9C29EB3F8500B8A9E4 /* AudioVideoBridging.framework */,
@@ -371,6 +495,10 @@
 				B7D2FD3129F18202003EBCA9 /* SwiftSoup */,
 				B74A169329F1FA54006A0605 /* SourceKittenFramework */,
 				B78C6C2629F3129300AA568A /* PNG */,
+				B7CA779829F6A5EB00A9DBE6 /* Vapor */,
+				B7CA779B29F6A63900A9DBE6 /* WebSocketKit */,
+				B7CA77A129F6A84500A9DBE6 /* Starscream */,
+				B7E7EE7129F6C86600EF2B25 /* NetService */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -428,9 +556,19 @@
 				B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */,
 				B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */,
+				B7CA779729F6A5EB00A9DBE6 /* XCRemoteSwiftPackageReference "vapor" */,
+				B7CA779A29F6A63900A9DBE6 /* XCRemoteSwiftPackageReference "websocket-kit" */,
+				B7CA77A029F6A84500A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
+				B7E7EE7029F6C86600EF2B25 /* XCRemoteSwiftPackageReference "NetService" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B746DFDD29F5E78A002804EB /* Products */;
+					ProjectRef = B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
@@ -438,6 +576,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B746DFE129F5E78A002804EB /* SwiftSageiOS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SwiftSageiOS.app;
+			remoteRef = B746DFE029F5E78A002804EB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B7C3889029F224FE0074659D /* Resources */ = {
@@ -455,31 +603,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
+				B70971F129F62DC6008ED803 /* MockMultipeerConnection.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
+				B70971EC29F62DC6008ED803 /* MultipeerProtocol.swift in Sources */,
+				B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
+				B70971F429F62DC6008ED803 /* Peer.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
 				B70CF17E29F07E2400993AAF /* Globals.swift in Sources */,
 				B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
+				B70971ED29F62DC6008ED803 /* MultipeerMessage.swift in Sources */,
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
+				B70971EE29F62DC6008ED803 /* MCPeerID+Me.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7D160A729F30D4900244188 /* Movies.swift in Sources */,
 				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
 				B7D1609829F2B48C00244188 /* Trivia.swift in Sources */,
+				B70971F329F62DC6008ED803 /* MultipeerTransceiver.swift in Sources */,
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
+				B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
+				B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */,
+				B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
@@ -491,7 +649,9 @@
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
+				B70971F029F62DC6008ED803 /* MultipeerKit.swift in Sources */,
 				B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */,
+				B70971EF29F62DC6008ED803 /* MultipeerConnection.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
@@ -657,13 +817,29 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
-				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
+				LD_RUNPATH_SEARCH_PATHS = (
+					cerevoice_sdk_6.1.0/cerevoice_aud/include,
+					cerevoice_sdk_6.1.0/cerevoice_eng/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)/**",
+					"Swifty-GPT/cerevoice_sdk_6.1.0/**",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat",
+				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a",
+					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
+				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -685,13 +861,29 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
-				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
+				LD_RUNPATH_SEARCH_PATHS = (
+					cerevoice_sdk_6.1.0/cerevoice_aud/include,
+					cerevoice_sdk_6.1.0/cerevoice_eng/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)/**",
+					"Swifty-GPT/cerevoice_sdk_6.1.0/**",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat",
+					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat",
+				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a",
+					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "$(inherited)/**";
+				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -798,9 +990,41 @@
 				kind = branch;
 			};
 		};
+		B7CA779729F6A5EB00A9DBE6 /* XCRemoteSwiftPackageReference "vapor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/vapor.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B7CA779A29F6A63900A9DBE6 /* XCRemoteSwiftPackageReference "websocket-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/websocket-kit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B7CA77A029F6A84500A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		B7E7EE7029F6C86600EF2B25 /* XCRemoteSwiftPackageReference "NetService" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Bouke/NetService.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -843,10 +1067,30 @@
 			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
 			productName = SourceKittenFramework;
 		};
+		B7CA779829F6A5EB00A9DBE6 /* Vapor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7CA779729F6A5EB00A9DBE6 /* XCRemoteSwiftPackageReference "vapor" */;
+			productName = Vapor;
+		};
+		B7CA779B29F6A63900A9DBE6 /* WebSocketKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7CA779A29F6A63900A9DBE6 /* XCRemoteSwiftPackageReference "websocket-kit" */;
+			productName = WebSocketKit;
+		};
+		B7CA77A129F6A84500A9DBE6 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7CA77A029F6A84500A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
 		B7D2FD3129F18202003EBCA9 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B7D2FD3029F18202003EBCA9 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		B7E7EE7129F6C86600EF2B25 /* NetService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7E7EE7029F6C86600EF2B25 /* XCRemoteSwiftPackageReference "NetService" */;
+			productName = NetService;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

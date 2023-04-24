@@ -24,7 +24,7 @@ var modalPath:String {
 var whisperContext: WhisperContext?
 
 func doTranscription(on audioFileURL:URL) async {
-    print("Using Swift Whisper to transcribe recorded audio at \(audioFileURL)... please wait...")
+    multiPrinter("Using Swift Whisper to transcribe recorded audio at \(audioFileURL)... please wait...")
     startRandomSpinner()
     convertAudioFileToPCMArray(fileURL: audioFileURL) { result in
         Task {
@@ -41,10 +41,10 @@ func doTranscription(on audioFileURL:URL) async {
                         gptCommand(input: text)
                 }
                 else {
-                    print("failed")
+                    multiPrinter("failed")
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                multiPrinter(error.localizedDescription)
             }
         }
     }
@@ -82,11 +82,11 @@ func convertAudioFileToPCMArray(fileURL: URL, completionHandler: @escaping (Resu
                 completionHandler(.success(floats))
             }
             catch {
-                print("great fails")
+                multiPrinter("great fails")
             }
         }
         catch {
-            print("greater fails")
+            multiPrinter("greater fails")
 
         }
     }

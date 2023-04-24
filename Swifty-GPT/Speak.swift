@@ -65,18 +65,20 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     }
 
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        print("finished speech")
+        multiPrinter("finished speech")
     }
 
     var count = 0
 
-    func speakText(_ text: String, _ voice: String, _ wpm: Int) -> TimeInterval {
+    func speakText(_ text: String, _ voice: String, _ wpm: Int, skipLog: Bool = false) -> TimeInterval {
 
         let utterance = AVSpeechUtterance(string: text)
         DispatchQueue.global(qos: .background).async { [self] in
             let readySynth = synthesizers[count % synthesizers.count]
 
-            print("say: " + text)
+            if !skipLog {
+                multiPrinter("say: " + text)
+            }
 
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
             utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
@@ -91,7 +93,6 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
             self.count += 1
         }
         return estimatedDuration(for: utterance)
-
     }
 }
 
@@ -139,11 +140,11 @@ public extension Date {
 }
 
 @discardableResult
-func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil) -> TimeInterval {
+func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil, skipLog: Bool = false) -> TimeInterval {
 
     let useVoice = overrideVoice ?? defaultVoice
     let useWpm = Int(overrideWpm ?? "") ?? 200
-    return shared.speakText(text,  useVoice,  useWpm)
+    return shared.speakText(text,  useVoice,  useWpm, skipLog: skipLog)
 }
 
 func welcomeWord() -> String {

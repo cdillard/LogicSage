@@ -57,7 +57,7 @@ class AudioRecorder {
         do {
             audioFile = try AVAudioFile(forWriting: outputTempFileURL, settings: inputFormat.settings)
         } catch {
-            print("Error initializing audio file: \(error)")
+            multiPrinter("Error initializing audio file: \(error)")
             return
         }
 
@@ -67,7 +67,7 @@ class AudioRecorder {
             do {
                 try strongSelf.audioFile.write(from: buffer)
             } catch {
-                print("Error writing to audio file: \(error)")
+                multiPrinter("Error writing to audio file: \(error)")
             }
         }
 
@@ -75,7 +75,7 @@ class AudioRecorder {
         do {
             try audioEngine.start()
         } catch {
-            print("Error starting audio engine: \(error)")
+            multiPrinter("Error starting audio engine: \(error)")
             return
         }
     }
@@ -87,7 +87,7 @@ class AudioRecorder {
 
         let asset = AVAsset(url: outputTempFileURL)
         guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
-            print("Failed to create export session")
+            multiPrinter("Failed to create export session")
             return
         }
 
@@ -97,14 +97,14 @@ class AudioRecorder {
         exportSession.exportAsynchronously {
             switch exportSession.status {
             case .completed:
-                print("Recording finished successfully")
+                multiPrinter("Recording finished successfully")
                 completion(true)
 
             case .failed:
-                print("Export failed: \(String(describing: exportSession.error))")
+                multiPrinter("Export failed: \(String(describing: exportSession.error))")
                 completion(false)
             case .cancelled:
-                print("Export cancelled")
+                multiPrinter("Export cancelled")
                 completion(false)
             default:
                 completion(false)
@@ -117,12 +117,12 @@ class AudioRecorder {
 func printAVVoices() {
     AVSpeechSynthesisVoice.speechVoices().forEach {
         if $0.language != "en-US" { return }
-        print($0)
+        multiPrinter($0)
     }
 }
 func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
     AVCaptureDevice.requestAccess(for: .audio) { granted in
-        DispatchQueue.main.async {
+        DispatchQueue.global().async {
             completion(granted)
         }
     }

@@ -1,0 +1,510 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */; };
+		B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */; };
+		B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */; };
+		B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */; };
+		B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FE29F62DF3008ED803 /* MultipeerKit.swift */; };
+		B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */; };
+		B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720129F62DF3008ED803 /* MultipeerDataSource.swift */; };
+		B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */; };
+		B709720E29F62DF3008ED803 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720429F62DF3008ED803 /* Peer.swift */; };
+		B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */; };
+		B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */; };
+		B746DFD029F5E789002804EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCF29F5E789002804EB /* ContentView.swift */; };
+		B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD129F5E78A002804EB /* Assets.xcassets */; };
+		B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD529F5E78A002804EB /* Preview Assets.xcassets */; };
+		B748C2EC29F5E81B000F5F14 /* LocalConsole in Frameworks */ = {isa = PBXBuildFile; productRef = B748C2EB29F5E81B000F5F14 /* LocalConsole */; };
+		B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779E29F6A71300A9DBE6 /* Starscream */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerProtocol.swift; sourceTree = "<group>"; };
+		B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
+		B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MCPeerID+Me.swift"; sourceTree = "<group>"; };
+		B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConnection.swift; sourceTree = "<group>"; };
+		B70971FE29F62DF3008ED803 /* MultipeerKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerKit.swift; sourceTree = "<group>"; };
+		B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMultipeerConnection.swift; sourceTree = "<group>"; };
+		B709720129F62DF3008ED803 /* MultipeerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerDataSource.swift; sourceTree = "<group>"; };
+		B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerTransceiver.swift; sourceTree = "<group>"; };
+		B709720429F62DF3008ED803 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
+		B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConfiguration.swift; sourceTree = "<group>"; };
+		B746DFCA29F5E789002804EB /* SwiftSageiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSageiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSApp.swift; sourceTree = "<group>"; };
+		B746DFCF29F5E789002804EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B746DFD129F5E78A002804EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftSageiOS.entitlements; sourceTree = "<group>"; };
+		B746DFD529F5E78A002804EB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		B748C2FA29F5FF4A000F5F14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B746DFC729F5E789002804EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B748C2EC29F5E81B000F5F14 /* LocalConsole in Frameworks */,
+				B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B70971F629F62DF3008ED803 /* MultipeerKit */ = {
+			isa = PBXGroup;
+			children = (
+				B70971F729F62DF3008ED803 /* Internal API */,
+				B709720029F62DF3008ED803 /* Public API */,
+			);
+			name = MultipeerKit;
+			path = ../../MultipeerKit;
+			sourceTree = "<group>";
+		};
+		B70971F729F62DF3008ED803 /* Internal API */ = {
+			isa = PBXGroup;
+			children = (
+				B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */,
+				B70971F929F62DF3008ED803 /* Models */,
+				B70971FB29F62DF3008ED803 /* Extensions */,
+				B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */,
+				B70971FE29F62DF3008ED803 /* MultipeerKit.swift */,
+				B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */,
+			);
+			path = "Internal API";
+			sourceTree = "<group>";
+		};
+		B70971F929F62DF3008ED803 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B70971FB29F62DF3008ED803 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B709720029F62DF3008ED803 /* Public API */ = {
+			isa = PBXGroup;
+			children = (
+				B709720129F62DF3008ED803 /* MultipeerDataSource.swift */,
+				B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */,
+				B709720329F62DF3008ED803 /* Models */,
+				B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */,
+			);
+			path = "Public API";
+			sourceTree = "<group>";
+		};
+		B709720329F62DF3008ED803 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B709720429F62DF3008ED803 /* Peer.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B746DFC129F5E789002804EB = {
+			isa = PBXGroup;
+			children = (
+				B746DFCC29F5E789002804EB /* SwiftSageiOS */,
+				B746DFCB29F5E789002804EB /* Products */,
+				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B746DFCB29F5E789002804EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B746DFCA29F5E789002804EB /* SwiftSageiOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B746DFCC29F5E789002804EB /* SwiftSageiOS */ = {
+			isa = PBXGroup;
+			children = (
+				B746DFD129F5E78A002804EB /* Assets.xcassets */,
+				B746DFCF29F5E789002804EB /* ContentView.swift */,
+				B748C2FA29F5FF4A000F5F14 /* Info.plist */,
+				B70971F629F62DF3008ED803 /* MultipeerKit */,
+				B746DFD429F5E78A002804EB /* Preview Content */,
+				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
+				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
+			);
+			path = SwiftSageiOS;
+			sourceTree = "<group>";
+		};
+		B746DFD429F5E78A002804EB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B746DFD529F5E78A002804EB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B748C2ED29F5EA4C000F5F14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B746DFC929F5E789002804EB /* SwiftSageiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B746DFD929F5E78A002804EB /* Build configuration list for PBXNativeTarget "SwiftSageiOS" */;
+			buildPhases = (
+				B746DFC629F5E789002804EB /* Sources */,
+				B746DFC729F5E789002804EB /* Frameworks */,
+				B746DFC829F5E789002804EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftSageiOS;
+			packageProductDependencies = (
+				B748C2EB29F5E81B000F5F14 /* LocalConsole */,
+				B7CA779E29F6A71300A9DBE6 /* Starscream */,
+			);
+			productName = SwiftSageiOS;
+			productReference = B746DFCA29F5E789002804EB /* SwiftSageiOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B746DFC229F5E789002804EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					B746DFC929F5E789002804EB = {
+						CreatedOnToolsVersion = 14.3;
+					};
+				};
+			};
+			buildConfigurationList = B746DFC529F5E789002804EB /* Build configuration list for PBXProject "SwiftSageiOS" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B746DFC129F5E789002804EB;
+			packageReferences = (
+				B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */,
+				B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
+			productRefGroup = B746DFCB29F5E789002804EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B746DFC929F5E789002804EB /* SwiftSageiOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B746DFC829F5E789002804EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */,
+				B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B746DFC629F5E789002804EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */,
+				B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */,
+				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
+				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
+				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
+				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,
+				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
+				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
+				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
+				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
+				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B746DFD729F5E78A002804EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B746DFD829F5E78A002804EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		B746DFDA29F5E78A002804EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses local network to communicate with SwiftSage";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B746DFDB29F5E78A002804EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses local network to communicate with SwiftSage";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B746DFC529F5E789002804EB /* Build configuration list for PBXProject "SwiftSageiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B746DFD729F5E78A002804EB /* Debug */,
+				B746DFD829F5E78A002804EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B746DFD929F5E78A002804EB /* Build configuration list for PBXNativeTarget "SwiftSageiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B746DFDA29F5E78A002804EB /* Debug */,
+				B746DFDB29F5E78A002804EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/duraidabdul/LocalConsole";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B748C2EB29F5E81B000F5F14 /* LocalConsole */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */;
+			productName = LocalConsole;
+		};
+		B7CA779E29F6A71300A9DBE6 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B746DFC229F5E789002804EB /* Project object */;
+}

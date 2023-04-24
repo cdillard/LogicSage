@@ -9,7 +9,7 @@ import Foundation
 import Darwin.POSIX.termios
 
 func promptUserInput(message: String) -> String? {
-    print(message, terminator: "")
+    multiPrinter(message, terminator: "")
     return readLine()
 }
 let validCharacterSet = CharacterSet(charactersIn: UnicodeScalar(0x20)!...UnicodeScalar(0x7E)!)
@@ -98,7 +98,7 @@ func handleUserInput() {
                 continue
             }
             if blockingInput {
-                print("input disabled (you can `q`). Plese file a github Issue. *with logs or else (shakesfist)*")
+                multiPrinter("input disabled (you can `q`). Plese file a github Issue. *with logs or else (shakesfist)*")
 
 
                 var input = ""
@@ -107,12 +107,12 @@ func handleUserInput() {
                 }
 
                if input == "q" {
-                    print("\nYou've entered the special lettr!")
+                    multiPrinter("\nYou've entered the special lettr!")
                     stopCommand(input: "")
 
                     // Execute the desired command
                 } else {
-                    print("\nIncorrect special lettr.")
+                    multiPrinter("\nIncorrect special lettr.")
                 }
 
                 // ONLY capture "q"
@@ -124,21 +124,21 @@ func handleUserInput() {
                 // Appearenlty questions have up to 8 multiple choice options.
                 if char >= "1" && char <= "8" {
                     if Int(String(char)) ?? 0  == tq.correctOptionIndex + 1 {
-                        print(" was correct! YAY")
+                        multiPrinter(" was correct! YAY")
                         streak += 1
                         printRandomUnusedTrivia()
                     }
                     else {
                         if streak > 1 {
-                            print("Incorrect! You better keep studying... you had a \(streak) q winning run!!!! GONE")
+                            multiPrinter("Incorrect! You better keep studying... you had a \(streak) q winning run!!!! GONE")
 
                         }
                         else if streak > 0 {
-                            print("Incorrect! Keep studying...")
+                            multiPrinter("Incorrect! Keep studying...")
 
                         }
                         else {
-                            print("Incorrect! Keep studying...")
+                            multiPrinter("Incorrect! Keep studying...")
                         }
                         streak = 0
 
@@ -148,12 +148,12 @@ func handleUserInput() {
 
                 }
                 else if char == "q" {
-                    print("Exiting trivia...")
+                    multiPrinter("Exiting trivia...")
 
                     chosenTQ = nil
                 }
                 else {
-                    print("You are in trivia mode... exit with `q`")
+                    multiPrinter("You are in trivia mode... exit with `q`")
 
                 }
                 continue
@@ -167,7 +167,7 @@ func handleUserInput() {
                     // Remove the last character from the command
                     command.removeLast()
                 }
-                print("\r", terminator: "")
+                multiPrinter("\r", terminator: "")
                 fflush(stdout)
 
                 // Remove the last character from the parameter or command
@@ -180,7 +180,7 @@ func handleUserInput() {
                 // Reprint the updated command and parameter
                 let validCommand = command.unicodeScalars.filter { validCharacterSet.contains($0) }
                 let validParameter = parameter.unicodeScalars.filter { validCharacterSet.contains($0) }
-                print(String(validCommand) + "" + String(validParameter), terminator: "")
+                multiPrinter(String(validCommand) + "" + String(validParameter), terminator: "")
                 fflush(stdout)
 
                 continue
@@ -221,12 +221,12 @@ func handleUserInput() {
 
 func callCommandCommand(_ command: String, _ arg: String) {
     DispatchQueue.global(qos: .userInitiated).async {
-        print("SWIFTSAGE: \(command)")
+        multiPrinter("SWIFTSAGE: \(command)")
         if let selectedCommand = commandTable[command] {
             selectedCommand(arg)
 
         } else {
-            print("Invalid command. Please try again:")
+            multiPrinter("Invalid command. Please try again:")
         }
     }
 }

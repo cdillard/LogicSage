@@ -15,18 +15,18 @@ func executeAppleScriptCommand(_ command: XcodeCommand, completion: @escaping (B
         let appleScriptCommand = command.appleScript
         let script = NSAppleScript(source: appleScriptCommand)
         var errorDict: NSDictionary? = nil
-        print("Executing AppleScript: \(command)")
+        multiPrinter("Executing AppleScript: \(command)")
 
         script?.executeAndReturnError(&errorDict)
         if let error = errorDict {
-            print("AppleScript Error: \(error)")
+            multiPrinter("AppleScript Error: \(error)")
             completion(false,[error.description])
         }
         else {
             completion(true, [])
         }
     } else {
-        print("Unsupported command")
+        multiPrinter("Unsupported command")
         completion(false, globalErrors)
     }
 }

@@ -18,7 +18,9 @@ enum LoadMode {
 }
 
 // VOICE SETTINGS
-
+let alexVoice = "com.apple.speech.synthesis.voice.Alex"
+let avaVoice = "com.apple.voice.premium.en-US.Ava"
+let allisonVoice = "com.apple.voice.enhanced.en-US.Allison"
 let sageVoice = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
 let grandmaVoice = "com.apple.eloquence.en-US.Grandma"
 let eddyVoice = "com.apple.eloquence.en-US.Eddy"
@@ -28,7 +30,11 @@ let kathyVoice = "com.apple.speech.synthesis.voice.Kathy"
 let sandyVoice = "com.apple.eloquence.en-US.Sandy"
 let floVoice = "com.apple.eloquence.en-US.Flo"
 let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
-var defaultVoice = aaronVoice//floVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
+var defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
+
+// What YOU don't like the goofy robotic voices built in to Mac OS????
+// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
+let cereprocVoicesEnabled = false
 
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
@@ -113,7 +119,9 @@ var voiceInputEnabled = false
 let enableGoogle = false
 let enableLink = false
 
+// VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
 let enableMacSage = false
+let swiftSageIOSEnabled = false
 
 // DO NOT USE
 let enableAEyes = false

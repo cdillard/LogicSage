@@ -25,26 +25,26 @@ func printRandomUnusedTrivia() {
 }
 
 func printTrivia(_ trivia: TriviaQuestion, index: Int) {
-    print("---------\n")
-    print("Trivia Question:")
-    print(trivia.question)
+    multiPrinter("---------\n")
+    multiPrinter("Trivia Question:")
+    multiPrinter(trivia.question)
 
     if trivia.code?.isEmpty == false {
-        print("\nCode:")
-        print(trivia.code ?? "")
+        multiPrinter("\nCode:")
+        multiPrinter(trivia.code ?? "")
     }
 
-    print("\nOptions:")
+    multiPrinter("\nOptions:")
 
     for (optionIndex, option) in trivia.options.enumerated() {
-        print("\(optionIndex + 1). \(option)")
+        multiPrinter("\(optionIndex + 1). \(option)")
     }
     if !trivia.reference.isEmpty {
-        print("\nReference:")
-        print(trivia.reference)
+        multiPrinter("\nReference:")
+        multiPrinter(trivia.reference)
     }
-    print("---------")
-    print("Choose correct answer [1-4], or quit w/ `q`?")
+    multiPrinter("---------")
+    multiPrinter("Choose correct answer [1-4], or quit w/ `q`?")
 }
 
 func parseMarkdown(_ content: String) -> [TriviaQuestion] {
@@ -99,7 +99,7 @@ func parseMarkdown(_ content: String) -> [TriviaQuestion] {
     }
 
     // Debugging quiz parsing
-    //    print(questions)
+    //    multiPrinter(questions)
 
     return questions
 }
@@ -109,7 +109,7 @@ func readMDFile(_ filePath: String) -> String? {
         let mdContent = try String(contentsOfFile: filePath, encoding: .utf8)
         return mdContent
     } catch {
-        print("Error reading MD file: \(error.localizedDescription)")
+        multiPrinter("Error reading MD file: \(error.localizedDescription)")
         return nil
     }
 }
@@ -130,13 +130,13 @@ func loadTriviaSystem() {
 //            trivialQs += parseTrivia(from: text2)
 //        }
 //        else {
-//            print("Failed to add objc-c qs....")
+//            multiPrinter("Failed to add objc-c qs....")
 //
 //        }
- //       print("Parsed \(trivialQs.count) iOS trivia qs...")
+ //       multiPrinter("Parsed \(trivialQs.count) iOS trivia qs...")
     }
     else {
-        print("Failed to add Swift qs..")
+        multiPrinter("Failed to add Swift qs..")
     }
 
 }

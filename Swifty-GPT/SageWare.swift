@@ -28,7 +28,7 @@ let linkPrefix = "Link"
 // Returns success / failure for some ops.
 func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completion: @escaping (Bool, [String]) -> Void) {
 
-    if logV == .verbose { print("🤖: \(output)") }
+    if logV == .verbose { multiPrinter("🤖: \(output)") }
 
     let (updatedString, fileContents) = extractFieldContents(output, field: "fileContents")
     lastFileContents = Array(fileContents)
@@ -37,22 +37,22 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
     let (_, commandContents) = extractFieldContents(output, field: "command")
 
-    print("found \(nameContents) names")
+    multiPrinter("found \(nameContents) names")
 
-    print("found \(commandContents) commands")
+    multiPrinter("found \(commandContents) commands")
 
-    print("📁 found = \(fileContents.count)")
+    multiPrinter("📁 found = \(fileContents.count)")
 
     guard !nameContents.isEmpty else {
-        print("No names found... failing..")
+        multiPrinter("No names found... failing..")
         return completion(false, [])
     }
     guard !commandContents.isEmpty else {
-        print("No commands found... failing..")
+        multiPrinter("No commands found... failing..")
         return completion(false, [])
     }
 
-    print("📜= \(updatedString)")
+    multiPrinter("📜= \(updatedString)")
 
     var nameIndex = 0
     var commandIndex = 0
@@ -60,7 +60,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
     for gptCommandIndex in 0...commandContents.count - 1 {
         let fullCommand = commandContents[gptCommandIndex]
-        print("🤖🔨: performing GPT command = \(fullCommand)")
+        multiPrinter("🤖🔨: performing GPT command = \(fullCommand)")
 
         if fullCommand.hasPrefix(createProjectPrefix) {
 
@@ -83,7 +83,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             }
         }
         else if fullCommand.hasPrefix(openProjectPrefix) {
-            print("SKIPPING GPT PROJECT OPENING FOR NOW")
+            multiPrinter("SKIPPING GPT PROJECT OPENING FOR NOW")
 //            var name =  projectName
 //
 //            projectName = name.isEmpty ? "MyApp" : name
@@ -104,7 +104,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 //            }
         }
         else if fullCommand.hasPrefix(buildProjectPrefix) {
-            print("SKIPPING GPT PROJECT BUILDING FOR NOW")
+            multiPrinter("SKIPPING GPT PROJECT BUILDING FOR NOW")
 
 //            buildIt() { success, errrors in
 //                if !success {
@@ -114,7 +114,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 //            return
         }
         else if fullCommand.hasPrefix(closeProjectPrefix) {
-            print("SKIPPING GPT PROJECT CLOSING FOR NOW")
+            multiPrinter("SKIPPING GPT PROJECT CLOSING FOR NOW")
 
 //            var name =  projectName
 //
@@ -130,10 +130,10 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 //            name = preprocessStringForFilename(name)
 //
 //            executeXcodeCommand(.closeProject(name: name)) { success , errors in
-//                print("unknown command = \(fullCommand)")
+//                multiPrinter("unknown command = \(fullCommand)")
 //
 //                if !success {
-//                    print("failed to close, e=\(errors) ")
+//                    multiPrinter("failed to close, e=\(errors) ")
 //
 //                }
 //                completion(success, errors)
@@ -203,7 +203,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             return
         }
         else {
-            print("unknown command = \(fullCommand)")
+            multiPrinter("unknown command = \(fullCommand)")
         }
 
         nameIndex += 1
@@ -211,7 +211,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     }
 
     if fileIndex == 0 || fileIndex != fileContents.count {
-        print("Failed to make files.. retrying...")
+        multiPrinter("Failed to make files.. retrying...")
         return completion(false, globalErrors)
     }
 
@@ -224,7 +224,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
 
 func buildIt(completion: @escaping (Bool, [String]) -> Void) {
-    print("Building project...")
+    multiPrinter("Building project...")
     textToSpeech(text: "Building project \(projectName)...")
 
     startRandomSpinner()
@@ -232,7 +232,7 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
         stopRandomSpinner()
 
         if success {
-            print("Build successful.")
+            multiPrinter("Build successful.")
 
             func sucessWord() -> String {
                 switch Int.random(in: 0...5)
@@ -257,7 +257,7 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
             completion(true, errors)
         }
         else {
-            print("Build failed.")
+            multiPrinter("Build failed.")
 
             func failWord() -> String {
                 switch Int.random(in: 0...5)

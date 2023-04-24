@@ -45,10 +45,10 @@ func createNewProject(projectName: String, projectDirectory: String, completion:
 
     let status = task.terminationStatus
     if status == 0 {
-        print("Project created successfully")
+        multiPrinter("Project created successfully")
         completion(true)
     } else {
-        print("Error creating project")
+        multiPrinter("Error creating project")
         completion(false)
     }
 }

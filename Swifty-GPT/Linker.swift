@@ -8,14 +8,14 @@
 import Foundation
 
 func linkIt(link: String, completion: @escaping (String?) -> Void) {
-    print("Linking it... \(link)")
+    multiPrinter("Linking it... \(link)")
          linkReq(link: link) { result in
             switch result {
             case .success(let text):
 
                 completion(text)
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
+                multiPrinter("Error: \(error.localizedDescription)")
                 completion(nil)
             }
         }
@@ -55,7 +55,7 @@ func linkReq(link: String, completion: @escaping (Result<String, Error>) -> Void
             }
         }
         catch {
-            print("failed to link w e=\(error)")
+            multiPrinter("failed to link w e=\(error)")
         }
     }
     task.resume()
