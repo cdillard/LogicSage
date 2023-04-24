@@ -86,6 +86,7 @@ class ScreamClient: WebSocketDelegate {
     }
 }
 
+// Left commented MultipeerTransceiver in case I have to get it working
 //class Transceiver {
 //    var transceiver: MultipeerTransceiver!
 //

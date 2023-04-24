@@ -51,14 +51,14 @@ public func configure(_ app: Application) throws {
         }
     }
     // dns-sd -R "MyWebSocketServer" _websocket._tcp . 8080
-   // advertise()
+   advertise()
 }
 
 
 
 func advertise() {
      // Start advertising the WebSocket server using Bonjour
-    let serviceName = "MyWebSocketServer"
+    let serviceName = "SageServer"
     let serviceType = "_websocket._tcp"
     let servicePort = 8080
 
@@ -66,7 +66,7 @@ func advertise() {
     process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
     process.arguments = ["dns-sd", "-R", serviceName, serviceType, ".", String(servicePort)]
     do {
-    try process.run()
+        try process.run()
     }
     catch {
         print("caught an advertising error = \(error)")

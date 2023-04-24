@@ -50,8 +50,8 @@ func randomAscii() -> String {
 
     switch index {
     case 0: return logoAscii2
-    case 1: return logoAscii
-    case 2: return logoAscii3
+    case 1: return logoAscii5
+    case 2: return logoAscii2
     case 3: return logoAscii5
     default: return logoAscii2
     }

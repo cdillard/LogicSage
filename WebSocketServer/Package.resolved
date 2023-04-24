@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "dns_sd",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nallick/dns_sd.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "9e9841c131cc1357fc63b69ff75d6d91e45b8429"
-      }
-    },
-    {
       "identity" : "fluent",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent.git",
