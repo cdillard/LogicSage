@@ -38,29 +38,6 @@ AGI is imminent. (NOT THIS PROJECT LOL) We might get some funny apps tho...
 2. Navigate to the project directory: `cd Swifty-GPT`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
 
-
----
-## MAKING YOUR VOICES THE BEST THEY VAN BE  (Not needed)
-
--MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
-
-WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
-```
-// What YOU don't like the goofy robotic voices built in to Mac OS????
-// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
-```
-let cereprocVoicesEnabled = false
-
-BUY CEREPROC DEVELOPER ACCESS
-
-FIND/BUY/INSTALL THE VOICE YOU FANCY.
-https://www.cereproc.com
-
-Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
-Turn on `let cereprocVoicesEnabled = true`
-
-
-
 ## Installation
 ### Dependencies
 - [Homebrew](https://brew.sh/)
@@ -104,6 +81,26 @@ NOTE: NYTIMES,PIXABAY, and GOOGLE are not required (yet) but be sure that the fe
 Check Config.swift for the config.
 
 You can turn on asciiAnimations for fun or turn them off for fun. Your choice.
+
+---
+## MAKING YOUR VOICES THE BEST THEY VAN BE  (Not needed)
+
+-MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
+
+WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
+```
+// What YOU don't like the goofy robotic voices built in to Mac OS????
+// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
+```
+let cereprocVoicesEnabled = false
+
+BUY CEREPROC DEVELOPER ACCESS
+
+FIND/BUY/INSTALL THE VOICE YOU FANCY.
+https://www.cereproc.com
+
+Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
+Turn on `let cereprocVoicesEnabled = true`
 
 ## SWIFT SAGE IOS INSTRUCTIONS: (Not needed)
 

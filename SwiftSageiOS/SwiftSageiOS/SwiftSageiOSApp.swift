@@ -69,8 +69,9 @@ class ScreamClient: WebSocketDelegate {
 
     static let screamer = ScreamClient()
     func connectWebSocket() {
-        // 10.0.0.1
-        // Substitute with your Mac OS IP Address.
+
+        // Substitute with your Mac OS IP Address for testing with real devices.
+
         let urlString = "ws://127.0.0.1:8080/ws"
         guard let url = URL(string: urlString) else {
             print("Error: Invalid URL")
