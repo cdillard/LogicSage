@@ -1,5 +1,5 @@
 ![Swifty-GPT](Swifty-GPT/assets/Swifty-Logo.png)
-
+![Swifty-iOS](Swifty-GPT/assets/Swifty-iOSx.png)
 # Swifty-GPT: The Ultimate AI Integration for Xcode
 
 Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.

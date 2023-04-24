@@ -38,7 +38,6 @@ class ScreamClient: WebSocketDelegate {
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
         case .text(let text):
-            print("Received text: \(text)")
             consoleManager.print(text)
         case .binary(let data):
             print("Received binary data: \(data)")

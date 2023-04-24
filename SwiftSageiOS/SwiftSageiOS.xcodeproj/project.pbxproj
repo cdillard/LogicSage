@@ -21,7 +21,12 @@
 		B746DFD029F5E789002804EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCF29F5E789002804EB /* ContentView.swift */; };
 		B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD129F5E78A002804EB /* Assets.xcassets */; };
 		B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD529F5E78A002804EB /* Preview Assets.xcassets */; };
-		B748C2EC29F5E81B000F5F14 /* LocalConsole in Frameworks */ = {isa = PBXBuildFile; productRef = B748C2EB29F5E81B000F5F14 /* LocalConsole */; };
+		B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BB29F6DAED003EC13F /* ResizeController.swift */; };
+		B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BC29F6DAED003EC13F /* LCManager.swift */; };
+		B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */; };
+		B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BE29F6DAED003EC13F /* SystemReport.swift */; };
+		B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BF29F6DAED003EC13F /* Extensions.swift */; };
+		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
 		B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779E29F6A71300A9DBE6 /* Starscream */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +49,12 @@
 		B746DFD529F5E78A002804EB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		B748C2FA29F5FF4A000F5F14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B767E9BB29F6DAED003EC13F /* ResizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeController.swift; sourceTree = "<group>"; };
+		B767E9BC29F6DAED003EC13F /* LCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCManager.swift; sourceTree = "<group>"; };
+		B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureEndpointPredictor.swift; sourceTree = "<group>"; };
+		B767E9BE29F6DAED003EC13F /* SystemReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemReport.swift; sourceTree = "<group>"; };
+		B767E9BF29F6DAED003EC13F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B767E9C029F6DAED003EC13F /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B748C2EC29F5E81B000F5F14 /* LocalConsole in Frameworks */,
 				B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				B746DFCC29F5E789002804EB /* SwiftSageiOS */,
+				B767E9BA29F6DAED003EC13F /* LocalConsole */,
 				B746DFCB29F5E789002804EB /* Products */,
 				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
 			);
@@ -164,6 +175,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B767E9BA29F6DAED003EC13F /* LocalConsole */ = {
+			isa = PBXGroup;
+			children = (
+				B767E9BB29F6DAED003EC13F /* ResizeController.swift */,
+				B767E9BC29F6DAED003EC13F /* LCManager.swift */,
+				B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */,
+				B767E9BE29F6DAED003EC13F /* SystemReport.swift */,
+				B767E9BF29F6DAED003EC13F /* Extensions.swift */,
+				B767E9C029F6DAED003EC13F /* BorderManager.swift */,
+			);
+			path = LocalConsole;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,7 +205,6 @@
 			);
 			name = SwiftSageiOS;
 			packageProductDependencies = (
-				B748C2EB29F5E81B000F5F14 /* LocalConsole */,
 				B7CA779E29F6A71300A9DBE6 /* Starscream */,
 			);
 			productName = SwiftSageiOS;
@@ -213,7 +236,6 @@
 			);
 			mainGroup = B746DFC129F5E789002804EB;
 			packageReferences = (
-				B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */,
 				B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
 			productRefGroup = B746DFCB29F5E789002804EB /* Products */;
@@ -244,15 +266,21 @@
 			files = (
 				B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */,
 				B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */,
+				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
 				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
+				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
 				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
 				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,
 				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
 				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
+				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
 				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
+				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
+				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,14 +503,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/duraidabdul/LocalConsole";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
@@ -494,11 +514,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B748C2EB29F5E81B000F5F14 /* LocalConsole */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B748C2EA29F5E81B000F5F14 /* XCRemoteSwiftPackageReference "LocalConsole" */;
-			productName = LocalConsole;
-		};
 		B7CA779E29F6A71300A9DBE6 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */;

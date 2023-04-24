@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "localconsole",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duraidabdul/LocalConsole",
-      "state" : {
-        "branch" : "main",
-        "revision" : "2c5d5e018acd4963fe6dfe858f6d6fecef7cbf2f"
-      }
-    },
-    {
       "identity" : "starscream",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daltoniam/Starscream.git",

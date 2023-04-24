@@ -7,7 +7,7 @@
 
 import Foundation
 
-var depthLimit = 11 // turn it up too
+var depthLimit = 6 // turn it up too
 let personalityA = alexVoice // male voice
 let personalityB = allisonVoice // female voice
 let personAsName = "Alex"

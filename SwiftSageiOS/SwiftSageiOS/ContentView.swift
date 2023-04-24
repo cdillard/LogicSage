@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import LocalConsole
 import Foundation
 
 let consoleManager = LCManager.shared
