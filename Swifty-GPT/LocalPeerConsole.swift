@@ -15,6 +15,12 @@ import Starscream
 //}
 func multiPrinter(_ items: Any..., separator: String = " ", terminator: String = "\n") {
 
+    if !swiftSageIOSEnabled {
+        print(items, separator: separator, terminator: terminator)
+        return
+    }
+
+
     if items.count == 1, let singleString = items.first as? String {
         print(items, separator: separator, terminator: terminator)
         LocalPeerConsole.localPeerConsole.sendLog(singleString)
@@ -36,7 +42,6 @@ class LocalPeerConsole: NSObject {
         static let webSocketClient = WebSocketClient()
 
         func sendLog(_ text: String) {
-            if !swiftSageIOSEnabled { print("remote logging disabled"); return }
 
             LocalPeerConsole.webSocketClient.websocket.write(string: text)
         }
