@@ -214,8 +214,9 @@ Swifty-GPT offers a range of features to make software development faster and mo
 - [SourceKitten](https://github.com/jpsim/SourceKitten)
 - [MultiPeerKit](https://github.com/insidegui/MultiPeerKit)
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
-- [Starscream]
-- [Vapor]
+- [Starscream](https://github.com/daltoniam/Starscream)
+- [Vapor](https://github.com/vapor/vapor)
+- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 
 Thanks to Mike Bruin for keeping the Plist safe.
 
