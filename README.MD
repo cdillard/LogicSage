@@ -82,8 +82,30 @@ Check Config.swift for the config.
 
 You can turn on asciiAnimations for fun or turn them off for fun. Your choice.
 
+
+## Configuration
+1. Open `Swifty-GPT.xcworkspace`.
+2. Set `OPEN_AI_KEY`.
+3. Enjoy!
+
+-More : Move InputText and IdeaText to your `~Documents/SwiftyGPTWorkspace/`, this will be your primary entry point for idea and gpt prompts. The xcode terminal does not support pasting multiple lines of code so this is the best way. Use gptFile, ideaFile to execute.
+
+### Path Configuration
+You may need to change the `xcodegenPath` variable depending on your configuration:
+- Option 1: `let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"`
+- Option 2: `let xcodegenPath = "/opt/homebrew/bin/xcodegen"`
+
+To discover your paths and issues, run:
+- `which xcodeproj`
+- `which xcodegen`
+If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
+
+
 ---
-## MAKING YOUR VOICES THE BEST THEY VAN BE  (Not needed)
+## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed)
+
+If you would not like to hear ANYTHING from this tool please set `let voiceOutputEnabled = false`
+
 
 -MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
 
@@ -134,27 +156,6 @@ Download the desired datasets from [Hugging Face](https://huggingface.co/ggergan
 - ggml-large-v1.bin
 - ggml-base.en.bin
 - ggml-small.en.bn
-
-## Configuration
-1. Open `Swifty-GPT.xcworkspace`.
-2. Set `OPEN_AI_KEY`.
-3. Enjoy!
-
--More : Move InputText and IdeaText to your `~Documents/SwiftyGPTWorkspace/`, this will be your primary entry point for idea and gpt prompts. The xcode terminal does not support pasting multiple lines of code so this is the best way. Use gptFile, ideaFile to execute.
-
-### Path Configuration
-You may need to change the `xcodegenPath` variable depending on your configuration:
-- Option 1: `let xcodegenPath = "/Users/$USERNAME/.rbenv/shims/xcodegen"`
-- Option 2: `let xcodegenPath = "/opt/homebrew/bin/xcodegen"`
-
-To discover your paths and issues, run:
-- `which xcodeproj`
-- `which xcodegen`
-
-If you encounter Ruby errors, follow the steps here:
-
-If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
-
 
 ## Troubleshooting
 
