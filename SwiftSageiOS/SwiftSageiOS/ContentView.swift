@@ -28,10 +28,11 @@ struct ContentView: View {
     var body: some View {
 
         ZStack {
-            Text("🚀🔥 SwiftSage 🧠💥")
-                .foregroundColor(.black)
-                .font(.largeTitle)
-                .fontWeight(.heavy)
+            Image("swsLogo")
+            .resizable()
+            .scaledToFit()
+            .padding()
+
             VStack {
                 Spacer()
 

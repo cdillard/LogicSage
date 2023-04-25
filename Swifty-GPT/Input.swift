@@ -222,6 +222,9 @@ func handleUserInput() {
 func callCommandCommand(_ command: String, _ arg: String) {
     DispatchQueue.global(qos: .userInitiated).async {
         multiPrinter("SWIFTSAGE: \(command)")
+
+        if command == "Hello" { return }
+
         if let selectedCommand = commandTable[command] {
             selectedCommand(arg)
 
