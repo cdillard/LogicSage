@@ -16,15 +16,17 @@ struct CommandButtonView: View {
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    multiLineText = ""
-                }) {
-                    Text( "X")
-                        .font(.subheadline)
-                        .foregroundColor(Color.white)
-                        .padding()
-                        .background(settingsViewModel.buttonColor)
-                        .cornerRadius(10)
+                if !multiLineText.isEmpty {
+                    Button(action: {
+                        multiLineText = ""
+                    }) {
+                        Text( "X")
+                            .font(.subheadline)
+                            .foregroundColor(Color.white)
+                            .padding()
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(10)
+                    }
                 }
 
                 Button(action: {
