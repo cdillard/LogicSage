@@ -16,7 +16,7 @@ struct CommandButtonView: View {
     var body: some View {
         VStack {
             HStack {
-                if !multiLineText.isEmpty {
+                if !multiLineText.isEmpty && isInputViewShown {
                     Button(action: {
                         multiLineText = ""
                     }) {
