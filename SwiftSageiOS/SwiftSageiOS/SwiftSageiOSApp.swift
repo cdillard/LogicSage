@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
-
+import Combine
 
 let defaultTerminalFontSize: CGFloat = 12.666
 
 @main
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel()
+    @StateObject private var appState = AppState()
     var serviceDiscovery: ServiceDiscovery?
     init() {
         serviceDiscovery = ServiceDiscovery()
@@ -26,11 +27,18 @@ struct SwiftSageiOSApp: App {
                     .ignoresSafeArea()
                 ContentView()
                     .environmentObject(settingsViewModel)
+                    .environmentObject(appState)
                 
             }
         }
     }
+
+    func doDiscover() {
+        serviceDiscovery?.startDiscovering()
+    }
 }
+
+
 
 let screamer = ScreamClient()
 
@@ -73,6 +81,10 @@ class ScreamClient: WebSocketDelegate {
             print("WebSocket cancelled")
         case .error(let error):
             print("Error: \(error?.localizedDescription ?? "Unknown error")")
+//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+//                print("Reconnecting...")
+//                self.connect()
+//            }
         }
     }
 
@@ -130,3 +142,27 @@ class ScreamClient: WebSocketDelegate {
 
 }
 
+class AppState: ObservableObject {
+    @Published var isInBackground: Bool = false
+    private var cancellables: [AnyCancellable] = []
+
+    init() {
+        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+            .map { _ in true }
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+
+        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+            .map { _ in false }
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+
+        didEnterBackground
+            .merge(with: willEnterForeground)
+            .sink { [weak self] in
+                self?.isInBackground = $0
+                // SHOULD RECONNECT????????
+            }
+            .store(in: &cancellables)
+    }
+}
