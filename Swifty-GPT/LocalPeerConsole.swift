@@ -95,7 +95,10 @@ class WebSocketClient: WebSocketDelegate {
             }
         case .cancelled:
             print("WebSocket cancelled")
-
+            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         }
     }
 

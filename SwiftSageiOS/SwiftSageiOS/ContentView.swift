@@ -34,16 +34,23 @@ struct ContentView: View {
 //            Image(systemName: "globe")
 //                .imageScale(.large)
 //                .foregroundColor(.accentColor)
-
-
-            VStack {
-                CommandButtonView()
+            HStack {
+//                Button("FORCE 📵🔌 📶") {
+//                    print("FORCING WEBSOCKET CONNECTION")
+//                }
+//                .font(.body)
+//                .foregroundColor(Color.white)
+//                .padding()
+//                .background(Color.red)
+//                .cornerRadius(10)
+                VStack {
+                    CommandButtonView()
+                }
+                //            Text("🚀🔥 Welcome to SwiftSage 🧠💥")
+                //                .foregroundColor(.black)
+                //                .font(.largeTitle)
+                //                .fontWeight(.heavy)
             }
-//            Text("🚀🔥 Welcome to SwiftSage 🧠💥")
-//                .foregroundColor(.black)
-//                .font(.largeTitle)
-//                .fontWeight(.heavy)
-
         }
         .padding(.bottom, keyboardObserver.isKeyboardVisible ? 0 : 0) // Adjust this value based on the actual keyboard height
         .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)

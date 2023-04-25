@@ -37,7 +37,8 @@ class ScreamClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("WebSocket connected, headers: \(headers)")
-            client.write(string: "Hello from iOS app!")
+            let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
+            client.write(string: "Hello from \(devType) app!")
             startPingTimer()
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
@@ -98,9 +99,8 @@ class ScreamClient: WebSocketDelegate {
     func sendCommand(command: String) {
         print("Executing: \(command)")
 
-        websocket.write(string:command ) {
-            print("commanded")
-        }
+
+        websocket.write(string:command)
     }
 
     func sendPing() {

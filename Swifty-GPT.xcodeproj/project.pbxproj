@@ -38,6 +38,7 @@
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
+		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
 		B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */; };
 		B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */; };
@@ -161,6 +162,7 @@
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
+		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSageiOS.xcodeproj; path = SwiftSageiOS/SwiftSageiOS.xcodeproj; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
+				B737F40429F8153B00E57577 /* Spotify.swift */,
 				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
 				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
@@ -633,6 +636,7 @@
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
+				B737F40529F8153B00E57577 /* Spotify.swift in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
 				B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,

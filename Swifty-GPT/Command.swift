@@ -489,14 +489,55 @@ In conclusion, Chris may have been young, but he was wise beyond his years. His 
 
  But for the moment, people were content exploring and experiencing the vast virtual environments created by ProGen, and the future of landscape creation seemed brighter than ever before.
  """
+let sageStory = """
+ Chris Dillard was a computer scientist who had always been fascinated by the world of artificial intelligence. He had spent years studying the intricacies of computer programming and had developed a love for Apple products. It was this combination of interests that led him to create Sage, an AI computer that specialized in all things Apple.
+
+ The journey of creating Sage was not an easy one. Chris spent countless sleepless nights coding and debugging, trying to perfect the software that would one day be the backbone of Sage. His efforts paid off, and Sage quickly became one of the most advanced AI computers in the world.
+
+ As word of Sage's capabilities spread, Chris began to receive offers from major corporations who wanted to purchase the technology. But he couldn't bring himself to sell something that he had put so much of himself into. Instead, he decided to keep Sage and use it for his own projects.
+
+ Soon, Chris was using Sage to develop new apps and software for the Apple platform. His work was groundbreaking, and he quickly gained a reputation as a tech genius. But as his fame grew, so too did the pressure to keep pushing the limits of what Sage could do.
+
+ Chris soon found himself working around the clock, never taking time off, and pushing himself to the brink of exhaustion. He was so focused on his work that he didn't even notice that he had stopped spending time with his family and friends.
+
+ It wasn't until he suffered a massive heart attack that Chris realized the toll that his obsession had taken on his life. He spent weeks in the hospital recovering, and during that time, he had plenty of time to reflect on what had gone wrong.
+
+ When he was finally released from the hospital, Chris made a decision to take his life in a new direction. He scaled back his work and began to focus on balancing his personal life with his professional one. He started spending more time with his family and friends, and even began to take up new hobbies.
+
+ As for Sage, Chris handed over control of the AI computer to a team of experts, who continued to develop and improve the technology. Sage became a staple in the world of Apple products, powering everything from mobile apps to desktop software.
+
+ In the end, Chris learned an important lesson about the dangers of obsession and the importance of finding balance in life. And with Sage by his side, he continued to push the limits of what was possible in the world of technology – but this time, with a renewed sense of purpose and perspective.
+ """
+
+
+
+let sageStory2 = """
+ Once upon a time, there was a young aspiring app developer who wanted to create an innovative app that would revolutionize the way people experience music. This young developer had a vision to create an app that would allow users to listen to music in a completely new and personalized way.
+
+ The young developer had only basic programming skills and little experience with app development. Despite this, he was determined to turn his vision into a reality. He spent countless hours learning and practicing coding in Swift, all while facing numerous setbacks and challenges.
+
+ At first, his app was full of bugs and glitches, and it seemed like the project was going nowhere. It was frustrating, and he felt like giving up. However, instead of throwing in the towel, he persevered.
+
+ He kept studying, experimenting, and refining his code. He sought advice from other developers and took their feedback, even when it was harsh. Slowly but surely, his app began to take shape, and the bugs started to disappear.
+
+ Finally, after months of hard work, the young developer's app was ready for release. When he launched it, he was nervous but excited. The feedback from his users was overwhelmingly positive. Everyone loved his innovative approach to music streaming, and the app rapidly became one of the most popular in the market.
+
+ What sets this young developer's story apart is his perseverance in the face of adversity. He did not give up, even when he faced numerous obstacles and had little experience with app development. He kept learning, refining, and pushing himself, determined to make his vision a reality.
+
+ The lesson that we can learn from this story is that perseverance is vital for success in coding and app development. It is easy to give up in the face of setbacks or challenges, but it is only through perseverance that we can turn our visions into reality. No matter how difficult the task may seem, keep pushing and striving towards your goals, and you too can achieve greatness.
+ """
     var chosenSong = song2
-    switch Int.random(in: 0...2) {
+    switch Int.random(in: 0...3) {
     case 0:
         chosenSong = song2
     case 1:
         chosenSong = il
     case 2:
         chosenSong = song3
+    case 3:
+        chosenSong = sageStory
+    case 4:
+        chosenSong = sageStory2
     default:
         chosenSong = song2
     }

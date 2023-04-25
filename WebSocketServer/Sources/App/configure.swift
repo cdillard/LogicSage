@@ -33,7 +33,7 @@ public func configure(_ app: Application) throws {
 
                 guard client !== ws else { 
                     print("skipping self")
-                    return
+                    continue
                 }
                 print("send to client =\(client)")
 
