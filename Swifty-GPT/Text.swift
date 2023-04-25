@@ -8,6 +8,15 @@
 import Foundation
 
 func commandsText() -> String {
+    var text = """
+     \( fullProjText() )
+
+    """
+    return text
+
+}
+
+func fullProjText() -> String {
 """
  🔸 Project Management:
    1. ✨ Run loaded prompt (r)
@@ -39,11 +48,13 @@ func commandsText() -> String {
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
-    """
+
+    let openLine = """
     \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
-    \((logV == .verbose || overrideV) ? commandsText() : "")
+    \((logV == .verbose && overrideV) ? commandsText() : "")
     🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
     """
+    return openLine
 }
 func randomAscii() -> String {
     let index = Int.random(in: 0..<4)
@@ -72,27 +83,3 @@ Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. U
 🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
 """
 }
-
-//func afterSuccessLine() -> String {
-//"""
-//Project creation success. Project should have auto openned.
-//\(logV == .verbose ? numericalCommands() : "")
-//\(logV == .verbose ? commandsText() : "")
-//🔍 Please choose an option [0-6, gpt:, xcode:, idea:, exit]:
-//"""
-//}
-//// 🎮🎨📲
-//func sharedCommands() -> String {
-//"""
-//🔹 0. 🗣️ Use voice command: "0" to start/end
-//🔹 1. ✨ Run loaded prompt, 2. 🚀 Show loaded prompt, 3. 📂 Open project,  B. 🏗️ Build Project, X. 📂 Voice settings
-//"""
-//}
-
-//func numericalCommands() -> String {
-//"""
-//\(logV == .verbose ? sharedCommands() : "")
-//🔹 4. 🚪📂 Close project,  5. 🖥️🔧 Fix errors w/ GPT, 6. 🆕   Continue implementation
-//"""
-//}
-
