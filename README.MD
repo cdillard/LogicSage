@@ -21,6 +21,7 @@ DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM 
 
 iOS Swift Sage??? Whattttt??? Yep.
 ![SwiftSage](Swifty-GPT/assets/swifty-ios.png)
+More screenshots at the bottom
 
 ----
 04-23-2023
@@ -222,3 +223,13 @@ Thanks to Mike Bruin for keeping the Plist safe.
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
+
+SwiftSage iOS PRetty
+
+
+![SwiftSage](Swifty-GPT/assets/swifty-ios-3.png)
+
+![SwiftSage](Swifty-GPT/assets/swifty-ios-4.png)
+
+
+![SwiftSage](Swifty-GPT/assets/swifty-ios-2.png)
