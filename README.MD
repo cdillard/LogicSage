@@ -1,7 +1,7 @@
-![Swifty-GPT](Swifty-GPT/assets/Swifty-Combine.png)
-# Swifty-GPT: The Ultimate AI Integration for Xcode
+![SwiftSage](Swifty-GPT/assets/Swifty-Combine.png)
+# SwiftSage: The Ultimate AI Integration for Xcode
 
-Swifty-GPT is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, Swifty-GPT makes the whole process smoother and easier in Xcode.
+SwiftSage is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, SwiftSage makes the whole process smoother and easier in Xcode.
 
 ## Table of Contents
 - News, Changelog
@@ -34,8 +34,8 @@ SwiftSage has evolved. realtime voice synthesis and google command gives super p
 AGI is imminent. (NOT THIS PROJECT LOL) We might get some funny apps tho...
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/username/Swifty-GPT.git`
-2. Navigate to the project directory: `cd Swifty-GPT`
+1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
+2. Navigate to the project directory: `cd SwiftSage`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
 
 ## Installation
@@ -190,7 +190,7 @@ No names found... failing..
 If this happens just try again and it _usually_ clears right up.
 
 ## Features
-Swifty-GPT offers a range of features to make software development faster and more efficient:
+SwiftSage offers a range of features to make software development faster and more efficient:
 - iOS REMOTE FOR SWIFT-SAGE [IN-PROGRESS]
 	- It's freaking cool!!!!
 - Code analysis and optimization
