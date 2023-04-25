@@ -6,6 +6,8 @@ import WebSocketKit
 import func Darwin.fflush
 import var Darwin.stdout
 
+let debugging = false
+
 // configures your application
 public func configure(_ app: Application) throws {
     var connectedClients: [WebSocket] = []
@@ -13,7 +15,9 @@ public func configure(_ app: Application) throws {
     app.http.server.configuration.hostname = "0.0.0.0"
 
     app.webSocket("ws") { req, ws in
-    //    print("Client connected")
+    if debugging {
+       print("Client connected")
+    }
         connectedClients.append(ws)
         ws.onText { ws, text in
  
@@ -24,18 +28,25 @@ public func configure(_ app: Application) throws {
                 print("\(text)")
             }
         
+    if debugging {
 
-            // print("connectedClients")
+            print("connectedClients")
 
-            // print(connectedClients)
+            print(connectedClients)
+    }
 
             for client in connectedClients {
 
                 guard client !== ws else { 
-                    print("skipping self")
+                    if debugging {
+                        print("skipping self")
+                    }
                     continue
                 }
-                print("send to client =\(client)")
+                if debugging {
+
+                    print("send to client =\(client)")
+                }
 
                 client.send("\(text)")
             }
@@ -54,7 +65,10 @@ public func configure(_ app: Application) throws {
 
             switch result {
             case .success:
-                print("Client disconnected")
+                if debugging {
+
+                    print("Client disconnected")
+                }
             case .failure(let error):
                 print("Client disconnected with error: \(error)")
             }

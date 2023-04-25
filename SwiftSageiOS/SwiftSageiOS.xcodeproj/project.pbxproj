@@ -17,6 +17,8 @@
 		B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */; };
 		B709720E29F62DF3008ED803 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720429F62DF3008ED803 /* Peer.swift */; };
 		B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */; };
+		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
+		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
 		B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */; };
 		B746DFD029F5E789002804EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCF29F5E789002804EB /* ContentView.swift */; };
 		B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD129F5E78A002804EB /* Assets.xcassets */; };
@@ -62,6 +64,8 @@
 		B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerTransceiver.swift; sourceTree = "<group>"; };
 		B709720429F62DF3008ED803 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConfiguration.swift; sourceTree = "<group>"; };
+		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
+		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B746DFCA29F5E789002804EB /* SwiftSageiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSageiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSApp.swift; sourceTree = "<group>"; };
 		B746DFCF29F5E789002804EB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
+				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
+				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -417,6 +423,7 @@
 				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
+				B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */,
 				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
 				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,
 				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
@@ -440,6 +447,7 @@
 				B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */,
 				B74A2CCF29F7F6990051DB52 /* Framer.swift in Sources */,
 				B74A2CCE29F7F6990051DB52 /* FoundationHTTPServerHandler.swift in Sources */,
+				B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
