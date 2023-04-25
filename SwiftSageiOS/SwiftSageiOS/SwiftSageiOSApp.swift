@@ -12,6 +12,7 @@ let defaultTerminalFontSize: CGFloat = 12.666
 
 @main
 struct SwiftSageiOSApp: App {
+    @StateObject private var settingsViewModel = SettingsViewModel()
     var serviceDiscovery: ServiceDiscovery?
     init() {
         serviceDiscovery = ServiceDiscovery()
@@ -21,9 +22,10 @@ struct SwiftSageiOSApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                Color.purple
+                settingsViewModel.backgroundColor
                     .ignoresSafeArea()
                 ContentView()
+                    .environmentObject(settingsViewModel)
                 
             }
         }

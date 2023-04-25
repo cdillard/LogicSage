@@ -11,6 +11,7 @@ import SwiftUI
 struct CommandButtonView: View {
     @State private var isInputViewShown = false
     @State private var multiLineText = ""
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
         VStack {
@@ -23,7 +24,7 @@ struct CommandButtonView: View {
                     .font(.headline)
                     .foregroundColor(Color.white)
                     .padding()
-                    .background(Color.blue)
+                    .background(settingsViewModel.buttonColor)
                     .cornerRadius(10)
             }
 

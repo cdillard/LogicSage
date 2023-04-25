@@ -18,7 +18,7 @@ struct ContentView: View {
 
     @StateObject private var keyboardObserver = KeyboardObserver()
 
-    @ObservedObject var viewModel = SettingsViewModel()
+    @ObservedObject var settingsViewModel = SettingsViewModel()
     
     init() {
         consoleManager.isVisible = true
@@ -39,7 +39,7 @@ struct ContentView: View {
                     //                .background(Color.red)
                     //                .cornerRadius(10)
                     VStack {
-                        CommandButtonView()
+                        CommandButtonView(settingsViewModel: settingsViewModel)
                     }
                     //            Text("🚀🔥 Welcome to SwiftSage 🧠💥")
                     //                .foregroundColor(.black)
@@ -63,13 +63,13 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding()
-                            .background(Color.blue)
+                            .background(settingsViewModel.buttonColor)
                             .foregroundColor(.white)
                             .cornerRadius(30)
                     }
                     .padding()
                     .popover(isPresented: $showSettings, arrowEdge: .top) {
-                        SettingsView(showSettings: $showSettings, viewModel: viewModel)
+                        SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
                     }
                     Spacer()
                 }

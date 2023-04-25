@@ -1,4 +1,4 @@
-![SwiftSage](Swifty-GPT/assets/Swifty-Combine.png)
+![SwiftSage](Swifty-GPT/assets/logo.png)
 # SwiftSage: The Ultimate AI Integration for Xcode
 
 SwiftSage is a powerful tool for creating apps on Apple devices like iPhones, Macs, and more. It helps with everything in Xcode, from starting projects to fixing bugs, and even automating tasks with AI integration. Whether you're developing a fun game or a professional business app, SwiftSage makes the whole process smoother and easier in Xcode.

@@ -62,7 +62,7 @@ struct SettingsView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 40)
                     .padding(.vertical, 12)
-                    .background(Color.blue)
+                    .background(viewModel.buttonColor)
                     .cornerRadius(8)
             }
             .padding(.bottom)
