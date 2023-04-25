@@ -26,6 +26,10 @@ struct ContentView: View {
     var body: some View {
 
         ZStack {
+            Text("🚀🔥 SwiftSage 🧠💥")
+                .foregroundColor(.black)
+                .font(.largeTitle)
+                .fontWeight(.heavy)
             VStack {
                 Spacer()
 
@@ -41,10 +45,7 @@ struct ContentView: View {
                     VStack {
                         CommandButtonView(settingsViewModel: settingsViewModel)
                     }
-                    //            Text("🚀🔥 Welcome to SwiftSage 🧠💥")
-                    //                .foregroundColor(.black)
-                    //                .font(.largeTitle)
-                    //                .fontWeight(.heavy)
+
                 }
             }
             .padding(.bottom, keyboardObserver.isKeyboardVisible ? 0 : 0) // Adjust this value based on the actual keyboard height

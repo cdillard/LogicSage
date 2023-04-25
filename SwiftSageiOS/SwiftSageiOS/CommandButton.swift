@@ -15,17 +15,30 @@ struct CommandButtonView: View {
 
     var body: some View {
         VStack {
-            Button(action: {
-                self.isInputViewShown.toggle()
-                consoleManager.isVisible = !isInputViewShown
+            HStack {
+                Button(action: {
+                    multiLineText = ""
+                }) {
+                    Text( "X")
+                        .font(.subheadline)
+                        .foregroundColor(Color.white)
+                        .padding()
+                        .background(settingsViewModel.buttonColor)
+                        .cornerRadius(10)
+                }
 
-            }) {
-                Text(self.isInputViewShown ? "TERM" : "COMMAND")
-                    .font(.headline)
-                    .foregroundColor(Color.white)
-                    .padding()
-                    .background(settingsViewModel.buttonColor)
-                    .cornerRadius(10)
+                Button(action: {
+                    self.isInputViewShown.toggle()
+                    consoleManager.isVisible = !isInputViewShown
+
+                }) {
+                    Text(self.isInputViewShown ? "TERM" : "COMMAND")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .padding()
+                        .background(settingsViewModel.buttonColor)
+                        .cornerRadius(10)
+                }
             }
 
             if isInputViewShown {
