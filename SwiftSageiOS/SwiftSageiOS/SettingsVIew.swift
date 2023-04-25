@@ -50,6 +50,17 @@ struct SettingsView: View {
                     .padding(.horizontal, 8)
             }
 
+            VStack(alignment: .leading, spacing: 15) {
+                Text("Text Size")
+                    .fontWeight(.semibold)
+                HStack {
+                    Text("Small")
+                    Slider(value: $viewModel.textSize, in: 12...36, step: 1)
+                        .accentColor(.blue)
+                    Text("Large")
+                }
+            }
+
             Spacer()
 
             Button(action: {

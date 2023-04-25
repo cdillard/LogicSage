@@ -65,7 +65,8 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     }
 
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        multiPrinter("finished speech")
+        // This could be used for all sorts of things like making voies not overlap
+       // multiPrinter("finished speech")
     }
 
     var count = 0
@@ -155,11 +156,6 @@ func welcomeWord() -> String {
         return "Hello"
     }
 }
-
-func killAllVoices() {
-    stopSayProcess()
-}
-
 
 class RepeatingTimer {
     private let timer: DispatchSourceTimer

@@ -9,6 +9,9 @@ import SwiftUI
 import Combine
 
 let defaultTerminalFontSize: CGFloat = 12.666
+var terminalFontSize: CGFloat = 12.666
+//let defaulTerminalTextColor: Color = .green
+var terminalTextColor: UIColor = .green
 
 @main
 struct SwiftSageiOSApp: App {
@@ -28,7 +31,6 @@ struct SwiftSageiOSApp: App {
                 ContentView()
                     .environmentObject(settingsViewModel)
                     .environmentObject(appState)
-                
             }
         }
     }
@@ -37,8 +39,6 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery?.startDiscovering()
     }
 }
-
-
 
 let screamer = ScreamClient()
 

@@ -139,7 +139,6 @@ func randomCommand(input: String) {
 }
 
 func stopCommand(input: String) {
-    killAllVoices()
     stopRandomSpinner()
     // TODO: Figure out a way to make this invalidate the potential GPTs requests and Google APIs requests.
 }

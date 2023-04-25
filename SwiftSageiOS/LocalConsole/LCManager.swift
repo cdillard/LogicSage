@@ -17,7 +17,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     public static let shared = LCManager()
     
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
-    public var fontSize: CGFloat =  defaultTerminalFontSize{
+    public var fontSize: CGFloat =  terminalFontSize{
         didSet {
             guard fontSize >= 4 else { fontSize = 4; return }
             guard fontSize <= 20 else { fontSize = 20; return }
@@ -25,7 +25,12 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             setAttributedText(consoleTextView.text)
         }
     }
-    
+
+//    public var textColor: Color = defaulTerminalTextColor {
+//        didSet {
+//
+//        }
+//    }
     var isConsoleConfigured = false
     
     /// A high performance text tracker that only updates the view's text if the view is visible. This allows the app to run print to the console with virtually no performance implications when the console isn't visible.
@@ -850,7 +855,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
-            .foregroundColor: UIColor.green,
+            .foregroundColor: terminalTextColor,
             .font: UIFont.systemFont(ofSize: fontSize, weight: .semibold, design: .monospaced)
         ]
         

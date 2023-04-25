@@ -10,6 +10,16 @@ import SwiftUI
 import Combine
 
 class SettingsViewModel: ObservableObject {
+    
+    @Published var textSize: CGFloat {
+        didSet {
+            UserDefaults.standard.set(Float(textSize), forKey: "textSize")
+
+            terminalFontSize = textSize
+
+        }
+    }
+
     @Published var terminalBackgroundColor: Color = .black {
         didSet {
                    if let data = terminalBackgroundColor.colorData() {
@@ -19,6 +29,7 @@ class SettingsViewModel: ObservableObject {
            }
 @Published var terminalTextColor: Color = .white {
     didSet {
+
         if let data = terminalTextColor.colorData() {
             UserDefaults.standard.set(data, forKey: "terminalTextColor")
         }
@@ -42,9 +53,11 @@ class SettingsViewModel: ObservableObject {
 
 init() {
     self.terminalBackgroundColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
-    self.terminalTextColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .white
-    self.buttonColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .blue
-    self.backgroundColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .gray
+    self.terminalTextColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .green
+    self.buttonColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
+    self.backgroundColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
+
+    self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
 }
 }
 

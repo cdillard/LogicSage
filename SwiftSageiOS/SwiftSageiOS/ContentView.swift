@@ -22,6 +22,8 @@ struct ContentView: View {
     
     init() {
         consoleManager.isVisible = true
+        consoleManager.fontSize = settingsViewModel.textSize
+
     }
     var body: some View {
 
@@ -67,6 +69,7 @@ struct ContentView: View {
                             .background(settingsViewModel.buttonColor)
                             .foregroundColor(.white)
                             .cornerRadius(30)
+                            .padding(.bottom, 10)
                     }
                     .padding()
                     .popover(isPresented: $showSettings, arrowEdge: .top) {

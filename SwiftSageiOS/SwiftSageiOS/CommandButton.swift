@@ -30,6 +30,7 @@ struct CommandButtonView: View {
                 Button(action: {
                     self.isInputViewShown.toggle()
                     consoleManager.isVisible = !isInputViewShown
+                    consoleManager.fontSize = settingsViewModel.textSize
 
                 }) {
                     Text(self.isInputViewShown ? "TERM" : "COMMAND")
