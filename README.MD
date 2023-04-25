@@ -20,6 +20,7 @@ DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM 
 04-24-2023
 
 iOS Swift Sage??? Whattttt??? Yep.
+![SwiftSage](Swifty-GPT/assets/swifty-ios.png)
 
 ----
 04-23-2023
