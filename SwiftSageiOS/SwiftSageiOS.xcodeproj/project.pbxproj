@@ -28,6 +28,7 @@
 		B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BF29F6DAED003EC13F /* Extensions.swift */; };
 		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
 		B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779E29F6A71300A9DBE6 /* Starscream */; };
+		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		B767E9BE29F6DAED003EC13F /* SystemReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemReport.swift; sourceTree = "<group>"; };
 		B767E9BF29F6DAED003EC13F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B767E9C029F6DAED003EC13F /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
+		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				B746DFD429F5E78A002804EB /* Preview Content */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
+				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
+				B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

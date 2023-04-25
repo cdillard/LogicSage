@@ -8,7 +8,7 @@
 	<true/>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_websocket._tcp</string>
+		<string>_sagess._tcp</string>
 	</array>
 	<key>NSAllowsLocalNetworking</key>
 	<true/>

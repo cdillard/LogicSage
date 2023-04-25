@@ -54,6 +54,10 @@ struct ContentView: View {
                             isLabelVisible = true
                             isTextFieldFocused = false
                         }
+
+                    Button("reset") {
+                        // reset term to default pos
+                    }
                 }
             }
             .animation(.default, value: isLabelVisible)

@@ -45,8 +45,8 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
     }
     
-    let defaultConsoleSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-    
+    let defaultConsoleSize = CGSize(width: UIScreen.size.width - 10, height: UIScreen.size.height - (UIScreen.size.height / 3))
+
     lazy var borderView = UIView()
     
     var lumaWidthAnchor: NSLayoutConstraint!

@@ -22,8 +22,10 @@ let defaultTerminalFontSize: CGFloat = 12.666
 
 @main
 struct SwiftSageiOSApp: App {
+    var serviceDiscovery: ServiceDiscovery?
     init() {
-        ScreamClient.screamer.connectWebSocket()
+        serviceDiscovery = ServiceDiscovery()
+            serviceDiscovery?.startDiscovering()
     }
 
 
@@ -33,6 +35,7 @@ struct SwiftSageiOSApp: App {
                 Color.purple
                     .ignoresSafeArea()
                 ContentView()
+                
             }
 
         }
@@ -68,11 +71,17 @@ class ScreamClient: WebSocketDelegate {
     var websocket: WebSocket!
 
     static let screamer = ScreamClient()
-    func connectWebSocket() {
+    func connectWebSocket(ipAddress: String, port: String) {
+
+
+
+        // here we can initialze the bonjour searching
+        
+
 
         // Substitute with your Mac OS IP Address for testing with real devices.
-
-        let urlString = "ws://127.0.0.1:8080/ws"
+        // System Settings -> Wi-Fi -> Details -> IP Address
+        let urlString = "ws://\(ipAddress):\(port)/ws"
         guard let url = URL(string: urlString) else {
             print("Error: Invalid URL")
             return

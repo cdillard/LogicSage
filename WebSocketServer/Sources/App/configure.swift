@@ -9,6 +9,8 @@ import var Darwin.stdout
 // configures your application
 public func configure(_ app: Application) throws {
         var connectedClients: [WebSocket] = []
+
+        app.http.server.configuration.hostname = "0.0.0.0"
     app.webSocket("ws") { req, ws in
      //   print("Client connected")
         connectedClients.append(ws)
@@ -23,12 +25,12 @@ public func configure(_ app: Application) throws {
         
             fflush(stdout) // Explicitly flush the standard output
 
-        // print("connectedClients")
+       // print("connectedClients")
 
-        // print(connectedClients)
+        print(connectedClients)
 
             for client in connectedClients {
-               // print("send to client =\(client)")
+          //     print("send to client =\(client)")
 
                 client.send("\(text)")
             }
@@ -58,8 +60,8 @@ public func configure(_ app: Application) throws {
 
 func advertise() {
      // Start advertising the WebSocket server using Bonjour
-    let serviceName = "SageServer"
-    let serviceType = "_websocket._tcp"
+    let serviceName = "SwiftSageServer"
+    let serviceType = "_sagess._tcp"
     let servicePort = 8080
 
     let process = Process()

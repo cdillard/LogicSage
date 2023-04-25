@@ -207,7 +207,7 @@ class ResizeController {
     var initialHeight = CGFloat.zero
     
     static let kMinConsoleHeight: CGFloat = 108
-    static let kMaxConsoleHeight: CGFloat = 1000
+    static let kMaxConsoleHeight: CGFloat = UIDevice.current.userInterfaceIdiom == .phone ? 400 : 1000
     
     var verticalPanner_frameRateRequestID: UUID?
     
@@ -289,8 +289,11 @@ class ResizeController {
     }
     
     var initialWidth = CGFloat.zero
-    
-    static let kMinConsoleWidth: CGFloat = 112
+
+
+
+    static let kMinConsoleWidth: CGFloat = UIDevice.current.userInterfaceIdiom == .phone ? 40 : 112
+
     static let kMaxConsoleWidth: CGFloat = [UIScreen.portraitSize.width, UIScreen.portraitSize.height].min()! - 56
     
     var horizontalPanner_frameRateRequestID: UUID?
@@ -299,8 +302,8 @@ class ResizeController {
         
         let translation = recognizer.translation(in: bottomGrabber.superview)
         
-        let minWidth = Self.kMinConsoleWidth
-        let maxWidth = Self.kMaxConsoleWidth
+        let minWidth: CGFloat = 0
+        let maxWidth: CGFloat = 10000
         
         switch recognizer.state {
         case .began:
@@ -593,10 +596,9 @@ class PlatterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var possibleEndpoints: [CGPoint] { return [CGPoint(x: 0, y: (UIScreen.hasRoundedCorners ? 44 : -8) + 700),
-                                               CGPoint(x: 0, y: LCManager.shared.consoleViewController.view.frame.size.height + 800)]
+    var possibleEndpoints: [CGPoint] { return [CGPoint(x: 0, y: (UIScreen.hasRoundedCorners ? 44 : -8) + 63),
+                                               CGPoint(x: 0, y: LCManager.shared.consoleViewController.view.frame.size.height + 5)]
     }
-    
     var initialPlatterOriginY = CGFloat.zero
     
     @objc func platterPanner(recognizer: UIPanGestureRecognizer) {
