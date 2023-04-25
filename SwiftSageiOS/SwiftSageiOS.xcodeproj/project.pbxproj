@@ -29,6 +29,7 @@
 		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
 		B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779E29F6A71300A9DBE6 /* Starscream */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
+		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		B767E9BF29F6DAED003EC13F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B767E9C029F6DAED003EC13F /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
+		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
+				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
 				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
+				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
 				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
 				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,

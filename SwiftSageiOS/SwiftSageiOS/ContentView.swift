@@ -14,7 +14,6 @@ let consoleManager = LCManager.shared
 struct ContentView: View {
 
     @State private var isLabelVisible: Bool = true
-    @State private var text: String = "Tap to edit"
     @FocusState private var isTextFieldFocused: Bool
 
     @StateObject private var keyboardObserver = KeyboardObserver()
@@ -38,37 +37,15 @@ struct ContentView: View {
 
 
             VStack {
-                if isLabelVisible {
-                    Text(text)
-                        .font(.largeTitle)
-                        .onTapGesture {
-                            isLabelVisible = false
-                            isTextFieldFocused = true
-                        }
-                } else {
-                    TextField("Tap to edit", text: $text, prompt: Text("Tap to edit"))
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .focused($isTextFieldFocused)
-                        .submitLabel(.done)
-                        .onSubmit {
-                            isLabelVisible = true
-                            isTextFieldFocused = false
-                        }
-
-                    Button("reset") {
-                        // reset term to default pos
-                    }
-                }
+                CommandButtonView()
             }
-            .animation(.default, value: isLabelVisible)
-
 //            Text("🚀🔥 Welcome to SwiftSage 🧠💥")
 //                .foregroundColor(.black)
 //                .font(.largeTitle)
 //                .fontWeight(.heavy)
 
         }
-        .padding(.bottom, keyboardObserver.isKeyboardVisible ? 270 : 0) // Adjust this value based on the actual keyboard height
+        .padding(.bottom, keyboardObserver.isKeyboardVisible ? 0 : 0) // Adjust this value based on the actual keyboard height
         .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
         .environmentObject(keyboardObserver)
         .padding()

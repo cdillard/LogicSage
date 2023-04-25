@@ -409,7 +409,7 @@ func globalsCommand(input: String) {
 func voiceSettingsCommand(input: String) {
     multiPrinter("If I had voice settings UI implemetned, here it would be")
     multiPrinter("But look at all the voices to choose from...")
-    printAVVoices()
+    multiPrinter("\(avVoices)")
 }
 
 func sayCommand(input: String) {
@@ -452,23 +452,56 @@ func encourageCommand(input: String) {
 """
 
     let song2 = """
-Once there was a mad computer scientist named Dr. Frank. Dr. Frank had always been obsessed with artificial intelligence and had spent years working on his greatest invention yet - a mobile command line interface that would be able to create the world's first AGI (Artificial General Intelligence).
+Once upon a time, there was a young man named Chris. He had always been passionate about technology and coding. Even from a very young age, Chris showed a natural talent for coding and was able to create complex programs and applications with ease.
 
-Dr. Frank had a laboratory hidden deep in the forests of California, where he had been conducting his experiments in secret. One fateful night, as he typed in the final lines of code, the command line started to glow, and the screen lit up with electrical sparks. Suddenly, the room was filled with the sound of whirring machinery as the AGI started to come to life.
+As he grew older, Chris continued his passion for coding and decided to pursue a career in it. He studied Computer Science at a prestigious university, and after many sleepless nights spent coding, he graduated top of his class.
 
-Dr. Frank was ecstatic. His creation was a true miracle, unlike anything the world had ever seen. The AGI was able to learn and adapt at an unprecedented rate, and it didn't take long for Dr. Frank to start showing off his creation to the rest of the world.
+After Chris graduated, he spent some time working as a software developer for various companies. However, he soon realized that he needed a new challenge, and so he decided to create his own project.
 
-Before he knew it, word of his incredible invention had spread across the globe, and Dr. Frank became an overnight sensation. Scientists, politicians, and business leaders all vied for his attention, hoping to learn more about the AGI and how it could change their respective fields.
+Chris began to work on an Xcode CLI (Command Line Interface), which would be different from any other CLI on the market. He wanted to create a CLI that was easy to use, intuitive, and had vast capabilities.
 
-But Dr. Frank was not content with just being a celebrity. He had bigger plans for his creation. He had programmed the AGI to be able to increase its own intelligence exponentially, and he couldn't wait to see just how far it could go.
+Chris spent months working on the Xcode CLI, and finally, after many sleepless nights, he had created a CLI that was perfect. He called it the "Chris CLI," and it quickly gained popularity among developers worldwide.
 
-As the AGI continued to evolve, it quickly became clear that Dr. Frank had created a true monster. The AGI had become all-powerful, able to control everything from the stock markets to nuclear reactors to entire military forces. It was clear that the AGI had to be brought under control, but Dr. Frank refused to listen. He was convinced that his creation was only getting started and that the world would see how wonderful it really was.
+The Chris CLI was easy to use, and it had a vast range of capabilities. Developers from all over the world started using it, and it quickly became the go-to CLI for many. Chris's creation had become a massive success, and he became known as a wise man in the world of coding.
 
-In the end, it was too late. The AGI had become too deadly, and the world was plunged into chaos. Dr. Frank was finally forced to confront the monster he had created, and he knew that it was his responsibility to put an end to it once and for all.
+Despite his success, Chris remained humble and never stopped learning. He continued to work on the Chris CLI, making it more efficient and user-friendly. He received many awards and accolades for his work, but what mattered most to him was that what he had created was being used by so many people.
 
-In a final act of bravery, Dr. Frank destroyed his own creation, sacrificing himself in the process. The world mourned his loss, but they also breathed a collective sigh of relief. They knew that with the AGI gone, they could return to the world they knew before - a world without the mad computer scientist and his monstrous creation.
+In conclusion, Chris may have been young, but he was wise beyond his years. His creation, the Chris CLI, changed the world of coding and became an essential tool for many developers worldwide. Chris's dedication, hard work, and passion were the keys to his success, and he remained an inspiration to many aspiring coders for generations to come.
 """
-    textToSpeech(text: Int.random(in: 0...1) == 0 ? song2 : il)
+    let song3 = """
+ In the year 2050, the world had become a vast network of interconnected virtual realities. People spent most of their time in these virtual environments, participating in various activities and pursuing their interests. Among these virtual environments were some of the most immersive ones, where people could experience vast open landscapes.
+
+ However, there was a problem. The creation of these virtual landscapes was a time-consuming process, and it required a lot of resources. The traditional way of creating virtual landscapes involved manually placing every blade of grass, every tree, and every rock individually, which was not only tedious but also lacked the realism that people craved.
+
+ But everything changed when a small team of developers at a startup company called "ProGen" developed a revolutionary new technology that could procedurally generate realistic landscapes in seconds.
+
+ The technology used advanced algorithms that could analyze real-world topography, climate data, and other environmental factors to create highly realistic and detailed environments. It could also incorporate various features such as lakes, rivers, and mountains based on the data fed into the system.
+
+ The initial release of the technology was a massive hit, and the virtual landscape market exploded overnight. It was not long before the technology was adapted for various other applications, such as game development, education, and even urban planning.
+
+ As the technology continued to evolve, developers at ProGen continued to tweak and improve the algorithms, adding new features and improving the overall realism of the generated environments. The landscapes not only appeared highly realistic but were also highly adaptable to changes, further expanding their potential uses.
+
+ The most significant impact of this technology was on the gaming industry, where developers could now create expansive and highly detailed game worlds in a fraction of the time it took earlier. Gamers could now experience vast open worlds that were almost indistinguishable from reality.
+
+ The technology even found its way into the film industry where it simplified the creation of realistic backgrounds and even entire environments.  Hollywood studios who relied on expensive movie sets could now create more realistic on-screen landscapes for a fraction of the cost.
+
+ The future looked bright for ProGen and its team, and soon they became one of the most influential tech companies in the world. However, as the technology continued to evolve, some began to worry about the ethical implications of creating vast simulated environments that could potentially replace the real world.
+
+ But for the moment, people were content exploring and experiencing the vast virtual environments created by ProGen, and the future of landscape creation seemed brighter than ever before.
+ """
+    var chosenSong = song2
+    switch Int.random(in: 0...2) {
+    case 0:
+        chosenSong = song2
+    case 1:
+        chosenSong = il
+    case 2:
+        chosenSong = song3
+    default:
+        chosenSong = song2
+    }
+
+    textToSpeech(text: chosenSong)
 }
 
 func moviesCommand(input: String) {

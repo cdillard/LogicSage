@@ -25,9 +25,8 @@ struct SwiftSageiOSApp: App {
     var serviceDiscovery: ServiceDiscovery?
     init() {
         serviceDiscovery = ServiceDiscovery()
-            serviceDiscovery?.startDiscovering()
+        serviceDiscovery?.startDiscovering()
     }
-
 
     var body: some Scene {
         WindowGroup {
@@ -72,15 +71,6 @@ class ScreamClient: WebSocketDelegate {
 
     static let screamer = ScreamClient()
     func connectWebSocket(ipAddress: String, port: String) {
-
-
-
-        // here we can initialze the bonjour searching
-        
-
-
-        // Substitute with your Mac OS IP Address for testing with real devices.
-        // System Settings -> Wi-Fi -> Details -> IP Address
         let urlString = "ws://\(ipAddress):\(port)/ws"
         guard let url = URL(string: urlString) else {
             print("Error: Invalid URL")
@@ -88,11 +78,18 @@ class ScreamClient: WebSocketDelegate {
         }
 
         var request = URLRequest(url: url)
-        request.timeoutInterval = 5
+        request.timeoutInterval = 10
 
         websocket = WebSocket(request: request)
         websocket.delegate = self
         websocket.connect()
+    }
+
+    func sendCommand(command: String) {
+
+        websocket.write(string:command ) {
+            print("commanded")
+        }
     }
 }
 
