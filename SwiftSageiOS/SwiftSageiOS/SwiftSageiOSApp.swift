@@ -6,19 +6,9 @@
 //
 
 import SwiftUI
-import LocalConsole
-import Starscream
 
-//import MultipeerConnectivity
-//
-//public extension MCPeerID {
-//    static var defaultSageDisplayName: String { "CommandLineAppPeerId" }
-//    static var defaultSagePhoneDisplayName: String { "iOSAppPeerID" }
-//
-//}
 
 let defaultTerminalFontSize: CGFloat = 12.666
-
 
 @main
 struct SwiftSageiOSApp: App {
@@ -36,30 +26,46 @@ struct SwiftSageiOSApp: App {
                 ContentView()
                 
             }
-
         }
     }
 }
 
+let screamer = ScreamClient()
+
 class ScreamClient: WebSocketDelegate {
-    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+    func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case .connected(let headers):
             print("WebSocket connected, headers: \(headers)")
+            client.write(string: "Hello from iOS app!")
+            startPingTimer()
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
+            stopPingTimer()
+            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         case .text(let text):
             consoleManager.print(text)
         case .binary(let data):
             print("Received binary data: \(data)")
         case .ping:
-            break
+            print("websocket received ping")
         case .pong:
-            break
+            print("websocket received pong")
         case .viabilityChanged(let isViable):
             print("Connection viability changed: \(isViable)")
         case .reconnectSuggested(let shouldReconnect):
             print("Reconnect suggested: \(shouldReconnect)")
+            if shouldReconnect {
+                DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                    print("Reconnecting...")
+                    self.connect()
+                }
+            } else {
+                print("shouldn't reconnect")
+            }
         case .cancelled:
             print("WebSocket cancelled")
         case .error(let error):
@@ -68,8 +74,8 @@ class ScreamClient: WebSocketDelegate {
     }
 
     var websocket: WebSocket!
+    let reconnectInterval: TimeInterval = 1.0
 
-    static let screamer = ScreamClient()
     func connectWebSocket(ipAddress: String, port: String) {
         let urlString = "ws://\(ipAddress):\(port)/ws"
         guard let url = URL(string: urlString) else {
@@ -81,82 +87,44 @@ class ScreamClient: WebSocketDelegate {
         request.timeoutInterval = 10
 
         websocket = WebSocket(request: request)
+        websocket.callbackQueue = DispatchQueue(label: "com.chrisswiftygpt.swiftsage")
         websocket.delegate = self
         websocket.connect()
     }
+    func connect() {
+        websocket.connect()
 
+    }
     func sendCommand(command: String) {
+        print("Executing: \(command)")
 
         websocket.write(string:command ) {
             print("commanded")
         }
     }
-}
 
-// Left commented MultipeerTransceiver in case I have to get it working
-//class Transceiver {
-//    var transceiver: MultipeerTransceiver!
-//
-//    var connectedPeers: [Peer] = []
-//
-//    init() {
-//        configureTransceiver()
-//    }
-//
-//    func configureTransceiver() {
-//
-//
-//        let inviterScheme = MultipeerConfiguration.Invitation.none
-//
-//        let config = MultipeerConfiguration(serviceType: "ssage-service",
-//                                            peerName: MCPeerID.defaultSagePhoneDisplayName,
-//                                            defaults: .standard,
-//                                            security: .default,
-//                                            invitation: inviterScheme)
-//
-//
-//        transceiver = MultipeerTransceiver(configuration: config, modes: [.receiver])
-//        transceiver.peerAdded = {  peer in
-//            print("Connected to: \(peer.name)")
-//            self.connectedPeers.append(peer)
-//            print("Connected peers: \(self.connectedPeers.map { $0.name } )")
-//        }
-//
-//        transceiver.peerRemoved = {  peer in
-//            print("Disconnected from: \(peer.name)")
-//            self.connectedPeers.removeAll { $0 == peer }
-//
-//            print("Connected peers: \(self.connectedPeers.map { $0.name } )")
-//        }
-//        transceiver.peerDisconnected = {  peer in
-//            print("peerDisconnected from: \(peer.name)")
-//
-//        }
-//
-//
-//
-//        transceiver.resume()
-//
-//
-//        transceiver.receive(YourDataType.self, using: { payload,sender  in
-//            print("received msg = \(payload)")
-//
-//            consoleManager.print(payload)
-//         })
-////        do {
-////            var cmdLinePeer = try Peer(peer: MCPeerID(displayName:  MCPeerID.defaultSageDisplayName), discoveryInfo: [:])
-////            self.transceiver.invite(cmdLinePeer, with: nil, timeout: 5) { result in
-////                print("transceiver invite result  = \(result)")
-////
-////            }
-////        }
-////        catch {
-////            print("error = \(error)")
-////        }
-//    }
-//
-//}
-//enum YourDataType: Codable {
-//    case text(String)
-//}
+    func sendPing() {
+        guard let socket = websocket else { return }
+        socket.write(ping: Data())
+    }
+
+    var pingTimer: Timer?
+
+    func startPingTimer() {
+        // Invalidate any existing timer
+        pingTimer?.invalidate()
+
+        // Create a new timer that fires every 30 seconds
+        pingTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+            self?.sendPing()
+        }
+    }
+
+
+    func stopPingTimer() {
+        pingTimer?.invalidate()
+        pingTimer = nil
+    }
+
+}
 

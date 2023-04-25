@@ -37,10 +37,7 @@ struct CommandButtonView: View {
 
                 Button(action: {
                     // Execute your action here
-                    print("Executing: \(multiLineText)")
-                    ScreamClient.screamer.websocket.write(string: multiLineText.replacingOccurrences(of: "\n", with: "\\n")) {
-                        print("completed")
-                    }
+                    screamer.sendCommand(command: multiLineText)
 
                     self.isInputViewShown = false
                     consoleManager.isVisible = true

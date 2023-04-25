@@ -21,13 +21,32 @@
 		B746DFD029F5E789002804EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCF29F5E789002804EB /* ContentView.swift */; };
 		B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD129F5E78A002804EB /* Assets.xcassets */; };
 		B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B746DFD529F5E78A002804EB /* Preview Assets.xcassets */; };
+		B74A2CC229F7F6990051DB52 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CA529F7F6990051DB52 /* Transport.swift */; };
+		B74A2CC329F7F6990051DB52 /* FoundationTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CA629F7F6990051DB52 /* FoundationTransport.swift */; };
+		B74A2CC429F7F6990051DB52 /* TCPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CA729F7F6990051DB52 /* TCPTransport.swift */; };
+		B74A2CC529F7F6990051DB52 /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CA929F7F6990051DB52 /* Security.swift */; };
+		B74A2CC629F7F6990051DB52 /* FoundationSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CAA29F7F6990051DB52 /* FoundationSecurity.swift */; };
+		B74A2CC729F7F6990051DB52 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CAC29F7F6990051DB52 /* Data+Extensions.swift */; };
+		B74A2CC829F7F6990051DB52 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CAE29F7F6990051DB52 /* Server.swift */; };
+		B74A2CC929F7F6990051DB52 /* WebSocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CAF29F7F6990051DB52 /* WebSocketServer.swift */; };
+		B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB229F7F6990051DB52 /* FoundationHTTPHandler.swift */; };
+		B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB329F7F6990051DB52 /* HTTPHandler.swift */; };
+		B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB429F7F6990051DB52 /* FrameCollector.swift */; };
+		B74A2CCD29F7F6990051DB52 /* StringHTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB529F7F6990051DB52 /* StringHTTPHandler.swift */; };
+		B74A2CCE29F7F6990051DB52 /* FoundationHTTPServerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB629F7F6990051DB52 /* FoundationHTTPServerHandler.swift */; };
+		B74A2CCF29F7F6990051DB52 /* Framer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB729F7F6990051DB52 /* Framer.swift */; };
+		B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CB929F7F6990051DB52 /* Compression.swift */; };
+		B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBA29F7F6990051DB52 /* WSCompression.swift */; };
+		B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBC29F7F6990051DB52 /* WebSocket.swift */; };
+		B74A2CD329F7F6990051DB52 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBE29F7F6990051DB52 /* Engine.swift */; };
+		B74A2CD429F7F6990051DB52 /* NativeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */; };
+		B74A2CD529F7F6990051DB52 /* WSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CC029F7F6990051DB52 /* WSEngine.swift */; };
 		B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BB29F6DAED003EC13F /* ResizeController.swift */; };
 		B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BC29F6DAED003EC13F /* LCManager.swift */; };
 		B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */; };
 		B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BE29F6DAED003EC13F /* SystemReport.swift */; };
 		B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BF29F6DAED003EC13F /* Extensions.swift */; };
 		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
-		B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA779E29F6A71300A9DBE6 /* Starscream */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +70,27 @@
 		B746DFD529F5E78A002804EB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		B748C2FA29F5FF4A000F5F14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B74A2CA529F7F6990051DB52 /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
+		B74A2CA629F7F6990051DB52 /* FoundationTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationTransport.swift; sourceTree = "<group>"; };
+		B74A2CA729F7F6990051DB52 /* TCPTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPTransport.swift; sourceTree = "<group>"; };
+		B74A2CA929F7F6990051DB52 /* Security.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Security.swift; sourceTree = "<group>"; };
+		B74A2CAA29F7F6990051DB52 /* FoundationSecurity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationSecurity.swift; sourceTree = "<group>"; };
+		B74A2CAC29F7F6990051DB52 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		B74A2CAE29F7F6990051DB52 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		B74A2CAF29F7F6990051DB52 /* WebSocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketServer.swift; sourceTree = "<group>"; };
+		B74A2CB029F7F6990051DB52 /* Starscream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Starscream.h; sourceTree = "<group>"; };
+		B74A2CB229F7F6990051DB52 /* FoundationHTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationHTTPHandler.swift; sourceTree = "<group>"; };
+		B74A2CB329F7F6990051DB52 /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
+		B74A2CB429F7F6990051DB52 /* FrameCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCollector.swift; sourceTree = "<group>"; };
+		B74A2CB529F7F6990051DB52 /* StringHTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHTTPHandler.swift; sourceTree = "<group>"; };
+		B74A2CB629F7F6990051DB52 /* FoundationHTTPServerHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationHTTPServerHandler.swift; sourceTree = "<group>"; };
+		B74A2CB729F7F6990051DB52 /* Framer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Framer.swift; sourceTree = "<group>"; };
+		B74A2CB929F7F6990051DB52 /* Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compression.swift; sourceTree = "<group>"; };
+		B74A2CBA29F7F6990051DB52 /* WSCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCompression.swift; sourceTree = "<group>"; };
+		B74A2CBC29F7F6990051DB52 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		B74A2CBE29F7F6990051DB52 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeEngine.swift; sourceTree = "<group>"; };
+		B74A2CC029F7F6990051DB52 /* WSEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSEngine.swift; sourceTree = "<group>"; };
 		B767E9BB29F6DAED003EC13F /* ResizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeController.swift; sourceTree = "<group>"; };
 		B767E9BC29F6DAED003EC13F /* LCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCManager.swift; sourceTree = "<group>"; };
 		B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureEndpointPredictor.swift; sourceTree = "<group>"; };
@@ -66,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7CA779F29F6A71300A9DBE6 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +175,7 @@
 			children = (
 				B746DFCC29F5E789002804EB /* SwiftSageiOS */,
 				B767E9BA29F6DAED003EC13F /* LocalConsole */,
+				B74A2CA329F7F6990051DB52 /* Starscream */,
 				B746DFCB29F5E789002804EB /* Products */,
 				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
 			);
@@ -181,6 +221,98 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B74A2CA329F7F6990051DB52 /* Starscream */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CA429F7F6990051DB52 /* Transport */,
+				B74A2CA829F7F6990051DB52 /* Security */,
+				B74A2CAB29F7F6990051DB52 /* DataBytes */,
+				B74A2CAD29F7F6990051DB52 /* Server */,
+				B74A2CB029F7F6990051DB52 /* Starscream.h */,
+				B74A2CB129F7F6990051DB52 /* Framer */,
+				B74A2CB829F7F6990051DB52 /* Compression */,
+				B74A2CBB29F7F6990051DB52 /* Starscream */,
+				B74A2CBD29F7F6990051DB52 /* Engine */,
+			);
+			path = Starscream;
+			sourceTree = "<group>";
+		};
+		B74A2CA429F7F6990051DB52 /* Transport */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CA529F7F6990051DB52 /* Transport.swift */,
+				B74A2CA629F7F6990051DB52 /* FoundationTransport.swift */,
+				B74A2CA729F7F6990051DB52 /* TCPTransport.swift */,
+			);
+			path = Transport;
+			sourceTree = "<group>";
+		};
+		B74A2CA829F7F6990051DB52 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CA929F7F6990051DB52 /* Security.swift */,
+				B74A2CAA29F7F6990051DB52 /* FoundationSecurity.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		B74A2CAB29F7F6990051DB52 /* DataBytes */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CAC29F7F6990051DB52 /* Data+Extensions.swift */,
+			);
+			path = DataBytes;
+			sourceTree = "<group>";
+		};
+		B74A2CAD29F7F6990051DB52 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CAE29F7F6990051DB52 /* Server.swift */,
+				B74A2CAF29F7F6990051DB52 /* WebSocketServer.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		B74A2CB129F7F6990051DB52 /* Framer */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CB229F7F6990051DB52 /* FoundationHTTPHandler.swift */,
+				B74A2CB329F7F6990051DB52 /* HTTPHandler.swift */,
+				B74A2CB429F7F6990051DB52 /* FrameCollector.swift */,
+				B74A2CB529F7F6990051DB52 /* StringHTTPHandler.swift */,
+				B74A2CB629F7F6990051DB52 /* FoundationHTTPServerHandler.swift */,
+				B74A2CB729F7F6990051DB52 /* Framer.swift */,
+			);
+			path = Framer;
+			sourceTree = "<group>";
+		};
+		B74A2CB829F7F6990051DB52 /* Compression */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CB929F7F6990051DB52 /* Compression.swift */,
+				B74A2CBA29F7F6990051DB52 /* WSCompression.swift */,
+			);
+			path = Compression;
+			sourceTree = "<group>";
+		};
+		B74A2CBB29F7F6990051DB52 /* Starscream */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CBC29F7F6990051DB52 /* WebSocket.swift */,
+			);
+			path = Starscream;
+			sourceTree = "<group>";
+		};
+		B74A2CBD29F7F6990051DB52 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				B74A2CBE29F7F6990051DB52 /* Engine.swift */,
+				B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */,
+				B74A2CC029F7F6990051DB52 /* WSEngine.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
 		B767E9BA29F6DAED003EC13F /* LocalConsole */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +343,6 @@
 			);
 			name = SwiftSageiOS;
 			packageProductDependencies = (
-				B7CA779E29F6A71300A9DBE6 /* Starscream */,
 			);
 			productName = SwiftSageiOS;
 			productReference = B746DFCA29F5E789002804EB /* SwiftSageiOS.app */;
@@ -242,7 +373,6 @@
 			);
 			mainGroup = B746DFC129F5E789002804EB;
 			packageReferences = (
-				B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
 			productRefGroup = B746DFCB29F5E789002804EB /* Products */;
 			projectDirPath = "";
@@ -271,9 +401,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */,
+				B74A2CC229F7F6990051DB52 /* Transport.swift in Sources */,
+				B74A2CC429F7F6990051DB52 /* TCPTransport.swift in Sources */,
 				B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */,
+				B74A2CC629F7F6990051DB52 /* FoundationSecurity.swift in Sources */,
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
+				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
+				B74A2CC329F7F6990051DB52 /* FoundationTransport.swift in Sources */,
+				B74A2CCD29F7F6990051DB52 /* StringHTTPHandler.swift in Sources */,
+				B74A2CC829F7F6990051DB52 /* Server.swift in Sources */,
+				B74A2CC729F7F6990051DB52 /* Data+Extensions.swift in Sources */,
 				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
+				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
+				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
 				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
@@ -282,14 +422,24 @@
 				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
 				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
 				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
 				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
+				B74A2CC529F7F6990051DB52 /* Security.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
+				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
 				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
+				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
+				B74A2CD529F7F6990051DB52 /* WSEngine.swift in Sources */,
+				B74A2CD429F7F6990051DB52 /* NativeEngine.swift in Sources */,
+				B74A2CD329F7F6990051DB52 /* Engine.swift in Sources */,
+				B74A2CC929F7F6990051DB52 /* WebSocketServer.swift in Sources */,
 				B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */,
+				B74A2CCF29F7F6990051DB52 /* Framer.swift in Sources */,
+				B74A2CCE29F7F6990051DB52 /* FoundationHTTPServerHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,25 +659,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		B7CA779E29F6A71300A9DBE6 /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B7CA779D29F6A71300A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B746DFC229F5E789002804EB /* Project object */;
 }

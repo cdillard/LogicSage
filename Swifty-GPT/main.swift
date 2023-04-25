@@ -21,8 +21,8 @@ func main() {
 
 
     // Tesitn when best time to initialize websock log
-    UserDefaults.resetStandardUserDefaults()
-    print(LocalPeerConsole.webSocketClient.websocket)
+   // UserDefaults.resetStandardUserDefaults()
+//    print(localPeerConsole.webSocketClient.websocket)
 
     multiPrinter("SwiftSage is loading...")
 
@@ -93,6 +93,8 @@ func main() {
 
     DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 
+        print(localPeerConsole.webSocketClient.websocket)
+
         stopRandomSpinner()
 
         if interactiveMode {
@@ -117,7 +119,7 @@ func main() {
     }
 
     // END AUDIO PROCESSING
-    sema.wait()
+    //sema.wait()
 }
 
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
@@ -235,4 +237,8 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
+
+
 main()
+
+RunLoop.main.run()

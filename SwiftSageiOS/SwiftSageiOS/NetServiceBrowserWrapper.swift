@@ -34,7 +34,7 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
         print("Found service: \(service)")
         discoveredServices.append(service)
         service.delegate = self
-        service.resolve(withTimeout: 5.0)
+        service.resolve(withTimeout: 10.0)
     }
 
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
@@ -57,7 +57,10 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
                 print("Resolved service (\(sender.name)) IP address: \(ipAddress), port: \(sender.port)")
 
                 // Use ipAddress and sender.port to connect to the WebSocket server
-                ScreamClient.screamer.connectWebSocket(ipAddress: ipAddress, port: String(sender.port))
+                screamer.connectWebSocket(ipAddress: ipAddress, port: String(sender.port))
+            }
+            else {
+                print("failed getnameinfo")
             }
         }
     }
