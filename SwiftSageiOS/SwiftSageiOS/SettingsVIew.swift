@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+
+
+
 struct SettingsView: View {
     @Binding var showSettings: Bool
     @ObservedObject var viewModel: SettingsViewModel
@@ -60,6 +63,7 @@ struct SettingsView: View {
                             .accentColor(.blue)
                         Text("Large")
                     }
+                    Text("\(viewModel.textSize)")
                 }
                 // Choose your avatar
                 Button(action: {

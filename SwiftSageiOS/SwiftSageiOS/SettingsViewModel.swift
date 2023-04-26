@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 import Combine
-
+let defaultTerminalFontSize: CGFloat = 12.666
+var terminalFontSize: CGFloat = 12.666
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
     @Published var receivedImage: UIImage? = nil
@@ -22,9 +23,6 @@ class SettingsViewModel: ObservableObject {
     @Published var textSize: CGFloat {
         didSet {
             UserDefaults.standard.set(Float(textSize), forKey: "textSize")
-
-            terminalFontSize = textSize
-
         }
     }
     @Published var terminalBackgroundColor: Color = .black {

@@ -26,11 +26,6 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
     }
 
-//    public var textColor: Color = defaulTerminalTextColor {
-//        didSet {
-//
-//        }
-//    }
     var isConsoleConfigured = false
     
     /// A high performance text tracker that only updates the view's text if the view is visible. This allows the app to run print to the console with virtually no performance implications when the console isn't visible.
@@ -59,7 +54,8 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     lazy var lumaView: LumaView = {
         let lumaView = LumaView()
-        lumaView.foregroundView.backgroundColor = .black
+
+        lumaView.foregroundView.backgroundColor = SettingsViewModel.shared.terminalBackgroundColor.uiColor()
         lumaView.layer.cornerRadius = consoleView.layer.cornerRadius
         
         consoleView.addSubview(lumaView)
@@ -863,7 +859,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
-            .foregroundColor: terminalTextColor,
+            .foregroundColor: SettingsViewModel.shared.terminalTextColor.uiColor(),
             .font: UIFont.systemFont(ofSize: fontSize, weight: .semibold, design: .monospaced)
         ]
         
