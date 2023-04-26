@@ -37,13 +37,13 @@ struct ContentView: View {
                         Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .padding(.leading, 10)
+                            .padding(.leading,geometry.size.width * 0.01)
                         Spacer()
                     }
                 } else {
                     HStack {
                         Text("Restart app if you encounter any issues, OK?")
-                            .padding(.leading, 10)
+                            .padding(.leading,geometry.size.width * 0.01)
                         Spacer()
                     }
 

@@ -14,77 +14,85 @@ struct CommandButtonView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
-        VStack {
-            HStack {
+        GeometryReader { geometry in
+            
+            VStack {
                 Spacer()
-                if !isInputViewShown {
-                    Button("🔌") {
-                        print("🔌 Force reconnecting websocket...")
-                        consoleManager.print("🔌 Force reconnect...")
-                        consoleManager.print("You can always force quit / restart you know...")
 
-                        //screamer.connect()
+                HStack {
+                    Spacer()
+                    if !isInputViewShown {
+                        Button("🔌") {
+                            print("🔌 Force reconnecting websocket...")
+                            consoleManager.print("🔌 Force reconnect...")
+                            consoleManager.print("You can always force quit / restart you know...")
+
+                            //screamer.connect()
+                        }
+                        .font(.body)
+//                        .foregroundColor(Color.white)
+//                        .padding(.bottom)
+                        .background(settingsViewModel.buttonColor)
+//                        .cornerRadius(10)
                     }
-                    .font(.body)
-                    .foregroundColor(Color.white)
-                    .padding()
-                    .background(settingsViewModel.buttonColor)
-                    .cornerRadius(10)
-                }
-                if !multiLineText.isEmpty && isInputViewShown {
+                    if !multiLineText.isEmpty && isInputViewShown {
+                        Button(action: {
+                            multiLineText = ""
+                        }) {
+                            Text( "X")
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+
+                    }
                     Button(action: {
-                        multiLineText = ""
+                        // Execute your action here
+                        screamer.sendCommand(command: multiLineText)
+
+                        self.isInputViewShown = false
+                        consoleManager.isVisible = true
+
                     }) {
-                        Text( "X")
-                            .font(.subheadline)
+                        Text("EXEC")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .padding()
+                            .background(Color.green)
+                            .cornerRadius(10)
+                    }
+                    .padding(.bottom)
+                    Button(action: {
+                        self.isInputViewShown.toggle()
+                        consoleManager.isVisible = !isInputViewShown
+                        consoleManager.fontSize = settingsViewModel.textSize
+
+                    }) {
+                        Text(self.isInputViewShown ? "TERM" : "COMMAND")
+                            .font(.headline)
                             .foregroundColor(Color.white)
                             .padding()
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
+                    .padding(.bottom)
+
                 }
-                Button(action: {
-                    // Execute your action here
-                    screamer.sendCommand(command: multiLineText)
+                .padding(.bottom)
 
-                    self.isInputViewShown = false
-                    consoleManager.isVisible = true
 
-                }) {
-                    Text("EXEC")
-                        .font(.headline)
-                        .foregroundColor(Color.white)
+                if isInputViewShown {
+                    TextEditor(text: $multiLineText)
+                        .frame(height: 200)
                         .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
+                        .border(Color.gray, width: 1)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
                 }
-                .padding(.top, 10)
-                Button(action: {
-                    self.isInputViewShown.toggle()
-                    consoleManager.isVisible = !isInputViewShown
-                    consoleManager.fontSize = settingsViewModel.textSize
-
-                }) {
-                    Text(self.isInputViewShown ? "TERM" : "COMMAND")
-                        .font(.headline)
-                        .foregroundColor(Color.white)
-                        .padding()
-                        .background(settingsViewModel.buttonColor)
-                        .cornerRadius(10)
-                }
-            }
-
-            if isInputViewShown {
-                TextEditor(text: $multiLineText)
-                    .frame(height: 200)
-                    .padding()
-                    .border(Color.gray, width: 1)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
-
-
             }
         }
-        .padding()
     }
 }
