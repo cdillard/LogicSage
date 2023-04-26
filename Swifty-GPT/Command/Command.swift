@@ -363,7 +363,7 @@ func buildCommand(input: String) {
 }
 
 func commandsCommand(input: String) {
-    multiPrinter(generatedOpenLine(overrideV: true))
+    multiPrinter(commandsText())
 }
 
 func linkCommand(input: String) {
