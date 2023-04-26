@@ -38,7 +38,7 @@ struct CommandButtonView: View {
 
                     if multiLineText.isEmpty && isInputViewShown {
                         Button(action: {
-                            multiLineText += "debate"
+                            multiLineText += "debate "
                         }) {
                             Text( "debate")
                                 .font(.subheadline)
@@ -60,7 +60,7 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         Button(action: {
-                            multiLineText += "i"
+                            multiLineText += "i "
                         }) {
                             Text( "i")
                                 .font(.subheadline)
@@ -71,7 +71,7 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         Button(action: {
-                            multiLineText += "g"
+                            multiLineText += "g "
                         }) {
                             Text( "g")
                                 .font(.subheadline)
