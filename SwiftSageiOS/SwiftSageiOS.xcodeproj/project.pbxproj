@@ -197,11 +197,11 @@
 			isa = PBXGroup;
 			children = (
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
-				B746DFCF29F5E789002804EB /* ContentView.swift */,
 				B748C2FA29F5FF4A000F5F14 /* Info.plist */,
 				B70971F629F62DF3008ED803 /* MultipeerKit */,
 				B746DFD429F5E78A002804EB /* Preview Content */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
+				B746DFCF29F5E789002804EB /* ContentView.swift */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,

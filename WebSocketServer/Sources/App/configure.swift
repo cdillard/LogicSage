@@ -56,6 +56,21 @@ public func configure(_ app: Application) throws {
         }
         ws.onBinary { ws, data in
             print("Received binary data: \(data)")
+
+            for client in connectedClients {
+
+                guard client !== ws else { 
+                    if debugging {
+                        print("skipping self")
+                    }
+                    continue
+                }
+                if debugging {
+
+                    print("send BINARY to client =\(client)")
+                }
+                client.send(data)
+            }
         }
 
         ws.onClose.whenComplete { result in

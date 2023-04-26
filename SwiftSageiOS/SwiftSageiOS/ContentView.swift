@@ -18,8 +18,7 @@ struct ContentView: View {
 
     @StateObject private var keyboardObserver = KeyboardObserver()
 
-    @ObservedObject var settingsViewModel = SettingsViewModel()
-    
+    @ObservedObject var settingsViewModel = SettingsViewModel.shared
     init() {
         consoleManager.isVisible = true
         consoleManager.fontSize = settingsViewModel.textSize
@@ -32,22 +31,33 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .padding()
+            if let image = settingsViewModel.receivedImage {
+                HStack {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.leading, 10)
+                    Spacer()
+                }
+            } else {
+                HStack {
+                    Text("No image received")
+                        .padding(.leading, 10)
+                    Spacer()
+                }
+
+
+            }
 
             VStack {
                 Spacer()
 
                 HStack {
-                    //                Button("FORCE 📵🔌 📶") {
-                    //                    print("FORCING WEBSOCKET CONNECTION")
-                    //                }
-                    //                .font(.body)
-                    //                .foregroundColor(Color.white)
-                    //                .padding()
-                    //                .background(Color.red)
-                    //                .cornerRadius(10)
+        
                     VStack {
                         CommandButtonView(settingsViewModel: settingsViewModel)
                     }
+                    
 
                 }
             }
@@ -58,6 +68,19 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 HStack {
+                    Button(action: {
+                        settingsViewModel.receivedImage = nil
+                    }) {
+                        Image(systemName: "macbook.and.iphone")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding()
+                            .background(settingsViewModel.buttonColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(30)
+                            .padding(.bottom, 10)
+                    }
+                    .padding()
                     Button(action: {
                         withAnimation {
                             showSettings.toggle()
@@ -75,6 +98,7 @@ struct ContentView: View {
                     .padding()
                     .popover(isPresented: $showSettings, arrowEdge: .top) {
                         SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
+                        
                     }
                     Spacer()
                 }

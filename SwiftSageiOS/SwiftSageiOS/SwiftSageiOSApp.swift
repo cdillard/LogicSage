@@ -61,6 +61,11 @@ class ScreamClient: WebSocketDelegate {
             consoleManager.print(text)
         case .binary(let data):
             print("Received binary data: \(data)")
+            if let receivedImage = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    SettingsViewModel.shared.receivedImage = receivedImage
+                }
+            }
         case .ping:
             print("websocket received ping")
         case .pong:
@@ -81,10 +86,6 @@ class ScreamClient: WebSocketDelegate {
             print("WebSocket cancelled")
         case .error(let error):
             print("Error: \(error?.localizedDescription ?? "Unknown error")")
-//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-//                print("Reconnecting...")
-//                self.connect()
-//            }
         }
     }
 
@@ -133,15 +134,12 @@ class ScreamClient: WebSocketDelegate {
             self?.sendPing()
         }
     }
-
-
     func stopPingTimer() {
         pingTimer?.invalidate()
         pingTimer = nil
     }
 
 }
-
 class AppState: ObservableObject {
     @Published var isInBackground: Bool = false
     private var cancellables: [AnyCancellable] = []
@@ -162,6 +160,7 @@ class AppState: ObservableObject {
             .sink { [weak self] in
                 self?.isInBackground = $0
                 // SHOULD RECONNECT????????
+                // screamer.connect()
             }
             .store(in: &cancellables)
     }

@@ -16,6 +16,20 @@ struct CommandButtonView: View {
     var body: some View {
         VStack {
             HStack {
+                if !isInputViewShown {
+                    Button("🔌") {
+                        print("🔌 Force reconnecting websocket...")
+                        consoleManager.print("🔌 Force reconnect...")
+                        consoleManager.print("You can always force quit / restart you know...")
+
+                        //screamer.connect()
+                    }
+                    .font(.body)
+                    .foregroundColor(Color.white)
+                    .padding()
+                    .background(settingsViewModel.buttonColor)
+                    .cornerRadius(10)
+                }
                 if !multiLineText.isEmpty && isInputViewShown {
                     Button(action: {
                         multiLineText = ""

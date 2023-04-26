@@ -39,6 +39,13 @@
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
 		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
+		B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41029F8953300E57577 /* CaptureEngine.swift */; };
+		B737F41329F8953300E57577 /* ScreenRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41129F8953300E57577 /* ScreenRecorder.swift */; };
+		B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B737F41429F8955100E57577 /* ScreenCaptureKit.framework */; };
+		B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41629F8958D00E57577 /* AudioPlayer.swift */; };
+		B737F41929F8958D00E57577 /* PowerMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41729F8958D00E57577 /* PowerMeter.swift */; };
+		B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */; };
+		B737F41D29F897DE00E57577 /* Eggland.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41C29F897DE00E57577 /* Eggland.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
 		B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */; };
 		B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */; };
@@ -163,6 +170,13 @@
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
+		B737F41029F8953300E57577 /* CaptureEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureEngine.swift; sourceTree = "<group>"; };
+		B737F41129F8953300E57577 /* ScreenRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenRecorder.swift; sourceTree = "<group>"; };
+		B737F41429F8955100E57577 /* ScreenCaptureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenCaptureKit.framework; path = System/Library/Frameworks/ScreenCaptureKit.framework; sourceTree = SDKROOT; };
+		B737F41629F8958D00E57577 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		B737F41729F8958D00E57577 /* PowerMeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerMeter.swift; sourceTree = "<group>"; };
+		B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureKitWrapper.swift; sourceTree = "<group>"; };
+		B737F41C29F897DE00E57577 /* Eggland.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggland.swift; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSageiOS.xcodeproj; path = SwiftSageiOS/SwiftSageiOS.xcodeproj; sourceTree = "<group>"; };
@@ -234,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */,
 				B7CA779929F6A5EB00A9DBE6 /* Vapor in Frameworks */,
 				B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */,
 				B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */,
@@ -356,6 +371,7 @@
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
 				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
+				B737F41C29F897DE00E57577 /* Eggland.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
@@ -381,6 +397,7 @@
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
 				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 				B70CF18129F0980800993AAF /* SageWare.swift */,
+				B737F41E29F8997300E57577 /* Screencapture */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B737F40429F8153B00E57577 /* Spotify.swift */,
@@ -406,6 +423,18 @@
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
 		};
+		B737F41E29F8997300E57577 /* Screencapture */ = {
+			isa = PBXGroup;
+			children = (
+				B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */,
+				B737F41629F8958D00E57577 /* AudioPlayer.swift */,
+				B737F41729F8958D00E57577 /* PowerMeter.swift */,
+				B737F41029F8953300E57577 /* CaptureEngine.swift */,
+				B737F41129F8953300E57577 /* ScreenRecorder.swift */,
+			);
+			path = Screencapture;
+			sourceTree = "<group>";
+		};
 		B746DFDD29F5E78A002804EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,6 +446,7 @@
 		B768CE9929EB3F8500B8A9E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B737F41429F8955100E57577 /* ScreenCaptureKit.framework */,
 				B748C2F029F5EA62000F5F14 /* MultipeerConnectivity.framework */,
 				B75FC59D29F5D58000A75EAF /* libcerevoice_eng.dylib */,
 				B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */,
@@ -605,10 +635,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */,
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
 				B70971F129F62DC6008ED803 /* MockMultipeerConnection.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
+				B737F41329F8953300E57577 /* ScreenRecorder.swift in Sources */,
 				B70971EC29F62DC6008ED803 /* MultipeerProtocol.swift in Sources */,
 				B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
@@ -626,6 +658,7 @@
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
+				B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B70971EE29F62DC6008ED803 /* MCPeerID+Me.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
@@ -644,8 +677,10 @@
 				B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
+				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */,
+				B737F41929F8958D00E57577 /* PowerMeter.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */,
 				B70CF18229F0980800993AAF /* SageWare.swift in Sources */,
@@ -658,6 +693,7 @@
 				B70971EF29F62DC6008ED803 /* MultipeerConnection.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
+				B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
 				B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */,
 			);
@@ -823,6 +859,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Uses your screen to capture your window content.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -867,6 +904,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Uses your screen to capture your window content.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Uses Speech recognition so you can talk to the robots";
 				LD_RUNPATH_SEARCH_PATHS = (

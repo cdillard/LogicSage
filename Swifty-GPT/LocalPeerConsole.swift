@@ -15,7 +15,6 @@ func multiPrinter(_ items: Any..., separator: String = " ", terminator: String =
         return
     }
 
-
     if items.count == 1, let singleString = items.first as? String {
         print(items, separator: separator, terminator: terminator)
         localPeerConsole.sendLog(singleString)
@@ -39,11 +38,15 @@ class LocalPeerConsole: NSObject {
 
         webSocketClient.websocket.write(string: text)
     }
+
+    func sendImageData(_ imageData: Data?) {
+        guard let data = imageData else {
+            print("failed")
+            return
+        }
+        webSocketClient.websocket.write(data: data)
+    }
 }
-
-
-import Foundation
-import Starscream
 
 class WebSocketClient: WebSocketDelegate {
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {

@@ -10,7 +10,17 @@ import SwiftUI
 import Combine
 
 class SettingsViewModel: ObservableObject {
+
+    static let shared = SettingsViewModel()
     
+    @Published var receivedImage: UIImage? = nil 
+    func updateImage(data: Data) {
+        if let image = UIImage(data: data) {
+            self.receivedImage = image
+        } else {
+            print("Failed to convert data to UIImage")
+        }
+    }
     @Published var textSize: CGFloat {
         didSet {
             UserDefaults.standard.set(Float(textSize), forKey: "textSize")
