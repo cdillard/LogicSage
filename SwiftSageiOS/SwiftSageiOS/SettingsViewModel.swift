@@ -70,7 +70,8 @@ class SettingsViewModel: ObservableObject {
 extension Color {
     static func color(data: Data) -> Color {
         do {
-            let color = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor ?? .clear
+            let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) ?? .clear
+
             return Color(color)
         } catch {
             print("Error converting Data to Color: \(error)")

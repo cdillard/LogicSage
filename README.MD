@@ -3,7 +3,7 @@
 
 DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY (INFACT I CODED IT IN MY SLEEP AND CANNOT BE SURE WHATS IN IT). THIS IS JUST AN EXPERIMENT.
 
-SwiftSage is an AI-powered program that integrates seamlessly into Xcode, iOS, and the command line, aiming to redefine the way users interact with their Apple devices. It offers features such as intelligent code completion, auto-debugging, context-aware notifications, and enhanced accessibility for users with disabilities, making Apple devices more powerful, efficient, and inclusive than ever before. SwiftSage is poised to transform the Apple ecosystem and capture the hearts and minds of Apple enthusiasts worldwide.
+SwiftSage is an innovative technology that integrates with Xcode to simplify app creation across various platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. Additionally, SwiftSage is free, open-source, and MIT licensed on GitHub.
 
 ## Features
 SwiftSage offers a range of features to make software development faster and more efficient:
