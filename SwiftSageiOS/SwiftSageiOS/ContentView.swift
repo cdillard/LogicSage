@@ -26,109 +26,142 @@ struct ContentView: View {
     }
     var body: some View {
 
-        ZStack {
-            Image("swsLogo")
-            .resizable()
-            .scaledToFit()
-            .padding()
-            if let image = settingsViewModel.receivedImage {
-                HStack {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.leading, 10)
-                    Spacer()
-                }
-            } else {
-                HStack {
-                    Text("No image received")
-                        .padding(.leading, 10)
-                    Spacer()
-                }
-
-
-            }
-
-            VStack {
-                Spacer()
-
-                HStack {
-        
-                    VStack {
-                        CommandButtonView(settingsViewModel: settingsViewModel)
-                    }
-                    
-
-                }
-            }
-            .padding(.bottom, keyboardObserver.isKeyboardVisible ? 0 : 0) // Adjust this value based on the actual keyboard height
-            .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
-            .environmentObject(keyboardObserver)
-            .padding()
-            VStack {
-                Spacer()
-                HStack {
-                    Button(action: {
-                        settingsViewModel.receivedImage = nil
-                    }) {
-                        Image(systemName: "macbook.and.iphone")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding()
-                            .background(settingsViewModel.buttonColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(30)
-                            .padding(.bottom, 10)
-                    }
+        GeometryReader { geometry in
+            ZStack {
+                Image("swsLogo")
+                    .resizable()
+                    .scaledToFit()
                     .padding()
-                    Button(action: {
-                        withAnimation {
-                            showSettings.toggle()
+                if let image = settingsViewModel.receivedImage {
+                    HStack {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.leading, 10)
+                        Spacer()
+                    }
+                } else {
+                    HStack {
+                        Text("No image received")
+                            .padding(.leading, 10)
+                        Spacer()
+                    }
+
+
+                }
+
+                VStack {
+                    Spacer()
+
+                    HStack {
+
+                        VStack {
+                            CommandButtonView(settingsViewModel: settingsViewModel)
                         }
-                    }) {
-                        Image(systemName: "gearshape")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding()
-                            .background(settingsViewModel.buttonColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(30)
-                            .padding(.bottom, 10)
+
+
                     }
-                    .padding()
-                    .popover(isPresented: $showSettings, arrowEdge: .top) {
-                        SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
-                        
-                    }
+                }
+                .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
+                .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
+                .environmentObject(keyboardObserver)
+                .padding()
+                VStack {
                     Spacer()
+                    HStack {
+                        Button(action: {
+                            settingsViewModel.receivedImage = nil
+                        }) {
+                            Image(systemName: "macbook.and.iphone")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(30)
+                                .padding(.bottom, 10)
+                        }
+                        .padding()
+                        Button(action: {
+                            withAnimation {
+                                showSettings.toggle()
+                            }
+                        }) {
+                            Image(systemName: "gearshape")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(30)
+                                .padding(.bottom, 10)
+                        }
+                        .padding()
+                        .popover(isPresented: $showSettings, arrowEdge: .top) {
+                            SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
+
+                        }
+                        Button(action: {
+                            withAnimation {
+                                screamer.websocket.write(ping: Data())
+                            }
+                        }) {
+                            Image(systemName: "shippingbox.and.arrow.backward")
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .foregroundColor(.white)
+                                .cornerRadius(30)
+                                .padding(.bottom, 10)
+                        }
+                        .padding()
+
+                        Spacer()
+                    }
                 }
             }
-        }
-        .onChange(of: showSettings) { newValue in
-            if newValue {
-                print("Popover is shown")
-                consoleManager.isVisible = false
-            } else {
-                print("Popover is hidden")
-                consoleManager.isVisible = true
+            .onAppear {
+                keyboardObserver.startObserve(height: geometry.size.height)
+            }
+            .onDisappear {
+                keyboardObserver.stopObserve()
+            }
+            .onChange(of: showSettings) { newValue in
+                if newValue {
+                    print("Popover is shown")
+                    consoleManager.isVisible = false
+                } else {
+                    print("Popover is hidden")
+                    consoleManager.isVisible = true
 
+                }
+            }
+
+        }
+    }
+
+    class KeyboardObserver: ObservableObject {
+        @Published var isKeyboardVisible = false
+        @Published var keyboardHeight: CGFloat = 0
+
+        private var screenHeight: CGFloat = 0
+
+        func startObserve(height: CGFloat) {
+            screenHeight = height
+            NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        }
+
+        func stopObserve() {
+            NotificationCenter.default.removeObserver(self)
+        }
+
+        @objc private func onKeyboardChange(notification: Notification) {
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                let keyboardTop = screenHeight - keyboardFrame.origin.y
+                isKeyboardVisible = keyboardTop > 0
+                keyboardHeight = max(0, keyboardTop)
             }
         }
-
-    }
-}
-
-class KeyboardObserver: ObservableObject {
-    @Published var isKeyboardVisible = false
-    private var cancellables: Set<AnyCancellable> = []
-
-    init() {
-        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-            .map { _ in true }
-            .assign(to: &$isKeyboardVisible)
-
-        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-            .map { _ in false }
-            .assign(to: &$isKeyboardVisible)
     }
 }

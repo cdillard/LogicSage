@@ -20,8 +20,8 @@ public func configure(_ app: Application) throws {
     }
         connectedClients.append(ws)
         ws.onText { ws, text in
- 
-            if text == "." {
+            let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
+            if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
                 print("\(text)", terminator: "")
             }
             else {
@@ -108,4 +108,11 @@ func advertise() {
     catch {
         print("caught an advertising error = \(error)")
     }
+}
+
+func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
+    if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
+        return scalar
+    }
+    return nil
 }

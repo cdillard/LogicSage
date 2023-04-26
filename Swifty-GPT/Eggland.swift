@@ -68,7 +68,22 @@ In conclusion, Chris may have been young, but he was wise beyond his years. His 
  The future looked bright for ProGen and its team, and soon they became one of the most influential tech companies in the world. However, as the technology continued to evolve, some began to worry about the ethical implications of creating vast simulated environments that could potentially replace the real world.
 
  But for the moment, people were content exploring and experiencing the vast virtual environments created by ProGen, and the future of landscape creation seemed brighter than ever before.
- """
+
+Story 2: Once upon a time, there was a cool dude named Max. Max was a brilliant programmer who always loved to tinker with new ideas and inventions. One day, he had an idea that would change everything in the programming world.
+
+Max had seen many programming languages and tools out there, but they all had limitations. He wanted to create a programming language that would allow programmers to create anything they could imagine. Max spent countless hours researching and experimenting until he finally invented a new programming language, which he called SwiftSage.
+
+SwiftSage was unlike anything seen before. It was fast, efficient, and allowed programmers to create complex applications with ease. Max released SwiftSage to the world, and it quickly gained popularity among programmers everywhere.
+
+As Max continued to perfect SwiftSage, he had another groundbreaking idea. He wanted to create the most advanced procedural generation program ever seen. Max knew that this would be a monumental task, but he was up for the challenge.
+
+Max dedicated his life to creating the perfect procedural generation program. He spent years developing the software, constantly testing and iterating until it was perfect. Max's program was so advanced that it could generate entire worlds and landscapes with a single click of a button.
+
+Finally, Max released the program to the world. It was a huge success, and Max became a legend in the programming world. His invention revolutionized the field of procedural generation, and his software is still being used to this day.
+
+And the best part? Max didn't just create this incredible software for Windows or Linux; he made sure it ran perfectly on Mac OS too! Max may be gone now, but his legacy lives on in every line of code created with SwiftSage and his amazing procedural generation program.
+
+"""
 let sageStory = """
  Chris Dillard was a computer scientist who had always been fascinated by the world of artificial intelligence. He had spent years studying the intricacies of computer programming and had developed a love for Apple products. It was this combination of interests that led him to create Sage, an AI computer that specialized in all things Apple.
 

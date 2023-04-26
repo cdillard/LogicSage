@@ -621,12 +621,20 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     public var isCharacterLimitDisabled = false
     public var isCharacterLimitWarningDisabled = false
-    
+    func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
+        if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
+            return scalar
+        }
+        return nil
+    }
     /// Print items to the console view.
     public func print(_ items: Any) {
         var dotMsg = false
         if let singleString = items as? String {
-            if singleString == "." {
+
+            let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
+
+            if specs.contains(singleString ?? "") {
                 dotMsg = true
             }
         }

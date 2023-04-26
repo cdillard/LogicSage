@@ -66,10 +66,16 @@ class ScreamClient: WebSocketDelegate {
                     SettingsViewModel.shared.receivedImage = receivedImage
                 }
             }
+            // parse audio chunks
+            else {
+
+            }
         case .ping:
             print("websocket received ping")
+            consoleManager.print("websocket received ping")
         case .pong:
             print("websocket received pong")
+            consoleManager.print("websocket received pong")
         case .viabilityChanged(let isViable):
             print("Connection viability changed: \(isViable)")
         case .reconnectSuggested(let shouldReconnect):

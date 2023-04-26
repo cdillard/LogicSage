@@ -140,6 +140,9 @@ func randomCommand(input: String) {
 
 func stopCommand(input: String) {
     stopRandomSpinner()
+
+    stopSayProcess()
+
     // TODO: Figure out a way to make this invalidate the potential GPTs requests and Google APIs requests.
 }
 
