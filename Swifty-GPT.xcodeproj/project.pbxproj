@@ -368,48 +368,39 @@
 				B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */,
 				B729B13B29F975F600BA6752 /* Command */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
+				B737F41C29F897DE00E57577 /* Eggland.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
-				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
 				B7D6517129EC847E00ED8BAE /* ggml.h */,
 				B70CF17D29F07E2400993AAF /* Globals.swift */,
 				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
-				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D1609D29F30CF300244188 /* movies */,
 				B7D160A629F30D4900244188 /* Movies.swift */,
 				B70971DC29F62DC6008ED803 /* MultipeerKit */,
 				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
-				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
-				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B737F41E29F8997300E57577 /* Screencapture */,
-				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B737F40429F8153B00E57577 /* Spotify.swift */,
-				B74A169529F1FA63006A0605 /* SrcCat.swift */,
-				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
 				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
 				B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */,
 				B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */,
 				B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
-				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
 				B70B44D329EAD61900C45773 /* Text.swift */,
+				B729B13F29F99DA800BA6752 /* Therapy.swift */,
 				B7D1609729F2B48C00244188 /* Trivia.swift */,
+				B729B14329F9B42800BA6752 /* Utilities */,
 				B76BF95D29E4AF5400F6420E /* Utilities.swift */,
 				B7D6517329EC847E00ED8BAE /* whisper.h */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
-				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
-				B737F41C29F897DE00E57577 /* Eggland.swift */,
-				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B729B13F29F99DA800BA6752 /* Therapy.swift */,
 			);
 			path = "Swifty-GPT";
 			sourceTree = "<group>";
@@ -425,6 +416,8 @@
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
+				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
+				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -440,6 +433,21 @@
 				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		B729B14329F9B42800BA6752 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B70CF17F29F08C7C00993AAF /* Regex.swift */,
+				B70B44D529EAD85B00C45773 /* Files.swift */,
+				B70CF17B29F07ACD00993AAF /* Loding.swift */,
+				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
+				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
+				B74A169529F1FA63006A0605 /* SrcCat.swift */,
+				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
+				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		B737F41E29F8997300E57577 /* Screencapture */ = {

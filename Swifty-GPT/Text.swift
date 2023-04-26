@@ -8,12 +8,10 @@
 import Foundation
 
 func commandsText() -> String {
-    var text = """
+    let text = """
      \( fullProjText() )
-
     """
     return text
-
 }
 
 func fullProjText() -> String {
@@ -78,7 +76,7 @@ func updateOpeningLine() {
 
 func afterBuildFailedLine() -> String {
 """
-Project creation failed. Check the Xcode project for simple mistakes [3] 🤔. Use GPT to fix erros one at a time [5] 🤖.
+Project creation failed. Check the Xcode project for simple mistakes [3] 🤔.
 ❓ What would you like to do:
 🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
 """
