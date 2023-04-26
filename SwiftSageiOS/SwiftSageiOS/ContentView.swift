@@ -42,7 +42,7 @@ struct ContentView: View {
                     }
                 } else {
                     HStack {
-                        Text("No image received")
+                        Text("Restart app if you encounter any issues, OK?")
                             .padding(.leading, 10)
                         Spacer()
                     }

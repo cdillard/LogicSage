@@ -362,9 +362,7 @@
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
-				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
-				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
-				B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */,
+				B729B13D29F992D300BA6752 /* Audio */,
 				B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */,
 				B729B13B29F975F600BA6752 /* Command */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
@@ -379,7 +377,6 @@
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
-				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
@@ -395,7 +392,6 @@
 				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B737F41E29F8997300E57577 /* Screencapture */,
-				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B737F40429F8153B00E57577 /* Spotify.swift */,
 				B74A169529F1FA63006A0605 /* SrcCat.swift */,
@@ -406,7 +402,6 @@
 				B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
-				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
 				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
 				B70B44D329EAD61900C45773 /* Text.swift */,
 				B7D1609729F2B48C00244188 /* Trivia.swift */,
@@ -429,6 +424,19 @@
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
 			);
 			path = Command;
+			sourceTree = "<group>";
+		};
+		B729B13D29F992D300BA6752 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
+				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
+				B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */,
+				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
+				B791552C29EDBB0300DE34FC /* Speak.swift */,
+				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		B737F41E29F8997300E57577 /* Screencapture */ = {

@@ -43,7 +43,22 @@ struct CommandButtonView: View {
                             .cornerRadius(10)
                     }
                 }
+                Button(action: {
+                    // Execute your action here
+                    screamer.sendCommand(command: multiLineText)
 
+                    self.isInputViewShown = false
+                    consoleManager.isVisible = true
+
+                }) {
+                    Text("EXEC")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(10)
+                }
+                .padding(.top, 10)
                 Button(action: {
                     self.isInputViewShown.toggle()
                     consoleManager.isVisible = !isInputViewShown
@@ -67,22 +82,7 @@ struct CommandButtonView: View {
                     .autocorrectionDisabled(true)
                     .autocapitalization(.none)
 
-                Button(action: {
-                    // Execute your action here
-                    screamer.sendCommand(command: multiLineText)
 
-                    self.isInputViewShown = false
-                    consoleManager.isVisible = true
-
-                }) {
-                    Text("EXEC")
-                        .font(.headline)
-                        .foregroundColor(Color.white)
-                        .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
-                }
-                .padding(.top, 10)
             }
         }
         .padding()
