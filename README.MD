@@ -28,6 +28,15 @@ SwiftSage offers a range of features to make software development faster and mor
 - [Contact](#contact)
 
 ## News, Changelog
+
+----
+04-26-2023
+
+iOS input works quite well, give your feedback in Discussions
+
+"debate your topic" mode BETA
+
+
 ----
 04-24-2023
 
@@ -116,7 +125,7 @@ If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](ht
 
 
 ---
-## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed)
+## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed unless you want decent sounding voices)
 
 If you would not like to hear ANYTHING from this tool please set `let voiceOutputEnabled = false`
 
@@ -138,7 +147,7 @@ https://www.cereproc.com
 Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
 Turn on `let cereprocVoicesEnabled = true`
 
-## SWIFT SAGE IOS INSTRUCTIONS: (Not needed)
+## SWIFT SAGE IOS INSTRUCTIONS: (Not needed unless you want to use SwiftSage on iOS/iPadOS devices)
 
 UPDATE the feat flag
 `let swiftSageIOSEnabled = true`
@@ -219,6 +228,7 @@ If this happens just try again and it _usually_ clears right up.
 - [Vapor](https://github.com/vapor/vapor)
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Blackhole](https://github.com/ExistentialAudio/BlackHole)
+- [https://github.com/louisdh/source-editor]
 
 Thanks to Mike Bruin for keeping the Plist safe.
 

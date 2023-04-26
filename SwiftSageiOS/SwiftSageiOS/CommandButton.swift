@@ -12,6 +12,7 @@ struct CommandButtonView: View {
     @State private var isInputViewShown = false
     @State private var multiLineText = ""
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
         GeometryReader { geometry in
@@ -38,6 +39,7 @@ struct CommandButtonView: View {
 
                     if multiLineText.isEmpty && isInputViewShown {
                         Button(action: {
+                            isTextFieldFocused = true
                             multiLineText += "debate "
                         }) {
                             Text( "debate")
@@ -49,6 +51,7 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         Button(action: {
+                            isTextFieldFocused = true
                             multiLineText += "st"
                         }) {
                             Text( "st")
@@ -60,6 +63,7 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         Button(action: {
+                            isTextFieldFocused = true
                             multiLineText += "i "
                         }) {
                             Text( "i")
@@ -71,6 +75,7 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         Button(action: {
+                            isTextFieldFocused = true
                             multiLineText += "g "
                         }) {
                             Text( "g")
@@ -79,6 +84,7 @@ struct CommandButtonView: View {
                                 .padding()
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
+
                         }
                         .padding(.bottom)
 
@@ -139,6 +145,7 @@ struct CommandButtonView: View {
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
+                        .focused($isTextFieldFocused)
                 }
             }
         }
