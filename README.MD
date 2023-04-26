@@ -126,12 +126,24 @@ To discover your paths and issues, run:
 - `which xcodegen`
 If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
 
+### OCR Models (not needed currently)
+Download the necessary OCR models and place them in the corresponding directories:
+1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
+2. [tessdata](https://github.com/tesseract-ocr/tessdata)
+3. [tessdata_best](https://github.com/tesseract-ocr/tessdata_best)
+
+### Voice Command
+Download the desired datasets from [Hugging Face](https://huggingface.co/ggerganov/whisper.cpp/tree/main) and place them in `Swifty-GPT/Swifty-GPT/Model`:
+- ggml-large.bin
+- ggml-medium.en.bin
+- ggml-large-v1.bin
+- ggml-base.en.bin
+- ggml-small.en.bn
 
 ---
 ## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed unless you want decent sounding voices)
 
 If you would not like to hear ANYTHING from this tool please set `let voiceOutputEnabled = false`
-
 
 -MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
 
@@ -148,8 +160,9 @@ FIND/BUY/INSTALL THE VOICE YOU FANCY.
 https://www.cereproc.com
 
 Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
-Turn on `let cereprocVoicesEnabled = true`
+Turn on `let cereprocVoicesEnabled = true` // THIS ISN't working yet, IN PROGRESS
 
+---
 ## SWIFT SAGE IOS INSTRUCTIONS: (Not needed unless you want to use SwiftSage on iOS/iPadOS devices)
 
 DO NOT use wireless debuggin, it won't work due to websockety conflict
@@ -171,24 +184,14 @@ vapor run
 ## MAC SAGE INSTRUCTIONS:
 TBD
 
-### OCR Models
-Download the necessary OCR models and place them in the corresponding directories:
-1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
-2. [tessdata](https://github.com/tesseract-ocr/tessdata)
-3. [tessdata_best](https://github.com/tesseract-ocr/tessdata_best)
 
-### Voice Command
-Download the desired datasets from [Hugging Face](https://huggingface.co/ggerganov/whisper.cpp/tree/main) and place them in `Swifty-GPT/Swifty-GPT/Model`:
-- ggml-large.bin
-- ggml-medium.en.bin
-- ggml-large-v1.bin
-- ggml-base.en.bin
-- ggml-small.en.bn
 
 ## Troubleshooting
 
 ### Xcode build
 `tessdata_fast-main` should be deleted from the Xcode project. It will be added to the SwiftyGPTWorkspace folder in your Documents dir.
+
+---
 
 ### Microphone Access
 
@@ -204,7 +207,7 @@ Head to the Swifty-GPT folder and run this on the entitlements fil with your App
 
 If you see dialogs such as "would like to use your Microphone" or "Would like to send events to other applications," please accept them.
 
-
+---
 Sometimes GPT will refuse to make apps....
 ```
 Response non nil, another generation...
@@ -218,7 +221,7 @@ No names found... failing..
 If this happens just try again and it _usually_ clears right up.
 
 
-
+---
 ## Credits
 - [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
 - [SwiftyTesseract](https://github.com/SwiftyTesseract/SwiftyTesseract)
@@ -234,7 +237,9 @@ If this happens just try again and it _usually_ clears right up.
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Blackhole](https://github.com/ExistentialAudio/BlackHole)
 - [https://github.com/louisdh/source-editor]
+https://github.com/louisdh/savannakit
 
+---
 Thanks to Mike Bruin for keeping the Plist safe.
 
 ---
