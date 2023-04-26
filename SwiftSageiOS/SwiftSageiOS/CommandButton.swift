@@ -35,6 +35,55 @@ struct CommandButtonView: View {
                         .background(settingsViewModel.buttonColor)
 //                        .cornerRadius(10)
                     }
+
+                    if multiLineText.isEmpty && isInputViewShown {
+                        Button(action: {
+                            multiLineText += "debate"
+                        }) {
+                            Text( "debate")
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+                        Button(action: {
+                            multiLineText += "st"
+                        }) {
+                            Text( "st")
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+                        Button(action: {
+                            multiLineText += "i"
+                        }) {
+                            Text( "i")
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+                        Button(action: {
+                            multiLineText += "g"
+                        }) {
+                            Text( "g")
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .padding()
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+
+                    }
+
                     if !multiLineText.isEmpty && isInputViewShown {
                         Button(action: {
                             multiLineText = ""
