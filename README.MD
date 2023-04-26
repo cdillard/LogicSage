@@ -228,12 +228,3 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
-SwiftSage iOS PRetty
-
-![SwiftSage](Swifty-GPT/assets/swifty-ios-3.png)
-
-![SwiftSage](Swifty-GPT/assets/swifty-ios-4.png)
-
-![SwiftSage](Swifty-GPT/assets/swifty-ios-2.png)
-
-![SwiftSage](Swifty-GPT/assets/swifty-ios-5.png)
