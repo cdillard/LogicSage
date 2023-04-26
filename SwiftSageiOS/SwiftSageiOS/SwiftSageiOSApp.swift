@@ -68,7 +68,7 @@ class ScreamClient: WebSocketDelegate {
             }
             // parse audio chunks
             else {
-
+                print("fail parse is it audio????")
             }
         case .ping:
             print("websocket received ping")

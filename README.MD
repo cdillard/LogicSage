@@ -216,6 +216,7 @@ SwiftSage offers a range of features to make software development faster and mor
 - [Starscream](https://github.com/daltoniam/Starscream)
 - [Vapor](https://github.com/vapor/vapor)
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
+- [Blackhole](https://github.com/ExistentialAudio/BlackHole)
 
 Thanks to Mike Bruin for keeping the Plist safe.
 

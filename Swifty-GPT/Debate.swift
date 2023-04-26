@@ -50,39 +50,38 @@ Give me a very interesting and detailed debate script \(subject != nil ? "about 
 }
 
 func randomDebate() -> String {
-    debatePrompt
-    //    switch Int.random(in: 0...6) {
-    //    case 0:
-    //        return debatePrompt
-    //    case 1:
-    //        return debatePrompt2
-    //
-    //    case 2:
-    //        return debatePrompt3
-    //
-    //    case 3:
-    //        return debatePrompt4
-    //
-    //    case 4:
-    //        return debatePrompt5
-    //
-    //    case 5:
-    //        return debatePrompt6
-    //
-    //    case 6:
-    //        return debatePrompt7
-    //
-    //    default:
-    //        return debatePrompt
-    //
-    //    }
+        switch Int.random(in: 0...6) {
+        case 0:
+            return debatePrompt
+        case 1:
+            return debatePrompt2
+
+        case 2:
+            return debatePrompt3
+
+        case 3:
+            return debatePrompt4
+
+        case 4:
+            return debatePrompt5
+
+        case 5:
+            return debatePrompt6
+
+        case 6:
+            return debatePrompt7
+
+        default:
+            return debatePrompt
+
+        }
 }
 let usePrePrompt = true
 func debateCommand(input: String) {
     debateMode = true
-    multiPrinter("DEBATE STAGE:")
     if (input.isEmpty || !usePrePrompt) {
-        deepConversation(currentPersonality: personalityA, initialPrompt: debatePrompt0, depth: depthLimit)
+        multiPrinter("DEBATE STAGE:")
+        deepConversation(currentPersonality: personalityA, initialPrompt: randomDebate(), depth: depthLimit)
 
     }
     else if (usePrePrompt) {

@@ -55,8 +55,10 @@ public func configure(_ app: Application) throws {
 
         }
         ws.onBinary { ws, data in
-            print("Received binary data: \(data)")
+            if debugging {
 
+                print("Received binary data: \(data)")
+            }
             for client in connectedClients {
 
                 guard client !== ws else { 
