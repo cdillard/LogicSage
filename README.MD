@@ -152,10 +152,12 @@ Turn on `let cereprocVoicesEnabled = true`
 
 ## SWIFT SAGE IOS INSTRUCTIONS: (Not needed unless you want to use SwiftSage on iOS/iPadOS devices)
 
+DO NOT use wireless debuggin, it won't work due to websockety conflict
+
 UPDATE the feat flag
 `let swiftSageIOSEnabled = true`
 
-If u have issues: `rm -rf WebSocketServer/.build`
+If you have issues: `rm -rf WebSocketServer/.build`
 
 TURN OFF YOUR FIREWALLS ON ALL USED DEVICES
 
