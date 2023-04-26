@@ -359,7 +359,6 @@
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
-				B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */,
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
@@ -367,8 +366,7 @@
 				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
 				B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */,
 				B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */,
-				B775BF7829EB78B0007FA7AE /* Command.swift */,
-				B74746A729F40FCD00075010 /* CommandTable.swift */,
+				B729B13B29F975F600BA6752 /* Command */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
 				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
@@ -421,6 +419,16 @@
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 			);
 			path = "Swifty-GPT";
+			sourceTree = "<group>";
+		};
+		B729B13B29F975F600BA6752 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */,
+				B775BF7829EB78B0007FA7AE /* Command.swift */,
+				B74746A729F40FCD00075010 /* CommandTable.swift */,
+			);
+			path = Command;
 			sourceTree = "<group>";
 		};
 		B737F41E29F8997300E57577 /* Screencapture */ = {

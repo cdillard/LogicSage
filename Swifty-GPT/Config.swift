@@ -7,7 +7,29 @@
 
 import Foundation
 
-var loadMode = LoadMode.dots
+// Sw-S CONFIG
+
+// Set builtInAppDesc
+let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
+
+// TODO: Fix hardcoded paths.
+let xcodegenPath = "/opt/homebrew/bin/xcodegen"
+
+// WORKSPACE SETTING
+let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
+
+let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
+
+// OPEN AI SETTIN
+// let gptModel = "gpt-4" // Someone please, if you are out there, hit the github discussions with results from gpt-4.
+
+let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
+let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+
+// 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit
+// your fancy and you know i'll add more.
+
+var loadMode = LoadMode.waves
 
 enum LoadMode {
     case none
@@ -30,30 +52,10 @@ let kathyVoice = "com.apple.speech.synthesis.voice.Kathy"
 let sandyVoice = "com.apple.eloquence.en-US.Sandy"
 let floVoice = "com.apple.eloquence.en-US.Flo"
 let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
-var defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
-
-// What YOU don't like the goofy robotic voices built in to Mac OS????
-// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
-let cereprocVoicesEnabled = false
-
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
-// Set builtInAppDesc
-let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
-
-// TODO: Fix hardcoded paths.
-let xcodegenPath = "/opt/homebrew/bin/xcodegen"
-
-// WORKSPACE SETTING
-let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
-
-let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
-
-// OPEN AI SETTIN
-// let gptModel = "gpt-4" // Someone please, if you are out there, hit the github discussions with results from gpt-4.
-
-let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
-let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+// CHOOSE your default voice (if using built in Mac OS voice synthesis)
+var defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
 
 // PLIST SETTINGS
 func keyForName(name: String) -> String {
@@ -116,6 +118,13 @@ let triviaEnabledObjc = false
 let voiceOutputEnabled = true
 var voiceInputEnabled = false
 
+// EXPERIMENTAL AUDIO
+// What YOU don't like the goofy robotic voices built in to Mac OS????
+// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
+let cereprocVoicesEnabled = false
+
+//https://github.com/suno-ai/bark   IN PROGRESS
+let barkVoicesEnabled = false
 
 // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
 let enableGoogle = false
@@ -136,7 +145,7 @@ enum LogVerbosity {
     case none
 }
 
-// IF the movie is TOO big/blurry for you and your tastes try manually setting your Xcode console font to 2 or 3 and then  turn movie width up :).
+// IF the movie is TOO big/blurry for you and your tastes try manually setting your Sw-S/Xcode console font to 2 or 3 and then  turn movie width up :).
 let movieWidth = 95
 let matrixScreenWidth = 100
 
