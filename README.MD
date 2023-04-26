@@ -1,7 +1,21 @@
 ![SwiftSage](Swifty-GPT/assets/logo.png)
 # SwiftSage: The Ultimate AI Integration for Xcode
 
+DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY (INFACT I CODED IT IN MY SLEEP AND CANNOT BE SURE WHATS IN IT). THIS IS JUST AN EXPERIMENT.
+
 SwiftSage is an AI-powered program that integrates seamlessly into Xcode, iOS, and the command line, aiming to redefine the way users interact with their Apple devices. It offers features such as intelligent code completion, auto-debugging, context-aware notifications, and enhanced accessibility for users with disabilities, making Apple devices more powerful, efficient, and inclusive than ever before. SwiftSage is poised to transform the Apple ecosystem and capture the hearts and minds of Apple enthusiasts worldwide.
+
+## Features
+SwiftSage offers a range of features to make software development faster and more efficient:
+- iOS REMOTE FOR SWIFT-SAGE [IN-PROGRESS]
+	- It's freaking cool!!!!
+- Code analysis and optimization
+- Error detection and correction [IN-PROGRESS]
+- Voice-activated GPT integration
+- Real-time code suggestions [IN-PROGRESS]
+- Powerful debugging tool [IN-PROGRESS]
+- Integration with Apple's built-in text-to-speech software
+- Personalized memory storage using a consciousness module [IN-PROGRESS]
 
 ## Table of Contents
 - News, Changelog
@@ -12,8 +26,6 @@ SwiftSage is an AI-powered program that integrates seamlessly into Xcode, iOS, a
 - [Features](#features)
 - [Credits](#credits)
 - [Contact](#contact)
-
-DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY. THIS IS JUST AN EXPERIMENT.
 
 ## News, Changelog
 ----
@@ -191,17 +203,7 @@ No names found... failing..
 ```
 If this happens just try again and it _usually_ clears right up.
 
-## Features
-SwiftSage offers a range of features to make software development faster and more efficient:
-- iOS REMOTE FOR SWIFT-SAGE [IN-PROGRESS]
-	- It's freaking cool!!!!
-- Code analysis and optimization
-- Error detection and correction [IN-PROGRESS]
-- Voice-activated GPT integration
-- Real-time code suggestions [IN-PROGRESS]
-- Powerful debugging tool [IN-PROGRESS]
-- Integration with Apple's built-in text-to-speech software
-- Personalized memory storage using a consciousness module [IN-PROGRESS]
+
 
 ## Credits
 - [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
