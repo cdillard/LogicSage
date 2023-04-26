@@ -36,6 +36,9 @@ iOS input works quite well, give your feedback in Discussions
 
 "debate your topic" mode BETA
 
+Customizable Terminal and app colors (Restart or fresh install app to apply/reset colors for now please.)
+
+CommandButton and wonderful SwiftUI code thanks to GPT-4 and I's coding chemistry.
 
 ----
 04-24-2023
