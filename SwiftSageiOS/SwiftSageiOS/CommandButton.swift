@@ -16,6 +16,7 @@ struct CommandButtonView: View {
     var body: some View {
         VStack {
             HStack {
+                Spacer()
                 if !isInputViewShown {
                     Button("🔌") {
                         print("🔌 Force reconnecting websocket...")

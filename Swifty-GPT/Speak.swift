@@ -29,7 +29,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     let minimumSynthesizersCount = 5
     let batchSynthesizersCount = 10
     private var timer: RepeatingTimer?
-
+    var audioData = Data()
     override init() {
 
         super.init()
@@ -63,11 +63,36 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
                 synthesizers.append(synthesizer)
         }
     }
-
+    var hasInitializedVoiceSynth = false
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         // This could be used for all sorts of things like making voies not overlap
-       // multiPrinter("finished speech")
+        if !hasInitializedVoiceSynth {
+            multiPrinter("Voice synthesis init...")
+            hasInitializedVoiceSynth = true
+        }
     }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakAudioBufferData buffer: AVAudioBuffer, utterance: AVSpeechUtterance) {
+        // Handle the synthesized audio data
+        if let pcmBuffer = buffer as? AVAudioPCMBuffer {
+            let dataSize = Int(pcmBuffer.frameLength * pcmBuffer.format.streamDescription.pointee.mBytesPerFrame)
+
+            if pcmBuffer.format.commonFormat == .pcmFormatFloat32, let floatChannelData = pcmBuffer.floatChannelData {
+                let data = Data(bytes: floatChannelData.pointee, count: dataSize)
+//                audioData.append(data)
+                multiPrinter("pusing to websocket audio chunk len = \(data.count)")
+                localPeerConsole.webSocketClient.websocket.write(data: data)
+            } else if pcmBuffer.format.commonFormat == .pcmFormatInt16, let int16ChannelData = pcmBuffer.int16ChannelData {
+                let data = Data(bytes: int16ChannelData.pointee, count: dataSize)
+                multiPrinter("pusing to websocket audio chunk len = \(data.count)")
+                localPeerConsole.webSocketClient.websocket.write(data: data)
+            }
+        }
+        else {
+            print("buf != AVAudioPCMBuffer")
+        }
+    }
+
 
     var count = 0
 
@@ -176,3 +201,4 @@ class RepeatingTimer {
         timer.cancel()
     }
 }
+

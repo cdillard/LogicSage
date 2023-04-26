@@ -52,51 +52,34 @@ struct ContentView: View {
 
                 VStack {
                     Spacer()
-
-                    HStack {
-
-                        VStack {
-                            CommandButtonView(settingsViewModel: settingsViewModel)
-                        }
-
-
-                    }
+                    CommandButtonView(settingsViewModel: settingsViewModel)
                 }
                 .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
                 .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
                 .environmentObject(keyboardObserver)
-                .padding()
+                .padding(.bottom, geometry.size.width * 0.01)
+
+
                 VStack {
                     Spacer()
                     HStack {
                         Button(action: {
                             settingsViewModel.receivedImage = nil
                         }) {
-                            Image(systemName: "macbook.and.iphone")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding()
-                                .background(settingsViewModel.buttonColor)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
-                                .padding(.bottom, 10)
+
+                            resizableButtonImage(systemName: "macbook.and.iphone", size: geometry.size)
+
                         }
-                        .padding()
+                        .padding(geometry.size.width * 0.01)
                         Button(action: {
                             withAnimation {
                                 showSettings.toggle()
                             }
                         }) {
-                            Image(systemName: "gearshape")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding()
-                                .background(settingsViewModel.buttonColor)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
-                                .padding(.bottom, 10)
+                            resizableButtonImage(systemName: "gearshape", size: geometry.size)
+
                         }
-                        .padding()
+                        .padding(geometry.size.width * 0.01)
                         .popover(isPresented: $showSettings, arrowEdge: .top) {
                             SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
 
@@ -106,17 +89,10 @@ struct ContentView: View {
                                 screamer.websocket.write(ping: Data())
                             }
                         }) {
-                            Image(systemName: "shippingbox.and.arrow.backward")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding()
-                                .background(settingsViewModel.buttonColor)
-                                .foregroundColor(.white)
-                                .cornerRadius(30)
-                                .padding(.bottom, 10)
-                        }
-                        .padding()
 
+                            resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
+                        }
+                        .padding(geometry.size.width * 0.01)
                         Spacer()
                     }
                 }
@@ -140,7 +116,19 @@ struct ContentView: View {
 
         }
     }
+    let maxButtonSize: CGFloat = 20
 
+    private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: min(size.width * 0.05, maxButtonSize), height: min(size.width * 0.05, maxButtonSize))
+            .padding(size.width * 0.02)
+            .background(settingsViewModel.buttonColor)
+            .foregroundColor(.white)
+            .cornerRadius(size.width * 0.05)
+            .padding(.bottom, size.width * 0.01)
+    }
     class KeyboardObserver: ObservableObject {
         @Published var isKeyboardVisible = false
         @Published var keyboardHeight: CGFloat = 0

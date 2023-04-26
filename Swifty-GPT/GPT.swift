@@ -89,7 +89,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
 
             }
         }
-        multiPrinter("🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠 THINKING... 🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑🧠🐑")
+        multiPrinter("🐑🐑🐑")
         task.resume()
     }
     catch {

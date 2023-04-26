@@ -8,7 +8,7 @@
 import Foundation
 
 // Main.swift Sema
-let sema = DispatchSemaphore(value: 0)
+//let sema = DispatchSemaphore(value: 0)
 
 var projectName = "MyApp"
 var globalErrors = [String]()

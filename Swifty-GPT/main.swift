@@ -70,8 +70,6 @@ func main() {
         doPrompting()
     }
 
-
-
     // BEGIN AUDIO PROCESSING
     let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)"
     let audioFilePath = "\(projectPath)/audio-\(UUID())\(audioRecordingFileFormat)"
@@ -93,7 +91,7 @@ func main() {
 
     DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 
-        print(localPeerConsole.webSocketClient.websocket)
+        _ = localPeerConsole.webSocketClient.websocket
 
         stopRandomSpinner()
 
@@ -118,8 +116,6 @@ func main() {
         }
     }
 
-    // END AUDIO PROCESSING
-    //sema.wait()
 }
 
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
@@ -168,7 +164,6 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                             multiPrinter("file error = \(error)")
                         }
 
-                        sema.signal()
                         return
                     }
 
@@ -230,14 +225,11 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         if success {
             completion(response)
         } else {
-
             multiPrinter("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
             generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)
         }
     }
 }
-
-
 
 main()
 

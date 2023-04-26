@@ -50,9 +50,9 @@ func fullProjText() -> String {
 func generatedOpenLine(overrideV: Bool = false) -> String {
 
     let openLine = """
-    \(openLinePrintCount == 0 ? "\(randomAscii())\n 🚀🔥 Welcome to SwiftSage 🧠💥" : "")
+    \(openLinePrintCount == 0 ? "\(randomAscii())" : "")
     \((logV == .verbose && overrideV) ? commandsText() : "")
-    🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
+    🔍 g: talk to gpt, i: app idea [(c) - list all commands, ...]:
     """
     return openLine
 }

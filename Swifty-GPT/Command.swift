@@ -246,7 +246,7 @@ func xcodeCommand(input: String) {
 }
 
 func exitCommand(input: String) {
-    sema.signal()
+    exit(0)
 }
 
 func closeCommand(input: String) {
