@@ -42,7 +42,7 @@ struct ContentView: View {
                     }
                 } else {
                     HStack {
-                        Text("Restart app if you encounter any issues, OK?")
+                        Text("Restart app if you encounter any issues, OK?\nReinstall if terminal becomes too small :(")
                             .padding(.leading,geometry.size.width * 0.01)
                         Spacer()
                     }

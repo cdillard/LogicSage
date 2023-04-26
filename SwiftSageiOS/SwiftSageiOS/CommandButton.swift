@@ -87,8 +87,7 @@ struct CommandButtonView: View {
                 if isInputViewShown {
                     TextEditor(text: $multiLineText)
                         .frame(height: 200)
-                        .padding()
-                        .border(Color.gray, width: 1)
+                        .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
                 }
