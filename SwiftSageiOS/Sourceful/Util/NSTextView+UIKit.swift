@@ -7,7 +7,7 @@
 //
 
 #if !os(macOS)
-
+#if !os(iOS)
 import AppKit
 
 extension NSTextView {
@@ -32,4 +32,5 @@ extension NSTextView {
 
 }
 
+#endif
 #endif
