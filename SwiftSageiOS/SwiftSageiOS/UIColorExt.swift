@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 extension UIColor {
-    convenience init(_ color: SwiftUI.Color) {
+    convenience init(_ color: Color) {
         let uiColor = color.uiColor()
         self.init(cgColor: uiColor.cgColor)
     }

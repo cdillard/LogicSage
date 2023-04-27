@@ -14,12 +14,44 @@ let consoleManager = LCManager.shared
 struct ContentView: View {
     @State private var showSettings = false
     @State private var isLabelVisible: Bool = true
+    @State private var isEditorVisible: Bool = false
+    @State private var  code: String = ""
     @FocusState private var isTextFieldFocused: Bool
 
     @StateObject private var keyboardObserver = KeyboardObserver()
 
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
+
+    @State var theCode: String
     init() {
+        
+        theCode  = """
+struct WaveView: View {
+var body: some View {
+GeometryReader { geometry in
+  ZStack {
+      let waveCount = 6
+      ForEach(0..<waveCount) { index in
+          Path { p in
+              let x: CGFloat = CGFloat(index) / CGFloat(waveCount)
+              let y = CGFloat(sin((.pi * 2 * Double(x)) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
+              p.move(to: CGPoint(x: geometry.frame(in: .local).minX, y: (1 + y) * geometry.frame(in: .local).height / 2))
+              for x in stride(from: geometry.frame(in:.local).minX, to: geometry.frame(in:.local).maxX, by: 4) {
+                  let y = CGFloat(sin((.pi * 2 * Double(x/100)) + (Double(index) * .pi / 3) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
+                  p.addLine(to: CGPoint(x:x, y: (1 + y) * geometry.frame(in: .local).height / 2))
+              }
+              p.addLine(to: CGPoint(x:geometry.frame(in:.local).maxX, y:geometry.frame(in:.local).maxY))
+              p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:geometry.frame(in:.local).maxY))
+              p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:(1 - y) * geometry.frame(in: .local).height / 2))
+          }
+          .fill(Color(red: Double(index) / Double(waveCount), green: Double((waveCount - index) / waveCount), blue: 1.0 - Double(index) / Double(waveCount)))
+          .opacity(0.5)
+      }
+  }
+}
+}
+}
+"""
         consoleManager.isVisible = true
         consoleManager.fontSize = settingsViewModel.textSize
 
@@ -32,6 +64,12 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
                     .padding()
+
+                if isEditorVisible {
+                    
+                    SourceCodeTextEditor(text: $theCode)
+                }
+
                 if let image = settingsViewModel.receivedImage {
                     HStack {
                         Image(uiImage: image)
@@ -41,15 +79,17 @@ struct ContentView: View {
                         Spacer()
                     }
                 } else {
-                    HStack {
-                        Text("Restart app if you encounter any issues, OK?\nFresh install if terminal becomes too small :(")
-                            .padding(.leading,geometry.size.width * 0.01)
-                            .padding(.top,geometry.size.width * 0.01)
+                    VStack {
+                        HStack {
+                            Spacer()
 
+                            Text("Restart app if you encounter any issues, OK?\nFresh install if terminal becomes too small :(")
+
+                        }
                         Spacer()
+
+
                     }
-
-
                 }
 
                 VStack {
@@ -66,6 +106,15 @@ struct ContentView: View {
                     Spacer()
                     HStack {
                         Button(action: {
+                            if isEditorVisible {
+                                consoleManager.isVisible = true
+                            } else {
+                                consoleManager.isVisible = false
+
+                            }
+
+                            isEditorVisible = !isEditorVisible
+                            // TODO: remove test reset here
                             settingsViewModel.receivedImage = nil
                         }) {
 

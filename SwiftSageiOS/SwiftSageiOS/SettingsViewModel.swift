@@ -75,7 +75,7 @@ extension Color {
 
     func colorData() -> Data? {
         do {
-            let uiColor = UIColor(self)
+            let uiColor = uiColor()
             let data = try NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
             return data
         } catch {

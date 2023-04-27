@@ -23,8 +23,9 @@ struct SwiftSageiOSApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                settingsViewModel.backgroundColor
-                    .ignoresSafeArea()
+                //settingsViewModel.backgroundColor
+
+
                 ContentView()
                     .environmentObject(settingsViewModel)
                     .environmentObject(appState)
@@ -117,6 +118,17 @@ class ScreamClient: WebSocketDelegate {
     func sendCommand(command: String) {
         print("Executing: \(command)")
 
+        // TODO: More commands iOS side?
+        switch command {
+        case "open":
+            // doooo open file thing
+            print("Opening ContentView.swift...")
+            consoleManager.print("Opening ContentView.swift...")
+
+            return
+        default:
+            break
+        }
 
         websocket.write(string:command)
     }

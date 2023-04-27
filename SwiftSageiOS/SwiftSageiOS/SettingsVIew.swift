@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 struct SettingsView: View {
     @Binding var showSettings: Bool
     @ObservedObject var viewModel: SettingsViewModel

@@ -1,14 +1,13 @@
 ![SwiftSage](Swifty-GPT/assets/logo.png)
 # SwiftSage: The Ultimate AI Integration for Xcode
 
-DISCLAIMER: I AM NOT RESPONSIBLE FOR ANY ISSUES (LEGAL or OTHER) RESULTING FORM THE USE OF THE CODE IN THIS REPOSITORY (INFACT I CODED IT IN MY SLEEP AND CANNOT BE SURE WHATS IN IT). THIS IS JUST AN EXPERIMENT.
+DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents as I coded it in my sleep.
 
-SwiftSage is an innovative technology that integrates with Xcode to simplify app creation across various platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. Additionally, SwiftSage is free, open-source, and MIT licensed on GitHub.
+SwiftSage is a cutting-edge technology that integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub.
 
 ## Features
-SwiftSage offers a range of features to make software development faster and more efficient:
-- iOS REMOTE FOR SWIFT-SAGE [IN-PROGRESS]
-	- It's freaking cool!!!!
+SwiftSage provides numerous features to accelerate software development and improve efficiency:
+- iOS remote for SwiftSage [IN-PROGRESS]
 - Code analysis and optimization
 - Error detection and correction [IN-PROGRESS]
 - Voice-activated GPT integration
@@ -16,6 +15,7 @@ SwiftSage offers a range of features to make software development faster and mor
 - Powerful debugging tool [IN-PROGRESS]
 - Integration with Apple's built-in text-to-speech software
 - Personalized memory storage using a consciousness module [IN-PROGRESS]
+- Debate mode: pit the GPT personas against one another with "debate" and "debate your topic"
 
 ## Table of Contents
 - News, Changelog
@@ -48,16 +48,12 @@ iOS Swift Sage??? Whattttt??? Yep.
 More screenshots at the bottom
 
 ----
-04-23-2023
-
-DEBATE MODE🗣️💬👥
+04-23-2023: DEBATE MODE introduced.
 
 ----
 04-22-2023
 
-SwiftSage has evolved. realtime voice synthesis and google command gives super powers to your SwiftSage `i` and `if` and `gf` commands.
-
-AGI is imminent. (NOT THIS PROJECT LOL) We might get some funny apps tho...
+SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
@@ -237,8 +233,8 @@ If this happens just try again and it _usually_ clears right up.
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Blackhole](https://github.com/ExistentialAudio/BlackHole)
 - [https://github.com/louisdh/source-editor]
-https://github.com/louisdh/savannakit
-
+- [https://github.com/louisdh/savannakit]
+- [https://github.com/twostraws/Sourceful]
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 
