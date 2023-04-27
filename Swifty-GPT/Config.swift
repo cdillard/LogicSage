@@ -135,7 +135,7 @@ let enableLink = false
 
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
 let enableMacSage = false
-let swiftSageIOSEnabled = true
+let swiftSageIOSEnabled = false
 let swiftSageIOSAudioStreaming = false
 
 // DO NOT USE
