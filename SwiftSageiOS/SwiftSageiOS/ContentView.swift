@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var isLabelVisible: Bool = true
     @State private var  code: String = ""
     @FocusState private var isTextFieldFocused: Bool
+    @State private var currentScale: CGFloat = 1.0
+    @State private var lastScaleValue: CGFloat = 1.0
 
     @StateObject private var keyboardObserver = KeyboardObserver()
 
@@ -70,8 +72,21 @@ GeometryReader { geometry in
                 if settingsViewModel.isEditorVisible {
                     
                     SourceCodeTextEditor(text: $theCode)
+                        .scaleEffect(currentScale)
+
+                        .gesture(
+                            MagnificationGesture()
+                                             .onChanged { scaleValue in
+                                                 // Update the current scale based on the gesture's scale value
+                                                 currentScale = lastScaleValue * scaleValue
+                                             }
+                                             .onEnded { scaleValue in
+                                                 // Save the scale value when the gesture ends
+                                                 lastScaleValue = currentScale
+                                             }
+                                     )
                 }
-                else if settingsViewModel.showWebView {
+                if settingsViewModel.showWebView {
                     SageWebView()
                 }
 

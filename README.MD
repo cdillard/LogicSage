@@ -29,6 +29,20 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ## News, Changelog
 
+---- 
+04-26-2023
+
+Files using twostraws excellent Sourceful (see creds)
+
+
+SwiftSage blurs the line between Playgrounds, Xcode and CLI in a beautiful way.
+
+Webviews for GPT-4!!!!!!!!!!
+
+See Screenshots at bottom
+
+Stay TUNED for multiple TERM windows AND MORE!
+
 ----
 04-26-2023
 
@@ -244,4 +258,7 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
+
+![iPad](Swifty-GPT/assets/Shiwfty_iPad2.png)
+
 ![SchwiftySage](Swifty-GPT/assets/command.png)
