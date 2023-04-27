@@ -53,6 +53,21 @@ class SettingsViewModel: ObservableObject {
             }
         }
     }
+
+
+    @Published var isEditorVisible: Bool = false {
+        didSet {
+
+        }
+    }
+
+    @Published var showWebView: Bool = false {
+        didSet {
+
+        }
+    }
+
+
     init() {
         self.terminalBackgroundColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
         self.terminalTextColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .green

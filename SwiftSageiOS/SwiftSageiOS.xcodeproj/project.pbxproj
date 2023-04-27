@@ -71,6 +71,10 @@
 		B74A2CD329F7F6990051DB52 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBE29F7F6990051DB52 /* Engine.swift */; };
 		B74A2CD429F7F6990051DB52 /* NativeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */; };
 		B74A2CD529F7F6990051DB52 /* WSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CC029F7F6990051DB52 /* WSEngine.swift */; };
+		B75B329129FA0F410049EB55 /* SageWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329029FA0F400049EB55 /* SageWebView.swift */; };
+		B75B329329FA11870049EB55 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329229FA11870049EB55 /* AddView.swift */; };
+		B75B329529FA16B50049EB55 /* SageTerminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329429FA16B50049EB55 /* SageTerminal.swift */; };
+		B75B329729FA238C0049EB55 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329629FA238C0049EB55 /* File.swift */; };
 		B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BB29F6DAED003EC13F /* ResizeController.swift */; };
 		B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BC29F6DAED003EC13F /* LCManager.swift */; };
 		B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */; };
@@ -151,6 +155,10 @@
 		B74A2CBE29F7F6990051DB52 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 		B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeEngine.swift; sourceTree = "<group>"; };
 		B74A2CC029F7F6990051DB52 /* WSEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSEngine.swift; sourceTree = "<group>"; };
+		B75B329029FA0F400049EB55 /* SageWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageWebView.swift; sourceTree = "<group>"; };
+		B75B329229FA11870049EB55 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		B75B329429FA16B50049EB55 /* SageTerminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageTerminal.swift; sourceTree = "<group>"; };
+		B75B329629FA238C0049EB55 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		B767E9BB29F6DAED003EC13F /* ResizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeController.swift; sourceTree = "<group>"; };
 		B767E9BC29F6DAED003EC13F /* LCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCManager.swift; sourceTree = "<group>"; };
 		B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureEndpointPredictor.swift; sourceTree = "<group>"; };
@@ -347,6 +355,10 @@
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
+				B75B329229FA11870049EB55 /* AddView.swift */,
+				B75B329029FA0F400049EB55 /* SageWebView.swift */,
+				B75B329429FA16B50049EB55 /* SageTerminal.swift */,
+				B75B329629FA238C0049EB55 /* File.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -557,6 +569,7 @@
 				B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */,
 				B7191F2429F9F09A00078D8D /* Token.swift in Sources */,
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
+				B75B329729FA238C0049EB55 /* File.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
 				B7191F1A29F9F09A00078D8D /* NSMutableAttributedString+Tokens.swift in Sources */,
@@ -566,6 +579,7 @@
 				B7191F2B29F9F09A00078D8D /* SyntaxTextViewLayoutManager.swift in Sources */,
 				B74A2CC829F7F6990051DB52 /* Server.swift in Sources */,
 				B74A2CC729F7F6990051DB52 /* Data+Extensions.swift in Sources */,
+				B75B329329FA11870049EB55 /* AddView.swift in Sources */,
 				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
 				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
@@ -585,6 +599,7 @@
 				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B75B329529FA16B50049EB55 /* SageTerminal.swift in Sources */,
 				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
 				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
 				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
@@ -592,6 +607,7 @@
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
 				B7191F2D29F9F09A00078D8D /* SourceCodeTheme.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
+				B75B329129FA0F410049EB55 /* SageWebView.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
 				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,

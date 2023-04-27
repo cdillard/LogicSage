@@ -9,18 +9,20 @@ import SwiftUI
 import Foundation
 import Combine
 
-let consoleManager = LCManager.shared
+let consoleManager = LCManager.shared//cmdWindows[0]
 
 struct ContentView: View {
     @State private var showSettings = false
     @State private var isLabelVisible: Bool = true
-    @State private var isEditorVisible: Bool = false
     @State private var  code: String = ""
     @FocusState private var isTextFieldFocused: Bool
 
     @StateObject private var keyboardObserver = KeyboardObserver()
 
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
+
+
+    @State private var showAddView = false
 
     @State var theCode: String
     init() {
@@ -65,9 +67,12 @@ GeometryReader { geometry in
                     .scaledToFit()
                     .padding()
 
-                if isEditorVisible {
+                if settingsViewModel.isEditorVisible {
                     
                     SourceCodeTextEditor(text: $theCode)
+                }
+                else if settingsViewModel.showWebView {
+                    SageWebView()
                 }
 
                 if let image = settingsViewModel.receivedImage {
@@ -87,8 +92,6 @@ GeometryReader { geometry in
 
                         }
                         Spacer()
-
-
                     }
                 }
 
@@ -106,14 +109,17 @@ GeometryReader { geometry in
                     Spacer()
                     HStack {
                         Button(action: {
-                            if isEditorVisible {
+                            if settingsViewModel.isEditorVisible {
                                 consoleManager.isVisible = true
                             } else {
                                 consoleManager.isVisible = false
 
                             }
+                            // For all windowzzz...
 
-                            isEditorVisible = !isEditorVisible
+
+                            // TODO
+                            settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
                             // TODO: remove test reset here
                             settingsViewModel.receivedImage = nil
                         }) {
@@ -145,13 +151,22 @@ GeometryReader { geometry in
                         }
                         .padding(geometry.size.width * 0.01)
                         Button(action: {
-                            LCManager.shared2.isVisible = !LCManager.shared2.isVisible
+
+
+                            showAddView.toggle()
+
+
+                            // window 1 is for second cmd prompt
                         }) {
 
                             resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                         }
                         .padding(geometry.size.width * 0.01)
                         Spacer()
+                            .popover(isPresented: $showAddView, arrowEdge: .top) {
+                                AddView(showAddView: $showAddView, viewModel: settingsViewModel)
+
+                            }
                     }
                 }
             }

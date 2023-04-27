@@ -19,6 +19,21 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     // right now there is a strong association between 1 term window... this could be alieviated wit some work
     public static let shared2 = LCManager()
 
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared3 = LCManager()
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared4 = LCManager()
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared5 = LCManager()
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared6 = LCManager()
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared7 = LCManager()
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared8 = LCManager()
+
+
+
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
     public var fontSize: CGFloat =  terminalFontSize{
         didSet {
@@ -112,25 +127,25 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         didSet {
             consoleView.frame.size = consoleSize
             
-            // Update text view width.
-            if consoleView.frame.size.width > ResizeController.kMaxConsoleWidth {
-                consoleTextView.frame.size.width = ResizeController.kMaxConsoleWidth - 2
-            } else if consoleView.frame.size.width < ResizeController.kMinConsoleWidth {
-                consoleTextView.frame.size.width = ResizeController.kMinConsoleWidth - 2
-            } else {
-                consoleTextView.frame.size.width = consoleSize.width - 2
-            }
-            
-            // Update text view height.
-            if consoleView.frame.size.height > ResizeController.kMaxConsoleHeight {
-                consoleTextView.frame.size.height = ResizeController.kMaxConsoleHeight - 2
-                + (consoleView.frame.size.height - ResizeController.kMaxConsoleHeight) * 2 / 3
-            } else if consoleView.frame.size.height < ResizeController.kMinConsoleHeight {
-                consoleTextView.frame.size.height = ResizeController.kMinConsoleHeight - 2
-                + (consoleView.frame.size.height - ResizeController.kMinConsoleHeight) * 2 / 3
-            } else {
-                consoleTextView.frame.size.height = consoleSize.height - 2
-            }
+//            // Update text view width.
+//            if consoleView.frame.size.width > ResizeController.kMaxConsoleWidth {
+//                consoleTextView.frame.size.width = ResizeController.kMaxConsoleWidth - 2
+//            } else if consoleView.frame.size.width < ResizeController.kMinConsoleWidth {
+//                consoleTextView.frame.size.width = ResizeController.kMinConsoleWidth - 2
+//            } else {
+//                consoleTextView.frame.size.width = consoleSize.width - 2
+//            }
+//
+//            // Update text view height.
+//            if consoleView.frame.size.height > ResizeController.kMaxConsoleHeight {
+//                consoleTextView.frame.size.height = ResizeController.kMaxConsoleHeight - 2
+//                + (consoleView.frame.size.height - ResizeController.kMaxConsoleHeight) * 2 / 3
+//            } else if consoleView.frame.size.height < ResizeController.kMinConsoleHeight {
+//                consoleTextView.frame.size.height = ResizeController.kMinConsoleHeight - 2
+//                + (consoleView.frame.size.height - ResizeController.kMinConsoleHeight) * 2 / 3
+//            } else {
+//                consoleTextView.frame.size.height = consoleSize.height - 2
+//            }
             
             consoleTextView.contentOffset.y = consoleTextView.contentSize.height - consoleTextView.bounds.size.height
             
@@ -419,6 +434,8 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             SwizzleTool().swizzleContextMenuReverseOrder()
             
             // Ensure console view always stays above other views.
+
+            // TODO Fix for multiple
             SwizzleTool().swizzleDidAddSubview {
                 window.bringSubviewToFront(self.consoleViewController.view)
             }
@@ -569,18 +586,18 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             $0.isEnabled.toggle(); $0.isEnabled.toggle()
         }
         
-        if UIDevice.current.userInterfaceIdiom != .pad && ResizeController.shared.isActive {
-            ResizeController.shared.isActive = false
-            ResizeController.shared.platterView.dismiss()
-        }
+//        if UIDevice.current.userInterfaceIdiom != .pad && ResizeController.shared.isActive {
+//            ResizeController.shared.isActive = false
+//            ResizeController.shared.platterView.dismiss()
+//        }
         
-        if UIDevice.current.userInterfaceIdiom == .pad && ResizeController.shared.isActive {
-            DispatchQueue.main.async {
-                UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
-                    LCManager.shared.consoleView.center = ResizeController.shared.consoleCenterPoint
-                }.startAnimation(afterDelay: 0.05)
-            }
-        } else {
+//        if UIDevice.current.userInterfaceIdiom == .pad && ResizeController.shared.isActive {
+//            DispatchQueue.main.async {
+//                UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1) {
+//                    LCManager.shared.consoleView.center = ResizeController.shared.consoleCenterPoint
+//                }.startAnimation(afterDelay: 0.05)
+//            }
+//        } else {
             let consoleView = LCManager.shared.consoleView
             
             let targetLocationEstimate: CGPoint = {
@@ -613,7 +630,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
                 
                 LCManager.shared.reassessGrabberMode()
             }
-        }
+       // }
     }
     
     var hasShortened = false
@@ -652,7 +669,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }()
         
         // Cut down string if it exceeds 50,000 characters to keep text view running smoothly.
-        if _currentText.count > 50000 && !isCharacterLimitDisabled {
+        if _currentText.count > STRING_LIMIT && !isCharacterLimitDisabled {
             
             if !hasShortened && !isCharacterLimitWarningDisabled {
                 hasShortened = true
@@ -660,7 +677,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
                 
             }
             
-            let shortenedString = String(_currentText.suffix(50000))
+            let shortenedString = String(_currentText.suffix(STRING_LIMIT))
             currentText = shortenedString.stringAfterFirstOccurenceOf(delimiter: "\n") ?? shortenedString
         } else {
             currentText = _currentText
@@ -891,10 +908,10 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }()
         
         let resize = UIAction(title: "Resize Console", image: UIImage(systemName: "arrow.up.backward.and.arrow.down.forward")) { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                ResizeController.shared.isActive.toggle()
-                ResizeController.shared.platterView.reveal()
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                ResizeController.shared.isActive.toggle()
+//                ResizeController.shared.platterView.reveal()
+//            }
         }
         
         // If device is phone in landscape, disable resize controller.
@@ -1273,9 +1290,9 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
                 UIViewPropertyAnimator(duration: 0.4, dampingRatio: 1) { [self] in
                     if !grabberMode {
                         consoleTextView.alpha = 1
-                        if !ResizeController.shared.isActive {
-                            menuButton.alpha = 1
-                        }
+//                        if !ResizeController.shared.isActive {
+//                            menuButton.alpha = 1
+//                        }
                     }
                 }.startAnimation()
             }

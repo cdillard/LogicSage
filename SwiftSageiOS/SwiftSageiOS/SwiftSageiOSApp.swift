@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-
+let STRING_LIMIT = 50000
 
 
 @main
@@ -18,27 +18,83 @@ struct SwiftSageiOSApp: App {
     init() {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
-    }
 
+    //    cmdWindows = [LCManager]()
+
+//        // Alpha window
+//        cmdWindows.append(LCManager())
+//        // Beta
+//        cmdWindows.append(LCManager())
+//        // Gamma
+//        cmdWindows.append(LCManager())
+//        // Delta
+//        cmdWindows.append(LCManager())
+//        // Epsilon
+//        cmdWindows.append(LCManager())
+//        // Zeta
+//        cmdWindows.append(LCManager())
+//        // Eta
+//        cmdWindows.append(LCManager())
+//        // Theta
+//        cmdWindows.append(LCManager())
+//        //Iota
+//        cmdWindows.append(LCManager())
+////        Kappa
+//        Lambda
+//        Mu
+//        Nu
+//        Xi
+//        Omicron
+//        Pi
+//        Rho
+//        Sigma
+//        Tau
+//        Upsilon
+//        Phi
+//        Chi
+//        Psi
+//        Omega
+    }
+    @State private var showInstructions: Bool = !hasSeenInstructions()
     var body: some Scene {
         WindowGroup {
             ZStack {
-                //settingsViewModel.backgroundColor
-
-
+                settingsViewModel.backgroundColor
+                    .ignoresSafeArea()
                 ContentView()
                     .environmentObject(settingsViewModel)
                     .environmentObject(appState)
+
+                    .overlay(
+                        Group {
+                            if showInstructions {
+                                InstructionsPopup(isPresented: $showInstructions)
+                            }
+                        }
+                    )
             }
         }
     }
-
     func doDiscover() {
         serviceDiscovery?.startDiscovering()
     }
 }
 
+func setHasSeenInstructions(_ hasSeen: Bool) {
+    UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
+}
+
+func hasSeenInstructions() -> Bool {
+    return UserDefaults.standard.bool(forKey: "hasSeenInstructions")
+}
+
+// wimdowz 95
+//var cmdWindows = [LCManager]()
+//var mainWindow = LCManager.shared
+
+// Socket
 let screamer = ScreamClient()
+let reconnectInterval: TimeInterval = 1.0
 
 class ScreamClient: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
@@ -51,7 +107,7 @@ class ScreamClient: WebSocketDelegate {
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
             stopPingTimer()
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
                 print("Reconnecting...")
                 self.connect()
             }
@@ -79,7 +135,7 @@ class ScreamClient: WebSocketDelegate {
         case .reconnectSuggested(let shouldReconnect):
             print("Reconnect suggested: \(shouldReconnect)")
             if shouldReconnect {
-                DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
                     print("Reconnecting...")
                     self.connect()
                 }
@@ -94,7 +150,6 @@ class ScreamClient: WebSocketDelegate {
     }
 
     var websocket: WebSocket!
-    let reconnectInterval: TimeInterval = 1.0
 
     func connectWebSocket(ipAddress: String, port: String) {
         let urlString = "ws://\(ipAddress):\(port)/ws"
@@ -175,7 +230,13 @@ class AppState: ObservableObject {
             .sink { [weak self] in
                 self?.isInBackground = $0
                 // SHOULD RECONNECT????????
-                // screamer.connect()
+                if !(self?.isInBackground ?? false) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+                        print("Reconnecting...")
+                        //screamer.connect()
+                    }
+                    
+                }
             }
             .store(in: &cancellables)
     }

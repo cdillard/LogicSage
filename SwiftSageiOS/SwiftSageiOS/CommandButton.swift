@@ -105,6 +105,22 @@ struct CommandButtonView: View {
 
                     }
                     Button(action: {
+//                        // Execute your action here
+//                        screamer.sendCommand(command: multiLineText)
+//
+//                        self.isInputViewShown = false
+//                        consoleManager.isVisible = true
+
+                    }) {
+                        Text("🛑")
+                            .font(.headline)
+                            .foregroundColor(Color.white)
+                            .padding()
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(10)
+                    }
+                    .padding(.bottom)
+                    Button(action: {
                         // Execute your action here
                         screamer.sendCommand(command: multiLineText)
 
@@ -116,7 +132,7 @@ struct CommandButtonView: View {
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding()
-                            .background(Color.green)
+                            .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
                     .padding(.bottom)
