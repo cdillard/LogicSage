@@ -103,16 +103,6 @@
 		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B746DFE029F5E78A002804EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B746DFCA29F5E789002804EB;
-			remoteInfo = SwiftSageiOS;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		B7139CDA29E147910049ADE1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -182,7 +172,6 @@
 		B737F41C29F897DE00E57577 /* Eggland.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggland.swift; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
 		B74486DD29E79D7C002D1D5A /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
-		B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSageiOS.xcodeproj; path = SwiftSageiOS/SwiftSageiOS.xcodeproj; sourceTree = "<group>"; };
 		B74746A729F40FCD00075010 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
 		B748C2F029F5EA62000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPeerConsole.swift; sourceTree = "<group>"; };
@@ -343,7 +332,6 @@
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7C3889329F224FE0074659D /* SwiftyGPTTests */,
 				B7139CDD29E147910049ADE1 /* Products */,
-				B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */,
 				B768CE9929EB3F8500B8A9E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -463,14 +451,6 @@
 				B737F41129F8953300E57577 /* ScreenRecorder.swift */,
 			);
 			path = Screencapture;
-			sourceTree = "<group>";
-		};
-		B746DFDD29F5E78A002804EB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B746DFE129F5E78A002804EB /* SwiftSageiOS.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		B768CE9929EB3F8500B8A9E4 /* Frameworks */ = {
@@ -626,12 +606,6 @@
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B746DFDD29F5E78A002804EB /* Products */;
-					ProjectRef = B746DFDC29F5E78A002804EB /* SwiftSageiOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
@@ -639,16 +613,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B746DFE129F5E78A002804EB /* SwiftSageiOS.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SwiftSageiOS.app;
-			remoteRef = B746DFE029F5E78A002804EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B7C3889029F224FE0074659D /* Resources */ = {

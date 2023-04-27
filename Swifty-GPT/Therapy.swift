@@ -11,3 +11,9 @@ import Foundation
 class Therapy {
 
 }
+func therapyCommand(input: String) {
+    multiPrinter("Welcome to therapy... today we will assess your mental condition and give you suggestions on proactive life changes to make so you feel better and are happier.")
+    multiPrinter("1. Drink more water...")
+    multiPrinter("2. Get better sleep...")
+    multiPrinter("3. Surround yourself with things you love...")
+}

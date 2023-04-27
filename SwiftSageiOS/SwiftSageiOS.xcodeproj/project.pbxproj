@@ -762,6 +762,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -803,6 +804,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

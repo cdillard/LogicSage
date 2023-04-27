@@ -15,6 +15,8 @@ struct InstructionsPopup: View {
     var body: some View {
         VStack {
             Text("Welcome to SwiftSage!")
+                .background(.green)
+                .opacity(0.7)
                 .font(.largeTitle)
                 .bold()
                 .padding()
@@ -31,6 +33,8 @@ struct InstructionsPopup: View {
                 Text("Due to this being an alpha please do this on launch:\n1. Force quit / restart app.\nrTap gear, set font size, terminal font color, tap command to open COMMAND , tap TERM. BOOM! your term colors.")
                 Text("You can dock terminals to side of screen to get them out of way")
             }
+            .background(.green)
+            .opacity(0.7)
             .padding()
 
             Button(action: {

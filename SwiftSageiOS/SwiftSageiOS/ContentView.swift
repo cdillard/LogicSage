@@ -8,6 +8,10 @@
 import SwiftUI
 import Foundation
 import Combine
+#if os(macOS)
+
+import AppKit
+#endif
 
 #if !os(macOS)
 
@@ -75,12 +79,45 @@ struct WaveView: View {
             ZStack {
                 // SOURCE CODE EDITOR HANDLE
                 ZStack {
+
+                    #if os(macOS)
+                    VStack {
+                        Button(action: {
+                            openTerminal()
+                        }) {
+                            Text("Open Terminal")
+                        }
+                        .zIndex(2)
+
+
+                        Button(action: {
+                            openiTerm2()
+                        }) {
+                            Text("Open iTerm2")
+                        }
+                        .zIndex(2)
+
+                        Button(action: {
+                            openTerminalAndRunCommand(command: "echo 'Hello, Terminal!'", path: "/Users/cdillard/Desktop")
+
+                        }) {
+                            Text("Open Terminal.app and run cmd.")
+                        }
+                        .zIndex(2)
+
+                    }
+                    .zIndex(2)
+
+                    #endif
+
+
                     if settingsViewModel.isEditorVisible {
 #if !os(macOS)
 
                         HandleView()
                             .zIndex(2) // Add zIndex to ensure it's above the SageWebView
                             .offset(x: -12, y: -12) // Adjust the offset values
+                        // TODO: RENABLE SOURCE EDITOR GESTURES
                             .gesture(
                                 DragGesture()
                                     .onChanged { value in
@@ -173,28 +210,14 @@ struct WaveView: View {
                     Spacer()
                     HStack {
                         Button(action: {
-#if !os(macOS)
-
-                            if settingsViewModel.isEditorVisible {
-                                consoleManager.isVisible = true
-                            } else {
-                                consoleManager.isVisible = false
-
-                            }
-#endif
-                            // For all windowzzz...
-
-
-                            // TODO
-                            settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
-                            // TODO: remove test reset here
+                            consoleManager.isVisible = true
 #if !os(macOS)
 
                             settingsViewModel.receivedImage = nil
 #endif
                         }) {
 
-                            resizableButtonImage(systemName: "macbook.and.iphone", size: geometry.size)
+                            resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
 
                         }
                         .padding(geometry.size.width * 0.01)
@@ -237,7 +260,7 @@ struct WaveView: View {
                         .padding(geometry.size.width * 0.01)
                         Spacer()
                             .popover(isPresented: $showAddView, arrowEdge: .top) {
-                                AddView(showAddView: $showAddView, viewModel: settingsViewModel)
+                                AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel)
 
                             }
                     }
@@ -308,3 +331,42 @@ struct WaveView: View {
         }
     }
 }
+#if os(macOS)
+func openTerminal() {
+    if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
+        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+    }
+}
+
+func openiTerm2() {
+    if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.googlecode.iterm2") {
+        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+    }
+}
+
+func openTerminalAndRunCommand(command: String, path: String) {
+     let scriptContent = "#!/bin/sh\n" +
+         "cd '\(path)'\n" +
+         "\(command)\n"
+
+     do {
+         let applicationSupportDirectory = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+         let appDirectory = applicationSupportDirectory.appendingPathComponent("YourAppName")
+         try FileManager.default.createDirectory(at: appDirectory, withIntermediateDirectories: true, attributes: nil)
+
+         let scriptURL = appDirectory.appendingPathComponent("temp_script.sh")
+         try scriptContent.write(to: scriptURL, atomically: true, encoding: .utf8)
+         try FileManager.default.setAttributes([.posixPermissions: NSNumber(value: 0o755)], ofItemAtPath: scriptURL.path)
+
+         let configuration = NSWorkspace.OpenConfiguration()
+         configuration.arguments = [scriptURL.path]
+
+         if let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
+             NSWorkspace.shared.openApplication(at: terminalURL, configuration: configuration, completionHandler: nil)
+         }
+     } catch {
+         print("Error: \(error)")
+     }
+ }
+
+#endif

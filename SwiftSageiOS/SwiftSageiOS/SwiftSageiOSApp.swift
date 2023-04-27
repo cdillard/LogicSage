@@ -20,14 +20,13 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery?.startDiscovering()
 
 #if !os(macOS)
-
-        if !hasSeenInstructions() {
-            print("openning console after instr")
-        }
-        else {
-            consoleManager.isVisible = true
-        }
-        #endif
+//        if !hasSeenInstructions() {
+//            print("openning console after instr")
+//        }
+//        else {
+//            consoleManager.isVisible = true
+//        }
+#endif
     //    cmdWindows = [LCManager]()
 
 //        // Alpha window
@@ -236,6 +235,7 @@ class ScreamClient: WebSocketDelegate {
     }
 
 }
+var firstBackground = false
 class AppState: ObservableObject {
     @Published var isInBackground: Bool = false
     private var cancellables: [AnyCancellable] = []
@@ -258,13 +258,16 @@ class AppState: ObservableObject {
             .sink { [weak self] in
                 self?.isInBackground = $0
                 // SHOULD RECONNECT????????
-                if !(self?.isInBackground ?? false) {
+//                if !(self?.isInBackground ?? false) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-                        print("Reconnecting...")
+                        if firstBackground {
+                            consoleManager.print("Reconnecting... but you should probably reboot app for now, he's working on it...")
+                        }
                         //screamer.connect()
+                        firstBackground = true
                     }
                     
-                }
+//                }
             }
             .store(in: &cancellables)
 #endif

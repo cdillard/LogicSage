@@ -91,7 +91,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         // This could be used for all sorts of things like making voies not overlap
         if !hasInitializedVoiceSynth {
-            multiPrinter("initialized voice syntheis...")
+            multiPrinter("initialized voice synthesis...")
             hasInitializedVoiceSynth = true
         }
     }

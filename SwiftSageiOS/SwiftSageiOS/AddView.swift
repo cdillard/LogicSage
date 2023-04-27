@@ -12,7 +12,7 @@ import SwiftUI
 var windowIndex = 0
 struct AddView: View {
     @Binding var showAddView: Bool
-    @ObservedObject var viewModel: SettingsViewModel
+    @ObservedObject var settingsViewModel: SettingsViewModel
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -20,40 +20,58 @@ struct AddView: View {
                     print("mnew File")
                     print("mnew File")
 
-                }
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom)
-                Button("New Window") {
-                    print("mnew window")
-                    showAddView.toggle()
 
-                    windowIndex += 1
 #if !os(macOS)
 
-                    switch windowIndex {
-                    case 1: LCManager.shared2.isVisible.toggle()
-                    case 2: LCManager.shared3.isVisible.toggle()
+                            if settingsViewModel.isEditorVisible {
+                                consoleManager.isVisible = true
+                            } else {
+                                consoleManager.isVisible = false
 
-                    case 3: LCManager.shared4.isVisible.toggle()
+                            }
+#endif
+                            // For all windowzzz...
 
-                    case 4: LCManager.shared5.isVisible.toggle()
 
-                    case 5: LCManager.shared6.isVisible.toggle()
-                    default: break
+                            // TODO
+                            settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
+                            // TODO: remove test reset here
 
-                    }
-                    #endif
                 }
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.bottom)
+                // TODO: HOOK UP TO NEW TERMINAL
+//                Button("New Window") {
+//                    print("mnew window")
+//                    showAddView.toggle()
+//
+//                  //  windowIndex += 1
+//#if !os(macOS)
+//
+////                    switch windowIndex {
+////                    case 1: LCManager.shared2.isVisible.toggle()
+////                    case 2: LCManager.shared3.isVisible.toggle()
+////
+////                    case 3: LCManager.shared4.isVisible.toggle()
+////
+////                    case 4: LCManager.shared5.isVisible.toggle()
+////
+////                    case 5: LCManager.shared6.isVisible.toggle()
+////                    default: break
+//
+////                    }
+//#endif
+//                }
+//                    .font(.largeTitle)
+//                    .fontWeight(.bold)
+//                    .padding(.bottom)
 
 
                 Button("New Webview") {
                     print("mnew Webview")
                     showAddView.toggle()
-                    viewModel.showWebView = true
+                    settingsViewModel.showWebView = true
                 }
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -68,7 +86,7 @@ struct AddView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
-                        .background(viewModel.buttonColor)
+                        .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
                 }
                 .padding(.bottom)
