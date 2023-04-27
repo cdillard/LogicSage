@@ -98,7 +98,7 @@ struct WaveView: View {
                         .zIndex(2)
 
                         Button(action: {
-                            openTerminalAndRunCommand(command: "echo 'Hello, Terminal!'", path: "/Users/cdillard/Desktop")
+                            openTerminalAndRunCommand(command: "echo 'Hello, Terminal!'")
 
                         }) {
                             Text("Open Terminal.app and run cmd.")
@@ -210,8 +210,9 @@ struct WaveView: View {
                     Spacer()
                     HStack {
                         Button(action: {
-                            consoleManager.isVisible = true
 #if !os(macOS)
+
+                            consoleManager.isVisible = true
 
                             settingsViewModel.receivedImage = nil
 #endif
@@ -344,14 +345,13 @@ func openiTerm2() {
     }
 }
 
-func openTerminalAndRunCommand(command: String, path: String) {
+func openTerminalAndRunCommand(command: String) {
      let scriptContent = "#!/bin/sh\n" +
-         "cd '\(path)'\n" +
          "\(command)\n"
 
      do {
-         let applicationSupportDirectory = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-         let appDirectory = applicationSupportDirectory.appendingPathComponent("YourAppName")
+         let tempDirectory = FileManager.default.temporaryDirectory
+         let appDirectory = tempDirectory.appendingPathComponent("SwiftSageiOS")
          try FileManager.default.createDirectory(at: appDirectory, withIntermediateDirectories: true, attributes: nil)
 
          let scriptURL = appDirectory.appendingPathComponent("temp_script.sh")
@@ -360,7 +360,7 @@ func openTerminalAndRunCommand(command: String, path: String) {
 
          let configuration = NSWorkspace.OpenConfiguration()
          configuration.arguments = [scriptURL.path]
-
+         configuration.promptsUserIfNeeded = true
          if let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
              NSWorkspace.shared.openApplication(at: terminalURL, configuration: configuration, completionHandler: nil)
          }
