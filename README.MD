@@ -191,8 +191,13 @@ TURN OFF YOUR FIREWALLS ON ALL USED DEVICES
 
 1. Install Vapor: `brew install vapor`
 
+
+
+USE THIS COMMAND TO RUN VAPOR SERVER
+
 ```
 cd  WebSocketServer
+rm -rf .build
 vapor build
 vapor run
 ```

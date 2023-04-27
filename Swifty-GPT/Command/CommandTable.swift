@@ -57,6 +57,7 @@ var commandTable: [String: (String) -> Void] = [
     "commands": commandsCommand,
     "c": commandsCommand,
     "debate": debateCommand,
+    "setLoadMode": setLoadMode,
 
     "delete": deleteCommand,
     "del": deleteCommand,

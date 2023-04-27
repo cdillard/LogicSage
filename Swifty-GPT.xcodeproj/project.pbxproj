@@ -60,6 +60,7 @@
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */; };
+		B762E69F29FAB8AE00AC5150 /* DebatePrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
 		B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */; };
 		B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B768CE9A29EB3F8500B8A9E4 /* AudioUnit.framework */; };
@@ -197,6 +198,7 @@
 		B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_eng.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a"; sourceTree = "<group>"; };
 		B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_aud.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a"; sourceTree = "<group>"; };
 		B75FC59D29F5D58000A75EAF /* libcerevoice_eng.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libcerevoice_eng.dylib; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat/libcerevoice_eng.dylib"; sourceTree = "<group>"; };
+		B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebatePrompts.swift; sourceTree = "<group>"; };
 		B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
 		B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioProcessor.swift; sourceTree = "<group>"; };
 		B768CE9A29EB3F8500B8A9E4 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
@@ -418,6 +420,7 @@
 				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */,
 				B70CF18229F0980800993AAF /* SageWare.swift in Sources */,
+				B762E69F29FAB8AE00AC5150 /* DebatePrompts.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,

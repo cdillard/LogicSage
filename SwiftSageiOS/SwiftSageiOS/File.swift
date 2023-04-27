@@ -10,6 +10,7 @@ import SwiftUI
 
 struct InstructionsPopup: View {
     @Binding var isPresented: Bool
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
         VStack {
@@ -33,8 +34,17 @@ struct InstructionsPopup: View {
             .padding()
 
             Button(action: {
+
+                if !hasSeenInstructions() {
+                    settingsViewModel.textSize = defaultTerminalFontSize
+                    settingsViewModel.terminalTextColor = .green
+                }
+
                 isPresented = false
                 setHasSeenInstructions(true)
+
+                consoleManager.isVisible = true
+                consoleManager.fontSize = settingsViewModel.textSize
             }) {
                 Text("Got it!")
                     .foregroundColor(.white)

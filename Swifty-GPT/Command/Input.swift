@@ -229,7 +229,10 @@ func callCommandCommand(_ command: String, _ arg: String) {
             selectedCommand(arg)
 
         } else {
-            multiPrinter("Invalid command. Please try again:")
+            // Oh boy, TODO: Fix the millions of robots chorus bug that seems to happen w/ wrong combo of server start, binary start, app start.
+           // textToSpeech(text: "Invalid command. Exec c for help")
+
+            multiPrinter("Invalid command. Please try again. (c) for help")
         }
     }
 }

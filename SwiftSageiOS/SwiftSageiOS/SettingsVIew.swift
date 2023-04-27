@@ -56,11 +56,38 @@ struct SettingsView: View {
                         .fontWeight(.semibold)
                     HStack {
                         Text("Small")
-                        Slider(value: $viewModel.textSize, in: 12...36, step: 1)
+                        Slider(value: $viewModel.textSize, in: 2...22, step: 0.3)
                             .accentColor(.blue)
                         Text("Large")
                     }
                     Text("\(viewModel.textSize)")
+                        .font(.caption)
+
+
+
+                    Text("LoadMode")
+                        .fontWeight(.semibold)
+                    HStack {
+                        // Rotate avatar BUTTON
+                        Button(action: {
+                            withAnimation {
+
+                                // randomize avatar
+
+                                // iteracte through loadMode types
+                            }
+                        }) {
+                            Text(".matrix")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 40)
+                                .padding(.vertical, 12)
+                                .background(viewModel.buttonColor)
+                                .cornerRadius(8)
+                        }
+                        .padding(.bottom)
+                    }
+                    Text("SET LOAD MODE: .matrix")
                         .font(.caption)
                 }
                 // Choose your avatar

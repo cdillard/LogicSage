@@ -19,6 +19,12 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
 
+        if !hasSeenInstructions() {
+            print("openning console after instr")
+        }
+        else {
+            consoleManager.isVisible = true
+        }
     //    cmdWindows = [LCManager]()
 
 //        // Alpha window
@@ -68,7 +74,7 @@ struct SwiftSageiOSApp: App {
                     .overlay(
                         Group {
                             if showInstructions {
-                                InstructionsPopup(isPresented: $showInstructions)
+                                InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
                             }
                         }
                     )

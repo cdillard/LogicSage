@@ -435,4 +435,17 @@ func simulatorCommand(input: String) {
 
 }
 
+func setLoadMode(input: String) {
+    switch input
+    {
+    case "dots": loadMode = .dots
+    case "waves": loadMode = .waves
+    case "bar": loadMode = .bar
+    case "matrix": loadMode = .matrix
+    default: loadMode = .dots
+    }
+    asciAnimations = loadMode == .matrix
+    
+    multiPrinter ("set load mode to \(input)")
+}
 

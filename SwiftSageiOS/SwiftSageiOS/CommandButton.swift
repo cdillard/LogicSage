@@ -85,7 +85,6 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         // g BUTTON
-
                         Button(action: {
                             isTextFieldFocused = true
                             multiLineText += "g "
@@ -142,7 +141,7 @@ struct CommandButtonView: View {
                     }
                     .padding(.bottom)
 
-
+                    // EXEC BUTTON
                     Button(action: {
                         // Execute your action here
                         screamer.sendCommand(command: multiLineText)
@@ -159,6 +158,8 @@ struct CommandButtonView: View {
                             .cornerRadius(10)
                     }
                     .padding(.bottom)
+
+                    // TERM/COMMAND BUTTON
                     Button(action: {
                         if isInputViewShown {
                             // Execute your action here
@@ -185,6 +186,7 @@ struct CommandButtonView: View {
 
 
                 if isInputViewShown {
+                    // MAIN INPUT TEXTFIELD
                     TextEditor(text: $multiLineText)
                         .frame(height: 200)
                         .border(settingsViewModel.buttonColor, width: 2)

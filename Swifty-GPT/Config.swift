@@ -29,7 +29,10 @@ let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 // 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit
 // your fancy and you know i'll add more.
 
-var loadMode = LoadMode.waves
+var defaultLoadMode = LoadMode.dots
+
+// Eventualy wr''ll read loadMoad from the user ID prefs
+var loadMode = LoadMode.dots
 
 enum LoadMode {
     case none
@@ -110,7 +113,7 @@ let interactiveMode = true
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
-let asciAnimations = loadMode == .matrix
+var asciAnimations = loadMode == .matrix
 
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false

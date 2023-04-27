@@ -63,8 +63,6 @@ struct WaveView: View {
     }
 }
 """
-        consoleManager.isVisible = true
-        consoleManager.fontSize = settingsViewModel.textSize
 
     }
     var body: some View {

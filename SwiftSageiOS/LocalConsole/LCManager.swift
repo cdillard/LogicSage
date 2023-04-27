@@ -35,10 +35,10 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
 
 
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
-    public var fontSize: CGFloat =  terminalFontSize{
+    public var fontSize: CGFloat =  SettingsViewModel.shared.textSize {
         didSet {
-            guard fontSize >= 4 else { fontSize = 4; return }
-            guard fontSize <= 20 else { fontSize = 20; return }
+            guard fontSize >= 2 else { fontSize = 2; return }
+            guard fontSize <= 22 else { fontSize = 22; return }
             
             setAttributedText(consoleTextView.text)
         }
