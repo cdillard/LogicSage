@@ -172,6 +172,11 @@ https://www.cereproc.com
 Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
 Turn on `let cereprocVoicesEnabled = true` // THIS ISN't working yet, IN PROGRESS
 
+
+## UNDERSTANDING THE SWIFT SAGE COMPONENTS!
+![SwiftSage](Swifty-GPT/assets/swifty-diagram.png)
+
+
 ---
 ## SWIFT SAGE IOS INSTRUCTIONS: (Not needed unless you want to use SwiftSage on iOS/iPadOS devices)
 
