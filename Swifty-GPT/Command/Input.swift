@@ -8,6 +8,13 @@
 import Foundation
 import Darwin.POSIX.termios
 
+
+
+// We should have an enum defining the "MODE" swift sage cmd is in,
+// for instance, during .trivia mode we have special input criteria and it must be exited to get back to the "main menu" cmd prompt.
+// for instance, during .debate we have special input criteria and need to allow bailing out of debate depths when user hits stop.
+
+
 func promptUserInput(message: String) -> String? {
     multiPrinter(message, terminator: "")
     return readLine()
