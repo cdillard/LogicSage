@@ -127,25 +127,25 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         didSet {
             consoleView.frame.size = consoleSize
             
-//            // Update text view width.
-//            if consoleView.frame.size.width > ResizeController.kMaxConsoleWidth {
-//                consoleTextView.frame.size.width = ResizeController.kMaxConsoleWidth - 2
-//            } else if consoleView.frame.size.width < ResizeController.kMinConsoleWidth {
-//                consoleTextView.frame.size.width = ResizeController.kMinConsoleWidth - 2
-//            } else {
-//                consoleTextView.frame.size.width = consoleSize.width - 2
-//            }
-//
-//            // Update text view height.
-//            if consoleView.frame.size.height > ResizeController.kMaxConsoleHeight {
-//                consoleTextView.frame.size.height = ResizeController.kMaxConsoleHeight - 2
-//                + (consoleView.frame.size.height - ResizeController.kMaxConsoleHeight) * 2 / 3
-//            } else if consoleView.frame.size.height < ResizeController.kMinConsoleHeight {
-//                consoleTextView.frame.size.height = ResizeController.kMinConsoleHeight - 2
-//                + (consoleView.frame.size.height - ResizeController.kMinConsoleHeight) * 2 / 3
-//            } else {
-//                consoleTextView.frame.size.height = consoleSize.height - 2
-//            }
+            // Update text view width.
+            if consoleView.frame.size.width > ResizeController.kMaxConsoleWidth {
+                consoleTextView.frame.size.width = ResizeController.kMaxConsoleWidth - 2
+            } else if consoleView.frame.size.width < ResizeController.kMinConsoleWidth {
+                consoleTextView.frame.size.width = ResizeController.kMinConsoleWidth - 2
+            } else {
+                consoleTextView.frame.size.width = consoleSize.width - 2
+            }
+
+            // Update text view height.
+            if consoleView.frame.size.height > ResizeController.kMaxConsoleHeight {
+                consoleTextView.frame.size.height = ResizeController.kMaxConsoleHeight - 2
+                + (consoleView.frame.size.height - ResizeController.kMaxConsoleHeight) * 2 / 3
+            } else if consoleView.frame.size.height < ResizeController.kMinConsoleHeight {
+                consoleTextView.frame.size.height = ResizeController.kMinConsoleHeight - 2
+                + (consoleView.frame.size.height - ResizeController.kMinConsoleHeight) * 2 / 3
+            } else {
+                consoleTextView.frame.size.height = consoleSize.height - 2
+            }
             
             consoleTextView.contentOffset.y = consoleTextView.contentSize.height - consoleTextView.bounds.size.height
             
@@ -908,10 +908,10 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }()
         
         let resize = UIAction(title: "Resize Console", image: UIImage(systemName: "arrow.up.backward.and.arrow.down.forward")) { _ in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                ResizeController.shared.isActive.toggle()
-//                ResizeController.shared.platterView.reveal()
-//            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                ResizeController.shared.isActive.toggle()
+                ResizeController.shared.platterView.reveal()
+            }
         }
         
         // If device is phone in landscape, disable resize controller.
@@ -1290,9 +1290,9 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
                 UIViewPropertyAnimator(duration: 0.4, dampingRatio: 1) { [self] in
                     if !grabberMode {
                         consoleTextView.alpha = 1
-//                        if !ResizeController.shared.isActive {
-//                            menuButton.alpha = 1
-//                        }
+                        if !ResizeController.shared.isActive {
+                            menuButton.alpha = 1
+                        }
                     }
                 }.startAnimation()
             }

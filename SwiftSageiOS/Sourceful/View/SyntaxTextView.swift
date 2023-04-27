@@ -203,7 +203,7 @@ open class SyntaxTextView: UIView {
         textView.textContainer?.containerSize = NSSize(width: self.bounds.width, height: .greatestFiniteMagnitude)
         textView.textContainer?.widthTracksTextView = true
 
-        //			textView.layerContentsRedrawPolicy = .beforeViewResize
+        			textView.layerContentsRedrawPolicy = .beforeViewResize
 
         wrapperView.textView = textView
 
