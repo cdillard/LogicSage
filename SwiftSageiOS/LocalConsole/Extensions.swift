@@ -4,6 +4,7 @@
 //  Created by Duraid Abdul.
 //  Copyright © 2021 Duraid Abdul. All rights reserved.
 //
+#if !os(macOS)
 
 import UIKit
 
@@ -58,3 +59,4 @@ extension UIView {
         frame.origin.y = (round(frame.origin.y * UIScreen.main.scale)) / UIScreen.main.scale
     }
 }
+#endif

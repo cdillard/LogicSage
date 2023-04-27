@@ -13,6 +13,7 @@ import Foundation
 #else
 	import UIKit
 #endif
+#if !os(macOS)
 
 public extension NSMutableAttributedString {
 	
@@ -83,3 +84,4 @@ public extension NSMutableAttributedString {
 	}
 	
 }
+#endif

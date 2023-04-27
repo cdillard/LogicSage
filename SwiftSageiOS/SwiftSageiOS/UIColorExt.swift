@@ -4,6 +4,7 @@
 //
 //  Created by Chris Dillard on 4/26/23.
 //
+#if !os(macOS)
 
 import Foundation
 import SwiftUI
@@ -34,3 +35,4 @@ extension Color {
         return UIColor(cgColor: self.cgColor ?? UIColor.black.cgColor)
     }
 }
+#endif

@@ -4,6 +4,7 @@
 //  Created by Duraid Abdul.
 //  Copyright © 2021 Duraid Abdul. All rights reserved.
 //
+#if !os(macOS)
 
 import UIKit
 import SwiftUI
@@ -1666,3 +1667,4 @@ final class FrameRateRequest {
     
     @objc private func dummyFunction() {}
 }
+#endif

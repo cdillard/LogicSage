@@ -42,9 +42,11 @@ struct InstructionsPopup: View {
 
                 isPresented = false
                 setHasSeenInstructions(true)
+#if !os(macOS)
 
                 consoleManager.isVisible = true
                 consoleManager.fontSize = settingsViewModel.textSize
+#endif
             }) {
                 Text("Got it!")
                     .foregroundColor(.white)

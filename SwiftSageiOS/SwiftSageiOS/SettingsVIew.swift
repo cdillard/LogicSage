@@ -126,7 +126,12 @@ struct SettingsView: View {
                 .padding(.bottom)
             }
             .padding()
+#if !os(macOS)
+
             .background(Color(.systemBackground))
+            #else
+            .background(Color(.black))
+            #endif
             .cornerRadius(16)
         }
         .scrollIndicators(.visible)

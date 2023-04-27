@@ -14,7 +14,8 @@ class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
 
 
-    
+#if !os(macOS)
+
 
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {
@@ -24,6 +25,7 @@ class SettingsViewModel: ObservableObject {
             print("Failed to convert data to UIImage")
         }
     }
+#endif
     @Published var textSize: CGFloat = defaultTerminalFontSize {
         didSet {
             UserDefaults.standard.set(Float(textSize), forKey: "textSize")
@@ -31,30 +33,42 @@ class SettingsViewModel: ObservableObject {
     }
     @Published var terminalBackgroundColor: Color = .black {
         didSet {
+#if !os(macOS)
+
             if let data = terminalBackgroundColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "terminalBackgroundColor")
             }
+#endif
         }
     }
     @Published var terminalTextColor: Color = .white {
         didSet {
+#if !os(macOS)
+
             if let data = terminalTextColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "terminalTextColor")
             }
+            #endif
         }
     }
     @Published var buttonColor: Color = .blue {
         didSet {
+#if !os(macOS)
+
             if let data = buttonColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "buttonColor")
             }
+#endif
         }
     }
     @Published var backgroundColor: Color = .gray {
         didSet {
+#if !os(macOS)
+
             if let data = backgroundColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "backgroundColor")
             }
+#endif
         }
     }
 
@@ -72,14 +86,19 @@ class SettingsViewModel: ObservableObject {
     }
 
     init() {
+#if !os(macOS)
+
         self.terminalBackgroundColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
         self.terminalTextColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .green
         self.buttonColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
         self.backgroundColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
         self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+#endif
         
     }
 }
+#if !os(macOS)
+
 extension Color {
     static func color(data: Data) -> Color {
         do {
@@ -103,3 +122,4 @@ extension Color {
         }
     }
 }
+#endif

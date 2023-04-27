@@ -16,8 +16,11 @@ struct CommandButtonView: View {
 
     func doExec() {
         self.isInputViewShown.toggle()
+#if !os(macOS)
+
         consoleManager.isVisible = !isInputViewShown
         consoleManager.fontSize = settingsViewModel.textSize
+#endif
     }
 
     var body: some View {
@@ -28,6 +31,8 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
+#if !os(macOS)
+
                     if !isInputViewShown {
                         // PLugItIn BUTTON
                         Button("🔌") {
@@ -43,6 +48,7 @@ struct CommandButtonView: View {
                         .background(settingsViewModel.buttonColor)
 //                        .cornerRadius(10)
                     }
+#endif
 
                     if multiLineText.isEmpty && isInputViewShown {
                         // debate BUTTON
@@ -127,8 +133,10 @@ struct CommandButtonView: View {
                             screamer.sendCommand(command: multiLineText)
 
                             self.isInputViewShown = false
-                            consoleManager.isVisible = true
+#if !os(macOS)
 
+                            consoleManager.isVisible = true
+#endif
                         }
 
                     }) {
@@ -147,7 +155,10 @@ struct CommandButtonView: View {
                         screamer.sendCommand(command: multiLineText)
 
                         self.isInputViewShown = false
+#if !os(macOS)
+
                         consoleManager.isVisible = true
+                        #endif
 
                     }) {
                         Text("EXEC")
@@ -166,7 +177,10 @@ struct CommandButtonView: View {
                             screamer.sendCommand(command: multiLineText)
 
                             self.isInputViewShown = false
+#if !os(macOS)
+
                             consoleManager.isVisible = true
+                            #endif
                         }
                         else {
                             doExec()
@@ -191,7 +205,10 @@ struct CommandButtonView: View {
                         .frame(height: 200)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
+#if !os(macOS)
+
                         .autocapitalization(.none)
+#endif
                         .focused($isTextFieldFocused)
                         .scrollDismissesKeyboard(.interactively)
                 }

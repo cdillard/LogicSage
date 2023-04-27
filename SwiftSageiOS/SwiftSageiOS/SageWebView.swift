@@ -4,6 +4,7 @@
 //
 //  Created by Chris Dillard on 4/26/23.
 //
+#if !os(macOS)
 
 import Foundation
 import SwiftUI
@@ -85,3 +86,4 @@ struct HandleView: View {
             .foregroundColor(Color.gray.opacity(0.5))
     }
 }
+#endif

@@ -14,6 +14,7 @@ import AppKit
 #else
 import UIKit
 #endif
+#if !os(macOS)
 
 public protocol SyntaxTextViewDelegate: AnyObject {
 
@@ -537,3 +538,4 @@ open class SyntaxTextView: UIView {
     }
 
 }
+#endif

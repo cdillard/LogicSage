@@ -21,6 +21,7 @@ public typealias _ViewRepresentable = NSViewRepresentable
 public typealias _ViewRepresentable = UIViewRepresentable
 
 #endif
+#if !os(macOS)
 
 
 public struct SourceCodeTextEditor: _ViewRepresentable {
@@ -149,5 +150,5 @@ extension SourceCodeTextEditor {
         }
     }
 }
-
+#endif
 #endif

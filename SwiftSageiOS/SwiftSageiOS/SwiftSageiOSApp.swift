@@ -19,12 +19,15 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
 
+#if !os(macOS)
+
         if !hasSeenInstructions() {
             print("openning console after instr")
         }
         else {
             consoleManager.isVisible = true
         }
+        #endif
     //    cmdWindows = [LCManager]()
 
 //        // Alpha window
@@ -107,8 +110,11 @@ class ScreamClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("WebSocket connected, headers: \(headers)")
+#if !os(macOS)
+
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
             client.write(string: "Hello from \(devType) app!")
+#endif
             startPingTimer()
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
@@ -118,8 +124,13 @@ class ScreamClient: WebSocketDelegate {
                 self.connect()
             }
         case .text(let text):
+#if !os(macOS)
+
             consoleManager.print(text)
+#endif
         case .binary(let data):
+#if !os(macOS)
+
             print("Received binary data: \(data)")
             if let receivedImage = UIImage(data: data) {
                 DispatchQueue.main.async {
@@ -130,12 +141,19 @@ class ScreamClient: WebSocketDelegate {
             else {
                 print("fail parse is it audio????")
             }
+#endif
         case .ping:
             print("websocket received ping")
+#if !os(macOS)
+
             consoleManager.print("websocket received ping")
+#endif
         case .pong:
             print("websocket received pong")
+#if !os(macOS)
+
             consoleManager.print("websocket received pong")
+#endif
         case .viabilityChanged(let isViable):
             print("Connection viability changed: \(isViable)")
         case .reconnectSuggested(let shouldReconnect):
@@ -184,8 +202,10 @@ class ScreamClient: WebSocketDelegate {
         case "open":
             // doooo open file thing
             print("Opening ContentView.swift...")
-            consoleManager.print("Opening ContentView.swift...")
+#if !os(macOS)
 
+            consoleManager.print("Opening ContentView.swift...")
+#endif
             return
         default:
             break
@@ -221,6 +241,8 @@ class AppState: ObservableObject {
     private var cancellables: [AnyCancellable] = []
 
     init() {
+#if !os(macOS)
+
         let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
             .map { _ in true }
             .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
@@ -245,5 +267,6 @@ class AppState: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+#endif
     }
 }

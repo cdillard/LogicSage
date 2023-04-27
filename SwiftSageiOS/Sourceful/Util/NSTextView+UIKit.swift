@@ -6,7 +6,7 @@
 //  Copyright © 2017 Silver Fox. All rights reserved.
 //
 
-#if os(macOS)
+#if !os(macOS)
 
 import AppKit
 
@@ -20,7 +20,7 @@ extension NSTextView {
 			self.string = newValue
 		}
 	}
-	
+
 	var tintColor: Color {
 		set {
 			insertionPointColor = newValue
@@ -29,7 +29,7 @@ extension NSTextView {
 			return insertionPointColor
 		}
 	}
-	
+
 }
 
 #endif

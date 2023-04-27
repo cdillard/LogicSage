@@ -5,6 +5,8 @@
 //  Copyright © 2021 Duraid Abdul. All rights reserved.
 //
 
+#if !os(macOS)
+
 import UIKit
 
 @available(iOSApplicationExtension, unavailable)
@@ -698,3 +700,4 @@ class PlatterView: UIView {
         }
     }
 }
+#endif

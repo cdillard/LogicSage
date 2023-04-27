@@ -13,6 +13,7 @@ import Foundation
 #else
 	import UIKit
 #endif
+#if !os(macOS)
 
 extension SyntaxTextView: InnerTextViewDelegate {
 	
@@ -384,3 +385,4 @@ extension SyntaxTextView {
 	}
 	
 }
+#endif

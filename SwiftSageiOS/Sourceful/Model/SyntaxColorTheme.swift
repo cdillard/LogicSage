@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+#if !os(macOS)
 
 public struct LineNumbersStyle {
 	
@@ -42,8 +43,11 @@ public protocol SyntaxColorTheme {
 	var lineNumbersStyle: LineNumbersStyle? { get }
 	
 	var gutterStyle: GutterStyle { get }
-	
+
+#if !os(macOS)
+
 	var font: Font { get }
+    #endif
 	
 	var backgroundColor: Colorv { get }
 
@@ -51,3 +55,4 @@ public protocol SyntaxColorTheme {
 
 	func attributes(for token: Token) -> [NSAttributedString.Key: Any]
 }
+#endif

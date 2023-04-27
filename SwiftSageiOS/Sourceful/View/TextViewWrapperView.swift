@@ -14,7 +14,7 @@ import Foundation
 	import UIKit
 #endif
 
-#if os(macOS)
+#if !os(macOS)
 	
 	class TextViewWrapperView: _View {
 		

@@ -29,6 +29,7 @@ struct AddView: View {
                     showAddView.toggle()
 
                     windowIndex += 1
+#if !os(macOS)
 
                     switch windowIndex {
                     case 1: LCManager.shared2.isVisible.toggle()
@@ -42,7 +43,7 @@ struct AddView: View {
                     default: break
 
                     }
-
+                    #endif
                 }
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -73,7 +74,12 @@ struct AddView: View {
                 .padding(.bottom)
             }
             .padding()
+#if !os(macOS)
+
             .background(Color(.systemBackground))
+#else
+            .background(Color(.black))
+#endif
             .cornerRadius(16)
         }
         .scrollIndicators(.visible)

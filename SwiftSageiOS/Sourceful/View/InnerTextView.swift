@@ -19,6 +19,8 @@ protocol InnerTextViewDelegate: AnyObject {
 	func didUpdateCursorFloatingState()
 }
 
+#if !os(macOS)
+
 class InnerTextView: TextView {
 	
 	weak var innerDelegate: InnerTextViewDelegate?
@@ -174,3 +176,5 @@ class InnerTextView: TextView {
 	#endif
 	
 }
+
+#endif

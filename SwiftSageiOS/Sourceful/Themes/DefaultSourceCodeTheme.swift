@@ -7,6 +7,7 @@
 //
 
 import Foundation
+#if !os(macOS)
 
 public struct DefaultSourceCodeTheme: SourceCodeTheme {
 	
@@ -54,3 +55,4 @@ public struct DefaultSourceCodeTheme: SourceCodeTheme {
 	}
 	
 }
+#endif

@@ -9,7 +9,11 @@ import SwiftUI
 import Foundation
 import Combine
 
+#if !os(macOS)
+
 let consoleManager = LCManager.shared//cmdWindows[0]
+
+#endif
 
 struct ContentView: View {
     @State private var showSettings = false
@@ -72,7 +76,8 @@ struct WaveView: View {
                 // SOURCE CODE EDITOR HANDLE
                 ZStack {
                     if settingsViewModel.isEditorVisible {
-                        
+#if !os(macOS)
+
                         HandleView()
                             .zIndex(2) // Add zIndex to ensure it's above the SageWebView
                             .offset(x: -12, y: -12) // Adjust the offset values
@@ -88,6 +93,7 @@ struct WaveView: View {
                             .onTapGesture {
                                 print("Tapped on the handle")
                             }
+#endif
                     }
 
                     Image("swsLogo")
@@ -97,6 +103,8 @@ struct WaveView: View {
 
                     // HANDLE SOURCE CODE EDITOR
                     if settingsViewModel.isEditorVisible {
+
+#if !os(macOS)
 
                         SourceCodeTextEditor(text: $theCode)
                             .scaleEffect(currentScale)
@@ -113,17 +121,23 @@ struct WaveView: View {
                                         lastScaleValue = currentScale
                                     }
                             )
+#endif
                     }
                 }
                 .offset(positionEditor)
 
                 // HANDLE WEBVIEW
                 if settingsViewModel.showWebView {
+#if !os(macOS)
+
                     SageWebView()
+                    #endif
                 }
 
 
                 // HANDLE SIMULATOR
+#if !os(macOS)
+
                 if let image = settingsViewModel.receivedImage {
                     HStack {
                         Image(uiImage: image)
@@ -143,6 +157,7 @@ struct WaveView: View {
                         Spacer()
                     }
                 }
+#endif
 
                 VStack {
                     Spacer()
@@ -158,19 +173,25 @@ struct WaveView: View {
                     Spacer()
                     HStack {
                         Button(action: {
+#if !os(macOS)
+
                             if settingsViewModel.isEditorVisible {
                                 consoleManager.isVisible = true
                             } else {
                                 consoleManager.isVisible = false
 
                             }
+#endif
                             // For all windowzzz...
 
 
                             // TODO
                             settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
                             // TODO: remove test reset here
+#if !os(macOS)
+
                             settingsViewModel.receivedImage = nil
+#endif
                         }) {
 
                             resizableButtonImage(systemName: "macbook.and.iphone", size: geometry.size)
@@ -192,7 +213,10 @@ struct WaveView: View {
                         }
                         Button(action: {
                                 screamer.websocket.write(ping: Data())
+#if !os(macOS)
+
                                 consoleManager.print("ping...")
+                            #endif
                                 print("ping...")
                         }) {
 
@@ -226,6 +250,8 @@ struct WaveView: View {
                 keyboardObserver.stopObserve()
             }
             .onChange(of: showSettings) { newValue in
+#if !os(macOS)
+
                 if newValue {
                     print("Popover is shown")
                     consoleManager.isVisible = false
@@ -234,6 +260,7 @@ struct WaveView: View {
                     consoleManager.isVisible = true
 
                 }
+#endif
             }
 
         }
@@ -258,8 +285,11 @@ struct WaveView: View {
         private var screenHeight: CGFloat = 0
 
         func startObserve(height: CGFloat) {
+#if !os(macOS)
+
             screenHeight = height
             NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+#endif
         }
 
         func stopObserve() {
@@ -267,11 +297,14 @@ struct WaveView: View {
         }
 
         @objc private func onKeyboardChange(notification: Notification) {
+#if !os(macOS)
+
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 let keyboardTop = screenHeight - keyboardFrame.origin.y
                 isKeyboardVisible = keyboardTop > 0
                 keyboardHeight = max(0, keyboardTop)
             }
+#endif
         }
     }
 }

@@ -5,6 +5,8 @@
 //  Copyright © 2021 Duraid Abdul. All rights reserved.
 //
 
+#if !os(macOS)
+
 import UIKit
 
 extension CGPoint {
@@ -78,3 +80,4 @@ func nearestTargetTo(_ point: CGPoint, possibleTargets: [CGPoint]) -> CGPoint {
     }
     return nearestEndpoint
 }
+#endif

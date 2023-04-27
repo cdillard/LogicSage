@@ -14,6 +14,8 @@ import Foundation
 	import UIKit
 #endif
 
+#if !os(macOS)
+
 extension TextView {
 	
 	func paragraphRectForRange(range: NSRange) -> CGRect {
@@ -181,3 +183,5 @@ func drawLineNumbers(_ paragraphs: [Paragraph], in rect: CGRect, for textView: I
 	}
 
 }
+
+#endif

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Silver Fox. All rights reserved.
 //
 
+#if !os(macOS)
+
 import Foundation
 
 public protocol SourceCodeTheme: SyntaxColorTheme {
@@ -37,3 +39,4 @@ extension SourceCodeTheme {
 	}
 	
 }
+#endif

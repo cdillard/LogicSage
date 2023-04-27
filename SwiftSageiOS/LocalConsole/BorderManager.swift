@@ -4,6 +4,8 @@
 //  Created by Duraid Abdul.
 //  Copyright © 2021 Duraid Abdul. All rights reserved.
 //
+#if !os(macOS)
+
 
 import UIKit
 
@@ -62,3 +64,4 @@ class BorderManager {
         }
     }
 }
+#endif
