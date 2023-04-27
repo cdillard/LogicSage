@@ -1,4 +1,6 @@
 ![SwiftSage](Swifty-GPT/assets/swslogostack.png)
+![instruct](Swifty-GPT/assets/instruct.png)
+
 # SwiftSage: The Ultimate AI Integration for Xcode
 
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents as I coded it in my sleep.
@@ -201,6 +203,7 @@ rm -rf .build
 vapor build
 vapor run
 ```
+
 ## MAC SAGE INSTRUCTIONS:
 TBD
 
