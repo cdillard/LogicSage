@@ -15,7 +15,10 @@ var GLOBAL_BORDER_TRACKERS: [BorderManager] = []
 public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     public static let shared = LCManager()
-    
+
+    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+    public static let shared2 = LCManager()
+
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
     public var fontSize: CGFloat =  terminalFontSize{
         didSet {

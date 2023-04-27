@@ -136,12 +136,19 @@ GeometryReader { geometry in
 
                         }
                         Button(action: {
-                            withAnimation {
                                 screamer.websocket.write(ping: Data())
-                            }
+                                consoleManager.print("ping...")
+                                print("ping...")
                         }) {
 
                             resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
+                        }
+                        .padding(geometry.size.width * 0.01)
+                        Button(action: {
+                            LCManager.shared2.isVisible = !LCManager.shared2.isVisible
+                        }) {
+
+                            resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                         }
                         .padding(geometry.size.width * 0.01)
                         Spacer()

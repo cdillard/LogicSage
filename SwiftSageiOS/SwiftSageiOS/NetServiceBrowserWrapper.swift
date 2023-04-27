@@ -19,31 +19,25 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
         super.init()
         netServiceBrowser.delegate = self
     }
-//SwiftSageServer._sagess._tcp
     func startDiscovering() {
         netServiceBrowser.searchForServices(ofType: "_sagess._tcp", inDomain: "local.")
     }
-
     func stopDiscovering() {
         netServiceBrowser.stop()
     }
-
     // MARK: - NetServiceBrowserDelegate
-
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         print("Found service: \(service)")
         discoveredServices.append(service)
         service.delegate = self
         service.resolve(withTimeout: 10.0)
     }
-
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
         print("Removed service: \(service)")
         if let index = discoveredServices.firstIndex(of: service) {
             discoveredServices.remove(at: index)
         }
     }
-
     // MARK: - NetServiceDelegate
 
     func netServiceDidResolveAddress(_ sender: NetService) {
@@ -64,8 +58,6 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
             }
         }
     }
-
-
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
         print("Failed to resolve service (\(sender.name)) with error: \(errorDict)")

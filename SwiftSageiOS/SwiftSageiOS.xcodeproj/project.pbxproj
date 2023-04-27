@@ -315,10 +315,10 @@
 		B746DFC129F5E789002804EB = {
 			isa = PBXGroup;
 			children = (
-				B7191EF429F9F09A00078D8D /* Sourceful */,
 				B746DFCC29F5E789002804EB /* SwiftSageiOS */,
 				B767E9BA29F6DAED003EC13F /* LocalConsole */,
 				B74A2CA329F7F6990051DB52 /* Starscream */,
+				B7191EF429F9F09A00078D8D /* Sourceful */,
 				B746DFCB29F5E789002804EB /* Products */,
 				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
 			);
