@@ -27,33 +27,40 @@ struct ContentView: View {
     @State private var showAddView = false
 
     @State var theCode: String
+
+
+    @State private var currentEditorScale: CGFloat = 1.0
+    @State private var lastEditorScaleValue: CGFloat = 1.0
+    @State private var positionEditor: CGSize = CGSize.zero
+
+
     init() {
         
         theCode  = """
 struct WaveView: View {
-var body: some View {
-GeometryReader { geometry in
-  ZStack {
-      let waveCount = 6
-      ForEach(0..<waveCount) { index in
-          Path { p in
-              let x: CGFloat = CGFloat(index) / CGFloat(waveCount)
-              let y = CGFloat(sin((.pi * 2 * Double(x)) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
-              p.move(to: CGPoint(x: geometry.frame(in: .local).minX, y: (1 + y) * geometry.frame(in: .local).height / 2))
-              for x in stride(from: geometry.frame(in:.local).minX, to: geometry.frame(in:.local).maxX, by: 4) {
-                  let y = CGFloat(sin((.pi * 2 * Double(x/100)) + (Double(index) * .pi / 3) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
-                  p.addLine(to: CGPoint(x:x, y: (1 + y) * geometry.frame(in: .local).height / 2))
-              }
-              p.addLine(to: CGPoint(x:geometry.frame(in:.local).maxX, y:geometry.frame(in:.local).maxY))
-              p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:geometry.frame(in:.local).maxY))
-              p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:(1 - y) * geometry.frame(in: .local).height / 2))
-          }
-          .fill(Color(red: Double(index) / Double(waveCount), green: Double((waveCount - index) / waveCount), blue: 1.0 - Double(index) / Double(waveCount)))
-          .opacity(0.5)
-      }
-  }
-}
-}
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                let waveCount = 6
+                ForEach(0..<waveCount) { index in
+                    Path { p in
+                        let x: CGFloat = CGFloat(index) / CGFloat(waveCount)
+                        let y = CGFloat(sin((.pi * 2 * Double(x)) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
+                        p.move(to: CGPoint(x: geometry.frame(in: .local).minX, y: (1 + y) * geometry.frame(in: .local).height / 2))
+                        for x in stride(from: geometry.frame(in:.local).minX, to: geometry.frame(in:.local).maxX, by: 4) {
+                            let y = CGFloat(sin((.pi * 2 * Double(x/100)) + (Double(index) * .pi / 3) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
+                            p.addLine(to: CGPoint(x:x, y: (1 + y) * geometry.frame(in: .local).height / 2))
+                        }
+                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).maxX, y:geometry.frame(in:.local).maxY))
+                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:geometry.frame(in:.local).maxY))
+                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:(1 - y) * geometry.frame(in: .local).height / 2))
+                    }
+                    .fill(Color(red: Double(index) / Double(waveCount), green: Double((waveCount - index) / waveCount), blue: 1.0 - Double(index) / Double(waveCount)))
+                    .opacity(0.5)
+                }
+            }
+        }
+    }
 }
 """
         consoleManager.isVisible = true
@@ -64,32 +71,61 @@ GeometryReader { geometry in
 
         GeometryReader { geometry in
             ZStack {
-                Image("swsLogo")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
+                // SOURCE CODE EDITOR HANDLE
+                ZStack {
+                    if settingsViewModel.isEditorVisible {
+                        
+                        HandleView()
+                            .zIndex(2) // Add zIndex to ensure it's above the SageWebView
+                            .offset(x: -12, y: -12) // Adjust the offset values
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { value in
+                                        positionEditor = CGSize(width: positionEditor.width + value.translation.width, height: positionEditor.height + value.translation.height)
+                                    }
+                                    .onEnded { value in
+                                        // No need to reset the translation value, as it's read-only
+                                    }
+                            )
+                            .onTapGesture {
+                                print("Tapped on the handle")
+                            }
+                    }
 
-                if settingsViewModel.isEditorVisible {
-                    
-                    SourceCodeTextEditor(text: $theCode)
-                        .scaleEffect(currentScale)
+                    Image("swsLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
 
-                        .gesture(
-                            MagnificationGesture()
-                                             .onChanged { scaleValue in
-                                                 // Update the current scale based on the gesture's scale value
-                                                 currentScale = lastScaleValue * scaleValue
-                                             }
-                                             .onEnded { scaleValue in
-                                                 // Save the scale value when the gesture ends
-                                                 lastScaleValue = currentScale
-                                             }
-                                     )
+                    // HANDLE SOURCE CODE EDITOR
+                    if settingsViewModel.isEditorVisible {
+
+                        SourceCodeTextEditor(text: $theCode)
+                            .scaleEffect(currentScale)
+                            .offset(positionEditor)
+
+                            .gesture(
+                                MagnificationGesture()
+                                    .onChanged { scaleValue in
+                                        // Update the current scale based on the gesture's scale value
+                                        currentScale = lastScaleValue * scaleValue
+                                    }
+                                    .onEnded { scaleValue in
+                                        // Save the scale value when the gesture ends
+                                        lastScaleValue = currentScale
+                                    }
+                            )
+                    }
                 }
+                .offset(positionEditor)
+
+                // HANDLE WEBVIEW
                 if settingsViewModel.showWebView {
                     SageWebView()
                 }
 
+
+                // HANDLE SIMULATOR
                 if let image = settingsViewModel.receivedImage {
                     HStack {
                         Image(uiImage: image)

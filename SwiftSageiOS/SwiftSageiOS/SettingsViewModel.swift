@@ -12,6 +12,10 @@ let defaultTerminalFontSize: CGFloat = 12.666
 var terminalFontSize: CGFloat = 12.666
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
+
+
+    
+
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {
         if let image = UIImage(data: data) {

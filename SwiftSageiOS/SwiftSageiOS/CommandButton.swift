@@ -14,6 +14,12 @@ struct CommandButtonView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @FocusState private var isTextFieldFocused: Bool
 
+    func doExec() {
+        self.isInputViewShown.toggle()
+        consoleManager.isVisible = !isInputViewShown
+        consoleManager.fontSize = settingsViewModel.textSize
+    }
+
     var body: some View {
         GeometryReader { geometry in
             
@@ -105,6 +111,23 @@ struct CommandButtonView: View {
 
                     }
                     Button(action: {
+
+                        // cmd send st
+
+
+                        multiLineText = "st"
+                        DispatchQueue.main.async {
+
+                            // Execute your action here
+                            screamer.sendCommand(command: multiLineText)
+
+                            self.isInputViewShown = false
+                            consoleManager.isVisible = true
+                            
+                        }
+
+
+
 //                        // Execute your action here
 //                        screamer.sendCommand(command: multiLineText)
 //
@@ -120,6 +143,8 @@ struct CommandButtonView: View {
                             .cornerRadius(10)
                     }
                     .padding(.bottom)
+
+
                     Button(action: {
                         // Execute your action here
                         screamer.sendCommand(command: multiLineText)
@@ -137,10 +162,16 @@ struct CommandButtonView: View {
                     }
                     .padding(.bottom)
                     Button(action: {
-                        self.isInputViewShown.toggle()
-                        consoleManager.isVisible = !isInputViewShown
-                        consoleManager.fontSize = settingsViewModel.textSize
+                        if isInputViewShown {
+                            // Execute your action here
+                            screamer.sendCommand(command: multiLineText)
 
+                            self.isInputViewShown = false
+                            consoleManager.isVisible = true
+                        }
+                        else {
+                            doExec()
+                        }
                     }) {
                         Text(self.isInputViewShown ? "TERM" : "COMMAND")
                             .font(.headline)
@@ -162,6 +193,7 @@ struct CommandButtonView: View {
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
                         .focused($isTextFieldFocused)
+                        .scrollDismissesKeyboard(.interactively)
                 }
             }
         }
