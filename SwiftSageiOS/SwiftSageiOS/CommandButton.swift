@@ -29,6 +29,7 @@ struct CommandButtonView: View {
                 HStack {
                     Spacer()
                     if !isInputViewShown {
+                        // PLugItIn BUTTON
                         Button("🔌") {
                             print("🔌 Force reconnecting websocket...")
                             consoleManager.print("🔌 Force reconnect...")
@@ -44,6 +45,7 @@ struct CommandButtonView: View {
                     }
 
                     if multiLineText.isEmpty && isInputViewShown {
+                        // debate BUTTON
                         Button(action: {
                             isTextFieldFocused = true
                             multiLineText += "debate "
@@ -56,18 +58,20 @@ struct CommandButtonView: View {
                                 .cornerRadius(10)
                         }
                         .padding(.bottom)
-                        Button(action: {
-                            isTextFieldFocused = true
-                            multiLineText += "st"
-                        }) {
-                            Text( "st")
-                                .font(.subheadline)
-                                .foregroundColor(Color.white)
-                                .padding()
-                                .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
-                        }
-                        .padding(.bottom)
+//                        // st BUTTON
+//                        Button(action: {
+//                            isTextFieldFocused = true
+//                            multiLineText += "st"
+//                        }) {
+//                            Text( "st")
+//                                .font(.subheadline)
+//                                .foregroundColor(Color.white)
+//                                .padding()
+//                                .background(settingsViewModel.buttonColor)
+//                                .cornerRadius(10)
+//                        }
+//                        .padding(.bottom)
+                        // i BUTTON
                         Button(action: {
                             isTextFieldFocused = true
                             multiLineText += "i "
@@ -80,6 +84,8 @@ struct CommandButtonView: View {
                                 .cornerRadius(10)
                         }
                         .padding(.bottom)
+                        // g BUTTON
+
                         Button(action: {
                             isTextFieldFocused = true
                             multiLineText += "g "
@@ -97,6 +103,7 @@ struct CommandButtonView: View {
                     }
 
                     if !multiLineText.isEmpty && isInputViewShown {
+                        // X BUTTON
                         Button(action: {
                             multiLineText = ""
                         }) {
@@ -110,11 +117,10 @@ struct CommandButtonView: View {
                         .padding(.bottom)
 
                     }
+                    // STOP BUTTON
                     Button(action: {
 
                         // cmd send st
-
-
                         multiLineText = "st"
                         DispatchQueue.main.async {
 
@@ -123,16 +129,8 @@ struct CommandButtonView: View {
 
                             self.isInputViewShown = false
                             consoleManager.isVisible = true
-                            
+
                         }
-
-
-
-//                        // Execute your action here
-//                        screamer.sendCommand(command: multiLineText)
-//
-//                        self.isInputViewShown = false
-//                        consoleManager.isVisible = true
 
                     }) {
                         Text("🛑")
