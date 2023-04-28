@@ -165,8 +165,6 @@ enum LogVerbosity {
 let movieWidth = 95
 let matrixScreenWidth = 100
 
-
-
 /*
  [AVSpeechSynthesisVoice 0x60000002c8b0] Language: en_GB, Name: CereVoice Lauren, Quality: Default [com.cereproc.tts.CereVoice6_rrh],
  [AVSpeechSynthesisVoice 0x600000034a70] Language: en_GB, Name: CereVoice Heather, Quality: Default [com.cereproc.tts.CereVoice6_fmm],

@@ -83,6 +83,11 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
         }
     }
     var hasInitializedVoiceSynth = false
+
+    internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        stopRandomSpinner()
+    }
+
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         // This could be used for all sorts of things like making voies not overlap
         if !hasInitializedVoiceSynth {
@@ -108,6 +113,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
             if voiceOutputEnabled {
                 readySynth.speak(utterance)
+                startRandomSpinner()
             }
 
             self.count += 1

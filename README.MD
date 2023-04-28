@@ -50,25 +50,14 @@ DEBATE MODE UPGRADE:
 `debates subject`
 
 CEREPROC instructions updated, you should be able to use the ones that install into Mac OS voices by default now.
-Customize to use cereproc voices in Debates.swift with code like
-```
-// CEREPROC VOICES SETUP
-// Don't check this in -- Chris
-//let personalityA = hannahVoice
-//let personalityB = carolynVoice
-//let personAsName = "Hannah"
-//let personBsName = "Sam"
-```
+Customize to use cereproc voices in Debates.swift . See COnfig.swift for detailed voice setup instructions :thumbup:
 
 ---- 
 04-26-2023
 
 Files using twostraws excellent Sourceful (see creds)
 
-
-SwiftSage blurs the line between Playgrounds, Xcode and CLI in a beautiful way.
-
-Webviews for GPT-4!!!!!!!!!!
+Webviews for GPT-4!
 
 See Screenshots at bottom
 
@@ -89,7 +78,6 @@ CommandButton and wonderful SwiftUI code thanks to GPT-4 and I's coding chemistr
 04-24-2023
 
 iOS Swift Sage??? Whattttt??? Yep.
-![SwiftSage](Swifty-GPT/assets/swifty-ios.png)
 More screenshots at the bottom
 
 ----
@@ -228,8 +216,11 @@ vapor run
 ```
 
 ## MAC SAGE INSTRUCTIONS:
-TBD
 
+MAC SAGE or SwiftSageForiOSForMac
+
+I've included a mac OS app you can use for prompting, since the Xcode terminal is a bit rough.
+![Sage](Swifty-GPT/assets/SwiftSageiOSforMac.PNG)
 
 
 ## Troubleshooting
