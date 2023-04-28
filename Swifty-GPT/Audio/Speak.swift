@@ -103,6 +103,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
             if !skipLog {
                 multiPrinter("say: " + text)
+                multiPrinter("Initializing vocalization l=\(text.count)...")
             }
 
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
