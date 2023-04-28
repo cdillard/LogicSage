@@ -100,6 +100,7 @@
 		B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */; };
 		B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */; };
 		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
+		B7FB0BD029FC17F200421573 /* Reminders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FB0BCF29FC17F200421573 /* Reminders.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -233,6 +234,7 @@
 		B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageStatusBarXFace.swift; sourceTree = "<group>"; };
 		B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SwiftSageStatusBar; sourceTree = "<group>"; };
 		B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftSageStatusBar.swiftmodule; sourceTree = "<group>"; };
+		B7FB0BCF29FC17F200421573 /* Reminders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminders.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,9 +347,9 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
-				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
+				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
 				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
@@ -370,6 +372,7 @@
 				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
+				B7FB0BCF29FC17F200421573 /* Reminders.swift */,
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B737F41E29F8997300E57577 /* Screencapture */,
 				B737F40429F8153B00E57577 /* Spotify.swift */,
@@ -666,6 +669,7 @@
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
 				B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
+				B7FB0BD029FC17F200421573 /* Reminders.swift in Sources */,
 				B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
