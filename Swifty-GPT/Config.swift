@@ -130,7 +130,11 @@ var voiceInputEnabled = false
 let heatherVoice = "com.cereproc.tts.CereVoice6_fmm"
 let hannahVoice = "com.cereproc.tts.CereVoice6_abm"
 let carolynVoice = "com.cereproc.tts.CereVoice6_acm"
-let samVoice = "com.cereproc.tts.CereVoice6_mmu"
+let samVoice = "com.cereproc.tts.CereVoice6_mmu" // new ones
+let laurenVoice = "com.cereproc.tts.CereVoice6_rrh"
+let isabellaVoice = "com.cereproc.tts.CereVoice6_vde"
+let meganVoice = "com.cereproc.tts.CereVoice6_alk"
+let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 // Don't check this in -- Chris
 // let defaultVoice = hannahVoice//heatherVoice//carolynVoice//samVoice
 
@@ -161,3 +165,15 @@ enum LogVerbosity {
 let movieWidth = 95
 let matrixScreenWidth = 100
 
+
+
+/*
+ [AVSpeechSynthesisVoice 0x60000002c8b0] Language: en_GB, Name: CereVoice Lauren, Quality: Default [com.cereproc.tts.CereVoice6_rrh],
+ [AVSpeechSynthesisVoice 0x600000034a70] Language: en_GB, Name: CereVoice Heather, Quality: Default [com.cereproc.tts.CereVoice6_fmm],
+ [AVSpeechSynthesisVoice 0x6000000341d0] Language: en_US, Name: CereVoice Hannah, Quality: Default [com.cereproc.tts.CereVoice6_abm],
+ [AVSpeechSynthesisVoice 0x60000002c9a0] Language: en_US, Name: CereVoice Isabella, Quality: Default [com.cereproc.tts.CereVoice6_vde],
+ [AVSpeechSynthesisVoice 0x600000034910] Language: en_US, Name: CereVoice Megan, Quality: Default [com.cereproc.tts.CereVoice6_alk],
+ [AVSpeechSynthesisVoice 0x600000034930] Language: en_US, Name: CereVoice Katherine, Quality: Default [com.cereproc.tts.CereVoice6_smo],
+ [AVSpeechSynthesisVoice 0x600000034a60] Language: en_US, Name: CereVoice Carolyn, Quality: Default [com.cereproc.tts.CereVoice6_acm],
+ [AVSpeechSynthesisVoice 0x600000034e00] Language: en_US, Name: CereVoice Sam, Quality: Default [com.cereproc.tts.CereVoice6_mmu],
+ */
