@@ -220,7 +220,7 @@ vapor run
 MAC SAGE or SwiftSageForiOSForMac
 
 I've included a mac OS app you can use for prompting, since the Xcode terminal is a bit rough.
-![Sage](Swifty-GPT/assets/SwiftSageiOSforMac.PNG)
+![Sage](Swifty-GPT/assets/SwiftSageiOSforMac.png)
 
 
 ## Troubleshooting
