@@ -10,7 +10,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @Binding var showSettings: Bool
-    @ObservedObject var viewModel: SettingsViewModel
+    @ObservedObject var settingsViewModel: SettingsViewModel
+    let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
+    @State private var currentModeIndex: Int = 0
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -22,7 +24,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     Text("Terminal Background Color")
                         .fontWeight(.semibold)
-                    ColorPicker("", selection: $viewModel.terminalBackgroundColor)
+                    ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
                         .labelsHidden()
                         .padding(.horizontal, 8)
                 }
@@ -30,7 +32,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     Text("Terminal Text Color")
                         .fontWeight(.semibold)
-                    ColorPicker("", selection: $viewModel.terminalTextColor)
+                    ColorPicker("", selection: $settingsViewModel.terminalTextColor)
                         .labelsHidden()
                         .padding(.horizontal, 8)
                 }
@@ -38,7 +40,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     Text("Button Color")
                         .fontWeight(.semibold)
-                    ColorPicker("", selection: $viewModel.buttonColor)
+                    ColorPicker("", selection: $settingsViewModel.buttonColor)
                         .labelsHidden()
                         .padding(.horizontal, 8)
                 }
@@ -46,7 +48,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     Text("Background Color")
                         .fontWeight(.semibold)
-                    ColorPicker("", selection: $viewModel.backgroundColor)
+                    ColorPicker("", selection: $settingsViewModel.backgroundColor)
                         .labelsHidden()
                         .padding(.horizontal, 8)
                 }
@@ -56,11 +58,11 @@ struct SettingsView: View {
                         .fontWeight(.semibold)
                     HStack {
                         Text("Small")
-                        Slider(value: $viewModel.textSize, in: 2...22, step: 0.3)
+                        Slider(value: $settingsViewModel.textSize, in: 2...22, step: 0.3)
                             .accentColor(.blue)
                         Text("Large")
                     }
-                    Text("\(viewModel.textSize)")
+                    Text("\(settingsViewModel.textSize)")
                         .font(.caption)
 
 
@@ -72,29 +74,34 @@ struct SettingsView: View {
                         Button(action: {
                             withAnimation {
 
-                                // randomize avatar
+                                // iter thru loads mode
+                                updateMode()
+                                // dots
+                                // waves
+                                // bar
+                                // matrix
+                                // none
 
-                                // iteracte through loadMode types
                             }
                         }) {
-                            Text(".matrix")
+                            Text(".\(modes[currentModeIndex])")
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 40)
                                 .padding(.vertical, 12)
-                                .background(viewModel.buttonColor)
+                                .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
                         }
                         .padding(.bottom)
                     }
-                    Text("SET LOAD MODE: .matrix")
+                    Text("SET LOAD MODE")
                         .font(.caption)
                 }
-                // Choose your avatar
                 Button(action: {
                     withAnimation {
-
-                        // randomize avatar
+#if !os(macOS)
+                        consoleManager.print("Patience... soon this will select your avatar. Then we'll add the customization of GPT bot avatars in time.")
+#endif
                     }
                 }) {
                     Text("👨")
@@ -102,7 +109,7 @@ struct SettingsView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
-                        .background(viewModel.buttonColor)
+                        .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
                 }
                 .padding(.bottom)
@@ -120,7 +127,7 @@ struct SettingsView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
-                        .background(viewModel.buttonColor)
+                        .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
                 }
                 .padding(.bottom)
@@ -135,5 +142,21 @@ struct SettingsView: View {
             .cornerRadius(16)
         }
         .scrollIndicators(.visible)
+    }
+    private func updateMode() {
+        currentModeIndex = (currentModeIndex + 1) % modes.count
+
+        settingsViewModel.multiLineText = "setLoadMode \(modes[currentModeIndex])"
+        DispatchQueue.main.async {
+
+            // Execute your action here
+            screamer.sendCommand(command: settingsViewModel.multiLineText)
+
+            self.settingsViewModel.isInputViewShown = false
+#if !os(macOS)
+
+            consoleManager.isVisible = true
+#endif
+        }
     }
 }

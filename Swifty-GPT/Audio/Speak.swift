@@ -63,15 +63,10 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
         }
 
     }
-
     func convertToData(floatChannelData: UnsafeMutablePointer<Float>, dataSize: Int) -> Data {
         let data = Data(bytes: floatChannelData, count: dataSize * MemoryLayout<Float>.size)
         return data
     }
-
-
-
-
     private func startReplenishTimer() {
 
         timer = RepeatingTimer(interval: 5) {
@@ -120,7 +115,6 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
         return estimatedDuration(for: utterance)
     }
 }
-
 func stopSayProcess() {
     shared.synthesizers.forEach {
         $0.stopSpeaking(at: .immediate)
@@ -208,9 +202,6 @@ class StreamSpeaker {
     var blackHoleDevice: Device?
 
     init() {
-
-
-
         setupSession()
 
         var blackHoleDevice: Device?

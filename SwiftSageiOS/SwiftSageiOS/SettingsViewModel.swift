@@ -12,11 +12,11 @@ let defaultTerminalFontSize: CGFloat = 12.666
 
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
+    @Published var isInputViewShown = false
 
+    @AppStorage("savedText") var multiLineText = ""
 
 #if !os(macOS)
-
-
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {
         if let image = UIImage(data: data) {
@@ -54,7 +54,6 @@ class SettingsViewModel: ObservableObject {
     @Published var buttonColor: Color = .blue {
         didSet {
 #if !os(macOS)
-
             if let data = buttonColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "buttonColor")
             }
@@ -64,7 +63,6 @@ class SettingsViewModel: ObservableObject {
     @Published var backgroundColor: Color = .gray {
         didSet {
 #if !os(macOS)
-
             if let data = backgroundColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "backgroundColor")
             }

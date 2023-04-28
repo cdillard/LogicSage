@@ -232,7 +232,7 @@ struct WaveView: View {
                         }
                         .padding(geometry.size.width * 0.01)
                         .popover(isPresented: $showSettings, arrowEdge: .top) {
-                            SettingsView(showSettings: $showSettings, viewModel: settingsViewModel)
+                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
 
                         }
                         Button(action: {
@@ -240,7 +240,7 @@ struct WaveView: View {
 #if !os(macOS)
 
                                 consoleManager.print("ping...")
-                            #endif
+#endif
                                 print("ping...")
                         }) {
 

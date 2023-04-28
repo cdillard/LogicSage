@@ -9,16 +9,14 @@ import Foundation
 import SwiftUI
 
 struct CommandButtonView: View {
-    @State private var isInputViewShown = false
-    @State private var multiLineText = ""
-    @ObservedObject var settingsViewModel: SettingsViewModel
-    @FocusState private var isTextFieldFocused: Bool
+    @StateObject var settingsViewModel: SettingsViewModel
+    @FocusState var isTextFieldFocused: Bool
 
     func doExec() {
-        self.isInputViewShown.toggle()
+        self.settingsViewModel.isInputViewShown.toggle()
 #if !os(macOS)
 
-        consoleManager.isVisible = !isInputViewShown
+        consoleManager.isVisible = !settingsViewModel.isInputViewShown
         consoleManager.fontSize = settingsViewModel.textSize
 #endif
     }
@@ -33,7 +31,7 @@ struct CommandButtonView: View {
                     Spacer()
 #if !os(macOS)
 
-                    if !isInputViewShown {
+                    if !settingsViewModel.isInputViewShown {
                         // PLugItIn BUTTON
                         Button("🔌") {
                             print("🔌 Force reconnecting websocket...")
@@ -50,11 +48,11 @@ struct CommandButtonView: View {
                     }
 #endif
 
-                    if multiLineText.isEmpty && isInputViewShown {
+                    if settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
                         // debate BUTTON
                         Button(action: {
                             isTextFieldFocused = true
-                            multiLineText += "debate "
+                            settingsViewModel.multiLineText += "debate "
                         }) {
                             Text( "debate")
                                 .font(.subheadline)
@@ -80,7 +78,7 @@ struct CommandButtonView: View {
                         // i BUTTON
                         Button(action: {
                             isTextFieldFocused = true
-                            multiLineText += "i "
+                            settingsViewModel.multiLineText += "i "
                         }) {
                             Text( "i")
                                 .font(.subheadline)
@@ -93,7 +91,7 @@ struct CommandButtonView: View {
                         // g BUTTON
                         Button(action: {
                             isTextFieldFocused = true
-                            multiLineText += "g "
+                            settingsViewModel.multiLineText += "g "
                         }) {
                             Text( "g")
                                 .font(.subheadline)
@@ -107,10 +105,10 @@ struct CommandButtonView: View {
 
                     }
 
-                    if !multiLineText.isEmpty && isInputViewShown {
+                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
                         // X BUTTON
                         Button(action: {
-                            multiLineText = ""
+                            settingsViewModel.multiLineText = ""
                         }) {
                             Text( "X")
                                 .font(.subheadline)
@@ -126,13 +124,13 @@ struct CommandButtonView: View {
                     Button(action: {
 
                         // cmd send st
-                        multiLineText = "st"
+                        settingsViewModel.multiLineText = "st"
                         DispatchQueue.main.async {
 
                             // Execute your action here
-                            screamer.sendCommand(command: multiLineText)
+                            screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                            self.isInputViewShown = false
+                            self.settingsViewModel.isInputViewShown = false
 #if !os(macOS)
 
                             consoleManager.isVisible = true
@@ -152,9 +150,9 @@ struct CommandButtonView: View {
                     // EXEC BUTTON
                     Button(action: {
                         // Execute your action here
-                        screamer.sendCommand(command: multiLineText)
+                        screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                        self.isInputViewShown = false
+                        self.settingsViewModel.isInputViewShown = false
 #if !os(macOS)
 
                         consoleManager.isVisible = true
@@ -172,11 +170,11 @@ struct CommandButtonView: View {
 
                     // TERM/COMMAND BUTTON
                     Button(action: {
-                        if isInputViewShown {
+                        if settingsViewModel.isInputViewShown {
                             // Execute your action here
-                            screamer.sendCommand(command: multiLineText)
+                            screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                            self.isInputViewShown = false
+                            self.settingsViewModel.isInputViewShown = false
 #if !os(macOS)
 
                             consoleManager.isVisible = true
@@ -186,7 +184,7 @@ struct CommandButtonView: View {
                             doExec()
                         }
                     }) {
-                        Text(self.isInputViewShown ? "TERM" : "COMMAND")
+                        Text(self.settingsViewModel.isInputViewShown ? "TERM" : "COMMAND")
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding()
@@ -199,9 +197,9 @@ struct CommandButtonView: View {
                 .padding(.bottom)
 
 
-                if isInputViewShown {
+                if settingsViewModel.isInputViewShown {
                     // MAIN INPUT TEXTFIELD
-                    TextEditor(text: $multiLineText)
+                    TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
