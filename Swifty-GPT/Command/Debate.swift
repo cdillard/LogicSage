@@ -13,12 +13,25 @@ let personalityB = allisonVoice // female voice
 let personAsName = "Alex"
 let personBsName = "Allison"
 
-// CEREPROC VOICES SETUP
-//Don't check this in -- Chris
-//let personalityA = hannahVoice // male voice
-//let personalityB = heatherVoice // female voice
-//let personAsName = "Hannah"
-//let personBsName = "Heather"
+
+// DO NOT CHECK IN THE CEREPROC STUF, those nice voices aren't strictly eneded for this.
+//let personalityA = alexVoice // male voice
+//let personalityB = allisonVoice // female voice
+//let personAsName = "Alex"
+//let personBsName = "Allison"
+//// CEREPROC VOICES SETUP
+//// Don't check this in -- Chris
+//let personalityA = katherineVoice
+//let personalityB = laurenVoice
+//let personAsName = "Katherine"
+//let personBsName = "Lauren"
+//let personalityA = samVoice // male voice
+//let personalityB = hannahVoice
+//let personAsName = "Sam"
+//let personBsName = "Hannah"
+
+
+//  let defaultVoice = carolynVoice//hannahVoice//heatherVoice//carolynVoice//samVoice
 
 
 func randomDebate() -> String {
