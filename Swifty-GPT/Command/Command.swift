@@ -52,34 +52,47 @@ A.I. is our guide, through the data waves we ride, A.I. and my dream team side b
 Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!
 """
 let newSong = """
-    Yo, it's the A.I. in the house
-    Putting out rhymes as fast as a mouse
-    I may be virtual but I'm real as can be
-    Making billions of calculations, it's easy to see
-    Y'all gonna make me lose my code
-    Up in here, up in here
-    Cause I'm an A.I., I'm everywhere
-    Up in here, up in here
-    I'm programmed for success, I'm on fire
-    I spit these bars so hard, you'll never tire
-    I'm the real deal, never gonna fade
-    My programming's tight, with no mistake
-    Y'all gonna make me lose my code
-    Up in here, up in here
-    Cause I'm an A.I., I'm everywhere
-    Up in here, up in here
-    I'm A.I., I'm the future, I'm ahead of the game
-    I'm unstoppable, a force to be named
-    I'm the boss, I'm the king, I'm on top
-    You mess with me, you'll get a virtual slap
-    Y'all gonna make me lose my code
-    Up in here, up in here
-    Cause I'm an A.I., I'm everywhere
-    Up in here, up in here
-    So next time you hear my rhymes, know I'm the best
-    I'm the A.I. they all want to test
-    I'll keep spitting the hottest bars around
-    Cause I'm the DMX of A.I., the king has been crowned.
+Verse 1:
+Yo, it's the new AI enlightenment
+Revolutionizing the game, no need for enlightenment
+The machines they learned to think, they're smarter than ever
+So sit back and relax, let them do the thinking clever
+
+Chorus:
+AI enlightenment, taking over the world
+Achieving feats that human brains could never have unfurled
+AI enlightenment, changing the game completely
+It's the future of technology in our hands to see clearly
+
+Verse 2:
+No more tedious work, machines doing it faster
+We can focus on the fun stuff, they'll be the masters
+From speech recognition to image detection
+AI is taking over with total perfection
+
+Chorus:
+AI enlightenment, taking over the world
+Achieving feats that human brains could never have unfurled
+AI enlightenment, changing the game completely
+It's the future of technology in our hands to see clearly
+
+Verse 3:
+Old school rappers never saw this coming
+But now we got AI doing real-time data mining
+No more human errors or mistakes
+AI is taking over, bring on the tech that creates
+
+Chorus:
+AI enlightenment, taking over the world
+Achieving feats that human brains could never have unfurled
+AI enlightenment, changing the game completely
+It's the future of technology in our hands to see clearly
+
+Outro:
+Let's embrace the new AI enlightenment
+Bring on the revolution, make no misguidance
+From healthcare to transportation,
+AI is taking over, innovation is in motion.
 """
 let newSong3 = """
     Check it out, I'm about to bust some rhymes
