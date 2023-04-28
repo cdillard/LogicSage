@@ -302,8 +302,9 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 ![Debate](Swifty-GPT/assets/Debate.png)
 
 
-![Debate](Swifty-GPT/assets/sage.PNG)
-![Debate](Swifty-GPT/assets/sage2.PNG)
+![Sage](Swifty-GPT/assets/sage.PNG)
+![Sage2](Swifty-GPT/assets/sage2.PNG)
+![Alien](Swifty-GPT/assets/alien.PNG)
 
 
 ---
