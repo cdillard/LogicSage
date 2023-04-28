@@ -67,6 +67,7 @@
 		B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7717D2529EFA56D005141AB /* AssisAI.swift */; };
 		B7717D2929EFA625005141AB /* Googler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7717D2829EFA624005141AB /* Googler.swift */; };
 		B774605A29FBE2FA00E7C46B /* Stocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774605929FBE2FA00E7C46B /* Stocks.swift */; };
+		B774605C29FBF12F00E7C46B /* StarTrekSimuilator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774605B29FBF12F00E7C46B /* StarTrekSimuilator.swift */; };
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B78C6C2729F3129300AA568A /* PNG in Frameworks */ = {isa = PBXBuildFile; productRef = B78C6C2629F3129300AA568A /* PNG */; };
@@ -194,6 +195,7 @@
 		B7717D2529EFA56D005141AB /* AssisAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssisAI.swift; sourceTree = "<group>"; };
 		B7717D2829EFA624005141AB /* Googler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Googler.swift; sourceTree = "<group>"; };
 		B774605929FBE2FA00E7C46B /* Stocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stocks.swift; sourceTree = "<group>"; };
+		B774605B29FBF12F00E7C46B /* StarTrekSimuilator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarTrekSimuilator.swift; sourceTree = "<group>"; };
 		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptLibrary.swift; sourceTree = "<group>"; };
 		B791552C29EDBB0300DE34FC /* Speak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				B70CF18129F0980800993AAF /* SageWare.swift */,
 				B737F41E29F8997300E57577 /* Screencapture */,
 				B737F40429F8153B00E57577 /* Spotify.swift */,
+				B774605B29FBF12F00E7C46B /* StarTrekSimuilator.swift */,
 				B774605929FBE2FA00E7C46B /* Stocks.swift */,
 				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
 				B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */,
@@ -635,6 +638,7 @@
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
+				B774605C29FBF12F00E7C46B /* StarTrekSimuilator.swift in Sources */,
 				B70971F429F62DC6008ED803 /* Peer.swift in Sources */,
 				B729B14029F99DA800BA6752 /* Therapy.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
