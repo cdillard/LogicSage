@@ -50,6 +50,15 @@ DEBATE MODE UPGRADE:
 `debates subject`
 
 CEREPROC instructions updated, you should be able to use the ones that install into Mac OS voices by default now.
+Customize to use cereproc voices in Debates.swift with code like
+```
+// CEREPROC VOICES SETUP
+// Don't check this in -- Chris
+//let personalityA = hannahVoice
+//let personalityB = carolynVoice
+//let personAsName = "Hannah"
+//let personBsName = "Sam"
+```
 
 ---- 
 04-26-2023

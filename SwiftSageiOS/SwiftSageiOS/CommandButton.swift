@@ -184,7 +184,7 @@ struct CommandButtonView: View {
                             doExec()
                         }
                     }) {
-                        Text(self.settingsViewModel.isInputViewShown ? "TERM" : "COMMAND")
+                        Text(self.settingsViewModel.isInputViewShown ? "DONE" : "COMMAND")
                             .font(.headline)
                             .foregroundColor(Color.white)
                             .padding()
