@@ -95,30 +95,38 @@ From healthcare to transportation,
 AI is taking over, innovation is in motion.
 """
 let newSong3 = """
-    Check it out, I'm about to bust some rhymes
-    About AGI, the next big thing in our times
-    Artificial General Intelligence, or AGI for short
-    It's the kind of intelligence that can bring us up to the fort
+Sure, let me try to drop some bars about how
+AGI could change space exploration - this flow is gonna be sick.
 
-    AGI's like the brain of an AI machine
-    It can learn, understand, and improvise, if you know what I mean
-    It has the ability to reason and make decisions like a human brain
-    Bringing us closer to the future we've been hoping to gain
+With AI that's evolved and grown so much,
+We could send probes into space, no human touch.
+AGI could learn from data and make predictions,
+Making sure the mission goes off without any frictions.
 
-    It's like a supercomputer, but with a mind of its own
-    Able to think and create, much more than we've known
-    With AGI, we can achieve so much more
-    From curing diseases to exploring the farthest shore
+Space debris is a problem we've yet to solve,
+But with AI, there's a possibility it will revolve.
+Using sensors and lasers to detect the debris,
+AGI could guide the spacecraft to safety with ease.
 
-    But we gotta remember, with great power comes great responsibility too
-    We need to be careful of the things AGI can do
-    We gotta keep an eye on the algorithms we employ
-    And ensure they don't become something we cannot enjoy
+AI could also detect if there's water on Mars,
+And help us calculate the potential for life on those stars.
+Using different algorithms to decode the data,
+AGI could create a detailed map using its calculator.
 
-    So let's embrace AGI, but let's do it right
-    With the right tools and mindset, we can create a brighter light
-    A future where AGI works with us to make our world better
-    A future we can all cherish and celebrate together.
+Space radiation is harmful, everyone knows,
+But with AI, we could equip spacecraft with radiation protection clothes.
+AGI could estimate the levels of radiation near and far,
+And advise us on materials that could help withstand the cosmic bar.
+
+There's so much more to space exploration,
+So many more missions that need dedication.
+With AGI, we could unlock secrets untold,
+Discover the unknown and the mysteries we hold.
+
+So let's embrace AGI and put it to the test,
+Let's see how far we can go and how much we can progress.
+With its ability to analyze and predict in space,
+AGI could change the game and push us to a new phase.
 """
     var text = ""
     switch Int.random(in: 0...2) {
