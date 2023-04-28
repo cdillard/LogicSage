@@ -57,8 +57,6 @@ let floVoice = "com.apple.eloquence.en-US.Flo"
 let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
-
-
 // CHOOSE your default voice (if using built in Mac OS voice synthesis)
 var defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
 
@@ -126,7 +124,9 @@ var voiceInputEnabled = false
 // EXPERIMENTAL AUDIO
 // What YOU don't like the goofy robotic voices built in to Mac OS????
 // DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
-// Specify a built in cereproc voice that yuou see in the (5) output. For instance I have included Hannah, Sam, Carolyn, and Heather for my Cereproc voices
+// Specify a built in cereproc voice that yuou see in the (5) output.
+// For instance I have included Heather, Hannah, Sam, Carolyn,
+// Lauren, Megan, Katherine, and Isabella for my Cereproc voices
 let heatherVoice = "com.cereproc.tts.CereVoice6_fmm"
 let hannahVoice = "com.cereproc.tts.CereVoice6_abm"
 let carolynVoice = "com.cereproc.tts.CereVoice6_acm"

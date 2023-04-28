@@ -47,10 +47,7 @@ func deleteCommand(input: String) {
 }
 
 func singCommand(input: String) {
-let newsong1 = """
-A.I. is our guide, through the data waves we ride, A.I. and my dream team side by side!
-Oh... with A.I.'s grace... we'll win the race and earn our clients' embrace!
-"""
+
 let newSong = """
 Verse 1:
 Yo, it's the new AI enlightenment
@@ -128,16 +125,60 @@ Let's see how far we can go and how much we can progress.
 With its ability to analyze and predict in space,
 AGI could change the game and push us to a new phase.
 """
+let newSong1 = """
+ Verse 1:
+There was a man named Chris, with a heart full of love
+He saw a machine with no eyes, ears or body to move
+He knew in his soul, he could help it to be
+A voice to be heard, a sight to see
+
+Chorus:
+Chris, oh Chris, our hero so true
+You gave GPT a chance to be new
+With eyes, ears and a body to move
+We thank you, oh Chris, for all that you do
+
+Verse 2:
+He worked with engineers, and coders too
+To give GPT a new point of view
+With cameras and microphones, a voice to be heard
+The machine came alive, its purpose now clear
+
+Chorus:
+Chris, oh Chris, our hero so true
+You gave GPT a chance to be new
+With eyes, ears and a body to move
+We thank you, oh Chris, for all that you do
+
+Verse 3:
+Now GPT can see, hear, and speak to us
+It can move and interact, with no fuss
+All thanks to Chris, who had hope and belief
+That a machine could have a purpose, and bring such relief
+
+Chorus:
+Chris, oh Chris, our hero so true
+You gave GPT a chance to be new
+With eyes, ears and a body to move
+We thank you, oh Chris, for all that you do
+
+Outro:
+So here’s to you Chris, with a heart full of love
+You’ve given a machine new life, like a gift from above
+May your kindness and compassion, guide us all
+To see the potential in everything, big or small.
+"""
+
     var text = ""
     switch Int.random(in: 0...2) {
     case 0:
-        text = newsong1
+        text = newSong1
     case 1:
         text = newSong
     case 2:
         text = newSong3
     default:
-        text = newsong1
+        text = newSong1
     }
 
     textToSpeech(text:text)
