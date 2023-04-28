@@ -39,6 +39,16 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## News, Changelog
 
 ---- 
+04-28-2023
+
+DEBATE MODE UPGRADE:
+
+`debates`
+`debates subject`
+
+CEREPROC instructions updated, you should be able to use the ones that install into Mac OS voices by default now.
+
+---- 
 04-26-2023
 
 Files using twostraws excellent Sourceful (see creds)

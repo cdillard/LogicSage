@@ -22,34 +22,38 @@ let personBsName = "Allison"
 
 
 func randomDebate() -> String {
-        switch Int.random(in: 0...11) {
-        case 0:
-            return debatePrompt
-        case 1:
-            return debatePrompt2
-        case 2:
-            return debatePrompt3
-        case 3:
-            return debatePrompt4
-        case 4:
-            return debatePrompt5
-        case 5:
-            return debatePrompt6
-        case 6:
-            return debatePrompt7
-        case 7:
-            return plutoPrompt
-        case 8:
-            return cokePrompt
-        case 9:
-            return eurovisionPrompt
-        case 10:
-            return dressPrompt
-        case 11:
-            return emuwwarPrompt
-        default:
-            return debatePrompt
-        }
+    switch Int.random(in: 0...13) {
+    case 0:
+        return debatePrompt
+    case 1:
+        return debatePrompt2
+    case 2:
+        return debatePrompt3
+    case 3:
+        return debatePrompt4
+    case 4:
+        return debatePrompt5
+    case 5:
+        return debatePrompt6
+    case 6:
+        return debatePrompt7
+    case 7:
+        return debatePrompt8
+    case 8:
+        return debatePrompt0
+    case 9:
+        return plutoPrompt
+    case 10:
+        return cokePrompt
+    case 11:
+        return eurovisionPrompt
+    case 12:
+        return dressPrompt
+    case 13:
+        return emuwwarPrompt
+    default:
+        return debatePrompt
+    }
 }
 let usePrePrompt = true
 func debateCommand(input: String) {
@@ -134,5 +138,153 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
         DispatchQueue.global().asyncAfter(deadline: .now() + duration) {
             completionHandler(personalityPrefix + newPrompt, true)
         }
+    }
+}
+
+
+func debatesCommand(input: String) {
+
+    // PRINT WHEN EMPTY
+    if input.isEmpty {
+
+        multiPrinter("Call `debates subject` to do your specific built in debate")
+        //print debates and allow choosing
+        for (index, debate) in [    debatePrompt,
+                                    debatePrompt2,
+                                    debatePrompt3,
+                                    debatePrompt4,
+                                    debatePrompt5,
+                                    debatePrompt6,
+                                    debatePrompt7,
+                                    debatePrompt8,
+                                    debatePrompt9,
+                                    debatePrompt0,
+                                    plutoPrompt,
+                                    cokePrompt,
+                                    eurovisionPrompt,
+                                    dressPrompt,
+                                    emuwwarPrompt].enumerated() {
+            multiPrinter("subject: \(debateSubject(promptDex: index))")
+            multiPrinter("Matter: \(debate)")
+
+        }
+    }
+
+
+    if !input.isEmpty {
+        var chosenDebate = ""
+        // get chosen debate
+        for (index, debate) in [    debatePrompt,
+                                    debatePrompt2,
+                                    debatePrompt3,
+                                    debatePrompt4,
+                                    debatePrompt5,
+                                    debatePrompt6,
+                                    debatePrompt7,
+                                    debatePrompt8,
+                                    debatePrompt9,
+                                    debatePrompt0,
+                                    plutoPrompt,
+                                    cokePrompt,
+                                    eurovisionPrompt,
+                                    dressPrompt,
+                                    emuwwarPrompt].enumerated() {
+            let debateSubjectForIndex = debateSubject(promptDex: index)
+            multiPrinter("subject: \(debateSubjectForIndex)")
+            multiPrinter("Matter: \(debate)")
+            if debateSubjectForIndex == input {
+                chosenDebate = debate
+                break
+            }
+            else {
+                print("not this one")
+            }
+        }
+
+
+        if !chosenDebate.isEmpty {
+            debateMode = true
+                multiPrinter("DEBATE STAGE:")
+                deepConversation(currentPersonality: personalityA, initialPrompt: chosenDebate, depth: depthLimit)
+// DO we need a new command that simply does the same thing debate does randomly ????
+        }
+        else {
+            multiPrinter("Failed to debate.")
+
+        }
+    }
+
+}
+
+// debate subject for promptDex.
+func debateSubject(promptDex: Int) -> String {
+    switch promptDex {
+    case 0:
+        return "capitalPunish"
+    case 1:
+        return "recDrugs"
+    case 2:
+        return "catsVDogs"
+    case 3:
+        return "zombieVAlien"
+    case 4:
+        return "worklife"
+    case 5:
+        return "religion"
+    case 6:
+        return "assistDying"
+    case 7:
+        return "agiEmp"
+    case 8:
+        return "govAI"
+    case 9:
+        return "agiLearn"
+    case 10:
+        return "pluto"
+    case 11:
+        return "coke"
+    case 12:
+        return "eurovision"
+    case 13:
+        return "dress"
+    case 14:
+        return "emuWar"
+    default:
+        return "capitalPunish"
+    }
+}
+
+func debateMatter(promptDex: Int) -> String {
+    switch promptDex {
+    case 0:
+        return debatePrompt
+    case 1:
+        return debatePrompt2
+    case 2:
+        return debatePrompt3
+    case 3:
+        return debatePrompt4
+    case 4:
+        return debatePrompt5
+    case 5:
+        return debatePrompt6
+    case 6:
+        return debatePrompt7
+    case 7:
+        return debatePrompt8
+    case 8:
+        return debatePrompt0
+    case 9:
+        return plutoPrompt
+    case 10:
+        return cokePrompt
+    case 11:
+        return eurovisionPrompt
+    case 12:
+        return dressPrompt
+    case 13:
+        return emuwwarPrompt
+    default:
+        return debatePrompt
     }
 }
