@@ -14,7 +14,7 @@ let personAsName = "Alex"
 let personBsName = "Allison"
 
 // CEREPROC VOICES SETUP
-// DOn't check this in -- Chris
+//Don't check this in -- Chris
 //let personalityA = hannahVoice // male voice
 //let personalityB = heatherVoice // female voice
 //let personAsName = "Hannah"

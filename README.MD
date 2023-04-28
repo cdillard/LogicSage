@@ -171,20 +171,14 @@ WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
 // What YOU don't like the goofy robotic voices built in to Mac OS????
 // DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
 ```
-let cereprocVoicesEnabled = false
-
-BUY CEREPROC DEVELOPER ACCESS
+Just install the voices you want to Mac OS TTS, once they are installed check out their identifier in Sw-S with (5) and add them to the config.swift.
 
 FIND/BUY/INSTALL THE VOICE YOU FANCY.
 https://www.cereproc.com
 
-Place the SDK you got from cereproc in ./Swifty-GPT/cerevoice_sdk_6.1.0
-Turn on `let cereprocVoicesEnabled = true` // THIS ISN't working yet, IN PROGRESS
-
 
 ## UNDERSTANDING THE SWIFT SAGE COMPONENTS!
 ![SwiftSage](Swifty-GPT/assets/swifty-diagram.png)
-
 
 ---
 ## SWIFT SAGE IOS INSTRUCTIONS: (Not needed unless you want to use SwiftSage on iOS/iPadOS devices)
