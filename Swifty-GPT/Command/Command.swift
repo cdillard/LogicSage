@@ -411,7 +411,7 @@ func globalsCommand(input: String) {
 func voiceSettingsCommand(input: String) {
     multiPrinter("If I had voice settings UI implemetned, here it would be")
     multiPrinter("But look at all the voices to choose from...")
-    multiPrinter("\(avVoices)")
+    multiPrinter("\(installedVoiesArr())")
 }
 
 func sayCommand(input: String) {
@@ -445,7 +445,9 @@ func setLoadMode(input: String) {
     default: loadMode = .dots
     }
     asciAnimations = loadMode == .matrix
-    
-    multiPrinter ("set load mode to \(input)")
+    let spinDex = spinner.getSpindex(input: input)
+    spinner = LoadingSpinner(columnCount: termColSize, spinDex: spinDex)
+
+    multiPrinter("set load mode to \(input)")
 }
 

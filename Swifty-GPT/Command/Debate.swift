@@ -13,6 +13,12 @@ let personalityB = allisonVoice // female voice
 let personAsName = "Alex"
 let personBsName = "Allison"
 
+// CEREPROC VOICES SETUP
+// DOn't check this in -- Chris
+//let personalityA = hannahVoice // male voice
+//let personalityB = heatherVoice // female voice
+//let personAsName = "Hannah"
+//let personBsName = "Heather"
 
 
 func randomDebate() -> String {

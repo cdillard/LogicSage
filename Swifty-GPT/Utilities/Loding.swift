@@ -8,7 +8,7 @@
 import Foundation
 
 var termColSize = 5
-var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize)
+var spinner: LoadingSpinner = LoadingSpinner(columnCount: termColSize, spinDex: 0)
 let animator = TextAnimator(text: loadingText)
 
 var spinnerInt: Int = 1

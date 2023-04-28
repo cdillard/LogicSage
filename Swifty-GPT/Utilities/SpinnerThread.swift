@@ -30,7 +30,7 @@ class LoadingSpinner {
     private var thread: Thread?
     private let columnCount: Int
 
-    init(columnCount: Int) {
+    init(columnCount: Int, spinDex: Int) {
         let index = Int.random(in: 0..<spinners().count)
         self.spinner = spinners()[index]
         self.columnCount = columnCount
@@ -62,5 +62,26 @@ class LoadingSpinner {
         blockingInput = false
         thread?.cancel()
         thread = nil
+    }
+
+    func getSpindex(input: String) -> Int {
+
+        var spinDex = 0
+        switch loadMode {
+        case .dots:
+            spinDex = 0
+        case .waves:
+            spinDex = 1
+        case .bar:
+            spinDex = 2
+        case .matrix:
+            spinDex = 3
+        case .none:
+            spinDex = 4
+
+        }
+        return spinDex
+
+
     }
 }

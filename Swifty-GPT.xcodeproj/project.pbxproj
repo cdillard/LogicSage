@@ -48,8 +48,6 @@
 		B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */; };
 		B737F41D29F897DE00E57577 /* Eggland.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41C29F897DE00E57577 /* Eggland.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
-		B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */; };
-		B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */; };
 		B74746A829F40FCD00075010 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74746A729F40FCD00075010 /* CommandTable.swift */; };
 		B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */; };
 		B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = B74A169329F1FA54006A0605 /* SourceKittenFramework */; };
@@ -59,7 +57,6 @@
 		B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7538D1F29F41FA000243E9B /* AVVoice.swift */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
-		B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */; };
 		B762E69F29FAB8AE00AC5150 /* DebatePrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */; };
 		B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */; };
 		B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */; };
@@ -182,8 +179,6 @@
 		B75AFC4029EA7207003BA454 /* lsystem_output */ = {isa = PBXFileReference; lastKnownFileType = text; path = lsystem_output; sourceTree = "<group>"; };
 		B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
 		B75AFC4329EA8140003BA454 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
-		B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CereprocWrapper.swift; sourceTree = "<group>"; };
-		B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cerevoice_sdk_6.1.0; sourceTree = "<group>"; };
 		B75FC59929F5D51000A75EAF /* libcerevoice_eng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_eng.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a"; sourceTree = "<group>"; };
 		B75FC59B29F5D52000A75EAF /* libcerevoice_aud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcerevoice_aud.a; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a"; sourceTree = "<group>"; };
 		B75FC59D29F5D58000A75EAF /* libcerevoice_eng.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libcerevoice_eng.dylib; path = "Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat/libcerevoice_eng.dylib"; sourceTree = "<group>"; };
@@ -243,8 +238,6 @@
 			files = (
 				B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */,
 				B7CA779929F6A5EB00A9DBE6 /* Vapor in Frameworks */,
-				B746DFC029F5DB2A002804EB /* libcerevoice_aud.a in Frameworks */,
-				B746DFBF29F5DB0D002804EB /* libcerevoice_eng.a in Frameworks */,
 				B78C6C2729F3129300AA568A /* PNG in Frameworks */,
 				B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */,
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
@@ -355,7 +348,6 @@
 				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
 				B729B13D29F992D300BA6752 /* Audio */,
-				B75FC59829F5D3E700A75EAF /* cerevoice_sdk_6.1.0 */,
 				B729B13B29F975F600BA6752 /* Command */,
 				B74E620E29F03EB90065DF88 /* Config.swift */,
 				B737F41C29F897DE00E57577 /* Eggland.swift */,
@@ -418,7 +410,6 @@
 			children = (
 				B768CE9729EB3EAF00B8A9E4 /* AudioProcessor.swift */,
 				B7538D1F29F41FA000243E9B /* AVVoice.swift */,
-				B75FC59529F5D2E900A75EAF /* CereprocWrapper.swift */,
 				B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */,
 				B791552C29EDBB0300DE34FC /* Speak.swift */,
 				B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */,
@@ -669,7 +660,6 @@
 				B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */,
-				B75FC59629F5D2E900A75EAF /* CereprocWrapper.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
@@ -870,10 +860,7 @@
 					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = (
-					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a",
-					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";
@@ -915,10 +902,7 @@
 					"$(PROJECT_DIR)/Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/javalibfat",
 				);
 				MARKETING_VERSION = 1.0;
-				OTHER_LDFLAGS = (
-					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_eng/libfat/libcerevoice_eng.a",
-					"Swifty-GPT/cerevoice_sdk_6.1.0/cerevoice_aud/libfat/libcerevoice_aud.a",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";

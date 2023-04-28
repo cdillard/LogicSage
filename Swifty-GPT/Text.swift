@@ -21,7 +21,7 @@ func fullProjText() -> String {
    2. 🚀 Show loaded prompt (s)
    3. 📂 Open project (o)
    4. 🏗️ Build Project (b)
-   5. 📂 Voice settings (x) (See more voices in Config.swift- you coding today)
+   5. 📂 Voice settings (See more voices in Config.swift- you coding today) CEREPROC VOICES ROCK!
  🔸 GPT Interaction:
    6. 💡 Idea prompt (i)
    7. 🧠 Talk to GPT (g)
