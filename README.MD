@@ -1,6 +1,6 @@
 ![SwiftSage](Swifty-GPT/assets/swslogostack.png)
-## An OpenAI AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
-
+## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
+### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com), THANK YOU!
 ![instruct](Swifty-GPT/assets/instruct.png)
 
 # SwiftSage: The Ultimate AI Integration for Xcode
