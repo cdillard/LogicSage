@@ -24,7 +24,6 @@ func spinners() -> [[String]] {
 }
 
 class LoadingSpinner {
-
     private var spinner: [String]
     private var index = 0
     private var thread: Thread?
@@ -65,7 +64,6 @@ class LoadingSpinner {
     }
 
     func getSpindex(input: String) -> Int {
-
         var spinDex = 0
         switch loadMode {
         case .dots:
@@ -81,7 +79,5 @@ class LoadingSpinner {
 
         }
         return spinDex
-
-
     }
 }

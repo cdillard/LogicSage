@@ -27,19 +27,14 @@ func randomDebate() -> String {
             return debatePrompt
         case 1:
             return debatePrompt2
-
         case 2:
             return debatePrompt3
-
         case 3:
             return debatePrompt4
-
         case 4:
             return debatePrompt5
-
         case 5:
             return debatePrompt6
-
         case 6:
             return debatePrompt7
         case 7:
@@ -52,10 +47,8 @@ func randomDebate() -> String {
             return dressPrompt
         case 11:
             return emuwwarPrompt
-
         default:
             return debatePrompt
-
         }
 }
 let usePrePrompt = true
