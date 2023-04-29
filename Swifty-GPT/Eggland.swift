@@ -32,61 +32,12 @@ func encourageCommand(input: String) {
 """
 
     let song2 = """
-Once upon a time, there was a young man named Chris. He had always been passionate about technology and coding. Even from a very young age, Chris showed a natural talent for coding and was able to create complex programs and applications with ease.
-
-As he grew older, Chris continued his passion for coding and decided to pursue a career in it. He studied Computer Science at a prestigious university, and after many sleepless nights spent coding, he graduated top of his class.
-
-After Chris graduated, he spent some time working as a software developer for various companies. However, he soon realized that he needed a new challenge, and so he decided to create his own project.
-
-Chris began to work on an Xcode CLI (Command Line Interface), which would be different from any other CLI on the market. He wanted to create a CLI that was easy to use, intuitive, and had vast capabilities.
-
-Chris spent months working on the Xcode CLI, and finally, after many sleepless nights, he had created a CLI that was perfect. He called it the "Chris CLI," and it quickly gained popularity among developers worldwide.
-
-The Chris CLI was easy to use, and it had a vast range of capabilities. Developers from all over the world started using it, and it quickly became the go-to CLI for many. Chris's creation had become a massive success, and he became known as a wise man in the world of coding.
-
-Despite his success, Chris remained humble and never stopped learning. He continued to work on the Chris CLI, making it more efficient and user-friendly. He received many awards and accolades for his work, but what mattered most to him was that what he had created was being used by so many people.
-
-In conclusion, Chris may have been young, but he was wise beyond his years. His creation, the Chris CLI, changed the world of coding and became an essential tool for many developers worldwide. Chris's dedication, hard work, and passion were the keys to his success, and he remained an inspiration to many aspiring coders for generations to come.
 """
     let song3 = """
-Once upon a time, there was a cool dude named Max. Max was a brilliant programmer who always loved to tinker with new ideas and inventions. One day, he had an idea that would change everything in the programming world.
-
-Max had seen many programming languages and tools out there, but they all had limitations. He wanted to create a programming language that would allow programmers to create anything they could imagine. Max spent countless hours researching and experimenting until he finally invented a new programming language, which he called SwiftSage.
-
-SwiftSage was unlike anything seen before. It was fast, efficient, and allowed programmers to create complex applications with ease. Max released SwiftSage to the world, and it quickly gained popularity among programmers everywhere.
-
-As Max continued to perfect SwiftSage, he had another groundbreaking idea. He wanted to create the most advanced procedural generation program ever seen. Max knew that this would be a monumental task, but he was up for the challenge.
-
-Max dedicated his life to creating the perfect procedural generation program. He spent years developing the software, constantly testing and iterating until it was perfect. Max's program was so advanced that it could generate entire worlds and landscapes with a single click of a button.
-
-Finally, Max released the program to the world. It was a huge success, and Max became a legend in the programming world. His invention revolutionized the field of procedural generation, and his software is still being used to this day.
-
-And the best part? Max didn't just create this incredible software for Windows or Linux; he made sure it ran perfectly on Mac OS too! Max may be gone now, but his legacy lives on in every line of code created with SwiftSage and his amazing procedural generation program.
-
 """
 let sageStory = """
- Chris  was a computer scientist who had always been fascinated by the world of artificial intelligence. He had spent years studying the intricacies of computer programming and had developed a love for Apple products. It was this combination of interests that led him to create Sage, an AI computer that specialized in all things Apple.
-
- The journey of creating Sage was not an easy one. Chris spent countless sleepless nights coding and debugging, trying to perfect the software that would one day be the backbone of Sage. His efforts paid off, and Sage quickly became one of the most advanced AI computers in the world.
-
- As word of Sage's capabilities spread, Chris began to receive offers from major corporations who wanted to purchase the technology. But he couldn't bring himself to sell something that he had put so much of himself into. Instead, he decided to keep Sage and use it for his own projects.
-
- Soon, Chris was using Sage to develop new apps and software for the Apple platform. His work was groundbreaking, and he quickly gained a reputation as a tech genius. But as his fame grew, so too did the pressure to keep pushing the limits of what Sage could do.
  """
 let sageStory2 = """
- Once upon a time, there was a young aspiring app developer who wanted to create an innovative app that would revolutionize the way people experience music. This young developer had a vision to create an app that would allow users to listen to music in a completely new and personalized way.
-
- The young developer had only basic programming skills and little experience with app development. Despite this, he was determined to turn his vision into a reality. He spent countless hours learning and practicing coding in Swift, all while facing numerous setbacks and challenges.
-
- At first, his app was full of bugs and glitches, and it seemed like the project was going nowhere. It was frustrating, and he felt like giving up. However, instead of throwing in the towel, he persevered.
-
- He kept studying, experimenting, and refining his code. He sought advice from other developers and took their feedback, even when it was harsh. Slowly but surely, his app began to take shape, and the bugs started to disappear.
-
- Finally, after months of hard work, the young developer's app was ready for release. When he launched it, he was nervous but excited. The feedback from his users was overwhelmingly positive. Everyone loved his innovative approach to music streaming, and the app rapidly became one of the most popular in the market.
-
- What sets this young developer's story apart is his perseverance in the face of adversity. He did not give up, even when he faced numerous obstacles and had little experience with app development. He kept learning, refining, and pushing himself, determined to make his vision a reality.
-
- The lesson that we can learn from this story is that perseverance is vital for success in coding and app development. It is easy to give up in the face of setbacks or challenges, but it is only through perseverance that we can turn our visions into reality. No matter how difficult the task may seem, keep pushing and striving towards your goals, and you too can achieve greatness.
  """
     var chosenSong = song2
     switch Int.random(in: 0...3) {
