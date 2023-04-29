@@ -66,22 +66,12 @@ struct SettingsView: View {
                         .font(.caption)
 
 
-
                     Text("LoadMode")
                         .fontWeight(.semibold)
                     HStack {
-                        // Rotate avatar BUTTON
                         Button(action: {
                             withAnimation {
-
-                                // iter thru loads mode
                                 updateMode()
-                                // dots
-                                // waves
-                                // bar
-                                // matrix
-                                // none
-
                             }
                         }) {
                             Text(".\(modes[currentModeIndex])")
@@ -94,8 +84,6 @@ struct SettingsView: View {
                         }
                         .padding(.bottom)
                     }
-                    Text("SET LOAD MODE")
-                        .font(.caption)
                 }
                 Button(action: {
                     withAnimation {
@@ -149,14 +137,15 @@ struct SettingsView: View {
         settingsViewModel.multiLineText = "setLoadMode \(modes[currentModeIndex])"
         DispatchQueue.main.async {
 
+            self.settingsViewModel.isInputViewShown = false
+
             // Execute your action here
             screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-            self.settingsViewModel.isInputViewShown = false
-#if !os(macOS)
-
-            consoleManager.isVisible = true
-#endif
+            settingsViewModel.multiLineText = ""
+//#if !os(macOS)
+//
+//            consoleManager.isVisible = true
+//#endif
         }
     }
 }

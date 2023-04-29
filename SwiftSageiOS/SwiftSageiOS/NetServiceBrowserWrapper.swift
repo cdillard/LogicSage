@@ -60,6 +60,6 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
     }
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
-        print("Failed to resolve service (\(sender.name)) with error: \(errorDict)")
+   //     print("Failed to resolve service (\(sender.name)) with error: \(errorDict)")
     }
 }

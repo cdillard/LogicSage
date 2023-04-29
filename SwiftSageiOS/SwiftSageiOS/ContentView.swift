@@ -116,7 +116,7 @@ struct WaveView: View {
 
                         HandleView()
                             .zIndex(2) // Add zIndex to ensure it's above the SageWebView
-                            .offset(x: -12, y: -12) // Adjust the offset values
+                            .offset(x: 0, y: 0) // Adjust the offset values
                         // TODO: RENABLE SOURCE EDITOR GESTURES
                             .gesture(
                                 DragGesture()
@@ -132,43 +132,55 @@ struct WaveView: View {
                             }
 #endif
                     }
+                    HStack {
+                        VStack {
+                            Image("swsLogo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: geometry.size.width * 0.1, height: geometry.size.height * 0.1)
+                                .scaledToFit()
+                                .padding(.top, 5)
+                                .padding(.leading, 5)
+                            Spacer()
 
-                    Image("swsLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-
+                        }
+                        Spacer()
+                    }
                     // HANDLE SOURCE CODE EDITOR
                     if settingsViewModel.isEditorVisible {
 
 #if !os(macOS)
+                        VStack {
+                            SourceCodeTextEditor(text: $theCode)
+                                .scaleEffect(currentScale)
+                                .offset(positionEditor)
 
-                        SourceCodeTextEditor(text: $theCode)
-                            .scaleEffect(currentScale)
-                            .offset(positionEditor)
+                                .gesture(
+                                    MagnificationGesture()
+                                        .onChanged { scaleValue in
+                                            // Update the current scale based on the gesture's scale value
+                                            currentScale = lastScaleValue * scaleValue
+                                        }
+                                        .onEnded { scaleValue in
+                                            // Save the scale value when the gesture ends
+                                            lastScaleValue = currentScale
+                                        }
+                                )
+                                .offset(positionEditor)
+                        }
 
-                            .gesture(
-                                MagnificationGesture()
-                                    .onChanged { scaleValue in
-                                        // Update the current scale based on the gesture's scale value
-                                        currentScale = lastScaleValue * scaleValue
-                                    }
-                                    .onEnded { scaleValue in
-                                        // Save the scale value when the gesture ends
-                                        lastScaleValue = currentScale
-                                    }
-                            )
 #endif
                     }
                 }
-                .offset(positionEditor)
 
                 // HANDLE WEBVIEW
                 if settingsViewModel.showWebView {
 #if !os(macOS)
+                    VStack {
 
-                    SageWebView()
-                    #endif
+                        SageWebView()
+                    }
+#endif
                 }
 
 
@@ -211,8 +223,12 @@ struct WaveView: View {
                     HStack {
                         Button(action: {
 #if !os(macOS)
+                            if consoleManager.isVisible {
+                                consoleManager.isVisible = false
 
-                            consoleManager.isVisible = true
+                            } else {
+                                consoleManager.isVisible = true
+                            }
 
                             settingsViewModel.receivedImage = nil
 #endif

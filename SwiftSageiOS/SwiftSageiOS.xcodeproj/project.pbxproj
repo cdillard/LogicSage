@@ -44,6 +44,7 @@
 		B7191F2E29F9F09A00078D8D /* SourceCodeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1129F9F09A00078D8D /* SourceCodeToken.swift */; };
 		B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1329F9F09A00078D8D /* DefaultSourceCodeTheme.swift */; };
 		B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */; };
+		B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62DE29FCAD3E004296E4 /* Screamer.swift */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
 		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
@@ -123,6 +124,7 @@
 		B7191F1129F9F09A00078D8D /* SourceCodeToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeToken.swift; sourceTree = "<group>"; };
 		B7191F1329F9F09A00078D8D /* DefaultSourceCodeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSourceCodeTheme.swift; sourceTree = "<group>"; };
 		B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextEditor.swift; sourceTree = "<group>"; };
+		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				B75B329029FA0F400049EB55 /* SageWebView.swift */,
 				B75B329429FA16B50049EB55 /* SageTerminal.swift */,
 				B75B329629FA238C0049EB55 /* File.swift */,
+				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
 				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
+				B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,
 				B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */,
 				B7191F1829F9F09A00078D8D /* NSTextView+UIKit.swift in Sources */,

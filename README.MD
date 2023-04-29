@@ -6,7 +6,7 @@
 # SwiftSage: The Ultimate AI Integration for Xcode
 
 
-DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents as I coded it in my sleep.
+DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
 
 SwiftSage is a cutting-edge technology that integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub.
 

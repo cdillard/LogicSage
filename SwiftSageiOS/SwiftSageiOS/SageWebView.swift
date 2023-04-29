@@ -82,8 +82,8 @@ struct WebView: UIViewRepresentable {
 struct HandleView: View {
     var body: some View {
         Circle()
-            .frame(width: 24, height: 24)
-            .foregroundColor(Color.gray.opacity(0.5))
+            .frame(width: 28, height: 28)
+            .foregroundColor(Color.white.opacity(0.75))
     }
 }
 #endif

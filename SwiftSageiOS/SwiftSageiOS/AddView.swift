@@ -32,10 +32,9 @@ struct AddView: View {
 #endif
                             // For all windowzzz...
 
+                    settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
+                    showAddView.toggle()
 
-                            // TODO
-                            settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
-                            // TODO: remove test reset here
 
                 }
                     .font(.largeTitle)

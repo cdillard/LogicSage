@@ -13,6 +13,7 @@ let defaultTerminalFontSize: CGFloat = 12.666
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
     @Published var isInputViewShown = false
+    @Published var commandMode: EntryMode = .commandBar
 
     @AppStorage("savedText") var multiLineText = ""
 

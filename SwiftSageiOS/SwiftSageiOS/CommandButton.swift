@@ -8,22 +8,25 @@
 import Foundation
 import SwiftUI
 
+enum EntryMode {
+    case commandText
+    case commandBar
+}
+
 struct CommandButtonView: View {
     @StateObject var settingsViewModel: SettingsViewModel
     @FocusState var isTextFieldFocused: Bool
 
-    func doExec() {
+    func openText() {
         self.settingsViewModel.isInputViewShown.toggle()
 #if !os(macOS)
 
-        consoleManager.isVisible = !settingsViewModel.isInputViewShown
-        consoleManager.fontSize = settingsViewModel.textSize
+       // consoleManager.isVisible = !settingsViewModel.isInputViewShown
 #endif
     }
 
     var body: some View {
         GeometryReader { geometry in
-            
             VStack {
                 Spacer()
 
@@ -170,18 +173,21 @@ struct CommandButtonView: View {
 
                     // TERM/COMMAND BUTTON
                     Button(action: {
-                        if settingsViewModel.isInputViewShown {
+                        if settingsViewModel.commandMode == .commandText {
                             // Execute your action here
                             screamer.sendCommand(command: settingsViewModel.multiLineText)
 
                             self.settingsViewModel.isInputViewShown = false
+                            settingsViewModel.commandMode = .commandBar
 #if !os(macOS)
-
-                            consoleManager.isVisible = true
-                            #endif
+//                            consoleManager.isVisible = true
+#endif
                         }
                         else {
-                            doExec()
+#if !os(macOS)
+                            consoleManager.isVisible = false
+#endif
+                            openText()
                         }
                     }) {
                         Text(self.settingsViewModel.isInputViewShown ? "DONE" : "COMMAND")
