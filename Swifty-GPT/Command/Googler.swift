@@ -12,9 +12,9 @@ struct SearchResult: Codable {
 }
 
 struct SearchItem: Codable {
-    let title: String
-    let link: String
-    let snippet: String
+    let title: String?
+    let link: String?
+    let snippet: String?
 }
 
 func search(query: String, apiKey: String, searchEngineId: String, completion: @escaping (Result<[SearchItem], Error>) -> Void) {
@@ -62,9 +62,9 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
         switch result {
         case .success(let searchItems):
             for item in searchItems {
-                multiPrinter("Title: \(item.title)")
-                multiPrinter("Link: \(item.link)")
-                multiPrinter("Snippet: \(item.snippet)")
+                multiPrinter("Title: \(item.title ?? "none")")
+                multiPrinter("Link: \(item.link ?? "none")")
+                multiPrinter("Snippet: \(item.snippet ?? "none")")
                 multiPrinter("\n")
             }
 

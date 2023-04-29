@@ -22,7 +22,7 @@ func linkIt(link: String, completion: @escaping (String?) -> Void) {
 }
 
 func linkReq(link: String, completion: @escaping (Result<String, Error>) -> Void) {
-    var urlComponents = URLComponents(string: link)
+    let urlComponents = URLComponents(string: link)
 
     guard let url = urlComponents?.url else {
         completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
@@ -33,7 +33,7 @@ func linkReq(link: String, completion: @escaping (Result<String, Error>) -> Void
     let customSession = URLSession(configuration: configuration)
 
     let urlreq = URLRequest(url: url)
-    let task = try  URLSession.shared.dataTask(with: urlreq) { data, response, error in
+    let task =  URLSession.shared.dataTask(with: urlreq) { data, response, error in
         do {
             if let error = error {
                 completion(.failure(error))
@@ -48,11 +48,7 @@ func linkReq(link: String, completion: @escaping (Result<String, Error>) -> Void
 
             let extractedText = try extractText(from: dataString)
 
-            do {
-                completion(.success(extractedText))
-            } catch {
-                completion(.failure(error))
-            }
+            completion(.success(extractedText))
         }
         catch {
             multiPrinter("failed to link w e=\(error)")

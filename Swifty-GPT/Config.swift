@@ -59,6 +59,7 @@ var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
 // CHOOSE your default voice (if using built in Mac OS voice synthesis)
 let defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
+// COMMENT OUT THE FOLLOWING LINE IF USING CEREPROC VOICES.
 
 // PLIST SETTINGS
 func keyForName(name: String) -> String {
@@ -121,6 +122,7 @@ let triviaEnabledObjc = false
 let voiceOutputEnabled = true
 var voiceInputEnabled = false
 
+// CEREPROC ZONE ///////////////////////////////
 // EXPERIMENTAL AUDIO
 // What YOU don't like the goofy robotic voices built in to Mac OS????
 // DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
@@ -136,34 +138,8 @@ let isabellaVoice = "com.cereproc.tts.CereVoice6_vde"
 let meganVoice = "com.cereproc.tts.CereVoice6_alk"
 let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 // Don't check this in -- Chris
-//var defaultVoice = cereprocVoices.randomElement() //hannahVoice//heatherVoice//carolynVoice//samVoice
-//let cereprocVoices = [
-//    heatherVoice,
-//    hannahVoice,
-//    carolynVoice,
-//    samVoice,
-//    laurenVoice,
-//    isabellaVoice,
-//    meganVoice,
-//    katherineVoice
-//]
-//let cereprocVoicesNames = [
-//    "Heather",
-//    "Hannah",
-//    "Carolyn",
-//    "Sam",
-//    "Lauren",
-//    "Isabella",
-//    "Megan",
-//    "Katherine"
-//]
-//func currentCereprocVoiceName() -> String {
-//    cereprocVoicesNames[cereprocVoices.firstIndex(of: defaultVoice ?? heatherVoice) ?? 0]
-//}
-//func getCereprocVoiceIdentifier(name: String) -> String {
-//    cereprocVoices[cereprocVoicesNames.firstIndex(of: name) ?? 0]
-//
-//}
+// UNCOMMENT THIS LINE AND fill the below arrs with your purchased Cereproc voices.
+// END CEREPROC ZONE ///////////////////////////////
 
 //https://github.com/suno-ai/bark   IN PROGRESS
 let barkVoicesEnabled = false
@@ -186,9 +162,9 @@ enum LogVerbosity {
     case verbose
     case none
 }
-
+// ASCII MOVIES ZONE ///////////////////////////////
 // IF the movie is TOO big/blurry for you and your tastes try manually setting your Sw-S/Xcode console font to 2 or 3 and then  turn movie width up :).
 // We'll need to sync each clients terminal window/s widths to make sure the animations and movies play properly.
 let movieWidth = 95
 let matrixScreenWidth = 100
-
+// END ASCII MOVIES ZONE ///////////////////////////////

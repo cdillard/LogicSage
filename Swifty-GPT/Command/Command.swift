@@ -280,9 +280,34 @@ func ideaFileCommand(input: String) {
         multiPrinter("no IdeaText....")
     }
 }
+var conversational = false
+
+
+// we can use "g end" to stop that particular gpt conversation and exit conversational mode.
 
 func gptCommand(input: String) {
-    manualPromptString = input
+
+    if input == "end" {
+        multiPrinter("Exited conversational mode.")
+
+        conversational = false
+        return
+    }
+
+    if enableGoogle {
+        conversational = true
+
+        manualPromptString = """
+Using the listed tools below, answer the question below "Question to Answer".
+1. Use the google command to find more information or if it requires information past your knowledge cutoff.
+2. The "google: query" query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
+3. The Link url command can be used to get more information by accessing a link. Pass the link: {"command": "Link","name": "www.nytimes.com"}. I will reply with a message containing the text from the link.
+
+Question to Answer:
+"""
+    }
+    manualPromptString += "\n\(input)"
+
     sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
         if !success {
             textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
@@ -297,6 +322,24 @@ func gptCommand(input: String) {
 
         multiPrinter(generatedOpenLine())
         openLinePrintCount += 1
+
+
+        if conversational {
+                  multiPrinter("continue talking to gpt...")
+
+
+                  if content.hasPrefix("google:") {
+                      let split  = content.split(separator: " ", maxSplits: 1)
+
+
+                      if split.count > 1 {
+
+                          multiPrinter("googling...")
+
+                          googleCommand(input: String(split[1]))
+                      }
+                  }
+               }
     }
 }
 
@@ -336,6 +379,7 @@ func showLoadedPrompt(input: String) {
 
 func openProjectCommand(input: String) {
     executeAppleScriptCommand(.openProject(name: projectName)) { success, error in
+        stopRandomSpinner()
         if success {
             multiPrinter("project opened successfully")
         }
@@ -355,7 +399,7 @@ func googleCommand(input: String) {
             multiPrinter("\n🤖 googled \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-            searchResultHeadingGlobal = "\(promptText())\n\(searchResultHeading)\n\(innerContent)"
+            searchResultHeadingGlobal = "\(searchResultHeading)\n\(innerContent)"
 
             if let results = searchResultHeadingGlobal {
                 multiPrinter("give 🤖 search results")
@@ -514,12 +558,6 @@ func setLoadMode(input: String) {
 }
 
 func setVoice(input: String) {
-//    defaultVoice = getCereprocVoiceIdentifier(name: input)
-//    if let defaultVoice = defaultVoice {
-//        multiPrinter("v set to \(input):\(defaultVoice)")
-//    }
-//    else {
-//        multiPrinter("default v failed")
-//
-//    }
+    defaultVoice = getCereprocVoiceIdentifier(name: input)
+    multiPrinter("v set to \(input):\(defaultVoice)")
 }

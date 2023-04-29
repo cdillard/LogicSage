@@ -91,7 +91,11 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         // This could be used for all sorts of things like making voies not overlap
         if !hasInitializedVoiceSynth {
+
+            // If using cereproc vs built in
+            // COMMENT THIS OUT, DO NOT CHECK IN - CHRIS
             // multiPrinter("v: \(currentCereprocVoiceName())")
+
             hasInitializedVoiceSynth = true
         }
     }
