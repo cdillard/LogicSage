@@ -558,6 +558,6 @@ func setLoadMode(input: String) {
 }
 
 func setVoice(input: String) {
-    defaultVoice = getCereprocVoiceIdentifier(name: input)
-    multiPrinter("v set to \(input):\(defaultVoice)")
+//    defaultVoice = getCereprocVoiceIdentifier(name: input)
+//    multiPrinter("v set to \(input):\(defaultVoice)")
 }
