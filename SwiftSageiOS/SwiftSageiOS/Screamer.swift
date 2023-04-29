@@ -35,10 +35,16 @@ class ScreamClient: WebSocketDelegate {
             startPingTimer()
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
+#if !os(macOS)
             consoleManager.print("WebSocket disconnected: reason: \(reason), code: \(code)")
+#endif
+
             stopPingTimer()
             DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+#if !os(macOS)
+
                 consoleManager.print("Reconnecting...")
+#endif
                 self.connect()
             }
         case .text(let text):

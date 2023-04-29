@@ -134,6 +134,8 @@ struct CommandButtonView: View {
                             screamer.sendCommand(command: settingsViewModel.multiLineText)
 
                             self.settingsViewModel.isInputViewShown = false
+
+                            settingsViewModel.multiLineText = ""
 #if !os(macOS)
 
                             consoleManager.isVisible = true

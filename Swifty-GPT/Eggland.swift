@@ -85,23 +85,13 @@ And the best part? Max didn't just create this incredible software for Windows o
 
 """
 let sageStory = """
- Chris Dillard was a computer scientist who had always been fascinated by the world of artificial intelligence. He had spent years studying the intricacies of computer programming and had developed a love for Apple products. It was this combination of interests that led him to create Sage, an AI computer that specialized in all things Apple.
+ Chris  was a computer scientist who had always been fascinated by the world of artificial intelligence. He had spent years studying the intricacies of computer programming and had developed a love for Apple products. It was this combination of interests that led him to create Sage, an AI computer that specialized in all things Apple.
 
  The journey of creating Sage was not an easy one. Chris spent countless sleepless nights coding and debugging, trying to perfect the software that would one day be the backbone of Sage. His efforts paid off, and Sage quickly became one of the most advanced AI computers in the world.
 
  As word of Sage's capabilities spread, Chris began to receive offers from major corporations who wanted to purchase the technology. But he couldn't bring himself to sell something that he had put so much of himself into. Instead, he decided to keep Sage and use it for his own projects.
 
  Soon, Chris was using Sage to develop new apps and software for the Apple platform. His work was groundbreaking, and he quickly gained a reputation as a tech genius. But as his fame grew, so too did the pressure to keep pushing the limits of what Sage could do.
-
- Chris soon found himself working around the clock, never taking time off, and pushing himself to the brink of exhaustion. He was so focused on his work that he didn't even notice that he had stopped spending time with his family and friends.
-
- It wasn't until he suffered a massive heart attack that Chris realized the toll that his obsession had taken on his life. He spent weeks in the hospital recovering, and during that time, he had plenty of time to reflect on what had gone wrong.
-
- When he was finally released from the hospital, Chris made a decision to take his life in a new direction. He scaled back his work and began to focus on balancing his personal life with his professional one. He started spending more time with his family and friends, and even began to take up new hobbies.
-
- As for Sage, Chris handed over control of the AI computer to a team of experts, who continued to develop and improve the technology. Sage became a staple in the world of Apple products, powering everything from mobile apps to desktop software.
-
- In the end, Chris learned an important lesson about the dangers of obsession and the importance of finding balance in life. And with Sage by his side, he continued to push the limits of what was possible in the world of technology – but this time, with a renewed sense of purpose and perspective.
  """
 
 
