@@ -8,7 +8,20 @@
 import Foundation
 import SwiftUI
 
+
+let cereprocVoicesNames = [
+    "Heather",
+    "Hannah",
+    "Carolyn",
+    "Sam",
+    "Lauren",
+    "Isabella",
+    "Megan",
+    "Katherine"
+]
+
 struct SettingsView: View {
+    @State private var selection: String?
     @Binding var showSettings: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
@@ -102,6 +115,12 @@ struct SettingsView: View {
                 }
                 .padding(.bottom)
 
+             
+                List(cereprocVoicesNames, id: \.self, selection: $selection) { name in
+                    Text(name)
+                        .frame(height: 30)
+                }
+                .frame(height: CGFloat(cereprocVoicesNames.count * 40))
 
                 Spacer()
 

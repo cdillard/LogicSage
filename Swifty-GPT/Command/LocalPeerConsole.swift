@@ -53,7 +53,7 @@ class WebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
-            client.write(string: "Hello from CMD LINE app!")
+            client.write(string: "hello from Sw-S")
 
             startPingTimer()
         case .disconnected(let reason, let code):

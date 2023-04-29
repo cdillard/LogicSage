@@ -1,4 +1,3 @@
-![SwiftSage](Swifty-GPT/assets/swslogostack.png)
 ## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
 ### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com), THANK YOU!
 ![instruct](Swifty-GPT/assets/instruct.png)
@@ -220,7 +219,6 @@ vapor run
 MAC SAGE or SwiftSageForiOSForMac
 
 I've included a mac OS app you can use for prompting, since the Xcode terminal is a bit rough.
-![Sage](Swifty-GPT/assets/SwiftSageiOSforMac.png)
 
 
 ## Troubleshooting
@@ -285,17 +283,6 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
-
-![iPad](Swifty-GPT/assets/Shiwfty_iPad2.png)
-
-![SchwiftySage](Swifty-GPT/assets/command.png)
-
-![Debate](Swifty-GPT/assets/Debate.png)
-
-
-![Sage](Swifty-GPT/assets/sage.PNG)
-![Sage2](Swifty-GPT/assets/sage2.PNG)
-![Alien](Swifty-GPT/assets/alien.PNG)
 
 
 ---

@@ -513,3 +513,13 @@ func setLoadMode(input: String) {
     multiPrinter("set load mode to \(input)")
 }
 
+func setVoice(input: String) {
+//    defaultVoice = getCereprocVoiceIdentifier(name: input)
+//    if let defaultVoice = defaultVoice {
+//        multiPrinter("v set to \(input):\(defaultVoice)")
+//    }
+//    else {
+//        multiPrinter("default v failed")
+//
+//    }
+}

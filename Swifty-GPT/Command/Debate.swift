@@ -6,12 +6,14 @@
 //
 
 import Foundation
-
 var depthLimit = 6 // turn it up too
-let personalityA = alexVoice // male voice
-let personalityB = allisonVoice // female voice
-let personAsName = "Alex"
-let personBsName = "Allison"
+
+
+// UNDO THIS BEFORTE CHECKING IN
+//let personalityA = alexVoice // male voice
+//let personalityB = allisonVoice // female voice
+//let personAsName = "Alex"
+//let personBsName = "Allison"
 
 
 // DO NOT CHECK IN THE CEREPROC STUF, those nice voices aren't strictly eneded for this.
@@ -29,7 +31,10 @@ let personBsName = "Allison"
 //let personalityB = hannahVoice
 //let personAsName = "Sam"
 //let personBsName = "Hannah"
-
+let personalityA = laurenVoice
+let personalityB = samVoice
+let personAsName = "Lauren"
+let personBsName = "Sam"
 
 //  let defaultVoice = carolynVoice//hannahVoice//heatherVoice//carolynVoice//samVoice
 

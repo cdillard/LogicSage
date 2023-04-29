@@ -134,10 +134,13 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
             multiPrinter("Response non nil, another generation...")
 
             parseAndExecuteGPTOutput(response, errors) { success, errors in
+
+                stopRandomSpinner()
+
                 if success {
                     multiPrinter("Parsed and executed code successfully. Opening project...")
 
-                    textToSpeech(text: "Opening project...")
+                    //textToSpeech(text: "Opening project...")
 
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
                         if success {

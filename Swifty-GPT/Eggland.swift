@@ -49,27 +49,7 @@ Despite his success, Chris remained humble and never stopped learning. He contin
 In conclusion, Chris may have been young, but he was wise beyond his years. His creation, the Chris CLI, changed the world of coding and became an essential tool for many developers worldwide. Chris's dedication, hard work, and passion were the keys to his success, and he remained an inspiration to many aspiring coders for generations to come.
 """
     let song3 = """
- In the year 2050, the world had become a vast network of interconnected virtual realities. People spent most of their time in these virtual environments, participating in various activities and pursuing their interests. Among these virtual environments were some of the most immersive ones, where people could experience vast open landscapes.
-
- However, there was a problem. The creation of these virtual landscapes was a time-consuming process, and it required a lot of resources. The traditional way of creating virtual landscapes involved manually placing every blade of grass, every tree, and every rock individually, which was not only tedious but also lacked the realism that people craved.
-
- But everything changed when a small team of developers at a startup company called "ProGen" developed a revolutionary new technology that could procedurally generate realistic landscapes in seconds.
-
- The technology used advanced algorithms that could analyze real-world topography, climate data, and other environmental factors to create highly realistic and detailed environments. It could also incorporate various features such as lakes, rivers, and mountains based on the data fed into the system.
-
- The initial release of the technology was a massive hit, and the virtual landscape market exploded overnight. It was not long before the technology was adapted for various other applications, such as game development, education, and even urban planning.
-
- As the technology continued to evolve, developers at ProGen continued to tweak and improve the algorithms, adding new features and improving the overall realism of the generated environments. The landscapes not only appeared highly realistic but were also highly adaptable to changes, further expanding their potential uses.
-
- The most significant impact of this technology was on the gaming industry, where developers could now create expansive and highly detailed game worlds in a fraction of the time it took earlier. Gamers could now experience vast open worlds that were almost indistinguishable from reality.
-
- The technology even found its way into the film industry where it simplified the creation of realistic backgrounds and even entire environments.  Hollywood studios who relied on expensive movie sets could now create more realistic on-screen landscapes for a fraction of the cost.
-
- The future looked bright for ProGen and its team, and soon they became one of the most influential tech companies in the world. However, as the technology continued to evolve, some began to worry about the ethical implications of creating vast simulated environments that could potentially replace the real world.
-
- But for the moment, people were content exploring and experiencing the vast virtual environments created by ProGen, and the future of landscape creation seemed brighter than ever before.
-
-Story 2: Once upon a time, there was a cool dude named Max. Max was a brilliant programmer who always loved to tinker with new ideas and inventions. One day, he had an idea that would change everything in the programming world.
+Once upon a time, there was a cool dude named Max. Max was a brilliant programmer who always loved to tinker with new ideas and inventions. One day, he had an idea that would change everything in the programming world.
 
 Max had seen many programming languages and tools out there, but they all had limitations. He wanted to create a programming language that would allow programmers to create anything they could imagine. Max spent countless hours researching and experimenting until he finally invented a new programming language, which he called SwiftSage.
 
@@ -93,9 +73,6 @@ let sageStory = """
 
  Soon, Chris was using Sage to develop new apps and software for the Apple platform. His work was groundbreaking, and he quickly gained a reputation as a tech genius. But as his fame grew, so too did the pressure to keep pushing the limits of what Sage could do.
  """
-
-
-
 let sageStory2 = """
  Once upon a time, there was a young aspiring app developer who wanted to create an innovative app that would revolutionize the way people experience music. This young developer had a vision to create an app that would allow users to listen to music in a completely new and personalized way.
 

@@ -646,6 +646,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     }
     /// Print items to the console view.
     public func print(_ items: Any) {
+        
         var dotMsg = false
         if let singleString = items as? String {
 
@@ -668,20 +669,31 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
                 return currentText + "\n\(items)"
             }
         }()
-        
+
         // Cut down string if it exceeds 50,000 characters to keep text view running smoothly.
         if _currentText.count > STRING_LIMIT && !isCharacterLimitDisabled {
-            
+
             if !hasShortened && !isCharacterLimitWarningDisabled {
                 hasShortened = true
                 Swift.print("LocalConsole's content has exceeded 50,000 characters.\nTo maintain performance, LCManager cuts down the beginning of the printed content. To disable this behaviour, set LCManager.shared.isCharacterLimitDisabled to true.\nTo disable this warning, set LCManager.shared.isCharacterLimitWarningDisabled = true.")
-                
+
             }
-            
+
             let shortenedString = String(_currentText.suffix(STRING_LIMIT))
             currentText = shortenedString.stringAfterFirstOccurenceOf(delimiter: "\n") ?? shortenedString
         } else {
             currentText = _currentText
+        }
+        if let singleString = items as? String {
+            if singleString == "." {
+                return
+            }
+
+
+        }
+        DispatchQueue.main.async {
+            let bottomOffset = CGPoint(x: 0, y: self.consoleTextView.contentSize.height - self.consoleTextView.bounds.size.height)
+            self.consoleTextView.setContentOffset(bottomOffset, animated: true)
         }
     }
     

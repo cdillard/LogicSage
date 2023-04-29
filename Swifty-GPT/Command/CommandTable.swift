@@ -60,6 +60,10 @@ var commandTable: [String: (String) -> Void] = [
     "debates": debatesCommand,
 
     "setLoadMode": setLoadMode,
+    "setVoice": setVoice,
+
+
+
     "therapy": therapyCommand,
 
     "delete": deleteCommand,

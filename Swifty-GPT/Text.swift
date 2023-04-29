@@ -50,7 +50,7 @@ func generatedOpenLine(overrideV: Bool = false) -> String {
     let openLine = """
     \(openLinePrintCount == 0 ? "\(randomAscii())" : "")
     \((logV == .verbose && overrideV) ? commandsText() : "")
-    🔍 g: talk to gpt, i: app idea [(c) - list all commands, ...]:
+    🔍:
     """
     return openLine
 }

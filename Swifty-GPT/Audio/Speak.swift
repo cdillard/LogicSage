@@ -91,7 +91,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
     internal func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         // This could be used for all sorts of things like making voies not overlap
         if !hasInitializedVoiceSynth {
-            multiPrinter("initialized voice synthesis...")
+            // multiPrinter("v: \(currentCereprocVoiceName())")
             hasInitializedVoiceSynth = true
         }
     }
@@ -103,7 +103,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
 
             if !skipLog {
                 multiPrinter("say: " + text)
-                multiPrinter("Initializing vocalization l=\(text.count)...")
+                multiPrinter("🗣️=\(text.count)...")
             }
 
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate
@@ -168,7 +168,7 @@ public extension Date {
 @discardableResult
 func textToSpeech(text: String, overrideVoice: String? = nil, overrideWpm: String? = nil, skipLog: Bool = false) -> TimeInterval {
 
-    let useVoice = overrideVoice ?? defaultVoice
+    let useVoice = overrideVoice ?? defaultVoice ?? sageVoice
     let useWpm = Int(overrideWpm ?? "") ?? 200
     return shared.speakText(text,  useVoice,  useWpm, skipLog: skipLog)
 }

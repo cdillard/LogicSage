@@ -73,7 +73,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             projectName = preprocessStringForFilename(projectName)
 
 
-            textToSpeech(text: "Create project " + projectName + ".")
+            //textToSpeech(text: "Create project " + projectName + ".")
 
             executeXcodeCommand(.createProject(name: projectName)) { success, errors in
 
@@ -225,7 +225,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
 func buildIt(completion: @escaping (Bool, [String]) -> Void) {
     multiPrinter("Building project...")
-    textToSpeech(text: "Building project \(projectName)...")
+    //textToSpeech(text: "Building project \(projectName)...")
 
     startRandomSpinner()
     executeXcodeCommand(.buildProject(name: projectName)) { success, errors in

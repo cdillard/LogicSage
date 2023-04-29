@@ -80,8 +80,18 @@ class ScreamClient: WebSocketDelegate {
 #endif
         case .viabilityChanged(let isViable):
             print("Connection viability changed: \(isViable)")
+#if !os(macOS)
+
+            consoleManager.print("Connection viability changed: \(isViable)")
+#endif
+
         case .reconnectSuggested(let shouldReconnect):
             print("Reconnect suggested: \(shouldReconnect)")
+#if !os(macOS)
+
+            consoleManager.print("Reconnect suggested: \(shouldReconnect)")
+#endif
+
             if shouldReconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
                     print("Reconnecting...")
@@ -92,9 +102,19 @@ class ScreamClient: WebSocketDelegate {
             }
         case .cancelled:
             print("WebSocket cancelled")
+#if !os(macOS)
+
+            consoleManager.print("WebSocket cancelled")
+#endif
         case .error(let error):
+
+#if !os(macOS)
+
+            consoleManager.print("Error: \(error?.localizedDescription ?? "Unknown error")")
+#endif
             print("Error: \(error?.localizedDescription ?? "Unknown error")")
             isConnected = false
+            disconnect()
         }
     }
 

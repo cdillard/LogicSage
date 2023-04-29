@@ -14,7 +14,6 @@ let STRING_LIMIT = 50000
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel()
     @StateObject private var appState = AppState()
-    var serviceDiscovery: ServiceDiscovery?
     init() {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
@@ -47,21 +46,8 @@ struct SwiftSageiOSApp: App {
 //        cmdWindows.append(LCManager())
 //        //Iota
 //        cmdWindows.append(LCManager())
-////        Kappa
-//        Lambda
-//        Mu
-//        Nu
-//        Xi
-//        Omicron
-//        Pi
-//        Rho
-//        Sigma
-//        Tau
-//        Upsilon
-//        Phi
-//        Chi
-//        Psi
-//        Omega
+////        Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho
+//        Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
     }
     @State private var showInstructions: Bool = !hasSeenInstructions()
     var body: some Scene {
@@ -87,6 +73,8 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery?.startDiscovering()
     }
 }
+
+var serviceDiscovery: ServiceDiscovery?
 
 func setHasSeenInstructions(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
@@ -123,17 +111,12 @@ class AppState: ObservableObject {
             .merge(with: willEnterForeground)
             .sink { [weak self] in
                 self?.isInBackground = $0
-                // SHOULD RECONNECT????????
-//                if !(self?.isInBackground ?? false) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-                        if firstBackground {
-                            consoleManager.print("Reconnecting... but you should probably reboot app for now, he's working on it...")
-                        }
-                        //screamer.connect()
-                        firstBackground = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+                    if firstBackground {
+                        serviceDiscovery?.startDiscovering()
                     }
-                    
-//                }
+                    firstBackground = true
+                }
             }
             .store(in: &cancellables)
 #endif
