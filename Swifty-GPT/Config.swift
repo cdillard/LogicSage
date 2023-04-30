@@ -119,7 +119,7 @@ var asciAnimations = loadMode == .matrix
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false
 
-let voiceOutputEnabled = true
+let voiceOutputEnabled = false
 var voiceInputEnabled = false
 
 // CEREPROC ZONE ///////////////////////////////

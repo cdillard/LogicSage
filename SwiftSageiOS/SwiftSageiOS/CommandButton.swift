@@ -62,7 +62,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding()
+                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
@@ -89,7 +89,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding()
+                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
@@ -103,7 +103,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding()
+                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
 
@@ -121,7 +121,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding()
+                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
@@ -174,7 +174,7 @@ struct CommandButtonView: View {
                             .font(.caption)
                             .lineLimit(nil)
                             .foregroundColor(Color.white)
-                            .padding()
+                            .padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
@@ -203,7 +203,7 @@ struct CommandButtonView: View {
                             .font(.caption)
                             .lineLimit(nil)
                             .foregroundColor(Color.white)
-                            .padding()
+                            .padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }

@@ -9,7 +9,7 @@ import Foundation
 
 func linkIt(link: String, completion: @escaping (String?) -> Void) {
     multiPrinter("Linking it... \(link)")
-         linkReq(link: link) { result in
+    linkReq(linkString: link) { result in
             switch result {
             case .success(let text):
 
@@ -21,8 +21,9 @@ func linkIt(link: String, completion: @escaping (String?) -> Void) {
         }
 }
 
-func linkReq(link: String, completion: @escaping (Result<String, Error>) -> Void) {
-    let urlComponents = URLComponents(string: link)
+func linkReq(linkString: String, completion: @escaping (Result<String, Error>) -> Void) {
+    let string2 = linkString.replacingOccurrences(of: "\\", with: "")
+    let urlComponents = URLComponents(string: string2)
 
     guard let url = urlComponents?.url else {
         completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))

@@ -14,92 +14,102 @@ struct AddView: View {
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Button("New File") {
-                    print("mnew File")
-                    print("mnew File")
-
-
+        GeometryReader { geometry in
+            
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Button("New File") {
+                        print("mnew File")
+                        print("mnew File")
+                        
+                        
 #if !os(macOS)
-
-                            if settingsViewModel.isEditorVisible {
-                                consoleManager.isVisible = true
-                            } else {
-                                consoleManager.isVisible = false
-
-                            }
+                        
+                        if consoleManager.isVisible {
+                            consoleManager.isVisible = false
+                        }
 #endif
-                            // For all windowzzz...
-
-                    settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
-                    showAddView.toggle()
-
-
-                }
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom)
-                // TODO: HOOK UP TO NEW TERMINAL
-//                Button("New Window") {
-//                    print("mnew window")
-//                    showAddView.toggle()
-//
-//                  //  windowIndex += 1
-//#if !os(macOS)
-//
-////                    switch windowIndex {
-////                    case 1: LCManager.shared2.isVisible.toggle()
-////                    case 2: LCManager.shared3.isVisible.toggle()
-////
-////                    case 3: LCManager.shared4.isVisible.toggle()
-////
-////                    case 4: LCManager.shared5.isVisible.toggle()
-////
-////                    case 5: LCManager.shared6.isVisible.toggle()
-////                    default: break
-//
-////                    }
-//#endif
-//                }
-//                    .font(.largeTitle)
-//                    .fontWeight(.bold)
-//                    .padding(.bottom)
-
-
-                Button("New Webview") {
-                    print("mnew Webview")
-                    showAddView.toggle()
-                    settingsViewModel.showWebView = true
-                }
-                .font(.caption)
-                .lineLimit(nil)
-                    .fontWeight(.bold)
-                    .padding(.bottom)
-                Button(action: {
-                    withAnimation {
+                        // For all windowzzz...
+                        
+                        settingsViewModel.isEditorVisible = !settingsViewModel.isEditorVisible
                         showAddView.toggle()
+                        
+                        
                     }
-                }) {
-                    Text("Close")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 12)
-                        .background(settingsViewModel.buttonColor)
-                        .cornerRadius(8)
-                }
-                .padding(.bottom)
-            }
-            .padding()
+                    .font(.caption)
+                    .lineLimit(nil)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
+                    // TODO: HOOK UP TO NEW TERMINAL
+                    //                Button("New Window") {
+                    //                    print("mnew window")
+                    //                    showAddView.toggle()
+                    //
+                    //                  //  windowIndex += 1
+                    //#if !os(macOS)
+                    //
+                    ////                    switch windowIndex {
+                    ////                    case 1: LCManager.shared2.isVisible.toggle()
+                    ////                    case 2: LCManager.shared3.isVisible.toggle()
+                    ////
+                    ////                    case 3: LCManager.shared4.isVisible.toggle()
+                    ////
+                    ////                    case 4: LCManager.shared5.isVisible.toggle()
+                    ////
+                    ////                    case 5: LCManager.shared6.isVisible.toggle()
+                    ////                    default: break
+                    //
+                    ////                    }
+                    //#endif
+                    //                }
+                    //                    .font(.largeTitle)
+                    //                    .fontWeight(.bold)
+                    //                    .padding(.bottom)
+                    
+                    
+                    Button("New Webview") {
 #if !os(macOS)
-
-            .background(Color(.systemBackground))
-#else
-            .background(Color(.black))
+                        
+                        if consoleManager.isVisible {
+                            consoleManager.isVisible = false
+                        }
 #endif
-            .cornerRadius(16)
+                        
+                        print("mnew Webview")
+                        showAddView.toggle()
+                        settingsViewModel.showWebView = true
+                    }
+                    .font(.caption)
+                    .lineLimit(nil)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
+                    Button(action: {
+                        withAnimation {
+                            showAddView.toggle()
+                        }
+                    }) {
+                        Text("Close")
+                            .font(.caption)
+                            .lineLimit(nil)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 40)
+                            .padding(.vertical, 12)
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(8)
+                    }
+                    .padding(.bottom)
+                }
+                .padding(geometry.size.width * 0.01)
+#if !os(macOS)
+                
+                .background(Color(.systemBackground))
+#else
+                .background(Color(.black))
+#endif
+                .cornerRadius(16)
+            }
+            .scrollIndicators(.visible)
         }
-        .scrollIndicators(.visible)
     }
 }

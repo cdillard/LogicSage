@@ -31,28 +31,20 @@ func encourageCommand(input: String) {
 10. Believe in your dreams - they can become a reality.
 """
 
-    let song2 = """
-"""
-    let song3 = """
-"""
-let sageStory = """
- """
-let sageStory2 = """
- """
-    var chosenSong = song2
+    var chosenSong = il
     switch Int.random(in: 0...3) {
     case 0:
-        chosenSong = song2
+        chosenSong = il
     case 1:
         chosenSong = il
     case 2:
-        chosenSong = song3
+        chosenSong = il
     case 3:
-        chosenSong = sageStory
+        chosenSong = il
     case 4:
-        chosenSong = sageStory2
+        chosenSong = il
     default:
-        chosenSong = song2
+        chosenSong = il
     }
 
     textToSpeech(text: chosenSong)

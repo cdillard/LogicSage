@@ -290,9 +290,22 @@ var conversational = false
 
 
 // we can use "g end" to stop that particular gpt conversation and exit conversational mode.
-
 func gptCommand(input: String) {
+    gptCommand(input: input, useGoogle: true, useLink: true, qPrompt: true)
+}
 
+func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
+
+
+
+    let googleTextSegment = """
+        1. Use the google command to find more information or if it requires information past your knowledge cutoff.
+        2. The "google: query" query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
+"""
+
+    let linkTextSegment = """
+3. The Link url command can be used to get more information by accessing a link. Pass the link: {"command": "Link","name": "www.nytimes.com"}. I will reply with a message containing the text from the link.
+"""
     if input == "end" {
         multiPrinter("Exited conversational mode.")
 
@@ -304,21 +317,26 @@ func gptCommand(input: String) {
     // conversational mode
     multiPrinter("Entered conversational mode! `g end` to reset")
 
-    if enableGoogle {
+    if enableGoogle && useGoogle {
         conversational = true
-
-        manualPromptString = """
+        manualPromptString += """
 Using the listed tools below, answer the question below "Question to Answer".
-1. Use the google command to find more information or if it requires information past your knowledge cutoff.
-2. The "google: query" query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
-3. The Link url command can be used to get more information by accessing a link. Pass the link: {"command": "Link","name": "www.nytimes.com"}. I will reply with a message containing the text from the link.
+"""
+        if !manualPromptString.contains(googleTextSegment) {
+            manualPromptString += !useGoogle ? "" : googleTextSegment
+        }
+    }
+    if !manualPromptString.contains(linkTextSegment) {
 
+        manualPromptString += !useLink ? "" : linkTextSegment
+    }
+    manualPromptString += !qPrompt ? "" : """
 Question to Answer:
 """
-    }
     manualPromptString += "\n\(input)"
 
     sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
+
         if !success {
             textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
             return
@@ -347,6 +365,11 @@ Question to Answer:
                           multiPrinter("googling...")
 
                           googleCommand(input: String(split[1]))
+
+                          if conversational {
+                             // multiPrinter("Exited conversational mode.")
+                              conversational = false
+                          }
                       }
                   }
                }
@@ -414,7 +437,13 @@ func googleCommand(input: String) {
             if let results = searchResultHeadingGlobal {
                 multiPrinter("give 🤖 search results")
 
-                doPrompting(overridePrompt: results)
+//                doPrompting(overridePrompt: results)
+
+                // SHOULD LINK??? no we wait for GPT to link...
+
+
+                gptCommand(input: results, useGoogle: false, useLink: true)
+
                 return
             }
             else {
@@ -483,26 +512,29 @@ func commandsCommand(input: String) {
 }
 
 func linkCommand(input: String) {
+    multiPrinter("\n🤖 attempt to link to  content for GPT... \(input))")
+
     linkIt(link: input) { innerContent in
         if let innerContent = innerContent {
 
-            multiPrinter("\n🤖 attempt to link to  content for GPT... \(input): \(innerContent)")
+            multiPrinter("\n🤖 attempt to link to link innner content content for GPT... \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
             linkResultGlobal = "link: \(input)\ncontent: \(innerContent)"
 
             if let results = linkResultGlobal {
-                multiPrinter("give 🤖 search results")
+                multiPrinter("give 🤖 LINK IT results")
 
-                doPrompting(overridePrompt: results)
+                gptCommand(input: results)
+               // doPrompting(overridePrompt: results)
                 return
             }
             else {
-                multiPrinter("FAILED to give results")
+                multiPrinter("FAILED to give  LINK IT results")
             }
         }
         else {
-            multiPrinter("failed to get search results.")
+            multiPrinter("failed to get LINK IT  results.")
         }
     }
 }

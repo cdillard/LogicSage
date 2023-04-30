@@ -251,7 +251,7 @@ struct SettingsView: View {
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
-                .padding()
+                .padding(geometry.size.width * 0.01)
 #if !os(macOS)
 
                 .background(Color(.systemBackground))
