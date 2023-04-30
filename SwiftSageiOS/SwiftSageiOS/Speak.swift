@@ -1,0 +1,47 @@
+//
+//  Speak.swift
+//  SwiftSageiOS
+//
+//  Created by Chris Dillard on 4/29/23.
+//
+
+import Foundation
+import AVFoundation
+let speechSynthesizer = AVSpeechSynthesizer()
+
+
+func speak(_ text: String) {
+    if !SettingsViewModel.shared.voiceOutputenabled {
+        print("DONT say: \(text)")
+        //consoleManager.print("say: \(text)")
+        return
+    }
+    let speechUtterance = AVSpeechUtterance(string: text)
+
+#if !targetEnvironment(simulator)
+
+    speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
+
+   // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+#endif
+    // Optional: Set properties like voice, pitch, rate, or volume if desired
+    // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+    // speechUtterance.pitchMultiplier = 1.0
+    // speechUtterance.rate = 0.5
+    // speechUtterance.volume = 0.8
+
+    speechSynthesizer.speak(speechUtterance)
+}
+
+func configureAudioSession() {
+#if !os(macOS)
+
+    let audioSession = AVAudioSession.sharedInstance()
+    do {
+        try audioSession.setCategory(.playback, mode: .spokenAudio, options: [])
+        try audioSession.setActive(true, options: [])
+    } catch {
+        print("Failed to configure audio session: \(error.localizedDescription)")
+    }
+#endif
+}

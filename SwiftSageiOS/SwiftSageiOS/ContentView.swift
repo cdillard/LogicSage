@@ -19,6 +19,9 @@ let consoleManager = LCManager.shared//cmdWindows[0]
 
 #endif
 
+let maxButtonSize: CGFloat = 20
+
+
 struct ContentView: View {
     @State private var showSettings = false
     @State private var isLabelVisible: Bool = true
@@ -116,8 +119,7 @@ struct WaveView: View {
 
                         HandleView()
                             .zIndex(2) // Add zIndex to ensure it's above the SageWebView
-                            .offset(x: 0, y: 0) // Adjust the offset values
-                        // TODO: RENABLE SOURCE EDITOR GESTURES
+                            .offset(x: -12, y: -12) // Adjust the offset values
                             .gesture(
                                 DragGesture()
                                     .onChanged { value in
@@ -305,7 +307,6 @@ struct WaveView: View {
 
         }
     }
-    let maxButtonSize: CGFloat = 20
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)

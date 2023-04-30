@@ -18,6 +18,7 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
 
+        configureAudioSession()
 #if !os(macOS)
 //        if !hasSeenInstructions() {
 //            print("openning console after instr")

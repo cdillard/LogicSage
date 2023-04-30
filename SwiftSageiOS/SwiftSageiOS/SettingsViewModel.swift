@@ -16,7 +16,7 @@ class SettingsViewModel: ObservableObject {
     @Published var commandMode: EntryMode = .commandBar
 
     @AppStorage("savedText") var multiLineText = ""
-
+    @Published var voiceOutputenabled = false
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {

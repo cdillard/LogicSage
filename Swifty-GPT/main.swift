@@ -143,6 +143,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                     //textToSpeech(text: "Opening project...")
 
                     executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
+                        stopRandomSpinner()
                         if success {
                             multiPrinter("opened successfully")
                         }

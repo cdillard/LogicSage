@@ -49,8 +49,22 @@ class ScreamClient: WebSocketDelegate {
             }
         case .text(let text):
 #if !os(macOS)
-
-            consoleManager.print(text)
+            DispatchQueue.main.async {
+                
+                consoleManager.print(text)
+                
+                if text.hasPrefix("say:") {
+                    let arr = text.split(separator: ": ", maxSplits: 1)
+                    if arr.count > 1 {
+                        print("speaking...")
+                        let speech = String(arr[1])
+                        speak(speech)
+                    }
+                    else {
+                        print("failed")
+                    }
+                }
+            }
 #endif
         case .binary(let data):
 #if !os(macOS)
@@ -67,25 +81,34 @@ class ScreamClient: WebSocketDelegate {
             }
 #endif
         case .ping:
-            print("websocket received ping")
+            DispatchQueue.main.async {
+
+                print("websocket received ping")
 #if !os(macOS)
 
-            consoleManager.print("websocket received ping")
+                consoleManager.print("websocket received ping")
 #endif
+            }
         case .pong:
-            print("websocket received pong")
+            DispatchQueue.main.async {
+
+                print("websocket received pong")
 #if !os(macOS)
 
-            consoleManager.print("websocket received pong")
+                consoleManager.print("websocket received pong")
 #endif
+            }
         case .viabilityChanged(let isViable):
-            print("Connection viability changed: \(isViable)")
+            DispatchQueue.main.async {
+
+                print("Connection viability changed: \(isViable)")
 #if !os(macOS)
 
-            consoleManager.print("Connection viability changed: \(isViable)")
+                consoleManager.print("Connection viability changed: \(isViable)")
 #endif
-
+            }
         case .reconnectSuggested(let shouldReconnect):
+            
             print("Reconnect suggested: \(shouldReconnect)")
 #if !os(macOS)
 
@@ -151,6 +174,7 @@ class ScreamClient: WebSocketDelegate {
 #if !os(macOS)
             consoleManager.print("Opening ContentView.swift...")
 #endif
+            return
             return
         default:
             break
