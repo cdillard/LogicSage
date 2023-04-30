@@ -17,6 +17,7 @@ class ScreamClient: WebSocketDelegate {
     var websocket: WebSocket!
     var pingTimer: Timer?
     public private(set) var isConnected = false
+    public private(set) var isViable = false
 
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
@@ -38,7 +39,7 @@ class ScreamClient: WebSocketDelegate {
 #if !os(macOS)
             consoleManager.print("WebSocket disconnected: reason: \(reason), code: \(code)")
 #endif
-
+            isConnected = false
             stopPingTimer()
             DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
 #if !os(macOS)
@@ -106,6 +107,8 @@ class ScreamClient: WebSocketDelegate {
 
                 consoleManager.print("Connection viability changed: \(isViable)")
 #endif
+                self.isViable = isViable
+
             }
         case .reconnectSuggested(let shouldReconnect):
             
@@ -158,7 +161,15 @@ class ScreamClient: WebSocketDelegate {
         websocket.connect()
     }
     func connect() {
-        websocket.connect()
+        if isViable && websocket != nil {
+            websocket.connect()
+        }
+        else {
+            print("Attept to connect non-viable connection - failing.")
+#if !os(macOS)
+            consoleManager.print("Attept to connect non-viable connection - failing.")
+#endif
+        }
 
     }
     func sendCommand(command: String) {
@@ -175,12 +186,18 @@ class ScreamClient: WebSocketDelegate {
             consoleManager.print("Opening ContentView.swift...")
 #endif
             return
-            return
+        case "st":
+            print("client stop")
+#if !os(macOS)
+            consoleManager.print("client stop.")
+#endif
+            stopVoice()
         default:
             break
         }
-
-        websocket.write(string:command)
+        if websocket != nil {
+            websocket.write(string:command)
+        }
     }
 
     func sendPing() {

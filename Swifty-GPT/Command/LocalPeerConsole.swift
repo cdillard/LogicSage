@@ -53,7 +53,7 @@ class WebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
-            client.write(string: "hello from Sw-S")
+            client.write(string: "hello from sws")
 
             startPingTimer()
         case .disconnected(let reason, let code):
@@ -83,7 +83,7 @@ class WebSocketClient: WebSocketDelegate {
         case .ping(let data):
             print("Received PING data: \(data ?? Data())")
         case .error(let error):
-            print("Error: \(error?.localizedDescription)")
+            print("Error: \(error?.localizedDescription ?? "error")")
         case .viabilityChanged(let isViable):
             print("Viability changed: \(isViable)")
         case .reconnectSuggested(let shouldReconnect):

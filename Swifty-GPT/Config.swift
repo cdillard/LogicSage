@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Sw-S CONFIG
+// sws CONFIG
 
 // Set builtInAppDesc
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
@@ -190,7 +190,7 @@ enum LogVerbosity {
     case none
 }
 // ASCII MOVIES ZONE ///////////////////////////////
-// IF the movie is TOO big/blurry for you and your tastes try manually setting your Sw-S/Xcode console font to 2 or 3 and then  turn movie width up :).
+// IF the movie is TOO big/blurry for you and your tastes try manually setting your sws/Xcode console font to 2 or 3 and then  turn movie width up :).
 // We'll need to sync each clients terminal window/s widths to make sure the animations and movies play properly.
 let movieWidth = 95
 let matrixScreenWidth = 100

@@ -21,20 +21,18 @@ struct SageWebView: View {
     var body: some View {
         ZStack {
             HandleView()
-                              .zIndex(2) // Add zIndex to ensure it's above the SageWebView
-                              .offset(x: -12, y: -12) // Adjust the offset values
-                              .gesture(
-                                  DragGesture()
-                                      .onChanged { value in
-                                          position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                                      }
-                                      .onEnded { value in
-                                          // No need to reset the translation value, as it's read-only
-                                      }
-                              )
-                              .onTapGesture {
-                                  print("Tapped on the handle")
-                              }
+                  .zIndex(2) // Add zIndex to ensure it's above the SageWebView
+                  .offset(x: -12, y: -12) // Adjust the offset values
+                  .gesture(
+                      DragGesture()
+                          .onChanged { value in
+                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+                          }
+                          .onEnded { value in
+                              // No need to reset the translation value, as it's read-only
+                          }
+                  )
+  
             WebView(url: webViewURL)
                 .ignoresSafeArea()
 

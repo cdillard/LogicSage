@@ -32,14 +32,17 @@ func speak(_ text: String) {
 
     speechSynthesizer.speak(speechUtterance)
 }
-
+func stopVoice() {
+    speechSynthesizer.stopSpeaking(at: .immediate)
+}
 func configureAudioSession() {
 #if !os(macOS)
 
     let audioSession = AVAudioSession.sharedInstance()
     do {
-        try audioSession.setCategory(.playback, mode: .spokenAudio, options: [])
-        try audioSession.setActive(true, options: [])
+        try audioSession.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers, .mixWithOthers])
+        try audioSession.setActive(true)
+        
     } catch {
         print("Failed to configure audio session: \(error.localizedDescription)")
     }

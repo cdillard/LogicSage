@@ -88,6 +88,10 @@ func main() {
             }
         }
     }
+    else {
+        multiPrinter("Voice output disabled in sws")
+
+    }
 
     DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 
@@ -235,6 +239,8 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
+
+// Running in Terminal and iTerm2 is still elusive.. I wonder what must be disabled.
 main()
 
 RunLoop.main.run()

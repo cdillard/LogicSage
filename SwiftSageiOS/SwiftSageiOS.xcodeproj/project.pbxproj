@@ -46,6 +46,7 @@
 		B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */; };
 		B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62DE29FCAD3E004296E4 /* Screamer.swift */; };
 		B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E029FDE0D7004296E4 /* Speak.swift */; };
+		B71C62E329FE0FF2004296E4 /* Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E229FE0FF2004296E4 /* Code.swift */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
 		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
@@ -127,6 +128,7 @@
 		B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextEditor.swift; sourceTree = "<group>"; };
 		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B71C62E029FDE0D7004296E4 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
+		B71C62E229FE0FF2004296E4 /* Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				B75B329629FA238C0049EB55 /* File.swift */,
 				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
+				B71C62E229FE0FF2004296E4 /* Code.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,
 				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
 				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
+				B71C62E329FE0FF2004296E4 /* Code.swift in Sources */,
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
 				B75B329529FA16B50049EB55 /* SageTerminal.swift in Sources */,

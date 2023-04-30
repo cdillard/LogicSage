@@ -47,33 +47,7 @@ struct ContentView: View {
 
     init() {
         
-        theCode  = """
-struct WaveView: View {
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                let waveCount = 6
-                ForEach(0..<waveCount) { index in
-                    Path { p in
-                        let x: CGFloat = CGFloat(index) / CGFloat(waveCount)
-                        let y = CGFloat(sin((.pi * 2 * Double(x)) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
-                        p.move(to: CGPoint(x: geometry.frame(in: .local).minX, y: (1 + y) * geometry.frame(in: .local).height / 2))
-                        for x in stride(from: geometry.frame(in:.local).minX, to: geometry.frame(in:.local).maxX, by: 4) {
-                            let y = CGFloat(sin((.pi * 2 * Double(x/100)) + (Double(index) * .pi / 3) - (Double(geometry.frame(in: .local).minX) / 100))) / 3
-                            p.addLine(to: CGPoint(x:x, y: (1 + y) * geometry.frame(in: .local).height / 2))
-                        }
-                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).maxX, y:geometry.frame(in:.local).maxY))
-                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:geometry.frame(in:.local).maxY))
-                        p.addLine(to: CGPoint(x:geometry.frame(in:.local).minX, y:(1 - y) * geometry.frame(in: .local).height / 2))
-                    }
-                    .fill(Color(red: Double(index) / Double(waveCount), green: Double((waveCount - index) / waveCount), blue: 1.0 - Double(index) / Double(waveCount)))
-                    .opacity(0.5)
-                }
-            }
-        }
-    }
-}
-"""
+        theCode  = code1
 
     }
     var body: some View {
@@ -83,7 +57,8 @@ struct WaveView: View {
                 // SOURCE CODE EDITOR HANDLE
                 ZStack {
 
-                    #if os(macOS)
+// MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE.
+#if os(macOS)
                     VStack {
                         Button(action: {
                             openTerminal()
@@ -110,8 +85,7 @@ struct WaveView: View {
 
                     }
                     .zIndex(2)
-
-                    #endif
+#endif
 
 
                     if settingsViewModel.isEditorVisible {
@@ -129,9 +103,6 @@ struct WaveView: View {
                                         // No need to reset the translation value, as it's read-only
                                     }
                             )
-                            .onTapGesture {
-                                print("Tapped on the handle")
-                            }
 #endif
                     }
                     HStack {
@@ -235,9 +206,7 @@ struct WaveView: View {
                             settingsViewModel.receivedImage = nil
 #endif
                         }) {
-
                             resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
-
                         }
                         .padding(geometry.size.width * 0.01)
                         Button(action: {
@@ -246,17 +215,28 @@ struct WaveView: View {
                             }
                         }) {
                             resizableButtonImage(systemName: "gearshape", size: geometry.size)
-
                         }
                         .padding(geometry.size.width * 0.01)
                         .popover(isPresented: $showSettings, arrowEdge: .top) {
-                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+#if !os(macOS)
+
+                            if UIDevice.current.userInterfaceIdiom == .pad {
+                                SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+                                    .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+                            }
+                            else {
+                                SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+
+                            }
+#endif
+
 
                         }
                         Button(action: {
+                            if screamer.websocket != nil {
                                 screamer.websocket.write(ping: Data())
+                        }
 #if !os(macOS)
-
                                 consoleManager.print("ping...")
 #endif
                                 print("ping...")
@@ -266,10 +246,7 @@ struct WaveView: View {
                         }
                         .padding(geometry.size.width * 0.01)
                         Button(action: {
-
-
                             showAddView.toggle()
-
 
                             // window 1 is for second cmd prompt
                         }) {
@@ -280,7 +257,6 @@ struct WaveView: View {
                         Spacer()
                             .popover(isPresented: $showAddView, arrowEdge: .top) {
                                 AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel)
-
                             }
                     }
                 }
@@ -293,14 +269,12 @@ struct WaveView: View {
             }
             .onChange(of: showSettings) { newValue in
 #if !os(macOS)
-
                 if newValue {
                     print("Popover is shown")
                     consoleManager.isVisible = false
                 } else {
                     print("Popover is hidden")
                     consoleManager.isVisible = true
-
                 }
 #endif
             }

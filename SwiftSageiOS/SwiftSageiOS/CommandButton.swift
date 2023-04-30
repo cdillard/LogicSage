@@ -41,7 +41,7 @@ struct CommandButtonView: View {
                             consoleManager.print("🔌 Force reconnect...")
                             consoleManager.print("You can always force quit / restart you know...")
 
-                            //screamer.connect()
+                            screamer.connect()
                         }
                         .font(.body)
 //                        .foregroundColor(Color.white)

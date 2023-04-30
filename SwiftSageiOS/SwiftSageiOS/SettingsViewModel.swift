@@ -17,6 +17,13 @@ class SettingsViewModel: ObservableObject {
 
     @AppStorage("savedText") var multiLineText = ""
     @Published var voiceOutputenabled = false
+    @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
+
+    // TODO
+    // add the code for server 
+    @Published var serverVoiceOutputEnabled = false
+
+
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {
@@ -92,6 +99,8 @@ class SettingsViewModel: ObservableObject {
         self.buttonColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
         self.backgroundColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
         self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+
+        voiceOutputenabled = voiceOutputenabledUserDefault
 #endif
         
     }

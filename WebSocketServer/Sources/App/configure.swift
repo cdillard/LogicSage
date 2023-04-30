@@ -7,6 +7,12 @@ import func Darwin.fflush
 import var Darwin.stdout
 
 let debugging = false
+let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
+             ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
+  
+let bufferSize = 100
+  
+var messageBuffer: [String] = []
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -15,12 +21,12 @@ public func configure(_ app: Application) throws {
     app.http.server.configuration.hostname = "0.0.0.0"
 
     app.webSocket("ws") { req, ws in
-    if debugging {
-       print("Client connected")
-    }
+        if debugging {
+            print("Client connected")
+        }
         connectedClients.append(ws)
+        sendBufferedMessages(to: ws)
         ws.onText { ws, text in
-            let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
             if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
                 print("\(text)", terminator: "")
             }
@@ -28,15 +34,11 @@ public func configure(_ app: Application) throws {
                 print("\(text)")
             }
         
-    if debugging {
-
-            print("connectedClients")
-
-            print(connectedClients)
-    }
-
+            if debugging {
+                    print("connectedClients")
+                    print(connectedClients)
+            }
             for client in connectedClients {
-
                 guard client !== ws else { 
                     if debugging {
                         print("skipping self")
@@ -44,14 +46,13 @@ public func configure(_ app: Application) throws {
                     continue
                 }
                 if debugging {
-
                     print("send to client =\(client)")
                 }
+                updateMessageBuffer(with: text)
 
                 client.send("\(text)")
             }
-
-             fflush(stdout) // Explicitly flush the standard output
+             fflush(stdout)
 
         }
         ws.onBinary { ws, data in
@@ -117,4 +118,20 @@ func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
         return scalar
     }
     return nil
+}
+
+func updateMessageBuffer(with message: String) {
+    if !message.hasPrefix("say") {
+        messageBuffer.append(message)
+    }
+
+    if messageBuffer.count > bufferSize {
+        messageBuffer.removeFirst()
+    }
+}
+
+func sendBufferedMessages(to ws: WebSocket) {
+    messageBuffer.forEach { message in
+        ws.send(message)
+    }
 }

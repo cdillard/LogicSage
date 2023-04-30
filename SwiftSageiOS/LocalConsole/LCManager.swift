@@ -11,6 +11,7 @@ import SwiftUI
 
 
 var GLOBAL_BORDER_TRACKERS: [BorderManager] = []
+let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
 
 @available(iOSApplicationExtension, unavailable)
 public class LCManager: NSObject, UIGestureRecognizerDelegate {
@@ -650,7 +651,6 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         var dotMsg = false
         if let singleString = items as? String {
 
-            let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
 
             if specs.contains(singleString ?? "") {
                 dotMsg = true
@@ -685,7 +685,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             currentText = _currentText
         }
         if let singleString = items as? String {
-            if singleString == "." {
+            if specs.contains( singleString)  {
                 return
             }
 

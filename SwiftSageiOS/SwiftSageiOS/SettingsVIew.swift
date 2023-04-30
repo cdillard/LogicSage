@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 
+// Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
+// are using muliple iOS devices for screens, etc.
 let cereprocVoicesNames = [
     "Heather",
     "Hannah",
@@ -101,6 +103,7 @@ struct SettingsView: View {
                             .padding(.bottom)
                         }
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                     Button(action: {
                         withAnimation {
 #if !os(macOS)
@@ -125,11 +128,15 @@ struct SettingsView: View {
                                 consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
                                 
                                 settingsViewModel.voiceOutputenabled.toggle()
+                                settingsViewModel.voiceOutputenabledUserDefault.toggle()
+                                stopVoice()
 #endif
                             }
                             
                         } label: {
-                            resizableButtonImage(systemName: settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill", size: geometry.size)
+                            resizableButtonImage(systemName:
+                                                    settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
+                                                 size: geometry.size)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 40)
@@ -137,13 +144,18 @@ struct SettingsView: View {
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
                         }
-                        
-                        List(cereprocVoicesNames, id: \.self, selection: $selection) { name in
-                            Text(name)
-                                .frame(height: 30)
+                        VStack {
+                            Text("Pick macOS server voice")
+
+                            //                        if settingsViewModel.voiceOutputenabled {
+                            List(cereprocVoicesNames, id: \.self, selection: $selection) { name in
+                                Text(name)
+                                    .frame(height: 30)
+                            }
+                            .frame(height: CGFloat(cereprocVoicesNames.count * 40))
+                            //                        }
+
                         }
-                        .frame(height: CGFloat(cereprocVoicesNames.count * 40))
-                        
                         Spacer()
                         
                         
@@ -163,8 +175,10 @@ struct SettingsView: View {
                             }
                             .padding(.bottom)
                         }
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
+                .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
 #if !os(macOS)
 
