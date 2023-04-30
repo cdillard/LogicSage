@@ -26,8 +26,9 @@ var commandTable: [String: (String) -> Void] = [
     "idea:": ideaCommand,
     "i": ideaCommand,  "I": ideaCommand,
 
-    "google:": googleCommand,
-    "link:": linkCommand,
+    "google:": googleCommand,    "Google:": googleCommand,
+
+    "link:": linkCommand,  "Link:": linkCommand,
 
     "image:": imageCommand,
 
@@ -44,8 +45,9 @@ var commandTable: [String: (String) -> Void] = [
     "q": exitCommand,
     "exit": exitCommand,
     "e": exitCommand,
-    "stop": stopCommand,
-    "say": sayCommand,
+    "stop": stopCommand,  "Stop": stopCommand,
+    "say": sayCommand,     "Say": sayCommand,
+
 
     "st": stopCommand,
     "random": randomCommand,
@@ -58,8 +60,8 @@ var commandTable: [String: (String) -> Void] = [
     "rs": resetCommand,
     "commands": commandsCommand,
     "c": commandsCommand,
-    "debate": debateCommand,
-    "debates": debatesCommand,
+    "debate": debateCommand,     "Debate": debateCommand,
+    "debates": debatesCommand,    "Debates": debatesCommand,
 
     "setLoadMode": setLoadMode,
     "setVoice": setVoice,
