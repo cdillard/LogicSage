@@ -43,7 +43,8 @@ struct CommandButtonView: View {
 
                             screamer.connect()
                         }
-                        .font(.body)
+                        .font(.caption)
+                        .lineLimit(nil)
 //                        .foregroundColor(Color.white)
 //                        .padding(.bottom)
                         .background(settingsViewModel.buttonColor)
@@ -58,7 +59,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "debate "
                         }) {
                             Text( "debate")
-                                .font(.subheadline)
+                                .font(.caption)
+                                .lineLimit(nil)
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .background(settingsViewModel.buttonColor)
@@ -84,7 +86,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "i "
                         }) {
                             Text( "i")
-                                .font(.subheadline)
+                                .font(.caption)
+                                .lineLimit(nil)
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .background(settingsViewModel.buttonColor)
@@ -97,7 +100,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "g "
                         }) {
                             Text( "g")
-                                .font(.subheadline)
+                                .font(.caption)
+                                .lineLimit(nil)
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .background(settingsViewModel.buttonColor)
@@ -114,7 +118,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText = ""
                         }) {
                             Text( "X")
-                                .font(.subheadline)
+                                .font(.caption)
+                                .lineLimit(nil)
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .background(settingsViewModel.buttonColor)
@@ -144,7 +149,8 @@ struct CommandButtonView: View {
 
                     }) {
                         Text("🛑")
-                            .font(.headline)
+                            .font(.caption)
+                            .lineLimit(nil)
                             .foregroundColor(Color.white)
                             .padding()
                             .background(settingsViewModel.buttonColor)
@@ -165,7 +171,8 @@ struct CommandButtonView: View {
 
                     }) {
                         Text("EXEC")
-                            .font(.headline)
+                            .font(.caption)
+                            .lineLimit(nil)
                             .foregroundColor(Color.white)
                             .padding()
                             .background(settingsViewModel.buttonColor)
@@ -193,7 +200,8 @@ struct CommandButtonView: View {
                         }
                     }) {
                         Text(self.settingsViewModel.isInputViewShown ? "DONE" : "COMMAND")
-                            .font(.headline)
+                            .font(.caption)
+                            .lineLimit(nil)
                             .foregroundColor(Color.white)
                             .padding()
                             .background(settingsViewModel.buttonColor)
@@ -209,6 +217,8 @@ struct CommandButtonView: View {
                     // MAIN INPUT TEXTFIELD
                     TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
+                        .font(.caption)
+                        .lineLimit(nil)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
 #if !os(macOS)

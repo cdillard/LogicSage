@@ -27,6 +27,8 @@ class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
 
 extension SpeechRecognizer {
     func startRecording() {
+#if !os(macOS)
+
         // Check if recognitionTask is running
         if let recognitionTask = recognitionTask {
             recognitionTask.cancel()
@@ -66,6 +68,9 @@ extension SpeechRecognizer {
 
         audioEngine.prepare()
         try! audioEngine.start()
+
+#endif
+
     }
 
     func stopRecording() {
@@ -75,7 +80,6 @@ extension SpeechRecognizer {
 
         print("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
         consoleManager.print("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
-#endif
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
         recognitionRequest = nil
@@ -88,5 +92,7 @@ extension SpeechRecognizer {
         // clear out speech regognition text after sending command
         SettingsViewModel.shared.multiLineText = SettingsViewModel.shared.recognizedText
         SettingsViewModel.shared.recognizedText = ""
+#endif
+
     }
 }

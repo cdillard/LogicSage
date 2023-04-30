@@ -35,7 +35,8 @@ struct SettingsView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     Group {
                         Text("Settings")
-                            .font(.largeTitle)
+                            .font(.caption)
+                            .lineLimit(nil)
                             .fontWeight(.bold)
                             .padding(.bottom)
                         
@@ -82,6 +83,7 @@ struct SettingsView: View {
                         }
                         Text("\(settingsViewModel.textSize)")
                             .font(.caption)
+                            .lineLimit(nil)
 
 
                         Text("LoadMode")

@@ -17,7 +17,8 @@ struct InstructionsPopup: View {
             Text("Welcome to SwiftSage!")
                 .background(.green)
                 .opacity(0.7)
-                .font(.largeTitle)
+                .font(.caption)
+                .lineLimit(nil)
                 .bold()
                 .padding()
 

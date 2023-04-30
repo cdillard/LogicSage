@@ -72,7 +72,8 @@ struct AddView: View {
                     showAddView.toggle()
                     settingsViewModel.showWebView = true
                 }
-                    .font(.largeTitle)
+                .font(.caption)
+                .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
                 Button(action: {

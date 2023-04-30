@@ -774,7 +774,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -786,7 +786,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to send voice commands";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to capture commands";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SwiftSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -819,7 +819,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -831,7 +831,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to send voice commands";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to capture commands";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SwiftSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -847,7 +847,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

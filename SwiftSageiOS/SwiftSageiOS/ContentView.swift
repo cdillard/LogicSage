@@ -174,6 +174,9 @@ struct ContentView: View {
                             Spacer()
 
                             Text("Restart app if you encounter any issues, OK?\nFresh install if terminal becomes too small :(")
+                                .font(.caption)
+                                .lineLimit(nil)
+
 
                         }
                         Spacer()
@@ -271,11 +274,15 @@ struct ContentView: View {
                           }) {
                               //Text(isRecording ? "Stop Recording" : "Start Recording")
                               resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
+                                  .font(.caption)
+                                  .lineLimit(nil)
 
                           }
                           .padding(geometry.size.width * 0.01)
 
                         Text(settingsViewModel.recognizedText)
+                            .font(.caption)
+                            .lineLimit(nil)
                             .padding(geometry.size.width * 0.01)
 
                         Spacer()
