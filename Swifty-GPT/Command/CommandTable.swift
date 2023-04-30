@@ -16,21 +16,23 @@ var commandTable: [String: (String) -> Void] = [
     "4": buildCommand,
     "5": voiceSettingsCommand,
 
-    "r": runAppDesc,
-    "s": showLoadedPrompt,
-    "o": openProjectCommand,
-    "b": buildCommand,
+    "r": runAppDesc,    "R": runAppDesc,
+
+    "s": showLoadedPrompt,  "S": showLoadedPrompt,
+    "o": openProjectCommand, "O": openProjectCommand,
+    "b": buildCommand, "B": buildCommand,
 
     "xcode:": xcodeCommand,
     "idea:": ideaCommand,
-    "i": ideaCommand,
+    "i": ideaCommand,  "I": ideaCommand,
 
     "google:": googleCommand,
     "link:": linkCommand,
 
     "image:": imageCommand,
 
-    "g": gptCommand,
+    "g": gptCommand,     "G": gptCommand,
+
     "gpt:": gptCommand,
     "gptVoice:": gptVoiceCommand,
     "gv": gptVoiceCommand,

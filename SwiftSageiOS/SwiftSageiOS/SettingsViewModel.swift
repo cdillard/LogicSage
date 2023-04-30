@@ -24,6 +24,9 @@ class SettingsViewModel: ObservableObject {
     @Published var serverVoiceOutputEnabled = false
     @Published var installedVoices = [VoicePair]()
     @Published var selectedVoice: VoicePair?
+    @Published var isRecording = false
+    @StateObject var speechRecognizer = SpeechRecognizer()
+    @Published var recognizedText: String = ""
 
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil

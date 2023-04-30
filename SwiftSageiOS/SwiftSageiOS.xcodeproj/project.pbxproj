@@ -47,6 +47,8 @@
 		B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62DE29FCAD3E004296E4 /* Screamer.swift */; };
 		B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E029FDE0D7004296E4 /* Speak.swift */; };
 		B71C62E329FE0FF2004296E4 /* Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E229FE0FF2004296E4 /* Code.swift */; };
+		B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E429FEB794004296E4 /* SpeechRecog.swift */; };
+		B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C62E629FEB7BB004296E4 /* Speech.framework */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
 		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
@@ -129,6 +131,8 @@
 		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B71C62E029FDE0D7004296E4 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
 		B71C62E229FE0FF2004296E4 /* Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
+		B71C62E429FEB794004296E4 /* SpeechRecog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecog.swift; sourceTree = "<group>"; };
+		B71C62E629FEB7BB004296E4 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/Speech.framework; sourceTree = DEVELOPER_DIR; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +372,7 @@
 				B75B329629FA238C0049EB55 /* File.swift */,
 				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
+				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B71C62E229FE0FF2004296E4 /* Code.swift */,
 			);
 			path = SwiftSageiOS;
@@ -383,6 +389,7 @@
 		B748C2ED29F5EA4C000F5F14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B71C62E629FEB7BB004296E4 /* Speech.framework */,
 				B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */,
 			);
 			name = Frameworks;
@@ -581,6 +588,7 @@
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B75B329729FA238C0049EB55 /* File.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
+				B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */,
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
 				B7191F1A29F9F09A00078D8D /* NSMutableAttributedString+Tokens.swift in Sources */,
 				B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */,
@@ -778,6 +786,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to send voice commands";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SwiftSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -821,6 +831,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftSage uses your mic to send voice commands";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SwiftSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

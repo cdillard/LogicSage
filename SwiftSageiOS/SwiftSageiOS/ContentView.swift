@@ -254,10 +254,32 @@ struct ContentView: View {
                             resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                         }
                         .padding(geometry.size.width * 0.01)
-                        Spacer()
                             .popover(isPresented: $showAddView, arrowEdge: .top) {
                                 AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel)
                             }
+
+                        // MIC BUTTON
+                        // "mic.fill"
+                        // "mic.slash.fill"
+                        Button(action: {
+                            if settingsViewModel.isRecording {
+                                  settingsViewModel.speechRecognizer.stopRecording()
+                              } else {
+                                  settingsViewModel.speechRecognizer.startRecording()
+                              }
+                            settingsViewModel.isRecording.toggle()
+                          }) {
+                              //Text(isRecording ? "Stop Recording" : "Start Recording")
+                              resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
+
+                          }
+                          .padding(geometry.size.width * 0.01)
+
+                        Text(settingsViewModel.recognizedText)
+                            .padding(geometry.size.width * 0.01)
+
+                        Spacer()
+
                     }
                 }
             }
