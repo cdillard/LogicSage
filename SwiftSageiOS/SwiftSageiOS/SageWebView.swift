@@ -15,7 +15,7 @@ struct SageWebView: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
     @State private var position: CGSize = CGSize.zero
-
+    @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     public var webViewURL = URL(string: "https://chat.openai.com")!
 
     var body: some View {
@@ -35,6 +35,7 @@ struct SageWebView: View {
   
             WebView(url: webViewURL)
                 .ignoresSafeArea()
+                .modifier(ResizableViewModifier(frame: $frame))
 
                 .scaleEffect(currentScale)
                 .offset(position)
@@ -85,3 +86,84 @@ struct HandleView: View {
     }
 }
 #endif
+
+
+struct ResizableViewModifier: ViewModifier {
+    @Binding var frame: CGRect
+    var handleSize: CGFloat = 20.0
+
+    func body(content: Content) -> some View {
+        content
+            .frame(width: frame.width, height: frame.height)
+            .overlay(ResizingHandle(position: .topLeading, frame: $frame, handleSize: handleSize))
+            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize))
+            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize))
+            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize))
+    }
+}
+
+
+struct ResizingHandle: View {
+    enum Position {
+        case topLeading, topTrailing, bottomLeading, bottomTrailing
+    }
+
+    var position: Position
+    @Binding var frame: CGRect
+    var handleSize: CGFloat
+    @State private var translation: CGSize = .zero
+
+    var body: some View {
+        Circle()
+            .fill(Color.blue)
+            .frame(width: handleSize, height: handleSize)
+            .position(positionPoint(for: position))
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        translation = value.translation
+                    }
+                    .onEnded { _ in
+                        updateFrame(with: translation)
+                        translation = .zero
+                    }
+            )
+    }
+
+    private func positionPoint(for position: Position) -> CGPoint {
+        switch position {
+        case .topLeading:
+            return CGPoint(x: frame.minX + translation.width / 2, y: frame.minY + translation.height / 2)
+        case .topTrailing:
+            return CGPoint(x: frame.maxX + translation.width / 2, y: frame.minY + translation.height / 2)
+        case .bottomLeading:
+            return CGPoint(x: frame.minX + translation.width / 2, y: frame.maxY + translation.height / 2)
+        case .bottomTrailing:
+            return CGPoint(x: frame.maxX + translation.width / 2, y: frame.maxY + translation.height / 2)
+        }
+    }
+
+    private func updateFrame(with translation: CGSize) {
+        let newWidth: CGFloat
+        let newHeight: CGFloat
+
+        switch position {
+        case .topLeading:
+            newWidth = frame.width - translation.width
+            newHeight = frame.height - translation.height
+        case .topTrailing:
+            newWidth = frame.width + translation.width
+            newHeight = frame.height - translation.height
+        case .bottomLeading:
+            newWidth = frame.width - translation.width
+            newHeight = frame.height + translation.height
+        case .bottomTrailing:
+            newWidth = frame.width + translation.width
+            newHeight = frame.height + translation.height
+        }
+
+        // Set minimum size constraints to avoid negative size values
+        frame.size.width = max(newWidth, handleSize * 2)
+        frame.size.height = max(newHeight, handleSize * 2)
+    }
+}

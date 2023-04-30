@@ -249,6 +249,9 @@ struct ContentView: View {
                         }
                         .padding(geometry.size.width * 0.01)
                         Button(action: {
+#if !os(macOS)
+                                consoleManager.isVisible = false
+#endif
                             showAddView.toggle()
 
                             // window 1 is for second cmd prompt
