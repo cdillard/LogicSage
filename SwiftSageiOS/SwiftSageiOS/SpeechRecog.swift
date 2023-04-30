@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Speech
 
+let recogDelay: CGFloat = 2.0
 
 class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
@@ -49,7 +50,7 @@ extension SpeechRecognizer {
 
                 // Reset the timer every time a new result is received
                 self.stopTimer?.invalidate()
-                self.stopTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                self.stopTimer = Timer.scheduledTimer(withTimeInterval: recogDelay, repeats: false) { _ in
                     self.stopRecording()
                 }
             } else if let error = error {

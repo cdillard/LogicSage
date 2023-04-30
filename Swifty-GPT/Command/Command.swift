@@ -28,7 +28,13 @@ func resetCommand(input: String) {
 
     appDesc = builtInAppDesc
     language = "Swift"
-    
+
+    if conversational {
+        multiPrinter("Exited conversational mode.")
+        conversational = false
+    }
+    manualPromptString = ""
+
     streak = 0
     chosenTQ = nil
     debateMode = false
@@ -294,6 +300,9 @@ func gptCommand(input: String) {
         manualPromptString = ""
         return
     }
+
+    // conversational mode
+    multiPrinter("Entered conversational mode! `g end` to reset")
 
     if enableGoogle {
         conversational = true
