@@ -15,19 +15,21 @@ enum ViewMode {
     case editor
 }
 struct SageMultiView: View {
-    @State private var currentScale: CGFloat = 1.0
-    @State private var lastScaleValue: CGFloat = 1.0
-    @State private var position: CGSize = CGSize.zero
-    @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+
     public var webViewURL = URL(string: "https://chat.openai.com")!
     @ObservedObject var settingsViewModel: SettingsViewModel
     @State var theCode: String
     @State var viewMode: ViewMode
 
+    @State private var currentScale: CGFloat = 1.0
+    @State private var lastScaleValue: CGFloat = 1.0
+    @State private var position: CGSize = CGSize.zero
+    @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
 
-    @State private var currentEditorScale: CGFloat = 1.0
-    @State private var lastEditorScaleValue: CGFloat = 1.0
-    @State private var positionEditor: CGSize = CGSize.zero
+//
+//    @State private var currentEditorScale: CGFloat = 1.0
+//    @State private var lastEditorScaleValue: CGFloat = 1.0
+//    @State private var positionEditor: CGSize = CGSize.zero
 
     
     var body: some View {
@@ -55,9 +57,9 @@ struct SageMultiView: View {
                     SourceCodeTextEditor(text: $theCode)
                         .ignoresSafeArea()
                         .modifier(ResizableViewModifier(frame: $frame))
+                    //    .offset(position)
 
                         .scaleEffect(currentScale)
-                        .offset(positionEditor)
 
                         .gesture(
                             MagnificationGesture()
@@ -70,7 +72,6 @@ struct SageMultiView: View {
                                     lastScaleValue = currentScale
                                 }
                         )
-                        .offset(positionEditor)
                 }
 
 #endif
@@ -79,9 +80,9 @@ struct SageMultiView: View {
                 WebView(url: webViewURL)
                     .ignoresSafeArea()
                     .modifier(ResizableViewModifier(frame: $frame))
-                
+                 //   .offset(position)
+
                     .scaleEffect(currentScale)
-                    .offset(position)
                     .gesture(
                         MagnificationGesture()
                             .onChanged { scaleValue in
@@ -93,14 +94,14 @@ struct SageMultiView: View {
                                 lastScaleValue = currentScale
                             }
                     )
-                    .zIndex(1) // Add zIndex to ensure it's above the handle
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                            }
-                        
-                    )
+
+//                    .gesture(
+//                        DragGesture()
+//                            .onChanged { value in
+//                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+//                            }
+//
+//                    )
             }
 
         }
