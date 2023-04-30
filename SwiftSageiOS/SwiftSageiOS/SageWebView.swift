@@ -115,7 +115,7 @@ struct ResizingHandle: View {
 
     var body: some View {
         Circle()
-            .fill(Color.blue)
+            .fill(SettingsViewModel.shared.buttonColor)
             .frame(width: handleSize, height: handleSize)
             .position(positionPoint(for: position))
             .gesture(
