@@ -22,7 +22,8 @@ class SettingsViewModel: ObservableObject {
     // TODO
     // add the code for server 
     @Published var serverVoiceOutputEnabled = false
-
+    @Published var installedVoices = [VoicePair]()
+    @Published var selectedVoice: VoicePair?
 
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil

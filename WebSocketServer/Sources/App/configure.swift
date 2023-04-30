@@ -7,6 +7,9 @@ import func Darwin.fflush
 import var Darwin.stdout
 
 let debugging = false
+
+let sendBuffer = false
+
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
              ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
   
@@ -25,7 +28,9 @@ public func configure(_ app: Application) throws {
             print("Client connected")
         }
         connectedClients.append(ws)
-        sendBufferedMessages(to: ws)
+        if (sendBuffer ) {
+            sendBufferedMessages(to: ws)
+        }
         ws.onText { ws, text in
             if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
                 print("\(text)", terminator: "")

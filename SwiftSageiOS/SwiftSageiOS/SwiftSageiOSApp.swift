@@ -18,6 +18,8 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
 
+        printVoicesInMyDevice()
+
         configureAudioSession()
 #if !os(macOS)
 //        if !hasSeenInstructions() {

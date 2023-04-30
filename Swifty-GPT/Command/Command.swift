@@ -291,6 +291,7 @@ func gptCommand(input: String) {
         multiPrinter("Exited conversational mode.")
 
         conversational = false
+        manualPromptString = ""
         return
     }
 

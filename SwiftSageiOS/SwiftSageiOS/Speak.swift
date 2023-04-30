@@ -10,6 +10,12 @@ import AVFoundation
 let speechSynthesizer = AVSpeechSynthesizer()
 
 
+struct VoicePair: Hashable {
+
+    let voiceName: String
+    let voiceIdentifier : String
+}
+
 func speak(_ text: String) {
     if !SettingsViewModel.shared.voiceOutputenabled {
         print("DONT say: \(text)")
@@ -19,8 +25,13 @@ func speak(_ text: String) {
     let speechUtterance = AVSpeechUtterance(string: text)
 
 #if !targetEnvironment(simulator)
+    if let customVoice = SettingsViewModel.shared.selectedVoice?.voiceIdentifier {
+        speechUtterance.voice = AVSpeechSynthesisVoice(identifier: customVoice)
 
-    speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
+    }
+    else {
+        speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
+    }
 
    // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
 #endif
@@ -37,14 +48,39 @@ func stopVoice() {
 }
 func configureAudioSession() {
 #if !os(macOS)
+    if SettingsViewModel.shared.voiceOutputenabled {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers, .mixWithOthers])
+            try audioSession.setActive(true)
 
-    let audioSession = AVAudioSession.sharedInstance()
-    do {
-        try audioSession.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers, .mixWithOthers])
-        try audioSession.setActive(true)
-        
-    } catch {
-        print("Failed to configure audio session: \(error.localizedDescription)")
+        } catch {
+            print("Failed to configure audio session: \(error.localizedDescription)")
+        }
     }
 #endif
+}
+
+func printVoicesInMyDevice() {
+#if !os(macOS)
+    var installedVoices = [VoicePair]()
+    for voice in installedVoiesArr() {
+        installedVoices += [ VoicePair(voiceName: voice.name, voiceIdentifier: voice.identifier)]
+    }
+    SettingsViewModel.shared.installedVoices = installedVoices
+    ///consoleManager.print("installed v: \(SettingsViewModel.shared.installedVoices)")
+    ///print("installed v: \(SettingsViewModel.shared.installedVoices)")
+
+#endif
+
+}
+
+func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
+    var ret = [AVSpeechSynthesisVoice]()
+    AVSpeechSynthesisVoice.speechVoices().forEach {
+
+        ret.append($0)
+
+    }
+    return ret
 }
