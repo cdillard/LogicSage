@@ -6,7 +6,7 @@ import WebSocketKit
 import func Darwin.fflush
 import var Darwin.stdout
 
-let debugging = false
+let debugging = true
 
 let sendBuffer = false
 
@@ -53,8 +53,10 @@ public func configure(_ app: Application) throws {
                 if debugging {
                     print("send to client =\(client)")
                 }
-                updateMessageBuffer(with: text)
+                        if (sendBuffer ) {
 
+                             updateMessageBuffer(with: text)
+                        }
                 client.send("\(text)")
             }
              fflush(stdout)

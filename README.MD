@@ -52,6 +52,15 @@ CEREPROC instructions updated, you should be able to use the ones that install i
 Customize to use cereproc voices in Debates.swift . See COnfig.swift for detailed voice setup instructions :thumbup:
 
 ---- 
+04-30-2023
+
+Swift Sage is getting mroe mobile!
+
+Voice synthesis with configurable voice, in the iOS app. Voice recognition using the mic button in the iOS app. Have fun!
+
+Check it out. Email me with questions or suggestions.
+
+---- 
 04-26-2023
 
 Files using twostraws excellent Sourceful (see creds)
