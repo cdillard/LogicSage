@@ -30,25 +30,15 @@ struct SwiftSageiOSApp: App {
 //        }
 #endif
     //    cmdWindows = [LCManager]()
-
 //        // Alpha window
-//        cmdWindows.append(LCManager())
 //        // Beta
-//        cmdWindows.append(LCManager())
 //        // Gamma
-//        cmdWindows.append(LCManager())
 //        // Delta
-//        cmdWindows.append(LCManager())
 //        // Epsilon
-//        cmdWindows.append(LCManager())
 //        // Zeta
-//        cmdWindows.append(LCManager())
 //        // Eta
-//        cmdWindows.append(LCManager())
 //        // Theta
-//        cmdWindows.append(LCManager())
 //        //Iota
-//        cmdWindows.append(LCManager())
 ////        Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho
 //        Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
     }

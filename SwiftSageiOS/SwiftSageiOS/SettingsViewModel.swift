@@ -89,7 +89,7 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var showWebView: Bool = false {
+    @Published var isWebViewVisible: Bool = false {
         didSet {
 
         }

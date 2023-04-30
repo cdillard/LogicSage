@@ -10,14 +10,26 @@ import Foundation
 import SwiftUI
 import UIKit
 import WebKit
-
-struct SageWebView: View {
+enum ViewMode {
+    case webView
+    case editor
+}
+struct SageMultiView: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
     @State private var position: CGSize = CGSize.zero
     @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
     public var webViewURL = URL(string: "https://chat.openai.com")!
+    @ObservedObject var settingsViewModel: SettingsViewModel
+    @State var theCode: String
+    @State var viewMode: ViewMode
 
+
+    @State private var currentEditorScale: CGFloat = 1.0
+    @State private var lastEditorScaleValue: CGFloat = 1.0
+    @State private var positionEditor: CGSize = CGSize.zero
+
+    
     var body: some View {
         ZStack {
             HandleView()
@@ -32,32 +44,64 @@ struct SageWebView: View {
                               // No need to reset the translation value, as it's read-only
                           }
                   )
-  
-            WebView(url: webViewURL)
-                .ignoresSafeArea()
-                .modifier(ResizableViewModifier(frame: $frame))
 
-                .scaleEffect(currentScale)
-                .offset(position)
-                .gesture(
-                    MagnificationGesture()
-                                     .onChanged { scaleValue in
-                                         // Update the current scale based on the gesture's scale value
-                                         currentScale = lastScaleValue * scaleValue
-                                     }
-                                     .onEnded { scaleValue in
-                                         // Save the scale value when the gesture ends
-                                         lastScaleValue = currentScale
-                                     }
-                             )
-                .zIndex(1) // Add zIndex to ensure it's above the handle
-                             .gesture(
-                                 DragGesture()
-                                     .onChanged { value in
-                                         position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                                     }
+            // hmm, this is where we can put a sourceeditor or a webview....
 
-                             )
+            // HANDLE SOURCE CODE EDITOR
+            if viewMode == .editor && settingsViewModel.isEditorVisible {
+
+#if !os(macOS)
+                VStack {
+                    SourceCodeTextEditor(text: $theCode)
+                        .ignoresSafeArea()
+                        .modifier(ResizableViewModifier(frame: $frame))
+
+                        .scaleEffect(currentScale)
+                        .offset(positionEditor)
+
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { scaleValue in
+                                    // Update the current scale based on the gesture's scale value
+                                    currentScale = lastScaleValue * scaleValue
+                                }
+                                .onEnded { scaleValue in
+                                    // Save the scale value when the gesture ends
+                                    lastScaleValue = currentScale
+                                }
+                        )
+                        .offset(positionEditor)
+                }
+
+#endif
+            }
+            else {
+                WebView(url: webViewURL)
+                    .ignoresSafeArea()
+                    .modifier(ResizableViewModifier(frame: $frame))
+                
+                    .scaleEffect(currentScale)
+                    .offset(position)
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { scaleValue in
+                                // Update the current scale based on the gesture's scale value
+                                currentScale = lastScaleValue * scaleValue
+                            }
+                            .onEnded { scaleValue in
+                                // Save the scale value when the gesture ends
+                                lastScaleValue = currentScale
+                            }
+                    )
+                    .zIndex(1) // Add zIndex to ensure it's above the handle
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+                            }
+                        
+                    )
+            }
 
         }
         .offset(position)
