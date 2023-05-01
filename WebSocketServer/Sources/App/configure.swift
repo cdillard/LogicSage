@@ -51,6 +51,8 @@ public func configure(_ app: Application) throws {
 
                         print("parsed to JSON =  \(json)")
 
+                            // HANDLE MESSAGES *****************************************************************
+
                         if let recipient = json?["recipient"] as? String,
                             let message = json?["message"] as? String {
 
@@ -59,17 +61,29 @@ public func configure(_ app: Application) throws {
                             // Send the message only to the intended recipient
 
                             let resps = clients[recipient] ?? []
-                            print("resps = \(resps)")
+                            print("auth resps = \(resps)")
 
                             resps.forEach { recipientSocket in
                                 print("Received message fpr recipientSocket = \(recipientSocket)")
 
                                 recipientSocket.send("\(message)")
                             }
-                        } else {
-                             print("invalid message format")
+                        } 
+                        // HANDLE COMMANDS *****************************************************************
+                        else if let recipient = json?["recipient"] as? String,
+                             let command = json?["command"] as? String {
 
-                           // ws.send("Invalid message format")
+                            let resps = clients[recipient] ?? []
+                            print("cmd resps = \(resps)")
+
+                            resps.forEach { recipientSocket in
+                                print("Received message fpr recipientSocket = \(recipientSocket)")
+
+                                recipientSocket.send("\(command)")
+                            }
+
+                        } else {
+                            ws.send("Invalid command format")
                         }
 
 
@@ -79,20 +93,6 @@ public func configure(_ app: Application) throws {
                         else {
                             print("\(text)")
                         }
-                    
-
-                        // for (_, otherSockets) in clients {
-                        //     // if debugging {
-                        //     //     print("other Sockets")
-                        //     // }
-                        //     // Send the message to all WebSocket connections, except the sender's connection
-                        //     for otherSocket in otherSockets where otherSocket !== ws {
-
-                        //       //  print("other Sockert")
-
-                        //         otherSocket.send("\(text)")
-                        //     }
-                        // }
                     }
                     catch {
                         print("error = \(error)")
@@ -122,24 +122,6 @@ public func configure(_ app: Application) throws {
                         ||
                         (user == "chuck" && password == "n1c3")  {
                             
-                            // Authenticate the user
-                            // username = user
-                            // if clients[user] == nil {
-                            //     clients[user] = []
-                            // }
-
-                            //  var clientsUser =  clients[user] 
-
-                            // if clientsUser != nil {
-                            //     clientsUser?.append(ws)
-                            //                                 print("clientsUser = \(clientsUser)")
-
-                            // }
-
-                            // else {
-                            //                                 print("failed to get resps")
-
-                            // }
                   // Authenticate the user
                     username = user
                     if clients[user] == nil {
@@ -147,24 +129,13 @@ public func configure(_ app: Application) throws {
                     }
                     clients[user]?.append(ws)
 
-                            print("Authentication")
-                           // ws.send("Authenticated")
+                            print("Authentication of \(user):\(ws) succeeded")
                         }
                         else {
                             print("Invalid username or password)")
-
-                           // ws.send("Invalid username or password")
-                          //  ws.close(promise: nil)
                         }
                     } catch {
                         print("Invalid JSON)")
-
-                        //ws.send("Invalid JSON")
-                        
-                        
-                        
-                        
-                        //ws.close(promise: nil)
                     }
                 }
             }

@@ -206,11 +206,11 @@ class ScreamClient: WebSocketDelegate {
             break
         }
         if websocket != nil {
-            let messageData: [String: Any] = ["recipient": "SERVER", "message": command]
+            let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
             do {
                let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
-            let messageString = String(data: messageJSON, encoding: .utf8)
-             websocket.write(string: messageString ?? "")
+                let messageString = String(data: messageJSON, encoding: .utf8)
+                websocket.write(string: messageString ?? "")
             }
             catch {
                 print("error = \(error)")
@@ -226,12 +226,18 @@ class ScreamClient: WebSocketDelegate {
 
 
     func startPingTimer() {
-        // Invalidate any existing timer
-        pingTimer?.invalidate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
-        // Create a new timer that fires every 30 seconds
-        pingTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.sendPing()
+            // Invalidate any existing timer
+           // self.pingTimer?.invalidate()
+
+            // Create a new timer that fires every 30 seconds
+            self.pingTimer = Timer.scheduledTimer(withTimeInterval: 22.666, repeats: true) { [weak self] _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+                    self?.sendPing()
+                }
+            }
         }
     }
     func stopPingTimer() {

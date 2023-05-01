@@ -80,10 +80,6 @@ struct CommandButtonView: View {
                                 self.settingsViewModel.isInputViewShown = false
 
                                 settingsViewModel.multiLineText = ""
-//    #if !os(macOS)
-//
-//                                consoleManager.isVisible = true
-//    #endif
                             }
 
                         }) {
@@ -97,8 +93,7 @@ struct CommandButtonView: View {
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                        //.padding(.bottom)
-                        
+
                         // i BUTTON
                         Button(action: {
                             isTextFieldFocused = true
@@ -114,7 +109,6 @@ struct CommandButtonView: View {
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                        //.padding(.bottom)
                         // g BUTTON
                         Button(action: {
                             isTextFieldFocused = true
@@ -126,7 +120,6 @@ struct CommandButtonView: View {
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
-//                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
 
@@ -145,13 +138,10 @@ struct CommandButtonView: View {
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
-//                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-
                     }
-
 
                     // STOP BUTTON
                     Button(action: {
@@ -166,17 +156,12 @@ struct CommandButtonView: View {
                             self.settingsViewModel.isInputViewShown = false
 
                             settingsViewModel.multiLineText = ""
-//#if !os(macOS)
-//
-//                            consoleManager.isVisible = true
-//#endif
                         }
 
                     }) {
                         Text("🛑")
                             .font(.caption)
                             .padding(geometry.size.width * 0.01)
-
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)

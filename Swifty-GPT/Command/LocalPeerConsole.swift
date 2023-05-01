@@ -9,7 +9,7 @@ import Foundation
 import Starscream
 
 func multiPrinter(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    for username in ["chris"] { //, "chuck", "hackerman"] {
+    for username in ["chris", "chuck", "hackerman"] {
         if !swiftSageIOSEnabled {
             print(items, separator: separator, terminator: terminator)
             return
@@ -37,6 +37,19 @@ class LocalPeerConsole: NSObject {
 
     func sendLog(to recipient: String, text: String) {
          let logData: [String: String] = ["recipient": recipient, "message": text]
+        do {
+            let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+            let logString = String(data: logJSON, encoding: .utf8)
+            webSocketClient.websocket.write(string: logString ?? "")
+
+        }
+        catch {
+            print( "error = \(error)")
+        }
+     }
+
+    func sendCommand(to recipient: String, command: String) {
+         let logData: [String: String] = ["recipient": recipient, "command": command]
         do {
             let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
             let logString = String(data: logJSON, encoding: .utf8)
@@ -81,7 +94,9 @@ class WebSocketClient: WebSocketDelegate {
 //                self.connect()
 //            }
         case .text(let text):
-            //print("Received text: \(text)")
+            print("Received text: \(text)")
+
+            // TODO: should probably be parsing the command JSON for recipient and command....
 
             let components = text.split(separator: " ", maxSplits: 1)
             if !components.isEmpty {
@@ -94,11 +109,6 @@ class WebSocketClient: WebSocketDelegate {
             else {
                 print("niped")
             }
-
-
-
-
-
 
         case .binary(let data):
             print("Received binary data: \(data)")
