@@ -49,7 +49,7 @@ class LocalPeerConsole: NSObject {
      }
 
     func sendCommand(to recipient: String, command: String) {
-         let logData: [String: String] = ["recipient": recipient, "command": command]
+        let logData: [String: String] = ["recipient": recipient, "command": command, "from": "SERVER"]
         do {
             let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
             let logString = String(data: logJSON, encoding: .utf8)

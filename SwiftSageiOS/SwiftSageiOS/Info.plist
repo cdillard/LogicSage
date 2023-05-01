@@ -4,15 +4,22 @@
 <dict>
 	<key>NSAllowsArbitraryLoads</key>
 	<true/>
+	<key>UIAppSupportsHDR</key>
+	<true/>
 	<key>NSAllowsLocalNetworking</key>
 	<true/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>SwiftSage uses your mic to capture commands</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>SwiftSage uses your mic and speech recognition to capture commands</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_sagess._tcp</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>push-to-talk</string>
+		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 </dict>
 </plist>

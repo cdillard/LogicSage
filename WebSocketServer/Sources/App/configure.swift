@@ -38,7 +38,6 @@ public func configure(_ app: Application) throws {
             sendBufferedMessages(to: ws)
         }
 
-
         ws.onText { ws, text in
 
             if useAuth {
@@ -56,6 +55,9 @@ public func configure(_ app: Application) throws {
                         if let recipient = json?["recipient"] as? String,
                             let message = json?["message"] as? String {
 
+                            let fromUser = json?["from"] as? String
+                             print("FROM: \(fromUser)")
+
                             print("Received message from \(user) to \(recipient): \(message)")
 
                             // Send the message only to the intended recipient
@@ -72,6 +74,11 @@ public func configure(_ app: Application) throws {
                         // HANDLE COMMANDS *****************************************************************
                         else if let recipient = json?["recipient"] as? String,
                              let command = json?["command"] as? String {
+
+
+
+                           let fromUser = json?["from"] as? String
+                             print("FROM: \(fromUser)")
 
                             let resps = clients[recipient] ?? []
                             print("cmd resps = \(resps)")

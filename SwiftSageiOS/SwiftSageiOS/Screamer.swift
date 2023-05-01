@@ -206,7 +206,7 @@ class ScreamClient: WebSocketDelegate {
             break
         }
         if websocket != nil {
-            let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
+            let messageData: [String: Any] = ["recipient": "SERVER", "command": command, "from": SettingsViewModel.shared.userName]
             do {
                let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
                 let messageString = String(data: messageJSON, encoding: .utf8)
