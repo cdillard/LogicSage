@@ -36,6 +36,17 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## News, Changelog
 
 ---- 
+05-01-2023
+
+Resizable Webview windows and Resizable File windows. Bug fixes galore.
+
+Rewrote Vapor server to support multiple users authenticating :).
+
+Redid SwiftSage iOS UI for more screen real estate.
+
+Google Command Progress, try it with `g` command, turn off enableGoogle in server if causing issues.
+
+---- 
 04-30-2023
 
 Swift Sage is getting mroe mobile!
