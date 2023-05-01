@@ -4,14 +4,14 @@
 <dict>
 	<key>NSAllowsArbitraryLoads</key>
 	<true/>
-	<key>UIAppSupportsHDR</key>
-	<true/>
 	<key>NSAllowsLocalNetworking</key>
 	<true/>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_sagess._tcp</string>
 	</array>
+	<key>UIAppSupportsHDR</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

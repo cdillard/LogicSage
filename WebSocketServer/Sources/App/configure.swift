@@ -47,7 +47,6 @@ public func configure(_ app: Application) throws {
                         //ws.send("Echo: \(text)")
                         let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .allowFragments) as? [String: String]
 
-
                         print("parsed to JSON =  \(json)")
 
                             // HANDLE MESSAGES *****************************************************************
@@ -56,9 +55,12 @@ public func configure(_ app: Application) throws {
                             let message = json?["message"] as? String {
 
                             let fromUser = json?["from"] as? String
-                             print("FROM: \(fromUser)")
+                            print("FROM: \(fromUser)")
 
-                            print("Received message from \(user) to \(recipient): \(message)")
+
+
+
+                            print("Received message from \(user) or fromUser:\(fromUser) to \(recipient): \(message)")
 
                             // Send the message only to the intended recipient
 
@@ -75,8 +77,6 @@ public func configure(_ app: Application) throws {
                         else if let recipient = json?["recipient"] as? String,
                              let command = json?["command"] as? String {
 
-
-
                            let fromUser = json?["from"] as? String
                              print("FROM: \(fromUser)")
 
@@ -84,11 +84,11 @@ public func configure(_ app: Application) throws {
                             print("cmd resps = \(resps)")
 
                             resps.forEach { recipientSocket in
-                                print("Received message fpr recipientSocket = \(recipientSocket)")
+
+                                print("Received COMMAND from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(command)")
 
                                 recipientSocket.send("\(command)")
                             }
-
                         } else {
                             ws.send("Invalid command format")
                         }

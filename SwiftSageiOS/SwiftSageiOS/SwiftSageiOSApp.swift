@@ -7,13 +7,16 @@
 
 import SwiftUI
 import Combine
+
 let STRING_LIMIT = 50000
 
+var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel()
     @StateObject private var appState = AppState()
+
     init() {
         serviceDiscovery = ServiceDiscovery()
         serviceDiscovery?.startDiscovering()
@@ -30,17 +33,7 @@ struct SwiftSageiOSApp: App {
 //        }
 #endif
     //    cmdWindows = [LCManager]()
-//        // Alpha window
-//        // Beta
-//        // Gamma
-//        // Delta
-//        // Epsilon
-//        // Zeta
-//        // Eta
-//        // Theta
-//        //Iota
-////        Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho
-//        Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
+//Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho    Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
     }
     var body: some Scene {
         WindowGroup {
@@ -58,6 +51,20 @@ struct SwiftSageiOSApp: App {
                             }
                         }
                     )
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+                        print("didFinishLaunchingNotification")
+                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                        print("applicationDidBecomeActive")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        print("applicationWillEnterForeground")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        print("didEnterBackgroundNotification")
+                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
+                    }
             }
         }
     }
@@ -66,7 +73,6 @@ struct SwiftSageiOSApp: App {
     }
 }
 
-var serviceDiscovery: ServiceDiscovery?
 
 func setHasSeenInstructions(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
@@ -80,8 +86,6 @@ func hasSeenInstructions() -> Bool {
 //var cmdWindows = [LCManager]()
 //var mainWindow = LCManager.shared
 
-
-var firstBackground = false
 class AppState: ObservableObject {
     @Published var isInBackground: Bool = false
     private var cancellables: [AnyCancellable] = []
@@ -104,10 +108,7 @@ class AppState: ObservableObject {
             .sink { [weak self] in
                 self?.isInBackground = $0
                 DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-                    if firstBackground {
                         serviceDiscovery?.startDiscovering()
-                    }
-                    firstBackground = true
                 }
             }
             .store(in: &cancellables)
