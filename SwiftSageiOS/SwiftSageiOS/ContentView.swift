@@ -19,7 +19,7 @@ let consoleManager = LCManager.shared//cmdWindows[0]
 
 #endif
 
-let maxButtonSize: CGFloat = 20
+let maxButtonSize: CGFloat = 19.5
 
 
 struct ContentView: View {
@@ -162,12 +162,11 @@ struct ContentView: View {
             .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
             .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
             .environmentObject(keyboardObserver)
-            //.padding(.bottom, geometry.size.width * 0.01)
 
 
             VStack {
                 Spacer()
-                HStack {
+                HStack(spacing: 0) {
                     // OPEN TERM BUTTON
 
                     Button(action: {
@@ -184,7 +183,6 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
                     }
-                    //.padding(geometry.size.width * 0.01)
 
                     // SETTINGS BUTTON
                     Button(action: {
@@ -194,7 +192,6 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
                     }
-                    //.padding(geometry.size.width * 0.01)
                     .popover(isPresented: $showSettings, arrowEdge: .top) {
 #if !os(macOS)
 
@@ -223,7 +220,6 @@ struct ContentView: View {
 
                         resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
                     }
-                    //.padding(geometry.size.width * 0.01)
 
                     // ADD VIEW BUTTON
                     Button(action: {
@@ -237,7 +233,6 @@ struct ContentView: View {
 
                         resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                     }
-                    //.padding(geometry.size.width * 0.01)
                     .popover(isPresented: $settingsViewModel.showAddView, arrowEdge: .top) {
 
 #if !os(macOS)
@@ -286,13 +281,9 @@ struct ContentView: View {
                             )
                     }
 
-                    //.disabled(!settingsViewModel.hasAcceptedMicrophone)
-                    //.padding(geometry.size.width * 0.01)
-
                     Text(settingsViewModel.recognizedText)
                         .font(.caption)
                         .lineLimit(nil)
-                        //.padding(geometry.size.width * 0.01)
 
                     Spacer()
 
@@ -329,11 +320,10 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .frame(width: min(size.width * 0.05, maxButtonSize), height: min(size.width * 0.05, maxButtonSize))
-          //  .padding(size.width * 0.02)
+            .padding(size.width * 0.01)
             .background(settingsViewModel.buttonColor)
             .foregroundColor(.white)
-            .cornerRadius(size.width * 0.05)
-            //.padding(.bottom, size.width * 0.01)
+//            .cornerRadius(size.width * 0.05)
     }
 }
 

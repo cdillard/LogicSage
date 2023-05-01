@@ -269,8 +269,10 @@ func advertise() {
 }
 
 func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
-    if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
-        return scalar
+    if text != nil && !text.isEmpty {
+        if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
+            return scalar
+        }
     }
     return nil
 }

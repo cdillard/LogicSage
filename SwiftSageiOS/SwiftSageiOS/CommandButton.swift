@@ -60,13 +60,12 @@ struct CommandButtonView: View {
                         }) {
                             Text( "debate")
                                 .font(.caption)
-                                .lineLimit(nil)
+                                .padding(geometry.size.width * 0.01)
+                                .lineLimit(1)
                                 .foregroundColor(Color.white)
-                                //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                       // .padding(.bottom)
 
                         // STOP BUTTON
                         Button(action: {
@@ -90,7 +89,9 @@ struct CommandButtonView: View {
                         }) {
                             Text("g end")
                                 .font(.caption)
-                                .lineLimit(nil)
+                                .padding(geometry.size.width * 0.01)
+
+                                .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
@@ -105,7 +106,9 @@ struct CommandButtonView: View {
                         }) {
                             Text( "i")
                                 .font(.caption)
-                                .lineLimit(nil)
+                                .padding(geometry.size.width * 0.01)
+
+                                .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
@@ -119,7 +122,9 @@ struct CommandButtonView: View {
                         }) {
                             Text( "g")
                                 .font(.caption)
-                                .lineLimit(nil)
+                                .padding(geometry.size.width * 0.01)
+
+                                .lineLimit(1)
                                 .foregroundColor(Color.white)
 //                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
@@ -136,7 +141,9 @@ struct CommandButtonView: View {
                         }) {
                             Text( "X")
                                 .font(.caption)
-                                .lineLimit(nil)
+                                .padding(geometry.size.width * 0.01)
+
+                                .lineLimit(1)
                                 .foregroundColor(Color.white)
 //                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
@@ -168,13 +175,13 @@ struct CommandButtonView: View {
                     }) {
                         Text("🛑")
                             .font(.caption)
-                            .lineLimit(nil)
+                            .padding(geometry.size.width * 0.01)
+
+                            .lineLimit(1)
                             .foregroundColor(Color.white)
-                           // .padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
-                    //.padding(.bottom)
 
                     // EXEC BUTTON
                     Button(action: {
@@ -188,9 +195,11 @@ struct CommandButtonView: View {
 //                        #endif
 
                     }) {
-                        Text("EXEC")
+                        Text("✅🔄")
                             .font(.caption)
-                            .lineLimit(nil)
+                            .padding(geometry.size.width * 0.01)
+
+                            .lineLimit(1)
                             .foregroundColor(Color.white)
                             //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
@@ -217,9 +226,10 @@ struct CommandButtonView: View {
                             openText()
                         }
                     }) {
-                        Text(self.settingsViewModel.isInputViewShown ? "DONE" : "COMMAND")
+                        Text(self.settingsViewModel.isInputViewShown ? "⌨️" : "🔹💬")
                             .font(.caption)
-                            .lineLimit(nil)
+                            .padding(geometry.size.width * 0.01)
+                            .lineLimit(1)
                             .foregroundColor(Color.white)
                             //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
