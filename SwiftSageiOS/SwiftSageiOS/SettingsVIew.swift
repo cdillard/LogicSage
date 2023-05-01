@@ -27,50 +27,76 @@ struct SettingsView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
     @State private var currentModeIndex: Int = 0
-
+    @State private var microphoneAccess: Bool?
+    
     @State private var selectedIOSVoiceIndex: Int?
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Group {
-                        Text("Settings")
-                            .font(.caption)
-                            .lineLimit(nil)
-                            .fontWeight(.bold)
-                            .padding(.bottom)
-                        
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Terminal Background Color")
-                                .fontWeight(.semibold)
-                            ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
-                                .labelsHidden()
-                                .padding(.horizontal, 8)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Terminal Text Color")
-                                .fontWeight(.semibold)
-                            ColorPicker("", selection: $settingsViewModel.terminalTextColor)
-                                .labelsHidden()
-                                .padding(.horizontal, 8)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Button Color")
-                                .fontWeight(.semibold)
-                            ColorPicker("", selection: $settingsViewModel.buttonColor)
-                                .labelsHidden()
-                                .padding(.horizontal, 8)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 15) {
-                            Text("Background Color")
-                                .fontWeight(.semibold)
-                            ColorPicker("", selection: $settingsViewModel.backgroundColor)
-                                .labelsHidden()
-                                .padding(.horizontal, 8)
-                        }
+                        Group {
+                            Text("Settings")
+                                .font(.caption)
+                                .lineLimit(nil)
+                                .fontWeight(.bold)
+                                .padding(.bottom)
+                            VStack(alignment: .leading, spacing: 15) {
+                                Text("Terminal Background Color")
+                                    .fontWeight(.semibold)
+                                ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
+                                    .labelsHidden()
+                                    .padding(.horizontal, 8)
+                            }
+                            VStack(alignment: .leading, spacing: 15) {
+                                Text("Terminal Text Color")
+                                    .fontWeight(.semibold)
+                                ColorPicker("", selection: $settingsViewModel.terminalTextColor)
+                                    .labelsHidden()
+                                    .padding(.horizontal, 8)
+                            }
+                            VStack(alignment: .leading, spacing: 15) {
+                                Text("Button Color")
+                                    .fontWeight(.semibold)
+                                ColorPicker("", selection: $settingsViewModel.buttonColor)
+                                    .labelsHidden()
+                                    .padding(.horizontal, 8)
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 15) {
+
+                                Text("Background Color")
+
+                                    .fontWeight(.semibold)
+                                ColorPicker("", selection: $settingsViewModel.backgroundColor)
+                                    .labelsHidden()
+                                    .padding(.horizontal, 8)
+                            }
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("username: ").font(.caption)
+                                    TextEditor(text: $settingsViewModel.userName)
+                                    .fontWeight(.semibold)
+                                    .autocorrectionDisabled(true)
+            #if !os(macOS)
+
+                                    .autocapitalization(.none)
+            #endif
+
+                                }
+                                HStack {
+                                    Text("password: ").font(.caption)
+
+                                    TextEditor(text: $settingsViewModel.password)
+                                        .fontWeight(.semibold)
+                                        .autocorrectionDisabled(true)
+                #if !os(macOS)
+
+                                        .autocapitalization(.none)
+                #endif
+                                    
+
+                                }
+                            }
                     }
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Text Size")
@@ -122,6 +148,34 @@ struct SettingsView: View {
                             .cornerRadius(8)
                     }
                     .padding(.bottom)
+
+
+                    // ENABLE MIC BUTTON
+                    Text("\(microphoneAccess == true ? "MIC ENABLED" : "Enable mic")")
+                    Button(action: {
+                        withAnimation {
+#if !os(macOS)
+                            consoleManager.print("Requesing mic permission...")
+#endif
+                            requestMicrophoneAccess { granted in
+                                microphoneAccess = granted
+                                settingsViewModel.hasAcceptedMicrophone = microphoneAccess == true
+                            }
+                        }
+                    }) {
+                        resizableButtonImage(systemName:
+                                            "mic.badge.plus",
+                                             size: geometry.size)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 12)
+                        .background(settingsViewModel.buttonColor)
+                        .cornerRadius(8)
+
+                    }
+                    .padding(.bottom)
+
                     // IOS AUDIO SETTING ON/OFF
                     Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable.") iOS audio output (this device)")
                     Button  {
@@ -179,13 +233,48 @@ struct SettingsView: View {
                                         .frame(height: 30)
                                     }
                                 }
-                                .frame(height: CGFloat(settingsViewModel.installedVoices.count * 30))
+                                .frame(height: CGFloat(settingsViewModel.installedVoices.count * 4))
                             }
 
                         }
 
                         HStack {
                             VStack {
+
+                                // BUTTON FOR (i) info
+                                Text("info")
+                                Button(action: {
+                                    withAnimation {
+                                        showSettings.toggle()
+
+                                        // Show Intro vie
+
+                                        settingsViewModel.showInstructions.toggle()
+
+    #if !os(macOS)
+                            consoleManager.print("info tapped...")
+    #endif
+                                        print("info tapped")
+
+
+//    #if !os(macOS)
+//                            consoleManager.isVisible = false
+//    #endif
+                                    }
+                                }) {
+                                    resizableButtonImage(systemName:
+                                                        "info.windshield",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 40)
+                                    .padding(.vertical, 12)
+                                    .background(settingsViewModel.buttonColor)
+                                    .cornerRadius(8)
+
+                                }
+                                .padding(.bottom)
+
                                 Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable.") MACOS audio output")
                                 Button  {
                                     withAnimation {

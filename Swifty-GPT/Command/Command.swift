@@ -429,7 +429,7 @@ func googleCommand(input: String) {
     searchIt(query: input) { innerContent in
         if let innerContent = innerContent {
 
-            multiPrinter("\n🤖 googled \(input): \(innerContent)")
+            //multiPrinter("\n🤖 googled \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
             searchResultHeadingGlobal = "\(searchResultHeading)\n\(innerContent)"

@@ -47,9 +47,6 @@ struct SageMultiView: View {
                           }
                   )
 
-            // hmm, this is where we can put a sourceeditor or a webview....
-
-            // HANDLE SOURCE CODE EDITOR
             if viewMode == .editor && settingsViewModel.isEditorVisible {
 
 #if !os(macOS)
@@ -57,21 +54,18 @@ struct SageMultiView: View {
                     SourceCodeTextEditor(text: $theCode)
                         .ignoresSafeArea()
                         .modifier(ResizableViewModifier(frame: $frame))
-                    //    .offset(position)
-
                         .scaleEffect(currentScale)
-
-                        .gesture(
-                            MagnificationGesture()
-                                .onChanged { scaleValue in
-                                    // Update the current scale based on the gesture's scale value
-                                    currentScale = lastScaleValue * scaleValue
-                                }
-                                .onEnded { scaleValue in
-                                    // Save the scale value when the gesture ends
-                                    lastScaleValue = currentScale
-                                }
-                        )
+//                        .gesture(
+//                            MagnificationGesture()
+//                                .onChanged { scaleValue in
+//                                    // Update the current scale based on the gesture's scale value
+//                                    currentScale = lastScaleValue * scaleValue
+//                                }
+//                                .onEnded { scaleValue in
+//                                    // Save the scale value when the gesture ends
+//                                    lastScaleValue = currentScale
+//                                }
+//                        )
                 }
 
 #endif
@@ -80,27 +74,17 @@ struct SageMultiView: View {
                 WebView(url: webViewURL)
                     .ignoresSafeArea()
                     .modifier(ResizableViewModifier(frame: $frame))
-                 //   .offset(position)
-
                     .scaleEffect(currentScale)
-                    .gesture(
-                        MagnificationGesture()
-                            .onChanged { scaleValue in
-                                // Update the current scale based on the gesture's scale value
-                                currentScale = lastScaleValue * scaleValue
-                            }
-                            .onEnded { scaleValue in
-                                // Save the scale value when the gesture ends
-                                lastScaleValue = currentScale
-                            }
-                    )
-
 //                    .gesture(
-//                        DragGesture()
-//                            .onChanged { value in
-//                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+//                        MagnificationGesture()
+//                            .onChanged { scaleValue in
+//                                // Update the current scale based on the gesture's scale value
+//                                currentScale = lastScaleValue * scaleValue
 //                            }
-//
+//                            .onEnded { scaleValue in
+//                                // Save the scale value when the gesture ends
+//                                lastScaleValue = currentScale
+//                            }
 //                    )
             }
 
@@ -132,6 +116,7 @@ struct HandleView: View {
 }
 #endif
 
+#if !os(macOS)
 
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
@@ -212,3 +197,4 @@ struct ResizingHandle: View {
         frame.size.height = max(newHeight, handleSize * 2)
     }
 }
+#endif

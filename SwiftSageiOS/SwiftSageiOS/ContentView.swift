@@ -35,7 +35,6 @@ struct ContentView: View {
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
 
 
-    @State private var showAddView = false
 
 
     var body: some View {
@@ -100,8 +99,8 @@ struct ContentView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: geometry.size.width * 0.1, height: geometry.size.height * 0.1)
                             .scaledToFit()
-                            .padding(.top, 5)
-                            .padding(.leading, 5)
+                            .padding(.top, 3)
+                            .padding(.leading, 1)
                         Spacer()
 
                     }
@@ -163,12 +162,14 @@ struct ContentView: View {
             .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
             .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
             .environmentObject(keyboardObserver)
-            .padding(.bottom, geometry.size.width * 0.01)
+            //.padding(.bottom, geometry.size.width * 0.01)
 
 
             VStack {
                 Spacer()
                 HStack {
+                    // OPEN TERM BUTTON
+
                     Button(action: {
 #if !os(macOS)
                         if consoleManager.isVisible {
@@ -183,7 +184,9 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
                     }
-                    .padding(geometry.size.width * 0.01)
+                    //.padding(geometry.size.width * 0.01)
+
+                    // SETTINGS BUTTON
                     Button(action: {
                         withAnimation {
                             showSettings.toggle()
@@ -191,7 +194,7 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
                     }
-                    .padding(geometry.size.width * 0.01)
+                    //.padding(geometry.size.width * 0.01)
                     .popover(isPresented: $showSettings, arrowEdge: .top) {
 #if !os(macOS)
 
@@ -207,6 +210,7 @@ struct ContentView: View {
 
 
                     }
+                    // PING BUTTON
                     Button(action: {
                         if screamer.websocket != nil {
                             screamer.websocket.write(ping: Data())
@@ -219,27 +223,48 @@ struct ContentView: View {
 
                         resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
                     }
-                    .padding(geometry.size.width * 0.01)
+                    //.padding(geometry.size.width * 0.01)
+
+                    // ADD VIEW BUTTON
                     Button(action: {
 #if !os(macOS)
                         consoleManager.isVisible = false
 #endif
-                        showAddView.toggle()
+                        settingsViewModel.showAddView.toggle()
 
                         // window 1 is for second cmd prompt
                     }) {
 
                         resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                     }
-                    .padding(geometry.size.width * 0.01)
-                    .popover(isPresented: $showAddView, arrowEdge: .top) {
-                        AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel)
+                    //.padding(geometry.size.width * 0.01)
+                    .popover(isPresented: $settingsViewModel.showAddView, arrowEdge: .top) {
+
+#if !os(macOS)
+
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
+                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+                        }
+                        else {
+                            AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
+
+                        }
+#endif
+
                     }
 
                     // MIC BUTTON
                     // "mic.fill"
                     // "mic.slash.fill"
                     Button(action: {
+                        if !settingsViewModel.hasAcceptedMicrophone {
+#if !os(macOS)
+                            consoleManager.print("Enable mic in Settings...")
+#endif
+                            print("Enable mic in Settings...")
+                            return
+                        }
                         if settingsViewModel.isRecording {
                             settingsViewModel.speechRecognizer.stopRecording()
                         } else {
@@ -251,14 +276,23 @@ struct ContentView: View {
                         resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
                             .font(.caption)
                             .lineLimit(nil)
-
+                            .overlay(
+                                Group {
+                                    if !settingsViewModel.hasAcceptedMicrophone {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .foregroundColor(Color.white.opacity(0.5))
+                                    }
+                                }
+                            )
                     }
-                    .padding(geometry.size.width * 0.01)
+
+                    //.disabled(!settingsViewModel.hasAcceptedMicrophone)
+                    //.padding(geometry.size.width * 0.01)
 
                     Text(settingsViewModel.recognizedText)
                         .font(.caption)
                         .lineLimit(nil)
-                        .padding(geometry.size.width * 0.01)
+                        //.padding(geometry.size.width * 0.01)
 
                     Spacer()
 
@@ -282,19 +316,24 @@ struct ContentView: View {
 #endif
             }
         }
-
-
+        .overlay(
+            Group {
+                if settingsViewModel.showInstructions {
+                    InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
+                }
+            }
+        )
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
             .frame(width: min(size.width * 0.05, maxButtonSize), height: min(size.width * 0.05, maxButtonSize))
-            .padding(size.width * 0.02)
+          //  .padding(size.width * 0.02)
             .background(settingsViewModel.buttonColor)
             .foregroundColor(.white)
             .cornerRadius(size.width * 0.05)
-            .padding(.bottom, size.width * 0.01)
+            //.padding(.bottom, size.width * 0.01)
     }
 }
 

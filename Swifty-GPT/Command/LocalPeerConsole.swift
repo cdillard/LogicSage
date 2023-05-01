@@ -9,22 +9,23 @@ import Foundation
 import Starscream
 
 func multiPrinter(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    for username in ["chris"] { //, "chuck", "hackerman"] {
+        if !swiftSageIOSEnabled {
+            print(items, separator: separator, terminator: terminator)
+            return
+        }
 
-    if !swiftSageIOSEnabled {
-        print(items, separator: separator, terminator: terminator)
-        return
-    }
-
-    if items.count == 1, let singleString = items.first as? String {
-        print(items, separator: separator, terminator: terminator)
-        localPeerConsole.sendLog(singleString)
-        return
-    }
-    // Otherwise, handle the items as a collection of strings
-    for item in items {
-        if let str = item as? String {
-            print(str, separator: separator, terminator: terminator)
-            localPeerConsole.sendLog(str)
+        if items.count == 1, let singleString = items.first as? String {
+            print(items, separator: separator, terminator: terminator)
+            localPeerConsole.sendLog(to: username, text: singleString)
+            return
+        }
+        // Otherwise, handle the items as a collection of strings
+        for item in items {
+            if let str = item as? String {
+                print(str, separator: separator, terminator: terminator)
+                localPeerConsole.sendLog(to: username, text: str)
+            }
         }
     }
 }
@@ -34,11 +35,20 @@ let localPeerConsole = LocalPeerConsole()
 class LocalPeerConsole: NSObject {
     let webSocketClient = WebSocketClient()
 
-    func sendLog(_ text: String) {
+    func sendLog(to recipient: String, text: String) {
+         let logData: [String: String] = ["recipient": recipient, "message": text]
+        do {
+            let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+            let logString = String(data: logJSON, encoding: .utf8)
+            webSocketClient.websocket.write(string: logString ?? "")
 
-        webSocketClient.websocket.write(string: text)
-    }
+        }
+        catch {
+            print( "error = \(error)")
+        }
+     }
 
+    // TODO: Fix with Auth
     func sendImageData(_ imageData: Data?) {
         guard let data = imageData else {
             print("failed")
@@ -53,18 +63,26 @@ class WebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
-            client.write(string: "hello from sws")
-
+            let authData: [String: String] = ["username": "SERVER", "password": "supers3cre3t"]
+            do {
+                let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed])
+                let authString = String(data: authJSON, encoding: .utf8)
+                client.write(string: authString ?? "")
+            }
+            catch {
+                print("fail = \(error)")
+            }
             startPingTimer()
         case .disconnected(let reason, let code):
             print("Disconnected from server: \(reason), code: \(code)")
             stopPingTimer()
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                print("Reconnecting...")
-                self.connect()
-            }
+//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+//                print("Reconnecting...")
+//                self.connect()
+//            }
         case .text(let text):
-            print("Received text: \(text)")
+            //print("Received text: \(text)")
+
             let components = text.split(separator: " ", maxSplits: 1)
             if !components.isEmpty {
                 var comp2 = ""
@@ -76,6 +94,12 @@ class WebSocketClient: WebSocketDelegate {
             else {
                 print("niped")
             }
+
+
+
+
+
+
         case .binary(let data):
             print("Received binary data: \(data)")
         case .pong(let data):

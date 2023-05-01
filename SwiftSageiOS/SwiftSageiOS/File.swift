@@ -51,7 +51,7 @@ struct InstructionsPopup: View {
                     setHasSeenInstructions(true)
 #if !os(macOS)
                     
-                    consoleManager.isVisible = true
+                   // consoleManager.isVisible = true
                     consoleManager.fontSize = settingsViewModel.textSize
 #endif
                 }) {

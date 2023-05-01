@@ -28,6 +28,25 @@ class SettingsViewModel: ObservableObject {
     @StateObject var speechRecognizer = SpeechRecognizer()
     @Published var recognizedText: String = ""
 
+
+    @Published var hasAcceptedMicrophone = false
+
+    @Published var showAddView = false
+    @Published var showInstructions: Bool = !hasSeenInstructions()
+
+
+    @AppStorage("userName") var userName = "chris" {
+        didSet {
+           // screamer.disconnect()
+        }
+    }
+    @AppStorage("password") var password = "swiftsage" {
+        didSet {
+           // screamer.disconnect()
+        }
+    }
+
+
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil
     func updateImage(data: Data) {

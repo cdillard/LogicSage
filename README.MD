@@ -9,24 +9,19 @@ DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may ar
 
 SwiftSage is a cutting-edge technology that integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub.
 
-NOTE: ethics exists.
-Approach AI and GPT like anything, with respect for balance. It's very addictive.
- >   But we gotta remember, with great power comes great responsibility too
-    We need to be careful of the things AGI can do
-    We gotta keep an eye on the algorithms we employ
-    And ensure they don't become something we cannot enjoy
+NOTE: ethics exists. Approach AI and GPT like anything, with respect for balance. It's very addictive.
 
 ## Features
 SwiftSage provides numerous features to accelerate software development and improve efficiency:
-- iOS remote for SwiftSage [IN-PROGRESS]
-- Code analysis and optimization
-- Error detection and correction [IN-PROGRESS]
 - Voice-activated GPT integration
+- Integration with Cereproc Voices and Apple's built-in text-to-speech software
+- Debate mode: pit the GPT personas against one another with "debate" and "debate your topic"
+- iOS remote for SwiftSage [IN-PROGRESS]
+- Code analysis and optimization [IN-PROGRESS]
+- Error detection and correction [IN-PROGRESS]
 - Real-time code suggestions [IN-PROGRESS]
 - Powerful debugging tool [IN-PROGRESS]
-- Integration with Apple's built-in text-to-speech software
 - Personalized memory storage using a consciousness module [IN-PROGRESS]
-- Debate mode: pit the GPT personas against one another with "debate" and "debate your topic"
 
 ## Table of Contents
 - News, Changelog

@@ -42,7 +42,6 @@ struct SwiftSageiOSApp: App {
 ////        Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho
 //        Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
     }
-    @State private var showInstructions: Bool = !hasSeenInstructions()
     var body: some Scene {
         WindowGroup {
             ZStack {
@@ -54,8 +53,8 @@ struct SwiftSageiOSApp: App {
 
                     .overlay(
                         Group {
-                            if showInstructions {
-                                InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
+                            if settingsViewModel.showInstructions {
+                                InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
                             }
                         }
                     )

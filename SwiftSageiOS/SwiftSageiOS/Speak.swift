@@ -84,3 +84,16 @@ func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
     }
     return ret
 }
+
+func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
+#if !os(macOS)
+
+    let audioSession = AVAudioSession.sharedInstance()
+    audioSession.requestRecordPermission { granted in
+        DispatchQueue.main.async {
+            completion(granted)
+        }
+    }
+#endif
+
+}

@@ -31,8 +31,18 @@ class ScreamClient: WebSocketDelegate {
 #if !os(macOS)
 
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
-            client.write(string: "Hello from \(devType)")
 #endif
+
+            let authData: [String: Any] = ["username": SettingsViewModel.shared.userName, "password": SettingsViewModel.shared.password]
+            do {
+            let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed]) 
+                let authString = String(data: authJSON, encoding: .utf8)
+                client.write(string: authString ?? "")
+            }
+            catch {
+                print("error = \(error)")
+            }
+            
             startPingTimer()
         case .disconnected(let reason, let code):
             print("WebSocket disconnected, reason: \(reason), code: \(code)")
@@ -196,7 +206,16 @@ class ScreamClient: WebSocketDelegate {
             break
         }
         if websocket != nil {
-            websocket.write(string:command)
+            let messageData: [String: Any] = ["recipient": "SERVER", "message": command]
+            do {
+               let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
+            let messageString = String(data: messageJSON, encoding: .utf8)
+             websocket.write(string: messageString ?? "")
+            }
+            catch {
+                print("error = \(error)")
+            }
+            
         }
     }
 

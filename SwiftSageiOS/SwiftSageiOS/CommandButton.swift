@@ -32,25 +32,25 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
-#if !os(macOS)
-
-                    if !settingsViewModel.isInputViewShown {
-                        // PLugItIn BUTTON
-                        Button("🔌") {
-                            print("🔌 Force reconnecting websocket...")
-                            consoleManager.print("🔌 Force reconnect...")
-                            consoleManager.print("You can always force quit / restart you know...")
-
-                            screamer.connect()
-                        }
-                        .font(.caption)
-                        .lineLimit(nil)
-//                        .foregroundColor(Color.white)
-//                        .padding(.bottom)
-                        .background(settingsViewModel.buttonColor)
-//                        .cornerRadius(10)
-                    }
-#endif
+//#if !os(macOS)
+//
+//                    if !settingsViewModel.isInputViewShown {
+//                        // PLugItIn BUTTON
+//                        Button("🔌") {
+//                            print("🔌 Force reconnecting websocket...")
+//                            consoleManager.print("🔌 Force reconnect...")
+//                            consoleManager.print("You can always force quit / restart you know...")
+//
+//                            screamer.connect()
+//                        }
+//                        .font(.caption)
+//                        .lineLimit(nil)
+////                        .foregroundColor(Color.white)
+////                        .padding(.bottom)
+//                        .background(settingsViewModel.buttonColor)
+////                        .cornerRadius(10)
+//                    }
+//#endif
 
                     if settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
                         // debate BUTTON
@@ -62,24 +62,42 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding(geometry.size.width * 0.01)
+                                //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                        .padding(.bottom)
-//                        // st BUTTON
-//                        Button(action: {
-//                            isTextFieldFocused = true
-//                            multiLineText += "st"
-//                        }) {
-//                            Text( "st")
-//                                .font(.subheadline)
-//                                .foregroundColor(Color.white)
-//                                .padding()
-//                                .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
-//                        }
-//                        .padding(.bottom)
+                       // .padding(.bottom)
+
+                        // STOP BUTTON
+                        Button(action: {
+
+                            // cmd send st
+                            settingsViewModel.multiLineText = "g end"
+                            DispatchQueue.main.async {
+
+                                // Execute your action here
+                                screamer.sendCommand(command: settingsViewModel.multiLineText)
+
+                                self.settingsViewModel.isInputViewShown = false
+
+                                settingsViewModel.multiLineText = ""
+//    #if !os(macOS)
+//
+//                                consoleManager.isVisible = true
+//    #endif
+                            }
+
+                        }) {
+                            Text("g end")
+                                .font(.caption)
+                                .lineLimit(nil)
+                                .foregroundColor(Color.white)
+                                //.padding(geometry.size.width * 0.01)
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        //.padding(.bottom)
+                        
                         // i BUTTON
                         Button(action: {
                             isTextFieldFocused = true
@@ -89,11 +107,11 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding(geometry.size.width * 0.01)
+                                //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                        .padding(.bottom)
+                        //.padding(.bottom)
                         // g BUTTON
                         Button(action: {
                             isTextFieldFocused = true
@@ -103,12 +121,11 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding(geometry.size.width * 0.01)
+//                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
 
                         }
-                        .padding(.bottom)
 
                     }
 
@@ -121,13 +138,14 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .lineLimit(nil)
                                 .foregroundColor(Color.white)
-                                .padding(geometry.size.width * 0.01)
+//                                .padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                         }
-                        .padding(.bottom)
 
                     }
+
+
                     // STOP BUTTON
                     Button(action: {
 
@@ -141,10 +159,10 @@ struct CommandButtonView: View {
                             self.settingsViewModel.isInputViewShown = false
 
                             settingsViewModel.multiLineText = ""
-#if !os(macOS)
-
-                            consoleManager.isVisible = true
-#endif
+//#if !os(macOS)
+//
+//                            consoleManager.isVisible = true
+//#endif
                         }
 
                     }) {
@@ -152,11 +170,11 @@ struct CommandButtonView: View {
                             .font(.caption)
                             .lineLimit(nil)
                             .foregroundColor(Color.white)
-                            .padding()
+                           // .padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
-                    .padding(.bottom)
+                    //.padding(.bottom)
 
                     // EXEC BUTTON
                     Button(action: {
@@ -164,21 +182,21 @@ struct CommandButtonView: View {
                         screamer.sendCommand(command: settingsViewModel.multiLineText)
 
                         self.settingsViewModel.isInputViewShown = false
-#if !os(macOS)
-
-                        consoleManager.isVisible = true
-                        #endif
+//#if !os(macOS)
+//
+//                        consoleManager.isVisible = true
+//                        #endif
 
                     }) {
                         Text("EXEC")
                             .font(.caption)
                             .lineLimit(nil)
                             .foregroundColor(Color.white)
-                            .padding(geometry.size.width * 0.01)
+                            //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
-                    .padding(.bottom)
+                    //.padding(.bottom)
 
                     // TERM/COMMAND BUTTON
                     Button(action: {
@@ -203,14 +221,14 @@ struct CommandButtonView: View {
                             .font(.caption)
                             .lineLimit(nil)
                             .foregroundColor(Color.white)
-                            .padding(geometry.size.width * 0.01)
+                            //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(10)
                     }
-                    .padding(.bottom)
+                    ///.padding(.bottom)
 
                 }
-                .padding(.bottom)
+                //.padding(.bottom)
 
 
                 if settingsViewModel.isInputViewShown {

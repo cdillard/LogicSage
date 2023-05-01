@@ -83,6 +83,8 @@ struct AddView: View {
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
+
+                    // SHOW ADD VIEW BUTTON
                     Button(action: {
                         withAnimation {
                             showAddView.toggle()

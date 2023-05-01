@@ -9,57 +9,197 @@ import var Darwin.stdout
 let debugging = true
 
 let sendBuffer = false
-
+let useAuth = true
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
              ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
   
 let bufferSize = 100
   
 var messageBuffer: [String] = []
-
+var clients: [String: [WebSocket]] = [:]
 // configures your application
 public func configure(_ app: Application) throws {
+
     var connectedClients: [WebSocket] = []
 
     app.http.server.configuration.hostname = "0.0.0.0"
 
     app.webSocket("ws") { req, ws in
+        var username: String?
+
         if debugging {
             print("Client connected")
         }
+        
         connectedClients.append(ws)
+        
+        
         if (sendBuffer ) {
             sendBufferedMessages(to: ws)
         }
+
+
         ws.onText { ws, text in
-            if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
-                print("\(text)", terminator: "")
+
+            if useAuth {
+                if let user = username {
+                    do {
+                        print("Received MSG from \(user): \(text)")
+                        //ws.send("Echo: \(text)")
+                        let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .allowFragments) as? [String: String]
+
+
+                        print("parsed to JSON =  \(json)")
+
+                        if let recipient = json?["recipient"] as? String,
+                            let message = json?["message"] as? String {
+
+                            print("Received message from \(user) to \(recipient): \(message)")
+
+                            // Send the message only to the intended recipient
+
+                            let resps = clients[recipient] ?? []
+                            print("resps = \(resps)")
+
+                            resps.forEach { recipientSocket in
+                                print("Received message fpr recipientSocket = \(recipientSocket)")
+
+                                recipientSocket.send("\(message)")
+                            }
+                        } else {
+                             print("invalid message format")
+
+                           // ws.send("Invalid message format")
+                        }
+
+
+                        if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
+                            print("\(text)", terminator: "")
+                        }
+                        else {
+                            print("\(text)")
+                        }
+                    
+
+                        // for (_, otherSockets) in clients {
+                        //     // if debugging {
+                        //     //     print("other Sockets")
+                        //     // }
+                        //     // Send the message to all WebSocket connections, except the sender's connection
+                        //     for otherSocket in otherSockets where otherSocket !== ws {
+
+                        //       //  print("other Sockert")
+
+                        //         otherSocket.send("\(text)")
+                        //     }
+                        // }
+                    }
+                    catch {
+                        print("error = \(error)")
+                    }
+                } else {
+
+
+
+                    if debugging {
+                         print("No auth for this req, attempting to auth...")
+                    }
+                    // Try to parse the received text as JSON
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: [.allowFragments]) as? [String: String]
+    
+                        if debugging {
+
+                            print("Got JSON = \(json)")
+                        }
+                        // Validate username and password
+                        if let user = json?["username"],  let password = json?["password"],
+                        (user == "chris" && password == "swiftsage") 
+                        ||
+                        (user == "hackerman" && password == "swiftsage") 
+                        ||
+                        (user == "SERVER" && password == "supers3cre3t") 
+                        ||
+                        (user == "chuck" && password == "n1c3")  {
+                            
+                            // Authenticate the user
+                            // username = user
+                            // if clients[user] == nil {
+                            //     clients[user] = []
+                            // }
+
+                            //  var clientsUser =  clients[user] 
+
+                            // if clientsUser != nil {
+                            //     clientsUser?.append(ws)
+                            //                                 print("clientsUser = \(clientsUser)")
+
+                            // }
+
+                            // else {
+                            //                                 print("failed to get resps")
+
+                            // }
+                  // Authenticate the user
+                    username = user
+                    if clients[user] == nil {
+                        clients[user] = []
+                    }
+                    clients[user]?.append(ws)
+
+                            print("Authentication")
+                           // ws.send("Authenticated")
+                        }
+                        else {
+                            print("Invalid username or password)")
+
+                           // ws.send("Invalid username or password")
+                          //  ws.close(promise: nil)
+                        }
+                    } catch {
+                        print("Invalid JSON)")
+
+                        //ws.send("Invalid JSON")
+                        
+                        
+                        
+                        
+                        //ws.close(promise: nil)
+                    }
+                }
             }
             else {
-                print("\(text)")
-            }
-        
-            if debugging {
-                    print("connectedClients")
-                    print(connectedClients)
-            }
-            for client in connectedClients {
-                guard client !== ws else { 
-                    if debugging {
-                        print("skipping self")
-                    }
-                    continue
-                }
-                if debugging {
-                    print("send to client =\(client)")
-                }
-                        if (sendBuffer ) {
 
-                             updateMessageBuffer(with: text)
+
+                if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
+                    print("\(text)", terminator: "")
+                }
+                else {
+                    print("\(text)")
+                }
+            
+                if debugging {
+                        print("connectedClients")
+                        print(connectedClients)
+                }
+                for client in connectedClients {
+                    guard client !== ws else { 
+                        if debugging {
+                            print("skipping self")
                         }
-                client.send("\(text)")
+                        continue
+                    }
+                    if debugging {
+                        print("send to client =\(client)")
+                    }
+                    if (sendBuffer ) {
+
+                        updateMessageBuffer(with: text)
+                    }
+                    client.send("\(text)")
+                }
             }
-             fflush(stdout)
+            fflush(stdout)
 
         }
         ws.onBinary { ws, data in
@@ -84,18 +224,26 @@ public func configure(_ app: Application) throws {
         }
 
         ws.onClose.whenComplete { result in
-            if let index = connectedClients.firstIndex(where: { $0 === ws }) {
-                connectedClients.remove(at: index)
-            }
-
-            switch result {
-            case .success:
-                if debugging {
-
-                    print("Client disconnected")
+            if useAuth {
+                if let user = username {
+                    clients[user]?.removeAll(where: { $0 === ws })
+                    if clients[user]?.isEmpty ?? false {
+                        clients.removeValue(forKey: user)
+                    }
+                    print("Client disconnected: \(user)")
                 }
-            case .failure(let error):
-                print("Client disconnected with error: \(error)")
+            }
+            else {
+
+                switch result {
+                case .success:
+                    if debugging {
+
+                        print("Client disconnected")
+                    }
+                case .failure(let error):
+                    print("Client disconnected with error: \(error)")
+                }
             }
         }
     }
