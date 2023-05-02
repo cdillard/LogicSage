@@ -35,31 +35,36 @@ struct SettingsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                         Group {
-                            Text("Settings")
-                                .font(.caption)
-                           //     .lineLimit(nil)
-                           //     .fontWeight(.bold)
-                                .padding(.bottom)
+                            HStack {
+                                Text("Settings:")
+                                    .font(.caption)
+                                //     .lineLimit(nil)
+                                //     .fontWeight(.bold)
+                                    .padding(.bottom)
+
+                                Text("for more scroll down 📜⬇️")
+                                    .font(.caption)
+                                //     .lineLimit(nil)
+                                //     .fontWeight(.bold)
+                                    .padding(.bottom)
+                            }
                             Group {
                                 VStack(alignment: .leading, spacing: 15) {
                                     Text("Terminal Background Color")
                                     //    .fontWeight(.semibold)
                                     ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
-                                        .labelsHidden()
                                     .padding(.horizontal, 8)
                                 }
                                 VStack(alignment: .leading, spacing: 15) {
                                     Text("Terminal Text Color")
                                     //    .fontWeight(.semibold)
                                     ColorPicker("", selection: $settingsViewModel.terminalTextColor)
-                                    //.labelsHidden()
                                     .padding(.horizontal, 8)
                                 }
                                 VStack(alignment: .leading, spacing: 15) {
                                     Text("Button Color")
                                         .fontWeight(.semibold)
                                     ColorPicker("", selection: $settingsViewModel.buttonColor)
-                                        .labelsHidden()
                                     .padding(.horizontal, 8)
                                 }
 
@@ -69,7 +74,6 @@ struct SettingsView: View {
 
                                         .fontWeight(.semibold)
                                     ColorPicker("", selection: $settingsViewModel.backgroundColor)
-                                    //.labelsHidden()
                                     .padding(.horizontal, 8)
                                 }
                             }
@@ -82,7 +86,8 @@ struct SettingsView: View {
                                     HStack {
                                         Text("sws username: ").font(.caption)
                                         TextEditor(text: $settingsViewModel.userName)
-                                        //.fontWeight(.semibold)
+
+                                            .font(.footnote)
                                             .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -90,11 +95,13 @@ struct SettingsView: View {
 #endif
 
                                     }
+                                    .frame(height: 22)
+
                                     HStack {
                                         Text("sws password: ").font(.caption)
 
                                         TextEditor(text: $settingsViewModel.password)
-                                        //.fontWeight(.semibold)
+                                            .font(.footnote)
                                             .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -103,13 +110,15 @@ struct SettingsView: View {
 
 
                                     }
+                                    .frame(height: 22)
+
                                 }
                                 else if settingsViewModel.currentMode == .mobile {
                                     HStack {
                                         Text("openai🔑: ").font(.caption)
 
                                         TextEditor(text: $settingsViewModel.openAIKey)
-                                        //.fontWeight(.semibold)
+                                            .font(.footnote)
                                             .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -118,6 +127,8 @@ struct SettingsView: View {
 
 
                                     }
+                                    .frame(height: 22)
+
                                 }
                             }
                     }
@@ -322,54 +333,54 @@ struct SettingsView: View {
                                     .cornerRadius(8)
                                 }
                                 .padding(.bottom)
-
-                                if settingsViewModel.currentMode == .computer {
-                                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") MACOS audio output")
-                                    Button  {
-                                        withAnimation {
-#if !os(macOS)
-                                            print("TODO: IMPLEMENT ENABLE/DISABLE MAC OS AUDIO FROM IOS")
-                                            //                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-                                            //                                    if settingsViewModel.voiceOutputenabled {
-                                            //                                        stopVoice()
-                                            //                                    }
-                                            //                                    else {
-                                            //                                        configureAudioSession()
-                                            //                                    }
-                                            //                                    settingsViewModel.voiceOutputenabled.toggle()
-                                            //                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
-
-#endif
-                                        }
-
-                                    } label: {
-                                        resizableButtonImage(systemName:
-                                                                settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
-                                                             size: geometry.size)
-                                        .fontWeight(.bold)
-                                        //                                    .foregroundColor(.white)
-                                        //                                    .padding(.horizontal, 40)
-                                        //                                    .padding(.vertical, 12)
-                                        .background(settingsViewModel.buttonColor)
-                                        .cornerRadius(8)
-                                    }
-                                }
+// TODO: Implement changing mac os voice from ios app
+//                                if settingsViewModel.currentMode == .computer {
+//                                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") MACOS audio output")
+//                                    Button  {
+//                                        withAnimation {
+//#if !os(macOS)
+//                                            print("TODO: IMPLEMENT ENABLE/DISABLE MAC OS AUDIO FROM IOS")
+//                                            //                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+//                                            //                                    if settingsViewModel.voiceOutputenabled {
+//                                            //                                        stopVoice()
+//                                            //                                    }
+//                                            //                                    else {
+//                                            //                                        configureAudioSession()
+//                                            //                                    }
+//                                            //                                    settingsViewModel.voiceOutputenabled.toggle()
+//                                            //                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
+//
+//#endif
+//                                        }
+//
+//                                    } label: {
+//                                        resizableButtonImage(systemName:
+//                                                                settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
+//                                                             size: geometry.size)
+//                                        .fontWeight(.bold)
+//                                        //                                    .foregroundColor(.white)
+//                                        //                                    .padding(.horizontal, 40)
+//                                        //                                    .padding(.vertical, 12)
+//                                        .background(settingsViewModel.buttonColor)
+//                                        .cornerRadius(8)
+//                                    }
+//                                }
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                             Spacer()
                         }
 
-                        if settingsViewModel.currentMode == .computer {
-
-                            Text("Pick macOS server voice")
-
-                            List(cereprocVoicesNames, id: \.self) { name in
-                                Text(name)
-                                    .frame(height: 30)
-                            }
-                            .frame(height: CGFloat(cereprocVoicesNames.count * 40))
-                        }
+//                        if settingsViewModel.currentMode == .computer {
+//
+//                            Text("Pick macOS server voice")
+//
+//                            List(cereprocVoicesNames, id: \.self) { name in
+//                                Text(name)
+//                                    .frame(height: 30)
+//                            }
+//                            .frame(height: CGFloat(cereprocVoicesNames.count * 40))
+//                        }
 
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)

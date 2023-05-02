@@ -938,7 +938,11 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         let clear = UIAction(title: "Clear Console", image: UIImage(systemName: "delete.backward"), attributes: .destructive) { _ in
             self.clear()
         }
-        
+// TODO
+        let scrollToBottom = UIAction(title: "Scroll to Bottom", image: UIImage(systemName: "delete.backward"), attributes: .destructive) { _ in
+            //elf.
+        }
+
         var frameSymbol = "rectangle.3.offgrid"
         
         var debugActions: [UIMenuElement] = []

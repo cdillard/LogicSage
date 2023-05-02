@@ -122,37 +122,6 @@ struct CommandButtonView: View {
                             .padding(.bottom)
                         }
 
-                        // STOP BUTTON
-                        Button(action: {
-
-                            // cmd send st
-                            settingsViewModel.multiLineText = "g end"
-                            DispatchQueue.main.async {
-
-                                // Execute your action here
-                                screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-                                self.settingsViewModel.isInputViewShown = false
-
-                                settingsViewModel.multiLineText = ""
-                            }
-
-                        }) {
-                            ZStack {
-                                Text("🧠")
-                                Text("❌")
-                                    .opacity(0.74)
-                            }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
-
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                //.padding(geometry.size.width * 0.01)
-                                .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
-                        }
-                        .padding(.bottom)
 
                         if settingsViewModel.currentMode == .computer {
                             // i BUTTON
@@ -191,7 +160,40 @@ struct CommandButtonView: View {
                         .padding(.bottom)
 
                     }
+                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
 
+                        // STOP // EXIT CONVERSATIONAL MODE BUTTON
+                        Button(action: {
+
+                            // cmd send st
+                            settingsViewModel.multiLineText = "g end"
+                            DispatchQueue.main.async {
+
+                                // Execute your action here
+                                screamer.sendCommand(command: settingsViewModel.multiLineText)
+
+                                self.settingsViewModel.isInputViewShown = false
+
+                                settingsViewModel.multiLineText = ""
+                            }
+
+                        }) {
+                            ZStack {
+                                Text("🧠")
+                                Text("❌")
+                                    .opacity(0.74)
+                            }
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            //                                .padding(geometry.size.width * 0.01)
+
+                            .lineLimit(1)
+                            .foregroundColor(Color.white)
+                            //.padding(geometry.size.width * 0.01)
+                            .background(settingsViewModel.buttonColor)
+                            //                                .cornerRadius(10)
+                        }
+                        .padding(.bottom)
+                    }
                     if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
                         // X BUTTON
                         Button(action: {
