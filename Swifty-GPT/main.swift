@@ -20,6 +20,8 @@ func main() {
     textToSpeech(text: "  ", overrideVoice: defaultVoice, skipLog: true)
 
 
+    resetCommandWithConfig(config: &config)
+
     // Tesitn when best time to initialize websock log
    // UserDefaults.resetStandardUserDefaults()
 //    print(localPeerConsole.webSocketClient.websocket)
@@ -37,9 +39,9 @@ func main() {
 
     // Parse command-line arguments
     let arguments = CommandLine.arguments
-    appName = arguments.contains("--name") ? arguments[arguments.firstIndex(of: "--name")! + 1] : "MyApp"
-    appType = arguments.contains("--type") ? arguments[arguments.firstIndex(of: "--type")! + 1] : "iOS"
-    language = arguments.contains("--language") ? arguments[arguments.firstIndex(of: "--language")! + 1] : "Swift"
+    config.appName = arguments.contains("--name") ? arguments[arguments.firstIndex(of: "--name")! + 1] : "MyApp"
+    config.appType = arguments.contains("--type") ? arguments[arguments.firstIndex(of: "--type")! + 1] : "iOS"
+    config.language = arguments.contains("--language") ? arguments[arguments.firstIndex(of: "--language")! + 1] : "Swift"
 
     do {
         try backupAndDeleteWorkspace()
@@ -49,9 +51,9 @@ func main() {
     }
 
     // Reset the global stuff
-    globalErrors.removeAll()
-    lastFileContents.removeAll()
-    lastNameContents.removeAll()
+    config.globalErrors.removeAll()
+    config.lastFileContents.removeAll()
+    config.lastNameContents.removeAll()
 
    // XcodeCommand impls TODO:
     /*
@@ -128,7 +130,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
         prompt = overridePrompt
     }
 
-    generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: promptingRetryNumber, errors: errors) { response in
+    generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: config.promptingRetryNumber, errors: errors) { response in
 
         // Generations
         multiPrinter("Retry another generation...?")
@@ -146,7 +148,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
                     //textToSpeech(text: "Opening project...")
 
-                    executeAppleScriptCommand(.openProject(name: projectName)) { success, errors in
+                    executeAppleScriptCommand(.openProject(name: config.projectName)) { success, errors in
                         stopRandomSpinner()
                         if success {
                             multiPrinter("opened successfully")
@@ -162,7 +164,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
                     multiPrinter(afterBuildFailedLine())
 
-                    if promptingRetryNumber >= retryLimit {
+                    if config.promptingRetryNumber >= retryLimit {
                         multiPrinter("OVERALL prompting limit reached, stopping the process. Try a diff prompt you doof.")
 
                         do {
@@ -175,7 +177,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                         return
                     }
 
-                    promptingRetryNumber += 1
+                    config.promptingRetryNumber += 1
 
                     if !interactiveMode {
                         doPrompting(errors)
@@ -204,7 +206,7 @@ func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
                 newPrompt += includeFilesPrompt()
                 newPrompt += swiftnewLine
 
-                for contents in lastFileContents {
+                for contents in config.lastFileContents {
                     newPrompt += contents
                     newPrompt += "\(swiftnewLine)\(swiftnewLine)\n"
                 }
@@ -218,7 +220,7 @@ func createIdeaPrompt(command: String) -> String {
     appDesc = command
     refreshPrompt(appDesc: command)
 
-    let newPrompt = promptText(noGoogle: !enableGoogle, noLink: !enableLink)
+    let newPrompt = promptText(noGoogle: !config.enableGoogle, noLink: !config.enableLink)
     return newPrompt
 }
 

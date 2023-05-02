@@ -18,8 +18,8 @@ func printRandomUnusedTrivia() {
     guard !trivialQs.isEmpty else { print("nope no qs") ; return }
     let randDex = Int.random(in: 0...trivialQs.count - 1)
 
-    chosenTQ = trivialQs[randDex]
-    guard let tq = chosenTQ else { return print("no q.. failed.") }
+    config.chosenTQ = trivialQs[randDex]
+    guard let tq = config.chosenTQ else { return print("no q.. failed.") }
 
     printTrivia(tq, index: randDex)
 }

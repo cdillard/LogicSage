@@ -24,7 +24,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
         "messages": [
             [
                 "role": "user",
-                "content": manualPrompt ? manualPromptString : prompt,
+                "content": manualPrompt ? config.manualPromptString : prompt,
             ]
         ]
     ]
@@ -76,7 +76,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             }
 
             do {
-                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) as? [String: Any],
                    let choices = jsonResponse["choices"] as? [[String: Any]],
                    let firstChoice = choices.first,
                    let message = firstChoice["message"] as? [String: Any],

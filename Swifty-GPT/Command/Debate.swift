@@ -10,10 +10,10 @@ var depthLimit = 6 // turn it up too
 
 
 // UNDO THIS BEFORTE CHECKING IN
-let personalityA = alexVoice // male voice
-let personalityB = allisonVoice // female voice
-let personAsName = "Alex"
-let personBsName = "Allison"
+//let personalityA = alexVoice // male voice
+//let personalityB = allisonVoice // female voice
+//let personAsName = "Alex"
+//let personBsName = "Allison"
 
 
 // DO NOT CHECK IN THE CEREPROC STUF, those nice voices aren't strictly eneded for this.
@@ -31,10 +31,10 @@ let personBsName = "Allison"
 //let personalityB = hannahVoice
 //let personAsName = "Sam"
 //let personBsName = "Hannah"
-//let personalityA = laurenVoice
-//let personalityB = samVoice
-//let personAsName = "Lauren"
-//let personBsName = "Sam"
+let personalityA = laurenVoice
+let personalityB = samVoice
+let personAsName = "Hannah"
+let personBsName = "Sam"
 
 //  let defaultVoice = carolynVoice//hannahVoice//heatherVoice//carolynVoice//samVoice
 
@@ -75,7 +75,9 @@ func randomDebate() -> String {
 }
 let usePrePrompt = true
 func debateCommand(input: String) {
-    debateMode = true
+
+    config.promptMode = .debate
+
     if (input.isEmpty || !usePrePrompt) {
         multiPrinter("DEBATE STAGE:")
         deepConversation(currentPersonality: personalityA, initialPrompt: randomDebate(), depth: depthLimit)
@@ -221,7 +223,7 @@ func debatesCommand(input: String) {
 
 
         if !chosenDebate.isEmpty {
-            debateMode = true
+            config.promptMode = .debate
                 multiPrinter("DEBATE STAGE:")
                 deepConversation(currentPersonality: personalityA, initialPrompt: chosenDebate, depth: depthLimit)
 // DO we need a new command that simply does the same thing debate does randomly ????

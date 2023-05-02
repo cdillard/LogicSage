@@ -4,7 +4,7 @@
 //
 //  Created by Chris Dillard on 5/1/23.
 //
-
+#if !os(macOS)
 import Foundation
 import UIKit
 import SwiftUI
@@ -14,7 +14,7 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
 
     static func applicationDidFinishLaunching() {
         // TODO BEFORE RELEASE: PROD BUNDLE ID
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.chrisswiftytgpt.SwiftSageiOS", using: nil) { task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "\(bundleID)bger", using: nil) { task in
             self.handleWebSocketRefresh(task: task as! BGAppRefreshTask)
         }
     }
@@ -39,6 +39,7 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
         // Refresh your WebSocket connection or perform necessary actions here
         // ...
         serviceDiscovery?.startDiscovering()
+        screamer.connect()
         screamer.sendPing()
 
         // After the task is complete
@@ -47,8 +48,8 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
     }
 
     static func scheduleWebSocketRefresh() {
-        let request = BGAppRefreshTaskRequest(identifier: "com.chrisswiftytgpt.SwiftSageiOS")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 1) // 1 minutes from now
+        let request = BGAppRefreshTaskRequest(identifier: "\(bundleID)bger")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 2) // 1 minutes from now
 
         do {
             try BGTaskScheduler.shared.submit(request)
@@ -57,3 +58,4 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
         }
     }
 }
+#endif

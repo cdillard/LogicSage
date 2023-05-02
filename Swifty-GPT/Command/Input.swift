@@ -109,7 +109,7 @@ func handleUserInput() {
             guard let char = readChar() else {
                 continue
             }
-            if blockingInput {
+            if config.blockingInput {
                 multiPrinter("input disabled (you can `q`). Plese file a github Issue. *with logs or else (shakesfist)*")
 
 
@@ -132,37 +132,37 @@ func handleUserInput() {
 
             }
 
-            if let tq = chosenTQ {
+            if let tq = config.chosenTQ {
                 // Appearenlty questions have up to 8 multiple choice options.
                 if char >= "1" && char <= "8" {
                     if Int(String(char)) ?? 0  == tq.correctOptionIndex + 1 {
                         multiPrinter(" was correct! YAY")
-                        streak += 1
+                        config.streak += 1
                         printRandomUnusedTrivia()
                     }
                     else {
-                        if streak > 1 {
-                            multiPrinter("Incorrect! You better keep studying... you had a \(streak) q winning run!!!! GONE")
+                        if config.streak > 1 {
+                            multiPrinter("Incorrect! You better keep studying... you had a \(config.streak) q winning run!!!! GONE")
 
                         }
-                        else if streak > 0 {
+                        else if config.streak > 0 {
                             multiPrinter("Incorrect! Keep studying...")
 
                         }
                         else {
                             multiPrinter("Incorrect! Keep studying...")
                         }
-                        streak = 0
+                        config.streak = 0
 
 
                     }
-                    chosenTQ = nil
+                    config.chosenTQ = nil
 
                 }
                 else if char == "q" {
                     multiPrinter("Exiting trivia...")
 
-                    chosenTQ = nil
+                    config.chosenTQ = nil
                 }
                 else {
                     multiPrinter("You are in trivia mode... exit with `q`")
@@ -201,7 +201,7 @@ func handleUserInput() {
             if char >= "0" && char <= "0" {
                 command = String(char)
                 callCommandCommand(command,
-                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines))
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines), recipient: "")
                 command = ""
                 parameter = ""
             } else if char == " " {
@@ -216,12 +216,12 @@ func handleUserInput() {
                 }
                 // attempt to parse cmd named
                 callCommandCommand(command,
-                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted))
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted), recipient: "")
                 command = ""
                 parameter = ""
             } else if char == "\n" {
                 callCommandCommand(command,
-                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines))
+                                   parameter.trimmingCharacters(in: .whitespacesAndNewlines), recipient: "")
                 command = ""
                 parameter = ""
             } else {
@@ -231,7 +231,7 @@ func handleUserInput() {
     }
 }
 
-func callCommandCommand(_ command: String, _ arg: String) {
+func callCommandCommand(_ command: String, _ arg: String, recipient: String) {
     DispatchQueue.global(qos: .userInitiated).async {
         multiPrinter("SWIFTSAGE: \(command)")
 

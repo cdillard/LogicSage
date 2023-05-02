@@ -30,7 +30,7 @@ public enum FoundationTransportError: Error {
 
 public class FoundationTransport: NSObject, Transport, StreamDelegate {
     private weak var delegate: TransportEventClient?
-    private let workQueue = DispatchQueue(label: "com.chriswiftygpt.SwiftSageiOS", attributes: [])
+    private let workQueue = DispatchQueue(label: "\(bundleID)transport", attributes: [])
     private var inputStream: InputStream?
     private var outputStream: OutputStream?
     private var isOpen = false

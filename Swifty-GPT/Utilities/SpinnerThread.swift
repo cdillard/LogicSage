@@ -9,7 +9,7 @@ import Foundation
 import Foundation
 
 func spinners() -> [[String]] {
-    switch loadMode {
+    switch config.loadMode {
     case .dots:
         return [["."]]
     case .waves:
@@ -48,9 +48,9 @@ class LoadingSpinner {
                 Thread.sleep(forTimeInterval: 0.1)
             }
         }
-        blockingInput = true
+        config.blockingInput = true
 
-        if loadMode == .none { return }
+        if config.loadMode == .none { return }
 
         thread?.start()
     }
@@ -58,14 +58,14 @@ class LoadingSpinner {
     func stop() {
         guard thread != nil else { return }
         
-        blockingInput = false
+        config.blockingInput = false
         thread?.cancel()
         thread = nil
     }
 
     func getSpindex(input: String) -> Int {
         var spinDex = 0
-        switch loadMode {
+        switch config.loadMode {
         case .dots:
             spinDex = 0
         case .waves:

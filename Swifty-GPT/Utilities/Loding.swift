@@ -15,7 +15,7 @@ var spinnerInt: Int = 1
 func startRandomSpinner() {
     
     spinnerInt = Int.random(in: 0...1)
-    if spinnerInt == 0 && asciAnimations  {
+    if spinnerInt == 0 && asciAnimations()  {
         animator.start()
 
     }
@@ -27,7 +27,7 @@ func startRandomSpinner() {
 func stopRandomSpinner() {
     spinner.stop()
 
-    if asciAnimations { animator.stop() }
+    if asciAnimations() { animator.stop() }
     multiPrinter("SWIFTSAGE:")
 }
 

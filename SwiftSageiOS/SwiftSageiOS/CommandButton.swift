@@ -53,6 +53,53 @@ struct CommandButtonView: View {
 //#endif
 
                     if settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
+
+                        // GOOGLE button
+                        Button(action: {
+
+                            consoleManager.print("toggling google mode")
+                            print("toggling google mode")
+                            // cmd send st
+
+
+                        }) {
+                            ZStack {
+                                Text("🌐")
+                                Text("❌")
+                                    .opacity(0.6)
+
+                            }
+                                .font(.caption)
+                                .padding(geometry.size.width * 0.01)
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                        }
+                        
+                        // LINK BUTTON
+                        Button(action: {
+
+                            consoleManager.print("toggling linking mode")
+                            print("toggling linking mode")
+
+
+                        }) {
+                            ZStack {
+                                Text("🔗")
+                                Text("❌")
+                                    .opacity(0.6)
+                            }
+                                .font(.caption)
+                                .padding(geometry.size.width * 0.01)
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
+//                                .cornerRadius(10)
+                        }
+
+
+                        
                         // debate BUTTON
                         Button(action: {
                             isTextFieldFocused = true
@@ -64,7 +111,7 @@ struct CommandButtonView: View {
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
+//                                .cornerRadius(10)
                         }
 
                         // STOP BUTTON
@@ -83,7 +130,11 @@ struct CommandButtonView: View {
                             }
 
                         }) {
-                            Text("g end")
+                            ZStack {
+                                Text("🧠")
+                                Text("❌")
+                                    .opacity(0.74)
+                            }
                                 .font(.caption)
                                 .padding(geometry.size.width * 0.01)
 
@@ -91,7 +142,7 @@ struct CommandButtonView: View {
                                 .foregroundColor(Color.white)
                                 //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
+//                                .cornerRadius(10)
                         }
 
                         // i BUTTON
@@ -107,7 +158,7 @@ struct CommandButtonView: View {
                                 .foregroundColor(Color.white)
                                 //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
+//                                .cornerRadius(10)
                         }
                         // g BUTTON
                         Button(action: {
@@ -121,7 +172,7 @@ struct CommandButtonView: View {
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
+//                                .cornerRadius(10)
 
                         }
 
@@ -132,14 +183,14 @@ struct CommandButtonView: View {
                         Button(action: {
                             settingsViewModel.multiLineText = ""
                         }) {
-                            Text( "X")
+                            Text( "🗑️")
                                 .font(.caption)
                                 .padding(geometry.size.width * 0.01)
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
+//                                .cornerRadius(10)
                         }
                     }
 
@@ -165,15 +216,21 @@ struct CommandButtonView: View {
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
-                            .cornerRadius(10)
+//                            .cornerRadius(10)
                     }
 
                     // EXEC BUTTON
                     Button(action: {
+                        if settingsViewModel.multiLineText.isEmpty {
+                            consoleManager.print("nothing to exec.")
+                            return
+                        }
                         // Execute your action here
                         screamer.sendCommand(command: settingsViewModel.multiLineText)
 
                         self.settingsViewModel.isInputViewShown = false
+
+                        consoleManager.isVisible = true
 //#if !os(macOS)
 //
 //                        consoleManager.isVisible = true
@@ -188,7 +245,7 @@ struct CommandButtonView: View {
                             .foregroundColor(Color.white)
                             //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
-                            .cornerRadius(10)
+//                            .cornerRadius(10)
                     }
                     //.padding(.bottom)
 
@@ -211,14 +268,30 @@ struct CommandButtonView: View {
                             openText()
                         }
                     }) {
-                        Text(self.settingsViewModel.isInputViewShown ? "⌨️" : "🔹💬")
+                        if self.settingsViewModel.isInputViewShown {
+                            ZStack {
+                                Text("🔽")
+//                                Text("❌")
+                            }
                             .font(.caption)
                             .padding(geometry.size.width * 0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
-                            .cornerRadius(10)
+//                            .cornerRadius(10)
+                        }
+                        else {
+                           Text( "🔹💬")
+                                .font(.caption)
+                                .padding(geometry.size.width * 0.01)
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                //.padding(geometry.size.width * 0.01)
+                                .background(settingsViewModel.buttonColor)
+//                                .cornerRadius(10)
+                        }
+
                     }
                     ///.padding(.bottom)
 

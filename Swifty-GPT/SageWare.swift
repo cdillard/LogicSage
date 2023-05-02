@@ -31,7 +31,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
     if logV == .verbose { multiPrinter("🤖: \(output)") }
 
     let (updatedString, fileContents) = extractFieldContents(output, field: "fileContents")
-    lastFileContents = Array(fileContents)
+    config.lastFileContents = Array(fileContents)
 
     let (_, nameContents) = extractFieldContents(updatedString, field: "name")
 
@@ -64,18 +64,18 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
         if fullCommand.hasPrefix(createProjectPrefix) {
 
-            var name =  projectName
+            var name =  config.projectName
             if nameContents.count > gptCommandIndex {
                 name = nameContents[gptCommandIndex]
             }
-            projectName = name.isEmpty ? "MyApp" : name
+            config.projectName = name.isEmpty ? "MyApp" : name
 
-            projectName = preprocessStringForFilename(projectName)
+            config.projectName = preprocessStringForFilename(config.projectName)
 
 
             //textToSpeech(text: "Create project " + projectName + ".")
 
-            executeXcodeCommand(.createProject(name: projectName)) { success, errors in
+            executeXcodeCommand(.createProject(name: config.projectName)) { success, errors in
 
                 if !success {
                     completion(success, errors)
@@ -168,12 +168,12 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                     fileIndex += 1
                 }
                 else {
-                    return completion(false, globalErrors)
+                    return completion(false, config.globalErrors)
                 }
             }
         }
         // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
-        else if fullCommand.hasPrefix(googlePrefix) && enableGoogle {
+        else if fullCommand.hasPrefix(googlePrefix) && config.enableGoogle {
             var query =  ""
 
             if nameContents.count > fileIndex {
@@ -188,7 +188,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
             return
         }
         // Experimental. I think this should probably override responses for 1 or two messages to get the research in place.
-        else if fullCommand.hasPrefix(linkPrefix) && enableLink {
+        else if fullCommand.hasPrefix(linkPrefix) && config.enableLink {
             var query =  ""
 
             if nameContents.count > fileIndex {
@@ -212,7 +212,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 
     if fileIndex == 0 || fileIndex != fileContents.count {
         multiPrinter("Failed to make files.. retrying...")
-        return completion(false, globalErrors)
+        return completion(false, config.globalErrors)
     }
 
     buildIt() { success, errrors in
@@ -228,7 +228,7 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
     //textToSpeech(text: "Building project \(projectName)...")
 
     startRandomSpinner()
-    executeXcodeCommand(.buildProject(name: projectName)) { success, errors in
+    executeXcodeCommand(.buildProject(name: config.projectName)) { success, errors in
         stopRandomSpinner()
 
         if success {

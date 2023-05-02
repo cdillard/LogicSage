@@ -8,27 +8,10 @@
 import Foundation
 import Starscream
 
-func multiPrinter(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    for username in ["chris", "chuck", "hackerman"] {
-        if !swiftSageIOSEnabled {
-            print(items, separator: separator, terminator: terminator)
-            return
-        }
 
-        if items.count == 1, let singleString = items.first as? String {
-            print(items, separator: separator, terminator: terminator)
-            localPeerConsole.sendLog(to: username, text: singleString)
-            return
-        }
-        // Otherwise, handle the items as a collection of strings
-        for item in items {
-            if let str = item as? String {
-                print(str, separator: separator, terminator: terminator)
-                localPeerConsole.sendLog(to: username, text: str)
-            }
-        }
-    }
-}
+let PING_INTERVAL: TimeInterval = 22.666
+let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+
 
 let localPeerConsole = LocalPeerConsole()
 
@@ -49,12 +32,11 @@ class LocalPeerConsole: NSObject {
      }
 
     func sendCommand(to recipient: String, command: String) {
-        let logData: [String: String] = ["recipient": recipient, "command": command, "from": "SERVER"]
+        let logData: [String: String] = ["recipient": recipient, "command": command]
         do {
             let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
             let logString = String(data: logJSON, encoding: .utf8)
             webSocketClient.websocket.write(string: logString ?? "")
-
         }
         catch {
             print( "error = \(error)")
@@ -76,6 +58,7 @@ class WebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
+            // TODO FIX HARDCODE CREDZ
             let authData: [String: String] = ["username": "SERVER", "password": "supers3cre3t"]
             do {
                 let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed])
@@ -89,33 +72,65 @@ class WebSocketClient: WebSocketDelegate {
         case .disconnected(let reason, let code):
             print("Disconnected from server: \(reason), code: \(code)")
             stopPingTimer()
-//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-//                print("Reconnecting...")
-//                self.connect()
-//            }
+            
+            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         case .text(let text):
             print("Received text: \(text)")
 
-            // TODO: should probably be parsing the command JSON for recipient and command....
 
-            let components = text.split(separator: " ", maxSplits: 1)
-            if !components.isEmpty {
-                var comp2 = ""
-                if components.count > 1 {
-                    comp2 = String(components[1])
+            do {
+                let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
+
+                print("parsed to JSON =  \(json)")
+
+                // HANDLE MESSAGES *****************************************************************
+
+                if let recipient = json?["recipient"] as? String,
+                   let command = json?["command"] as? String {
+
+                    print("recipient=\(recipient) , command=\(command)")
+                    let commandSplit = command.split(separator: " ", maxSplits: 1)
+
+                    if !commandSplit.isEmpty {
+                        var comp2 = ""
+                        if commandSplit.count > 1 {
+                            comp2 = String(commandSplit[1])
+                        }
+
+                        callCommandCommand(String(commandSplit[0]), comp2, recipient: recipient)
+                    }
                 }
-                callCommandCommand(String(components[0]), comp2)
+                
+
+                break
             }
-            else {
-                print("niped")
+            catch {
+                print("failed to parse command as JSON: \(error), trying normal...")
             }
+
+//            let components = text.split(separator: " ", maxSplits: 1)
+//            if !components.isEmpty {
+//                var comp2 = ""
+//                if components.count > 1 {
+//                    comp2 = String(components[1])
+//                }
+//                callCommandCommand(String(components[0]), comp2, recipient: "")
+//            }
+//            else {
+//                print("niped")
+//            }
 
         case .binary(let data):
             print("Received binary data: \(data)")
-        case .pong(let data):
-            print("Received PONG data: \(data ?? Data())")
-        case .ping(let data):
-            print("Received PING data: \(data ?? Data())")
+        case .pong( _):
+            break
+//            print("Received PONG data: \(data ?? Data())")
+        case .ping( _):
+            break
+//            print("Received PING data: \(data ?? Data())")
         case .error(let error):
             print("Error: \(error?.localizedDescription ?? "error")")
         case .viabilityChanged(let isViable):
@@ -141,6 +156,8 @@ class WebSocketClient: WebSocketDelegate {
 
     var websocket: WebSocket!
     let reconnectInterval: TimeInterval = 1.0
+    private let timer: DispatchSourceTimer
+    private var isRunning: Bool
 
     init() {
 
@@ -151,9 +168,11 @@ class WebSocketClient: WebSocketDelegate {
 
         var request = URLRequest(url: url)
         request.timeoutInterval = 10
+        timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+        isRunning = false
 
         websocket = WebSocket(request: request)
-        websocket.callbackQueue = DispatchQueue(label: "com.chrisswiftygpt.swiftsage")
+        websocket.callbackQueue = DispatchQueue(label: "\(bundleID)websocket")
 
         websocket.delegate = self
         websocket.connect()
@@ -162,22 +181,32 @@ class WebSocketClient: WebSocketDelegate {
         websocket.connect()
 
     }
-    var pingTimer: Timer?
 
     func startPingTimer() {
-        // Invalidate any existing timer
-        pingTimer?.invalidate()
+        guard !isRunning else { return }
+        isRunning = true
 
-        // Create a new timer that fires every 30 seconds
-        pingTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.sendPing()
+        let delay: TimeInterval = PING_INTERVAL
+
+        timer.schedule(deadline: .now(), repeating: delay)
+        timer.setEventHandler { [weak self] in
+            guard let self = self else { return }
+
+            if !self.isRunning {
+                return
+            }
+
+           sendPing()
         }
+
+        timer.resume()
     }
 
     func stopPingTimer() {
-        pingTimer?.invalidate()
-        pingTimer = nil
+        isRunning = false
     }
+
+
 
     func sendPing() {
         websocket.write(ping: Data())

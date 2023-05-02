@@ -19,9 +19,6 @@ let consoleManager = LCManager.shared//cmdWindows[0]
 
 #endif
 
-let maxButtonSize: CGFloat = 19.5
-
-
 struct ContentView: View {
     @State private var showSettings = false
     @State private var isLabelVisible: Bool = true
@@ -29,7 +26,7 @@ struct ContentView: View {
     @FocusState private var isTextFieldFocused: Bool
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
-
+    @State private var buttonScale: CGFloat = 1.0
     @StateObject private var keyboardObserver = KeyboardObserver()
 
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
@@ -159,7 +156,7 @@ struct ContentView: View {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
             }
-            .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
+//            .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
             .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
             .environmentObject(keyboardObserver)
 
@@ -318,11 +315,16 @@ struct ContentView: View {
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
-            .scaledToFit()
-            .frame(width: min(size.width * 0.05, maxButtonSize), height: min(size.width * 0.05, maxButtonSize))
-            .padding(size.width * 0.01)
-            .background(settingsViewModel.buttonColor)
-            .foregroundColor(.white)
+//            .scaledToFit()
+//            .scaleEffect(settingsViewModel.maxButtonSize)
+            .frame(width: size.width * 0.05, height: size.width * 0.05)
+            .padding(.leading, size.width * 0.05)
+            .padding(.trailing, size.width * 0.05)
+
+//            .background(settingsViewModel.buttonColor)
+  //          .foregroundColor(.white)
+            .scaleEffect(CGFloat(settingsViewModel.buttonScale))
+
 //            .cornerRadius(size.width * 0.05)
     }
 }

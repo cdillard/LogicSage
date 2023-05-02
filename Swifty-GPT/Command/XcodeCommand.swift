@@ -136,45 +136,45 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
         $0.replacingOccurrences(of: getWorkspaceFolder(), with: "")
     }
     .map {
-        $0.replacingOccurrences(of: "\(swiftyGPTWorkspaceName)/\(projectName)/Sources/", with: "")
+        $0.replacingOccurrences(of: "\(swiftyGPTWorkspaceName)/\(config.projectName)/Sources/", with: "")
     }
     
-    globalErrors += Array(errorsCopy)
-    completion(successful, globalErrors)
+    config.globalErrors += Array(errorsCopy)
+    completion(successful, config.globalErrors)
 }
 
 
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
     switch command {
     case let .openProject(name):
-        executeAppleScriptCommand(.openProject(name: projectName)) {
+        executeAppleScriptCommand(.openProject(name: config.projectName)) {
             success, errors in
-            completion(success, globalErrors)
+            completion(success, config.globalErrors)
         }
     case let .createProject(name):
         multiPrinter("Creating project with name: \(name)")
-        projectName = name.isEmpty ? "MyApp" : name
-        projectName = preprocessStringForFilename(projectName)
+        config.projectName = name.isEmpty ? "MyApp" : name
+        config.projectName = preprocessStringForFilename(config.projectName)
         multiPrinter("set current name")
         let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/"
 
         createNewProject(projectName: name, projectDirectory: projectPath) { success in
-            completion(success, globalErrors)
+            completion(success, config.globalErrors)
         }
 
     case .closeProject(name: let name):
         executeAppleScriptCommand(.closeProject(name: name)) { success, errors in
 
         }
-        completion(true, globalErrors)
+        completion(true, config.globalErrors)
 
     case .createFile(fileName: let fileName, fileContents: let fileContents):
-        if projectName.isEmpty {
+        if config.projectName.isEmpty {
             multiPrinter("missing proj, creating one... ****danger****")
-            projectName = "MyApp"
+            config.projectName = "MyApp"
 
             // MIssing projecr gen// create a proj
-            executeXcodeCommand(.createProject(name: projectName)) { success, errors in
+            executeXcodeCommand(.createProject(name: config.projectName)) { success, errors in
                 if success {
                     completion(true, [])
                 } else {
@@ -184,17 +184,17 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
                 }
             }
         }
-        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName)"
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(config.projectName)"
         let filePath = "\(projectPath)/Sources/\(fileName)"
         multiPrinter("Adding file w/ path: \(filePath) w/ contents w length = \(fileContents.count) to p=\(projectPath)")
-        let added = createFile(projectPath: "\(projectPath).xcodeproj", projectName: projectName, targetName: projectName, filePath: filePath, fileContent: fileContents)
+        let added = createFile(projectPath: "\(projectPath).xcodeproj", projectName: config.projectName, targetName: config.projectName, filePath: filePath, fileContent: fileContents)
         completion(added, [])
 
     case .buildProject(name: let name):
         multiPrinter("buildProject project with name: \(name)")
-        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(projectName).xcodeproj"
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(config.projectName).xcodeproj"
 
-        buildProject(projectPath: projectPath, scheme: projectName) { success, errors in
+        buildProject(projectPath: projectPath, scheme: config.projectName) { success, errors in
             if success {
                 completion(true, [])
             } else {

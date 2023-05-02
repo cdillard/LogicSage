@@ -11,7 +11,7 @@ import Combine
 let STRING_LIMIT = 50000
 
 var serviceDiscovery: ServiceDiscovery?
-
+let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
 @main
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel()
@@ -51,6 +51,8 @@ struct SwiftSageiOSApp: App {
                             }
                         }
                     )
+#if !os(macOS)
+
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
                         print("didFinishLaunchingNotification")
                         SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
@@ -65,6 +67,7 @@ struct SwiftSageiOSApp: App {
                         print("didEnterBackgroundNotification")
                         SwiftSageiOSAppDelegate.applicationDidEnterBackground()
                     }
+#endif
             }
         }
     }

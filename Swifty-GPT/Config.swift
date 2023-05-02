@@ -32,7 +32,6 @@ let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 var defaultLoadMode = LoadMode.dots
 
 // Eventualy wr''ll read loadMoad from the user ID prefs
-var loadMode = LoadMode.dots
 
 enum LoadMode {
     case none
@@ -114,7 +113,9 @@ let interactiveMode = true
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
-var asciAnimations = loadMode == .matrix
+func asciAnimations() -> Bool {
+    config.loadMode == LoadMode.matrix
+}
 
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false
@@ -170,10 +171,6 @@ let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 
 //https://github.com/suno-ai/bark   IN PROGRESS
 let barkVoicesEnabled = false
-
-// EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-let enableGoogle = false
-let enableLink = false
 
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
 let enableMacSage = false

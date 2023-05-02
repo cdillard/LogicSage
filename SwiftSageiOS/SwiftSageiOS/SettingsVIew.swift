@@ -104,14 +104,24 @@ struct SettingsView: View {
                         HStack {
                             Text("Small")
                             Slider(value: $settingsViewModel.textSize, in: 2...22, step: 0.3)
-                                .accentColor(.blue)
+                                .accentColor(settingsViewModel.buttonColor)
                             Text("Large")
                         }
                         Text("\(settingsViewModel.textSize)")
                             .font(.caption)
                             .lineLimit(nil)
 
-
+                        Text("Button Size")
+                            .fontWeight(.semibold)
+                        HStack {
+                            Text("Small")
+                            Slider(value: $settingsViewModel.buttonScale, in:  0.1...3.0, step: 0.01)
+                                .accentColor(settingsViewModel.buttonColor)
+                            Text("Large")
+                        }
+                        Text("\(settingsViewModel.buttonScale)")
+                            .font(.caption)
+                            .lineLimit(nil)
                         Text("LoadMode")
                             .fontWeight(.semibold)
                         HStack {
@@ -357,7 +367,7 @@ struct SettingsView: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: min(size.width * 0.05, maxButtonSize), height: min(size.width * 0.05, maxButtonSize))
+            .frame(width: min(size.width * 0.05, settingsViewModel.buttonScalerFloat), height: min(size.width * 0.05, settingsViewModel.buttonScalerFloat))
             .padding(size.width * 0.02)
             .background(settingsViewModel.buttonColor)
             .foregroundColor(.white)

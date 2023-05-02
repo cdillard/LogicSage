@@ -9,7 +9,7 @@ import var Darwin.stdout
 let debugging = true
 
 let sendBuffer = false
-let useAuth = true
+// let useAuth = true
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
              ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
   
@@ -40,7 +40,7 @@ public func configure(_ app: Application) throws {
 
         ws.onText { ws, text in
 
-            if useAuth {
+            if true {
                 if let user = username {
                     do {
                         print("Received MSG from \(user): \(text)")
@@ -54,28 +54,49 @@ public func configure(_ app: Application) throws {
                         if let recipient = json?["recipient"] as? String,
                             let message = json?["message"] as? String {
 
+
+                            let senderSettings = userSettings[user] ?? freshConfig()
+                            let recipientSettings = userSettings[recipient] ?? freshConfig()
+
                             let fromUser = json?["from"] as? String
                             print("FROM: \(fromUser)")
 
-
-
-
-                            print("Received message from \(user) or fromUser:\(fromUser) to \(recipient): \(message)")
+                            print("Received message from \(user) or fromUser:\(fromUser) to \(recipient): \(message)") //using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
 
                             // Send the message only to the intended recipient
 
                             let resps = clients[recipient] ?? []
                             print("auth resps = \(resps)")
+                            //let resps = clients[recipient] ?? []
+                           /// print("cmd resps = \(resps)")
 
                             resps.forEach { recipientSocket in
-                                print("Received message fpr recipientSocket = \(recipientSocket)")
 
-                                recipientSocket.send("\(message)")
+                                print("Received MESSAGE from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(message)")// using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
+
+                                let logData: [String: String] = ["recipient": recipient, "message": message]
+                                do {
+                                    let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                    let logString = String(data: logJSON, encoding: .utf8)
+
+                                    recipientSocket.send(logString ?? "")
+                                    print("Sent auth cmd from server to Swift binary.")
+                                }
+                                catch {
+                                    print("error writing auth cmd")
+                                }
+
+
                             }
                         } 
                         // HANDLE COMMANDS *****************************************************************
                         else if let recipient = json?["recipient"] as? String,
                              let command = json?["command"] as? String {
+
+
+                            let senderSettings = userSettings[user] ?? freshConfig()
+                            let recipientSettings = userSettings[recipient] ?? freshConfig()
+
 
                            let fromUser = json?["from"] as? String
                              print("FROM: \(fromUser)")
@@ -83,11 +104,23 @@ public func configure(_ app: Application) throws {
                             let resps = clients[recipient] ?? []
                             print("cmd resps = \(resps)")
 
+
                             resps.forEach { recipientSocket in
 
-                                print("Received COMMAND from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(command)")
+                                print("Received COMMAND from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(command) using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
 
-                                recipientSocket.send("\(command)")
+                                let logData: [String: String] = ["recipient": recipient, "command": command]
+                                do {
+                                    let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                    let logString = String(data: logJSON, encoding: .utf8)
+                                    recipientSocket.send(logString ?? "")
+                                    print("Sent auth cmd from server to Swift binary.")
+                                }
+                                catch {
+                                    print("error writing auth cmd")
+                                }
+
+
                             }
                         } else {
                             ws.send("Invalid command format")
@@ -123,20 +156,43 @@ public func configure(_ app: Application) throws {
                         if let user = json?["username"],  let password = json?["password"],
                         (user == "chris" && password == "swiftsage") 
                         ||
-                        (user == "hackerman" && password == "swiftsage") 
-                        ||
                         (user == "SERVER" && password == "supers3cre3t") 
                         ||
-                        (user == "chuck" && password == "n1c3")  {
+                        (user == "hackerman" && password == "swiftsage")                         
+                        ||
+                        (user == "chuck" && password == "swiftsage")  {
                             
-                  // Authenticate the user
-                    username = user
-                    if clients[user] == nil {
-                        clients[user] = []
-                    }
-                    clients[user]?.append(ws)
+                            // Authenticate the user
+                            username = user
+                            if clients[user] == nil {
+                                clients[user] = []
+                            }
+                            clients[user]?.append(ws)
 
                             print("Authentication of \(user):\(ws) succeeded")
+
+
+                            let resps = clients["SERVER"] ?? []
+                            print("auth resps = \(resps)")
+
+                            resps.forEach { recipientSocket in
+                                print("Received message fpr recipientSocket = \(recipientSocket)")
+                                    // send server auth cmd
+                                    let logData: [String: String] = ["recipient": "SERVER", "command": "Authed \(user)"]
+                                    do {
+                                        let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                        let logString = String(data: logJSON, encoding: .utf8)
+                                        ws.send(logString ?? "")
+
+                                       recipientSocket.send(logString ?? "")
+                                       print("Sent auth cmd from server to Swift binary.")
+
+
+                                    }
+                                    catch {
+                                        print("error writing auth cmd")
+                                    }
+                            }
                         }
                         else {
                             print("Invalid username or password)")
@@ -146,37 +202,37 @@ public func configure(_ app: Application) throws {
                     }
                 }
             }
-            else {
+            // else {
 
 
-                if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
-                    print("\(text)", terminator: "")
-                }
-                else {
-                    print("\(text)")
-                }
+            //     if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
+            //         print("\(text)", terminator: "")
+            //     }
+            //     else {
+            //         print("\(text)")
+            //     }
             
-                if debugging {
-                        print("connectedClients")
-                        print(connectedClients)
-                }
-                for client in connectedClients {
-                    guard client !== ws else { 
-                        if debugging {
-                            print("skipping self")
-                        }
-                        continue
-                    }
-                    if debugging {
-                        print("send to client =\(client)")
-                    }
-                    if (sendBuffer ) {
+            //     if debugging {
+            //             print("connectedClients")
+            //             print(connectedClients)
+            //     }
+            //     for client in connectedClients {
+            //         guard client !== ws else { 
+            //             if debugging {
+            //                 print("skipping self")
+            //             }
+            //             continue
+            //         }
+            //         if debugging {
+            //             print("send to client =\(client)")
+            //         }
+            //         if (sendBuffer ) {
 
-                        updateMessageBuffer(with: text)
-                    }
-                    client.send("\(text)")
-                }
-            }
+            //             updateMessageBuffer(with: text)
+            //         }
+            //         client.send("\(text)")
+            //     }
+            // }
             fflush(stdout)
 
         }
@@ -202,7 +258,7 @@ public func configure(_ app: Application) throws {
         }
 
         ws.onClose.whenComplete { result in
-            if useAuth {
+            if true {
                 if let user = username {
                     clients[user]?.removeAll(where: { $0 === ws })
                     if clients[user]?.isEmpty ?? false {
@@ -211,18 +267,18 @@ public func configure(_ app: Application) throws {
                     print("Client disconnected: \(user)")
                 }
             }
-            else {
+            // else {
 
-                switch result {
-                case .success:
-                    if debugging {
+            //     switch result {
+            //     case .success:
+            //         if debugging {
 
-                        print("Client disconnected")
-                    }
-                case .failure(let error):
-                    print("Client disconnected with error: \(error)")
-                }
-            }
+            //             print("Client disconnected")
+            //         }
+            //     case .failure(let error):
+            //         print("Client disconnected with error: \(error)")
+            //     }
+            // }
         }
     }
     // dns-sd -R "MyWebSocketServer" _websocket._tcp . 8080
@@ -248,6 +304,7 @@ func advertise() {
 
 func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
     if text != nil && !text.isEmpty {
+        if text.unicodeScalars.isEmpty { return nil }
         if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
             return scalar
         }
@@ -269,4 +326,89 @@ func sendBufferedMessages(to ws: WebSocket) {
     messageBuffer.forEach { message in
         ws.send(message)
     }
+}
+
+
+var userSettings: [String: Config] = [:]
+
+let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
+
+
+enum InputMode {
+    case loading
+    case normal
+    case debate
+    case trivia
+}
+struct TriviaQuestion {
+    let question: String
+    let code: String?
+    let options: [String]
+    let correctOptionIndex: Int
+    let reference: String
+}
+
+func freshConfig() -> Config {
+ Config(
+    projectName: "MyApp",
+    globalErrors: [String](),
+    manualPromptString: "",
+    blockingInput: false,
+    promptingRetryNumber: 0,
+    lastFileContents: [String](),
+    lastNameContents: [String](),
+    searchResultHeadingGlobal: nil,
+    appName: "MyApp",
+    appType: "iOS",
+    appDesc: builtInAppDesc,
+    language: "Swift",
+    conversational: false,
+    streak: 0,
+    chosenTQ: nil,
+    promptMode: .normal,
+    // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+    enableGoogle: false,
+    enableLink: false,
+    loadMode: LoadMode.dots
+)
+}
+
+
+struct Config {
+    var projectName: String
+    var globalErrors: [String]
+    var manualPromptString: String
+    var blockingInput: Bool
+    var promptingRetryNumber: Int
+
+    var lastFileContents: [String]
+    var lastNameContents: [String]
+    var searchResultHeadingGlobal: String?
+    var linkResultGlobal: String?
+
+    var appName: String
+    var appType: String
+
+    var appDesc: String
+    var language: String
+
+    var conversational: Bool
+    var streak: Int
+    var chosenTQ: TriviaQuestion?
+    var promptMode: InputMode
+
+    // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+    var enableGoogle: Bool
+    var enableLink: Bool
+
+    var loadMode: LoadMode
+
+}
+
+enum LoadMode {
+    case none
+    case dots
+    case bar
+    case waves
+    case matrix
 }

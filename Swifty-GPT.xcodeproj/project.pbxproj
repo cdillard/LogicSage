@@ -38,6 +38,8 @@
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
+		B71C62F02A0063A4004296E4 /* Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62EF2A0063A4004296E4 /* Reset.swift */; };
+		B71C62F22A00A47F004296E4 /* Multiprinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62F12A00A47F004296E4 /* Multiprinter.swift */; };
 		B729B14029F99DA800BA6752 /* Therapy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B13F29F99DA800BA6752 /* Therapy.swift */; };
 		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
 		B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41029F8953300E57577 /* CaptureEngine.swift */; };
@@ -160,6 +162,8 @@
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
+		B71C62EF2A0063A4004296E4 /* Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reset.swift; sourceTree = "<group>"; };
+		B71C62F12A00A47F004296E4 /* Multiprinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiprinter.swift; sourceTree = "<group>"; };
 		B729B13F29F99DA800BA6752 /* Therapy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Therapy.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 				B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */,
+				B71C62EF2A0063A4004296E4 /* Reset.swift */,
+				B71C62F12A00A47F004296E4 /* Multiprinter.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -652,6 +658,7 @@
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
 				B70971ED29F62DC6008ED803 /* MultipeerMessage.swift in Sources */,
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
+				B71C62F02A0063A4004296E4 /* Reset.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */,
@@ -692,6 +699,7 @@
 				B774605A29FBE2FA00E7C46B /* Stocks.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 				B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */,
+				B71C62F22A00A47F004296E4 /* Multiprinter.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
 				B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */,
 			);

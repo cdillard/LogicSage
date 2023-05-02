@@ -12,34 +12,8 @@ import os.log
 import AVFoundation
 import CoreMedia
 
-func resetCommand(input: String) {
-    projectName = "MyApp"
-    globalErrors = [String]()
-    manualPromptString = ""
-    blockingInput = false
-    promptingRetryNumber = 0
 
-    lastFileContents = [String]()
-    lastNameContents = [String]()
-    searchResultHeadingGlobal = nil
 
-    appName = "MyApp"
-    appType = "iOS"
-
-    appDesc = builtInAppDesc
-    language = "Swift"
-
-    if conversational {
-        multiPrinter("Exited conversational mode.")
-        conversational = false
-    }
-    manualPromptString = ""
-
-    streak = 0
-    chosenTQ = nil
-    debateMode = false
-    multiPrinter("🔁🔄♻️ Reset.")
-}
 
 func deleteCommand(input: String) {
     multiPrinter("backing up and deleting SwiftSage workspace, as requested")
@@ -296,8 +270,6 @@ func gptCommand(input: String) {
 
 func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
 
-
-
     let googleTextSegment = """
         1. Use the google command to find more information or if it requires information past your knowledge cutoff.
         2. The "google: query" query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
@@ -310,32 +282,35 @@ func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, q
         multiPrinter("Exited conversational mode.")
 
         conversational = false
-        manualPromptString = ""
+        config.manualPromptString = ""
         return
     }
 
-    // conversational mode
-    multiPrinter("Entered conversational mode! `g end` to reset")
 
-    if enableGoogle && useGoogle {
+    if config.enableGoogle && useGoogle {
+        // conversational mode
+        multiPrinter("Entered conversational mode! `g end` to reset")
+
         conversational = true
-        manualPromptString += """
+        config.manualPromptString += """
 Using the listed tools below, answer the question below "Question to Answer".
 """
-        if !manualPromptString.contains(googleTextSegment) {
-            manualPromptString += !useGoogle ? "" : googleTextSegment
+        if !config.manualPromptString.contains(googleTextSegment) {
+            config.manualPromptString += !useGoogle ? "" : googleTextSegment
         }
     }
-    if !manualPromptString.contains(linkTextSegment) {
+    if !config.manualPromptString.contains(linkTextSegment) && config.enableLink {
 
-        manualPromptString += !useLink ? "" : linkTextSegment
+        config.manualPromptString += !useLink ? "" : linkTextSegment
     }
-    manualPromptString += !qPrompt ? "" : """
+    if config.enableGoogle {
+        config.manualPromptString += !qPrompt ? "" : """
 Question to Answer:
 """
-    manualPromptString += "\n\(input)"
+    }
+    config.manualPromptString += "\n\(input)"
 
-    sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
+    sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
 
         if !success {
             textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
@@ -353,8 +328,6 @@ Question to Answer:
 
 
         if conversational {
-                  multiPrinter("continue talking to gpt...")
-
 
                   if content.hasPrefix("google:") {
                       let split  = content.split(separator: " ", maxSplits: 1)
@@ -388,15 +361,15 @@ func exitCommand(input: String) {
 }
 
 func closeCommand(input: String) {
-    executeAppleScriptCommand(.closeProject(name: projectName)) { sucess, error in
+    executeAppleScriptCommand(.closeProject(name: config.projectName)) { sucess, error in
 
     }
 }
 
 func fixItCommand(input: String) {
-    let newPrompt = createFixItPrompt(errors: globalErrors, currentRetry: 0)
+    let newPrompt = createFixItPrompt(errors: config.globalErrors, currentRetry: 0)
     // create file should check if the file already exists
-    doPrompting(globalErrors, overridePrompt: newPrompt)
+    doPrompting(config.globalErrors, overridePrompt: newPrompt)
 }
 
 func runAppDesc(input: String) {
@@ -411,7 +384,7 @@ func showLoadedPrompt(input: String) {
 }
 
 func openProjectCommand(input: String) {
-    executeAppleScriptCommand(.openProject(name: projectName)) { success, error in
+    executeAppleScriptCommand(.openProject(name: config.projectName)) { success, error in
         stopRandomSpinner()
         if success {
             multiPrinter("project opened successfully")
@@ -432,9 +405,9 @@ func googleCommand(input: String) {
             //multiPrinter("\n🤖 googled \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-            searchResultHeadingGlobal = "\(searchResultHeading)\n\(innerContent)"
+            config.searchResultHeadingGlobal = "\(searchResultHeading)\n\(innerContent)"
 
-            if let results = searchResultHeadingGlobal {
+            if let results = config.searchResultHeadingGlobal {
                 multiPrinter("give 🤖 search results")
 
 //                doPrompting(overridePrompt: results)
@@ -471,8 +444,8 @@ func gptVoiceCommand(input: String) {
 
         let gptVoiceCommandOverrideVoice = comps[1].replacingOccurrences(of: "--voice ", with: "")
 
-        manualPromptString = promper
-        sendPromptToGPT(prompt: manualPromptString, currentRetry: 0) { content, success in
+        config.manualPromptString = promper
+        sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
             if !success {
                 textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
                 return
@@ -520,9 +493,9 @@ func linkCommand(input: String) {
             multiPrinter("\n🤖 attempt to link to link innner content content for GPT... \(input): \(innerContent)")
 
             // if overridePrompt is set by the googleCommand.. the next prompt will need to be auto send on this prompts completion.
-            linkResultGlobal = "link: \(input)\ncontent: \(innerContent)"
+            config.linkResultGlobal = "link: \(input)\ncontent: \(innerContent)"
 
-            if let results = linkResultGlobal {
+            if let results = config.linkResultGlobal {
                 multiPrinter("give 🤖 LINK IT results")
 
                 gptCommand(input: results)
@@ -540,20 +513,20 @@ func linkCommand(input: String) {
 }
 
 func globalsCommand(input: String) {
-    multiPrinter("projectName = \(projectName)")
-    multiPrinter("globalErrors = \(globalErrors)")
-    multiPrinter("manualPromptString = \(manualPromptString)")
-    multiPrinter("projectName = \(projectName)")
-    multiPrinter("BlockingInput = \(blockingInput)")
-    multiPrinter("promptingRetryNumber = \(promptingRetryNumber)")
-    multiPrinter("chosenTQ = \(chosenTQ.debugDescription)")
-    multiPrinter("lastFileContents = \(lastFileContents)")
-    multiPrinter("lastNameContents = \(lastNameContents)")
-    multiPrinter("searchResultHeadingGlobal = \(searchResultHeadingGlobal ?? "none")")
-    multiPrinter("linkResultGlobal = \(linkResultGlobal ?? "none")")
-    multiPrinter("appName = \(appName ?? "Default")")
-    multiPrinter("appType = \(appType)")
-    multiPrinter("language = \(language)")
+    multiPrinter("projectName = \(config.projectName)")
+    multiPrinter("globalErrors = \(config.globalErrors)")
+    multiPrinter("manualPromptString = \(config.manualPromptString)")
+    multiPrinter("projectName = \(config.projectName)")
+    multiPrinter("BlockingInput = \(config.blockingInput)")
+    multiPrinter("promptingRetryNumber = \(config.promptingRetryNumber)")
+    multiPrinter("chosenTQ = \(config.chosenTQ.debugDescription)")
+    multiPrinter("lastFileContents = \(config.lastFileContents)")
+    multiPrinter("lastNameContents = \(config.lastNameContents)")
+    multiPrinter("searchResultHeadingGlobal = \(config.searchResultHeadingGlobal ?? "none")")
+    multiPrinter("linkResultGlobal = \(config.linkResultGlobal ?? "none")")
+    multiPrinter("appName = \(config.appName ?? "Default")")
+    multiPrinter("appType = \(config.appType)")
+    multiPrinter("language = \(config.language)")
 }
 
 func voiceSettingsCommand(input: String) {
@@ -586,13 +559,12 @@ func simulatorCommand(input: String) {
 func setLoadMode(input: String) {
     switch input
     {
-    case "dots": loadMode = .dots
-    case "waves": loadMode = .waves
-    case "bar": loadMode = .bar
-    case "matrix": loadMode = .matrix
-    default: loadMode = .dots
+    case "dots": config.loadMode = LoadMode.dots
+    case "waves": config.loadMode = LoadMode.waves
+    case "bar": config.loadMode = LoadMode.bar
+    case "matrix": config.loadMode = LoadMode.matrix
+    default: config.loadMode = LoadMode.dots
     }
-    asciAnimations = loadMode == .matrix
     let spinDex = spinner.getSpindex(input: input)
     spinner = LoadingSpinner(columnCount: termColSize, spinDex: spinDex)
 

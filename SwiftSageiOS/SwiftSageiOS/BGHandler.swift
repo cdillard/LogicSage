@@ -9,12 +9,18 @@ import Foundation
 import BackgroundTasks
 
 func scheduleWebSocketRefresh() {
-    let request = BGAppRefreshTaskRequest(identifier: "com.example.app.websocketrefresh")
-    request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 1) // 1 minute from now
+
+#if !os(macOS)
+
+    let request = BGAppRefreshTaskRequest(identifier: "\(bundleID)bger")
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 2)
 
     do {
         try BGTaskScheduler.shared.submit(request)
     } catch {
         print("Could not schedule WebSocket refresh task: \(error)")
     }
+
+#endif
+
 }

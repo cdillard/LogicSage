@@ -27,6 +27,6 @@ func executeAppleScriptCommand(_ command: XcodeCommand, completion: @escaping (B
         }
     } else {
         multiPrinter("Unsupported command")
-        completion(false, globalErrors)
+        completion(false, config.globalErrors)
     }
 }

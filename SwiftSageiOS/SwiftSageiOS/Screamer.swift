@@ -60,26 +60,62 @@ class ScreamClient: WebSocketDelegate {
             }
         case .text(let text):
 #if !os(macOS)
-            DispatchQueue.main.async {
-                
-                consoleManager.print(text)
-                
-                if text.hasPrefix("say:") {
-                    let arr = text.split(separator: ": ", maxSplits: 1)
-                    if arr.count > 1 {
-                        print("speaking...")
-                        let speech = String(arr[1])
-                        speak(speech)
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
+                if let recipient = json?["recipient"] as? String,
+                   let message = json?["message"] as? String {
+
+                    if recipient == SettingsViewModel.shared.userName {
+
+
+                        consoleManager.print(message)
+
+                        if message.hasPrefix("say:") {
+                            let arr = message.split(separator: ": ", maxSplits: 1)
+                            if arr.count > 1 {
+                                print("speaking...")
+                                let speech = String(arr[1])
+                                speak(speech)
+                            }
+                            else {
+                                print("failed")
+                            }
+                        }
                     }
                     else {
-                        print("failed")
+                        print("recipient: \(recipient)?")
+
                     }
                 }
+
+                return
             }
+            catch {
+                print("error printing text")
+            }
+
+//            DispatchQueue.main.async {
+//
+//
+//                consoleManager.print(text)
+//
+//                if text.hasPrefix("say:") {
+//                    let arr = text.split(separator: ": ", maxSplits: 1)
+//                    if arr.count > 1 {
+//                        print("speaking...")
+//                        let speech = String(arr[1])
+//                        speak(speech)
+//                    }
+//                    else {
+//                        print("failed")
+//                    }
+//                }
+//            }
 #endif
         case .binary(let data):
 #if !os(macOS)
-
+            // TODO FIX BINARY WITH AUTH
             print("Received binary data: \(data)")
             if let receivedImage = UIImage(data: data) {
                 DispatchQueue.main.async {
@@ -102,11 +138,11 @@ class ScreamClient: WebSocketDelegate {
             }
         case .pong:
             DispatchQueue.main.async {
-
-                print("websocket received pong")
+                // fade in out green dot.
+             //   print("websocket received pong")
 #if !os(macOS)
 
-                consoleManager.print("websocket received pong")
+                //consoleManager.print("websocket received pong")
 #endif
             }
         case .viabilityChanged(let isViable):
@@ -166,7 +202,7 @@ class ScreamClient: WebSocketDelegate {
         request.timeoutInterval = 10
 
         websocket = WebSocket(request: request)
-        websocket.callbackQueue = DispatchQueue(label: "com.chrisswiftygpt.swiftsage")
+        websocket.callbackQueue = DispatchQueue(label: bundleID)
         websocket.delegate = self
         websocket.connect()
     }
@@ -206,7 +242,7 @@ class ScreamClient: WebSocketDelegate {
             break
         }
         if websocket != nil {
-            let messageData: [String: Any] = ["recipient": "SERVER", "command": command, "from": SettingsViewModel.shared.userName]
+            let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
             do {
                let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
                 let messageString = String(data: messageJSON, encoding: .utf8)

@@ -18,7 +18,7 @@ class TextAnimator {
     }
 
     func start() {
-        blockingInput = true
+        config.blockingInput = true
         stopped = false
 
         // Randomly choose between ASCII gifs
@@ -33,7 +33,7 @@ class TextAnimator {
         matrixAnim?.stop()
         matrixAnim = nil
 
-        blockingInput = false
+        config.blockingInput = false
     }
 
     func animateAscii(frameDelay: TimeInterval = 0.03, repetitions: Int = 1, consoleHeight: Int = 25) {

@@ -363,6 +363,7 @@
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
+				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
@@ -377,7 +378,6 @@
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
 				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B71C62E229FE0FF2004296E4 /* Code.swift */,
-				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
 				B746DFD429F5E78A002804EB /* Preview Content */,
 				B70971F629F62DF3008ED803 /* MultipeerKit */,
 			);

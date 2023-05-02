@@ -34,6 +34,13 @@ class SettingsViewModel: ObservableObject {
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()
 
+    @AppStorage("savedButtonSize") var buttonScale: Double = 1.0 {
+        didSet {
+            buttonScalerFloat = CGFloat(  buttonScale)
+        }
+    }
+
+    @Published var buttonScalerFloat: CGFloat = 1.0
 
     @AppStorage("userName") var userName = "chris" {
         didSet {
