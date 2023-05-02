@@ -190,7 +190,6 @@ class ScreamClient: WebSocketDelegate {
         }
     }
 
-
     func connectWebSocket(ipAddress: String, port: String) {
         let urlString = "ws://\(ipAddress):\(port)/ws"
         guard let url = URL(string: urlString) else {
@@ -211,47 +210,33 @@ class ScreamClient: WebSocketDelegate {
             websocket.connect()
         }
         else {
-            print("Attept to connect non-viable connection - failing.")
-#if !os(macOS)
-            consoleManager.print("Attept to connect non-viable connection - failing.")
-#endif
+            logD("Attempt to connect non-viable connection - failing.")
         }
 
     }
     func sendCommand(command: String) {
-        print("Executing: \(command)")
-#if !os(macOS)
-            consoleManager.print("Executing: \(command)")
-#endif
-        // TODO: More commands iOS side?
-        switch command {
-        case "open":
-            // doooo open file thing
-            print("Opening ContentView.swift...")
-#if !os(macOS)
-            consoleManager.print("Opening ContentView.swift...")
-#endif
-            return
-        case "st":
-            print("client stop")
-#if !os(macOS)
-            consoleManager.print("client stop.")
-#endif
-            stopVoice()
-        default:
-            break
+
+        logD("Executing: \(command)")
+        if SettingsViewModel.shared.currentMode == .mobile {
+            logD("Handling \(command) as local cmd...")
+            if callLocalCommand(command) {
+                return
+            }
         }
-        if websocket != nil {
-            let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
-            do {
-               let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
-                let messageString = String(data: messageJSON, encoding: .utf8)
-                websocket.write(string: messageString ?? "")
+        else {
+
+            if websocket != nil {
+                let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
+                do {
+                    let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
+                    let messageString = String(data: messageJSON, encoding: .utf8)
+                    websocket.write(string: messageString ?? "")
+                }
+                catch {
+                    print("error = \(error)")
+                }
+
             }
-            catch {
-                print("error = \(error)")
-            }
-            
         }
     }
 
@@ -265,7 +250,7 @@ class ScreamClient: WebSocketDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
             // Invalidate any existing timer
-           // self.pingTimer?.invalidate()
+            self.pingTimer?.invalidate()
 
             // Create a new timer that fires every 30 seconds
             self.pingTimer = Timer.scheduledTimer(withTimeInterval: 22.666, repeats: true) { [weak self] _ in

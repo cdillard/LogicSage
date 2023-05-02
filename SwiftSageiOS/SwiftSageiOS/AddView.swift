@@ -105,9 +105,7 @@ struct AddView: View {
                 .padding(geometry.size.width * 0.01)
 #if !os(macOS)
                 
-                .background(Color(.systemBackground))
-#else
-                .background(Color(.black))
+                .background(settingsViewModel.backgroundColor)
 #endif
                 .cornerRadius(16)
             }

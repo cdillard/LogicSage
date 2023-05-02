@@ -9,8 +9,7 @@ import Foundation
 import Starscream
 
 
-let PING_INTERVAL: TimeInterval = 22.666
-let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+
 
 
 let localPeerConsole = LocalPeerConsole()
@@ -73,10 +72,10 @@ class WebSocketClient: WebSocketDelegate {
             print("Disconnected from server: \(reason), code: \(code)")
             stopPingTimer()
             
-//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-//                print("Reconnecting...")
-//                self.connect()
-//            }
+            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         case .text(let text):
             print("Received text: \(text)")
 
@@ -110,19 +109,6 @@ class WebSocketClient: WebSocketDelegate {
             catch {
                 print("failed to parse command as JSON: \(error), trying normal...")
             }
-
-//            let components = text.split(separator: " ", maxSplits: 1)
-//            if !components.isEmpty {
-//                var comp2 = ""
-//                if components.count > 1 {
-//                    comp2 = String(components[1])
-//                }
-//                callCommandCommand(String(components[0]), comp2, recipient: "")
-//            }
-//            else {
-//                print("niped")
-//            }
-
         case .binary(let data):
             print("Received binary data: \(data)")
         case .pong( _):
@@ -147,10 +133,10 @@ class WebSocketClient: WebSocketDelegate {
             }
         case .cancelled:
             print("WebSocket cancelled")
-//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-//                print("Reconnecting...")
-//                self.connect()
-//            }
+            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         }
     }
 

@@ -118,12 +118,12 @@ public func configure(_ app: Application) throws {
                         }
 
 
-                        if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
-                            print("\(text)", terminator: "")
-                        }
-                        else {
+                        // if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
+                        //     print("\(text)", terminator: "")
+                        // }
+                        // else {
                             print("\(text)")
-                        }
+                        //}
                     }
                     catch {
                         print("error = \(error)")
@@ -193,37 +193,6 @@ public func configure(_ app: Application) throws {
                     }
                 }
             }
-            // else {
-
-
-            //     if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
-            //         print("\(text)", terminator: "")
-            //     }
-            //     else {
-            //         print("\(text)")
-            //     }
-            
-            //     if debugging {
-            //             print("connectedClients")
-            //             print(connectedClients)
-            //     }
-            //     for client in connectedClients {
-            //         guard client !== ws else { 
-            //             if debugging {
-            //                 print("skipping self")
-            //             }
-            //             continue
-            //         }
-            //         if debugging {
-            //             print("send to client =\(client)")
-            //         }
-            //         if (sendBuffer ) {
-
-            //             updateMessageBuffer(with: text)
-            //         }
-            //         client.send("\(text)")
-            //     }
-            // }
             fflush(stdout)
 
         }
@@ -293,15 +262,15 @@ func advertise() {
     }
 }
 
-func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
-    if text != nil && !text.isEmpty {
-        if text.unicodeScalars.isEmpty { return nil }
-        if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
-            return scalar
-        }
-    }
-    return nil
-}
+// func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
+//     if text != nil && !text.isEmpty {
+//         if text.unicodeScalars.isEmpty { return nil }
+//         if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
+//             return scalar
+//         }
+//     }
+//     return nil
+// }
 
 // func updateMessageBuffer(with message: String) {
 //     if !message.hasPrefix("say") {

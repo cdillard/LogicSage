@@ -30,6 +30,7 @@ class SettingsViewModel: ObservableObject {
 
 
     @Published var hasAcceptedMicrophone = false
+    @AppStorage("device") var currentMode: Device = .computer 
 
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()
@@ -99,7 +100,7 @@ class SettingsViewModel: ObservableObject {
             #endif
         }
     }
-    @Published var buttonColor: Color = .blue {
+    @Published var buttonColor: Color = .green {
         didSet {
 #if !os(macOS)
             if let data = buttonColor.colorData() {
@@ -130,6 +131,14 @@ class SettingsViewModel: ObservableObject {
 
         }
     }
+
+
+// CLIENT API KEYS
+    // TODO: USER THE KEYCHAIN
+
+    @AppStorage("openAIKey") var openAIKey = "sk-"
+
+// END CLIENT APIS ZONE
 
     init() {
 #if !os(macOS)
@@ -171,3 +180,6 @@ extension Color {
     }
 }
 #endif
+enum Device: Int {
+    case mobile, computer
+}

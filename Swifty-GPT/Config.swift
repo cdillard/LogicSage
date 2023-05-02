@@ -41,6 +41,10 @@ enum LoadMode {
     case matrix
 }
 
+// NETWORKING SETTINGS AND MISC
+let PING_INTERVAL: TimeInterval = 22.666
+let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+
 // VOICE SETTINGS
 let alexVoice = "com.apple.speech.synthesis.voice.Alex"
 let avaVoice = "com.apple.voice.premium.en-US.Ava"

@@ -58,7 +58,7 @@ struct InstructionsPopup: View {
                     Text("Got it!")
                         .foregroundColor(.white)
                         .padding(geometry.size.width * 0.01)
-                        .background(Color.blue)
+                        .background(Color.green)
                         .cornerRadius(8)
                 }
                 .padding(geometry.size.width * 0.01)

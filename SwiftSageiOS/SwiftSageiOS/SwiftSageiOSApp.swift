@@ -9,9 +9,11 @@ import SwiftUI
 import Combine
 
 let STRING_LIMIT = 50000
+// TODO BEFORE RELEASE: PROD BUNDLE ID
+let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
 
 var serviceDiscovery: ServiceDiscovery?
-let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+
 @main
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel()
@@ -33,7 +35,7 @@ struct SwiftSageiOSApp: App {
 //        }
 #endif
     //    cmdWindows = [LCManager]()
-//Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa       Lambda     Mu       Nu       Xi       Omicron        Pi      Rho    Sigma        Tau      Upsilon       Phi       Chi       Psi       Omega
+//Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa, Lambda, Mu,Nu,Xi,Omicron,Pi, Rho,Sigma,Tau      Upsilon       Phi       Chi       Psi       Omega
     }
     var body: some Scene {
         WindowGroup {

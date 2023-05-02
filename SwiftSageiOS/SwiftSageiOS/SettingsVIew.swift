@@ -37,68 +37,91 @@ struct SettingsView: View {
                         Group {
                             Text("Settings")
                                 .font(.caption)
-                                .lineLimit(nil)
-                                .fontWeight(.bold)
+                           //     .lineLimit(nil)
+                           //     .fontWeight(.bold)
                                 .padding(.bottom)
-                            VStack(alignment: .leading, spacing: 15) {
-                                Text("Terminal Background Color")
-                                    .fontWeight(.semibold)
-                                ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
-                                    .labelsHidden()
+                            Group {
+                                VStack(alignment: .leading, spacing: 15) {
+                                    Text("Terminal Background Color")
+                                    //    .fontWeight(.semibold)
+                                    ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
+                                        .labelsHidden()
                                     .padding(.horizontal, 8)
-                            }
-                            VStack(alignment: .leading, spacing: 15) {
-                                Text("Terminal Text Color")
-                                    .fontWeight(.semibold)
-                                ColorPicker("", selection: $settingsViewModel.terminalTextColor)
-                                    .labelsHidden()
+                                }
+                                VStack(alignment: .leading, spacing: 15) {
+                                    Text("Terminal Text Color")
+                                    //    .fontWeight(.semibold)
+                                    ColorPicker("", selection: $settingsViewModel.terminalTextColor)
+                                    //.labelsHidden()
                                     .padding(.horizontal, 8)
-                            }
-                            VStack(alignment: .leading, spacing: 15) {
-                                Text("Button Color")
-                                    .fontWeight(.semibold)
-                                ColorPicker("", selection: $settingsViewModel.buttonColor)
-                                    .labelsHidden()
+                                }
+                                VStack(alignment: .leading, spacing: 15) {
+                                    Text("Button Color")
+                                        .fontWeight(.semibold)
+                                    ColorPicker("", selection: $settingsViewModel.buttonColor)
+                                        .labelsHidden()
                                     .padding(.horizontal, 8)
-                            }
-                            
-                            VStack(alignment: .leading, spacing: 15) {
+                                }
 
-                                Text("Background Color")
+                                VStack(alignment: .leading, spacing: 15) {
 
-                                    .fontWeight(.semibold)
-                                ColorPicker("", selection: $settingsViewModel.backgroundColor)
-                                    .labelsHidden()
+                                    Text("Background Color")
+
+                                        .fontWeight(.semibold)
+                                    ColorPicker("", selection: $settingsViewModel.backgroundColor)
+                                    //.labelsHidden()
                                     .padding(.horizontal, 8)
+                                }
+                            }
+                            Group {
+                                Text("sws mode").font(.caption)
+                                DevicePicker(settingsViewModel: settingsViewModel)
                             }
                             VStack(alignment: .leading) {
-                                HStack {
-                                    Text("username: ").font(.caption)
-                                    TextEditor(text: $settingsViewModel.userName)
-                                    .fontWeight(.semibold)
-                                    .autocorrectionDisabled(true)
-            #if !os(macOS)
+                                if settingsViewModel.currentMode == .computer {
+                                    HStack {
+                                        Text("sws username: ").font(.caption)
+                                        TextEditor(text: $settingsViewModel.userName)
+                                        //.fontWeight(.semibold)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
 
-                                    .autocapitalization(.none)
-            #endif
+                                            .autocapitalization(.none)
+#endif
 
+                                    }
+                                    HStack {
+                                        Text("sws password: ").font(.caption)
+
+                                        TextEditor(text: $settingsViewModel.password)
+                                        //.fontWeight(.semibold)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                            .autocapitalization(.none)
+#endif
+
+
+                                    }
                                 }
-                                HStack {
-                                    Text("password: ").font(.caption)
+                                else if settingsViewModel.currentMode == .mobile {
+                                    HStack {
+                                        Text("openai🔑: ").font(.caption)
 
-                                    TextEditor(text: $settingsViewModel.password)
-                                        .fontWeight(.semibold)
-                                        .autocorrectionDisabled(true)
-                #if !os(macOS)
+                                        TextEditor(text: $settingsViewModel.openAIKey)
+                                        //.fontWeight(.semibold)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
 
-                                        .autocapitalization(.none)
-                #endif
-                                    
+                                            .autocapitalization(.none)
+#endif
 
+
+                                    }
                                 }
                             }
                     }
-                    VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 0) {
                         Group {
                             Text("Text Size")
                                 .fontWeight(.semibold)
@@ -148,10 +171,6 @@ struct SettingsView: View {
                                     }
                                 }) {
                                     Text(".\(modes[currentModeIndex])")
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .padding(.horizontal, 40)
-                                        .padding(.vertical, 12)
                                         .background(settingsViewModel.buttonColor)
                                         .cornerRadius(8)
                                 }
@@ -160,6 +179,8 @@ struct SettingsView: View {
                         }
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                     Button(action: {
                         withAnimation {
 #if !os(macOS)
@@ -169,17 +190,20 @@ struct SettingsView: View {
                     }) {
                         Text("👨")
                             .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 12)
+//                            .foregroundColor(.white)
+//                            .padding(.horizontal, 40)
+//                            .padding(.vertical, 12)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom)
 
 
                     // ENABLE MIC BUTTON
-                    Text("\(microphoneAccess == true ? "MIC ENABLED" : "Enable mic")")
+                    Text("\(microphoneAccess == true ? "Mic enabled" : "Enable mic")")
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                     Button(action: {
                         withAnimation {
 #if !os(macOS)
@@ -195,17 +219,20 @@ struct SettingsView: View {
                                             "mic.badge.plus",
                                              size: geometry.size)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 12)
+//                        .foregroundColor(.white)
+//                        .padding(.horizontal, 40)
+//                        .padding(.vertical, 12)
                         .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
 
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom)
 
                     // IOS AUDIO SETTING ON/OFF
-                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable.") iOS audio output (this device)")
+                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                     Button  {
                         withAnimation {
 #if !os(macOS)
@@ -229,12 +256,14 @@ struct SettingsView: View {
                                                 settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
                                              size: geometry.size)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 12)
-                        .background(settingsViewModel.buttonColor)
+                        //.foregroundColor(.white)
+//                        .padding(.horizontal, 40)
+//                        .padding(.vertical, 12)
+                        //.background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+
 
                     VStack {
                         if settingsViewModel.voiceOutputenabled {
@@ -249,7 +278,7 @@ struct SettingsView: View {
                                             Spacer()
                                             if selectedIOSVoiceIndex == index {
                                                 Image(systemName: "checkmark")
-                                                    .foregroundColor(.blue)
+                                                    .foregroundColor(settingsViewModel.buttonColor)
                                                     .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
                                             }
                                         }
@@ -261,7 +290,7 @@ struct SettingsView: View {
                                         .frame(height: 30)
                                     }
                                 }
-                                .frame(height: CGFloat(settingsViewModel.installedVoices.count * 4))
+                                .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
                             }
 
                         }
@@ -274,78 +303,77 @@ struct SettingsView: View {
                                 Button(action: {
                                     withAnimation {
                                         showSettings.toggle()
-
-                                        // Show Intro vie
-
                                         settingsViewModel.showInstructions.toggle()
 
-    #if !os(macOS)
-                            consoleManager.print("info tapped...")
-    #endif
-                                        print("info tapped")
+                                        logD("info tapped")
 
-
-//    #if !os(macOS)
-//                            consoleManager.isVisible = false
-//    #endif
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.34) {
+#if !os(macOS)
+                                            consoleManager.isVisible = false
+#endif
+                                        }
                                     }
                                 }) {
                                     resizableButtonImage(systemName:
                                                         "info.windshield",
                                                          size: geometry.size)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 40)
-                                    .padding(.vertical, 12)
                                     .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
-
                                 }
                                 .padding(.bottom)
 
-                                Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable.") MACOS audio output")
-                                Button  {
-                                    withAnimation {
+                                if settingsViewModel.currentMode == .computer {
+                                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") MACOS audio output")
+                                    Button  {
+                                        withAnimation {
 #if !os(macOS)
-                                        print("TODO: IMPLEMENT ENABLE/DISABLE MAC OS AUDIO FROM IOS")
-                                        //                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-                                        //                                    if settingsViewModel.voiceOutputenabled {
-                                        //                                        stopVoice()
-                                        //                                    }
-                                        //                                    else {
-                                        //                                        configureAudioSession()
-                                        //                                    }
-                                        //                                    settingsViewModel.voiceOutputenabled.toggle()
-                                        //                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
+                                            print("TODO: IMPLEMENT ENABLE/DISABLE MAC OS AUDIO FROM IOS")
+                                            //                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+                                            //                                    if settingsViewModel.voiceOutputenabled {
+                                            //                                        stopVoice()
+                                            //                                    }
+                                            //                                    else {
+                                            //                                        configureAudioSession()
+                                            //                                    }
+                                            //                                    settingsViewModel.voiceOutputenabled.toggle()
+                                            //                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
 
 #endif
+                                        }
+
+                                    } label: {
+                                        resizableButtonImage(systemName:
+                                                                settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
+                                                             size: geometry.size)
+                                        .fontWeight(.bold)
+                                        //                                    .foregroundColor(.white)
+                                        //                                    .padding(.horizontal, 40)
+                                        //                                    .padding(.vertical, 12)
+                                        .background(settingsViewModel.buttonColor)
+                                        .cornerRadius(8)
                                     }
-
-                                } label: {
-                                    resizableButtonImage(systemName:
-                                                            settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
-                                                         size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 40)
-                                    .padding(.vertical, 12)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
                                 }
-
-
-                                Text("Pick macOS server voice")
                             }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                             Spacer()
                         }
 
-                        List(cereprocVoicesNames, id: \.self) { name in
-                            Text(name)
-                                .frame(height: 30)
+                        if settingsViewModel.currentMode == .computer {
+
+                            Text("Pick macOS server voice")
+
+                            List(cereprocVoicesNames, id: \.self) { name in
+                                Text(name)
+                                    .frame(height: 30)
+                            }
+                            .frame(height: CGFloat(cereprocVoicesNames.count * 40))
                         }
-                        .frame(height: CGFloat(cereprocVoicesNames.count * 40))
 
                     }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                     Spacer()
 
 
@@ -357,9 +385,9 @@ struct SettingsView: View {
                         }) {
                             Text("Close")
                                 .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 40)
-                                .padding(.vertical, 12)
+//                                .foregroundColor(.white)
+//                                .padding(.horizontal, 40)
+//                                .padding(.vertical, 12)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
                         }
@@ -371,11 +399,8 @@ struct SettingsView: View {
                 .padding(geometry.size.width * 0.01)
 #if !os(macOS)
 
-                .background(Color(.systemBackground))
-#else
-                .background(Color(.black))
+                .background(settingsViewModel.backgroundColor)
 #endif
-                .cornerRadius(16)
             }
             .scrollIndicators(.visible)
         }
@@ -385,14 +410,10 @@ struct SettingsView: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: min(size.width * 0.05, settingsViewModel.buttonScalerFloat), height: min(size.width * 0.05, settingsViewModel.buttonScalerFloat))
-            .padding(size.width * 0.02)
-            .background(settingsViewModel.buttonColor)
-            .foregroundColor(.white)
-            .cornerRadius(size.width * 0.05)
-            .padding(.bottom, size.width * 0.01)
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .tint(settingsViewModel.buttonColor)
+            .background(CustomShape())
     }
-
     private func updateMode() {
         currentModeIndex = (currentModeIndex + 1) % modes.count
 
@@ -408,6 +429,49 @@ struct SettingsView: View {
             //
             //            consoleManager.isVisible = true
             //#endif
+        }
+    }
+}
+
+
+struct DevicePicker: View {
+    @State  var isExpanded = true
+    @ObservedObject var settingsViewModel: SettingsViewModel
+
+    var body: some View {
+        // Your component view will be here
+        ZStack {
+            RoundedRectangle(cornerRadius: isExpanded ? 10 : 30)
+                .fill(Color.blue)
+                .frame(width: isExpanded ? 250 : 60, height: 60)
+
+            HStack(spacing: 30) {
+                Image(systemName: "iphone")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                    .opacity(settingsViewModel.currentMode == .mobile ? 1 : 0.5)
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            settingsViewModel.currentMode = .mobile
+
+                        }
+                    }
+                Image(systemName: "desktopcomputer")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                    .opacity(settingsViewModel.currentMode == .computer ? 1 : 0.5)
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            settingsViewModel.currentMode = .computer
+                        }
+                    }
+            }
+            .padding(.horizontal, isExpanded ? 20 : 0)
+            .opacity(isExpanded ? 1 : 0)
         }
     }
 }

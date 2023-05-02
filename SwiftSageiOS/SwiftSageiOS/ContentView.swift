@@ -143,9 +143,6 @@ struct ContentView: View {
 
                         Text("Restart app if you encounter any issues, OK?\nFresh install if terminal becomes too small :(")
                             .font(.caption)
-                            .lineLimit(nil)
-
-
                     }
                     Spacer()
                 }
@@ -204,19 +201,19 @@ struct ContentView: View {
 
 
                     }
-                    // PING BUTTON
-                    Button(action: {
-                        if screamer.websocket != nil {
-                            screamer.websocket.write(ping: Data())
-                        }
-#if !os(macOS)
-                        consoleManager.print("ping...")
-#endif
-                        print("ping...")
-                    }) {
-
-                        resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
-                    }
+//                    // PING BUTTON
+//                    Button(action: {
+//                        if screamer.websocket != nil {
+//                            screamer.websocket.write(ping: Data())
+//                        }
+//#if !os(macOS)
+//                        consoleManager.print("ping...")
+//#endif
+//                        print("ping...")
+//                    }) {
+//
+//                        resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
+//                    }
 
                     // ADD VIEW BUTTON
                     Button(action: {
@@ -267,7 +264,6 @@ struct ContentView: View {
                         //Text(isRecording ? "Stop Recording" : "Start Recording")
                         resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
                             .font(.caption)
-                            .lineLimit(nil)
                             .overlay(
                                 Group {
                                     if !settingsViewModel.hasAcceptedMicrophone {
@@ -280,8 +276,6 @@ struct ContentView: View {
 
                     Text(settingsViewModel.recognizedText)
                         .font(.caption)
-                        .lineLimit(nil)
-
                     Spacer()
 
                 }

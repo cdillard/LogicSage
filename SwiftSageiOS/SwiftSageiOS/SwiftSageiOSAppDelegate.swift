@@ -13,7 +13,6 @@ import BackgroundTasks
 class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 
     static func applicationDidFinishLaunching() {
-        // TODO BEFORE RELEASE: PROD BUNDLE ID
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "\(bundleID)bger", using: nil) { task in
             self.handleWebSocketRefresh(task: task as! BGAppRefreshTask)
         }
@@ -23,13 +22,6 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
 
         scheduleWebSocketRefresh()
     }
-
-//    func application(
-//        _ application: UIApplication,
-//        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-//    ) {
-//
-//    }
 
     static func handleWebSocketRefresh(task: BGAppRefreshTask) {
         task.expirationHandler = {

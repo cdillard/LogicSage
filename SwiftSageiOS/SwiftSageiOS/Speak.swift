@@ -18,7 +18,7 @@ struct VoicePair: Hashable {
 
 func speak(_ text: String) {
     if !SettingsViewModel.shared.voiceOutputenabled {
-        print("DONT say: \(text)")
+        //print("DONT say: \(text)")
         //consoleManager.print("say: \(text)")
         return
     }
