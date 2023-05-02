@@ -99,49 +99,67 @@ struct SettingsView: View {
                             }
                     }
                     VStack(alignment: .leading, spacing: 15) {
-                        Text("Text Size")
-                            .fontWeight(.semibold)
-                        HStack {
-                            Text("Small")
-                            Slider(value: $settingsViewModel.textSize, in: 2...22, step: 0.3)
-                                .accentColor(settingsViewModel.buttonColor)
-                            Text("Large")
-                        }
-                        Text("\(settingsViewModel.textSize)")
-                            .font(.caption)
-                            .lineLimit(nil)
-
-                        Text("Button Size")
-                            .fontWeight(.semibold)
-                        HStack {
-                            Text("Small")
-                            Slider(value: $settingsViewModel.buttonScale, in:  0.1...3.0, step: 0.01)
-                                .accentColor(settingsViewModel.buttonColor)
-                            Text("Large")
-                        }
-                        Text("\(settingsViewModel.buttonScale)")
-                            .font(.caption)
-                            .lineLimit(nil)
-                        Text("LoadMode")
-                            .fontWeight(.semibold)
-                        HStack {
-                            Button(action: {
-                                withAnimation {
-                                    updateMode()
-                                }
-                            }) {
-                                Text(".\(modes[currentModeIndex])")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 40)
-                                    .padding(.vertical, 12)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
+                        Group {
+                            Text("Text Size")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Text("Small")
+                                Slider(value: $settingsViewModel.textSize, in: 2...30, step: 0.1)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
                             }
-                            .padding(.bottom)
+                            Text("\(settingsViewModel.textSize)")
+                                .font(.caption)
+                                .lineLimit(nil)
                         }
+                        Group {
+                            Text("Toolbar size")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Text("Small")
+                                Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.4, step: 0.01)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
+                            }
+                            Text("\(settingsViewModel.buttonScale)")
+                                .font(.caption)
+                                .lineLimit(nil)
+                        }
+                        Group {
+                            Text("CMD bar size")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Text("Small")
+                                Slider(value: $settingsViewModel.commandButtonFontSize, in:  8...48, step: 0.01)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
+                            }
+                            Text("\(settingsViewModel.commandButtonFontSize)")
+                                .font(.caption)
+                                .lineLimit(nil)
+                        }
+                        Group {
+                            Text("LoadMode")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Button(action: {
+                                    withAnimation {
+                                        updateMode()
+                                    }
+                                }) {
+                                    Text(".\(modes[currentModeIndex])")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 40)
+                                        .padding(.vertical, 12)
+                                        .background(settingsViewModel.buttonColor)
+                                        .cornerRadius(8)
+                                }
+                                .padding(.bottom)
+                            }
+                        }
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                     Button(action: {
                         withAnimation {
 #if !os(macOS)

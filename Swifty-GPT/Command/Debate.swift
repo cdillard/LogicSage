@@ -101,7 +101,7 @@ func debateCommand(input: String) {
 func deepConversation(currentPersonality: String, initialPrompt: String, depth: Int) {
     if depth <= 0 {
         textToSpeech(text: "This concludes the debate.", overrideVoice: personalityA)
-
+        stopRandomSpinner()
         return
     }
 

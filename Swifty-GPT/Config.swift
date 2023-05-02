@@ -189,6 +189,6 @@ enum LogVerbosity {
 // ASCII MOVIES ZONE ///////////////////////////////
 // IF the movie is TOO big/blurry for you and your tastes try manually setting your sws/Xcode console font to 2 or 3 and then  turn movie width up :).
 // We'll need to sync each clients terminal window/s widths to make sure the animations and movies play properly.
-let movieWidth = 95
+let movieWidth = 100
 let matrixScreenWidth = 100
 // END ASCII MOVIES ZONE ///////////////////////////////

@@ -8,15 +8,11 @@ import var Darwin.stdout
 
 let debugging = true
 
-let sendBuffer = false
-// let useAuth = true
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
              ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
-  
-let bufferSize = 100
-  
-var messageBuffer: [String] = []
+    
 var clients: [String: [WebSocket]] = [:]
+
 // configures your application
 public func configure(_ app: Application) throws {
 
@@ -32,11 +28,6 @@ public func configure(_ app: Application) throws {
         }
         
         connectedClients.append(ws)
-        
-        
-        if (sendBuffer ) {
-            sendBufferedMessages(to: ws)
-        }
 
         ws.onText { ws, text in
 
@@ -312,21 +303,21 @@ func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
     return nil
 }
 
-func updateMessageBuffer(with message: String) {
-    if !message.hasPrefix("say") {
-        messageBuffer.append(message)
-    }
+// func updateMessageBuffer(with message: String) {
+//     if !message.hasPrefix("say") {
+//         messageBuffer.append(message)
+//     }
 
-    if messageBuffer.count > bufferSize {
-        messageBuffer.removeFirst()
-    }
-}
+//     if messageBuffer.count > bufferSize {
+//         messageBuffer.removeFirst()
+//     }
+// }
 
-func sendBufferedMessages(to ws: WebSocket) {
-    messageBuffer.forEach { message in
-        ws.send(message)
-    }
-}
+// func sendBufferedMessages(to ws: WebSocket) {
+//     messageBuffer.forEach { message in
+//         ws.send(message)
+//     }
+// }
 
 
 var userSettings: [String: Config] = [:]

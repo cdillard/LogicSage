@@ -73,10 +73,10 @@ class WebSocketClient: WebSocketDelegate {
             print("Disconnected from server: \(reason), code: \(code)")
             stopPingTimer()
             
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                print("Reconnecting...")
-                self.connect()
-            }
+//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+//                print("Reconnecting...")
+//                self.connect()
+//            }
         case .text(let text):
             print("Received text: \(text)")
 
@@ -147,10 +147,10 @@ class WebSocketClient: WebSocketDelegate {
             }
         case .cancelled:
             print("WebSocket cancelled")
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                print("Reconnecting...")
-                self.connect()
-            }
+//            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
+//                print("Reconnecting...")
+//                self.connect()
+//            }
         }
     }
 

@@ -56,8 +56,10 @@ struct CommandButtonView: View {
 
                         // GOOGLE button
                         Button(action: {
+#if !os(macOS)
 
                             consoleManager.print("toggling google mode")
+#endif
                             print("toggling google mode")
                             // cmd send st
 
@@ -69,8 +71,8 @@ struct CommandButtonView: View {
                                     .opacity(0.6)
 
                             }
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -79,8 +81,10 @@ struct CommandButtonView: View {
                         
                         // LINK BUTTON
                         Button(action: {
+#if !os(macOS)
 
                             consoleManager.print("toggling linking mode")
+                            #endif
                             print("toggling linking mode")
 
 
@@ -90,8 +94,8 @@ struct CommandButtonView: View {
                                 Text("❌")
                                     .opacity(0.6)
                             }
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -105,9 +109,9 @@ struct CommandButtonView: View {
                             isTextFieldFocused = true
                             settingsViewModel.multiLineText += "debate "
                         }) {
-                            Text( "debate")
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                            Text( "⚖️")
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -135,8 +139,8 @@ struct CommandButtonView: View {
                                 Text("❌")
                                     .opacity(0.74)
                             }
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
@@ -151,7 +155,7 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "i "
                         }) {
                             Text( "i")
-                                .font(.caption)
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
                                 .padding(geometry.size.width * 0.01)
 
                                 .lineLimit(1)
@@ -166,8 +170,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "g "
                         }) {
                             Text( "g")
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
@@ -184,8 +188,8 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText = ""
                         }) {
                             Text( "🗑️")
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
 
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
@@ -211,8 +215,8 @@ struct CommandButtonView: View {
 
                     }) {
                         Text("🛑")
-                            .font(.caption)
-                            .padding(geometry.size.width * 0.01)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                            .padding(geometry.size.width * 0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
@@ -222,24 +226,31 @@ struct CommandButtonView: View {
                     // EXEC BUTTON
                     Button(action: {
                         if settingsViewModel.multiLineText.isEmpty {
+#if !os(macOS)
+
                             consoleManager.print("nothing to exec.")
+#endif
+                            print("nothing to exec")
+
                             return
                         }
                         // Execute your action here
                         screamer.sendCommand(command: settingsViewModel.multiLineText)
 
                         self.settingsViewModel.isInputViewShown = false
+#if !os(macOS)
 
                         consoleManager.isVisible = true
+#endif
 //#if !os(macOS)
 //
 //                        consoleManager.isVisible = true
 //                        #endif
 
                     }) {
-                        Text("✅🔄")
-                            .font(.caption)
-                            .padding(geometry.size.width * 0.01)
+                        Text("✅")
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                            .padding(geometry.size.width * 0.01)
 
                             .lineLimit(1)
                             .foregroundColor(Color.white)
@@ -273,8 +284,8 @@ struct CommandButtonView: View {
                                 Text("🔽")
 //                                Text("❌")
                             }
-                            .font(.caption)
-                            .padding(geometry.size.width * 0.01)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                            .padding(geometry.size.width * 0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             //.padding(geometry.size.width * 0.01)
@@ -282,9 +293,9 @@ struct CommandButtonView: View {
 //                            .cornerRadius(10)
                         }
                         else {
-                           Text( "🔹💬")
-                                .font(.caption)
-                                .padding(geometry.size.width * 0.01)
+                           Text( "💬")
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 //.padding(geometry.size.width * 0.01)
@@ -303,7 +314,7 @@ struct CommandButtonView: View {
                     // MAIN INPUT TEXTFIELD
                     TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
-                        .font(.caption)
+//                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                         .lineLimit(nil)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(true)
@@ -316,5 +327,13 @@ struct CommandButtonView: View {
                 }
             }
         }
+    }
+}
+struct CustomFontSize: ViewModifier {
+    @Binding var size: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: size))
     }
 }

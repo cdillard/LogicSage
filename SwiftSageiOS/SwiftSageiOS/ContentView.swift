@@ -163,7 +163,7 @@ struct ContentView: View {
 
             VStack {
                 Spacer()
-                HStack(spacing: 0) {
+                HStack(alignment: .bottom, spacing: 0) {
                     // OPEN TERM BUTTON
 
                     Button(action: {
@@ -315,17 +315,10 @@ struct ContentView: View {
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
-//            .scaledToFit()
-//            .scaleEffect(settingsViewModel.maxButtonSize)
-            .frame(width: size.width * 0.05, height: size.width * 0.05)
-            .padding(.leading, size.width * 0.05)
-            .padding(.trailing, size.width * 0.05)
-
-//            .background(settingsViewModel.buttonColor)
-  //          .foregroundColor(.white)
-            .scaleEffect(CGFloat(settingsViewModel.buttonScale))
-
-//            .cornerRadius(size.width * 0.05)
+            .scaledToFit()
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .tint(settingsViewModel.buttonColor)
+            .background(CustomShape())
     }
 }
 
@@ -398,3 +391,10 @@ func openTerminalAndRunCommand(command: String) {
 }
 
 #endif
+struct CustomShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addRect(rect)
+        return path
+    }
+}

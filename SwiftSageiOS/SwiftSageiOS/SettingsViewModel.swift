@@ -34,13 +34,23 @@ class SettingsViewModel: ObservableObject {
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()
 
-    @AppStorage("savedButtonSize") var buttonScale: Double = 1.0 {
+    @AppStorage("savedButtonSize") var buttonScale: Double = 0.2 {
         didSet {
             buttonScalerFloat = CGFloat(  buttonScale)
         }
     }
+    @Published var buttonScalerFloat: CGFloat = 0.2
 
-    @Published var buttonScalerFloat: CGFloat = 1.0
+    // COMMAND BUTTON SIZE
+    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 24 {
+        didSet {
+            commandButtonFontSizeFloat = CGFloat(  commandButtonFontSize)
+        }
+    }
+
+    @Published var commandButtonFontSizeFloat: CGFloat = 24
+
+
 
     @AppStorage("userName") var userName = "chris" {
         didSet {
