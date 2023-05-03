@@ -16,7 +16,7 @@ struct InstructionsPopup: View {
         GeometryReader { geometry in
             
             VStack {
-                Text("Welcome to SwiftSage!")
+                Text("Welcome to LogicSage!")
                     .background(.green)
                     .opacity(0.7)
                     .font(.caption)
@@ -44,7 +44,7 @@ struct InstructionsPopup: View {
                         Text("1. Running SwiftSage Swifty-GPT cmd line target on your command line Mac.")
                         Text("2. Running the vapor server.")
                     }
-                    Text("Without these 3 steps, the SwiftSage server will not work.")
+                    Text("Without these 3 steps, the LogicSage server will not work.")
 
                     Text("Tips: - You can dock terminals to side of screen to get them out of way.")
                 }
