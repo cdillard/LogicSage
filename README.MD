@@ -35,6 +35,20 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ## News, Changelog
 
+
+---- 
+05-02-2023
+
+Simply Groundbreaking!!!!!!!
+
+
+You can now use the Swift Sage app without the server, Have fun! 
+
+Coming to an app store near you for free soon.
+
+![modez](Swifty-GPT/assets/modez.png)
+
+
 ---- 
 05-01-2023
 

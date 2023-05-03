@@ -24,8 +24,17 @@ class ScreamClient: WebSocketDelegate {
         case .connected(let headers):
             isConnected = true
 #if !os(macOS)
-
-            consoleManager.print("WebSocket connected")
+            let logoAscii5 = """
+            ╭━━━╮╱╱╱╱╱╱╭━┳╮╭━━━╮
+            ┃╭━╮┃╱╱╱╱╱╱┃╭╯╰┫╭━╮┃
+            ┃╰━━┳╮╭╮╭┳┳╯╰╮╭┫╰━━┳━━┳━━┳━━╮
+            ╰━━╮┃╰╯╰╯┣╋╮╭┫┃╰━━╮┃╭╮┃╭╮┃┃━┫
+            ┃╰━╯┣╮╭╮╭┫┃┃┃┃╰┫╰━╯┃╭╮┃╰╯┃┃━┫
+            ╰━━━╯╰╯╰╯╰╯╰╯╰━┻━━━┻╯╰┻━╮┣━━╯
+            ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+            ╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯
+            """
+            consoleManager.print("WebSocket connected\n\(logoAscii5)")
 #endif
             print("WebSocket connected \(headers)")
 #if !os(macOS)
@@ -151,7 +160,7 @@ class ScreamClient: WebSocketDelegate {
                 print("Connection viability changed: \(isViable)")
 #if !os(macOS)
 
-                consoleManager.print("Connection viability changed: \(isViable)")
+                consoleManager.print("connection viable: \(isViable)")
 #endif
                 self.isViable = isViable
 

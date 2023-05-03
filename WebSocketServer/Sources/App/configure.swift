@@ -12,7 +12,23 @@ let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "�
              ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
     
 var clients: [String: [WebSocket]] = [:]
-
+let logoAscii5 = """
+╭━━━╮╱╱╱╱╱╱╭━┳╮╭━━━╮
+┃╭━╮┃╱╱╱╱╱╱┃╭╯╰┫╭━╮┃
+┃╰━━┳╮╭╮╭┳┳╯╰╮╭┫╰━━┳━━┳━━┳━━╮
+╰━━╮┃╰╯╰╯┣╋╮╭┫┃╰━━╮┃╭╮┃╭╮┃┃━┫
+┃╰━╯┣╮╭╮╭┫┃┃┃┃╰┫╰━╯┃╭╮┃╰╯┃┃━┫
+╰━━━╯╰╯╰╯╰╯╰╯╰━┻━━━┻╯╰┻━╮┣━━╯
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯
+"""
+let logoAscii2 = """
+   ____       _ _____           ________  ______
+  / __/    __(_) _/ /___ ______/ ___/ _ \\ /_  __/
+ _\\ \\| |/|/ / / _/ __/ // /___/ (_ / ___/ / /
+/___/|__,__/_/_/ \\__ /\\_ /    \\___/_/    /_/
+                    /___/
+"""
 // configures your application
 public func configure(_ app: Application) throws {
 
@@ -169,7 +185,7 @@ public func configure(_ app: Application) throws {
                             resps.forEach { recipientSocket in
                                 print("Received message fpr recipientSocket = \(recipientSocket)")
                                     // send server auth cmd
-                                    let logData: [String: String] = ["recipient": "SERVER", "command": "Authed \(user)"]
+                                    let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
                                     do {
                                         let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
                                         let logString = String(data: logJSON, encoding: .utf8)
