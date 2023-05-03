@@ -9,6 +9,8 @@ import Foundation
 import PushToTalk
 import AVFoundation
 
+// TODO: PUSH TO TALK
+#if !os(macOS)
 
 class PTTWrapper: NSObject, PTChannelManagerDelegate, PTChannelRestorationDelegate {
 
@@ -60,3 +62,4 @@ class PTTWrapper: NSObject, PTChannelManagerDelegate, PTChannelRestorationDelega
     }
 
 }
+#endif

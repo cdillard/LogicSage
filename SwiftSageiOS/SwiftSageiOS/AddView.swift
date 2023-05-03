@@ -18,11 +18,8 @@ struct AddView: View {
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Button("\(settingsViewModel.isEditorVisible ? "Hide" : "Add") File") {
-                        print("mnew File")
-                        print("mnew File")
-                        
-                        
+                    Button("\(settingsViewModel.isEditorVisible ? "Hide" : "Open") File") {
+                        print("open new File")
 #if !os(macOS)
                         
                         if consoleManager.isVisible {
@@ -67,7 +64,7 @@ struct AddView: View {
                     //                    .padding(.bottom)
                     
                     
-                    Button("\(settingsViewModel.isWebViewVisible ? "Hide" : "Add") WebView") {
+                    Button("\(settingsViewModel.isWebViewVisible ? "Hide" : "Open") chatGPT") {
 #if !os(macOS)
                         
                         if consoleManager.isVisible {
@@ -75,7 +72,7 @@ struct AddView: View {
                         }
 #endif
 
-                        print("mnew Webview")
+                        print("open chatGPT Webview")
                         showAddView.toggle()
                         settingsViewModel.isWebViewVisible.toggle()
                     }

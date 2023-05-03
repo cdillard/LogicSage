@@ -67,10 +67,15 @@ func printVoicesInMyDevice() {
     for voice in installedVoiesArr() {
         installedVoices += [ VoicePair(voiceName: voice.name, voiceIdentifier: voice.identifier)]
     }
-    SettingsViewModel.shared.installedVoices = installedVoices
-    ///consoleManager.print("installed v: \(SettingsViewModel.shared.installedVoices)")
-    ///print("installed v: \(SettingsViewModel.shared.installedVoices)")
 
+    installedVoices.sort { $0.voiceName < $1.voiceName }
+
+    SettingsViewModel.shared.installedVoices = installedVoices.sorted {
+        if $0.voiceName.contains("Premium") || $0.voiceName.contains("Enhanced")  {
+            return $0.voiceName > $1.voiceName
+        }
+        return $0.voiceName < $1.voiceName
+    }
 #endif
 
 }

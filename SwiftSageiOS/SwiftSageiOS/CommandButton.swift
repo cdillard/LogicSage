@@ -236,7 +236,7 @@ struct CommandButtonView: View {
                             .padding(.bottom)
 //                            .cornerRadius(10)
                     }
-                    if settingsViewModel.multiLineText.count > 2 {
+                    if settingsViewModel.multiLineText.count > 0 {
                         // EXEC BUTTON
                         Button(action: {
                             if settingsViewModel.multiLineText.isEmpty {

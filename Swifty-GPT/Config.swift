@@ -43,7 +43,8 @@ enum LoadMode {
 
 // NETWORKING SETTINGS AND MISC
 let PING_INTERVAL: TimeInterval = 22.666
-let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+let bundleID = "com.chrisdillard.SwiftSageServer"
+//let bundleID = "com.chrisdillard.SwiftSageServer"
 
 // VOICE SETTINGS
 let alexVoice = "com.apple.speech.synthesis.voice.Alex"

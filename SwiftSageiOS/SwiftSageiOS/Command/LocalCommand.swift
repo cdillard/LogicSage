@@ -48,12 +48,12 @@ func callLocalCommand(_ command: String) -> Bool {
             // Oh boy, TODO: Fix the millions of robots chorus bug that seems to happen w/ wrong combo of server start, binary start, app start.
            // textToSpeech(text: "Invalid command. Exec c for help")
 
-            logD("Invalid command. Please try again. (c) for help")
         }
     }
+    // HERE WE HANDLE LOCAL COMANDS
+    if command == "st" { stopVoice() ; stopRandomSpinner() ; return true  }
 
-
-
+    logD("Invalid sws command. Please try again. (c) for help")
 
     return false
 }

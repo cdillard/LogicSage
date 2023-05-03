@@ -86,6 +86,7 @@ struct SettingsView: View {
                                     HStack {
                                         Text("sws username: ").font(.caption)
                                         TextEditor(text: $settingsViewModel.userName)
+                                            .scrollDismissesKeyboard(.interactively)
 
                                             .font(.footnote)
                                             .autocorrectionDisabled(true)
@@ -101,6 +102,8 @@ struct SettingsView: View {
                                         Text("sws password: ").font(.caption)
 
                                         TextEditor(text: $settingsViewModel.password)
+                                            .scrollDismissesKeyboard(.interactively)
+
                                             .font(.footnote)
                                             .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -119,6 +122,7 @@ struct SettingsView: View {
                                             Text("openai🔑: ").font(.caption)
 
                                             TextEditor(text: $settingsViewModel.openAIKey)
+                                                .scrollDismissesKeyboard(.interactively)
                                                 .font(.footnote)
                                                 .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -339,6 +343,30 @@ struct SettingsView: View {
 
                         HStack {
                             VStack {
+                                // Button for (help)
+                                Text("help")
+                                Button(action: {
+                                    withAnimation {
+                                        showSettings.toggle()
+
+
+                                        settingsViewModel.showHelp.toggle()
+
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.34) {
+#if !os(macOS)
+                                            consoleManager.isVisible = false
+#endif
+                                        }
+                                    }
+                                }) {
+                                    resizableButtonImage(systemName:
+                                                        "questionmark.circle.fill",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .background(settingsViewModel.buttonColor)
+                                    .cornerRadius(8)
+                                }
+                                .padding(.bottom)
 
                                 // BUTTON FOR (i) info
                                 Text("info")

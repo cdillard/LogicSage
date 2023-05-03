@@ -101,16 +101,47 @@ open class SyntaxTextView: UIView {
     }
 
     #endif
-    
+    @objc func doneBtnFromKeyboardClicked (sender: Any) {
+         print("Done Button Clicked.")
+        //Hide Keyboard by endEditing or Anything you want.
+        self.textView.endEditing(true)
+    }
+
     public override init(frame: CGRect) {
         textView = SyntaxTextView.createInnerTextView()
+
+
+
+
+
         super.init(frame: frame)
+
+        var ViewForDoneButtonOnKeyboard = UIToolbar()
+        ViewForDoneButtonOnKeyboard.sizeToFit()
+        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
+        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
+        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
+
+        textView.keyboardDismissMode = .interactive
+
+
         setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         textView = SyntaxTextView.createInnerTextView()
+        textView.keyboardDismissMode = .interactive
+
         super.init(coder: aDecoder)
+
+        var ViewForDoneButtonOnKeyboard = UIToolbar()
+        ViewForDoneButtonOnKeyboard.sizeToFit()
+        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
+        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
+        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
+
+        textView.keyboardDismissMode = .interactive
+
         setup()
     }
 

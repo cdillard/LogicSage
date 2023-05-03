@@ -354,8 +354,6 @@
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
-				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
-				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B7717D2529EFA56D005141AB /* AssisAI.swift */,
 				B729B13D29F992D300BA6752 /* Audio */,
 				B729B13B29F975F600BA6752 /* Command */,
@@ -435,10 +433,12 @@
 		B729B14329F9B42800BA6752 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				B70CF17F29F08C7C00993AAF /* Regex.swift */,
+				B768CE9529EB157700B8A9E4 /* AsciiAnimator.swift */,
+				B70B44DC29EAFBFE00C45773 /* AsciiText.swift */,
 				B70B44D529EAD85B00C45773 /* Files.swift */,
 				B70CF17B29F07ACD00993AAF /* Loding.swift */,
 				71FD62B129EF75AC00C6EC34 /* plistHelper.swift */,
+				B70CF17F29F08C7C00993AAF /* Regex.swift */,
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,

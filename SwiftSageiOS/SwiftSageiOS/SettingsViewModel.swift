@@ -34,6 +34,7 @@ class SettingsViewModel: ObservableObject {
 
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()
+    @Published var showHelp: Bool = false
 
     @AppStorage("savedButtonSize") var buttonScale: Double = 0.2 {
         didSet {

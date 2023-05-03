@@ -26,20 +26,27 @@ struct InstructionsPopup: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     Group {
-                        Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
-                        Text("Check out SwiftSage GitHub: https://github.com/cdillard/SwiftSage for instructions.")
-                        Text("Make sure you are have at minimum:")
+                        Group {
+                            Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
+                            Text("Check out SwiftSage GitHub: https://github.com/cdillard/SwiftSage for instructions.")
+
+                            Text("This app/project is an ALPHA. email me with issues/suggestions.")
+
+                            Text("You will start in `mobile` mode. Check out Settings to set your openAI key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
+                        }
+                        Text("PLEASE READ ****")
+                        Text("Due to this being an alpha please do this on launch:\n1. Force quit / restart app.\nrTap gear, set terminal bg, terminal font color, button color, set font size. Then  Force quit / restart app one last time. Restart the app and you should have your custom colors :)")
+
+                        Text("Check out the repo for info on setting up server.")
+
+                        Text("To Run The server: Make sure you have at minimum taken these steps:")
                         Text("0. Set your API Key for Open AI and enabled feature flag swiftSageIOSEnabled.")
                         Text("1. Running SwiftSage Swifty-GPT cmd line target on your command line Mac.")
                         Text("2. Running the vapor server.")
                     }
-                    Text("Without this, it will not work.")
-                    Text("PLEASE READ ****")
-                    Text("Due to this being an alpha please do this on launch:\n1. Force quit / restart app.\nrTap gear, set font size, terminal font color, tap command to open COMMAND , tap TERM. BOOM! your term colors.")
-                    Text("You can dock terminals to side of screen to get them out of way")
+                    Text("Without these 3 steps, the SwiftSage server will not work.")
 
-                    Text("You will start in `mobile` mode. Check out Settings to set your openAI key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
-                    Text("Check out the repo for info on setting up server.")
+                    Text("Tips: - You can dock terminals to side of screen to get them out of way.")
                 }
                 .background(.green)
                 .opacity(0.7)

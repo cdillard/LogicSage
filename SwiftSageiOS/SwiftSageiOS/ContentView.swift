@@ -141,7 +141,8 @@ struct ContentView: View {
                     HStack {
                         Spacer()
 
-                        Text("Restart app if you encounter any issues, OK?\nFresh install if terminal becomes too small :(")
+                        Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if terminal becomes too small :(")
+                            .zIndex(-999)
                             .font(.caption)
                     }
                     Spacer()

@@ -52,6 +52,9 @@ let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
 var defaultLoadMode = LoadMode.dots
 
+func asciAnimations() -> Bool {
+    config.loadMode == LoadMode.matrix
+}
 
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
 

@@ -57,18 +57,17 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             logD("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-//        if !disableSpinner {
-//            startRandomSpinner()
-//        }
+        if !disableSpinner {
+            startRandomSpinner()
+        }
 
         logD("Prompting \(prompt.count)")
-        // textToSpeech(text: "Prompting \(prompt.count)")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
-//            if !disableSpinner {
-//                stopRandomSpinner()
-//            }
+            if !disableSpinner {
+                stopRandomSpinner()
+            }
 
             if let error = error {
                 logD("Error occurred: \(error.localizedDescription)")
