@@ -98,6 +98,7 @@
 		B78DA9672A02AF3A002343AB /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9632A02AF3A002343AB /* Loading.swift */; };
 		B78DA9682A02AF3A002343AB /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9642A02AF3A002343AB /* AsciiText.swift */; };
 		B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9692A02AF72002343AB /* SageMultiView.swift */; };
+		B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA96B2A0312F1002343AB /* HelpPopup.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -200,6 +201,7 @@
 		B78DA9632A02AF3A002343AB /* Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		B78DA9642A02AF3A002343AB /* AsciiText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B78DA9692A02AF72002343AB /* SageMultiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SageMultiView.swift; sourceTree = "<group>"; };
+		B78DA96B2A0312F1002343AB /* HelpPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpPopup.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
 				B78DA9602A02AF3A002343AB /* Loading */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
+				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
 				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
@@ -680,6 +683,7 @@
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
 				B7191F2829F9F09A00078D8D /* InnerTextView.swift in Sources */,
 				B7191F2929F9F09A00078D8D /* TextViewWrapperView.swift in Sources */,
+				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,
 				B7191F2C29F9F09A00078D8D /* Paragraphs.swift in Sources */,
 				B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */,
 				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
@@ -850,7 +854,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -896,7 +900,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;

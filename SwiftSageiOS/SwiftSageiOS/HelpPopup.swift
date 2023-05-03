@@ -25,7 +25,7 @@ struct HelpPopup: View {
                     .bold()
                     .padding(geometry.size.width * 0.01)
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 2) {
                     Group {
                         Group {
                             Text("Welcome to your AI workspace. See your toolbar at the bottom left, see your command bar at the bottom right.")
@@ -34,14 +34,17 @@ struct HelpPopup: View {
 
                             Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
-
                             Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.")
-
 
                             Text("You will start in `mobile` mode. Check out Settings to set your openAI key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
 
                             Text("OPTIONAL: Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
 
+                            Text("Follow this order when running LogicSage in computer mode.")
+
+                            Text("0. Start Swift Vapor Server with `vapor run`")
+                            Text("1. Start Swifty-GPT swift binary in Xcode with the play button")
+                            Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
                         }
 
                     }

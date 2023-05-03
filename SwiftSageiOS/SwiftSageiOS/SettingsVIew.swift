@@ -348,9 +348,10 @@ struct SettingsView: View {
                                 Button(action: {
                                     withAnimation {
                                         showSettings.toggle()
-
-
                                         settingsViewModel.showHelp.toggle()
+
+                                        logD("HELP tapped")
+
 
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.34) {
 #if !os(macOS)

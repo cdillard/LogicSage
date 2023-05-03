@@ -40,7 +40,7 @@ struct InstructionsPopup: View {
                         Text("Check out the repo for info on setting up server.")
 
                         Text("To Run The server: Make sure you have at minimum taken these steps:")
-                        Text("0. Set your API Key for Open AI and enabled feature flag swiftSageIOSEnabled.")
+                        Text("0. Set your Computers API Key for Open AI in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the SwiftSage Xcode project.")
                         Text("1. Running SwiftSage Swifty-GPT cmd line target on your command line Mac.")
                         Text("2. Running the vapor server.")
                     }

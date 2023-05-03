@@ -304,6 +304,10 @@ struct ContentView: View {
                 if settingsViewModel.showInstructions {
                     InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
                 }
+                else if settingsViewModel.showHelp {
+                    HelpPopup(isPresented: $settingsViewModel.showHelp ,settingsViewModel: settingsViewModel )
+
+                }
             }
         )
     }
