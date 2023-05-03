@@ -30,7 +30,7 @@ class SettingsViewModel: ObservableObject {
 
 
     @Published var hasAcceptedMicrophone = false
-    @AppStorage("device") var currentMode: Device = .computer 
+    @AppStorage("device") var currentMode: Device = .mobile
 
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()

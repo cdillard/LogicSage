@@ -129,7 +129,7 @@ struct CommandButtonView: View {
                                 isTextFieldFocused = true
                                 settingsViewModel.multiLineText += "i "
                             }) {
-                                Text( "i")
+                                Text( "💡")
                                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
                                 //                                .padding(geometry.size.width * 0.01)
 

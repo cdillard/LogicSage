@@ -115,19 +115,50 @@ struct SettingsView: View {
                                 }
                                 else if settingsViewModel.currentMode == .mobile {
                                     HStack {
-                                        Text("openai🔑: ").font(.caption)
+                                        HStack {
+                                            Text("openai🔑: ").font(.caption)
 
-                                        TextEditor(text: $settingsViewModel.openAIKey)
-                                            .font(.footnote)
-                                            .autocorrectionDisabled(true)
+                                            TextEditor(text: $settingsViewModel.openAIKey)
+                                                .font(.footnote)
+                                                .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                                            .autocapitalization(.none)
+                                                .autocapitalization(.none)
 #endif
 
 
+                                        }
+                                        .frame(height: 22)
+                                        // TODO ALLOW ENTRY OF GOOGLE KEY AND GOOGLE SECRET
+//                                        HStack {
+//                                            Text("google key: ").font(.caption)
+//
+//                                            TextEditor(text: "")
+//                                                .font(.footnote)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//
+//                                                .autocapitalization(.none)
+//#endif
+//
+//
+//                                        }
+//                                        .frame(height: 22)
+//                                        HStack {
+//                                            Text("google secret: ").font(.caption)
+//
+//                                            TextEditor(text: "")
+//                                                .font(.footnote)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//
+//                                                .autocapitalization(.none)
+//#endif
+//
+//
+//                                        }
+//                                        .frame(height: 22)
                                     }
-                                    .frame(height: 22)
 
                                 }
                             }

@@ -10,7 +10,8 @@ import Combine
 
 let STRING_LIMIT = 50000
 // TODO BEFORE RELEASE: PROD BUNDLE ID
-let bundleID = "com.chrisswiftytgpt.SwiftSageiOS"
+//let bundleID = "com.chrisdillard.SwiftSage"
+let bundleID = "com.chrisdillard.SwiftSageDev"
 
 var serviceDiscovery: ServiceDiscovery?
 
@@ -55,20 +56,20 @@ struct SwiftSageiOSApp: App {
                     )
 #if !os(macOS)
 
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-                        print("didFinishLaunchingNotification")
-                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                        print("applicationDidBecomeActive")
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                        print("applicationWillEnterForeground")
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                        print("didEnterBackgroundNotification")
-                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
-                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+//                        print("didFinishLaunchingNotification")
+//                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+//                        print("applicationDidBecomeActive")
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+//                        print("applicationWillEnterForeground")
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+//                        print("didEnterBackgroundNotification")
+//                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
+//                    }
 #endif
             }
         }
