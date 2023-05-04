@@ -7,6 +7,11 @@
 
 import Foundation
 
+// CONSTANTS FOR GPT in mobile mode
+let gptModel = "gpt-4"
+//let gptModel = "gpt-3.5-turbo"
+let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
 //    \(openLinePrintCount == 0 ? "\(randomAscii())" : "")
@@ -43,12 +48,7 @@ let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // OPEN AI SETTING
 // DEFAULT GPT MODEL ON CLIENT SIDE.
- let gptModel = "gpt-4" // Someone please, if you are out there, hit the github discussions with results from gpt-4.
-//let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
 
-
-
-let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
 // 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit
 // your fancy and you know i'll add more.

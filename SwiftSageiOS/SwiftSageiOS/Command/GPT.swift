@@ -14,7 +14,8 @@
 import Foundation
 
 // Function to send a prompt to GPT via the OpenAI API
-func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  voiceOverride: String? = nil, disableSpinner: Bool = false, completion: @escaping (String, Bool) -> Void) {
+func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,
+                     voiceOverride: String? = nil, disableSpinner: Bool = false, completion: @escaping (String, Bool) -> Void) {
 
     let url = URL(string: apiEndpoint)!
     var request = URLRequest(url: url)
