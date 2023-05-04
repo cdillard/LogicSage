@@ -46,9 +46,8 @@ let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // OPEN AI SETTIN
- let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
-// let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
-
+// let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
+let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 

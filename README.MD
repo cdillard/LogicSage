@@ -31,26 +31,17 @@ SwiftSage provides numerous features to accelerate software development and impr
 - Powerful debugging tool [IN-PROGRESS]
 - Personalized memory storage using a consciousness module [IN-PROGRESS]
 
-## Why did I make this?
-
-![LogicSage1](Swifty-GPT/assets/iOSsws1.PNG)
-![LogicSage2](Swifty-GPT/assets/iOSsws2.PNG)
-![LogicSage3](Swifty-GPT/assets/iOSsws3.PNG)
-
-
-
-## Table of Contents
-- News, Changelog
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [Features](#features)
-- [Credits](#credits)
-- [Contact](#contact)
-
 ## News, Changelog
 
+---
+05-04-2023
+
+Another day full of excitement for LogicSage!
+
+-You can now choose whatever gpt model you would like to use with the chat/completions API.
+-It's starting out with gpt-3.5-turbo, but you can use gpt-4 too.
+
+-Keep in mind you must manually set your GPT model in the Config of Swifty-GPT command line app. So go ahead and do that if you plan on using GPT-4. I've left it as gpt-3.5-turbo.
 
 ---- 
 05-02-2023
@@ -128,6 +119,26 @@ More screenshots at the bottom
 04-22-2023
 
 SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
+
+
+## Why did I make this?
+
+![LogicSage1](Swifty-GPT/assets/iOSsws1.PNG)
+![LogicSage2](Swifty-GPT/assets/iOSsws2.PNG)
+![LogicSage3](Swifty-GPT/assets/iOSsws3.PNG)
+
+
+
+## Table of Contents
+- News, Changelog
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
+- [Features](#features)
+- [Credits](#credits)
+- [Contact](#contact)
+
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
