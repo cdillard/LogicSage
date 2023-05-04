@@ -24,16 +24,7 @@ class ScreamClient: WebSocketDelegate {
         case .connected(let headers):
             isConnected = true
 #if !os(macOS)
-            let logoAscii5 = """
-            ╭╮╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮
-            ┃┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃
-            ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
-            ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
-            ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
-            ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
-            ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
-            ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
-            """
+
             consoleManager.print("WebSocket connected\n\(logoAscii5)")
 #endif
             print("WebSocket connected \(headers)")
