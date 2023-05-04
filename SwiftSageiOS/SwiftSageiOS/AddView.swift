@@ -64,7 +64,7 @@ struct AddView: View {
                     //                    .padding(.bottom)
                     
                     
-                    Button("\(settingsViewModel.isWebViewVisible ? "Hide" : "Open") chatGPT") {
+                    Button("\(settingsViewModel.isWebViewVisible ? "Hide" : "Open") WebView") {
 #if !os(macOS)
                         
                         if consoleManager.isVisible {
@@ -72,7 +72,7 @@ struct AddView: View {
                         }
 #endif
 
-                        print("open chatGPT Webview")
+                        print("open Webview")
                         showAddView.toggle()
                         settingsViewModel.isWebViewVisible.toggle()
                     }

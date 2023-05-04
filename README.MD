@@ -1,13 +1,23 @@
-## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
-### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com), THANK YOU!
 
-# SwiftSage: The mobile AI workspace - The Ultimate AI Integration for Xcode
+# LogicSage: The mobile AI workspace - The Ultimate AI Integration for Xcode
+
+### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs], THANK YOU!
+
+## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
 
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
 
+---
+## Contact
+Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
+
+- With a little help from my GPT🤖. Thank you, OpenAI!
+---
+
+
 SwiftSage is a cutting-edge technology that integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub.
 
-NOTE: ethics exists. Approach AI and GPT like anything, with respect for balance. It's very addictive.
+NOTE: ethics exist. Approach AI and GPT like anything, with respect for balance. It's very powerful and addictive.
 
 ## Features
 SwiftSage provides numerous features to accelerate software development and improve efficiency:
@@ -36,9 +46,6 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ---- 
 05-02-2023
-
-Simply Groundbreaking!!!!!!!
-
 
 You can now use the Swift Sage app without the server, Have fun! 
 
@@ -303,14 +310,6 @@ If this happens just try again and it _usually_ clears right up.
 - [https://github.com/twostraws/Sourceful]
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
-
----
-## Contact
-Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
-
-- With a little help from my GPT🤖. Thank you, OpenAI!
----
-
 
 ---
 Unlocking the Power of the Future: Exploring the Intersection of Mobile and Artificial General Intelligence Programming. In this project, an expert in the field of mobile technology works on ways in which these two fields are converging and changing the way we interact with technology. From the impact of machine learning on mobile apps to the future of robotics and automation, this project explores the cutting edge of innovation and speculates on what the future may hold. Join me as we delve into the possibilities of a world transformed by the power of technology.

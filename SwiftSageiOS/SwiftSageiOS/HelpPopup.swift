@@ -30,13 +30,13 @@ struct HelpPopup: View {
                         Group {
                             Text("Welcome to your AI workspace. See your toolbar at the bottom left, see your command bar at the bottom right.")
 
-                            Text("Check out SwiftSage GitHub: https://github.com/cdillard/SwiftSage for more help and Discussions.")
+                            Text("Check out LogicSage GitHub: https://github.com/cdillard/SwiftSage#readme for more help and Discussions and my contact info.")
 
                             Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
-                            Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.")
+                            Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
 
-                            Text("You will start in `mobile` mode. Check out Settings to set your openAI key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
+                            Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
 
                             Text("OPTIONAL: Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
 

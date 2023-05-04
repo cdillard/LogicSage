@@ -402,6 +402,8 @@
 		B746DFCC29F5E789002804EB /* SwiftSageiOS */ = {
 			isa = PBXGroup;
 			children = (
+				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
+				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
 				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
 				B78DA9602A02AF3A002343AB /* Loading */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
@@ -425,8 +427,6 @@
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
 				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
-				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
-				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
 			);
@@ -853,16 +853,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 72WEN2C47N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = LogicSage;
+				INFOPLIST_KEY_CFBundleDisplayName = LogicSageDev;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to SwiftSage";
@@ -885,6 +886,8 @@
 				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_NAME = LogicSageDev;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = LogicSageDev;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -900,7 +903,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -26,12 +26,6 @@ struct SageMultiView: View {
     @State private var position: CGSize = CGSize.zero
     @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
 
-//
-//    @State private var currentEditorScale: CGFloat = 1.0
-//    @State private var lastEditorScaleValue: CGFloat = 1.0
-//    @State private var positionEditor: CGSize = CGSize.zero
-
-    
     var body: some View {
         ZStack {
             HandleView()

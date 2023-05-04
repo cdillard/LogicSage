@@ -119,7 +119,7 @@ struct SettingsView: View {
                                 else if settingsViewModel.currentMode == .mobile {
                                     HStack {
                                         HStack {
-                                            Text("openai🔑: ").font(.caption)
+                                            Text("A.I. 🔑: ").font(.caption)
 
                                             TextEditor(text: $settingsViewModel.openAIKey)
                                                 .scrollDismissesKeyboard(.interactively)
