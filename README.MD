@@ -207,6 +207,15 @@ To discover your paths and issues, run:
 - `which xcodegen`
 If you encounter Ruby errors, follow the steps here: [StackOverflow Solution](https://stackoverflow.com/a/31250347)
 
+## COMMANDS
+Check the following link for the Swifty-GPT server command list.
+https://github.com/cdillard/SwiftSage/blob/main/Swifty-GPT/Command/CommandTable.swift
+
+
+Check the following out for the much shorter list of iOS commands for mobile mode. (Working to add these all so server isn’t required) 
+https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift
+
+
 ### OCR Models (not needed currently)
 Download the necessary OCR models and place them in the corresponding directories:
 1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
