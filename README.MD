@@ -33,9 +33,9 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ## Why did I make this?
 
-![1](Swifty-GPT/assets/iOSsws1.png)
-![2](Swifty-GPT/assets/iOSsws2.png)
-![3](Swifty-GPT/assets/iOSsws3.png)
+![LogicSage1](Swifty-GPT/assets/iOSsws1.PNG)
+![LogicSage2](Swifty-GPT/assets/iOSsws2.PNG)
+![LogicSage3](Swifty-GPT/assets/iOSsws3.PNG)
 
 
 

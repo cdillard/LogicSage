@@ -64,7 +64,7 @@ func main() {
      8. Send Slack message
      */
 
-    if interactiveMode {
+    if config.interactiveMode {
 
         handleUserInput()
     }
@@ -78,14 +78,14 @@ func main() {
     let audioOut = URL(fileURLWithPath: audioFilePath)
     audioRecorder = AudioRecorder(outputFileURL: audioOut)
 
-    if voiceInputEnabled {
+    if config.voiceInputEnabled {
         requestMicrophoneAccess { granted in
             if granted {
                 multiPrinter("Microphone access granted.")
                 // Start audio capture or other operations that require microphone access.
             } else {
                 multiPrinter("Microphone access denied.")
-                voiceInputEnabled = false
+                config.voiceInputEnabled = false
                 // Handle the case where microphone access is denied.
             }
         }
@@ -101,7 +101,7 @@ func main() {
 
         stopRandomSpinner()
 
-        if interactiveMode {
+        if config.interactiveMode {
 
             multiPrinter(generatedOpenLine())
             openLinePrintCount += 1
@@ -179,7 +179,7 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
                     config.promptingRetryNumber += 1
 
-                    if !interactiveMode {
+                    if !config.interactiveMode {
                         doPrompting(errors)
                     }
                 }

@@ -8,23 +8,59 @@
 import Foundation
 
 // sws CONFIG
+var config = Config(
+    projectName: "MyApp",
+    globalErrors: [String](),
+    manualPromptString: "",
+    blockingInput: false,
+    promptingRetryNumber: 0,
+    lastFileContents: [String](),
+    lastNameContents: [String](),
+    searchResultHeadingGlobal: nil,
+    appName: "MyApp",
+    appType: "iOS",
+    appDesc: builtInAppDesc,
+    language: "Swift",
+    conversational: false,
+    streak: 0,
+    chosenTQ: nil,
+    promptMode: .normal,
+    // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+    enableGoogle: false,
+    enableLink: false,
+    loadMode: LoadMode.dots,
+    voiceOutputEnabled: false,
+    voiceInputEnabled: false,
+    interactiveMode: true
+)
 
-// Set builtInAppDesc
+//// Set builtInAppDesc
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
-
-// TODO: Fix hardcoded paths.
+//
+//// TODO: Fix hardcoded paths.
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
-
-// WORKSPACE SETTING
+//
+//// WORKSPACE SETTING
 let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
-
+//
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // OPEN AI SETTIN
-// let gptModel = "gpt-4" // Someone please, if you are out there, hit the github discussions with results from gpt-4.
+ let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
+// let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
 
-let gptModel = "gpt-3.5-turbo" // Can someone out there hook me up with "gpt-4" ;)
+
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+
+
+// WE SHOULD SUPPORT FETCHING SUPPORTED MODELS
+//
+//2
+//3
+//curl https://api.openai.com/v1/models \
+//  -H "Authorization: Bearer $OPENAI_API_KEY" \
+//  -H "OpenAI-Organization: REDACt"
+
 
 // 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit
 // your fancy and you know i'll add more.
@@ -112,21 +148,21 @@ var rubyScriptPath:String {
 let retryLimit = 10
 let fixItRetryLimit = 3
 
-// set to false and it should go til successful build automatically using built in prompt, if it actually does anything good or not is up to chance though.
-let interactiveMode = true
-
+//// set to false and it should go til successful build automatically using built in prompt, if it actually does anything good or not is up to chance though.
+//let interactiveMode = true
+//
 let aiNamedProject = true
 let tryToFixCompileErrors = true
 let includeSourceCodeFromPreviousRun = true
 func asciAnimations() -> Bool {
     config.loadMode == LoadMode.matrix
 }
-
+//
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false
-
-let voiceOutputEnabled = false
-var voiceInputEnabled = false
+//
+//let voiceOutputEnabled = true
+//var voiceInputEnabled = false
 
 // CEREPROC ZONE ///////////////////////////////
 // EXPERIMENTAL AUDIO

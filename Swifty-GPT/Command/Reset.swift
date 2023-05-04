@@ -7,28 +7,6 @@
 
 import Foundation
 
-var config = Config(
-    projectName: "MyApp",
-    globalErrors: [String](),
-    manualPromptString: "",
-    blockingInput: false,
-    promptingRetryNumber: 0,
-    lastFileContents: [String](),
-    lastNameContents: [String](),
-    searchResultHeadingGlobal: nil,
-    appName: "MyApp",
-    appType: "iOS",
-    appDesc: builtInAppDesc,
-    language: "Swift",
-    conversational: false,
-    streak: 0,
-    chosenTQ: nil,
-    promptMode: .normal,
-    // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-    enableGoogle: false,
-    enableLink: false,
-    loadMode: LoadMode.dots
-)
 
 
 struct Config {
@@ -59,6 +37,10 @@ struct Config {
     var enableLink: Bool
 
     var loadMode: LoadMode
+
+    var voiceOutputEnabled: Bool
+    var voiceInputEnabled: Bool
+    var interactiveMode: Bool
 
 }
 func resetCommand(input: String) {

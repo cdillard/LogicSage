@@ -118,50 +118,38 @@ struct SettingsView: View {
                                 }
                                 else if settingsViewModel.currentMode == .mobile {
                                     HStack {
-                                        HStack {
-                                            Text("A.I. 🔑: ").font(.caption)
+                                            VStack {
+                                                HStack {
+                                                    Text("A.I. 🔑: ").font(.caption)
 
-                                            TextEditor(text: $settingsViewModel.openAIKey)
-                                                .scrollDismissesKeyboard(.interactively)
-                                                .font(.footnote)
-                                                .autocorrectionDisabled(true)
+                                                    TextEditor(text: $settingsViewModel.openAIKey)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                                                .autocapitalization(.none)
+                                                        .autocapitalization(.none)
 #endif
+                                                }
+                                                HStack {
+                                                    Text("A.I. model: ").font(.caption)
+                                                    
+                                                    TextEditor(text: $settingsViewModel.openAIModel)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                    
+                                                        .autocapitalization(.none)
+                                                    
+#endif
+                                                }
+                                            }
+                                            .frame(height: 60)
 
-
-                                        }
-                                        .frame(height: 22)
-                                        // TODO ALLOW ENTRY OF GOOGLE KEY AND GOOGLE SECRET
-//                                        HStack {
-//                                            Text("google key: ").font(.caption)
-//
-//                                            TextEditor(text: "")
-//                                                .font(.footnote)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//
-//                                                .autocapitalization(.none)
-//#endif
-//
-//
-//                                        }
-//                                        .frame(height: 22)
-//                                        HStack {
-//                                            Text("google secret: ").font(.caption)
-//
-//                                            TextEditor(text: "")
-//                                                .font(.footnote)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//
-//                                                .autocapitalization(.none)
-//#endif
-//
-//
-//                                        }
-//                                        .frame(height: 22)
                                     }
 
                                 }

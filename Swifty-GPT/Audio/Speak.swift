@@ -116,7 +116,7 @@ class Speak: NSObject, AVSpeechSynthesizerDelegate {
             // Quite nice for Flow (lol)
            //  utterance.pitchMultiplier = 0.75
 
-            if voiceOutputEnabled {
+            if config.voiceOutputEnabled {
                 readySynth.speak(utterance)
                 startRandomSpinner()
             }

@@ -17,12 +17,18 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
     // Set the required headers
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("Bearer \(OPEN_AI_KEY)", forHTTPHeaderField: "Authorization")
-
+    // GPT-4 seems slow, but awesome
+    request.timeoutInterval = 360 // seconds
+    let maxTokens = 8192
+    let temp = 1.0
     // Prepare the request payload
     let requestBody: [String: Any] = [
         "model": "\(gptModel)",
         "messages": [
             [
+
+//                "max_tokens": "\(maxTokens)",
+//                "temperature": "\(temp)",
                 "role": "user",
                 "content": manualPrompt ? config.manualPromptString : prompt,
             ]

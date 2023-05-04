@@ -138,6 +138,7 @@ class SettingsViewModel: ObservableObject {
     // TODO: USER THE KEYCHAIN
 
     @AppStorage("openAIKey") var openAIKey = "sk-"
+    @AppStorage("openAIModel") var openAIModel = "\(gptModel)"
 
 // END CLIENT APIS ZONE
 

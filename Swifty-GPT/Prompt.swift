@@ -5,7 +5,7 @@
 //  Created by Chris Dillard on 4/12/23.
 //
 
-var appDesc = builtInAppDesc
+var appDesc = config.appDesc
 
 func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
 

@@ -27,7 +27,7 @@ func fullProjText() -> String {
    7. 🧠 Talk to GPT (g)
    8. 🧠 GPT Voice (gv) `gv I'm Bubbles, I like Kitties. --voice com.apple.speech.synthesis.voice.Bubbles`
  🔸 Speak:
-  \(voiceInputEnabled == false ? "" :" -  🗣️: tap 0 to start listening, tap 0 to capture." )
+  \(config.voiceInputEnabled == false ? "" :" -  🗣️: tap 0 to start listening, tap 0 to capture." )
    -  💬 `say anything`
  🔸 Miscellaneous:
    9. 💥 Build random app (rand)

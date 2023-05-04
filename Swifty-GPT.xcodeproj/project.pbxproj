@@ -351,6 +351,7 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
+				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
@@ -363,7 +364,6 @@
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
 				B7D6517129EC847E00ED8BAE /* ggml.h */,
 				B70CF17D29F07E2400993AAF /* Globals.swift */,
-				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7139CDF29E147910049ADE1 /* main.swift */,

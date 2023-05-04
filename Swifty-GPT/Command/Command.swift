@@ -196,7 +196,7 @@ func ideaCommand(input: String) {
 }
 
 func zeroCommand(input: String) {
-    if !voiceInputEnabled { multiPrinter("disabled input audio")  ; return }
+    if !config.voiceInputEnabled { multiPrinter("disabled input audio")  ; return }
     guard let audioRecorder = audioRecorder else { multiPrinter("Fail audio") ; return }
 
         // start voice capture
