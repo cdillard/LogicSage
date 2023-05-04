@@ -8,10 +8,6 @@
 import Foundation
 import Starscream
 
-
-
-
-
 let localPeerConsole = LocalPeerConsole()
 
 class LocalPeerConsole: NSObject {
@@ -67,7 +63,7 @@ class WebSocketClient: WebSocketDelegate {
             catch {
                 print("fail = \(error)")
             }
-            startPingTimer()
+          //  startPingTimer()
         case .disconnected(let reason, let code):
             print("Disconnected from server: \(reason), code: \(code)")
             stopPingTimer()

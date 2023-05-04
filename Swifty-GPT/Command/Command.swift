@@ -174,8 +174,8 @@ func randomCommand(input: String) {
     guard let prompt = PromptLibrary.promptLib.randomElement() else {
         return multiPrinter("fail prompt")
     }
-    appDesc = prompt
-    refreshPrompt(appDesc: appDesc)
+    config.appDesc = prompt
+    refreshPrompt(appDesc: config.appDesc)
 
     doPrompting()
 }
@@ -321,7 +321,7 @@ Question to Answer:
 
         textToSpeech(text: content)
 
-        refreshPrompt(appDesc: appDesc)
+        refreshPrompt(appDesc: config.appDesc)
 
         multiPrinter(generatedOpenLine())
         openLinePrintCount += 1
@@ -379,7 +379,7 @@ func runAppDesc(input: String) {
 func showLoadedPrompt(input: String) {
     multiPrinter("\n \(prompt) \n")
 
-    refreshPrompt(appDesc: appDesc)
+    refreshPrompt(appDesc: config.appDesc)
     multiPrinter(openingLine)
 }
 
@@ -393,7 +393,7 @@ func openProjectCommand(input: String) {
             multiPrinter("project failed to open.")
         }
     }
-    refreshPrompt(appDesc: appDesc)
+    refreshPrompt(appDesc: config.appDesc)
     multiPrinter(generatedOpenLine())
     openLinePrintCount += 1
 }
@@ -455,7 +455,7 @@ func gptVoiceCommand(input: String) {
             let modContent = content.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted)
             textToSpeech(text: modContent, overrideVoice: gptVoiceCommandOverrideVoice)
 
-            refreshPrompt(appDesc: appDesc)
+            refreshPrompt(appDesc: config.appDesc)
 
             multiPrinter(generatedOpenLine())
             openLinePrintCount += 1

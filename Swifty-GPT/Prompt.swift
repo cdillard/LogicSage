@@ -5,8 +5,6 @@
 //  Created by Chris Dillard on 4/12/23.
 //
 
-var appDesc = config.appDesc
-
 func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
 
     let googleStringInclude = !noGoogle ? "{\"command\": \"Google\",\"name\": \"EXC_BAD_ACCESS\"}," : ""
@@ -67,7 +65,7 @@ func refreshPrompt(appDesc: String) {
 }
 
 func updatePrompt(appDesc2: String) {
-    appDesc = appDesc2
+    config.appDesc = appDesc2
     prompt = promptText(noGoogle: !config.enableGoogle, noLink: !config.enableLink)
 }
 

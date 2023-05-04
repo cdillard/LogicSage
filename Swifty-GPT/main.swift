@@ -35,7 +35,7 @@ func main() {
     // check for tessarect training files
     // cause a more elegant failure if issues are detected wit xcodegen or xcodeproj
 
-    refreshPrompt(appDesc: appDesc)
+    refreshPrompt(appDesc: config.appDesc)
 
     // Parse command-line arguments
     let arguments = CommandLine.arguments
@@ -105,7 +105,7 @@ func main() {
 
             multiPrinter(generatedOpenLine())
             openLinePrintCount += 1
-            refreshPrompt(appDesc: appDesc)
+            refreshPrompt(appDesc: config.appDesc)
         }
 
         if triviaEnabledSwift || triviaEnabledObjc {
@@ -217,7 +217,7 @@ func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
 }
 
 func createIdeaPrompt(command: String) -> String {
-    appDesc = command
+    config.appDesc = command
     refreshPrompt(appDesc: command)
 
     let newPrompt = promptText(noGoogle: !config.enableGoogle, noLink: !config.enableLink)
