@@ -31,6 +31,14 @@ SwiftSage provides numerous features to accelerate software development and impr
 - Powerful debugging tool [IN-PROGRESS]
 - Personalized memory storage using a consciousness module [IN-PROGRESS]
 
+## Why did I make this?
+
+![1](Swifty-GPT/assets/iOSsws1.png)
+![2](Swifty-GPT/assets/iOSsws2.png)
+![3](Swifty-GPT/assets/iOSsws3.png)
+
+
+
 ## Table of Contents
 - News, Changelog
 - [Getting Started](#getting-started)
