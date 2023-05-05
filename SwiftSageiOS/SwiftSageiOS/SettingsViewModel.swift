@@ -115,12 +115,12 @@ class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
 
-            if let data = terminalBackgroundColor.colorData() {
-                UserDefaults.standard.set(data, forKey: "terminalBackgroundColor")
-            }
-            else {
-                print("failed to set user def for terminalBackgroundColor")
-            }
+     //       if let data =  {
+                UserDefaults.standard.set(terminalBackgroundColor.rawValue, forKey: "terminalBackgroundColor")
+//            }
+//            else {
+//                print("failed to set user def for terminalBackgroundColor")
+//            }
            // consoleManager.fontSize = self.textSize
 
 #endif
@@ -129,13 +129,14 @@ class SettingsViewModel: ObservableObject {
     @Published var terminalTextColor: Color = .white {
         didSet {
 #if !os(macOS)
+            UserDefaults.standard.set(terminalTextColor.rawValue, forKey: "terminalTextColor")
 
-            if let data = terminalTextColor.colorData() {
-                UserDefaults.standard.set(data, forKey: "terminalTextColor")
-            }
-            else {
-                print("failed to set user def for termTextColor")
-            }
+//            if let data = terminalTextColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "terminalTextColor")
+//            }
+//            else {
+//                print("failed to set user def for termTextColor")
+//            }
 
            // consoleManager.fontSize = self.textSize
 #endif
@@ -144,12 +145,14 @@ class SettingsViewModel: ObservableObject {
     @Published var buttonColor: Color = .green {
         didSet {
 #if !os(macOS)
-            if let data = buttonColor.colorData() {
-                UserDefaults.standard.set(data, forKey: "buttonColor")
-            }
-            else {
-                print("failed to set user def for buttonColor")
-            }
+            UserDefaults.standard.set(buttonColor.rawValue, forKey: "buttonColor")
+
+//            if let data = buttonColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "buttonColor")
+//            }
+//            else {
+//                print("failed to set user def for buttonColor")
+//            }
 
             //consoleManager.fontSize = self.textSize
 
@@ -159,12 +162,14 @@ class SettingsViewModel: ObservableObject {
     @Published var backgroundColor: Color = .gray {
         didSet {
 #if !os(macOS)
-            if let data = backgroundColor.colorData() {
-                UserDefaults.standard.set(data, forKey: "backgroundColor")
-            }
-            else {
-                print("failed to set user def for backgroundColor")
-            }
+            UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
+
+//            if let data = backgroundColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "backgroundColor")
+//            }
+//            else {
+//                print("failed to set user def for backgroundColor")
+//            }
 
            // consoleManager.fontSize = self.textSize
 
@@ -286,60 +291,42 @@ class SettingsViewModel: ObservableObject {
 
         voiceOutputenabled = voiceOutputenabledUserDefault
 
-        if let myColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } {
-            self.terminalBackgroundColor = myColor
+        if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
+
+            self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
         }
         else {
             self.terminalBackgroundColor = .black
         }
-        if let myColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } {
-            self.terminalTextColor = myColor
+        if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
+
+            self.terminalTextColor =  Color(rawValue:colorKey) ?? .white
         }
         else {
             self.terminalTextColor = .white
+
         }
-        if let myColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } {
-            self.buttonColor = myColor
+
+        if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
+            self.buttonColor = Color(rawValue:colorKey) ?? .green
         }
         else {
             self.buttonColor = .green
         }
-        if let myColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } {
-            self.backgroundColor = myColor
+
+        if let colorKey = UserDefaults.standard.string(forKey: "backgroundColor") {
+
+            self.backgroundColor =  Color(rawValue:colorKey) ?? .gray
         }
         else {
             self.backgroundColor = .gray
         }
+
 #endif
         
     }
 }
-#if !os(macOS)
 
-extension Color {
-    static func color(data: Data) -> Color {
-        do {
-            let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) ?? .clear
-
-            return Color(color)
-        } catch {
-            print("Error converting Data to Color: \(error)")
-            return Color.clear
-        }
-    }
-
-    func colorData() -> Data? {
-        do {
-            let uiColor = uiColor()
-            let data = try NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
-            return data
-        } catch {
-            print("Error converting Color to Data: \(error)")
-            return nil
-        }
-    }
-}
-#endif
 enum Device: Int {
     case mobile, computer
 }
@@ -387,10 +374,10 @@ extension SettingsViewModel {
             self.isLoading = false
             switch result {
             case .success(let repositoryFiles):
-                // print("All files and directories: \(repositoryFiles)")
+                 logD("All files and directories structure downloaded.")
                 self.rootFiles = repositoryFiles
             case .failure(let error):
-                print("Error fetching files: \(error)")
+                logD("Error fetching files: \(error)")
             }
         }
     }
@@ -506,3 +493,40 @@ extension SettingsViewModel {
         }
     }
 }
+#if !os(macOS)
+
+
+extension Color: RawRepresentable {
+
+    public init?(rawValue: String) {
+
+        guard let data = Data(base64Encoded: rawValue) else{
+            self = .black
+            return
+        }
+
+        do{
+            let color = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor ?? .black
+            self = Color(color)
+        }catch{
+            self = .black
+        }
+
+    }
+
+    public var rawValue: String {
+
+        do{
+            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false) as Data
+            return data.base64EncodedString()
+
+        }catch{
+
+            return ""
+
+        }
+
+    }
+
+}
+#endif

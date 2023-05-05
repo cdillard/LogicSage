@@ -89,20 +89,20 @@ struct ContentView: View {
                     //                            )
                     //#endif
                 }
-                HStack {
-                    VStack {
-                        Image("swsLogo")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: geometry.size.width * 0.1, height: geometry.size.height * 0.1)
-                            .scaledToFit()
-                            .padding(.top, 3)
-                            .padding(.leading, 1)
-                        Spacer()
-
-                    }
-                    Spacer()
-                }
+//                HStack {
+//                    VStack {
+//                        Image("swsLogo")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: geometry.size.width * 0.1, height: geometry.size.height * 0.1)
+//                            .scaledToFit()
+//                            .padding(.top, 3)
+//                            .padding(.leading, 1)
+//                        Spacer()
+//
+//                    }
+//                    Spacer()
+//                }
 
             }
 
@@ -239,7 +239,7 @@ struct ContentView: View {
 
                         if UIDevice.current.userInterfaceIdiom == .pad {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
-                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.height * 0.75)
                         }
                         else {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
