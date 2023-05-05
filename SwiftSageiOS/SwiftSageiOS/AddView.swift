@@ -128,8 +128,11 @@ struct AddView: View {
                 .cornerRadius(16)
 
 
+                NavigationView {
+                    RepositoryTreeView(accessToken: "")
+                }
+                .navigationTitle("Repository Tree")
 
-                RepositoryTreeView(accessToken: "")
             }
             .scrollIndicators(.visible)
         }

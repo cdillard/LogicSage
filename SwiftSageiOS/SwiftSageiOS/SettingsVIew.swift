@@ -166,6 +166,52 @@ struct SettingsView: View {
 #endif
                                                 }
                                                 .frame(height: geometry.size.height / 17)
+
+                                                HStack {
+                                                    Text("git user: ").font(.caption)
+
+                                                    TextEditor(text: $settingsViewModel.gitUser)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                        .autocapitalization(.none)
+
+#endif
+                                                }
+                                                .frame(height: geometry.size.height / 17)
+                                                HStack {
+                                                    Text("git repo: ").font(.caption)
+
+                                                    TextEditor(text: $settingsViewModel.gitRepo)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                        .autocapitalization(.none)
+
+#endif
+                                                }
+                                                .frame(height: geometry.size.height / 17)
+                                                HStack {
+                                                    Text("git branch: ").font(.caption)
+
+                                                    TextEditor(text: $settingsViewModel.gitBranch)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                        .autocapitalization(.none)
+
+#endif
+                                                }
+                                                .frame(height: geometry.size.height / 17)
                                             }
                                             .frame( maxWidth: .infinity, maxHeight: .infinity)
 

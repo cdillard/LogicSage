@@ -9,12 +9,10 @@ import Foundation
 import SwiftUI
 import Combine
 let defaultTerminalFontSize: CGFloat = 12.666
-//let repoURL = "https://api.github.com/repos/cdillard/SwiftSage/git/trees/main?recursive=1"
 
-
-let owner = "cdillard"
- let repo = "SwiftSage"
- let branch = "main"
+let defaultOwner = "cdillard"
+let defaultRepo = "SwiftSage"
+let defaultBranch = "main"
 
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
@@ -106,6 +104,9 @@ class SettingsViewModel: ObservableObject {
             if let data = terminalBackgroundColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "terminalBackgroundColor")
             }
+            else {
+                print("failed to set user def for terminalBackgroundColor")
+            }
 #endif
         }
     }
@@ -116,6 +117,9 @@ class SettingsViewModel: ObservableObject {
             if let data = terminalTextColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "terminalTextColor")
             }
+            else {
+                print("failed to set user def for termTextColor")
+            }
 #endif
         }
     }
@@ -125,6 +129,9 @@ class SettingsViewModel: ObservableObject {
             if let data = buttonColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "buttonColor")
             }
+            else {
+                print("failed to set user def for buttonColor")
+            }
 #endif
         }
     }
@@ -133,6 +140,9 @@ class SettingsViewModel: ObservableObject {
 #if !os(macOS)
             if let data = backgroundColor.colorData() {
                 UserDefaults.standard.set(data, forKey: "backgroundColor")
+            }
+            else {
+                print("failed to set user def for backgroundColor")
             }
 #endif
         }
@@ -153,33 +163,36 @@ class SettingsViewModel: ObservableObject {
 
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
-    // CLIENT API KEYS
-    // TODO: USER THE KEYCHAIN
 
+    @AppStorage("openAIModel") var openAIModel = "\(gptModel)"
+
+    // CLIENT API KEYS
     @Published var openAIKey = "" {
         didSet {
             if keychainManager.saveToKeychain(key:aiKeyKey, value: openAIKey) {
                // print("openAIKey saved successfully")
             } else {
-                print("Error saving key")
+                print("Error saving ai key")
             }
         }
     }
-
-
-    @AppStorage("openAIModel") var openAIModel = "\(gptModel)"
-
-
     @Published var ghaPat = ""  {
         didSet {
             if keychainManager.saveToKeychain(key: ghaKeyKey, value: ghaPat) {
                 //print("ghPat saved successfully")
             } else {
-                print("Error saving key")
+                print("Error saving gha pat")
             }
         }
 
     }
+
+    @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
+
+    @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
+
+    @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
+
 
     // END CLIENT APIS ZONE
 
@@ -295,6 +308,7 @@ struct GitHubContent: Codable, Identifiable {
 extension SettingsViewModel {
     func syncGithubRepo() {
         isLoading = true
+        self.rootFiles = []
         SettingsViewModel.shared.fetchSubfolders(path: "", delay: 1.0) { result in
             self.isLoading = false
             switch result {
@@ -309,7 +323,7 @@ extension SettingsViewModel {
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
 
-        let urlString = "https://api.github.com/repos/\(owner)/\(repo)/contents/\(path)?ref=\(branch)".replacingOccurrences(of: " ", with: "%20")
+        let urlString = "https://api.github.com/repos/\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/contents/\(path)?ref=\(SettingsViewModel.shared.gitBranch)".replacingOccurrences(of: " ", with: "%20")
 
         if let apiUrl = URL(string: urlString)  {
 
@@ -379,32 +393,42 @@ extension SettingsViewModel {
     }
 
     // Fetch specific file
-    private func fetchFileContentPublisher(filePath: String) -> AnyPublisher<String, Error> {
-        let apiUrl = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/contents/\(filePath)?ref=\(branch)")!
-        var request = URLRequest(url: apiUrl)
-        request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .map(\.data)
-            .tryMap { data -> String in
-                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                guard let fileContentUrlString = json?["download_url"] as? String,
-                      let fileContentUrl = URL(string: fileContentUrlString) else {
-                    throw URLError(.badURL)
+    private func fetchFileContentPublisher(filePath: String) throws -> AnyPublisher<String, Error> {
+        if let apiUrl = URL(string: "https://api.github.com/repos/\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/contents/\(filePath)?ref=\(SettingsViewModel.shared.gitBranch)".replacingOccurrences(of: " ", with: "%20")) {
+            var request = URLRequest(url: apiUrl)
+            request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
+            return URLSession.shared.dataTaskPublisher(for: request)
+                .map(\.data)
+                .tryMap { data -> String in
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    guard let fileContentUrlString = json?["download_url"] as? String,
+                          let fileContentUrl = URL(string: fileContentUrlString) else {
+                        throw URLError(.badURL)
+                    }
+                    let fileContentData = try Data(contentsOf: fileContentUrl)
+                    return String(data: fileContentData, encoding: .utf8) ?? ""
                 }
-                let fileContentData = try Data(contentsOf: fileContentUrl)
-                return String(data: fileContentData, encoding: .utf8) ?? ""
-            }
-            .eraseToAnyPublisher()
+                .eraseToAnyPublisher()
+        }
+        else {
+                print("catastrophic error dling github repo. faling...")
+                throw URLError(.badURL)
+        }
     }
     func fetchFileContent(accessToken: String, filePath: String, completion: @escaping (Result<String, Error>) -> Void) {
-        cancellable = fetchFileContentPublisher(filePath: filePath)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completionStatus in
-                if case .failure(let error) = completionStatus {
-                    completion(.failure(error))
-                }
-            }, receiveValue: { fileContent in
-                completion(.success(fileContent))
-            })
+        do {
+            cancellable = try fetchFileContentPublisher(filePath: filePath)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { completionStatus in
+                    if case .failure(let error) = completionStatus {
+                        completion(.failure(error))
+                    }
+                }, receiveValue: { fileContent in
+                    completion(.success(fileContent))
+                })
+        }
+        catch {
+            print("failed to fetch file content w/ error = \(error)")
+        }
     }
 }

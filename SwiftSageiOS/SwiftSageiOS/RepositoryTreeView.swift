@@ -16,29 +16,26 @@ struct RepositoryTreeView: View {
     }
 
     var body: some View {
-        NavigationView {
-            Group {
-                if SettingsViewModel.shared.isLoading {
-                    ProgressView()
-                } else {
-                    List {
-                        ForEach(files) { file in
-                            if file.type == "dir" {
-                                NavigationLink(destination: RepositoryTreeView(accessToken: "", files: file.children)) {
-                                    Text(file.name)
-                                }
-                            } else {
-                                Button(action: {
-                                    fileTapped(file)
-                                }) {
-                                    Text(file.name)
-                                }
+        Group {
+            if SettingsViewModel.shared.isLoading {
+                ProgressView()
+            } else {
+                List {
+                    ForEach(files) { file in
+                        if file.type == "dir" {
+                            NavigationLink(destination: RepositoryTreeView(accessToken: "", files: file.children)) {
+                                Text(file.name)
+                            }
+                        } else {
+                            Button(action: {
+                                fileTapped(file)
+                            }) {
+                                Text(file.name)
                             }
                         }
                     }
                 }
             }
-            .navigationTitle("Repository Tree")
         }
     }
 
