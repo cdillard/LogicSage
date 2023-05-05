@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
-let defaultTerminalFontSize: CGFloat = 22.666
+let defaultTerminalFontSize: CGFloat = 18.666
 
 let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
@@ -47,21 +47,27 @@ class SettingsViewModel: ObservableObject {
     @Published var showInstructions: Bool = !hasSeenInstructions()
     @Published var showHelp: Bool = false
 
-    @AppStorage("savedButtonSize") var buttonScale: Double = 0.4 {
+    // TOOL BAR BUTOTN SIZE
+    @AppStorage("savedButtonSize") var buttonScale: Double = 0.3 {
         didSet {
             buttonScalerFloat = CGFloat(  buttonScale)
         }
     }
-    @Published var buttonScalerFloat: CGFloat = 0.2
+    @Published var buttonScalerFloat: CGFloat = 0.3
 
     // COMMAND BUTTON SIZE
-    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 32 {
+    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 23 {
         didSet {
             commandButtonFontSizeFloat = CGFloat(  commandButtonFontSize)
         }
     }
+    @Published var commandButtonFontSizeFloat: CGFloat = 23
 
-    @Published var commandButtonFontSizeFloat: CGFloat = 24
+
+    @AppStorage("cornerHandleSize")var cornerHandleSize: Double = 28
+    @AppStorage("middleHandleSize")var middleHandleSize: Double = 28
+
+
 
 
 
@@ -94,7 +100,15 @@ class SettingsViewModel: ObservableObject {
 #endif
     @Published var textSize: CGFloat = defaultTerminalFontSize {
         didSet {
-            UserDefaults.standard.set(Float(textSize), forKey: "textSize")
+            if textSize != 0 {
+                UserDefaults.standard.set(Float(textSize), forKey: "textSize")
+            }
+            else {
+                print("failed to set terminal text size")
+
+            }
+          //  consoleManager.fontSize = self.textSize
+
         }
     }
     @Published var terminalBackgroundColor: Color = .black {
@@ -107,6 +121,8 @@ class SettingsViewModel: ObservableObject {
             else {
                 print("failed to set user def for terminalBackgroundColor")
             }
+           // consoleManager.fontSize = self.textSize
+
 #endif
         }
     }
@@ -120,6 +136,8 @@ class SettingsViewModel: ObservableObject {
             else {
                 print("failed to set user def for termTextColor")
             }
+
+           // consoleManager.fontSize = self.textSize
 #endif
         }
     }
@@ -132,6 +150,9 @@ class SettingsViewModel: ObservableObject {
             else {
                 print("failed to set user def for buttonColor")
             }
+
+            //consoleManager.fontSize = self.textSize
+
 #endif
         }
     }
@@ -144,6 +165,9 @@ class SettingsViewModel: ObservableObject {
             else {
                 print("failed to set user def for backgroundColor")
             }
+
+           // consoleManager.fontSize = self.textSize
+
 #endif
         }
     }
@@ -196,23 +220,42 @@ class SettingsViewModel: ObservableObject {
 
     // END CLIENT APIS ZONE
 
+    //
+
+
     init() {
 #if !os(macOS)
 
-        self.terminalBackgroundColor = .black//UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
-        self.terminalTextColor = .white //UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .white
-        self.buttonColor = .green // UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
-        self.backgroundColor = .black //UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
-        self.textSize = defaultTerminalFontSize//CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+
+        if UserDefaults.standard.float(forKey: "textSize") != 0 {
+            self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+
+        }
+        else {
+            self.textSize = defaultTerminalFontSize
+        }
 
 
-        self.buttonScale = 0.4 //CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))
-        self.commandButtonFontSize = 32 // CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
+        if UserDefaults.standard.float(forKey: "savedButtonSize") != 0 {
+            self.buttonScale = CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))
+
+        }
+        else {
+            self.buttonScale = 0.3
+        }
+        if UserDefaults.standard.float(forKey: "commandButtonFontSize") != 0 {
+            self.commandButtonFontSize = CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
+
+        }
+        else {
+            self.commandButtonFontSize = 23
+        }
+
 
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
             self.openAIKey = key
- //           print("Retrieved value: \(openAIKey)")
+            print("Retrieved value: aiKey")
         } else {
 //            print("Error retrieving openAIKey")
 //            keychainManager.saveToKeychain(key:openAIKey, value: "")
@@ -221,7 +264,7 @@ class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
-  //          print("Retrieved value: \(ghaPat)")
+            print("Retrieved value: ghaPat")
         } else {
    //         print("Error retrieving ghaPat == reset")
  //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
@@ -232,6 +275,8 @@ class SettingsViewModel: ObservableObject {
 
             self.password = key
   //          print("Retrieved value: \(ghaPat)")
+            print("Retrieved value: swsPassword")
+
         } else {
    //         print("Error retrieving ghaPat == reset")
  //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
@@ -240,6 +285,31 @@ class SettingsViewModel: ObservableObject {
         }
 
         voiceOutputenabled = voiceOutputenabledUserDefault
+
+        if let myColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } {
+            self.terminalBackgroundColor = myColor
+        }
+        else {
+            self.terminalBackgroundColor = .black
+        }
+        if let myColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } {
+            self.terminalTextColor = myColor
+        }
+        else {
+            self.terminalTextColor = .white
+        }
+        if let myColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } {
+            self.buttonColor = myColor
+        }
+        else {
+            self.buttonColor = .green
+        }
+        if let myColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } {
+            self.backgroundColor = myColor
+        }
+        else {
+            self.backgroundColor = .gray
+        }
 #endif
         
     }

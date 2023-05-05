@@ -288,10 +288,13 @@ struct ContentView: View {
             }
             .background(
 
-            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-                .opacity(showSettings ? 1.0 : 0.0)
-                    )
-
+                VStack {
+                    SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+                        .opacity(showSettings ? 1.0 : 0.0)
+                        .padding(.bottom, 30)
+                    Spacer()
+                }
+            )
 
             .onAppear {
                 keyboardObserver.startObserve(height: geometry.size.height)

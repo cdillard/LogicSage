@@ -37,10 +37,10 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
 
 
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
-    public var fontSize: CGFloat =  SettingsViewModel.shared.textSize {
+    public var fontSize: CGFloat =  defaultTerminalFontSize {
         didSet {
-            guard fontSize >= 2 else { fontSize = 2; return }
-            guard fontSize <= 22 else { fontSize = 22; return }
+            guard fontSize >= 1 else { fontSize = 1; return }
+            guard fontSize <= 64 else { fontSize = 64; return }
             
             setAttributedText(consoleTextView.text)
         }
@@ -71,29 +71,14 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     var lumaWidthAnchor: NSLayoutConstraint!
     var lumaHeightAnchor: NSLayoutConstraint!
-    
-    lazy var lumaView: LumaView = {
-        let lumaView = LumaView()
+    let lumaView = LumaView()
 
-        lumaView.foregroundView.backgroundColor = SettingsViewModel.shared.terminalBackgroundColor.uiColor()
-        lumaView.layer.cornerRadius = consoleView.layer.cornerRadius
-        
-        consoleView.addSubview(lumaView)
-        
-        lumaView.translatesAutoresizingMaskIntoConstraints = false
-        
-        lumaWidthAnchor = lumaView.widthAnchor.constraint(equalTo: consoleView.widthAnchor)
-        lumaHeightAnchor = lumaView.heightAnchor.constraint(equalToConstant: consoleView.frame.size.height)
-        
-        NSLayoutConstraint.activate([
-            lumaWidthAnchor,
-            lumaHeightAnchor,
-            lumaView.centerXAnchor.constraint(equalTo: consoleView.centerXAnchor),
-            lumaView.centerYAnchor.constraint(equalTo: consoleView.centerYAnchor)
-        ])
-        
-        return lumaView
-    }()
+//    var lumaView: LumaView = {
+//
+//
+//
+//        return lumaView
+//    }
     
     lazy var unhideButton: UIButton = {
         let button = UIButton()
@@ -296,7 +281,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         consoleView.layer.cornerRadius = 24
         consoleView.layer.cornerCurve = .continuous
         
-        let _ = lumaView
+//        let _ = lumaView
         
         let borderWidth = 2 - 1 / consoleView.traitCollection.displayScale
         
@@ -311,7 +296,24 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         borderView.layer.cornerCurve = .continuous
         borderView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         consoleView.addSubview(borderView)
-        
+
+        lumaView.foregroundView.backgroundColor = SettingsViewModel.shared.terminalBackgroundColor.uiColor()
+        lumaView.layer.cornerRadius = consoleView.layer.cornerRadius
+
+        consoleView.addSubview(lumaView)
+
+        lumaView.translatesAutoresizingMaskIntoConstraints = false
+
+        lumaWidthAnchor = lumaView.widthAnchor.constraint(equalTo: consoleView.widthAnchor)
+        lumaHeightAnchor = lumaView.heightAnchor.constraint(equalToConstant: consoleView.frame.size.height)
+
+        NSLayoutConstraint.activate([
+            lumaWidthAnchor,
+            lumaHeightAnchor,
+            lumaView.centerXAnchor.constraint(equalTo: consoleView.centerXAnchor),
+            lumaView.centerYAnchor.constraint(equalTo: consoleView.centerYAnchor)
+        ])
+
         // Configure text view.
         consoleTextView.frame = CGRect(x: 1, y: 1, width: consoleSize.width - 2, height: consoleSize.height - 2)
         consoleTextView.isEditable = false

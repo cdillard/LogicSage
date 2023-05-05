@@ -103,7 +103,7 @@ struct WebView: UIViewRepresentable {
 struct HandleView: View {
     var body: some View {
         Circle()
-            .frame(width: 28, height: 28)
+            .frame(width: SettingsViewModel.shared.middleHandleSize, height: SettingsViewModel.shared.middleHandleSize)
             .foregroundColor(Color.white.opacity(0.75))
     }
 }
@@ -113,7 +113,7 @@ struct HandleView: View {
 
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
-    var handleSize: CGFloat = 20.0
+    var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
 
     func body(content: Content) -> some View {
         content

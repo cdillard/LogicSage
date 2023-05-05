@@ -261,22 +261,50 @@ struct SettingsView: View {
                                 .lineLimit(nil)
                         }
                         Group {
-                            Text("LoadMode")
+                            Text("middle handle size")
                                 .fontWeight(.semibold)
                             HStack {
-                                Button(action: {
-                                    withAnimation {
-                                        updateMode()
-                                    }
-                                }) {
-                                    Text(".\(modes[currentModeIndex])")
-                                        .background(settingsViewModel.buttonColor)
-                                        .cornerRadius(8)
-                                }
-                                .padding(.bottom)
+                                Text("Small")
+                                Slider(value: $settingsViewModel.middleHandleSize, in:  18...48, step: 1)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
                             }
+                            Text("\(settingsViewModel.middleHandleSize)")
+                                .font(.caption)
+                                .lineLimit(nil)
                         }
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        Group {
+                            Text("corner handle size")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Text("Small")
+                                Slider(value: $settingsViewModel.cornerHandleSize, in:  18...48, step: 1)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
+                            }
+                            Text("\(settingsViewModel.cornerHandleSize)")
+                                .font(.caption)
+                                .lineLimit(nil)
+                        }
+                        if settingsViewModel.currentMode == .computer {
+                            Group {
+                                Text("LoadMode")
+                                    .fontWeight(.semibold)
+                                HStack {
+                                    Button(action: {
+                                        withAnimation {
+                                            updateMode()
+                                        }
+                                    }) {
+                                        Text(".\(modes[currentModeIndex])")
+                                            .background(settingsViewModel.buttonColor)
+                                            .cornerRadius(8)
+                                    }
+                                    .padding(.bottom)
+                                }
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        }
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
 
