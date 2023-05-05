@@ -43,6 +43,10 @@ Welcome to LogicSage.
 
 Now with GIT REPO SUPPORT!
 
+Your precious API Keys are now stored in the Keychain :)
+
+You can now enter a Github PAT in settings, then go to the Addiew and tap "Download sws repo" , hide the add view, once the download completes open the add view and browse away! Select files and drill down to check out the LogicSage mobile AI workspace code.
+
 ---
 05-04-2023
 
