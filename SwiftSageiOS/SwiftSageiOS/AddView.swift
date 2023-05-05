@@ -105,6 +105,10 @@ struct AddView: View {
                 .background(settingsViewModel.backgroundColor)
 #endif
                 .cornerRadius(16)
+
+
+
+                RepositoryTreeView(accessToken: settingsViewModel.ghaPat)
             }
             .scrollIndicators(.visible)
         }

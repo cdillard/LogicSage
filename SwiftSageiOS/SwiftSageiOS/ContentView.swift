@@ -111,7 +111,7 @@ struct ContentView: View {
 #if !os(macOS)
                 VStack {
 
-                    SageMultiView(settingsViewModel: settingsViewModel, theCode: "", viewMode: .webView)
+                    SageMultiView(settingsViewModel: settingsViewModel, viewMode: .webView)
                 }
 #endif
             }
@@ -119,7 +119,7 @@ struct ContentView: View {
 #if !os(macOS)
                 VStack {
 
-                    SageMultiView(settingsViewModel: settingsViewModel, theCode: code1, viewMode: .editor)
+                    SageMultiView(settingsViewModel: settingsViewModel, viewMode: .editor)
                 }
 #endif
             }

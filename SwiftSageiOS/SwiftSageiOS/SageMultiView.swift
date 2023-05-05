@@ -18,7 +18,6 @@ struct SageMultiView: View {
 
     public var webViewURL = URL(string: "https://chat.openai.com")!
     @ObservedObject var settingsViewModel: SettingsViewModel
-    @State var theCode: String
     @State var viewMode: ViewMode
 
     @State private var currentScale: CGFloat = 1.0
@@ -45,7 +44,7 @@ struct SageMultiView: View {
 
 #if !os(macOS)
                 VStack {
-                    SourceCodeTextEditor(text: $theCode)
+                    SourceCodeTextEditor(text: $settingsViewModel.sourceEditorCode)
                         .ignoresSafeArea()
                         .modifier(ResizableViewModifier(frame: $frame))
                         .scaleEffect(currentScale)

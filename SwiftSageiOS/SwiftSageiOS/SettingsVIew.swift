@@ -133,22 +133,41 @@ struct SettingsView: View {
                                                         .autocapitalization(.none)
 #endif
                                                 }
+                                                .frame(height: geometry.size.height / 13)
+
                                                 HStack {
                                                     Text("A.I. model: ").font(.caption)
-                                                    
+
                                                     TextEditor(text: $settingsViewModel.openAIModel)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
                                                         .font(.caption)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
-                                                    
+
                                                         .autocapitalization(.none)
-                                                    
+
 #endif
                                                 }
+                                                .frame(height: geometry.size.height / 13)
+
+                                                HStack {
+                                                    Text("GHA PAT: ").font(.caption)
+
+                                                    TextEditor(text: $settingsViewModel.ghaPat)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.caption)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                        .autocapitalization(.none)
+
+#endif
+                                                }
+                                                .frame(height: geometry.size.height / 17)
                                             }
-                                            .frame(height: 60)
+                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                                     }
 

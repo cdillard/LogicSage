@@ -23,8 +23,8 @@ import Combine
 
 let STRING_LIMIT = 50000
 // TODO BEFORE RELEASE: PROD BUNDLE ID
-//let bundleID = "com.chrisdillard.SwiftSage"
 let bundleID = "com.chrisdillard.SwiftSage"
+//let bundleID = "com.chrisdillard.SwiftSage"
 
 var serviceDiscovery: ServiceDiscovery?
 

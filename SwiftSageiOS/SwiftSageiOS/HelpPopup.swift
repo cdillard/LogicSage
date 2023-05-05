@@ -35,16 +35,20 @@ struct HelpPopup: View {
                                 Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
                                 Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
-
-                                Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
-
-                                Text("OPTIONAL: Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
-
-                                Text("Follow this order when running LogicSage in computer mode.")
-
-                                Text("0. Start Swift Vapor Server with `vapor run`")
-                                Text("1. Start Swifty-GPT swift binary in Xcode with the play button")
-                                Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
+                                Group {
+                                    Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
+                                    
+                                    Text("OPTIONAL: Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
+                                    
+                                    Text("Follow this order when running LogicSage in computer mode.")
+                                    
+                                    Text("0. Start Swift Vapor Server with `vapor run`")
+                                    Text("1. Start Swifty-GPT swift binary in Xcode with the play button")
+                                    Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
+                                    
+                                    
+                                    Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/SwiftSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                }
                             }
 
                         }

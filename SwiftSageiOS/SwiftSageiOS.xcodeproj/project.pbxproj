@@ -99,6 +99,9 @@
 		B78DA9682A02AF3A002343AB /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9642A02AF3A002343AB /* AsciiText.swift */; };
 		B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9692A02AF72002343AB /* SageMultiView.swift */; };
 		B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA96B2A0312F1002343AB /* HelpPopup.swift */; };
+		B78DA9742A04A083002343AB /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9732A04A083002343AB /* KeychainManager.swift */; };
+		B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */; };
+		B78DA9782A04A0C1002343AB /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -202,6 +205,9 @@
 		B78DA9642A02AF3A002343AB /* AsciiText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B78DA9692A02AF72002343AB /* SageMultiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SageMultiView.swift; sourceTree = "<group>"; };
 		B78DA96B2A0312F1002343AB /* HelpPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpPopup.swift; sourceTree = "<group>"; };
+		B78DA9732A04A083002343AB /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTreeView.swift; sourceTree = "<group>"; };
+		B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -402,6 +408,7 @@
 		B746DFCC29F5E789002804EB /* SwiftSageiOS */ = {
 			isa = PBXGroup;
 			children = (
+				B78DA9732A04A083002343AB /* KeychainManager.swift */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
 				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
@@ -429,6 +436,8 @@
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
+				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
+				B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -662,6 +671,7 @@
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
 				B7191F1A29F9F09A00078D8D /* NSMutableAttributedString+Tokens.swift in Sources */,
 				B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */,
+				B78DA9742A04A083002343AB /* KeychainManager.swift in Sources */,
 				B78DA9662A02AF3A002343AB /* SpinnerThread.swift in Sources */,
 				B74A2CC329F7F6990051DB52 /* FoundationTransport.swift in Sources */,
 				B74A2CCD29F7F6990051DB52 /* StringHTTPHandler.swift in Sources */,
@@ -703,8 +713,10 @@
 				B7191F2D29F9F09A00078D8D /* SourceCodeTheme.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
+				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */,
+				B78DA9782A04A0C1002343AB /* RepositoryViewModel.swift in Sources */,
 				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B71C62FA2A018D0E004296E4 /* GPT.swift in Sources */,
