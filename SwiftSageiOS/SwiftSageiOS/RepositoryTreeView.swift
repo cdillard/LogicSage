@@ -52,6 +52,7 @@ struct RepositoryTreeView: View {
                 // Perform an action with the file content, e.g., navigate to a file content view
                 SettingsViewModel.shared.sourceEditorCode = fileContent
                 SettingsViewModel.shared.isEditorVisible = true
+                SettingsViewModel.shared.showAddView = false
             case .failure(let error):
                 print("Error fetching file content: \(error.localizedDescription)")
             }

@@ -9,7 +9,13 @@ import Foundation
 import SwiftUI
 import Combine
 let defaultTerminalFontSize: CGFloat = 12.666
-let repoURL = "https://api.github.com/repos/cdillard/SwiftSage/git/trees/main?recursive=1"
+//let repoURL = "https://api.github.com/repos/cdillard/SwiftSage/git/trees/main?recursive=1"
+
+
+let owner = "cdillard"
+ let repo = "SwiftSage"
+ let branch = "main"
+
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
     let keychainManager = KeychainManager()
@@ -288,10 +294,12 @@ struct GitHubContent: Codable, Identifiable {
 
 extension SettingsViewModel {
     func syncGithubRepo() {
+        isLoading = true
         SettingsViewModel.shared.fetchSubfolders(path: "", delay: 1.0) { result in
+            self.isLoading = false
             switch result {
             case .success(let repositoryFiles):
-                print("All files and directories: \(repositoryFiles)")
+                // print("All files and directories: \(repositoryFiles)")
                 self.rootFiles = repositoryFiles
             case .failure(let error):
                 print("Error fetching files: \(error)")
@@ -300,9 +308,7 @@ extension SettingsViewModel {
     }
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
-        let owner = "cdillard"
-         let repo = "SwiftSage"
-         let branch = "main"
+
         let urlString = "https://api.github.com/repos/\(owner)/\(repo)/contents/\(path)?ref=\(branch)".replacingOccurrences(of: " ", with: "%20")
 
         if let apiUrl = URL(string: urlString)  {
@@ -325,7 +331,7 @@ extension SettingsViewModel {
                 }
 
                 do {
-                    print("data = \(String(data: data, encoding: .utf8))")
+                    // print("data = \(String(data: data, encoding: .utf8))")
                     let decodedData = try JSONDecoder().decode([GitHubContent].self, from: data)
                     completion(.success(decodedData))
                 } catch {
@@ -374,7 +380,7 @@ extension SettingsViewModel {
 
     // Fetch specific file
     private func fetchFileContentPublisher(filePath: String) -> AnyPublisher<String, Error> {
-        let apiUrl = URL(string: "https://api.github.com/repos/cdillard/SwiftSage/contents/\(filePath)?ref=main")!
+        let apiUrl = URL(string: "https://api.github.com/repos/\(owner)/\(repo)/contents/\(filePath)?ref=\(branch)")!
         var request = URLRequest(url: apiUrl)
         request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
         return URLSession.shared.dataTaskPublisher(for: request)
