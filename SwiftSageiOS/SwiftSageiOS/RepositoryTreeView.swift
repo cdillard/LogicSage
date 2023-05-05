@@ -6,22 +6,13 @@
 //
 
 import SwiftUI
-struct RepositoryFile: Identifiable {
-    let id: String
-    let name: String
-    let path: String
-    var isDirectory: Bool = false
-    var children: [RepositoryFile] = []
-}
+
 struct RepositoryTreeView: View {
-//    @ObservedObject var settingsViewModel: SettingsViewModel
+    //    @ObservedObject var settingsViewModel: SettingsViewModel
+    let files: [GitHubContent]
 
-    private let accessToken: String
-    private let files: [RepositoryFile]
-
-    init(accessToken: String, files: [RepositoryFile]? = nil) {
-        self.accessToken = accessToken
-        self.files = files ?? []
+    init(accessToken: String, files: [GitHubContent]? = nil) {
+        self.files = files ?? SettingsViewModel.shared.rootFiles
     }
 
     var body: some View {
@@ -31,9 +22,9 @@ struct RepositoryTreeView: View {
                     ProgressView()
                 } else {
                     List {
-                        ForEach(files.isEmpty ? SettingsViewModel.shared.rootFiles : files) { file in
-                            if file.isDirectory {
-                                NavigationLink(destination: RepositoryTreeView(accessToken: accessToken, files: file.children)) {
+                        ForEach(files) { file in
+                            if file.type == "dir" {
+                                NavigationLink(destination: RepositoryTreeView(accessToken: "", files: file.children)) {
                                     Text(file.name)
                                 }
                             } else {
@@ -48,27 +39,22 @@ struct RepositoryTreeView: View {
                 }
             }
             .navigationTitle("Repository Tree")
-            .onAppear {
-                if files.isEmpty {
-                    SettingsViewModel.shared.fetchRepositoryTreeStructure(accessToken: accessToken)
-                }
-            }
         }
     }
 
-    private func fileTapped(_ file: RepositoryFile) {
+    private func fileTapped(_ file: GitHubContent) {
         print("Tapped file: \(file.path)")
         // Perform an action when a file is tapped, e.g., navigate to a file content view
-        SettingsViewModel.shared.fetchFileContent(accessToken: accessToken, filePath: file.path) { result in
-                switch result {
-                case .success(let fileContent):
-                    print("File content: \(fileContent)")
-                    // Perform an action with the file content, e.g., navigate to a file content view
-                    SettingsViewModel.shared.sourceEditorCode = fileContent
-                    SettingsViewModel.shared.isEditorVisible = true
-                case .failure(let error):
-                    print("Error fetching file content: \(error.localizedDescription)")
-                }
+        SettingsViewModel.shared.fetchFileContent(accessToken: SettingsViewModel.shared.ghaPat, filePath: file.path) { result in
+            switch result {
+            case .success(let fileContent):
+                print("File content: \(fileContent)")
+                // Perform an action with the file content, e.g., navigate to a file content view
+                SettingsViewModel.shared.sourceEditorCode = fileContent
+                SettingsViewModel.shared.isEditorVisible = true
+            case .failure(let error):
+                print("Error fetching file content: \(error.localizedDescription)")
             }
+        }
     }
 }

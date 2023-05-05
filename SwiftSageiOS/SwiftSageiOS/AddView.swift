@@ -66,7 +66,7 @@ struct AddView: View {
                     
                     Button("\(settingsViewModel.isWebViewVisible ? "Hide" : "Open") WebView") {
 #if !os(macOS)
-                        
+
                         if consoleManager.isVisible {
                             consoleManager.isVisible = false
                         }
@@ -75,6 +75,27 @@ struct AddView: View {
                         print("open Webview")
                         showAddView.toggle()
                         settingsViewModel.isWebViewVisible.toggle()
+                    }
+                    .font(.caption)
+                    .lineLimit(nil)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
+
+                    Button("Download sws repo") {
+
+                        print("Downloading sws repo...")
+                        settingsViewModel.syncGithubRepo()
+
+//#if !os(macOS)
+//
+//                        if consoleManager.isVisible {
+//                            consoleManager.isVisible = false
+//                        }
+//#endif
+//
+//                        print("open Webview")
+//                        showAddView.toggle()
+//                        settingsViewModel.isWebViewVisible.toggle()
                     }
                     .font(.caption)
                     .lineLimit(nil)
@@ -108,7 +129,7 @@ struct AddView: View {
 
 
 
-                RepositoryTreeView(accessToken: settingsViewModel.ghaPat)
+                RepositoryTreeView(accessToken: "")
             }
             .scrollIndicators(.visible)
         }

@@ -15,7 +15,7 @@ class SettingsViewModel: ObservableObject {
     let keychainManager = KeychainManager()
     @Published var sourceEditorCode = """
     """
-    @Published var rootFiles: [RepositoryFile] = []
+    @Published var rootFiles: [GitHubContent] = []
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
@@ -250,13 +250,133 @@ extension Color {
 enum Device: Int {
     case mobile, computer
 }
+struct GitHubContent: Codable, Identifiable {
+    var id: String {
+        return path
+    }
+    let name: String
+    let path: String
+    let type: String
+    let size: Int
+    let downloadUrl: String?
+    let htmlUrl: URL
+    let gitUrl: URL
+    let url: URL
+    let sha: String
+    let links: Links
+    var children: [GitHubContent]?
 
+    enum CodingKeys: String, CodingKey {
+        case name
+        case path
+        case type
+        case size
+        case downloadUrl = "download_url"
+        case htmlUrl = "html_url"
+        case gitUrl = "git_url"
+        case url
+        case sha
+        case links = "_links"
+    }
+
+    struct Links: Codable {
+        let git: URL
+        let html: URL
+        let `self`: URL
+    }
+}
 
 extension SettingsViewModel {
-    private func fetchFileContentPublisher(accessToken: String, filePath: String) -> AnyPublisher<String, Error> {
+    func syncGithubRepo() {
+        SettingsViewModel.shared.fetchSubfolders(path: "", delay: 1.0) { result in
+            switch result {
+            case .success(let repositoryFiles):
+                print("All files and directories: \(repositoryFiles)")
+                self.rootFiles = repositoryFiles
+            case .failure(let error):
+                print("Error fetching files: \(error)")
+            }
+        }
+    }
+
+    func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
+        let owner = "cdillard"
+         let repo = "SwiftSage"
+         let branch = "main"
+        let urlString = "https://api.github.com/repos/\(owner)/\(repo)/contents/\(path)?ref=\(branch)".replacingOccurrences(of: " ", with: "%20")
+
+        if let apiUrl = URL(string: urlString)  {
+
+
+            var request = URLRequest(url: apiUrl)
+            request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
+            logD("Execute github API req with path = \(path)")
+
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "No data", code: -1, userInfo: nil)))
+                    return
+                }
+
+                do {
+                    print("data = \(String(data: data, encoding: .utf8))")
+                    let decodedData = try JSONDecoder().decode([GitHubContent].self, from: data)
+                    completion(.success(decodedData))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+        else {
+            print("failed to make URL")
+        }
+    }
+
+    func fetchSubfolders(path: String, delay: TimeInterval, completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
+        fetchRepositoryTreeStructure(path: path) { [weak self] result in
+            switch result {
+            case .success(var githubContents):
+                let directories = githubContents.filter { $0.type == "dir" }
+                let group = DispatchGroup()
+
+                for directory in directories {
+                    group.enter()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                        self?.fetchSubfolders(path: directory.path, delay: delay) { result in
+                            switch result {
+                            case .success(let files):
+                                if let index = githubContents.firstIndex(where: { $0.id == directory.id }) {
+                                    githubContents[index].children = files
+                                }
+                            case .failure(let error):
+                                print("Error fetching subfolder: \(error)")
+                            }
+                            group.leave()
+                        }
+                    }
+                }
+
+                group.notify(queue: .main) {
+                    completion(.success(githubContents))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    // Fetch specific file
+    private func fetchFileContentPublisher(filePath: String) -> AnyPublisher<String, Error> {
         let apiUrl = URL(string: "https://api.github.com/repos/cdillard/SwiftSage/contents/\(filePath)?ref=main")!
         var request = URLRequest(url: apiUrl)
-        request.addValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
         return URLSession.shared.dataTaskPublisher(for: request)
             .map(\.data)
             .tryMap { data -> String in
@@ -270,68 +390,8 @@ extension SettingsViewModel {
             }
             .eraseToAnyPublisher()
     }
-
-    func fetchRepositoryTreeStructure(accessToken: String) {
-        isLoading = true
-        cancellable = fetchRepositoryTreeStructurePublisher(accessToken: accessToken)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                
-                logD("fetched repository at url = \(repoURL)")
-                if case .failure(let error) = completion {
-                    print("Error fetching repository tree structure: \(error.localizedDescription)")
-                }
-            } receiveValue: { [weak self] filePaths in
-                self?.rootFiles = self?.buildFileHierarchy(from: filePaths) ?? []
-            }
-    }
-
-    private func buildFileHierarchy(from filePaths: [String]) -> [RepositoryFile] {
-        var fileDict: [String: RepositoryFile] = [:]
-        var directoryPaths: Set<String> = []
-
-        // Identify directory paths
-        for path in filePaths {
-            let components = path.split(separator: "/")
-            if components.count > 1 {
-                let parentComponents = components.dropLast()
-                let parentPath = parentComponents.joined(separator: "/")
-                directoryPaths.insert(parentPath)
-            }
-        }
-
-        // Create hierarchical structure
-        for path in filePaths {
-            let components = path.split(separator: "/")
-            var currentFolder: RepositoryFile? = nil
-
-            for (index, component) in components.enumerated() {
-                let currentPath = components[0...index].joined(separator: "/")
-
-                if let existingFile = fileDict[currentPath] {
-                    currentFolder = existingFile
-                } else {
-                    let isDirectory = directoryPaths.contains(currentPath)
-                    let newFile = RepositoryFile(id: currentPath, name: String(component), path: currentPath, isDirectory: isDirectory)
-                    fileDict[currentPath] = newFile
-
-                    if let parentPath = components.dropLast().joined(separator: "/").addingPercentEncoding(withAllowedCharacters: .urlPathAllowed), var parentFolder = fileDict[parentPath] {
-                        parentFolder.children.append(newFile)
-                        fileDict[parentPath] = parentFolder
-                    }
-
-                    currentFolder = newFile
-                }
-            }
-        }
-
-        return fileDict.values.filter { $0.path.split(separator: "/").count == 1 }.sorted(by: { $0.name < $1.name })
-    }
-
-
     func fetchFileContent(accessToken: String, filePath: String, completion: @escaping (Result<String, Error>) -> Void) {
-        cancellable = fetchFileContentPublisher(accessToken: accessToken, filePath: filePath)
+        cancellable = fetchFileContentPublisher(filePath: filePath)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completionStatus in
                 if case .failure(let error) = completionStatus {
@@ -341,20 +401,4 @@ extension SettingsViewModel {
                 completion(.success(fileContent))
             })
     }
-
-
-    private func fetchRepositoryTreeStructurePublisher(accessToken: String) -> AnyPublisher<[String], Error> {
-        let apiUrl = URL(string: "https://api.github.com/repos/cdillard/SwiftSage/git/trees/main?recursive=1")!
-        var request = URLRequest(url: apiUrl)
-        request.addValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .map(\.data)
-            .tryMap { data -> [String] in
-                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                guard let tree = json?["tree"] as? [[String: Any]] else { return [] }
-                return tree.compactMap { $0["path"] as? String }
-            }
-            .eraseToAnyPublisher()
-    }
-
 }

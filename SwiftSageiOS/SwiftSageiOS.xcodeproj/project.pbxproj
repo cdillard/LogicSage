@@ -101,7 +101,6 @@
 		B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA96B2A0312F1002343AB /* HelpPopup.swift */; };
 		B78DA9742A04A083002343AB /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9732A04A083002343AB /* KeychainManager.swift */; };
 		B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */; };
-		B78DA9782A04A0C1002343AB /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -207,7 +206,6 @@
 		B78DA96B2A0312F1002343AB /* HelpPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpPopup.swift; sourceTree = "<group>"; };
 		B78DA9732A04A083002343AB /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTreeView.swift; sourceTree = "<group>"; };
-		B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -437,7 +435,6 @@
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
 				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
-				B78DA9772A04A0C1002343AB /* RepositoryViewModel.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -716,7 +713,6 @@
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */,
-				B78DA9782A04A0C1002343AB /* RepositoryViewModel.swift in Sources */,
 				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B71C62FA2A018D0E004296E4 /* GPT.swift in Sources */,
