@@ -34,6 +34,16 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## News, Changelog
 
 ---
+05-05-2023
+
+What is it? A workspace, a git client, an AI project generator? A song maker? A debate practice tool? 
+Help me decide!
+
+Welcome to LogicSage. 
+
+Now with GIT REPO SUPPORT!
+
+---
 05-04-2023
 
 Another day full of excitement for LogicSage!
