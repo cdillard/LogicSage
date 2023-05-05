@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import Combine
-let defaultTerminalFontSize: CGFloat = 12.666
+let defaultTerminalFontSize: CGFloat = 22.666
 
 let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
@@ -47,7 +47,7 @@ class SettingsViewModel: ObservableObject {
     @Published var showInstructions: Bool = !hasSeenInstructions()
     @Published var showHelp: Bool = false
 
-    @AppStorage("savedButtonSize") var buttonScale: Double = 0.2 {
+    @AppStorage("savedButtonSize") var buttonScale: Double = 0.4 {
         didSet {
             buttonScalerFloat = CGFloat(  buttonScale)
         }
@@ -55,7 +55,7 @@ class SettingsViewModel: ObservableObject {
     @Published var buttonScalerFloat: CGFloat = 0.2
 
     // COMMAND BUTTON SIZE
-    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 24 {
+    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 32 {
         didSet {
             commandButtonFontSizeFloat = CGFloat(  commandButtonFontSize)
         }
@@ -199,11 +199,15 @@ class SettingsViewModel: ObservableObject {
     init() {
 #if !os(macOS)
 
-        self.terminalBackgroundColor = UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
-        self.terminalTextColor = UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .white
-        self.buttonColor = UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
-        self.backgroundColor = UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
-        self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+        self.terminalBackgroundColor = .black//UserDefaults.standard.data(forKey: "terminalBackgroundColor").flatMap { Color.color(data: $0) } ?? .black
+        self.terminalTextColor = .white //UserDefaults.standard.data(forKey: "terminalTextColor").flatMap { Color.color(data: $0) } ?? .white
+        self.buttonColor = .green // UserDefaults.standard.data(forKey: "buttonColor").flatMap { Color.color(data: $0) } ?? .green
+        self.backgroundColor = .black //UserDefaults.standard.data(forKey: "backgroundColor").flatMap { Color.color(data: $0) } ?? .black
+        self.textSize = defaultTerminalFontSize//CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+
+
+        self.buttonScale = 0.4 //CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))
+        self.commandButtonFontSize = 32 // CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
 
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 

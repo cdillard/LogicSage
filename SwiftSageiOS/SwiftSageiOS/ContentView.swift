@@ -187,21 +187,26 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
                     }
-                    .popover(isPresented: $showSettings, arrowEdge: .top) {
-#if !os(macOS)
-
-                        if UIDevice.current.userInterfaceIdiom == .pad {
-                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
-                        }
-                        else {
-                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-
-                        }
-#endif
 
 
-                    }
+
+
+//
+//                    .popover(isPresented: $showSettings, arrowEdge: .top) {
+//#if !os(macOS)
+//
+//                        if UIDevice.current.userInterfaceIdiom == .pad {
+//                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+//                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+//                        }
+//                        else {
+//                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+//
+//                        }
+//#endif
+
+
+//                    }
 //                    // PING BUTTON
 //                    Button(action: {
 //                        if screamer.websocket != nil {
@@ -281,6 +286,13 @@ struct ContentView: View {
 
                 }
             }
+            .background(
+
+            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+                .opacity(showSettings ? 1.0 : 0.0)
+                    )
+
+
             .onAppear {
                 keyboardObserver.startObserve(height: geometry.size.height)
             }
@@ -299,6 +311,7 @@ struct ContentView: View {
 #endif
             }
         }
+
         .overlay(
             Group {
                 if settingsViewModel.showInstructions {
