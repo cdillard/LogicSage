@@ -51,7 +51,18 @@ func configureAudioSession() {
     if SettingsViewModel.shared.voiceOutputenabled {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers, .mixWithOthers])
+            let defOpt: AVAudioSession.CategoryOptions
+            if SettingsViewModel.shared.duckingAudio {
+                 defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.duckOthers, AVAudioSession.CategoryOptions.mixWithOthers])
+
+            }
+            else {
+                 defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.mixWithOthers])
+
+            }
+
+
+            try audioSession.setCategory(.playback, mode: .spokenAudio, options: defOpt)
             try audioSession.setActive(true)
 
         } catch {
@@ -75,6 +86,20 @@ func printVoicesInMyDevice() {
             return $0.voiceName > $1.voiceName
         }
         return $0.voiceName < $1.voiceName
+    }
+
+
+    // get voice index
+    if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+        SettingsViewModel.shared.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+
+        SettingsViewModel.shared.selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
+
+
+    }
+    else {
+        SettingsViewModel.shared.selectedVoiceIndexSaved = 0
+
     }
 #endif
 

@@ -16,6 +16,8 @@ let defaultBranch = "main"
 
 class SettingsViewModel: ObservableObject {
     static let shared = SettingsViewModel()
+
+    // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
     let keychainManager = KeychainManager()
     @Published var sourceEditorCode = """
     """
@@ -27,8 +29,47 @@ class SettingsViewModel: ObservableObject {
     @Published var commandMode: EntryMode = .commandBar
 
     @AppStorage("savedText") var multiLineText = ""
+
+    @Published var hasAcceptedMicrophone = false
+    @AppStorage("device") var currentMode: Device = .mobile
+
+    @Published var showAddView = false
+    @Published var showInstructions: Bool = !hasSeenInstructions()
+    @Published var showHelp: Bool = false
+
+
+#if !os(macOS)
+    @Published var receivedImage: UIImage? = nil
+    func updateImage(data: Data) {
+        if let image = UIImage(data: data) {
+            self.receivedImage = image
+        } else {
+            print("Failed to convert data to UIImage")
+        }
+    }
+#endif
+
+
+    @Published var isEditorVisible: Bool = false {
+        didSet {
+
+        }
+    }
+
+    @Published var isWebViewVisible: Bool = false {
+        didSet {
+
+        }
+    }
+
+    // END SAVED UI SETTINGS ZONE **************************************************************************************
+
+    // BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
+
     @Published var voiceOutputenabled = false
     @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
+    @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0
+    @AppStorage("duckingAudio") var duckingAudio = true
 
     // TODO
     // add the code for server
@@ -40,12 +81,10 @@ class SettingsViewModel: ObservableObject {
     @Published var recognizedText: String = ""
 
 
-    @Published var hasAcceptedMicrophone = false
-    @AppStorage("device") var currentMode: Device = .mobile
+    // END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
-    @Published var showAddView = false
-    @Published var showInstructions: Bool = !hasSeenInstructions()
-    @Published var showHelp: Bool = false
+    // BEGIN SAVED SIZES ZONE **************************************************************************************
+
 
     // TOOL BAR BUTOTN SIZE
     @AppStorage("savedButtonSize") var buttonScale: Double = 0.3 {
@@ -68,7 +107,96 @@ class SettingsViewModel: ObservableObject {
     @AppStorage("middleHandleSize")var middleHandleSize: Double = 28
 
 
+    @Published var textSize: CGFloat = defaultTerminalFontSize {
+        didSet {
+            if textSize != 0 {
+                UserDefaults.standard.set(Float(textSize), forKey: "textSize")
+            }
+            else {
+                print("failed to set terminal text size")
 
+            }
+          //  consoleManager.fontSize = self.textSize
+
+        }
+    }
+
+    // END SAVED SIZES ZONE ********************************************************************************************
+
+    // BEGIN SAVED COLORS ZONE **************************************************************************************
+
+    @Published var terminalBackgroundColor: Color {
+        didSet {
+#if !os(macOS)
+
+     //       if let data =  {
+            UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
+            print("saved terminalBackgroundColor to userdefaults")
+            consoleManager.updateLumaColor()
+//            }
+//            else {
+//                print("failed to set user def for terminalBackgroundColor")
+//            }
+           // consoleManager.fontSize = self.textSize
+
+#endif
+        }
+    }
+    @Published var terminalTextColor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
+            print("saved terminalTextColor to userdefaults")
+
+//            if let data = terminalTextColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "terminalTextColor")
+//            }
+//            else {
+//                print("failed to set user def for termTextColor")
+//            }
+
+           // consoleManager.fontSize = self.textSize
+#endif
+        }
+    }
+    @Published var buttonColor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
+            print("saved buttonColor to userdefaults")
+
+//            if let data = buttonColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "buttonColor")
+//            }
+//            else {
+//                print("failed to set user def for buttonColor")
+//            }
+
+            //consoleManager.fontSize = self.textSize
+
+#endif
+        }
+    }
+    @Published var backgroundColor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
+            print("saved backgroundColor to userdefaults")
+//            if let data = backgroundColor.colorData() {
+//                UserDefaults.standard.set(data, forKey: "backgroundColor")
+//            }
+//            else {
+//                print("failed to set user def for backgroundColor")
+//            }
+
+           // consoleManager.fontSize = self.textSize
+
+#endif
+        }
+    }
+    // END SAVED COLORS ZONE **************************************************************************************
+
+    // BEGIN SAVED SECRETS ZONE **************************************************************************************
 
 
     @AppStorage("userName") var userName = "chris" {
@@ -87,108 +215,6 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-
-#if !os(macOS)
-    @Published var receivedImage: UIImage? = nil
-    func updateImage(data: Data) {
-        if let image = UIImage(data: data) {
-            self.receivedImage = image
-        } else {
-            print("Failed to convert data to UIImage")
-        }
-    }
-#endif
-    @Published var textSize: CGFloat = defaultTerminalFontSize {
-        didSet {
-            if textSize != 0 {
-                UserDefaults.standard.set(Float(textSize), forKey: "textSize")
-            }
-            else {
-                print("failed to set terminal text size")
-
-            }
-          //  consoleManager.fontSize = self.textSize
-
-        }
-    }
-    @Published var terminalBackgroundColor: Color = .black {
-        didSet {
-#if !os(macOS)
-
-     //       if let data =  {
-                UserDefaults.standard.set(terminalBackgroundColor.rawValue, forKey: "terminalBackgroundColor")
-//            }
-//            else {
-//                print("failed to set user def for terminalBackgroundColor")
-//            }
-           // consoleManager.fontSize = self.textSize
-
-#endif
-        }
-    }
-    @Published var terminalTextColor: Color = .white {
-        didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(terminalTextColor.rawValue, forKey: "terminalTextColor")
-
-//            if let data = terminalTextColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "terminalTextColor")
-//            }
-//            else {
-//                print("failed to set user def for termTextColor")
-//            }
-
-           // consoleManager.fontSize = self.textSize
-#endif
-        }
-    }
-    @Published var buttonColor: Color = .green {
-        didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(buttonColor.rawValue, forKey: "buttonColor")
-
-//            if let data = buttonColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "buttonColor")
-//            }
-//            else {
-//                print("failed to set user def for buttonColor")
-//            }
-
-            //consoleManager.fontSize = self.textSize
-
-#endif
-        }
-    }
-    @Published var backgroundColor: Color = .gray {
-        didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
-
-//            if let data = backgroundColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "backgroundColor")
-//            }
-//            else {
-//                print("failed to set user def for backgroundColor")
-//            }
-
-           // consoleManager.fontSize = self.textSize
-
-#endif
-        }
-    }
-
-
-    @Published var isEditorVisible: Bool = false {
-        didSet {
-
-        }
-    }
-
-    @Published var isWebViewVisible: Bool = false {
-        didSet {
-
-        }
-    }
 
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
@@ -222,15 +248,13 @@ class SettingsViewModel: ObservableObject {
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 
-
-    // END CLIENT APIS ZONE
-
-    //
-
+    // END CLIENT APIS ZONE **************************************************************************************
 
     init() {
 #if !os(macOS)
 
+
+        // BEGIN SIZE SETTING LOAD ZONE FROM DISK
 
         if UserDefaults.standard.float(forKey: "textSize") != 0 {
             self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
@@ -255,7 +279,10 @@ class SettingsViewModel: ObservableObject {
         else {
             self.commandButtonFontSize = 23
         }
+        // END SIZE SETTING LOAD ZONE FROM DISK
 
+
+        // BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
@@ -289,8 +316,11 @@ class SettingsViewModel: ObservableObject {
 
         }
 
-        voiceOutputenabled = voiceOutputenabledUserDefault
+        // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
+
+
+        // BEGIN COLOR LOAD FROM DISK ZONE ******************************
         if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
 
             self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
@@ -312,6 +342,7 @@ class SettingsViewModel: ObservableObject {
         }
         else {
             self.buttonColor = .green
+            
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "backgroundColor") {
@@ -321,15 +352,81 @@ class SettingsViewModel: ObservableObject {
         else {
             self.backgroundColor = .gray
         }
+        // END COLOR LOAD FROM DISK ZONE ******************************
 
+        // BEGIN AUDIO SETTING LOAD ZONE FROM DISK
+        self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
+        voiceOutputenabled = voiceOutputenabledUserDefault
+
+        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+
+        }
+        else {
+            self.selectedVoiceIndexSaved = 0
+        }
+        // END AUDIO SETTING LOAD ZONE FROM DISK
 #endif
         
+    }
+
+    func setColorsToDisk() {
+//        UserDefaults.standard.set(Color.white.rawValue , forKey: "terminalTextColor")
+//
+//        UserDefaults.standard.set(Color.black.rawValue , forKey: "terminalBackgroundColor")
+//
+//        UserDefaults.standard.set(Color.gray.rawValue , forKey: "backgroundColor")
+//
+//        UserDefaults.standard.set(Color.green.rawValue , forKey: "buttonColor")
+
     }
 }
 
 enum Device: Int {
     case mobile, computer
 }
+
+#if !os(macOS)
+
+
+extension Color: RawRepresentable {
+
+    public init?(rawValue: String) {
+
+        guard let data = Data(base64Encoded: rawValue) else{
+            self = .black
+            return
+        }
+
+        do{
+            let color = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor ?? .black
+            self = Color(color)
+        }catch{
+            self = .black
+        }
+
+    }
+
+    public var rawValue: String {
+
+        do{
+            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false) as Data
+            return data.base64EncodedString()
+
+        }catch{
+
+            return ""
+
+        }
+
+    }
+
+}
+#endif
+
+// BEGIN GITHUB API HANDLING ZONE **************************************************************************************
+
+
 struct GitHubContent: Codable, Identifiable {
     var id: String {
         return path
@@ -493,40 +590,7 @@ extension SettingsViewModel {
         }
     }
 }
-#if !os(macOS)
 
 
-extension Color: RawRepresentable {
+// END GITHUB API HANDLING ZONE **************************************************************************************
 
-    public init?(rawValue: String) {
-
-        guard let data = Data(base64Encoded: rawValue) else{
-            self = .black
-            return
-        }
-
-        do{
-            let color = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor ?? .black
-            self = Color(color)
-        }catch{
-            self = .black
-        }
-
-    }
-
-    public var rawValue: String {
-
-        do{
-            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false) as Data
-            return data.base64EncodedString()
-
-        }catch{
-
-            return ""
-
-        }
-
-    }
-
-}
-#endif

@@ -29,7 +29,8 @@ struct SettingsView: View {
     @State private var currentModeIndex: Int = 0
     @State private var microphoneAccess: Bool?
     
-    @State private var selectedIOSVoiceIndex: Int?
+//    @State private var selectedVoiceIndex: Int = 0
+
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -49,31 +50,31 @@ struct SettingsView: View {
                                     .padding(.bottom)
                             }
                             Group {
-                                VStack(alignment: .leading, spacing: 15) {
-                                    Text("Terminal Background Color")
+                                VStack(alignment: .leading, spacing: 3) {
+//                                    Text("Terminal Background Color")
                                     //    .fontWeight(.semibold)
-                                    ColorPicker("", selection: $settingsViewModel.terminalBackgroundColor)
+                                    ColorPicker("Terminal Background Color", selection: $settingsViewModel.terminalBackgroundColor)
                                     .padding(.horizontal, 8)
                                 }
-                                VStack(alignment: .leading, spacing: 15) {
-                                    Text("Terminal Text Color")
+                                VStack(alignment: .leading, spacing: 3) {
+//                                    Text("Terminal Text Color")
                                     //    .fontWeight(.semibold)
-                                    ColorPicker("", selection: $settingsViewModel.terminalTextColor)
+                                    ColorPicker("Terminal Text Color", selection: $settingsViewModel.terminalTextColor)
                                     .padding(.horizontal, 8)
                                 }
-                                VStack(alignment: .leading, spacing: 15) {
-                                    Text("Button Color")
-                                        .fontWeight(.semibold)
-                                    ColorPicker("", selection: $settingsViewModel.buttonColor)
+                                VStack(alignment: .leading, spacing: 3) {
+//                                    Text("Button Color")
+//                                        .fontWeight(.semibold)
+                                    ColorPicker("Button Color", selection: $settingsViewModel.buttonColor)
                                     .padding(.horizontal, 8)
                                 }
 
-                                VStack(alignment: .leading, spacing: 15) {
-
-                                    Text("Background Color")
-
-                                        .fontWeight(.semibold)
-                                    ColorPicker("", selection: $settingsViewModel.backgroundColor)
+                                VStack(alignment: .leading, spacing: 3) {
+//
+//                                    Text("Background Color")
+//
+//                                        .fontWeight(.semibold)
+                                    ColorPicker("Background Color", selection: $settingsViewModel.backgroundColor)
                                     .padding(.horizontal, 8)
                                 }
                             }
@@ -359,38 +360,73 @@ struct SettingsView: View {
                     // IOS AUDIO SETTING ON/OFF
                     Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-
-                    Button  {
-                        withAnimation {
+                    HStack {
+                        Button  {
+                            withAnimation {
 #if !os(macOS)
-                            consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-                            if settingsViewModel.voiceOutputenabled {
-                                stopVoice()
-                            }
-                            else {
-                                configureAudioSession()
-                                printVoicesInMyDevice()
-                            }
-                            settingsViewModel.voiceOutputenabled.toggle()
-                            settingsViewModel.voiceOutputenabledUserDefault.toggle()
+                                consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+                                if settingsViewModel.voiceOutputenabled {
+                                    stopVoice()
+                                }
+                                else {
+                                    configureAudioSession()
+                                    printVoicesInMyDevice()
+                                }
+                                settingsViewModel.voiceOutputenabled.toggle()
+                                settingsViewModel.voiceOutputenabledUserDefault.toggle()
 
 
 #endif
+                            }
+
+                        } label: {
+                            resizableButtonImage(systemName:
+                                                    settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
+                                                 size: geometry.size)
+                            .fontWeight(.bold)
+                            //.foregroundColor(.white)
+                            //                        .padding(.horizontal, 40)
+                            //                        .padding(.vertical, 12)
+                            //.background(settingsViewModel.buttonColor)
+                            .cornerRadius(8)
                         }
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
 
-                    } label: {
-                        resizableButtonImage(systemName:
-                                                settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
-                                             size: geometry.size)
-                        .fontWeight(.bold)
-                        //.foregroundColor(.white)
-//                        .padding(.horizontal, 40)
-//                        .padding(.vertical, 12)
-                        //.background(settingsViewModel.buttonColor)
-                        .cornerRadius(8)
+                        if settingsViewModel.voiceOutputenabled {
+                            Button  {
+                                withAnimation {
+                                    logD("duck audio: \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+                                    
+                                    settingsViewModel.duckingAudio.toggle()
+                                    
+                                }
+                                
+                            } label: {
+                                ZStack {
+                                    Text("🦆")
+                                    if settingsViewModel.duckingAudio {
+                                        Text("❌")
+                                            .opacity(0.74)
+                                    }
+                                }
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                //                                .padding(geometry.size.width * 0.01)
+                                
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                //.padding(geometry.size.width * 0.01)
+                                .background(settingsViewModel.buttonColor)
+                                //                                .cornerRadius(10)
+                                .fontWeight(.bold)
+                                //.foregroundColor(.white)
+                                //                        .padding(.horizontal, 40)
+                                //                        .padding(.vertical, 12)
+                                //.background(settingsViewModel.buttonColor)
+                                .cornerRadius(8)
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        }
                     }
-                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-
 
                     VStack {
                         if settingsViewModel.voiceOutputenabled {
@@ -403,7 +439,7 @@ struct SettingsView: View {
                                         HStack {
                                             Text(item.voiceName)
                                             Spacer()
-                                            if selectedIOSVoiceIndex == index {
+                                            if settingsViewModel.selectedVoiceIndexSaved == index {
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(settingsViewModel.buttonColor)
                                                     .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
@@ -411,8 +447,8 @@ struct SettingsView: View {
                                         }
                                         .contentShape(Rectangle())
                                         .onTapGesture {
-                                            selectedIOSVoiceIndex = index
-                                            settingsViewModel.selectedVoice = settingsViewModel.installedVoices[selectedIOSVoiceIndex ?? 0]
+                                            settingsViewModel.selectedVoiceIndexSaved = index
+                                            settingsViewModel.selectedVoice = settingsViewModel.installedVoices[settingsViewModel.selectedVoiceIndexSaved]
                                         }
                                         .frame(height: 30)
                                     }
@@ -546,13 +582,18 @@ struct SettingsView: View {
                         .padding(.bottom)
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
+
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding(geometry.size.width * 0.01)
+                .onAppear {
+                    settingsViewModel.setColorsToDisk()
+                }
 #if !os(macOS)
 
                 .background(settingsViewModel.backgroundColor)
 #endif
+                
             }
             .scrollIndicators(.visible)
         }

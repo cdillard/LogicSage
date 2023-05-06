@@ -38,7 +38,7 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery?.startDiscovering()
 
         printVoicesInMyDevice()
-
+        
         configureAudioSession()
 #if !os(macOS)
 //        if !hasSeenInstructions() {
@@ -49,14 +49,13 @@ struct SwiftSageiOSApp: App {
 //        }
         consoleManager.print(logoAscii5)
 #endif
+
     //    cmdWindows = [LCManager]()
 //Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa, Lambda, Mu,Nu,Xi,Omicron,Pi, Rho,Sigma,Tau      Upsilon       Phi       Chi       Psi       Omega
     }
     var body: some Scene {
         WindowGroup {
             ZStack {
-                settingsViewModel.backgroundColor
-                    .ignoresSafeArea()
                 ContentView()
                     .environmentObject(settingsViewModel)
                     .environmentObject(appState)
@@ -86,11 +85,13 @@ struct SwiftSageiOSApp: App {
 //                    }
 #endif
             }
+
         }
     }
     func doDiscover() {
         serviceDiscovery?.startDiscovering()
     }
+
 }
 
 

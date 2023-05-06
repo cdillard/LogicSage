@@ -265,9 +265,13 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             return endpoints
         }
     }
-    
+
+    func updateLumaColor() {
+        lumaView.foregroundView.backgroundColor = SettingsViewModel.shared.terminalBackgroundColor.uiColor()
+    }
+
     lazy var initialViewLocation: CGPoint = .zero
-    
+
     func configureConsole() {
         consoleSize = CGSize(width: UserDefaults.standard.object(forKey: "LocalConsole.Width") as? CGFloat ?? consoleSize.width,
                              height: UserDefaults.standard.object(forKey: "LocalConsole.Height") as? CGFloat ?? consoleSize.height)

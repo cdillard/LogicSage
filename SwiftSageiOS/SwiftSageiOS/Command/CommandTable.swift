@@ -44,11 +44,11 @@ var commandTable: [String: (String) -> Void] = [
 //    "q": exitCommand,
 //    "exit": exitCommand,
 //    "e": exitCommand,
-//    "stop": stopCommand,  "Stop": stopCommand,
+    "stop": stopCommand,  "Stop": stopCommand,
 //    "say": sayCommand,     "Say": sayCommand,
 //
 //
-//    "st": stopCommand,
+    "st": stopCommand,
 //    "random": randomCommand,
 //    "rand": randomCommand,
 //    "prompts": promptsCommand,
@@ -91,3 +91,11 @@ var commandTable: [String: (String) -> Void] = [
 //    "alien": alienCommand,
 //    "movies": moviesCommand,
 ]
+
+func stopCommand(input: String) {
+    stopRandomSpinner()
+
+    stopVoice()
+
+    // TODO: Figure out a way to make this invalidate the potential GPTs requests and Google APIs requests.
+}
