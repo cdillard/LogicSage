@@ -891,7 +891,9 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             menuButton.menu = makeMenu()
         }
     }
-    
+    func refreshAtributedText() {
+        setAttributedText(consoleTextView.text)
+    }
     func setAttributedText(_ string: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.headIndent = 7

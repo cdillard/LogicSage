@@ -240,7 +240,7 @@ struct SettingsView: View {
                                 .fontWeight(.semibold)
                             HStack {
                                 Text("Small")
-                                Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.4, step: 0.01)
+                                Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.45, step: 0.01)
                                     .accentColor(settingsViewModel.buttonColor)
                                 Text("Large")
                             }
@@ -253,7 +253,7 @@ struct SettingsView: View {
                                 .fontWeight(.semibold)
                             HStack {
                                 Text("Small")
-                                Slider(value: $settingsViewModel.commandButtonFontSize, in:  8...48, step: 0.01)
+                                Slider(value: $settingsViewModel.commandButtonFontSize, in:  10...64, step: 0.01)
                                     .accentColor(settingsViewModel.buttonColor)
                                 Text("Large")
                             }

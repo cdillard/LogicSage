@@ -302,7 +302,7 @@ struct ContentView: View {
             .onAppear {
                 keyboardObserver.startObserve(height: geometry.size.height)
 
-                handleColor()
+               // handleColor()
             }
             .onDisappear {
                 keyboardObserver.stopObserve()
@@ -345,136 +345,6 @@ struct ContentView: View {
             .background(CustomShape())
     }
 
-    func handleColor() {
-
-
-        print("CALLING CONTENTVIEW HANDLECOLOR")
-
-
-        selectedColor = .black
-//        if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
-//
-//            settingsViewModel.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
-//        }
-//        else {
-//            settingsViewModel.terminalBackgroundColor = .black
-        setDefaultColorIfNecessary(colorKey: "terminalBackgroundColor", defaultColor: selectedColor)
-
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-
-            //        }
-            //        if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
-            //
-            //            settingsViewModel.terminalTextColor =  Color(rawValue:colorKey) ?? .white
-            //        }
-            //        else {
-            //            settingsViewModel.terminalTextColor = .white
-
-            selectedColor = .white
-
-            setDefaultColorIfNecessary(colorKey: "terminalTextColor", defaultColor: selectedColor)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                selectedColor = .green
-
-                setDefaultColorIfNecessary(colorKey: "buttonColor", defaultColor: selectedColor)
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-
-
-                    selectedColor = .gray
-
-                    setDefaultColorIfNecessary(colorKey: "backgroundColor", defaultColor: selectedColor)
-
-                }
-
-            }
-
-        }
-//        }
-//
-//        if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
-//            settingsViewModel.buttonColor = Color(rawValue:colorKey) ?? .green
-//        }
-//        else {
-//            settingsViewModel.buttonColor = .green
-
-//
-//
-//        }
-
-//        if let colorKey = UserDefaults.standard.string(forKey: "backgroundColor") {
-//
-//            settingsViewModel.backgroundColor =  Color(rawValue:colorKey) ?? .gray
-//        }
-//        else {
-//            settingsViewModel.backgroundColor = .gray
-
-
-//        }
-    }
-    func setDefaultColorIfNecessary(colorKey: String, defaultColor: Color) {
-
-        if UserDefaults.standard.string(forKey: colorKey) == nil {
-            print("SET DEFAULT COLOR")
-
-            UserDefaults.standard.set(defaultColor.rawValue, forKey: colorKey)
-
-            switch colorKey {
-            case "terminalBackgroundColor":
-                settingsViewModel.terminalBackgroundColor = defaultColor
-
-            case "terminalTextColor":
-                settingsViewModel.terminalTextColor =   defaultColor
-
-            case "buttonColor":
-                settingsViewModel.buttonColor =   defaultColor
-
-            case "backgroundColor":
-                settingsViewModel.backgroundColor =   defaultColor
-            default:
-                break
-            }
-        }
-        else {
-            print("SET COLOR = \(colorKey)")
-
-            if let colorData = UserDefaults.standard.string(forKey: colorKey) {
-
-                switch colorKey {
-                case "terminalBackgroundColor":
-                    let myNewColor = Color(rawValue:colorData)!
-                    print("parsed color w/ comps:\(myNewColor.cgColor?.components)")
-                    settingsViewModel.terminalBackgroundColor = myNewColor
-
-                case "terminalTextColor":
-                    let myNewColor = Color(rawValue:colorData)!
-                    print("parsed color w/ comps:\(myNewColor.cgColor?.components)")
-
-                    settingsViewModel.terminalTextColor =  myNewColor
-
-                case "buttonColor":
-                    let myNewColor = Color(rawValue:colorData)!
-                    print("parsed color w/ comps:\(myNewColor.cgColor?.components)")
-
-                    settingsViewModel.buttonColor =  myNewColor
-
-                case "backgroundColor":
-                    let myNewColor = Color(rawValue:colorData)!
-                    print("parsed color w/ comps:\(myNewColor.cgColor?.components)")
-
-                    settingsViewModel.backgroundColor =  myNewColor
-                default:
-                    break
-                }
-
-              }
-            else {
-                print("massive color failure")
-            }
-        }
-    }
 }
 
 

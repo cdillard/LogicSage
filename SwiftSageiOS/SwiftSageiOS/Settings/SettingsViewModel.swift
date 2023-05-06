@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 import Combine
 let defaultTerminalFontSize: CGFloat = 18.666
+let defaultCommandButtonSize: CGFloat = 38
+let defaultToolbarButtonScale: CGFloat = 0.4
+let defaultHandleSize: Double = 28
 
 let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
@@ -87,24 +90,24 @@ class SettingsViewModel: ObservableObject {
 
 
     // TOOL BAR BUTOTN SIZE
-    @AppStorage("savedButtonSize") var buttonScale: Double = 0.3 {
+    @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale {
         didSet {
             buttonScalerFloat = CGFloat(  buttonScale)
         }
     }
-    @Published var buttonScalerFloat: CGFloat = 0.3
+    @Published var buttonScalerFloat: CGFloat = defaultToolbarButtonScale
 
     // COMMAND BUTTON SIZE
-    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = 23 {
+    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize {
         didSet {
             commandButtonFontSizeFloat = CGFloat(  commandButtonFontSize)
         }
     }
-    @Published var commandButtonFontSizeFloat: CGFloat = 23
+    @Published var commandButtonFontSizeFloat: CGFloat = defaultCommandButtonSize
 
 
-    @AppStorage("cornerHandleSize")var cornerHandleSize: Double = 28
-    @AppStorage("middleHandleSize")var middleHandleSize: Double = 28
+    @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
+    @AppStorage("middleHandleSize")var middleHandleSize: Double = defaultHandleSize
 
 
     @Published var textSize: CGFloat = defaultTerminalFontSize {
@@ -116,7 +119,9 @@ class SettingsViewModel: ObservableObject {
                 print("failed to set terminal text size")
 
             }
-          //  consoleManager.fontSize = self.textSize
+            consoleManager.fontSize = self.textSize
+
+            consoleManager.refreshAtributedText()
 
         }
     }
@@ -157,6 +162,7 @@ class SettingsViewModel: ObservableObject {
 
            // consoleManager.fontSize = self.textSize
 #endif
+            consoleManager.refreshAtributedText()
         }
     }
     @Published var buttonColor: Color {
@@ -270,14 +276,14 @@ class SettingsViewModel: ObservableObject {
 
         }
         else {
-            self.buttonScale = 0.3
+            self.buttonScale = defaultToolbarButtonScale
         }
         if UserDefaults.standard.float(forKey: "commandButtonFontSize") != 0 {
             self.commandButtonFontSize = CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
 
         }
         else {
-            self.commandButtonFontSize = 23
+            self.commandButtonFontSize = defaultCommandButtonSize
         }
         // END SIZE SETTING LOAD ZONE FROM DISK
 
