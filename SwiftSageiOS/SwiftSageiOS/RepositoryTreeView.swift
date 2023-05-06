@@ -10,6 +10,7 @@ import SwiftUI
 struct RepositoryTreeView: View {
     //    @ObservedObject var settingsViewModel: SettingsViewModel
     let files: [GitHubContent]
+    @EnvironmentObject var windowManager: WindowManager
 
     init(accessToken: String, files: [GitHubContent]? = nil) {
         self.files = files ?? SettingsViewModel.shared.rootFiles
@@ -47,8 +48,11 @@ struct RepositoryTreeView: View {
             case .success(let fileContent):
                 print("File content: \(fileContent)")
                 // Perform an action with the file content, e.g., navigate to a file content view
-                SettingsViewModel.shared.sourceEditorCode = fileContent
-                SettingsViewModel.shared.isEditorVisible = true
+                // TODO : FIX PASSING CODE TO THE VIEW MODEL
+                //                SettingsViewModel.shared.sourceEditorCode = fileContent
+
+                windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0, fileContents: fileContent)
+
                 SettingsViewModel.shared.showAddView = false
             case .failure(let error):
                 print("Error fetching file content: \(error.localizedDescription)")

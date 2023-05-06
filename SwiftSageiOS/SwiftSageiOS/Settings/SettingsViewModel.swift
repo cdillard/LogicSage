@@ -22,8 +22,7 @@ class SettingsViewModel: ObservableObject {
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
     let keychainManager = KeychainManager()
-    @Published var sourceEditorCode = """
-    """
+
     @Published var rootFiles: [GitHubContent] = []
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
@@ -51,19 +50,6 @@ class SettingsViewModel: ObservableObject {
         }
     }
 #endif
-
-
-    @Published var isEditorVisible: Bool = false {
-        didSet {
-
-        }
-    }
-
-    @Published var isWebViewVisible: Bool = false {
-        didSet {
-
-        }
-    }
 
     // END SAVED UI SETTINGS ZONE **************************************************************************************
 

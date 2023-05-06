@@ -31,7 +31,7 @@ struct ContentView: View {
 
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
 
-
+    @StateObject private var windowManager = WindowManager()
     @State private var selectedColor: Color = .black 
 
     var body: some View {
@@ -108,25 +108,32 @@ struct ContentView: View {
 //                }
 
             }
-
-            // HANDLE WEBVIEW
-            if settingsViewModel.isWebViewVisible {
-#if !os(macOS)
-                VStack {
-
-                    SageMultiView(settingsViewModel: settingsViewModel, viewMode: .webView)
+            // IF USING WINDOW MANAGER
+            if true {
+                ForEach(windowManager.windows) { window in
+                    WindowView(window: window)
+                        .environmentObject(windowManager)
                 }
-#endif
             }
-            if settingsViewModel.isEditorVisible {
-#if !os(macOS)
-                VStack {
-
-                    SageMultiView(settingsViewModel: settingsViewModel, viewMode: .editor)
-                }
-#endif
+            else {
+                // HANDLE WEBVIEW
+//                if settingsViewModel.isWebViewVisible {
+//#if !os(macOS)
+//                    VStack {
+//
+//                        SageMultiView(settingsViewModel: settingsViewModel, viewMode: .webView)
+//                    }
+//#endif
+//                }
+//                if settingsViewModel.isEditorVisible {
+//#if !os(macOS)
+//                    VStack {
+//
+//                        SageMultiView(settingsViewModel: settingsViewModel, viewMode: .editor)
+//                    }
+//#endif
+//                }
             }
-
 
             // HANDLE SIMULATOR
 #if !os(macOS)
@@ -243,9 +250,11 @@ struct ContentView: View {
                         if UIDevice.current.userInterfaceIdiom == .pad {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
                                 .frame(width:  geometry.size.width * 0.5, height: geometry.size.height * 0.75)
+                                .environmentObject(windowManager)
                         }
                         else {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
+                                .environmentObject(windowManager)
 
                         }
 #endif
