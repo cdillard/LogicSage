@@ -15,6 +15,16 @@ struct TopBar: View {
 
     var body: some View {
         HStack {
+
+            Button(action: onClose) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.body)
+            }
+            .foregroundColor(SettingsViewModel.shared.buttonColor)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+
+            Spacer()
             if windowInfo.windowType == .file {
                 Button(action: {
                     isEditing.toggle()
@@ -25,13 +35,6 @@ struct TopBar: View {
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            Spacer()
-            Button(action: onClose) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.body)
-            }
-            .foregroundColor(SettingsViewModel.shared.buttonColor)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         }
 

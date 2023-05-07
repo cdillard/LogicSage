@@ -81,7 +81,10 @@ struct HelpPopup: View {
                 .edgesIgnoringSafeArea(.all)
             }
             .onAppear {
+#if !os(macOS)
+
                 UIScrollView.appearance().bounces = false
+#endif
             }
 
         }

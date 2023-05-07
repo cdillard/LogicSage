@@ -625,7 +625,9 @@ struct SettingsView: View {
                 
             }
             .onAppear {
+#if !os(macOS)
                 UIScrollView.appearance().bounces = false
+#endif
             }
 
             .scrollIndicators(.visible)

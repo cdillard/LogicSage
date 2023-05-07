@@ -105,6 +105,9 @@
 		B78DA9802A070EC9002343AB /* WindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA97F2A070EC9002343AB /* WindowView.swift */; };
 		B78DA9822A0731D5002343AB /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9812A0731D5002343AB /* TopBar.swift */; };
 		B78DA9842A0785E2002343AB /* RepoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9832A0785E2002343AB /* RepoDownloader.swift */; };
+		B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9852A07FEC1002343AB /* CommitDownloader.swift */; };
+		B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9872A07FEF3002343AB /* Settings+Github.swift */; };
+		B78DA98A2A080037002343AB /* WindowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9892A080037002343AB /* WindowList.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -214,6 +217,9 @@
 		B78DA97F2A070EC9002343AB /* WindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowView.swift; sourceTree = "<group>"; };
 		B78DA9812A0731D5002343AB /* TopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
 		B78DA9832A0785E2002343AB /* RepoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDownloader.swift; sourceTree = "<group>"; };
+		B78DA9852A07FEC1002343AB /* CommitDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitDownloader.swift; sourceTree = "<group>"; };
+		B78DA9872A07FEF3002343AB /* Settings+Github.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Github.swift"; sourceTree = "<group>"; };
+		B78DA9892A080037002343AB /* WindowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowList.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -414,39 +420,41 @@
 		B746DFCC29F5E789002804EB /* SwiftSageiOS */ = {
 			isa = PBXGroup;
 			children = (
-				B78DA9732A04A083002343AB /* KeychainManager.swift */,
-				B78DA97F2A070EC9002343AB /* WindowView.swift */,
-				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
-				B78DA9812A0731D5002343AB /* TopBar.swift */,
-				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
-				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
-				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
-				B78DA9602A02AF3A002343AB /* Loading */,
-				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
-				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
 				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
 				B71C62E229FE0FF2004296E4 /* Code.swift */,
 				B71C62F32A018B4A004296E4 /* Command */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
+				B78DA9852A07FEC1002343AB /* CommitDownloader.swift */,
 				B71C62F62A018C4F004296E4 /* Config */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
+				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B748C2FA29F5FF4A000F5F14 /* Info.plist */,
+				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
+				B78DA9732A04A083002343AB /* KeychainManager.swift */,
+				B78DA9602A02AF3A002343AB /* Loading */,
 				B70971F629F62DF3008ED803 /* MultipeerKit */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B746DFD429F5E78A002804EB /* Preview Content */,
+				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
+				B78DA9832A0785E2002343AB /* RepoDownloader.swift */,
+				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
+				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
 				B75B329429FA16B50049EB55 /* SageTerminal.swift */,
 				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
-				B78DA97C2A06F401002343AB /* Utilities */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
 				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
+				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
+				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
+				B78DA9812A0731D5002343AB /* TopBar.swift */,
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
-				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
-				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
-				B78DA9832A0785E2002343AB /* RepoDownloader.swift */,
+				B78DA97C2A06F401002343AB /* Utilities */,
+				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
+				B78DA97F2A070EC9002343AB /* WindowView.swift */,
+				B78DA9892A080037002343AB /* WindowList.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -589,6 +597,7 @@
 			children = (
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
+				B78DA9872A07FEF3002343AB /* Settings+Github.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -709,6 +718,7 @@
 				B78DA9802A070EC9002343AB /* WindowView.swift in Sources */,
 				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
 				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
+				B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
 				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
@@ -734,12 +744,14 @@
 				B78DA9672A02AF3A002343AB /* Loading.swift in Sources */,
 				B75B329529FA16B50049EB55 /* SageTerminal.swift in Sources */,
 				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
+				B78DA98A2A080037002343AB /* WindowList.swift in Sources */,
 				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
 				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
 				B74A2CC529F7F6990051DB52 /* Security.swift in Sources */,
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
 				B7191F2D29F9F09A00078D8D /* SourceCodeTheme.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
+				B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
@@ -893,11 +905,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 72WEN2C47N;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
@@ -928,6 +942,7 @@
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = LogicSageDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = MacDevelopment;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -943,7 +958,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -73,70 +73,20 @@ struct ContentView: View {
                     }
                     .zIndex(2)
 #endif
-
-                    //
-                    //                    if settingsViewModel.isEditorVisible {
-                    //#if !os(macOS)
-                    //
-                    //                        HandleView()
-                    //                            .zIndex(2) // Add zIndex to ensure it's above the SageWebView
-                    //                            .offset(x: -12, y: -12) // Adjust the offset values
-                    //                            .gesture(
-                    //                                DragGesture()
-                    //                                    .onChanged { value in
-                    //                                        positionEditor = CGSize(width: positionEditor.width + value.translation.width, height: positionEditor.height + value.translation.height)
-                    //                                    }
-                    //                                    .onEnded { value in
-                    //                                        // No need to reset the translation value, as it's read-only
-                    //                                    }
-                    //                            )
-                    //#endif
-                }
-//                HStack {
-//                    VStack {
-//                        Image("swsLogo")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: geometry.size.width * 0.1, height: geometry.size.height * 0.1)
-//                            .scaledToFit()
-//                            .padding(.top, 3)
-//                            .padding(.leading, 1)
-//                        Spacer()
-//
-//                    }
-//                    Spacer()
-//                }
-
-            }
-            // IF USING WINDOW MANAGER
-            if true {
-                ForEach(windowManager.windows) { window in
-                    WindowView(window: window)
-                        .environmentObject(windowManager)
                 }
             }
-            else {
-                // HANDLE WEBVIEW
-//                if settingsViewModel.isWebViewVisible {
-//#if !os(macOS)
-//                    VStack {
-//
-//                        SageMultiView(settingsViewModel: settingsViewModel, viewMode: .webView)
-//                    }
-//#endif
-//                }
-//                if settingsViewModel.isEditorVisible {
-//#if !os(macOS)
-//                    VStack {
-//
-//                        SageMultiView(settingsViewModel: settingsViewModel, viewMode: .editor)
-//                    }
-//#endif
-//                }
+#if !os(macOS)
+
+            // WINDOW MANAGER ZONE
+            ForEach(windowManager.windows) { window in
+                WindowView(window: window)
+                    .padding(SettingsViewModel.shared.cornerHandleSize)
+                    .background(.clear)
+                    .environmentObject(windowManager)
             }
+            // END WINDOW MANAGER ZONE
 
             // HANDLE SIMULATOR
-#if !os(macOS)
 
             if let image = settingsViewModel.receivedImage {
                 HStack {
@@ -149,14 +99,13 @@ struct ContentView: View {
             }
 #endif
 
+            // BEGIN TOOL BAR / COMMAND BAR ZONE
             VStack {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
             }
-//            .padding(.bottom, keyboardObserver.isKeyboardVisible ? keyboardObserver.keyboardHeight : 0)
             .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
             .environmentObject(keyboardObserver)
-
 
             VStack {
                 Spacer()
@@ -187,32 +136,17 @@ struct ContentView: View {
                     Button(action: {
                         withAnimation {
                             showSettings.toggle()
+#if !os(macOS)
+
                             if consoleManager.isVisible {
                                 consoleManager.isVisible = false
                             }
+#endif
+
                         }
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
                     }
-
-
-
-
-//
-//                    .popover(isPresented: $showSettings, arrowEdge: .top) {
-//#if !os(macOS)
-//
-//                        if UIDevice.current.userInterfaceIdiom == .pad {
-//                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-//                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.width * 0.5)
-//                        }
-//                        else {
-//                            SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-//
-//                        }
-//#endif
-
-
 //                    }
 //                    // PING BUTTON
 //                    Button(action: {
@@ -262,9 +196,6 @@ struct ContentView: View {
 
                     }
 
-                    // MIC BUTTON
-                    // "mic.fill"
-                    // "mic.slash.fill"
                     Button(action: {
                         if !settingsViewModel.hasAcceptedMicrophone {
 #if !os(macOS)
@@ -280,7 +211,6 @@ struct ContentView: View {
                         }
                         settingsViewModel.isRecording.toggle()
                     }) {
-                        //Text(isRecording ? "Stop Recording" : "Start Recording")
                         resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
                             .font(.body)
                             .overlay(
@@ -296,7 +226,6 @@ struct ContentView: View {
                     Text(settingsViewModel.recognizedText)
                         .font(.body)
                     Spacer()
-
                 }
             }
             .background(
@@ -316,19 +245,7 @@ struct ContentView: View {
             .onDisappear {
                 keyboardObserver.stopObserve()
             }
-//            .onChange(of: showSettings) { newValue in
-//#if !os(macOS)
-//                if newValue {
-//                    print("Popover is shown")
-//                    consoleManager.isVisible = false
-//                } else {
-//                    print("Popover is hidden")
-//                    consoleManager.isVisible = true
-//                }
-//#endif
-//            }
         }
-
         .overlay(
             Group {
                 if settingsViewModel.showInstructions {
@@ -343,12 +260,14 @@ struct ContentView: View {
         .background {
             ZStack {
                 Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if its bad")
-                    .zIndex(-1)
+                    .zIndex(1)
                     .font(.body)
                 settingsViewModel.backgroundColor
                     .ignoresSafeArea()
             }
         }
+        // END TOOL BAR / COMMAND BAR ZONE
+
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
@@ -358,9 +277,7 @@ struct ContentView: View {
             .tint(settingsViewModel.buttonColor)
             .background(CustomShape())
     }
-
 }
-
 
 class KeyboardObserver: ObservableObject {
     @Published var isKeyboardVisible = false

@@ -21,21 +21,11 @@ struct SageMultiView: View {
     @State var viewMode: ViewMode
 
     @EnvironmentObject var sageMultiViewModel: SageMultiViewModel
-
-
-//    @State private var position: CGSize = CGSize.zero
-    @State private var frame: CGRect = defSize
-//    @State private var zoomScale: CGFloat = 1.0
-//    @State private var isPinching: Bool = false
-
-    @StateObject private var pinchHandler = PinchGestureHandler()
     @State var sourceEditorCode = """
     """
-
     var body: some View {
         ZStack {
-
-            if viewMode == .editor { //&& settingsViewModel.isEditorVisible {
+            if viewMode == .editor {
 
 #if !os(macOS)
                 VStack {
@@ -43,76 +33,46 @@ struct SageMultiView: View {
 
                     SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $sageMultiViewModel.isEditing)
                         .ignoresSafeArea()
-                        .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale))
                         .environmentObject(viewModel)
-//                        .scaleEffect(currentScale)
-//                        .gesture(
-//                            MagnificationGesture()
-//                                .onChanged { scaleValue in
-//                                    // Update the current scale based on the gesture's scale value
-//                                    currentScale = lastScaleValue * scaleValue
-//                                }
-//                                .onEnded { scaleValue in
-//                                    // Save the scale value when the gesture ends
-//                                    lastScaleValue = currentScale
-//                                }
-//                        )
                 }
-
 #endif
             }
             else {
                 let viewModel = WebViewViewModel()
-                WebView(url:webViewURL, isPinching: $pinchHandler.isPinching)
+                WebView(url:webViewURL)
                     .ignoresSafeArea()
-                    .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale))
                     .environmentObject(viewModel)
             }
         }
     }
-   
 }
-
 class SourceCodeTextEditorViewModel: ObservableObject {
 }
 class WebViewViewModel: ObservableObject {
 }
-
 class PinchGestureHandler: ObservableObject {
     @Published var scale: CGFloat = 1.0
     var contentSize: CGSize = .zero
     var onContentSizeChange: ((CGSize) -> Void)?
     var isPinching: Bool = false
 }
-
 struct WebView: UIViewRepresentable {
     let url: URL
-    @Binding var isPinching: Bool
-
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-
     var webViewInstance: WKWebView {
         let webView = WKWebView()
         let request = URLRequest(url: self.url)
-
-//        let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
-//        request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
-
         webView.load(request)
         return webView
     }
-
     func makeUIView(context: Context) -> WKWebView {
         return webViewInstance
     }
-
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.scrollView.isScrollEnabled = !isPinching
+
     }
-
-
     class Coordinator: NSObject, WKNavigationDelegate, UIScrollViewDelegate {
         var parent: WebView
 
@@ -125,7 +85,6 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
-
 struct HandleView: View {
     var body: some View {
         Circle()
@@ -136,23 +95,26 @@ struct HandleView: View {
 #endif
 
 #if !os(macOS)
-
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
     @Binding var zoomScale: CGFloat
+    var window: WindowInfo
 
     var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
+    @EnvironmentObject var windowManager: WindowManager
 
     func body(content: Content) -> some View {
         content
             .frame(width: frame.width, height: frame.height)
-            .overlay(ResizingHandle(position: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+            .overlay(
+                ResizingHandle(position: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window)
+                    .environmentObject(windowManager)
+            )
+//            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+//            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+//            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
     }
 }
-
 
 struct ResizingHandle: View {
     enum Position {
@@ -165,25 +127,53 @@ struct ResizingHandle: View {
     @State private var translation: CGSize = .zero
     @Binding var zoomScale: CGFloat
 
+
+    @GestureState private var dragOffset: CGSize = .zero
+    @State private var activeDragOffset: CGSize = .zero
+    @State private var isResizeGestureActive = false
+
+    @EnvironmentObject var windowManager: WindowManager
+    var window: WindowInfo
+
     var body: some View {
+
         Circle()
             .fill(SettingsViewModel.shared.buttonColor)
             .frame(width: handleSize, height: handleSize)
-            .position(positionPoint(for: position))
+            .position(positionPoint(for: position, dragOffset: activeDragOffset))
             .opacity(0.666)
             .gesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        translation = value.translation
+                    .updating($dragOffset) { value, state, _ in
+                        state = value.translation
                     }
-                    .onEnded { _ in
-                        updateFrame(with: translation)
-                        translation = .zero
+                    .onChanged { value in
+
+                        activeDragOffset = value.translation
+
+                        if !isResizeGestureActive {
+                            isResizeGestureActive = true
+                            self.windowManager.bringWindowToFront(window: self.window)
+
+                        }
+                    }
+                    .onEnded { value in
+                        updateFrame(with: value.translation)
+                        activeDragOffset = .zero
+                        isResizeGestureActive = false
+
                     }
             )
+            .onChange(of: activeDragOffset) { newValue in
+                withAnimation(.interactiveSpring()) {
+                    updateFrame(with: newValue)
+                }
+            }
+            .animation(.interactiveSpring(), value: activeDragOffset)
     }
 
-    private func positionPoint(for position: Position) -> CGPoint {
+    private func positionPoint(for position: Position, dragOffset: CGSize) -> CGPoint {
+        let translation = dragOffset
         switch position {
         case .topLeading:
             return CGPoint(x: frame.minX + translation.width / 2, y: frame.minY + translation.height / 2)
@@ -214,13 +204,8 @@ struct ResizingHandle: View {
             newWidth = frame.width + translation.width
             newHeight = frame.height + translation.height
         }
-
-        // Set minimum size constraints to avoid negative size values
         frame.size.width = newWidth
         frame.size.height = newHeight
-
-//        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.size.width , height: frame.size.height )
-
     }
 }
 
@@ -237,71 +222,4 @@ class SageMultiViewModel: ObservableObject {
     }
 }
 
-
 #endif
-//struct ZoomableScrollView: UIViewRepresentable {
-//    //@Binding var zoomScale: CGFloat
-//    let contentView: UIView
-//    @ObservedObject var pinchHandler: PinchGestureHandler
-//
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//
-//    func makeUIView(context: Context) -> UIScrollView {
-//        let scrollView = UIScrollView()
-//        scrollView.delegate = context.coordinator
-//        scrollView.minimumZoomScale = 0.75
-//        scrollView.maximumZoomScale = 4.0
-//        scrollView.addSubview(contentView)
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-//            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-//            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-//            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
-//        ])
-//        return scrollView
-//    }
-//
-//    func updateUIView(_ uiView: UIScrollView, context: Context) {
-//        uiView.setZoomScale(pinchHandler.scale, animated: false)
-//
-//    }
-//
-//    class Coordinator: NSObject, UIScrollViewDelegate {
-//        var parent: ZoomableScrollView
-//
-//        init(_ parent: ZoomableScrollView) {
-//            self.parent = parent
-//        }
-//
-//        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//            return parent.contentView
-//        }
-//
-//        func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-//            parent.pinchHandler.scale = scale
-//            let newSize = CGSize(width: view?.frame.width ?? 0, height: view?.frame.height ?? 0)
-//            parent.pinchHandler.contentSize = newSize
-//            parent.pinchHandler.onContentSizeChange?(newSize)
-//        }
-//    }
-//}
-
-//struct WebView: UIViewRepresentable {
-
-//    let url: URL
-
- //   func makeUIView(context: Context) -> WKWebView {
-  //      let webView = WKWebView()
-   //     webView.load(URLRequest(url: url))
- //       return webView
- //   }
-
-//    func updateUIView(_ uiView: WKWebView, context: Context) {
-        // Update the UIView (WKWebView) as needed
-//    }
-//}

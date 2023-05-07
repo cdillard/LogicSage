@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-let defSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 4, height: UIScreen.main.bounds.size.height / 4)
+
 var windowIndex = 0
 struct AddView: View {
     @Binding var showAddView: Bool
@@ -30,8 +30,10 @@ struct AddView: View {
                         // For all windowzzz...
                         
                         showAddView.toggle()
-                        
+#if !os(macOS)
+                        //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
                         windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+                        #endif
                     }
                     .foregroundColor(settingsViewModel.buttonColor)
 
@@ -51,8 +53,11 @@ struct AddView: View {
                         print("open Webview")
                         showAddView.toggle()
 
+#if !os(macOS)
+                       // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
 
                         windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0)
+#endif
 
                     }
                     .foregroundColor(settingsViewModel.buttonColor)
@@ -62,7 +67,7 @@ struct AddView: View {
                     .fontWeight(.bold)
                     .padding(.bottom)
                     HStack {
-                        Button("Download repo") {
+                        Button("|Download Repo|") {
 
                             print("Downloading repo...")
                             settingsViewModel.syncGithubRepo()
@@ -72,7 +77,8 @@ struct AddView: View {
                         .lineLimit(nil)
                         .fontWeight(.bold)
                         .padding(.bottom)
-                        Button("View DLed Repos") {
+                        Button("|View DLed Repos|") {
+                            showAddView.toggle()
 
                             print("View the DLed Repos...")
                         }
@@ -82,6 +88,20 @@ struct AddView: View {
                         .fontWeight(.bold)
                         .padding(.bottom)
                     }
+//                    HStack {
+//                        Button("|Window List|") {
+//                            showAddView.toggle()
+//
+//                            print("Showing window list...")
+//                        }
+//                        .foregroundColor(settingsViewModel.buttonColor)
+//                        .font(.body)
+//                        .lineLimit(nil)
+//                        .fontWeight(.bold)
+//                        .padding(.bottom)
+//
+//                    }
+
                     // SHOW ADD VIEW BUTTON
                     Button(action: {
                         withAnimation {
@@ -111,16 +131,30 @@ struct AddView: View {
 #endif
                 .cornerRadius(16)
 
+                VStack {
+                    NavigationView {
+                        RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                            .environmentObject(windowManager)
+                        
+                    }
+                    .navigationTitle("Repository Tree")
+                    //                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Text("Window List")
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
 
-                NavigationView {
-                    RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                        .environmentObject(windowManager)
-
+                    NavigationView {
+                        
+                        WindowList()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .environmentObject(windowManager)
+                    }
+                    .navigationTitle("Window List:")
                 }
-                .navigationTitle("Repository Tree")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
 
 
             }
