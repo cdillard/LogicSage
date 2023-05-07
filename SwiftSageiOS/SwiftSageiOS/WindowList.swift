@@ -41,9 +41,9 @@ struct WindowList: View {
     private func windowTitle(window: WindowInfo) -> String {
         switch window.windowType {
         case .webView:
-            return "Webview"
+            return window.url ?? "Webview"
         case .file:
-            return "File"
+            return window.file?.name ?? "Filename"
         }
     }
 }

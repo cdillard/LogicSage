@@ -56,7 +56,7 @@ struct AddView: View {
 #if !os(macOS)
                        // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
 
-                        windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0)
+                        windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
 
                     }

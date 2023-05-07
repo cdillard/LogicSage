@@ -12,8 +12,8 @@ import SwiftUI
 class WindowManager: ObservableObject {
     @Published var windows: [WindowInfo] = []
 
-    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: GitHubContent? = nil, fileContents: String = "") {
-        let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file)
+    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: GitHubContent? = nil, fileContents: String = "", url: String = "") {
+        let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url)
         windows.append(newWindow)
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
@@ -53,7 +53,8 @@ struct WindowInfo: Identifiable, Equatable {
     var windowType: WindowType
     var fileContents: String
     var file: GitHubContent?
-    
+    var url: String?
+
     enum WindowType {
         case webView
         case file

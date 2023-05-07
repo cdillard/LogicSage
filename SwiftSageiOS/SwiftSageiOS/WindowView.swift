@@ -23,23 +23,23 @@ struct WindowView: View {
     @State private var isMoveGestureActivated = false
     var body: some View {
         ZStack {
-            HandleView()
-                  .zIndex(2)
-                  .offset(x: -12, y: -12)
-                  .gesture(
-                      DragGesture()
-                          .onChanged { value in
-                              if !isMoveGestureActivated {
-                                  self.windowManager.bringWindowToFront(window: self.window)
-                                  isMoveGestureActivated = true
-                              }
-
-                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                          }
-                          .onEnded { value in
-                              isMoveGestureActivated = false
-                          }
-                  )
+//            HandleView()
+//                  .zIndex(2)
+//                  .offset(x: -12, y: -12)
+//                  .gesture(
+//                      DragGesture()
+//                          .onChanged { value in
+//                              if !isMoveGestureActivated {
+//                                  self.windowManager.bringWindowToFront(window: self.window)
+//                                  isMoveGestureActivated = true
+//                              }
+//
+//                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+//                          }
+//                          .onEnded { value in
+//                              isMoveGestureActivated = false
+//                          }
+//                  )
 
             VStack {
 
@@ -63,15 +63,17 @@ struct WindowView: View {
         switch window.windowType {
         case .webView:
             let viewModel = SageMultiViewModel(windowInfo: window)
+            let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window)
+                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, frame: $frame, position: $position, webViewURL: url)
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
         case .file:
             let viewModel = SageMultiViewModel(windowInfo: window)
+            let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window)
+                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, frame: $frame, position: $position,webViewURL: url)
                     .environmentObject(viewModel).environmentObject(windowManager)
             )
         }

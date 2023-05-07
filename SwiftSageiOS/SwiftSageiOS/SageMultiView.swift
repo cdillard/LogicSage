@@ -16,7 +16,6 @@ enum ViewMode {
 }
 struct SageMultiView: View {
 
-    public var webViewURL = URL(string: "https://chat.openai.com")!
     @ObservedObject var settingsViewModel: SettingsViewModel
     @State var viewMode: ViewMode
     @EnvironmentObject var windowManager: WindowManager
@@ -27,44 +26,80 @@ struct SageMultiView: View {
     """
     @State var isEditing = false
 
+    @Binding var frame: CGRect
+    @Binding var position: CGSize
+    @State private var isMoveGestureActivated = false
+    @State var webViewURL: URL?
+
     var body: some View {
-        ZStack {
-            VStack {
-                TopBar(isEditing: $isEditing, onClose: {
-                    windowManager.removeWindow(window: window)
-                }, windowInfo: window)
+        GeometryReader { geometry in
+            ZStack {
+                VStack {
+                    TopBar(isEditing: $isEditing, onClose: {
+                        windowManager.removeWindow(window: window)
+                    }, windowInfo: window, webViewURL: getURL())
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                if !isMoveGestureActivated {
+                                    self.windowManager.bringWindowToFront(window: self.window)
+                                    isMoveGestureActivated = true
+                                }
+                                let minY = geometry.safeAreaInsets.top - geometry.size.height / 12
+                                // Keep windows from going to close top top
+                                let newY = max(position.height + value.translation.height, minY)
 
-                if viewMode == .editor {
+                                position = CGSize(width: position.width + value.translation.width, height: newY)
+                            }
+                            .onEnded { value in
+                                isMoveGestureActivated = false
+                            }
+                    )
+
+
+                    if viewMode == .editor {
 #if !os(macOS)
-                    let viewModel = SourceCodeTextEditorViewModel()
+                        let viewModel = SourceCodeTextEditorViewModel()
 
-                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
-                        SourceCodeTextEditor.Customization(didChangeText:
-                    { srcCodeTextEditor in
-                        print("srcEditor lexerForSource")
+                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
+                                                SourceCodeTextEditor.Customization(didChangeText:
+                                                                                    { srcCodeTextEditor in
+                            print("srcEditor didChangeText")
 
-                    }, insertionPointColor: {
-                        Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
-                    }, lexerForSource: { lexer in
-                        SwiftLexer()
-                    }, textViewDidBeginEditing: { srcEditor in
-                        print("srcEditor textViewDidBeginEditing")
-                    }, theme: {
-                        DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-                    }))
+                        }, insertionPointColor: {
+                            Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
+                        }, lexerForSource: { lexer in
+                            SwiftLexer()
+                        }, textViewDidBeginEditing: { srcEditor in
+                            print("srcEditor textViewDidBeginEditing")
+                        }, theme: {
+                            DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
+                        }))
                         .environmentObject(viewModel)
 #endif
-                }
-                else {
-                    let viewModel = WebViewViewModel()
-                    WebView(url:webViewURL)
-                        .environmentObject(viewModel)
+                    }
+                    else {
+                        let viewModel = WebViewViewModel()
+                        WebView(url:getURL())
+                            .environmentObject(viewModel)
+                    }
+
                 }
                 Spacer()
             }
-
-            
         }
+
+    }
+    func getURL() -> URL {
+        let webURL: URL
+        if let webViewURL = webViewURL {
+            webURL = webViewURL
+        }
+        else {
+            webURL = URL(string: "http://www.google.com")!
+        }
+        
+        return webURL
     }
 }
 class SourceCodeTextEditorViewModel: ObservableObject {
@@ -131,9 +166,9 @@ struct ResizableViewModifier: ViewModifier {
                 ResizingHandle(position: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window)
                     .environmentObject(windowManager)
             )
-//            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-//            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-//            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+        //            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+        //            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
+        //            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
     }
 }
 

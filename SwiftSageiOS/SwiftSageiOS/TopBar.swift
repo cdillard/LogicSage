@@ -12,6 +12,7 @@ struct TopBar: View {
     @Binding var isEditing: Bool
     var onClose: () -> Void
     @State var windowInfo: WindowInfo
+    @State var webViewURL: URL?
 
     var body: some View {
         HStack {
@@ -53,10 +54,11 @@ struct TopBar: View {
     }
     func getName() -> String {
         if windowInfo.windowType == .file {
-            return "\(windowInfo.file?.path ?? "name")"
+            return "\(windowInfo.file?.name ?? "Filename")"
         }
         else {
-            return "Webview"
+            return  "\(webViewURL?.absoluteString ?? "WebView")"
+
         }
     }
 }

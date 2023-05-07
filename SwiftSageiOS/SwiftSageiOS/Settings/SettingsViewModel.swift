@@ -44,6 +44,7 @@ public class SettingsViewModel: ObservableObject {
     // 📙
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
 
+    @AppStorage("defaultURL") var defaultURL = "https://"
 
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil
@@ -192,7 +193,6 @@ public class SettingsViewModel: ObservableObject {
             print("saved numberColorSrcEditor to userdefaults")
 
 #endif
-
         }
     }
     @Published var stringColorSrcEditor: Color {
@@ -313,6 +313,7 @@ public class SettingsViewModel: ObservableObject {
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 
+    
     // END CLIENT APIS ZONE **************************************************************************************
 
     init() {

@@ -268,6 +268,22 @@ struct SettingsView: View {
 #endif
                                                 }
                                                 .frame(height: geometry.size.height / 17)
+
+                                                HStack {
+                                                    Text("default webview url: ").font(.body)
+
+                                                    TextEditor(text: $settingsViewModel.defaultURL)
+                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                        .scrollDismissesKeyboard(.interactively)
+                                                        .font(.body)
+                                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                        .autocapitalization(.none)
+
+#endif
+                                                }
+                                                .frame(height: geometry.size.height / 17)
                                             }
                                             .frame( maxWidth: .infinity, maxHeight: .infinity)
 
@@ -708,7 +724,11 @@ struct SettingsView: View {
             .scaledToFit()
             .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.buttonColor)
-            .background(CustomShape())
+#if !os(macOS)
+
+                .background(settingsViewModel.backgroundColor)
+#endif
+
     }
     private func updateMode() {
         currentModeIndex = (currentModeIndex + 1) % modes.count
@@ -747,6 +767,10 @@ struct DevicePicker: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
                     .foregroundColor(.white)
+#if !os(macOS)
+
+                    .background(settingsViewModel.backgroundColor)
+#endif
                     .opacity(settingsViewModel.currentMode == .mobile ? 1 : 0.5)
                     .onTapGesture {
                         withAnimation(.spring()) {
@@ -759,6 +783,10 @@ struct DevicePicker: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
                     .foregroundColor(.white)
+#if !os(macOS)
+
+                    .background(settingsViewModel.backgroundColor)
+#endif
                     .opacity(settingsViewModel.currentMode == .computer ? 1 : 0.5)
                     .onTapGesture {
                         withAnimation(.spring()) {
