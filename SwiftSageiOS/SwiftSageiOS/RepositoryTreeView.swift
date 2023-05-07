@@ -30,8 +30,10 @@ struct RepositoryTreeView: View {
                         } else {
                             Button(action: {
                                // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+#if !os(macOS)
 
                                 fileTapped(file, defSize)
+#endif
                             }) {
                                 Text(file.name)
                             }
