@@ -16,6 +16,7 @@ class WindowManager: ObservableObject {
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents)
         windows.append(newWindow)
         sortWindowsByZIndex()
+        bringWindowToFront(window: newWindow)
     }
 
     func removeWindow(window: WindowInfo) {
@@ -39,6 +40,10 @@ class WindowManager: ObservableObject {
         windows[index].zIndex = maxZIndex + 1
         sortWindowsByZIndex()
     }
+    
+//    func isMaxZIndexWindow(window: WindowInfo) {
+//
+//    }
     private func sortWindowsByZIndex() {
         windows.sort(by: { $0.zIndex < $1.zIndex })
     }

@@ -8,33 +8,38 @@
 import SwiftUI
 
 struct RepositoryTreeView: View {
-    //    @ObservedObject var settingsViewModel: SettingsViewModel
+    @ObservedObject var settingsViewModel: SettingsViewModel
     let files: [GitHubContent]
     @EnvironmentObject var windowManager: WindowManager
 
-    init(accessToken: String, files: [GitHubContent]? = nil) {
+    init(settingsViewModel: SettingsViewModel, accessToken: String, files: [GitHubContent]? = nil) {
         self.files = files ?? SettingsViewModel.shared.rootFiles
+        self.settingsViewModel = settingsViewModel
     }
 
     var body: some View {
         Group {
-            if SettingsViewModel.shared.isLoading {
-                ProgressView()
-            } else {
-                List {
-                    ForEach(files) { file in
-                        if file.type == "dir" {
-                            NavigationLink(destination: RepositoryTreeView(accessToken: "", files: file.children)) {
-                                Text(file.name)
-                            }
-                        } else {
-                            Button(action: {
-                                fileTapped(file)
-                            }) {
-                                Text(file.name)
-                            }
+
+            List {
+                ForEach(files) { file in
+                    if file.type == "dir" {
+                        NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "", files: file.children)) {
+                            Text(file.name)
+                        }
+                    } else {
+                        Button(action: {
+                            fileTapped(file)
+                        }) {
+                            Text(file.name)
                         }
                     }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            .background {
+                if settingsViewModel.isLoading {
+                    ProgressView()
                 }
             }
         }

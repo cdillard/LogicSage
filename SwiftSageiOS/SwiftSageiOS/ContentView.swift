@@ -146,17 +146,6 @@ struct ContentView: View {
                         .padding(.leading,geometry.size.width * 0.01)
                     Spacer()
                 }
-            } else {
-                VStack {
-                    HStack {
-                        Spacer()
-
-                        Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if terminal becomes too small :(")
-                            .zIndex(-999)
-                            .font(.caption)
-                    }
-                    Spacer()
-                }
             }
 #endif
 
@@ -182,7 +171,12 @@ struct ContentView: View {
                         } else {
                             consoleManager.isVisible = true
                         }
-
+                        if showSettings {
+                            showSettings = false
+                        }
+                        if settingsViewModel.showAddView  {
+                            settingsViewModel.showAddView = false
+                        }
                         settingsViewModel.receivedImage = nil
 #endif
                     }) {
@@ -193,6 +187,9 @@ struct ContentView: View {
                     Button(action: {
                         withAnimation {
                             showSettings.toggle()
+                            if consoleManager.isVisible {
+                                consoleManager.isVisible = false
+                            }
                         }
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
@@ -237,7 +234,9 @@ struct ContentView: View {
                         consoleManager.isVisible = false
 #endif
                         settingsViewModel.showAddView.toggle()
-
+                        if showSettings {
+                            showSettings = false
+                        }
                         // window 1 is for second cmd prompt
                     }) {
 
@@ -249,11 +248,13 @@ struct ContentView: View {
 
                         if UIDevice.current.userInterfaceIdiom == .pad {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
-                                .frame(width:  geometry.size.width * 0.5, height: geometry.size.height * 0.75)
+                                .frame(width:  geometry.size.width * 0.75, height: geometry.size.height * 0.75)
                                 .environmentObject(windowManager)
                         }
                         else {
                             AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                                 .environmentObject(windowManager)
 
                         }
@@ -281,7 +282,7 @@ struct ContentView: View {
                     }) {
                         //Text(isRecording ? "Stop Recording" : "Start Recording")
                         resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
-                            .font(.caption)
+                            .font(.body)
                             .overlay(
                                 Group {
                                     if !settingsViewModel.hasAcceptedMicrophone {
@@ -293,7 +294,7 @@ struct ContentView: View {
                     }
 
                     Text(settingsViewModel.recognizedText)
-                        .font(.caption)
+                        .font(.body)
                     Spacer()
 
                 }
@@ -303,7 +304,6 @@ struct ContentView: View {
                 VStack {
                     SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
                         .opacity(showSettings ? 1.0 : 0.0)
-                        .padding(.bottom, 30)
                     Spacer()
                 }
             )
@@ -316,17 +316,17 @@ struct ContentView: View {
             .onDisappear {
                 keyboardObserver.stopObserve()
             }
-            .onChange(of: showSettings) { newValue in
-#if !os(macOS)
-                if newValue {
-                    print("Popover is shown")
-                    consoleManager.isVisible = false
-                } else {
-                    print("Popover is hidden")
-                    consoleManager.isVisible = true
-                }
-#endif
-            }
+//            .onChange(of: showSettings) { newValue in
+//#if !os(macOS)
+//                if newValue {
+//                    print("Popover is shown")
+//                    consoleManager.isVisible = false
+//                } else {
+//                    print("Popover is hidden")
+//                    consoleManager.isVisible = true
+//                }
+//#endif
+//            }
         }
 
         .overlay(
@@ -341,8 +341,13 @@ struct ContentView: View {
             }
         )
         .background {
-            settingsViewModel.backgroundColor
-                .ignoresSafeArea()
+            ZStack {
+                Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if its bad")
+                    .zIndex(-1)
+                    .font(.body)
+                settingsViewModel.backgroundColor
+                    .ignoresSafeArea()
+            }
         }
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {

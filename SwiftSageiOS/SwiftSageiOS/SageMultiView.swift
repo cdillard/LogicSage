@@ -24,7 +24,7 @@ struct SageMultiView: View {
 
 
 //    @State private var position: CGSize = CGSize.zero
-    @State private var frame: CGRect = CGRect(x: 0, y: 0, width: 200, height: 200)
+    @State private var frame: CGRect = defSize
 //    @State private var zoomScale: CGFloat = 1.0
 //    @State private var isPinching: Bool = false
 
@@ -41,7 +41,7 @@ struct SageMultiView: View {
                 VStack {
                     let viewModel = SourceCodeTextEditorViewModel()
 
-                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode)
+                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $sageMultiViewModel.isEditing)
                         .ignoresSafeArea()
                         .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale))
                         .environmentObject(viewModel)
@@ -67,76 +67,17 @@ struct SageMultiView: View {
                     .ignoresSafeArea()
                     .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale))
                     .environmentObject(viewModel)
-//                ZoomableScrollView(contentView: instance, pinchHandler: pinchHandler)
-//                    .edgesIgnoringSafeArea(.all)
-////                    .scaleEffect(pinchHandler.scale)
-//                    .onAppear {
-//                        pinchHandler.onContentSizeChange = { newSize in
-//                                        print("Content size after pinch gesture: \(newSize)")
-//                            frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: newSize.width / 2, height: newSize.height / 2)
-//                        }
-//                    }
-//                    .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale))
-//
-////                    .gesture(
-//                        MagnificationGesture()
-//                            .onChanged { value in
-//                                if value > 0.2 && value < 4.0 {
-//                                    pinchHandler.scale = value
-//
-//                                    pinchHandler.isPinching = true
-//
-//                                    frame.size.width = frame.size.width * pinchHandler.scale
-//                                    frame.size.height = frame.size.height * pinchHandler.scale
-//                                }
-//                                else {
-//                                    print("outside pinchable bound")
-//                                }
-////                                isPinching = true
-//                            }
-//                            .onEnded { value in
-//                                if value > 0.2 && value < 4.0 {
-//
-//                                    pinchHandler.scale = value
-//
-//                                    frame.size.width = frame.size.width * pinchHandler.scale
-//                                    frame.size.height = frame.size.height * pinchHandler.scale
-//                                    pinchHandler.isPinching = false
-//                                }
-//                                else {
-//                                    print("outside pinchable bound")
-//                                }
-//
-//
-//                            })
-
-//                    .gesture(
-//                        MagnificationGesture()
-//                            .onChanged { scaleValue in
-//                                // Update the current scale based on the gesture's scale value
-//                                currentScale = lastScaleValue * scaleValue
-//                            }
-//                            .onEnded { scaleValue in
-//                                // Save the scale value when the gesture ends
-//                                lastScaleValue = currentScale
-//                            }
-//                    )
             }
-
         }
-//        .offset(position)
     }
    
 }
+
 class SourceCodeTextEditorViewModel: ObservableObject {
-
-//    @Published var sourceCode: String
-
-    
 }
 class WebViewViewModel: ObservableObject {
-
 }
+
 class PinchGestureHandler: ObservableObject {
     @Published var scale: CGFloat = 1.0
     var contentSize: CGSize = .zero
@@ -154,7 +95,7 @@ struct WebView: UIViewRepresentable {
 
     var webViewInstance: WKWebView {
         let webView = WKWebView()
-        var request = URLRequest(url: self.url)
+        let request = URLRequest(url: self.url)
 
 //        let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
 //        request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
@@ -229,7 +170,6 @@ struct ResizingHandle: View {
             .fill(SettingsViewModel.shared.buttonColor)
             .frame(width: handleSize, height: handleSize)
             .position(positionPoint(for: position))
-//            .scaleEffect(zoomScale, anchor: .center)
             .opacity(0.666)
             .gesture(
                 DragGesture(minimumDistance: 0)
@@ -288,10 +228,12 @@ struct ResizingHandle: View {
 class SageMultiViewModel: ObservableObject {
     @Published var windowInfo: WindowInfo
     @Published var sourceCode: String
+    @Published var isEditing: Bool
 
-    init(windowInfo: WindowInfo) {
+    init(windowInfo: WindowInfo, isEditing: Bool) {
         self.windowInfo = windowInfo
         self.sourceCode = windowInfo.fileContents
+        self.isEditing = isEditing
     }
 }
 

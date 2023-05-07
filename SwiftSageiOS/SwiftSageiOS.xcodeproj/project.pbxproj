@@ -103,6 +103,8 @@
 		B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */; };
 		B78DA97E2A0707DB002343AB /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA97D2A0707DB002343AB /* WindowManager.swift */; };
 		B78DA9802A070EC9002343AB /* WindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA97F2A070EC9002343AB /* WindowView.swift */; };
+		B78DA9822A0731D5002343AB /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9812A0731D5002343AB /* TopBar.swift */; };
+		B78DA9842A0785E2002343AB /* RepoDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9832A0785E2002343AB /* RepoDownloader.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -210,6 +212,8 @@
 		B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTreeView.swift; sourceTree = "<group>"; };
 		B78DA97D2A0707DB002343AB /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		B78DA97F2A070EC9002343AB /* WindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowView.swift; sourceTree = "<group>"; };
+		B78DA9812A0731D5002343AB /* TopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
+		B78DA9832A0785E2002343AB /* RepoDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDownloader.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -413,6 +417,7 @@
 				B78DA9732A04A083002343AB /* KeychainManager.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
+				B78DA9812A0731D5002343AB /* TopBar.swift */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
 				B78DA9692A02AF72002343AB /* SageMultiView.swift */,
@@ -441,6 +446,7 @@
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
 				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
+				B78DA9832A0785E2002343AB /* RepoDownloader.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -670,6 +676,7 @@
 			files = (
 				B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */,
 				B74A2CC229F7F6990051DB52 /* Transport.swift in Sources */,
+				B78DA9842A0785E2002343AB /* RepoDownloader.swift in Sources */,
 				B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */,
 				B7191F1929F9F09A00078D8D /* Types.swift in Sources */,
 				B74A2CC429F7F6990051DB52 /* TCPTransport.swift in Sources */,
@@ -687,6 +694,7 @@
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
 				B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */,
+				B78DA9822A0731D5002343AB /* TopBar.swift in Sources */,
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
 				B7191F1A29F9F09A00078D8D /* NSMutableAttributedString+Tokens.swift in Sources */,
 				B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */,

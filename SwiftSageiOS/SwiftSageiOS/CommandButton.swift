@@ -43,7 +43,7 @@ struct CommandButtonView: View {
 //
 //                            screamer.connect()
 //                        }
-//                        .font(.caption)
+//                        .font(.body)
 //                        .lineLimit(nil)
 ////                        .foregroundColor(Color.white)
 ////                        .padding(.bottom)
@@ -333,10 +333,11 @@ struct CommandButtonView: View {
                     // MAIN INPUT TEXTFIELD
                     TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
+                        .padding(.bottom, 30)
 //                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                         .lineLimit(nil)
                         .border(settingsViewModel.buttonColor, width: 2)
-                        .autocorrectionDisabled(true)
+                        .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
 
                         .autocapitalization(.none)

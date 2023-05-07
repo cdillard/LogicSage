@@ -199,7 +199,13 @@ extension SyntaxTextView {
 		
 		public func textViewDidBeginEditing(_ textView: UITextView) {
 			// pass the message up to our own delegate
-			delegate?.textViewDidBeginEditing(self)
+
+
+            // maybe we can check isEditing here , dont call next one in the case its false
+
+            if isEditing {
+                delegate?.textViewDidBeginEditing(self)
+            }
 		}
 		
 		open func textViewDidChange(_ textView: UITextView) {

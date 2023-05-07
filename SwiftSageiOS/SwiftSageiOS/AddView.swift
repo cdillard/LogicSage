@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-let defSize = CGRect(x: 0, y: 0, width: 200, height: 200)
+let defSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 4, height: UIScreen.main.bounds.size.height / 4)
 var windowIndex = 0
 struct AddView: View {
     @Binding var showAddView: Bool
@@ -33,7 +33,9 @@ struct AddView: View {
                         
                         windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
                     }
-                    .font(.footnote)
+                    .foregroundColor(settingsViewModel.buttonColor)
+
+                    .font(.body)
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
@@ -53,21 +55,33 @@ struct AddView: View {
                         windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0)
 
                     }
-                    .font(.footnote)
+                    .foregroundColor(settingsViewModel.buttonColor)
+
+                    .font(.body)
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
+                    HStack {
+                        Button("Download repo") {
 
-                    Button("Download sws repo") {
+                            print("Downloading repo...")
+                            settingsViewModel.syncGithubRepo()
+                        }
+                        .foregroundColor(settingsViewModel.buttonColor)
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+                        .padding(.bottom)
+                        Button("View DLed Repos") {
 
-                        print("Downloading sws repo...")
-                        settingsViewModel.syncGithubRepo()
+                            print("View the DLed Repos...")
+                        }
+                        .foregroundColor(settingsViewModel.buttonColor)
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+                        .padding(.bottom)
                     }
-                    .font(.caption)
-                    .lineLimit(nil)
-                    .fontWeight(.bold)
-                    .padding(.bottom)
-
                     // SHOW ADD VIEW BUTTON
                     Button(action: {
                         withAnimation {
@@ -75,13 +89,15 @@ struct AddView: View {
                         }
                     }) {
                         Text("Close")
-                            .font(.footnote)
+                            .foregroundColor(settingsViewModel.buttonColor)
+
+                            .font(.body)
                             .lineLimit(nil)
                             .fontWeight(.bold)
 //                            .foregroundColor(.white)
 //                            .padding(.horizontal, 40)
 //                            .padding(.vertical, 12)
-                            .background(settingsViewModel.buttonColor)
+//                            .background(settingsViewModel.buttonColor)
 //                            .cornerRadius(8)
                     }
                     .padding(.bottom)
@@ -97,11 +113,15 @@ struct AddView: View {
 
 
                 NavigationView {
-                    RepositoryTreeView(accessToken: "")
+                    RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                         .environmentObject(windowManager)
 
                 }
                 .navigationTitle("Repository Tree")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
 
             }
             .scrollIndicators(.visible)

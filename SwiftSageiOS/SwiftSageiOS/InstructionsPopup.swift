@@ -32,7 +32,7 @@ struct InstructionsPopup: View {
                     Text("Welcome to LogicSage!")
                         .background(.green)
                         .opacity(0.7)
-                        .font(.caption)
+                        .font(.body)
                         .lineLimit(nil)
                         .bold()
                         .padding(geometry.size.width * 0.01)
@@ -93,6 +93,10 @@ struct InstructionsPopup: View {
 //                .background(Color.black.opacity(0.8))
                 .edgesIgnoringSafeArea(.all)
             }
+            .onAppear {
+                UIScrollView.appearance().bounces = false
+            }
+            
         }
     }
 }

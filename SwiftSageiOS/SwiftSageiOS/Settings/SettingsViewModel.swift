@@ -39,6 +39,9 @@ class SettingsViewModel: ObservableObject {
     @Published var showInstructions: Bool = !hasSeenInstructions()
     @Published var showHelp: Bool = false
 
+    // 📙
+    @AppStorage("autoCorrect") var autoCorrect: Bool = true
+
 
 #if !os(macOS)
     @Published var receivedImage: UIImage? = nil
@@ -255,7 +258,6 @@ class SettingsViewModel: ObservableObject {
         else {
             self.textSize = defaultTerminalFontSize
         }
-
 
         if UserDefaults.standard.float(forKey: "savedButtonSize") != 0 {
             self.buttonScale = CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))

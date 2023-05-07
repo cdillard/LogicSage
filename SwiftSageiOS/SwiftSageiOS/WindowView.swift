@@ -12,7 +12,7 @@ struct WindowView: View {
     @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo
     @State private var position: CGSize = CGSize.zero
-
+    @State var isEditing = false
     var body: some View {
         ZStack {
             HandleView()
@@ -29,10 +29,14 @@ struct WindowView: View {
                   )
 
             VStack {
+                TopBar(isEditing: $isEditing, onClose: {
+                    // Add close action here
+                    windowManager.removeWindow(window: window)
+                }, windowInfo: window)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 windowContent()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .background(Color.white)
             .cornerRadius(8)
             .shadow(radius: 10)
             .frame(width: window.frame.width, height: window.frame.height)
@@ -48,10 +52,10 @@ struct WindowView: View {
     private func windowContent() -> some View {
         switch window.windowType {
         case .webView:
-            let viewModel = SageMultiViewModel(windowInfo: window)
+            let viewModel = SageMultiViewModel(windowInfo: window, isEditing: isEditing)
             return AnyView(SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView).environmentObject(viewModel))
         case .file:
-            let viewModel = SageMultiViewModel(windowInfo: window)
+            let viewModel = SageMultiViewModel(windowInfo: window, isEditing: isEditing)
             return AnyView(SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor).environmentObject(viewModel))
         // Add more window types as needed
         }

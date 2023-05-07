@@ -38,13 +38,13 @@ struct SettingsView: View {
                         Group {
                             HStack {
                                 Text("Settings:")
-                                    .font(.caption)
+                                    .font(.body)
                                 //     .lineLimit(nil)
                                 //     .fontWeight(.bold)
                                     .padding(.bottom)
 
                                 Text("for more scroll down 📜⬇️")
-                                    .font(.caption)
+                                    .font(.body)
                                 //     .lineLimit(nil)
                                 //     .fontWeight(.bold)
                                     .padding(.bottom)
@@ -79,13 +79,13 @@ struct SettingsView: View {
                                 }
                             }
                             Group {
-                                Text("sws mode").font(.caption)
+                                Text("sws mode").font(.body)
                                 DevicePicker(settingsViewModel: settingsViewModel)
                             }
                             VStack(alignment: .leading) {
                                 if settingsViewModel.currentMode == .computer {
                                     HStack {
-                                        Text("sws username: ").font(.caption)
+                                        Text("sws username: ").font(.body)
                                         TextEditor(text: $settingsViewModel.userName)
                                             .scrollDismissesKeyboard(.interactively)
 
@@ -100,7 +100,7 @@ struct SettingsView: View {
                                     .frame(height: 22)
 
                                     HStack {
-                                        Text("sws password: ").font(.caption)
+                                        Text("sws password: ").font(.body)
 
                                         TextEditor(text: $settingsViewModel.password)
                                             .scrollDismissesKeyboard(.interactively)
@@ -121,13 +121,13 @@ struct SettingsView: View {
                                     HStack {
                                             VStack {
                                                 HStack {
-                                                    Text("A.I. 🔑: ").font(.caption)
+                                                    Text("A.I. 🔑: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.openAIKey)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -137,12 +137,12 @@ struct SettingsView: View {
                                                 .frame(height: geometry.size.height / 13)
 
                                                 HStack {
-                                                    Text("A.I. model: ").font(.caption)
+                                                    Text("A.I. model: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.openAIModel)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -153,12 +153,12 @@ struct SettingsView: View {
                                                 .frame(height: geometry.size.height / 13)
 
                                                 HStack {
-                                                    Text("GHA PAT: ").font(.caption)
+                                                    Text("GHA PAT: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.ghaPat)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -169,12 +169,12 @@ struct SettingsView: View {
                                                 .frame(height: geometry.size.height / 17)
 
                                                 HStack {
-                                                    Text("git user: ").font(.caption)
+                                                    Text("git user: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.gitUser)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -184,12 +184,12 @@ struct SettingsView: View {
                                                 }
                                                 .frame(height: geometry.size.height / 17)
                                                 HStack {
-                                                    Text("git repo: ").font(.caption)
+                                                    Text("git repo: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.gitRepo)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -199,12 +199,12 @@ struct SettingsView: View {
                                                 }
                                                 .frame(height: geometry.size.height / 17)
                                                 HStack {
-                                                    Text("git branch: ").font(.caption)
+                                                    Text("git branch: ").font(.body)
 
                                                     TextEditor(text: $settingsViewModel.gitBranch)
                                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                         .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
+                                                        .font(.body)
                                                         .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -232,7 +232,7 @@ struct SettingsView: View {
                                 Text("Large")
                             }
                             Text("\(settingsViewModel.textSize)")
-                                .font(.caption)
+                                .font(.body)
                                 .lineLimit(nil)
                         }
                         Group {
@@ -245,7 +245,7 @@ struct SettingsView: View {
                                 Text("Large")
                             }
                             Text("\(settingsViewModel.buttonScale)")
-                                .font(.caption)
+                                .font(.body)
                                 .lineLimit(nil)
                         }
                         Group {
@@ -258,7 +258,7 @@ struct SettingsView: View {
                                 Text("Large")
                             }
                             Text("\(settingsViewModel.commandButtonFontSize)")
-                                .font(.caption)
+                                .font(.body)
                                 .lineLimit(nil)
                         }
                         Group {
@@ -271,7 +271,7 @@ struct SettingsView: View {
                                 Text("Large")
                             }
                             Text("\(settingsViewModel.middleHandleSize)")
-                                .font(.caption)
+                                .font(.body)
                                 .lineLimit(nil)
                         }
                         Group {
@@ -284,9 +284,42 @@ struct SettingsView: View {
                                 Text("Large")
                             }
                             Text("\(settingsViewModel.cornerHandleSize)")
-                                .font(.caption)
+                                .font(.body)
                                 .lineLimit(nil)
                         }
+
+                        Group {
+
+                            Button  {
+                                withAnimation {
+                                    logD("AUTOCORRECTION: \(settingsViewModel.autoCorrect ? "off" : "on.")")
+
+                                    settingsViewModel.autoCorrect.toggle()
+
+                                }
+
+                            } label: {
+                                ZStack {
+                                    VStack {
+                                        Text("Autocorrect?")
+                                            .font(.body)
+                                        Text("📙")
+                                    }
+                                    if settingsViewModel.autoCorrect {
+                                        Text("❌")
+                                            .opacity(0.74)
+                                    }
+                                }
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .lineLimit(1)
+                                .background(settingsViewModel.buttonColor)
+                                .fontWeight(.bold)
+                                .cornerRadius(8)
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                        }
+
                         if settingsViewModel.currentMode == .computer {
                             Group {
                                 Text("LoadMode")
@@ -316,13 +349,16 @@ struct SettingsView: View {
 #endif
                         }
                     }) {
-                        Text("👨")
-                            .fontWeight(.bold)
-//                            .foregroundColor(.white)
-//                            .padding(.horizontal, 40)
-//                            .padding(.vertical, 12)
-                            .background(settingsViewModel.buttonColor)
-                            .cornerRadius(8)
+                        VStack {
+                            Text("Choose Avatar")
+                                .foregroundColor(settingsViewModel.buttonColor)
+                                .font(.body)
+
+                            Text("👨")
+                                .fontWeight(.bold)
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(8)
+                        }
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom)
@@ -347,9 +383,6 @@ struct SettingsView: View {
                                             "mic.badge.plus",
                                              size: geometry.size)
                         .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//                        .padding(.horizontal, 40)
-//                        .padding(.vertical, 12)
                         .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
 
@@ -403,25 +436,20 @@ struct SettingsView: View {
                                 
                             } label: {
                                 ZStack {
-                                    Text("🦆")
+                                    VStack {
+                                        Text("Duck Audio?")
+                                            .font(.body)
+                                        Text("🦆")
+                                    }
                                     if settingsViewModel.duckingAudio {
                                         Text("❌")
                                             .opacity(0.74)
                                     }
                                 }
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-                                //                                .padding(geometry.size.width * 0.01)
-                                
                                 .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
-                                //                                .cornerRadius(10)
                                 .fontWeight(.bold)
-                                //.foregroundColor(.white)
-                                //                        .padding(.horizontal, 40)
-                                //                        .padding(.vertical, 12)
-                                //.background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -589,12 +617,17 @@ struct SettingsView: View {
                 .onAppear {
                     settingsViewModel.setColorsToDisk()
                 }
+                .padding(.bottom, 30)
 #if !os(macOS)
 
                 .background(settingsViewModel.backgroundColor)
 #endif
                 
             }
+            .onAppear {
+                UIScrollView.appearance().bounces = false
+            }
+
             .scrollIndicators(.visible)
         }
     }

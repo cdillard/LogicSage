@@ -57,11 +57,15 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     }
     
     @Binding private var text: String
+    @Binding private var isEditing: Bool
+
     private var shouldBecomeFirstResponder: Bool
     private var custom: Customization
     
     public init(
         text: Binding<String>,
+        isEditing: Binding<Bool>,
+
         customization: Customization = Customization(
             didChangeText: {_ in },
             insertionPointColor: { Colorv.white },
@@ -72,6 +76,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         shouldBecomeFirstResponder: Bool = false
     ) {
         self._text = text
+        self._isEditing = isEditing
+
         self.custom = customization
         self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
     }
@@ -97,7 +103,22 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         if shouldBecomeFirstResponder {
             view.becomeFirstResponder()
         }
-        view.text = text
+        //view.text = text
+
+        view.textView.isEditable = isEditing
+//
+////        view.textView.isUserInteractionEnabled = isEditing
+//
+        view.contentTextView.isEditable = isEditing
+//
+//
+//        view.contentTextView.isUserInteractionEnabled = isEditing
+
+
+        view.isEditing = isEditing
+        view.textView.isSelectable = isEditing
+        view.contentTextView.isSelectable = isEditing
+//        view.isUserInteractionEnabled = isEditing
     }
     #endif
     

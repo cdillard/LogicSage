@@ -65,6 +65,7 @@ open class SyntaxTextView: UIView {
             refreshColors()
         }
     }
+    var isEditing = false
 
     var ignoreSelectionChange = false
 
