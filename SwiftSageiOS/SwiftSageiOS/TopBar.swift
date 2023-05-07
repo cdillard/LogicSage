@@ -25,6 +25,16 @@ struct TopBar: View {
 
 
             Spacer()
+
+            Text(getName())
+                .font(.body)
+                .lineLimit(1)
+
+                .foregroundColor(SettingsViewModel.shared.buttonColor)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+
+
             if windowInfo.windowType == .file {
                 Button(action: {
                     isEditing.toggle()
@@ -40,5 +50,13 @@ struct TopBar: View {
 
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 30)
+    }
+    func getName() -> String {
+        if windowInfo.windowType == .file {
+            return "\(windowInfo.file?.path ?? "name")"
+        }
+        else {
+            return "Webview"
+        }
     }
 }

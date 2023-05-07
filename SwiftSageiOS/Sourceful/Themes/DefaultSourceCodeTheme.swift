@@ -10,46 +10,49 @@ import Foundation
 #if !os(macOS)
 
 public struct DefaultSourceCodeTheme: SourceCodeTheme {
-	
-	public init() {
-		
+    var settingsViewModel: SettingsViewModel
+    public init(settingsViewModel: SettingsViewModel) {
+        self.settingsViewModel = settingsViewModel
 	}
 	
-	private static var lineNumbersColor: Colorv {
-		return Colorv(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
+    static var lineNumbersColor: Colorv {
+        Colorv(SettingsViewModel.shared.lineNumbersColorSrcEditor)
 	}
 	
 	public let lineNumbersStyle: LineNumbersStyle? = LineNumbersStyle(font: Font(name: "Menlo", size: 9)!, textColor: lineNumbersColor)
 	
 	public let gutterStyle: GutterStyle = GutterStyle(backgroundColor: Colorv(red: 21/255.0, green: 22/255, blue: 31/255, alpha: 1.0), minimumWidth: 32)
 	
-	public let font = Font(name: "Menlo", size: 9)!
-	
-	public let backgroundColor = Colorv(red: 31/255.0, green: 32/255, blue: 41/255, alpha: 1.0)
+    public let font = getFont()
+
+    static func getFont() -> Font {
+        Font(name: "Menlo", size: CGFloat(SettingsViewModel.shared.sourceEditorFontSizeFloat))!
+    }
+    public let backgroundColor = Colorv(SettingsViewModel.shared.backgroundColorSrcEditor)
 	
 	public func color(for syntaxColorType: SourceCodeTokenType) -> Colorv {
 		
 		switch syntaxColorType {
 		case .plain:
-			return .white
+            return Colorv(settingsViewModel.plainColorSrcEditor)
 			
 		case .number:
-			return Colorv(red: 116/255, green: 109/255, blue: 176/255, alpha: 1.0)
+            return Colorv(settingsViewModel.numberColorSrcEditor)
 			
 		case .string:
-			return Colorv(red: 211/255, green: 35/255, blue: 46/255, alpha: 1.0)
+            return Colorv(settingsViewModel.stringColorSrcEditor)
 			
 		case .identifier:
-			return Colorv(red: 20/255, green: 156/255, blue: 146/255, alpha: 1.0)
+            return Colorv(settingsViewModel.identifierColorSrcEditor)
 			
 		case .keyword:
-			return Colorv(red: 215/255, green: 0, blue: 143/255, alpha: 1.0)
+            return Colorv(settingsViewModel.keywordColorSrcEditor)
 			
 		case .comment:
-			return Colorv(red: 69.0/255.0, green: 187.0/255.0, blue: 62.0/255.0, alpha: 1.0)
+            return Colorv(settingsViewModel.commentColorSrceEditor)
 			
 		case .editorPlaceholder:
-			return backgroundColor
+            return Colorv(settingsViewModel.editorPlaceholderColorSrcEditor)
 		}
 		
 	}

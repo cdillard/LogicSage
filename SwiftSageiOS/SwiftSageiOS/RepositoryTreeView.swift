@@ -53,18 +53,13 @@ struct RepositoryTreeView: View {
 
     private func fileTapped(_ file: GitHubContent, _ frame: CGRect) {
         print("Tapped file: \(file.path)")
-        // Perform an action when a file is tapped, e.g., navigate to a file content view
         SettingsViewModel.shared.fetchFileContent(accessToken: SettingsViewModel.shared.ghaPat, filePath: file.path) { result in
             switch result {
             case .success(let fileContent):
                 print("File content: \(fileContent)")
-                // Perform an action with the file content, e.g., navigate to a file content view
-                // TODO : FIX PASSING CODE TO THE VIEW MODEL
-                //                SettingsViewModel.shared.sourceEditorCode = fileContent
-
 #if !os(macOS)
 
-                windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, fileContents: fileContent)
+                windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
 #endif
 
                 SettingsViewModel.shared.showAddView = false

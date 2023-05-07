@@ -231,9 +231,12 @@ struct ContentView: View {
             .background(
 
                 VStack {
+#if !os(macOS)
+
                     SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
                         .opacity(showSettings ? 1.0 : 0.0)
                     Spacer()
+#endif
                 }
             )
 

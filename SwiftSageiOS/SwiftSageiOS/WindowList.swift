@@ -30,6 +30,10 @@ struct WindowList: View {
                                 .font(.footnote)
                         }
                     }
+                    .onTapGesture {
+                        logD("bringing tapped view to front")
+                        windowManager.bringWindowToFront(window: window)
+                    }
                 }
             }
     }

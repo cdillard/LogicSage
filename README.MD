@@ -34,6 +34,16 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## News, Changelog
 
 ---
+05-07-2023
+Introducing customizable Source Editor colors! Check it out in Settings :)
+
+Introducing multiple window support. Introducing smooth resizability. Introducing Window List in Add View.
+
+Introducing your repository in LogicSage: Simply set your github PAT, github owner, github repo, and github branch and then tap Download Repo in the Add View This will grab the repo from Github. Cool!
+
+Ability to Create PRs, Create Branches, View working Changes, View Commits coming Soon!
+
+---
 05-05-2023
 
 What is it? A workspace, a git client, an AI project generator? A song maker? A debate practice tool? 

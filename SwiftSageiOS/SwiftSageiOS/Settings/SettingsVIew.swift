@@ -24,12 +24,10 @@ let cereprocVoicesNames = [
 
 struct SettingsView: View {
     @Binding var showSettings: Bool
+
     @ObservedObject var settingsViewModel: SettingsViewModel
     let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
     @State private var currentModeIndex: Int = 0
-    @State private var microphoneAccess: Bool?
-    
-//    @State private var selectedVoiceIndex: Int = 0
 
     var body: some View {
         GeometryReader { geometry in
@@ -39,45 +37,102 @@ struct SettingsView: View {
                             HStack {
                                 Text("Settings:")
                                     .font(.body)
-                                //     .lineLimit(nil)
-                                //     .fontWeight(.bold)
+
                                     .padding(.bottom)
 
                                 Text("for more scroll down 📜⬇️")
                                     .font(.body)
-                                //     .lineLimit(nil)
-                                //     .fontWeight(.bold)
+
                                     .padding(.bottom)
                             }
                             Group {
                                 VStack(alignment: .leading, spacing: 3) {
-//                                    Text("Terminal Background Color")
-                                    //    .fontWeight(.semibold)
+
                                     ColorPicker("Terminal Background Color", selection: $settingsViewModel.terminalBackgroundColor)
                                     .padding(.horizontal, 8)
                                 }
                                 VStack(alignment: .leading, spacing: 3) {
-//                                    Text("Terminal Text Color")
-                                    //    .fontWeight(.semibold)
+
                                     ColorPicker("Terminal Text Color", selection: $settingsViewModel.terminalTextColor)
                                     .padding(.horizontal, 8)
                                 }
                                 VStack(alignment: .leading, spacing: 3) {
-//                                    Text("Button Color")
-//                                        .fontWeight(.semibold)
+
                                     ColorPicker("Button Color", selection: $settingsViewModel.buttonColor)
                                     .padding(.horizontal, 8)
                                 }
 
                                 VStack(alignment: .leading, spacing: 3) {
-//
-//                                    Text("Background Color")
-//
-//                                        .fontWeight(.semibold)
+
                                     ColorPicker("Background Color", selection: $settingsViewModel.backgroundColor)
                                     .padding(.horizontal, 8)
                                 }
                             }
+                            Group {
+                                Text("\(settingsViewModel.showSourceEditorColorSettings ? "hide" : "show") srceditor colors").font(.body)
+                            }
+                            .onTapGesture {
+                                settingsViewModel.showSourceEditorColorSettings.toggle()
+                            }
+                            if settingsViewModel.showSourceEditorColorSettings {
+                                // SOURCE CODE EDITOR CUSTOM COLORS
+                                // TODO FINISH THE ADDITIONS IN Settings VM
+                                Group {
+
+
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Plain srceditor clr", selection: $settingsViewModel.plainColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Number srceditor clr", selection: $settingsViewModel.numberColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("String srceditor clr", selection: $settingsViewModel.stringColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Identifier srceditor clr", selection: $settingsViewModel.identifierColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Keyword srceditor clr", selection: $settingsViewModel.keywordColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Comment srceditor clr", selection: $settingsViewModel.commentColorSrceEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Editor plchold srceditor clr", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Bg srceditor clr", selection: $settingsViewModel.backgroundColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+                                    VStack(alignment: .leading, spacing: 3) {
+
+                                        ColorPicker("Line number srceditor clr", selection: $settingsViewModel.lineNumbersColorSrcEditor)
+                                            .padding(.horizontal, 8)
+                                    }
+
+                                }
+                            }
+
                             Group {
                                 Text("sws mode").font(.body)
                                 DevicePicker(settingsViewModel: settingsViewModel)
@@ -236,6 +291,19 @@ struct SettingsView: View {
                                 .lineLimit(nil)
                         }
                         Group {
+                            Text("SrcEditor Text Size")
+                                .fontWeight(.semibold)
+                            HStack {
+                                Text("Small")
+                                Slider(value: $settingsViewModel.sourceEditorFontSizeFloat, in: 4...64, step: 1)
+                                    .accentColor(settingsViewModel.buttonColor)
+                                Text("Large")
+                            }
+                            Text("\(settingsViewModel.sourceEditorFontSizeFloat)")
+                                .font(.body)
+                                .lineLimit(nil)
+                        }
+                        Group {
                             Text("Toolbar size")
                                 .fontWeight(.semibold)
                             HStack {
@@ -365,7 +433,7 @@ struct SettingsView: View {
 
 
                     // ENABLE MIC BUTTON
-                    Text("\(microphoneAccess == true ? "Mic enabled" : "Enable mic")")
+                    Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                     Button(action: {
@@ -374,8 +442,8 @@ struct SettingsView: View {
                             consoleManager.print("Requesing mic permission...")
 #endif
                             requestMicrophoneAccess { granted in
-                                microphoneAccess = granted
-                                settingsViewModel.hasAcceptedMicrophone = microphoneAccess == true
+//                                microphoneAccess = granted
+                                settingsViewModel.hasAcceptedMicrophone = granted == true
                             }
                         }
                     }) {

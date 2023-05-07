@@ -19,30 +19,51 @@ struct SageMultiView: View {
     public var webViewURL = URL(string: "https://chat.openai.com")!
     @ObservedObject var settingsViewModel: SettingsViewModel
     @State var viewMode: ViewMode
+    @EnvironmentObject var windowManager: WindowManager
+    var window: WindowInfo
 
     @EnvironmentObject var sageMultiViewModel: SageMultiViewModel
     @State var sourceEditorCode = """
     """
+    @State var isEditing = false
+
     var body: some View {
         ZStack {
-            if viewMode == .editor {
+            VStack {
+                TopBar(isEditing: $isEditing, onClose: {
+                    windowManager.removeWindow(window: window)
+                }, windowInfo: window)
 
+                if viewMode == .editor {
 #if !os(macOS)
-                VStack {
                     let viewModel = SourceCodeTextEditorViewModel()
 
-                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $sageMultiViewModel.isEditing)
-                        .ignoresSafeArea()
+                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
+                        SourceCodeTextEditor.Customization(didChangeText:
+                    { srcCodeTextEditor in
+                        print("srcEditor lexerForSource")
+
+                    }, insertionPointColor: {
+                        Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
+                    }, lexerForSource: { lexer in
+                        SwiftLexer()
+                    }, textViewDidBeginEditing: { srcEditor in
+                        print("srcEditor textViewDidBeginEditing")
+                    }, theme: {
+                        DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
+                    }))
+                        .environmentObject(viewModel)
+#endif
+                }
+                else {
+                    let viewModel = WebViewViewModel()
+                    WebView(url:webViewURL)
                         .environmentObject(viewModel)
                 }
-#endif
+                Spacer()
             }
-            else {
-                let viewModel = WebViewViewModel()
-                WebView(url:webViewURL)
-                    .ignoresSafeArea()
-                    .environmentObject(viewModel)
-            }
+
+            
         }
     }
 }
@@ -213,12 +234,10 @@ struct ResizingHandle: View {
 class SageMultiViewModel: ObservableObject {
     @Published var windowInfo: WindowInfo
     @Published var sourceCode: String
-    @Published var isEditing: Bool
 
-    init(windowInfo: WindowInfo, isEditing: Bool) {
+    init(windowInfo: WindowInfo) {
         self.windowInfo = windowInfo
         self.sourceCode = windowInfo.fileContents
-        self.isEditing = isEditing
     }
 }
 

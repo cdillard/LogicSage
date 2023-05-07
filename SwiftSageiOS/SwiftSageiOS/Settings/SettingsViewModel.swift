@@ -12,13 +12,14 @@ let defaultTerminalFontSize: CGFloat = 18.666
 let defaultCommandButtonSize: CGFloat = 38
 let defaultToolbarButtonScale: CGFloat = 0.4
 let defaultHandleSize: Double = 28
+let defaultSourceEditorFontSize: CGFloat = 13.666
 
 let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
 let defaultBranch = "main"
 
-class SettingsViewModel: ObservableObject {
-    static let shared = SettingsViewModel()
+public class SettingsViewModel: ObservableObject {
+    public static let shared = SettingsViewModel()
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
     let keychainManager = KeychainManager()
@@ -38,6 +39,7 @@ class SettingsViewModel: ObservableObject {
     @Published var showAddView = false
     @Published var showInstructions: Bool = !hasSeenInstructions()
     @Published var showHelp: Bool = false
+        @Published var showSourceEditorColorSettings: Bool = false
 
     // 📙
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
@@ -129,11 +131,6 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
             print("saved terminalBackgroundColor to userdefaults")
             consoleManager.updateLumaColor()
-//            }
-//            else {
-//                print("failed to set user def for terminalBackgroundColor")
-//            }
-           // consoleManager.fontSize = self.textSize
 
 #endif
         }
@@ -144,14 +141,6 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
             print("saved terminalTextColor to userdefaults")
 
-//            if let data = terminalTextColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "terminalTextColor")
-//            }
-//            else {
-//                print("failed to set user def for termTextColor")
-//            }
-
-           // consoleManager.fontSize = self.textSize
             consoleManager.refreshAtributedText()
 #endif
 
@@ -162,16 +151,6 @@ class SettingsViewModel: ObservableObject {
 #if !os(macOS)
             UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
             print("saved buttonColor to userdefaults")
-
-//            if let data = buttonColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "buttonColor")
-//            }
-//            else {
-//                print("failed to set user def for buttonColor")
-//            }
-
-            //consoleManager.fontSize = self.textSize
-
 #endif
         }
     }
@@ -180,31 +159,119 @@ class SettingsViewModel: ObservableObject {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
             print("saved backgroundColor to userdefaults")
-//            if let data = backgroundColor.colorData() {
-//                UserDefaults.standard.set(data, forKey: "backgroundColor")
-//            }
-//            else {
-//                print("failed to set user def for backgroundColor")
-//            }
+#endif
+        }
+    }
 
-           // consoleManager.fontSize = self.textSize
+
+    // BEGIN SUB ZONE FOR SRC EDITOR COLORS ********************************************
+
+    @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize {
+        didSet {
+            sourceEditorFontSizeFloat = CGFloat(  fontSizeSrcEditor)
+        }
+    }
+    @Published var sourceEditorFontSizeFloat: CGFloat = defaultSourceEditorFontSize
+
+
+    @Published var plainColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+
+     //       if let data =  {
+            UserDefaults.standard.set(plainColorSrcEditor.rawValue , forKey: "plainColorSrcEditor")
+            print("saved plainColorSrcEditor to userdefaults")
 
 #endif
         }
     }
+    @Published var numberColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(numberColorSrcEditor.rawValue , forKey: "numberColorSrcEditor")
+            print("saved numberColorSrcEditor to userdefaults")
+
+#endif
+
+        }
+    }
+    @Published var stringColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(stringColorSrcEditor.rawValue , forKey: "stringColorSrcEditor")
+            print("saved stringColorSrcEditor to userdefaults")
+#endif
+        }
+    }
+    @Published var identifierColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(identifierColorSrcEditor.rawValue, forKey: "identifierColorSrcEditor")
+            print("saved identifierColorSrcEditor to userdefaults")
+#endif
+        }
+    }
+    @Published var keywordColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(keywordColorSrcEditor.rawValue , forKey: "keywordColorSrcEditor")
+            print("saved keywordColorSrcEditor to userdefaults")
+
+#endif
+
+        }
+    }
+    @Published var commentColorSrceEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
+            print("saved commentColorSrceEditor to userdefaults")
+
+#endif
+
+        }
+    }
+    @Published var editorPlaceholderColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(editorPlaceholderColorSrcEditor.rawValue , forKey: "editorPlaceholderColorSrcEditor")
+            print("saved editorPlaceholderColorSrcEditor to userdefaults")
+#endif
+        }
+    }
+    @Published var backgroundColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(backgroundColorSrcEditor.rawValue, forKey: "backgroundColorSrcEditor")
+            print("saved backgroundColorSrcEditor to userdefaults")
+#endif
+        }
+    }
+    @Published var lineNumbersColorSrcEditor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(lineNumbersColorSrcEditor.rawValue, forKey: "lineNumbersColorSrcEditor")
+            print("saved lineNumbersColorSrcEditor to userdefaults")
+#endif
+        }
+    }
+
+
+
+    // END SUB ZONE FOR SRC EDITOR COLORS********************************************
+
     // END SAVED COLORS ZONE **************************************************************************************
 
     // BEGIN SAVED SECRETS ZONE **************************************************************************************
 
 
+    // TODO: React to user name and password change
     @AppStorage("userName") var userName = "chris" {
         didSet {
-            // screamer.disconnect()
         }
     }
     @Published var password = "swiftsage" {
         didSet {
-            // screamer.disconnect()
             if keychainManager.saveToKeychain(key: "swsPassword", value: password) {
                 print("Key saved successfully")
             } else {
@@ -262,17 +329,21 @@ class SettingsViewModel: ObservableObject {
 
         if UserDefaults.standard.float(forKey: "savedButtonSize") != 0 {
             self.buttonScale = CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))
-
+            self.buttonScalerFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize")))
         }
         else {
             self.buttonScale = defaultToolbarButtonScale
+            self.buttonScalerFloat = CGFloat(  defaultToolbarButtonScale)
         }
         if UserDefaults.standard.float(forKey: "commandButtonFontSize") != 0 {
             self.commandButtonFontSize = CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
+            self.commandButtonFontSizeFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize")))
 
         }
         else {
             self.commandButtonFontSize = defaultCommandButtonSize
+            self.commandButtonFontSizeFloat = CGFloat(  defaultCommandButtonSize)
+
         }
         // END SIZE SETTING LOAD ZONE FROM DISK
 
@@ -354,6 +425,116 @@ class SettingsViewModel: ObservableObject {
         self.backgroundColor = .gray
 
 #endif
+
+        // BEGIN SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
+
+        if UserDefaults.standard.float(forKey: "fontSizeSrcEditor") != 0 {
+            self.fontSizeSrcEditor = CGFloat(UserDefaults.standard.float(forKey: "fontSizeSrcEditor"))
+            self.sourceEditorFontSizeFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "fontSizeSrcEditor")))
+
+
+        }
+        else {
+            self.fontSizeSrcEditor = defaultSourceEditorFontSize
+
+        }
+#if !os(macOS)
+
+        if let colorKey = UserDefaults.standard.string(forKey: "plainColorSrcEditor") {
+
+            self.plainColorSrcEditor =  Color(rawValue:colorKey) ?? .white
+        }
+        else {
+            self.plainColorSrcEditor = .white
+        }
+        let defautColornumberColor = Color(red: 116/255, green: 109/255, blue: 176/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "numberColorSrcEditor") {
+
+            self.numberColorSrcEditor =  Color(rawValue:colorKey) ?? defautColornumberColor
+        }
+        else {
+            self.numberColorSrcEditor = defautColornumberColor
+        }
+        let defaultStringColor = Color(red: 211/255, green: 35/255, blue: 46/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "stringColorSrcEditor") {
+
+            self.stringColorSrcEditor =  Color(rawValue:colorKey) ?? defaultStringColor
+        }
+        else {
+            self.stringColorSrcEditor = defaultStringColor
+        }
+
+        let defaultIdentifierColor = Color(red: 20/255, green: 156/255, blue: 146/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "identifierColorSrcEditor") {
+
+            self.identifierColorSrcEditor =  Color(rawValue:colorKey) ?? defaultIdentifierColor
+        }
+        else {
+            self.identifierColorSrcEditor = defaultIdentifierColor
+        }
+        let defaultKeywordColor = Color(red: 215/255, green: 0, blue: 143/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "keywordColorSrcEditor") {
+
+            self.keywordColorSrcEditor =  Color(rawValue:colorKey) ?? defaultKeywordColor
+        }
+        else {
+            self.keywordColorSrcEditor = defaultKeywordColor
+        }
+        let defaultCommentColor = Color(red: 69.0/255.0, green: 187.0/255.0, blue: 62.0/255.0)
+        if let colorKey = UserDefaults.standard.string(forKey: "commentColorSrceEditor") {
+
+            self.commentColorSrceEditor =  Color(rawValue:colorKey) ?? defaultCommentColor
+        }
+        else {
+            self.commentColorSrceEditor = defaultCommentColor
+        }
+        let defaultEditorPlaceholderColor = Color(red: 31/255.0, green: 32/255, blue: 41/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "editorPlaceholderColorSrcEditor") {
+
+            self.editorPlaceholderColorSrcEditor =  Color(rawValue:colorKey) ?? defaultEditorPlaceholderColor
+        }
+        else {
+            self.editorPlaceholderColorSrcEditor = defaultEditorPlaceholderColor
+        }
+        let defaultBackgroundColorSrcEditor = Color(red: 31/255.0, green: 32/255, blue: 41/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "backgroundColorSrcEditor") {
+
+            self.backgroundColorSrcEditor =  Color(rawValue:colorKey) ?? defaultBackgroundColorSrcEditor
+        }
+        else {
+            self.backgroundColorSrcEditor = defaultBackgroundColorSrcEditor
+        }
+
+        let defaultlineNumbersColorSrcEditor = Color( red: 100/255, green: 100/255, blue: 100/255)
+        if let colorKey = UserDefaults.standard.string(forKey: "lineNumbersColorSrcEditor") {
+
+            self.lineNumbersColorSrcEditor =  Color(rawValue:colorKey) ?? defaultlineNumbersColorSrcEditor
+        }
+        else {
+            self.lineNumbersColorSrcEditor = defaultlineNumbersColorSrcEditor
+        }
+#else
+
+        self.fontSizeSrcEditor = 13.666
+        self.sourceEditorFontSizeFloat = 13.666
+        self.plainColorSrcEditor = .black
+        self.numberColorSrcEditor = .white
+        self.stringColorSrcEditor = .green
+        self.identifierColorSrcEditor = .gray
+
+        self.keywordColorSrcEditor = .gray
+        self.commentColorSrceEditor = .gray
+
+        self.editorPlaceholderColorSrcEditor = .gray
+        self.backgroundColorSrcEditor = .gray
+
+        self.lineNumbersColorSrcEditor = .gray
+
+#endif
+        // END SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
+
+
+
         // END COLOR LOAD FROM DISK ZONE ******************************
 
         // BEGIN AUDIO SETTING LOAD ZONE FROM DISK

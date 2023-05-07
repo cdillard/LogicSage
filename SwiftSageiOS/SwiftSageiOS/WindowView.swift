@@ -15,7 +15,6 @@ struct WindowView: View {
     @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo
     @State private var position: CGSize = CGSize.zero
-    @State var isEditing = false
 
 
     @State private var frame: CGRect = defSize
@@ -43,10 +42,7 @@ struct WindowView: View {
                   )
 
             VStack {
-                TopBar(isEditing: $isEditing, onClose: {
-                    windowManager.removeWindow(window: window)
-                }, windowInfo: window)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                 windowContent()
                     .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window))
                     .environmentObject(windowManager)
@@ -66,11 +62,18 @@ struct WindowView: View {
     private func windowContent() -> some View {
         switch window.windowType {
         case .webView:
-            let viewModel = SageMultiViewModel(windowInfo: window, isEditing: isEditing)
-            return AnyView(SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView).environmentObject(viewModel))
+            let viewModel = SageMultiViewModel(windowInfo: window)
+            return AnyView(
+                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
+            )
         case .file:
-            let viewModel = SageMultiViewModel(windowInfo: window, isEditing: isEditing)
-            return AnyView(SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor).environmentObject(viewModel))
+            let viewModel = SageMultiViewModel(windowInfo: window)
+            return AnyView(
+                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window)
+                    .environmentObject(viewModel).environmentObject(windowManager)
+            )
         }
     }
 }

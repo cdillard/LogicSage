@@ -71,7 +71,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             insertionPointColor: { Colorv.white },
             lexerForSource: { _ in SwiftLexer() },
             textViewDidBeginEditing: { _ in },
-            theme: { DefaultSourceCodeTheme() }
+            theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) }
         ),
         shouldBecomeFirstResponder: Bool = false
     ) {

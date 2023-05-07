@@ -12,7 +12,21 @@ import Combine
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
 
-struct GitHubContent: Codable, Identifiable {
+struct GitHubContent: Equatable, Codable, Identifiable {
+    static func == (lhs: GitHubContent, rhs: GitHubContent) -> Bool {
+        return lhs.name == rhs.name &&
+               lhs.path == rhs.path &&
+               lhs.type == rhs.type &&
+               lhs.size == rhs.size &&
+               lhs.downloadUrl == rhs.downloadUrl &&
+               lhs.htmlUrl == rhs.htmlUrl &&
+               lhs.gitUrl == rhs.gitUrl &&
+               lhs.url == rhs.url &&
+               lhs.sha == rhs.sha &&
+               lhs.links == rhs.links &&
+               lhs.children == rhs.children
+    }
+
     var id: String {
         return path
     }
@@ -41,7 +55,7 @@ struct GitHubContent: Codable, Identifiable {
         case links = "_links"
     }
 
-    struct Links: Codable {
+    struct Links: Equatable, Codable {
         let git: URL
         let html: URL
         let `self`: URL
