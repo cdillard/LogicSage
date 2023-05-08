@@ -16,7 +16,7 @@ import Foundation
 
 #if !os(macOS)
 
-extension TextView {
+extension TextViewUIKit {
 	
 	func paragraphRectForRange(range: NSRange) -> CGRect {
 		

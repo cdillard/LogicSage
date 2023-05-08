@@ -56,7 +56,7 @@ open class SyntaxTextView: UIView {
 
     let textView: InnerTextView
 
-    public var contentTextView: TextView {
+    public var contentTextView: TextViewUIKit {
         return textView
     }
 

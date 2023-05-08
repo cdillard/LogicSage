@@ -10,10 +10,12 @@ import SwiftUI
 
 struct WindowList: View {
     @EnvironmentObject var windowManager: WindowManager
+    @Binding var showAddView: Bool
 
     var body: some View {
+        if !windowManager.windows.isEmpty {
             List {
-                ForEach(windowManager.windows) { window in
+                ForEach(windowManager.windows.reversed()) { window in
                     VStack(alignment: .leading) {
                         Text(windowTitle(window: window))
                             .font(.headline)
@@ -32,10 +34,16 @@ struct WindowList: View {
                     }
                     .onTapGesture {
                         logD("bringing tapped view to front")
+                        showAddView = false
                         windowManager.bringWindowToFront(window: window)
                     }
                 }
             }
+        }
+        else {
+            Text("Open window and it will appear here")
+                .frame(height: 30.0)
+        }
     }
 
     private func windowTitle(window: WindowInfo) -> String {

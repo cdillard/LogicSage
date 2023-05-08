@@ -20,32 +20,40 @@ struct RepositoryTreeView: View {
     var body: some View {
         GeometryReader { geometry in
             Group {
+                if !files.isEmpty {
+                    List {
+                        ForEach(files) { file in
+                            if file.type == "dir" {
+                                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "", files: file.children)) {
+                                    Text(file.name)
+                                }
 
-                List {
-                    ForEach(files) { file in
-                        if file.type == "dir" {
-                            NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "", files: file.children)) {
-                                Text(file.name)
-                            }
-                        } else {
-                            Button(action: {
-                               // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+                            } else {
+                                Button(action: {
+                                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
 #if !os(macOS)
-
-                                fileTapped(file, defSize)
+                                    
+                                    fileTapped(file, defSize)
 #endif
-                            }) {
-                                Text(file.name)
+                                }) {
+                                    Text(file.name)
+                                        .foregroundColor(.blue)
+                                }
                             }
                         }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+//                    .background {
+//                        if settingsViewModel.isLoading {
+//                            ProgressView()
+//                        }
+//                    }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                else {
+                    Text("Select a repo and it will appear here")
+                        .frame(height: 30.0)
 
-                .background {
-                    if settingsViewModel.isLoading {
-                        ProgressView()
-                    }
                 }
             }
         }

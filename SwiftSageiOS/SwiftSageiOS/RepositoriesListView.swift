@@ -12,10 +12,19 @@ struct RepositoriesListView: View {
     @State private var directories: [URL] = []
     private let maxDepth = 3
     var body: some View {
-            List(directories, id: \.self) { directory in
-                Text(directory.pathComponents.suffix(3).joined(separator: "/"))
-            }
-            .onAppear(perform: loadDirectories)
+        GeometryReader { geometry in
+                List(directories, id: \.self) { directory in
+                    Text(directory.pathComponents.suffix(3).joined(separator: "/"))
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                            repoTapped(directory)
+                        }
+                }
+                .onAppear(perform: loadDirectories)
+
+        }
     }
     private func loadDirectories() {
           let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -45,7 +54,8 @@ struct RepositoriesListView: View {
     }
 
 
-     private func fileTapped(_ file: GitHubContent) {
+     private func repoTapped(_ repo: URL) {
          // Handle the file tap action here
+         logD("Should select repo = \(repo)")
      }
  }

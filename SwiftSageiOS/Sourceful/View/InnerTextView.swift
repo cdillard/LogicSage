@@ -21,7 +21,7 @@ protocol InnerTextViewDelegate: AnyObject {
 
 #if !os(macOS)
 
-class InnerTextView: TextView {
+class InnerTextView: TextViewUIKit {
 	
 	weak var innerDelegate: InnerTextViewDelegate?
 	

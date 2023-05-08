@@ -17,7 +17,7 @@ func downloadAndStoreFiles(_ files: [GitHubContent], accessToken: String, comple
             var request = URLRequest(url: URL(string: downloadUrl)!)
             request.setValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + githubDelay) {
 
                 URLSession.shared.dataTask(with: request) { data, response, error in
                      defer { dispatchGroup.leave() }

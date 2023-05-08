@@ -37,7 +37,8 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("device") var currentMode: Device = .mobile
 
     @Published var showAddView = false
-    @Published var showInstructions: Bool = !hasSeenInstructions()
+    // DONT AUTO SHOW THE STUFF
+    @Published var showInstructions: Bool = false //!hasSeenInstructions()
     @Published var showHelp: Bool = false
         @Published var showSourceEditorColorSettings: Bool = false
 

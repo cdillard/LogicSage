@@ -19,6 +19,19 @@ struct AddView: View {
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
+                    HStack {
+                        Text("Open menu:")
+                            .font(.body)
+                            .foregroundColor(settingsViewModel.buttonColor)
+
+                            .padding(.bottom)
+
+                        Text("for more scroll down 📜⬇️")
+                            .font(.body)
+                            .foregroundColor(settingsViewModel.buttonColor)
+
+                            .padding(.bottom)
+                    }
                     Button("New File") {
                         print("open new File")
 #if !os(macOS)
@@ -66,18 +79,22 @@ struct AddView: View {
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
-                    Button("|Download Repo|") {
+                    if !settingsViewModel.isLoading {
+                        Button("|Download Repo|") {
 
-                        print("Downloading repo...")
-                        settingsViewModel.syncGithubRepo()
+                            print("Downloading repo...")
+                            settingsViewModel.syncGithubRepo()
+                        }
+                        .foregroundColor(settingsViewModel.buttonColor)
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+                        .padding(.bottom)
+
                     }
-                    .foregroundColor(settingsViewModel.buttonColor)
-                    .font(.body)
-                    .lineLimit(nil)
-                    .fontWeight(.bold)
-                    .padding(.bottom)
-
-
+                    else {
+                        ProgressView()
+                    }
                     // SHOW ADD VIEW BUTTON
                     Button(action: {
                         withAnimation {
@@ -108,30 +125,35 @@ struct AddView: View {
                 .cornerRadius(16)
 
                 VStack {
-                    Text("Repositories")
-                        .font(.body)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-
-                    NavigationView {
-                        RepositoriesListView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                            .environmentObject(windowManager)
-
-                    }
-                    Text("Open Repo")
-                        .font(.body)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-                    NavigationView {
-                        RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    if !settingsViewModel.isLoading {
                         
-                            .environmentObject(windowManager)
+                        Text("Downloaded Repositories")
+                            .font(.body)
+                            .lineLimit(nil)
+                            .fontWeight(.bold)
                         
+                        NavigationView {
+                            RepositoriesListView()
+                            //                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
+                                .environmentObject(windowManager)
+                            
+                        }
                     }
-                    .navigationTitle("Repository Tree")
+                    if !settingsViewModel.isLoading {
+                        Text("Open Repo Tree")
+                            .font(.body)
+                            .lineLimit(nil)
+                            .fontWeight(.bold)
+                        NavigationView {
+                            RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
+                            //                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                                .environmentObject(windowManager)
+
+                        }
+                        .navigationTitle("Repository Tree")
+                    }
                     //                .frame(maxWidth: .infinity, maxHeight: .infinity)
                     Text("Window List")
                         .font(.body)
@@ -140,13 +162,15 @@ struct AddView: View {
 
                     NavigationView {
                         
-                        WindowList()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        WindowList(showAddView: $showAddView)
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .environmentObject(windowManager)
                     }
                     .navigationTitle("Window List:")
+                    Spacer()
                 }
 
+                Spacer()
 
 
             }

@@ -8,9 +8,11 @@
 import Foundation
 import SwiftUI
 import Combine
+import UIKit
 
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
+let githubDelay: TimeInterval = 1.5
 
 struct GitHubContent: Equatable, Codable, Identifiable {
     static func == (lhs: GitHubContent, rhs: GitHubContent) -> Bool {
@@ -66,7 +68,7 @@ extension SettingsViewModel {
     func syncGithubRepo() {
         isLoading = true
         self.rootFiles = []
-        SettingsViewModel.shared.fetchSubfolders(path: "", delay: 1.0) { result in
+        SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
             switch result {
             case .success(let repositoryFiles):
                 logD("All file and directories structure downloaded.")

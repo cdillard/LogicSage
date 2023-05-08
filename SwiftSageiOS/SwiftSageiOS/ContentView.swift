@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
     @State private var buttonScale: CGFloat = 1.0
-    @StateObject private var keyboardObserver = KeyboardObserver()
+   // @StateObject private var keyboardObserver = KeyboardObserver()
 
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
 
@@ -104,8 +104,8 @@ struct ContentView: View {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
             }
-            .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
-            .environmentObject(keyboardObserver)
+//            .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
+//            .environmentObject(keyboardObserver)
 
             VStack {
                 Spacer()
@@ -113,6 +113,8 @@ struct ContentView: View {
                     // OPEN TERM BUTTON
 
                     Button(action: {
+                        hideKeyboard()
+
 #if !os(macOS)
                         if consoleManager.isVisible {
                             consoleManager.isVisible = false
@@ -134,6 +136,8 @@ struct ContentView: View {
 
                     // SETTINGS BUTTON
                     Button(action: {
+                        hideKeyboard()
+
                         withAnimation {
                             showSettings.toggle()
 #if !os(macOS)
@@ -164,6 +168,7 @@ struct ContentView: View {
 
                     // ADD VIEW BUTTON
                     Button(action: {
+                        hideKeyboard()
 #if !os(macOS)
                         consoleManager.isVisible = false
 #endif
@@ -197,6 +202,8 @@ struct ContentView: View {
                     }
 
                     Button(action: {
+                        hideKeyboard()
+
                         if !settingsViewModel.hasAcceptedMicrophone {
 #if !os(macOS)
                             consoleManager.print("Enable mic in Settings...")
@@ -240,14 +247,14 @@ struct ContentView: View {
                 }
             )
 
-            .onAppear {
-                keyboardObserver.startObserve(height: geometry.size.height)
-
-               // handleColor()
-            }
-            .onDisappear {
-                keyboardObserver.stopObserve()
-            }
+//            .onAppear {
+//                keyboardObserver.startObserve(height: geometry.size.height)
+//
+//               // handleColor()
+//            }
+//            .onDisappear {
+//                keyboardObserver.stopObserve()
+//            }
         }
         .overlay(
             Group {
@@ -282,35 +289,35 @@ struct ContentView: View {
     }
 }
 
-class KeyboardObserver: ObservableObject {
-    @Published var isKeyboardVisible = false
-    @Published var keyboardHeight: CGFloat = 0
-
-    private var screenHeight: CGFloat = 0
-
-    func startObserve(height: CGFloat) {
-#if !os(macOS)
-
-        screenHeight = height
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-#endif
-    }
-
-    func stopObserve() {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    @objc private func onKeyboardChange(notification: Notification) {
-#if !os(macOS)
-
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardTop = screenHeight - keyboardFrame.origin.y
-            isKeyboardVisible = keyboardTop > 0
-            keyboardHeight = max(0, keyboardTop)
-        }
-#endif
-    }
-}
+//class KeyboardObserver: ObservableObject {
+//    @Published var isKeyboardVisible = false
+//    @Published var keyboardHeight: CGFloat = 0
+//
+//    private var screenHeight: CGFloat = 0
+//
+//    func startObserve(height: CGFloat) {
+//#if !os(macOS)
+//
+//        screenHeight = height
+//        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//#endif
+//    }
+//
+//    func stopObserve() {
+//        NotificationCenter.default.removeObserver(self)
+//    }
+//
+//    @objc private func onKeyboardChange(notification: Notification) {
+//#if !os(macOS)
+//
+//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//            let keyboardTop = screenHeight - keyboardFrame.origin.y
+//            isKeyboardVisible = keyboardTop > 0
+//            keyboardHeight = max(0, keyboardTop)
+//        }
+//#endif
+//    }
+//}
 
 #if os(macOS)
 func openTerminal() {
