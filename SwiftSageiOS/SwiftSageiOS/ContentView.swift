@@ -113,8 +113,10 @@ struct ContentView: View {
                     // OPEN TERM BUTTON
 
                     Button(action: {
-                        hideKeyboard()
+#if !os(macOS)
 
+                        hideKeyboard()
+#endif
 #if !os(macOS)
                         if consoleManager.isVisible {
                             consoleManager.isVisible = false
@@ -136,7 +138,10 @@ struct ContentView: View {
 
                     // SETTINGS BUTTON
                     Button(action: {
+#if !os(macOS)
+
                         hideKeyboard()
+#endif
 
                         withAnimation {
                             showSettings.toggle()
@@ -168,7 +173,11 @@ struct ContentView: View {
 
                     // ADD VIEW BUTTON
                     Button(action: {
+#if !os(macOS)
+
                         hideKeyboard()
+#endif
+
 #if !os(macOS)
                         consoleManager.isVisible = false
 #endif
@@ -202,7 +211,10 @@ struct ContentView: View {
                     }
 
                     Button(action: {
+#if !os(macOS)
+
                         hideKeyboard()
+#endif
 
                         if !settingsViewModel.hasAcceptedMicrophone {
 #if !os(macOS)

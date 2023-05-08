@@ -8,8 +8,10 @@
 import Foundation
 import SwiftUI
 import Combine
-import UIKit
+#if !os(macOS)
 
+import UIKit
+#endif
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
 let githubDelay: TimeInterval = 1.5

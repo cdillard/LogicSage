@@ -7,7 +7,10 @@
 
 import Foundation
 import SwiftUI
+#if !os(macOS)
+
 import UIKit
+#endif
 
 // Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
 // are using muliple iOS devices for screens, etc.
