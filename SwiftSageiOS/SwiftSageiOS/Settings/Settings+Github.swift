@@ -57,6 +57,7 @@ struct GitHubContent: Equatable, Codable, Identifiable {
         case url
         case sha
         case links = "_links"
+        case children = "children"
     }
 
     struct Links: Equatable, Codable {
@@ -80,18 +81,16 @@ extension SettingsViewModel {
                 logD("Downloading all files in repo...")
                 self.rootFiles = repositoryFiles
 
-                var allChildren = [GitHubContent]()
-                for file in self.rootFiles {
-                    allChildren += file.children ?? []
-                }
-                let allRefs = self.rootFiles + allChildren
+
+           //     let saveTree = self.makeTree(roots: self.rootFiles)
 
                 let githubContentKey = "\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/\(SettingsViewModel.shared.gitBranch)"
                 // Save GithubContent struct heirarchy to user defaults with key owner/repo/branch
-                saveGithubContentUserDefaults(object: allRefs, forKey: githubContentKey)
+                saveGithubContentUserDefaults(object: self.rootFiles, forKey: githubContentKey)
 
 
-                downloadAndStoreFiles(self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
+
+                downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
 //                    defer { self.isLoading = false }
                     switch success {
                     case .success(let files):
@@ -111,6 +110,13 @@ extension SettingsViewModel {
             }
         }
     }
+//    func makeTree(roots: [GitHubContent]) {
+//        for file in roots {
+//            let children = file.children ?? []
+//
+//            makeTree(roots: children)
+//        }
+//    }
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
 

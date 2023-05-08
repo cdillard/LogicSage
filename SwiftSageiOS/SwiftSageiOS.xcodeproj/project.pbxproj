@@ -7,16 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */; };
-		B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */; };
-		B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */; };
-		B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */; };
-		B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FE29F62DF3008ED803 /* MultipeerKit.swift */; };
-		B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */; };
-		B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720129F62DF3008ED803 /* MultipeerDataSource.swift */; };
-		B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */; };
-		B709720E29F62DF3008ED803 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720429F62DF3008ED803 /* Peer.swift */; };
-		B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */; };
 		B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */; };
 		B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF729F9F09A00078D8D /* String+Range.swift */; };
 		B7191F1829F9F09A00078D8D /* NSTextView+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF829F9F09A00078D8D /* NSTextView+UIKit.swift */; };
@@ -686,14 +676,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B709720A29F62DF3008ED803 /* MultipeerKit.swift in Sources */,
 				B74A2CC229F7F6990051DB52 /* Transport.swift in Sources */,
 				B78DA9842A0785E2002343AB /* RepoDownloader.swift in Sources */,
 				B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */,
 				B7191F1929F9F09A00078D8D /* Types.swift in Sources */,
 				B74A2CC429F7F6990051DB52 /* TCPTransport.swift in Sources */,
 				B71C62EC2A00312A004296E4 /* BGHandler.swift in Sources */,
-				B709720B29F62DF3008ED803 /* MockMultipeerConnection.swift in Sources */,
 				B71C62F52A018B5B004296E4 /* GPTCommand.swift in Sources */,
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,
 				B71C62F82A018C6D004296E4 /* Reset.swift in Sources */,
@@ -719,12 +707,10 @@
 				B74A2CC729F7F6990051DB52 /* Data+Extensions.swift in Sources */,
 				B75B329329FA11870049EB55 /* AddView.swift in Sources */,
 				B78DA9802A070EC9002343AB /* WindowView.swift in Sources */,
-				B709720629F62DF3008ED803 /* MultipeerProtocol.swift in Sources */,
 				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
 				B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
-				B709720E29F62DF3008ED803 /* Peer.swift in Sources */,
 				B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */,
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
@@ -738,10 +724,6 @@
 				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,
 				B7191F2C29F9F09A00078D8D /* Paragraphs.swift in Sources */,
 				B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */,
-				B709720C29F62DF3008ED803 /* MultipeerDataSource.swift in Sources */,
-				B709720D29F62DF3008ED803 /* MultipeerTransceiver.swift in Sources */,
-				B709720929F62DF3008ED803 /* MultipeerConnection.swift in Sources */,
-				B709720729F62DF3008ED803 /* MultipeerMessage.swift in Sources */,
 				B71C62E329FE0FF2004296E4 /* Code.swift in Sources */,
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
@@ -760,7 +742,6 @@
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */,
-				B709720F29F62DF3008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B71C62FA2A018D0E004296E4 /* GPT.swift in Sources */,
 				B7191F2229F9F09A00078D8D /* Paragraph.swift in Sources */,
@@ -769,7 +750,6 @@
 				B7191F1E29F9F09A00078D8D /* JavaLexer.swift in Sources */,
 				B7191F2529F9F09A00078D8D /* RegexLexer.swift in Sources */,
 				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
-				B709720829F62DF3008ED803 /* MCPeerID+Me.swift in Sources */,
 				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
 				B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,

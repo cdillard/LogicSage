@@ -15,17 +15,16 @@ struct RepositoriesListView: View {
     private let maxDepth = 3
     var body: some View {
         GeometryReader { geometry in
-                List(directories, id: \.self) { directory in
-                    Text(directory.pathComponents.suffix(3).joined(separator: "/"))
-                        .font(.body)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-                        .onTapGesture {
-                            repoTapped(directory)
-                        }
-                }
-                .onAppear(perform: loadDirectories)
-
+            List(directories, id: \.self) { directory in
+                Text(directory.pathComponents.suffix(3).joined(separator: "/"))
+                    .font(.body)
+                    .lineLimit(nil)
+                    .fontWeight(.bold)
+                    .onTapGesture {
+                        repoTapped(directory)
+                    }
+            }
+            .onAppear(perform: loadDirectories)
         }
     }
     private func loadDirectories() {
@@ -62,7 +61,6 @@ struct RepositoriesListView: View {
          let openRepoKey = pathSuffixComps.joined(separator: "/")
          logD("Should select repoKey = \(openRepoKey)")
 
-
          if let retrievedObject = retrieveGithubContentFromUserDefaults(forKey: openRepoKey) {
              settingsViewModel.gitUser = pathSuffixComps[0]
              settingsViewModel.gitRepo = pathSuffixComps[1]
@@ -70,10 +68,12 @@ struct RepositoriesListView: View {
              settingsViewModel.rootFiles = retrievedObject.compactMap { $0 }
 
              print("Sucessfully restored open repo w/ rootFile count = \(settingsViewModel.rootFiles.count)")
+             for file in settingsViewModel.rootFiles {
+                 print("Child count: \(file.children?.count ?? 0)")
+             }
 
          } else {
              print("Failed to retrieve saved git repo...")
          }
-         // set settingsViewModel.rootFiles to the looked up repo contents from UserDefaults
      }
  }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-func downloadAndStoreFiles(_ files: [GitHubContent], accessToken: String, completionHandler: @escaping (Result<Void, Error>) -> Void) {
+func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent], accessToken: String, completionHandler: @escaping (Result<Void, Error>) -> Void) {
     let dispatchGroup = DispatchGroup()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
@@ -54,7 +54,7 @@ func downloadAndStoreFiles(_ files: [GitHubContent], accessToken: String, comple
 
         }
         else if file.type == "dir" && file.children?.isEmpty == false {
-            downloadAndStoreFiles(file.children ?? [], accessToken: SettingsViewModel.shared.ghaPat) { success in
+            downloadAndStoreFiles(file, file.children ?? [], accessToken: SettingsViewModel.shared.ghaPat) { success in
                 defer { dispatchGroup.leave() }
                 switch success {
                 case .success(let files):

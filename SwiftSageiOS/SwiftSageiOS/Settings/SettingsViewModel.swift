@@ -561,6 +561,10 @@ public class SettingsViewModel: ObservableObject {
 
             print("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
 
+            for file in self.rootFiles {
+                print("Child count: \(file.children?.count ?? 0)")
+            }
+
         } else {
             print("Failed to retrieve saved git repo...")
         }
@@ -629,7 +633,7 @@ func saveGithubContentUserDefaults(object: [GitHubContent], forKey key: String) 
         print("failed w error = \(error)")
     }
 }
-func retrieveGithubContentFromUserDefaults(forKey key: String) -> [GitHubContent?]? {
+func retrieveGithubContentFromUserDefaults(forKey key: String) -> [GitHubContent]? {
     let userDefaults = UserDefaults.standard
 
     // 4. Retrieve the data from UserDefaults
@@ -638,7 +642,7 @@ func retrieveGithubContentFromUserDefaults(forKey key: String) -> [GitHubContent
 
             // 5. Use JSONDecoder to decode the data back into your custom object
             let decoder = JSONDecoder()
-            return try decoder.decode([GitHubContent?].self, from: savedData)
+            return try decoder.decode([GitHubContent].self, from: savedData)
         }
         catch {
             print("failed w error = \(error)")

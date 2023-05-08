@@ -11,16 +11,6 @@
 		71FD626A29E848B900C6EC34 /* add_file_to_project.rb in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7BACF6029E25D03006B065B /* add_file_to_project.rb */; };
 		71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FD62B129EF75AC00C6EC34 /* plistHelper.swift */; };
 		71FD62B329EF76BB00C6EC34 /* GPT-Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 71FD62B029EF739900C6EC34 /* GPT-Info.plist */; };
-		B70971EC29F62DC6008ED803 /* MultipeerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */; };
-		B70971ED29F62DC6008ED803 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E029F62DC6008ED803 /* MultipeerMessage.swift */; };
-		B70971EE29F62DC6008ED803 /* MCPeerID+Me.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */; };
-		B70971EF29F62DC6008ED803 /* MultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E329F62DC6008ED803 /* MultipeerConnection.swift */; };
-		B70971F029F62DC6008ED803 /* MultipeerKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E429F62DC6008ED803 /* MultipeerKit.swift */; };
-		B70971F129F62DC6008ED803 /* MockMultipeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */; };
-		B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */; };
-		B70971F329F62DC6008ED803 /* MultipeerTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */; };
-		B70971F429F62DC6008ED803 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971EA29F62DC6008ED803 /* Peer.swift */; };
-		B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */; };
 		B70B44D429EAD61900C45773 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D329EAD61900C45773 /* Text.swift */; };
 		B70B44D629EAD85B00C45773 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D529EAD85B00C45773 /* Files.swift */; };
 		B70B44D829EAD91900C45773 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44D729EAD91900C45773 /* GPT.swift */; };
@@ -135,16 +125,6 @@
 /* Begin PBXFileReference section */
 		71FD62B029EF739900C6EC34 /* GPT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GPT-Info.plist"; sourceTree = "<group>"; };
 		71FD62B129EF75AC00C6EC34 /* plistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = plistHelper.swift; sourceTree = "<group>"; };
-		B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerProtocol.swift; sourceTree = "<group>"; };
-		B70971E029F62DC6008ED803 /* MultipeerMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
-		B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MCPeerID+Me.swift"; sourceTree = "<group>"; };
-		B70971E329F62DC6008ED803 /* MultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConnection.swift; sourceTree = "<group>"; };
-		B70971E429F62DC6008ED803 /* MultipeerKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerKit.swift; sourceTree = "<group>"; };
-		B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMultipeerConnection.swift; sourceTree = "<group>"; };
-		B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerDataSource.swift; sourceTree = "<group>"; };
-		B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerTransceiver.swift; sourceTree = "<group>"; };
-		B70971EA29F62DC6008ED803 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
-		B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConfiguration.swift; sourceTree = "<group>"; };
 		B70B44D329EAD61900C45773 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		B70B44D529EAD85B00C45773 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		B70B44D729EAD91900C45773 /* GPT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
@@ -272,63 +252,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B70971DC29F62DC6008ED803 /* MultipeerKit */ = {
-			isa = PBXGroup;
-			children = (
-				B70971DD29F62DC6008ED803 /* Internal API */,
-				B70971E629F62DC6008ED803 /* Public API */,
-			);
-			path = MultipeerKit;
-			sourceTree = SOURCE_ROOT;
-		};
-		B70971DD29F62DC6008ED803 /* Internal API */ = {
-			isa = PBXGroup;
-			children = (
-				B70971DE29F62DC6008ED803 /* MultipeerProtocol.swift */,
-				B70971DF29F62DC6008ED803 /* Models */,
-				B70971E129F62DC6008ED803 /* Extensions */,
-				B70971E329F62DC6008ED803 /* MultipeerConnection.swift */,
-				B70971E429F62DC6008ED803 /* MultipeerKit.swift */,
-				B70971E529F62DC6008ED803 /* MockMultipeerConnection.swift */,
-			);
-			path = "Internal API";
-			sourceTree = "<group>";
-		};
-		B70971DF29F62DC6008ED803 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B70971E029F62DC6008ED803 /* MultipeerMessage.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		B70971E129F62DC6008ED803 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B70971E229F62DC6008ED803 /* MCPeerID+Me.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		B70971E629F62DC6008ED803 /* Public API */ = {
-			isa = PBXGroup;
-			children = (
-				B70971E729F62DC6008ED803 /* MultipeerDataSource.swift */,
-				B70971E829F62DC6008ED803 /* MultipeerTransceiver.swift */,
-				B70971E929F62DC6008ED803 /* Models */,
-				B70971EB29F62DC6008ED803 /* MultipeerConfiguration.swift */,
-			);
-			path = "Public API";
-			sourceTree = "<group>";
-		};
-		B70971E929F62DC6008ED803 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B70971EA29F62DC6008ED803 /* Peer.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
@@ -370,7 +293,6 @@
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D1609D29F30CF300244188 /* movies */,
 				B7D160A629F30D4900244188 /* Movies.swift */,
-				B70971DC29F62DC6008ED803 /* MultipeerKit */,
 				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
@@ -637,18 +559,15 @@
 			files = (
 				B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */,
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
-				B70971F129F62DC6008ED803 /* MockMultipeerConnection.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
 				B737F41329F8953300E57577 /* ScreenRecorder.swift in Sources */,
-				B70971EC29F62DC6008ED803 /* MultipeerProtocol.swift in Sources */,
 				B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B774605C29FBF12F00E7C46B /* StarTrekSimuilator.swift in Sources */,
-				B70971F429F62DC6008ED803 /* Peer.swift in Sources */,
 				B729B14029F99DA800BA6752 /* Therapy.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
@@ -656,28 +575,23 @@
 				B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
-				B70971ED29F62DC6008ED803 /* MultipeerMessage.swift in Sources */,
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B71C62F02A0063A4004296E4 /* Reset.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
-				B70971EE29F62DC6008ED803 /* MCPeerID+Me.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7D160A729F30D4900244188 /* Movies.swift in Sources */,
 				B7717D2929EFA625005141AB /* Googler.swift in Sources */,
 				B7D1609829F2B48C00244188 /* Trivia.swift in Sources */,
-				B70971F329F62DC6008ED803 /* MultipeerTransceiver.swift in Sources */,
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B737F40529F8153B00E57577 /* Spotify.swift in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
-				B70971F229F62DC6008ED803 /* MultipeerDataSource.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B7FB0BD029FC17F200421573 /* Reminders.swift in Sources */,
-				B70971F529F62DC6008ED803 /* MultipeerConfiguration.swift in Sources */,
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
@@ -692,9 +606,7 @@
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
-				B70971F029F62DC6008ED803 /* MultipeerKit.swift in Sources */,
 				B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */,
-				B70971EF29F62DC6008ED803 /* MultipeerConnection.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B774605A29FBE2FA00E7C46B /* Stocks.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,

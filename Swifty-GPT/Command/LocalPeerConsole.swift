@@ -73,20 +73,18 @@ class WebSocketClient: WebSocketDelegate {
                 self.connect()
             }
         case .text(let text):
-            print("Received text: \(text)")
+            print("\(text)")
 
 
             do {
                 let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
-
-                print("parsed to JSON =  \(json)")
 
                 // HANDLE MESSAGES *****************************************************************
 
                 if let recipient = json?["recipient"] as? String,
                    let command = json?["command"] as? String {
 
-                    print("recipient=\(recipient) , command=\(command)")
+                  // print("recipient=\(recipient) , command=\(command)")
                     let commandSplit = command.split(separator: " ", maxSplits: 1)
 
                     if !commandSplit.isEmpty {
@@ -187,8 +185,6 @@ class WebSocketClient: WebSocketDelegate {
     func stopPingTimer() {
         isRunning = false
     }
-
-
 
     func sendPing() {
         websocket.write(ping: Data())
