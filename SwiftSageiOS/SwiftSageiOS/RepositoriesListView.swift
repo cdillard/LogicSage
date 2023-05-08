@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct RepositoriesListView: View {
+    @ObservedObject var settingsViewModel: SettingsViewModel
+
     @State private var directories: [URL] = []
     private let maxDepth = 3
     var body: some View {
@@ -55,7 +57,23 @@ struct RepositoriesListView: View {
 
 
      private func repoTapped(_ repo: URL) {
+         let pathSuffixComps = Array(repo.pathComponents.suffix(3))
          // Handle the file tap action here
-         logD("Should select repo = \(repo)")
+         let openRepoKey = pathSuffixComps.joined(separator: "/")
+         logD("Should select repoKey = \(openRepoKey)")
+
+
+         if let retrievedObject = retrieveGithubContentFromUserDefaults(forKey: openRepoKey) {
+             settingsViewModel.gitUser = pathSuffixComps[0]
+             settingsViewModel.gitRepo = pathSuffixComps[1]
+             settingsViewModel.gitBranch = pathSuffixComps[2]
+             settingsViewModel.rootFiles = retrievedObject.compactMap { $0 }
+
+             print("Sucessfully restored open repo w/ rootFile count = \(settingsViewModel.rootFiles.count)")
+
+         } else {
+             print("Failed to retrieve saved git repo...")
+         }
+         // set settingsViewModel.rootFiles to the looked up repo contents from UserDefaults
      }
  }

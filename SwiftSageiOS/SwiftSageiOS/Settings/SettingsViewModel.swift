@@ -19,6 +19,7 @@ let defaultRepo = "SwiftSage"
 let defaultBranch = "main"
 
 public class SettingsViewModel: ObservableObject {
+
     public static let shared = SettingsViewModel()
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
@@ -318,7 +319,6 @@ public class SettingsViewModel: ObservableObject {
     // END CLIENT APIS ZONE **************************************************************************************
 
     init() {
-
         // BEGIN SIZE SETTING LOAD ZONE FROM DISK
 
         if UserDefaults.standard.float(forKey: "textSize") != 0 {
@@ -552,18 +552,22 @@ public class SettingsViewModel: ObservableObject {
         }
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
+
+        // BEGIN LOAD SAVED GIT REPO
+        let openRepoKey = "\(gitUser)/\(gitRepo)/\(gitBranch)"
+
+        if let retrievedObject = retrieveGithubContentFromUserDefaults(forKey: openRepoKey) {
+            self.rootFiles = retrievedObject.compactMap { $0 }
+
+            print("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
+
+        } else {
+            print("Failed to retrieve saved git repo...")
+        }
+        // END LOAD SAVED GIT REPO
+
     }
 
-    func setColorsToDisk() {
-//        UserDefaults.standard.set(Color.white.rawValue , forKey: "terminalTextColor")
-//
-//        UserDefaults.standard.set(Color.black.rawValue , forKey: "terminalBackgroundColor")
-//
-//        UserDefaults.standard.set(Color.gray.rawValue , forKey: "backgroundColor")
-//
-//        UserDefaults.standard.set(Color.green.rawValue , forKey: "buttonColor")
-
-    }
 }
 
 enum Device: Int {
@@ -609,3 +613,37 @@ extension Color: RawRepresentable {
 #endif
 
 
+// Function to save a MyObject instance to UserDefaults
+func saveGithubContentUserDefaults(object: [GitHubContent], forKey key: String) {
+    let userDefaults = UserDefaults.standard
+
+    // 2. Use JSONEncoder to encode your object into Data
+    let encoder = JSONEncoder()
+    do {
+         let encodedData = try encoder.encode(object)
+            // 3. Save the encoded data to UserDefaults
+        userDefaults.set(encodedData, forKey: key)
+
+    }
+    catch {
+        print("failed w error = \(error)")
+    }
+}
+func retrieveGithubContentFromUserDefaults(forKey key: String) -> [GitHubContent?]? {
+    let userDefaults = UserDefaults.standard
+
+    // 4. Retrieve the data from UserDefaults
+    if let savedData = userDefaults.object(forKey: key) as? Data {
+        do {
+
+            // 5. Use JSONDecoder to decode the data back into your custom object
+            let decoder = JSONDecoder()
+            return try decoder.decode([GitHubContent?].self, from: savedData)
+        }
+        catch {
+            print("failed w error = \(error)")
+
+        }
+    }
+    return nil
+}

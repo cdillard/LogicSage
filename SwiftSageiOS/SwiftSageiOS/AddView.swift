@@ -79,6 +79,7 @@ struct AddView: View {
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
+                    Text("Current repo = \("\(settingsViewModel.gitUser)/\(settingsViewModel.gitRepo)/\(settingsViewModel.gitBranch)")")
                     if !settingsViewModel.isLoading {
                         Button("|Download Repo|") {
 
@@ -133,7 +134,7 @@ struct AddView: View {
                             .fontWeight(.bold)
                         
                         NavigationView {
-                            RepositoriesListView()
+                            RepositoriesListView(settingsViewModel: settingsViewModel)
                             //                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             
                                 .environmentObject(windowManager)

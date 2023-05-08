@@ -45,9 +45,13 @@ struct SageMultiView: View {
                                     self.windowManager.bringWindowToFront(window: self.window)
                                     isMoveGestureActivated = true
                                 }
-                                let minY = geometry.safeAreaInsets.top - geometry.size.height / 12
+                                let minY = geometry.safeAreaInsets.top
                                 // Keep windows from going to close top top
-                                let newY = max(position.height + value.translation.height, minY)
+                                var newY = max(position.height + value.translation.height, minY)
+//                                if newY > geometry.size.height - position.height {
+//                                    newY = geometry.size.height - position.height
+//                                }
+//                                print("pos = \(position)")
 
                                 position = CGSize(width: position.width + value.translation.width, height: newY)
                             }
@@ -198,6 +202,9 @@ struct ResizingHandle: View {
             .frame(width: handleSize, height: handleSize)
             .position(positionPoint(for: position, dragOffset: activeDragOffset))
             .opacity(0.666)
+
+        // TODO: Add resizing contraints so users don't resize to a place they can't return from.
+
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .updating($dragOffset) { value, state, _ in

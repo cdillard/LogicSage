@@ -71,9 +71,12 @@ extension SettingsViewModel {
         isLoading = true
         self.rootFiles = []
         SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
+            defer { self.isLoading = false }
             switch result {
             case .success(let repositoryFiles):
                 logD("All file and directories structure downloaded.")
+
+
                 logD("Downloading all files in repo...")
                 self.rootFiles = repositoryFiles
 
@@ -81,19 +84,27 @@ extension SettingsViewModel {
                 for file in self.rootFiles {
                     allChildren += file.children ?? []
                 }
+                let allRefs = self.rootFiles + allChildren
 
-                downloadAndStoreFiles(self.rootFiles + allChildren, accessToken: SettingsViewModel.shared.ghaPat) { success in
-                    defer { self.isLoading = false }
+                let githubContentKey = "\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/\(SettingsViewModel.shared.gitBranch)"
+                // Save GithubContent struct heirarchy to user defaults with key owner/repo/branch
+                saveGithubContentUserDefaults(object: allRefs, forKey: githubContentKey)
+
+
+                downloadAndStoreFiles(self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
+//                    defer { self.isLoading = false }
                     switch success {
                     case .success(let files):
                         logD("Successful download of repo contents = \(files).")
 
                     case .failure(let error):
-                        
+
                         logD("Error downloading repo contents. \(error)!")
 
                     }
                 }
+
+
             case .failure(let error):
                 self.isLoading = false
                 logD("Error fetching files: \(error)")

@@ -843,9 +843,6 @@ struct SettingsView: View {
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding(geometry.size.width * 0.01)
-                .onAppear {
-                    settingsViewModel.setColorsToDisk()
-                }
                 .padding(.bottom, 30)
 #if !os(macOS)
 

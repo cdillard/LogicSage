@@ -11,9 +11,12 @@ func downloadAndStoreFiles(_ files: [GitHubContent], accessToken: String, comple
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
     for file in files {
-        if file.type == "file", let downloadUrl = file.downloadUrl {
-            dispatchGroup.enter()
+        dispatchGroup.enter()
 
+        if file.type == "file", let downloadUrl = file.downloadUrl {
+
+
+            
             var request = URLRequest(url: URL(string: downloadUrl)!)
             request.setValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
 
@@ -49,6 +52,20 @@ func downloadAndStoreFiles(_ files: [GitHubContent], accessToken: String, comple
                 }.resume()
             }
 
+        }
+        else if file.type == "dir" && file.children?.isEmpty == false {
+            downloadAndStoreFiles(file.children ?? [], accessToken: SettingsViewModel.shared.ghaPat) { success in
+                defer { dispatchGroup.leave() }
+                switch success {
+                case .success(let files):
+                    logD("Successful download of dir children.")
+
+                case .failure(let error):
+
+                    logD("Error download of dir children.error =  \(error)!")
+
+                }
+            }
         }
     }
 
