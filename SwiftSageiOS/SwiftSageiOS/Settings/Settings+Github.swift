@@ -67,12 +67,31 @@ extension SettingsViewModel {
         isLoading = true
         self.rootFiles = []
         SettingsViewModel.shared.fetchSubfolders(path: "", delay: 1.0) { result in
-            self.isLoading = false
             switch result {
             case .success(let repositoryFiles):
-                 logD("All files and directories structure downloaded.")
+                logD("All file and directories structure downloaded.")
+                logD("Downloading all files in repo...")
                 self.rootFiles = repositoryFiles
+
+                var allChildren = [GitHubContent]()
+                for file in self.rootFiles {
+                    allChildren += file.children ?? []
+                }
+
+                downloadAndStoreFiles(self.rootFiles + allChildren, accessToken: SettingsViewModel.shared.ghaPat) { success in
+                    defer { self.isLoading = false }
+                    switch success {
+                    case .success(let files):
+                        logD("Successful download of repo contents = \(files).")
+
+                    case .failure(let error):
+                        
+                        logD("Error downloading repo contents. \(error)!")
+
+                    }
+                }
             case .failure(let error):
+                self.isLoading = false
                 logD("Error fetching files: \(error)")
             }
         }

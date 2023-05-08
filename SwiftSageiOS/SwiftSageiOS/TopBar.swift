@@ -23,6 +23,7 @@ struct TopBar: View {
             }
             .foregroundColor(SettingsViewModel.shared.buttonColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
 
 
             Spacer()
@@ -34,7 +35,7 @@ struct TopBar: View {
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-
+            Spacer()
 
             if windowInfo.windowType == .file {
                 Button(action: {
@@ -45,6 +46,7 @@ struct TopBar: View {
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.trailing, 8)
             }
 
         }

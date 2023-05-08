@@ -226,6 +226,7 @@ struct ResizingHandle: View {
                 }
             }
             .animation(.interactiveSpring(), value: activeDragOffset)
+            .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
     }
 
     private func positionPoint(for position: Position, dragOffset: CGSize) -> CGPoint {

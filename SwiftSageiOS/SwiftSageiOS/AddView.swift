@@ -66,41 +66,17 @@ struct AddView: View {
                     .lineLimit(nil)
                     .fontWeight(.bold)
                     .padding(.bottom)
-                    HStack {
-                        Button("|Download Repo|") {
+                    Button("|Download Repo|") {
 
-                            print("Downloading repo...")
-                            settingsViewModel.syncGithubRepo()
-                        }
-                        .foregroundColor(settingsViewModel.buttonColor)
-                        .font(.body)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-                        .padding(.bottom)
-                        Button("|View DLed Repos|") {
-                            showAddView.toggle()
-
-                            print("View the DLed Repos...")
-                        }
-                        .foregroundColor(settingsViewModel.buttonColor)
-                        .font(.body)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-                        .padding(.bottom)
+                        print("Downloading repo...")
+                        settingsViewModel.syncGithubRepo()
                     }
-//                    HStack {
-//                        Button("|Window List|") {
-//                            showAddView.toggle()
-//
-//                            print("Showing window list...")
-//                        }
-//                        .foregroundColor(settingsViewModel.buttonColor)
-//                        .font(.body)
-//                        .lineLimit(nil)
-//                        .fontWeight(.bold)
-//                        .padding(.bottom)
-//
-//                    }
+                    .foregroundColor(settingsViewModel.buttonColor)
+                    .font(.body)
+                    .lineLimit(nil)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
+
 
                     // SHOW ADD VIEW BUTTON
                     Button(action: {
@@ -132,6 +108,22 @@ struct AddView: View {
                 .cornerRadius(16)
 
                 VStack {
+                    Text("Repositories")
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+
+                    NavigationView {
+                        RepositoriesListView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                            .environmentObject(windowManager)
+
+                    }
+                    Text("Open Repo")
+                        .font(.body)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
                     NavigationView {
                         RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
