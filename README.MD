@@ -38,6 +38,10 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
+For my SwiftSage readers here I have something special: I will provide the latest TestFlight beta version for your feedback and review in my updates. 
+
+https://testflight.apple.com/join/FhTLIHnj
+
 
 Feedback in Github Issues please! Thank you if you try!
 

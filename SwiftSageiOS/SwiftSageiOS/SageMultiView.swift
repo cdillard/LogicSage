@@ -30,7 +30,7 @@ struct SageMultiView: View {
     @Binding var position: CGSize
     @State private var isMoveGestureActivated = false
     @State var webViewURL: URL?
-    // START HANDLE WINDOW MOVEMENT GESTURE *************************************
+// START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
 
     var body: some View {
         GeometryReader { geometry in
@@ -63,14 +63,14 @@ struct SageMultiView: View {
 
                                 position = CGSize(width: newWidth, height: newY)
                                 
-                                print(position)
+                                //print(position)
                             }
                             .onEnded { value in
                                 isMoveGestureActivated = false
                             }
                     )
 
-                    // START SOURCE CODE WINDOW SETUP HANDLING *************************************
+// START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
 
                     if viewMode == .editor {
 #if !os(macOS)
@@ -99,7 +99,7 @@ struct SageMultiView: View {
                             .environmentObject(viewModel)
                     }
                 }
-                // END SOURCE CODE WINDOW SETUP HANDLING *************************************
+// END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
 
                 Spacer()
             }
@@ -165,9 +165,9 @@ struct HandleView: View {
     }
 }
 #endif
-// END HANDLE WINDOW MOVEMENT GESTURE *************************************
+// END HANDLE WINDOW MOVEMENT GESTURE *************************************************
 
-// START WINDOW RESIZING GESTURE ****************************************************************************
+// START WINDOW RESIZING GESTURE ************************************************************************************
 #if !os(macOS)
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
@@ -268,8 +268,10 @@ struct ResizingHandle: View {
 //        }
         frame.size.width = newWidth
         frame.size.height = newHeight
-        print(frame)
-        print(boundPosition)
+
+      //  print(frame)
+      //  print(boundPosition)
+
 //        if newWidth > 4 && newHeight > 4 {
 //            if newWidth > screenWidth {
 //
@@ -295,15 +297,5 @@ struct ResizingHandle: View {
     }
 }
 // END WINDOW RESIZING GESTURE HANDLING ****************************************************************************
-
-class SageMultiViewModel: ObservableObject {
-    @Published var windowInfo: WindowInfo
-    @Published var sourceCode: String
-
-    init(windowInfo: WindowInfo) {
-        self.windowInfo = windowInfo
-        self.sourceCode = windowInfo.fileContents
-    }
-}
 
 #endif

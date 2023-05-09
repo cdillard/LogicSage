@@ -99,6 +99,7 @@
 		B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9852A07FEC1002343AB /* CommitDownloader.swift */; };
 		B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9872A07FEF3002343AB /* Settings+Github.swift */; };
 		B78DA98A2A080037002343AB /* WindowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9892A080037002343AB /* WindowList.swift */; };
+		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -202,6 +203,7 @@
 		B78DA9852A07FEC1002343AB /* CommitDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitDownloader.swift; sourceTree = "<group>"; };
 		B78DA9872A07FEF3002343AB /* Settings+Github.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Github.swift"; sourceTree = "<group>"; };
 		B78DA9892A080037002343AB /* WindowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowList.swift; sourceTree = "<group>"; };
+		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 				B78DA9892A080037002343AB /* WindowList.swift */,
+				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B78DA96A2A02AF72002343AB /* SageMultiView.swift in Sources */,
+				B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */,
 				B767E9C529F6DAED003EC13F /* Extensions.swift in Sources */,
 				B71C62FA2A018D0E004296E4 /* GPT.swift in Sources */,
 				B7191F2229F9F09A00078D8D /* Paragraph.swift in Sources */,
