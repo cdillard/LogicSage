@@ -41,7 +41,7 @@ func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent],
                     do {
                         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
                         try data.write(to: fileURL)
-                        logD("Wrote \(fileURL)")
+                        //logD("Wrote \(fileURL)")
 
                     } catch {
                         logD("error writing file: \(error)")
@@ -57,9 +57,9 @@ func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent],
             downloadAndStoreFiles(file, file.children ?? [], accessToken: SettingsViewModel.shared.ghaPat) { success in
                 defer { dispatchGroup.leave() }
                 switch success {
-                case .success(let files):
-                    logD("Successful download of dir children.")
-
+                case .success(_):
+//                    logD("Successful download of dir children.")
+                    break
                 case .failure(let error):
 
                     logD("Error download of dir children.error =  \(error)!")
@@ -70,7 +70,6 @@ func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent],
     }
 
     dispatchGroup.notify(queue: .main) {
-        print("Successfully downloaded all files of repository.")
         completionHandler(.success(()))
     }
 }

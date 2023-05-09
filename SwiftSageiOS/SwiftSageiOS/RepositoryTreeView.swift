@@ -42,13 +42,8 @@ struct RepositoryTreeView: View {
                             }
                         }
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    //                    .background {
-                    //                        if settingsViewModel.isLoading {
-                    //                            ProgressView()
-                    //                        }
-                    //                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+
                 }
                 else {
                     Text("Select a repo and it will appear here")
@@ -78,7 +73,6 @@ struct RepositoryTreeView: View {
 
     private func fileTapped(_ file: GitHubContent, _ frame: CGRect) {
         print("Tapped file: \(file.path)")
-        print(file)
 
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
@@ -91,7 +85,6 @@ struct RepositoryTreeView: View {
 #endif
 
         settingsViewModel.showAddView = false
-
 
         //        // FETCH FILE FROM NETWORK, VS FETCH FILE FROM DISK
         //        SettingsViewModel.shared.fetchFileContent(accessToken: SettingsViewModel.shared.ghaPat, filePath: file.path) { result in

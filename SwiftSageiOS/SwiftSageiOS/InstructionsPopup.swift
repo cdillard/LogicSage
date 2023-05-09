@@ -47,19 +47,14 @@ struct InstructionsPopup: View {
 
                                 Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
                             }
-                            Text("PLEASE READ ****")
-                            Text("Due to this being an alpha please do this on launch:\n1. Force quit / restart app.\nrTap gear, set terminal bg, terminal font color, button color, set font size. Then  Force quit / restart app one last time. Restart the app and you should have your custom colors :)")
 
                             Text("Check out the repo for info on setting up server.")
-
                             Text("To Run The server: Make sure you have at minimum taken these steps:")
                             Text("0. Set your Computers API Key for A.I. in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the LogicSage Xcode project.")
                             Text("1. Running SwiftSage Swifty-GPT cmd line target on your command line Mac.")
                             Text("2. Running the vapor server.")
                         }
                         Text("Without these 3 steps, the LogicSage server will not work.")
-
-                        Text("Tips: - You can dock terminals to side of screen to get them out of way.")
                     }
                     .background(.green)
                     .opacity(0.7)

@@ -616,7 +616,41 @@ extension Color: RawRepresentable {
 }
 #endif
 
+ let maxFolderTraversalDepth = 3
 
+extension SettingsViewModel {
+    func loadDirectories() -> [URL] {
+          let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        var retDir = [URL]()
+
+          do {
+              retDir = try listDirectories(at: documentsDirectory, depth: 1)
+          } catch {
+              print("Error loading directories: \(error)")
+          }
+
+        return retDir
+      }
+
+    func listDirectories(at url: URL, depth: Int) throws -> [URL] {
+        guard depth <= maxFolderTraversalDepth else { return [] }
+
+        let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: .skipsHiddenFiles)
+        var retDir = [URL]()
+        for content in directoryContents {
+            let resourceValues = try content.resourceValues(forKeys: Set([URLResourceKey.isDirectoryKey]))
+            let isDirectory = resourceValues.isDirectory ?? false
+            if isDirectory {
+                if depth == 3 {
+                    retDir.append(content)
+                }
+                let childs = try listDirectories(at: content, depth: depth + 1)
+                retDir += childs
+            }
+        }
+        return retDir
+    }
+}
 // Function to save a MyObject instance to UserDefaults
 func saveGithubContentUserDefaults(object: [GitHubContent], forKey key: String) {
     let userDefaults = UserDefaults.standard

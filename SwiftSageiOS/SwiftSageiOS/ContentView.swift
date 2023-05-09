@@ -32,7 +32,6 @@ struct ContentView: View {
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
 
     @StateObject private var windowManager = WindowManager()
-    @State private var selectedColor: Color = .black 
 
     var body: some View {
 
@@ -40,13 +39,10 @@ struct ContentView: View {
             ZStack {
                 // SOURCE CODE EDITOR HANDLE
                 ZStack {
-                    ColorPicker("", selection: $selectedColor)
-                        .opacity(0.0) // Set the opacity to 0 to hide the ColorPicker
-                        .frame(width: 0, height: 0) // Set the frame size to 0 to avoid taking up any space
 
                     // MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE.
 #if os(macOS)
-                    VStack {
+                    VStack(alignment: .leading, spacing: 8) {
                         Button(action: {
                             openTerminal()
                         }) {
@@ -190,25 +186,7 @@ struct ContentView: View {
 
                         resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                     }
-                    .popover(isPresented: $settingsViewModel.showAddView, arrowEdge: .top) {
 
-#if !os(macOS)
-
-                        if UIDevice.current.userInterfaceIdiom == .pad {
-                            AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
-                                .frame(width:  geometry.size.width * 0.75, height: geometry.size.height * 0.75)
-                                .environmentObject(windowManager)
-                        }
-                        else {
-                            AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                                .environmentObject(windowManager)
-
-                        }
-#endif
-
-                    }
 
                     Button(action: {
 #if !os(macOS)
@@ -249,15 +227,26 @@ struct ContentView: View {
             }
             .background(
 
-                VStack {
+                ZStack {
 #if !os(macOS)
 
+                    AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel, currentRoot: nil)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)
+
+                        .environmentObject(windowManager)
                     SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .opacity(showSettings ? 1.0 : 0.0)
-                    Spacer()
+
+
 #endif
+
                 }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+
             )
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 
 //            .onAppear {
 //                keyboardObserver.startObserve(height: geometry.size.height)

@@ -14,7 +14,7 @@ import UIKit
 #endif
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
-let githubDelay: TimeInterval = 1.5
+let githubDelay: TimeInterval = 1.77
 
 struct GitHubContent: Equatable, Codable, Identifiable {
     static func == (lhs: GitHubContent, rhs: GitHubContent) -> Bool {
@@ -72,7 +72,6 @@ extension SettingsViewModel {
         isLoading = true
         self.rootFiles = []
         SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
-            defer { self.isLoading = false }
             switch result {
             case .success(let repositoryFiles):
                 logD("All file and directories structure downloaded.")
@@ -91,7 +90,7 @@ extension SettingsViewModel {
 
 
                 downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
-//                    defer { self.isLoading = false }
+                    defer { self.isLoading = false }
                     switch success {
                     case .success(let files):
                         logD("Successful download of repo contents = \(files).")
@@ -120,14 +119,15 @@ extension SettingsViewModel {
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
 
-        let urlString = "https://api.github.com/repos/\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/contents/\(path)?ref=\(SettingsViewModel.shared.gitBranch)".replacingOccurrences(of: " ", with: "%20")
+        let urlString = "https://api.github.com/repos/\(SettingsViewModel.shared.gitUser)/\(SettingsViewModel.shared.gitRepo)/contents/\(path)?ref=\(SettingsViewModel.shared.gitBranch)"
+            .replacingOccurrences(of: " ", with: "%20")
 
         if let apiUrl = URL(string: urlString)  {
 
 
             var request = URLRequest(url: apiUrl)
             request.addValue("token \(ghaPat)", forHTTPHeaderField: "Authorization")
-            logD("Execute github API req with path = \(path)")
+            //logD("Execute github API req with path = \(path)")
 
 
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -142,7 +142,6 @@ extension SettingsViewModel {
                 }
 
                 do {
-                    // print("data = \(String(data: data, encoding: .utf8))")
                     let decodedData = try JSONDecoder().decode([GitHubContent].self, from: data)
                     completion(.success(decodedData))
                 } catch {

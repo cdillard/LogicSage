@@ -39,6 +39,8 @@ struct WindowList: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
         }
         else {
             Text("Open window and it will appear here")

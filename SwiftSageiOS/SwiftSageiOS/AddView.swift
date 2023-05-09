@@ -10,17 +10,21 @@ import SwiftUI
 
 
 var windowIndex = 0
+let listHeightFactor = 13.666
+
 struct AddView: View {
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var windowManager: WindowManager
+    @State var currentRoot: GitHubContent?
+    
     var body: some View {
         GeometryReader { geometry in
-            
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    HStack {
-                        Text("Open menu:")
+                VStack(spacing: 4) {
+                    
+                    HStack(spacing: 4) {
+                        Text("open menu:")
                             .font(.body)
                             .foregroundColor(settingsViewModel.buttonColor)
 
@@ -32,30 +36,30 @@ struct AddView: View {
 
                             .padding(.bottom)
                     }
-                    Button("New File") {
+                    Button("new file") {
                         print("open new File")
 #if !os(macOS)
-                        
+
                         if consoleManager.isVisible {
                             consoleManager.isVisible = false
                         }
 #endif
                         // For all windowzzz...
-                        
+
                         showAddView.toggle()
 #if !os(macOS)
                         //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
                         windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
-                        #endif
+#endif
                     }
                     .foregroundColor(settingsViewModel.buttonColor)
+                    .border(settingsViewModel.buttonColor, width: 2)
 
-                    .font(.body)
+                    .font(.title2)
                     .lineLimit(nil)
                     .fontWeight(.bold)
-                    .padding(.bottom)
 
-                    Button("New WebView") {
+                    Button("new webview: \(settingsViewModel.defaultURL)") {
 #if !os(macOS)
 
                         if consoleManager.isVisible {
@@ -67,7 +71,7 @@ struct AddView: View {
                         showAddView.toggle()
 
 #if !os(macOS)
-                       // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+                        // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
 
                         windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
@@ -75,22 +79,25 @@ struct AddView: View {
                     }
                     .foregroundColor(settingsViewModel.buttonColor)
 
-                    .font(.body)
+                    .font(.title2)
                     .lineLimit(nil)
                     .fontWeight(.bold)
-                    .padding(.bottom)
+                    .border(settingsViewModel.buttonColor, width: 2)
+
                     Text("Current repo = \("\(settingsViewModel.gitUser)/\(settingsViewModel.gitRepo)/\(settingsViewModel.gitBranch)")")
                     if !settingsViewModel.isLoading {
-                        Button("|Download Repo|") {
+                        Button("dl repo") {
 
                             print("Downloading repo...")
                             settingsViewModel.syncGithubRepo()
                         }
                         .foregroundColor(settingsViewModel.buttonColor)
-                        .font(.body)
+                        .font(.largeTitle)
                         .lineLimit(nil)
                         .fontWeight(.bold)
-                        .padding(.bottom)
+                        .border(settingsViewModel.buttonColor, width: 2)
+
+
 
                     }
                     else {
@@ -102,80 +109,91 @@ struct AddView: View {
                             showAddView.toggle()
                         }
                     }) {
-                        Text("Close")
+                        Text("close")
                             .foregroundColor(settingsViewModel.buttonColor)
 
-                            .font(.body)
+                            .font(.title2)
                             .lineLimit(nil)
                             .fontWeight(.bold)
-//                            .foregroundColor(.white)
-//                            .padding(.horizontal, 40)
-//                            .padding(.vertical, 12)
-//                            .background(settingsViewModel.buttonColor)
-//                            .cornerRadius(8)
+                            .border(settingsViewModel.buttonColor, width: 2)
+
+                        //                            .foregroundColor(.white)
+                        //                            .padding(.horizontal, 40)
+                        //                            .padding(.vertical, 12)
+                        //                            .background(settingsViewModel.buttonColor)
+                        //                            .cornerRadius(8)
                     }
-                    .padding(.bottom)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                .padding(geometry.size.width * 0.01)
-#if !os(macOS)
-                
-                .background(settingsViewModel.backgroundColor)
-#endif
-                .cornerRadius(16)
-
-                VStack {
                     if !settingsViewModel.isLoading {
-                        
+                        let val = settingsViewModel.loadDirectories().count
                         Text("Downloaded Repositories")
-                            .font(.body)
+                            .font(.title3)
                             .lineLimit(nil)
                             .fontWeight(.bold)
                         
                         NavigationView {
                             RepositoriesListView(settingsViewModel: settingsViewModel)
-                            //                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            
+
                                 .environmentObject(windowManager)
                             
                         }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
+                        .navigationViewStyle(StackNavigationViewStyle())
                     }
                     if !settingsViewModel.isLoading {
+
                         Text("Open Repo Tree")
-                            .font(.body)
+                            .font(.title3)
                             .lineLimit(nil)
                             .fontWeight(.bold)
                         NavigationView {
                             RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
-                            //                            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                                 .environmentObject(windowManager)
 
                         }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count), maxHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count))
+
+                        .navigationViewStyle(StackNavigationViewStyle())
                         .navigationTitle("Repository Tree")
                     }
                     //                .frame(maxWidth: .infinity, maxHeight: .infinity)
                     Text("Window List")
-                        .font(.body)
+                        .font(.title3)
                         .lineLimit(nil)
                         .fontWeight(.bold)
 
                     NavigationView {
                         
                         WindowList(showAddView: $showAddView)
-//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                             .environmentObject(windowManager)
                     }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count), maxHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count))
+
+                    .navigationViewStyle(StackNavigationViewStyle())
                     .navigationTitle("Window List:")
-                    Spacer()
                 }
+                .padding(.bottom, geometry.size.height / 8)
 
-                Spacer()
+#if !os(macOS)
+
+                .background(settingsViewModel.backgroundColor)
+#endif
+                .cornerRadius(16)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 
 
+                //            }
+                //            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                //            .padding(geometry.size.width * 0.01)
+                //            .padding(.bottom, 30)
+                //#if !os(macOS)
+                //
+                //            .background(settingsViewModel.backgroundColor)
+                //#endif
             }
-            .scrollIndicators(.visible)
         }
+//        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     }
 }
