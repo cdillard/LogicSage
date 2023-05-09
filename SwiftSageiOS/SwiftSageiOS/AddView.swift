@@ -129,7 +129,10 @@ struct AddView: View {
                             
                         }
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
+#if !os(macOS)
+
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
                     }
                     if !settingsViewModel.isLoading {
 
@@ -144,11 +147,12 @@ struct AddView: View {
 
                         }
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count), maxHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count))
+#if !os(macOS)
 
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
                         .navigationTitle("Repository Tree")
                     }
-                    //                .frame(maxWidth: .infinity, maxHeight: .infinity)
                     Text("Window List")
                         .font(.title3)
                         .lineLimit(nil)
@@ -161,8 +165,9 @@ struct AddView: View {
                             .environmentObject(windowManager)
                     }
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count), maxHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count))
-
+#if !os(macOS)
                     .navigationViewStyle(StackNavigationViewStyle())
+#endif
                     .navigationTitle("Window List:")
                 }
                 .padding(.bottom, geometry.size.height / 8)
