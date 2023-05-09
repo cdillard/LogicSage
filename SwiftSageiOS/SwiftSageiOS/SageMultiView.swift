@@ -30,6 +30,7 @@ struct SageMultiView: View {
     @Binding var position: CGSize
     @State private var isMoveGestureActivated = false
     @State var webViewURL: URL?
+    // START HANDLE WINDOW MOVEMENT GESTURE *************************************
 
     var body: some View {
         GeometryReader { geometry in
@@ -48,18 +49,28 @@ struct SageMultiView: View {
                                 let minY = geometry.safeAreaInsets.top
                                 // Keep windows from going to close top top
                                 var newY = max(position.height + value.translation.height, minY)
-//                                if newY > geometry.size.height - position.height {
-//                                    newY = geometry.size.height - position.height
-//                                }
-//                                print("pos = \(position)")
 
-                                position = CGSize(width: position.width + value.translation.width, height: newY)
+                                var newWidth = position.width + value.translation.width
+                                if newWidth < 4 {
+                                    newWidth = 4
+                                }
+                                // TODO: MORE CONSTRAINTS
+//                                var newHeight = newY
+//
+//                                if newHeight > geometry.size.height - frame.height {
+//                                    newHeight = geometry.size.height - frame.height
+//                                }
+
+                                position = CGSize(width: newWidth, height: newY)
+                                
+                                print(position)
                             }
                             .onEnded { value in
                                 isMoveGestureActivated = false
                             }
                     )
 
+                    // START SOURCE CODE WINDOW SETUP HANDLING *************************************
 
                     if viewMode == .editor {
 #if !os(macOS)
@@ -87,8 +98,9 @@ struct SageMultiView: View {
                         WebView(url:getURL())
                             .environmentObject(viewModel)
                     }
-
                 }
+                // END SOURCE CODE WINDOW SETUP HANDLING *************************************
+
                 Spacer()
             }
         }
@@ -153,7 +165,9 @@ struct HandleView: View {
     }
 }
 #endif
+// END HANDLE WINDOW MOVEMENT GESTURE *************************************
 
+// START WINDOW RESIZING GESTURE ****************************************************************************
 #if !os(macOS)
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
@@ -162,117 +176,125 @@ struct ResizableViewModifier: ViewModifier {
 
     var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
     @EnvironmentObject var windowManager: WindowManager
+    @Binding var boundPosition: CGSize
 
     func body(content: Content) -> some View {
         content
             .frame(width: frame.width, height: frame.height)
             .overlay(
-                ResizingHandle(position: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window)
+                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window, boundPosition: $boundPosition)
                     .environmentObject(windowManager)
             )
-        //            .overlay(ResizingHandle(position: .topTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-        //            .overlay(ResizingHandle(position: .bottomLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
-        //            .overlay(ResizingHandle(position: .bottomTrailing, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale))
     }
 }
 
 struct ResizingHandle: View {
     enum Position {
-        case topLeading, topTrailing, bottomLeading, bottomTrailing
+        case topLeading
     }
 
-    var position: Position
+    var positionLocation: Position
     @Binding var frame: CGRect
     var handleSize: CGFloat
-    @State private var translation: CGSize = .zero
     @Binding var zoomScale: CGFloat
-
-
     @GestureState private var dragOffset: CGSize = .zero
     @State private var activeDragOffset: CGSize = .zero
     @State private var isResizeGestureActive = false
-
     @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo
+    @Binding var boundPosition: CGSize
 
     var body: some View {
+        GeometryReader { reader in
+            Circle()
+                .fill(SettingsViewModel.shared.buttonColor)
+                .frame(width: handleSize, height: handleSize)
+                .position(positionPoint(for: positionLocation))
+                .opacity(0.666)
+            // TODO: Add resizing contraints so users don't resize to a place they can't return from.
 
-        Circle()
-            .fill(SettingsViewModel.shared.buttonColor)
-            .frame(width: handleSize, height: handleSize)
-            .position(positionPoint(for: position, dragOffset: activeDragOffset))
-            .opacity(0.666)
-
-        // TODO: Add resizing contraints so users don't resize to a place they can't return from.
-
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .updating($dragOffset) { value, state, _ in
-                        state = value.translation
-                    }
-                    .onChanged { value in
-
-                        activeDragOffset = value.translation
-
-                        if !isResizeGestureActive {
-                            isResizeGestureActive = true
-                            self.windowManager.bringWindowToFront(window: self.window)
-
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .updating($dragOffset) { value, state, _ in
+                            state = value.translation
                         }
-                    }
-                    .onEnded { value in
-                        updateFrame(with: value.translation)
-                        activeDragOffset = .zero
-                        isResizeGestureActive = false
+                        .onChanged { value in
+                            activeDragOffset = value.translation
 
+                            if !isResizeGestureActive {
+                                isResizeGestureActive = true
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            }
+                        }
+                        .onEnded { value in
+                            updateFrame(with: value.translation, reader.size.width, reader.size.height)
+                            activeDragOffset = .zero
+                            isResizeGestureActive = false
+                        }
+                )
+                .onChange(of: activeDragOffset) { newValue in
+                    withAnimation(.interactiveSpring()) {
+                        updateFrame(with: newValue, reader.size.width, reader.size.height)
                     }
-            )
-            .onChange(of: activeDragOffset) { newValue in
-                withAnimation(.interactiveSpring()) {
-                    updateFrame(with: newValue)
                 }
-            }
-            .animation(.interactiveSpring(), value: activeDragOffset)
-            .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
+                .animation(.interactiveSpring(), value: activeDragOffset)
+                .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
+        }
+        
     }
-
-    private func positionPoint(for position: Position, dragOffset: CGSize) -> CGPoint {
-        let translation = dragOffset
+    private func positionPoint(for position: Position) -> CGPoint {
         switch position {
         case .topLeading:
-            return CGPoint(x: frame.minX + translation.width / 2, y: frame.minY + translation.height / 2)
-        case .topTrailing:
-            return CGPoint(x: frame.maxX + translation.width / 2, y: frame.minY + translation.height / 2)
-        case .bottomLeading:
-            return CGPoint(x: frame.minX + translation.width / 2, y: frame.maxY + translation.height / 2)
-        case .bottomTrailing:
-            return CGPoint(x: frame.maxX + translation.width / 2, y: frame.maxY + translation.height / 2)
+            return CGPoint(x: frame.minX, y: frame.minY)
         }
     }
 
-    private func updateFrame(with translation: CGSize) {
+    private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat) {
         let newWidth: CGFloat
         let newHeight: CGFloat
 
-        switch position {
+        switch positionLocation {
         case .topLeading:
             newWidth = frame.width - translation.width
             newHeight = frame.height - translation.height
-        case .topTrailing:
-            newWidth = frame.width + translation.width
-            newHeight = frame.height - translation.height
-        case .bottomLeading:
-            newWidth = frame.width - translation.width
-            newHeight = frame.height + translation.height
-        case .bottomTrailing:
-            newWidth = frame.width + translation.width
-            newHeight = frame.height + translation.height
         }
+        // TOP LEFT CONSTRAINT
+
+//        if position.width < 5 {
+//            position.width = 5
+//        }
+//        if position.height < 5 {
+//            position.height = 5
+//        }
         frame.size.width = newWidth
         frame.size.height = newHeight
+        print(frame)
+        print(boundPosition)
+//        if newWidth > 4 && newHeight > 4 {
+//            if newWidth > screenWidth {
+//
+//                frame.size.width = newWidth
+//            }
+//            else {
+//                print("resize too wide, preventing")
+//
+//            }
+//            if newHeight > screenHeight {
+//
+//                frame.size.height = newHeight
+//            }
+//            else {
+//                print("resize too tall, preventing")
+//            }
+//
+//        }
+//        else {
+//            print("resize too wide, preventing")
+//
+//        }
     }
 }
-
+// END WINDOW RESIZING GESTURE HANDLING ****************************************************************************
 
 class SageMultiViewModel: ObservableObject {
     @Published var windowInfo: WindowInfo

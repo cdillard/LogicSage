@@ -40,7 +40,7 @@ struct ContentView: View {
                 // SOURCE CODE EDITOR HANDLE
                 ZStack {
 
-                    // MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE.
+        // START MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
 #if os(macOS)
                     VStack(alignment: .leading, spacing: 8) {
                         Button(action: {
@@ -70,6 +70,9 @@ struct ContentView: View {
                     .zIndex(2)
 #endif
                 }
+
+        // END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
+
             }
 #if !os(macOS)
 
@@ -100,8 +103,6 @@ struct ContentView: View {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
             }
-//            .animation(.easeInOut(duration: 0.25), value: keyboardObserver.isKeyboardVisible)
-//            .environmentObject(keyboardObserver)
 
             VStack {
                 Spacer()

@@ -7,6 +7,8 @@
 
 import Foundation
 
+// OPEN AI SETTING
+// DEFAULT GPT MODEL ON CLIENT SIDE.
 // CONSTANTS FOR GPT in mobile mode
 //let gptModel = "gpt-4"
 let gptModel = "gpt-3.5-turbo"
@@ -45,9 +47,6 @@ let aiNamedProject = true
 let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
-
-// OPEN AI SETTING
-// DEFAULT GPT MODEL ON CLIENT SIDE.
 
 
 // 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit

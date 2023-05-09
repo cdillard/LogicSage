@@ -44,8 +44,6 @@ struct AddView: View {
                             consoleManager.isVisible = false
                         }
 #endif
-                        // For all windowzzz...
-
                         showAddView.toggle()
 #if !os(macOS)
                         //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
@@ -66,7 +64,6 @@ struct AddView: View {
                             consoleManager.isVisible = false
                         }
 #endif
-
                         print("open Webview")
                         showAddView.toggle()
 
@@ -116,12 +113,6 @@ struct AddView: View {
                             .lineLimit(nil)
                             .fontWeight(.bold)
                             .border(settingsViewModel.buttonColor, width: 2)
-
-                        //                            .foregroundColor(.white)
-                        //                            .padding(.horizontal, 40)
-                        //                            .padding(.vertical, 12)
-                        //                            .background(settingsViewModel.buttonColor)
-                        //                            .cornerRadius(8)
                     }
 
                     if !settingsViewModel.isLoading {
@@ -169,7 +160,7 @@ struct AddView: View {
 
                             .environmentObject(windowManager)
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count), maxHeight: geometry.size.height/listHeightFactor * Double(settingsViewModel.rootFiles.count))
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count), maxHeight: geometry.size.height/listHeightFactor * Double(windowManager.windows.count))
 
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationTitle("Window List:")

@@ -105,16 +105,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerProtocol.swift; sourceTree = "<group>"; };
-		B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
-		B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MCPeerID+Me.swift"; sourceTree = "<group>"; };
-		B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConnection.swift; sourceTree = "<group>"; };
-		B70971FE29F62DF3008ED803 /* MultipeerKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerKit.swift; sourceTree = "<group>"; };
-		B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMultipeerConnection.swift; sourceTree = "<group>"; };
-		B709720129F62DF3008ED803 /* MultipeerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerDataSource.swift; sourceTree = "<group>"; };
-		B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerTransceiver.swift; sourceTree = "<group>"; };
-		B709720429F62DF3008ED803 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
-		B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerConfiguration.swift; sourceTree = "<group>"; };
 		B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeRegexLexer.swift; sourceTree = "<group>"; };
 		B7191EF729F9F09A00078D8D /* String+Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Range.swift"; sourceTree = "<group>"; };
 		B7191EF829F9F09A00078D8D /* NSTextView+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+UIKit.swift"; sourceTree = "<group>"; };
@@ -229,64 +219,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B70971F629F62DF3008ED803 /* MultipeerKit */ = {
-			isa = PBXGroup;
-			children = (
-				B70971F729F62DF3008ED803 /* Internal API */,
-				B709720029F62DF3008ED803 /* Public API */,
-			);
-			name = MultipeerKit;
-			path = ../../MultipeerKit;
-			sourceTree = "<group>";
-		};
-		B70971F729F62DF3008ED803 /* Internal API */ = {
-			isa = PBXGroup;
-			children = (
-				B70971F829F62DF3008ED803 /* MultipeerProtocol.swift */,
-				B70971F929F62DF3008ED803 /* Models */,
-				B70971FB29F62DF3008ED803 /* Extensions */,
-				B70971FD29F62DF3008ED803 /* MultipeerConnection.swift */,
-				B70971FE29F62DF3008ED803 /* MultipeerKit.swift */,
-				B70971FF29F62DF3008ED803 /* MockMultipeerConnection.swift */,
-			);
-			path = "Internal API";
-			sourceTree = "<group>";
-		};
-		B70971F929F62DF3008ED803 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B70971FA29F62DF3008ED803 /* MultipeerMessage.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		B70971FB29F62DF3008ED803 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B70971FC29F62DF3008ED803 /* MCPeerID+Me.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		B709720029F62DF3008ED803 /* Public API */ = {
-			isa = PBXGroup;
-			children = (
-				B709720129F62DF3008ED803 /* MultipeerDataSource.swift */,
-				B709720229F62DF3008ED803 /* MultipeerTransceiver.swift */,
-				B709720329F62DF3008ED803 /* Models */,
-				B709720529F62DF3008ED803 /* MultipeerConfiguration.swift */,
-			);
-			path = "Public API";
-			sourceTree = "<group>";
-		};
-		B709720329F62DF3008ED803 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				B709720429F62DF3008ED803 /* Peer.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		B7191EF429F9F09A00078D8D /* Sourceful */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,7 +358,6 @@
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
 				B78DA9732A04A083002343AB /* KeychainManager.swift */,
 				B78DA9602A02AF3A002343AB /* Loading */,
-				B70971F629F62DF3008ED803 /* MultipeerKit */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B746DFD429F5E78A002804EB /* Preview Content */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
@@ -891,7 +822,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 72WEN2C47N;
@@ -942,7 +873,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;

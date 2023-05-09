@@ -34,9 +34,18 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## News, Changelog
 
 ---
+05-09-2023
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+
+Feedback in Github Issues please! Thank you if you try!
+
+---
 05-08-2023
 
 Multiple repositories can be downloaded to your device! Woo! Enjoy all those tasty codes even on the go in the tunnel. Stay tuned for the next updates folks.
+---
 
 05-07-2023
 Introducing customizable Source Editor colors! Check it out in Settings :)

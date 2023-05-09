@@ -44,7 +44,7 @@ struct WindowView: View {
             VStack {
 
                 windowContent()
-                    .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window))
+                    .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position))
                     .environmentObject(windowManager)
             }
             .cornerRadius(8)

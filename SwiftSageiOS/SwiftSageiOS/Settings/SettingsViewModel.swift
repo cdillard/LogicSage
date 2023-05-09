@@ -561,15 +561,10 @@ public class SettingsViewModel: ObservableObject {
 
             print("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
 
-            for file in self.rootFiles {
-                print("Child count: \(file.children?.count ?? 0)")
-            }
-
         } else {
             print("Failed to retrieve saved git repo...")
         }
         // END LOAD SAVED GIT REPO
-
     }
 
 }

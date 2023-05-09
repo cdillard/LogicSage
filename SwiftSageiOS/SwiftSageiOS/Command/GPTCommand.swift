@@ -196,12 +196,12 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
     search(query: query, apiKey: "GOOGLE_KEY", searchEngineId: "GOOGLE_ID") { result in
         switch result {
         case .success(let searchItems):
-            for item in searchItems {
+//            for item in searchItems {
 //                logD("Title: \(item.title ?? "none")")
 //                logD("Link: \(item.link ?? "none")")
 //                logD("Snippet: \(item.snippet ?? "none")")
 //                logD("\n")
-            }
+//            }
 
             func searchItemsToJSONString(_ searchItems: [SearchItem]) -> String? {
                 let encoder = JSONEncoder()
