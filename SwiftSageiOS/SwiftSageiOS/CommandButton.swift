@@ -56,13 +56,8 @@ struct CommandButtonView: View {
 
                         // GOOGLE button
                         Button(action: {
-#if !os(macOS)
 
-                            consoleManager.print("toggling google mode")
-#endif
-                            print("toggling google mode")
-                            // cmd send st
-
+                            logD("toggling google mode")
 
                         }) {
                             ZStack {
@@ -72,7 +67,6 @@ struct CommandButtonView: View {
 
                             }
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -80,15 +74,8 @@ struct CommandButtonView: View {
                         }
                         .padding(.bottom)
                         
-                        // LINK BUTTON
                         Button(action: {
-#if !os(macOS)
-
-                            consoleManager.print("toggling linking mode")
-                            #endif
-                            print("toggling linking mode")
-
-
+                            logD("toggling linking mode")
                         }) {
                             ZStack {
                                 Text("🔗")
@@ -96,28 +83,24 @@ struct CommandButtonView: View {
                                     .opacity(0.6)
                             }
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
                         }
                         .padding(.bottom)
 
                         if settingsViewModel.currentMode == .computer {
 
-                            // debate BUTTON
+                            // Debate BUTTON
                             Button(action: {
                                 isTextFieldFocused = true
                                 settingsViewModel.multiLineText += "debate "
                             }) {
                                 Text( "⚖️")
                                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-                                //                                .padding(geometry.size.width * 0.01)
                                     .lineLimit(1)
                                     .foregroundColor(Color.white)
                                     .background(settingsViewModel.buttonColor)
-                                //                                .cornerRadius(10)
                             }
                             .padding(.bottom)
                         }
@@ -131,13 +114,9 @@ struct CommandButtonView: View {
                             }) {
                                 Text( "💡")
                                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-                                //                                .padding(geometry.size.width * 0.01)
-
                                     .lineLimit(1)
                                     .foregroundColor(Color.white)
-                                //.padding(geometry.size.width * 0.01)
                                     .background(settingsViewModel.buttonColor)
-                                //                                .cornerRadius(10)
                             }
                             .padding(.bottom)
                         }
@@ -149,12 +128,9 @@ struct CommandButtonView: View {
                         }) {
                             Text( "g")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
-
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
 
                         }
                         .padding(.bottom)
@@ -184,13 +160,10 @@ struct CommandButtonView: View {
                                     .opacity(0.74)
                             }
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-                            //                                .padding(geometry.size.width * 0.01)
 
                             .lineLimit(1)
                             .foregroundColor(Color.white)
-                            //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
-                            //                                .cornerRadius(10)
                         }
                         .padding(.bottom)
                     }
@@ -201,12 +174,9 @@ struct CommandButtonView: View {
                         }) {
                             Text( "🗑️")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
-
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
                         }
                         .padding(.bottom)
                     }
@@ -229,22 +199,16 @@ struct CommandButtonView: View {
                     }) {
                         Text("🛑")
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                            .padding(geometry.size.width * 0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
                             .padding(.bottom)
-//                            .cornerRadius(10)
                     }
                     if settingsViewModel.multiLineText.count > 0 {
                         // EXEC BUTTON
                         Button(action: {
                             if settingsViewModel.multiLineText.isEmpty {
-#if !os(macOS)
-                                
-                                consoleManager.print("nothing to exec.")
-#endif
-                                print("nothing to exec")
+                                logD("nothing to exec.")
                                 
                                 return
                             }
@@ -253,28 +217,17 @@ struct CommandButtonView: View {
                             
                             self.settingsViewModel.isInputViewShown = false
 #if !os(macOS)
-                            
                             consoleManager.isVisible = true
 #endif
-                            //#if !os(macOS)
-                            //
-                            //                        consoleManager.isVisible = true
-                            //                        #endif
-                            
                         }) {
                             Text("✅")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-                            //                            .padding(geometry.size.width * 0.01)
-                            
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
-                            //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
                                 .padding(.bottom)
-                            //                            .cornerRadius(10)
                         }
                     }
-                    //.padding(.bottom)
 
                     // TERM/COMMAND BUTTON
                     Button(action: {
@@ -284,9 +237,6 @@ struct CommandButtonView: View {
 
                             self.settingsViewModel.isInputViewShown = false
                             settingsViewModel.commandMode = .commandBar
-#if !os(macOS)
-//                            consoleManager.isVisible = true
-#endif
                         }
                         else {
 #if !os(macOS)
@@ -298,48 +248,34 @@ struct CommandButtonView: View {
                         if self.settingsViewModel.isInputViewShown {
                             ZStack {
                                 Text("🔽")
-//                                Text("❌")
                             }
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                            .padding(geometry.size.width * 0.01)
                             .lineLimit(1)
                             .foregroundColor(Color.white)
-                            //.padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
-
-//                            .cornerRadius(10)
                         }
                         else {
                            Text( "💬")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
-//                                .padding(geometry.size.width * 0.01)
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
-                                //.padding(geometry.size.width * 0.01)
                                 .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
                         }
 
                     }
                     .padding(.bottom)
-                    ///.padding(.bottom)
-
                 }
                 .edgesIgnoringSafeArea([.top])
-                //.padding(.bottom)
-
 
                 if settingsViewModel.isInputViewShown {
                     // MAIN INPUT TEXTFIELD
                     TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
                         .padding(.bottom, 30)
-//                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                         .lineLimit(nil)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
-
                         .autocapitalization(.none)
 #endif
                         .focused($isTextFieldFocused)

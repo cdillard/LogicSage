@@ -19,7 +19,19 @@ let defaultRepo = "SwiftSage"
 let defaultBranch = "main"
 
 public class SettingsViewModel: ObservableObject {
-
+    func logoAscii5() -> String {
+        """
+        ╭╮╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮
+        ┃┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃
+        ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
+        ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
+        ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
+        ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
+        ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
+        ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
+        client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(gptModel).
+        """
+    }
     public static let shared = SettingsViewModel()
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
@@ -103,7 +115,6 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
     @AppStorage("middleHandleSize")var middleHandleSize: Double = defaultHandleSize
 
-
     @Published var textSize: CGFloat = defaultTerminalFontSize {
         didSet {
             if textSize != 0 {
@@ -129,12 +140,9 @@ public class SettingsViewModel: ObservableObject {
     @Published var terminalBackgroundColor: Color {
         didSet {
 #if !os(macOS)
-
-     //       if let data =  {
             UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
             print("saved terminalBackgroundColor to userdefaults")
             consoleManager.updateLumaColor()
-
 #endif
         }
     }

@@ -13,7 +13,7 @@ let logoAscii2 = """
  _\\ \\| |/|/ / / _/ __/ // /___/ (_ / ___/ / /
 /___/|__,__/_/_/ \\__ /\\_ /    \\___/_/    /_/
                     /___/
-computer: model: \(gptModel).
+server: model: \(gptModel).
 """
 
 let logoAscii5 = """
@@ -25,7 +25,7 @@ let logoAscii5 = """
 ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
 ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
 ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
-computer: model: \(gptModel).
+server: model: \(gptModel).
 """
 
 

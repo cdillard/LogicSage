@@ -56,25 +56,13 @@ struct InstructionsPopup: View {
                         }
                         Text("Without these 3 steps, the LogicSage server will not work.")
                     }
-                    .background(.green)
-                    .opacity(0.7)
+                    .background(settingsViewModel.backgroundColor)
                     .padding(geometry.size.width * 0.01)
 
                     Button(action: {
 
-//                        if !hasSeenInstructions() {
-//                            settingsViewModel.textSize = defaultTerminalFontSize
-//                        }
-
                         isPresented = false
                         setHasSeenInstructions(true)
-#if !os(macOS)
-
-                        // consoleManager.isVisible = true
-                        //consoleManager.fontSize = settingsViewModel.textSize
-
-                        consoleManager.print(logoAscii5)
-#endif
                     }) {
                         Text("Got it!")
                             .foregroundColor(.white)
@@ -85,7 +73,6 @@ struct InstructionsPopup: View {
                     .padding(geometry.size.width * 0.01)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(Color.black.opacity(0.8))
                 .edgesIgnoringSafeArea(.all)
             }
             .onAppear {

@@ -23,15 +23,11 @@ class ScreamClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             isConnected = true
-#if !os(macOS)
 
-            consoleManager.print("WebSocket connected\n\(logoAscii5)")
-#endif
-            print("WebSocket connected \(headers)")
-#if !os(macOS)
 
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
-#endif
+
+            logD("WebSocket connected a \(devType) device.\n\(headers)\n\(SettingsViewModel.shared.logoAscii5())")
 
             let authData: [String: Any] = ["username": SettingsViewModel.shared.userName, "password": SettingsViewModel.shared.password]
             do {
@@ -45,17 +41,13 @@ class ScreamClient: WebSocketDelegate {
             
             startPingTimer()
         case .disconnected(let reason, let code):
-            print("WebSocket disconnected, reason: \(reason), code: \(code)")
-#if !os(macOS)
-            consoleManager.print("WebSocket disconnected: reason: \(reason), code: \(code)")
-#endif
+            logD("WebSocket disconnected, reason: \(reason), code: \(code)")
+
             isConnected = false
             stopPingTimer()
             DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-#if !os(macOS)
 
-                consoleManager.print("Reconnecting...")
-#endif
+                logD("Reconnecting...")
                 self.connect()
             }
         case .text(let text):
@@ -67,25 +59,22 @@ class ScreamClient: WebSocketDelegate {
                    let message = json?["message"] as? String {
 
                     if recipient == SettingsViewModel.shared.userName {
-
-
-                        consoleManager.print(message)
+                        logD(message)
 
                         if message.hasPrefix("say:") {
                             let arr = message.split(separator: ": ", maxSplits: 1)
                             if arr.count > 1 {
-                                print("speaking...")
+                                logD("speaking...")
                                 let speech = String(arr[1])
                                 speak(speech)
                             }
                             else {
-                                print("failed")
+                                logD("failed")
                             }
                         }
                     }
                     else {
                         print("recipient: \(recipient)?")
-
                     }
                 }
 
@@ -94,28 +83,9 @@ class ScreamClient: WebSocketDelegate {
             catch {
                 print("error printing text")
             }
-
-//            DispatchQueue.main.async {
-//
-//
-//                consoleManager.print(text)
-//
-//                if text.hasPrefix("say:") {
-//                    let arr = text.split(separator: ": ", maxSplits: 1)
-//                    if arr.count > 1 {
-//                        print("speaking...")
-//                        let speech = String(arr[1])
-//                        speak(speech)
-//                    }
-//                    else {
-//                        print("failed")
-//                    }
-//                }
-//            }
 #endif
         case .binary(let data):
 #if !os(macOS)
-            // TODO FIX BINARY WITH AUTH
             print("Received binary data: \(data)")
             if let receivedImage = UIImage(data: data) {
                 DispatchQueue.main.async {
@@ -128,41 +98,19 @@ class ScreamClient: WebSocketDelegate {
             }
 #endif
         case .ping:
-            DispatchQueue.main.async {
-
-                print("websocket received ping")
-#if !os(macOS)
-
-                consoleManager.print("websocket received ping")
-#endif
-            }
+            break
         case .pong:
-            DispatchQueue.main.async {
-                // fade in out green dot.
-             //   print("websocket received pong")
-#if !os(macOS)
-
-                //consoleManager.print("websocket received pong")
-#endif
-            }
+            break
         case .viabilityChanged(let isViable):
             DispatchQueue.main.async {
 
-                print("Connection viability changed: \(isViable)")
-#if !os(macOS)
-
-                consoleManager.print("connection viable: \(isViable)")
-#endif
+                logD("connection viable: \(isViable)")
                 self.isViable = isViable
 
             }
         case .reconnectSuggested(let shouldReconnect):
-            
-            print("Reconnect suggested: \(shouldReconnect)")
-#if !os(macOS)
 
-            consoleManager.print("Reconnect suggested: \(shouldReconnect)")
-#endif
+            logD("Reconnect suggested: \(shouldReconnect)")
 
             if shouldReconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
@@ -173,18 +121,9 @@ class ScreamClient: WebSocketDelegate {
                 print("shouldn't reconnect")
             }
         case .cancelled:
-            print("WebSocket cancelled")
-#if !os(macOS)
-
-            consoleManager.print("WebSocket cancelled")
-#endif
+            logD("WebSocket cancelled")
         case .error(let error):
-
-#if !os(macOS)
-
-            consoleManager.print("Error: \(error?.localizedDescription ?? "Unknown error")")
-#endif
-            print("Error: \(error?.localizedDescription ?? "Unknown error")")
+            logD("Error: \(error?.localizedDescription ?? "Unknown error")")
             isConnected = false
             disconnect()
         }

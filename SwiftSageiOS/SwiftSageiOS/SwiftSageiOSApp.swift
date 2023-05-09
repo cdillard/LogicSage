@@ -40,18 +40,9 @@ struct SwiftSageiOSApp: App {
         printVoicesInMyDevice()
         
         configureAudioSession()
-#if !os(macOS)
-//        if !hasSeenInstructions() {
-//            print("openning console after instr")
-//        }
-//        else {
-//            consoleManager.isVisible = true
-//        }
-        consoleManager.print(logoAscii5)
-#endif
 
     //    cmdWindows = [LCManager]()
-//Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa, Lambda, Mu,Nu,Xi,Omicron,Pi, Rho,Sigma,Tau      Upsilon       Phi       Chi       Psi       Omega
+        //Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa, Lambda, Mu,Nu,Xi,Omicron,Pi, Rho,Sigma,Tau      Upsilon       Phi       Chi       Psi       Omega
     }
     var body: some Scene {
         WindowGroup {
@@ -94,7 +85,6 @@ struct SwiftSageiOSApp: App {
 
 }
 
-
 func setHasSeenInstructions(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
 }
@@ -102,10 +92,6 @@ func setHasSeenInstructions(_ hasSeen: Bool) {
 func hasSeenInstructions() -> Bool {
     return UserDefaults.standard.bool(forKey: "hasSeenInstructions")
 }
-
-// wimdowz 95
-//var cmdWindows = [LCManager]()
-//var mainWindow = LCManager.shared
 
 class AppState: ObservableObject {
     @Published var isInBackground: Bool = false

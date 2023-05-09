@@ -148,6 +148,7 @@ struct SettingsView: View {
                             Group {
                                 Text("sws mode").font(.body)
                                 DevicePicker(settingsViewModel: settingsViewModel)
+                                
                             }
                             VStack(alignment: .leading) {
                                 if settingsViewModel.currentMode == .computer {
@@ -912,7 +913,7 @@ struct DevicePicker: View {
                     .onTapGesture {
                         withAnimation(.spring()) {
                             settingsViewModel.currentMode = .mobile
-
+                            logD(settingsViewModel.logoAscii5())
                         }
                     }
                 Image(systemName: "desktopcomputer")
@@ -928,6 +929,8 @@ struct DevicePicker: View {
                     .onTapGesture {
                         withAnimation(.spring()) {
                             settingsViewModel.currentMode = .computer
+                            logD(settingsViewModel.logoAscii5())
+
                         }
                     }
             }

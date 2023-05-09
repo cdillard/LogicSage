@@ -50,23 +50,14 @@ struct HelpPopup: View {
                                     Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/SwiftSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
                                 }
                             }
-
                         }
                     }
-                    .background(.green)
-                    .opacity(0.7)
-                    .padding(geometry.size.width * 0.01)
+                    .background(settingsViewModel.backgroundColor)
+                    .padding(geometry.size.width * 0.02)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                     Button(action: {
-
                         isPresented = false
-#if !os(macOS)
-
-                        // consoleManager.isVisible = true
-                        consoleManager.fontSize = settingsViewModel.textSize
-
-                        consoleManager.print(logoAscii5)
-#endif
                     }) {
                         Text("Got it!")
                             .foregroundColor(.white)
@@ -77,7 +68,6 @@ struct HelpPopup: View {
                     .padding(geometry.size.width * 0.01)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(Color.black.opacity(0.8))
                 .edgesIgnoringSafeArea(.all)
             }
             .onAppear {

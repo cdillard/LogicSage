@@ -37,10 +37,8 @@ struct ContentView: View {
 
         GeometryReader { geometry in
             ZStack {
-                // SOURCE CODE EDITOR HANDLE
                 ZStack {
-
-        // START MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
+// START MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
 #if os(macOS)
                     VStack(alignment: .leading, spacing: 8) {
                         Button(action: {
@@ -65,25 +63,22 @@ struct ContentView: View {
                             Text("Open Terminal.app and run cmd.")
                         }
                         .zIndex(2)
-
                     }
                     .zIndex(2)
 #endif
                 }
-
-        // END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
-
+// END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
             }
-#if !os(macOS)
 
-            // WINDOW MANAGER ZONE
+#if !os(macOS)
+// START WINDOW MANAGER ZONE *************************************************
             ForEach(windowManager.windows) { window in
                 WindowView(window: window)
                     .padding(SettingsViewModel.shared.cornerHandleSize)
                     .background(.clear)
                     .environmentObject(windowManager)
             }
-            // END WINDOW MANAGER ZONE
+// END WINDOW MANAGER ZONE *************************************************
 
             // HANDLE SIMULATOR
 
@@ -98,7 +93,7 @@ struct ContentView: View {
             }
 #endif
 
-            // BEGIN TOOL BAR / COMMAND BAR ZONE
+// START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
             VStack {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
@@ -171,7 +166,6 @@ struct ContentView: View {
                     // ADD VIEW BUTTON
                     Button(action: {
 #if !os(macOS)
-
                         hideKeyboard()
 #endif
 
@@ -182,7 +176,6 @@ struct ContentView: View {
                         if showSettings {
                             showSettings = false
                         }
-                        // window 1 is for second cmd prompt
                     }) {
 
                         resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
@@ -191,15 +184,10 @@ struct ContentView: View {
 
                     Button(action: {
 #if !os(macOS)
-
                         hideKeyboard()
 #endif
-
                         if !settingsViewModel.hasAcceptedMicrophone {
-#if !os(macOS)
-                            consoleManager.print("Enable mic in Settings...")
-#endif
-                            print("Enable mic in Settings...")
+                            logD("Enable mic in Settings...")
                             return
                         }
                         if settingsViewModel.isRecording {
@@ -239,24 +227,11 @@ struct ContentView: View {
                     SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .opacity(showSettings ? 1.0 : 0.0)
-
-
 #endif
-
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
             )
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
-//            .onAppear {
-//                keyboardObserver.startObserve(height: geometry.size.height)
-//
-//               // handleColor()
-//            }
-//            .onDisappear {
-//                keyboardObserver.stopObserve()
-//            }
         }
         .overlay(
             Group {
@@ -278,7 +253,7 @@ struct ContentView: View {
                     .ignoresSafeArea()
             }
         }
-        // END TOOL BAR / COMMAND BAR ZONE
+// END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
 
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
@@ -290,36 +265,6 @@ struct ContentView: View {
             .background(CustomShape())
     }
 }
-
-//class KeyboardObserver: ObservableObject {
-//    @Published var isKeyboardVisible = false
-//    @Published var keyboardHeight: CGFloat = 0
-//
-//    private var screenHeight: CGFloat = 0
-//
-//    func startObserve(height: CGFloat) {
-//#if !os(macOS)
-//
-//        screenHeight = height
-//        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//#endif
-//    }
-//
-//    func stopObserve() {
-//        NotificationCenter.default.removeObserver(self)
-//    }
-//
-//    @objc private func onKeyboardChange(notification: Notification) {
-//#if !os(macOS)
-//
-//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-//            let keyboardTop = screenHeight - keyboardFrame.origin.y
-//            isKeyboardVisible = keyboardTop > 0
-//            keyboardHeight = max(0, keyboardTop)
-//        }
-//#endif
-//    }
-//}
 
 #if os(macOS)
 func openTerminal() {
