@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // Function to execute an high level Xcode Shell/ Ruby / AppleScript command
 func executeAppleScriptCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
     if !command.appleScript.isEmpty {

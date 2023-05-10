@@ -12,7 +12,6 @@ let useMatrixLettrs = ":.=*+-¦|_ﾊﾐﾋｰｳｼ012ç34578ﾘ9ﾅ日ﾓﾆｻ
 
 let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
 
-
 let heightProp: CGFloat = 0.92
 
 func goToMovies() {
@@ -50,7 +49,6 @@ func imageToAscii(imagePath: String, width: Int) -> String {
     do {
         guard let image:PNG.Data.Rectangular = try .decompress(path: imagePath) else {
             multiPrinter("fail") ; return ""
-
         }
 
         let asciiImage = convertToAscii(image: image, newWidth: width)

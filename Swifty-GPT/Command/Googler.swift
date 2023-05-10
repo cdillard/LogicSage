@@ -46,7 +46,7 @@ func search(query: String, apiKey: String, searchEngineId: String, completion: @
 
         do {
             let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
-            // TODO : Double check this prefixing, its just to test less serach results now
+            // TODO : Double check this prefixing, its just to test less search results now
             completion(.success(Array(searchResult.items.prefix(2))))
         } catch {
             completion(.failure(error))
@@ -61,12 +61,14 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
     search(query: query, apiKey: GOOGLE_KEY, searchEngineId: GOOGLE_ID) { result in
         switch result {
         case .success(let searchItems):
-            for item in searchItems {
-                multiPrinter("Title: \(item.title ?? "none")")
-                multiPrinter("Link: \(item.link ?? "none")")
-                multiPrinter("Snippet: \(item.snippet ?? "none")")
-                multiPrinter("\n")
-            }
+            multiPrinter("sucessfully fetched \(searchItems.count) from Google.")
+            break
+//            for item in searchItems {
+//                multiPrinter("Title: \(item.title ?? "none")")
+//                multiPrinter("Link: \(item.link ?? "none")")
+//                multiPrinter("Snippet: \(item.snippet ?? "none")")
+//                multiPrinter("\n")
+//            }
 
             func searchItemsToJSONString(_ searchItems: [SearchItem]) -> String? {
                 let encoder = JSONEncoder()

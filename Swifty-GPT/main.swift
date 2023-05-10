@@ -10,7 +10,12 @@ import AVFAudio
 import AppKit
 
 // Note you must have xcodegen brew and gem xcodeproj installed.
+
+// Check out this awesome repo for help doing new stuff. This repo is only an example. learn to
+// perform the prompts of your design in whatever A.I. tool you want.
+
 // https://github.com/f/awesome-chatgpt-prompts
+
 // Note the Xcode Console works w/ stdin the way this input works but iTerm and the Terminal app won't allow entering input
 // I'm looking into it with GPT.
 
@@ -19,12 +24,7 @@ func main() {
     // Try to preload voice synth
     textToSpeech(text: "  ", overrideVoice: defaultVoice, skipLog: true)
 
-
     resetCommandWithConfig(config: &config)
-
-    // Tesitn when best time to initialize websock log
-   // UserDefaults.resetStandardUserDefaults()
-//    print(localPeerConsole.webSocketClient.websocket)
 
     multiPrinter("SwiftSage is loading...")
 
@@ -65,7 +65,6 @@ func main() {
      */
 
     if config.interactiveMode {
-
         handleUserInput()
     }
     else {
@@ -121,7 +120,6 @@ func main() {
             runMacSage()
         }
     }
-
 }
 
 func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
@@ -132,17 +130,11 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
 
     generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: config.promptingRetryNumber, errors: errors) { response in
 
-        // Generations
         multiPrinter("Retry another generation...?")
-
         if response != nil, let response {
-
             multiPrinter("Response non nil, another generation...")
-
             parseAndExecuteGPTOutput(response, errors) { success, errors in
-
                 stopRandomSpinner()
-
                 if success {
                     multiPrinter("Parsed and executed code successfully. Opening project...")
 
@@ -241,8 +233,7 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
-
-// Running in Terminal and iTerm2 is still elusive.. I wonder what must be disabled.
+// Running in Terminal and iTerm2 is still elusive.. I wonder what the the issue is?
 main()
 
 RunLoop.main.run()

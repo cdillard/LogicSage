@@ -9,7 +9,7 @@ import Foundation
 import Darwin.POSIX.termios
 
 
-
+// TODO: FIX input modes
 // We should have an enum defining the "MODE" swift sage cmd is in,
 // for instance, during .trivia mode we have special input criteria and it must be exited to get back to the "main menu" cmd prompt.
 // for instance, during .debate we have special input criteria and need to allow bailing out of debate depths when user hits stop.
@@ -110,8 +110,7 @@ func handleUserInput() {
                 continue
             }
             if config.blockingInput {
-                multiPrinter("input disabled (you can `q`). Plese file a github Issue. *with logs or else (shakesfist)*")
-
+                multiPrinter("input disabled (you might be able to `q`, but I recommend restarted sws). Please file a github Issue. *with logs*")
 
                 var input = ""
                 while let char = readChar(), char != "\n" {

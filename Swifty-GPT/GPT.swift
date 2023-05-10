@@ -21,12 +21,13 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
     request.timeoutInterval = 360 // seconds
     let maxTokens = 8192
     let temp = 1.0
+
+    // TODO: IMPLEMENT CUSTOMIZATION FOR THESE MAGIC NUMBERS RELATED TO OPENAI APIS.
     // Prepare the request payload
     let requestBody: [String: Any] = [
         "model": "\(gptModel)",
         "messages": [
             [
-
 //                "max_tokens": "\(maxTokens)",
 //                "temperature": "\(temp)",
                 "role": "user",

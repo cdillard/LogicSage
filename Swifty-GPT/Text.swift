@@ -46,8 +46,6 @@ func fullProjText() -> String {
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
-//    \(openLinePrintCount == 0 ? "\(randomAscii())" : "")
-
     let openLine = """
     \(randomAscii())
     \((logV == .verbose && overrideV) ? commandsText() : "")

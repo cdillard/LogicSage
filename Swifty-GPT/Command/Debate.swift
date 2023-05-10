@@ -79,9 +79,8 @@ func debateCommand(input: String) {
     config.promptMode = .debate
 
     if (input.isEmpty || !usePrePrompt) {
-        multiPrinter("DEBATE STAGE:")
+        multiPrinter("DEBATE STAGE: \(personalityA) vs. \(personalityB)")
         deepConversation(currentPersonality: personalityA, initialPrompt: randomDebate(), depth: depthLimit)
-
     }
     else if (usePrePrompt) {
         multiPrinter("DEBATE STAGE:")
@@ -89,11 +88,7 @@ func debateCommand(input: String) {
         sendPromptToGPT(prompt: usePrompt, currentRetry: 0, disableSpinner: false) { content, success in
             if !success { return multiPrinter("Failed to think of debating...") }
 
-            // put content into template
-
-
             deepConversation(currentPersonality: personalityA, initialPrompt: content, depth: depthLimit)
-
         }
     }
 }
@@ -150,8 +145,6 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
         let newResponse = newPrompt
             .replacingOccurrences(of: "\(personAsName):", with: "")
             .replacingOccurrences(of: "\(personBsName):", with: "")
-
-
         // avg loading for prompt duration for session.... (MIGHT BE 1 righ???)
         let duration = textToSpeech(text: newResponse, overrideVoice: personality) - 0.6
 
@@ -160,7 +153,6 @@ func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: S
         }
     }
 }
-
 
 func debatesCommand(input: String) {
 
@@ -189,7 +181,6 @@ func debatesCommand(input: String) {
 
         }
     }
-
 
     if !input.isEmpty {
         var chosenDebate = ""
@@ -221,12 +212,10 @@ func debatesCommand(input: String) {
             }
         }
 
-
         if !chosenDebate.isEmpty {
             config.promptMode = .debate
                 multiPrinter("DEBATE STAGE:")
                 deepConversation(currentPersonality: personalityA, initialPrompt: chosenDebate, depth: depthLimit)
-// DO we need a new command that simply does the same thing debate does randomly ????
         }
         else {
             multiPrinter("Failed to debate.")

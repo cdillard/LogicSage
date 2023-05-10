@@ -14,9 +14,7 @@ import CoreMedia
 var audioRecorder: AudioRecorder?
 
 // LISTEN
-
 let avFoundationLog = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "AVFoundation")
-
 let audioRecordingFileFormat = ".m4a"
 let tempAudioRecordingFileFormat = ".caf"
 
@@ -38,8 +36,6 @@ class AudioRecorder {
         let tempAudioPath = "\(projectPath)/audio-\(UUID())\(tempAudioRecordingFileFormat)"
 
         self.outputTempFileURL = URL(fileURLWithPath:tempAudioPath)
-
-      //  printAVVoices()
     }
 
     func startRecording() {
@@ -111,8 +107,6 @@ class AudioRecorder {
             }
         }
     }
-
-
 }
 func printAVVoices() {
     AVSpeechSynthesisVoice.speechVoices().forEach {

@@ -15,4 +15,3 @@ func getTerminalWidth() -> Int? {
         return nil
     }
 }
-

@@ -125,7 +125,7 @@ func loadTriviaSystem() {
         trivialQs += parseMarkdown(text)
 
 
-        // Add obj-c quizing sometime
+        // TODO: Add obj-c quizing sometime
 //        if let path2 = Bundle.main.path(forResource: "objective-c-quiz", ofType: "md"), let text2 = readMDFile(path2) {
 //            trivialQs += parseTrivia(from: text2)
 //        }

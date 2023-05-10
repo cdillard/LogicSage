@@ -38,7 +38,7 @@ class LocalPeerConsole: NSObject {
         }
      }
 
-    // TODO: Fix with Auth
+    // TODO: Fix binary data sending now that we have Auth
     func sendImageData(_ imageData: Data?) {
         guard let data = imageData else {
             print("failed")
@@ -53,7 +53,7 @@ class WebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
-            // TODO FIX HARDCODE CREDZ
+            // TODO: FIX HARDCODE CREDZ
             let authData: [String: String] = ["username": "SERVER", "password": "supers3cre3t"]
             do {
                 let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed])
@@ -73,11 +73,11 @@ class WebSocketClient: WebSocketDelegate {
                 self.connect()
             }
         case .text(let text):
-            print("\(text)")
-
+           // print("\(text)")
 
             do {
-                let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
+                let json = try JSONSerialization.jsonObject(with:
+                                                    Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
 
                 // HANDLE MESSAGES *****************************************************************
 

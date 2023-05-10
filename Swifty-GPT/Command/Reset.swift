@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct Config {
     var projectName: String
     var globalErrors: [String]
@@ -44,11 +42,9 @@ struct Config {
 
 }
 func resetCommand(input: String) {
-
     // TODO: Reset for the right user.
     resetCommandWithConfig(config: &config)
 }
-
 func resetCommandWithConfig(config: inout Config) {
     config.projectName = "MyApp"
     config.globalErrors = [String]()

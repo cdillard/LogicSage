@@ -58,6 +58,5 @@ func createFile(projectPath: String, projectName: String, targetName: String, fi
     } catch {
         multiPrinter("Error: \(error.localizedDescription)")
         return false
-
     }
 }

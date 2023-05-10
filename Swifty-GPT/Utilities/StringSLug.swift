@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 func preprocessStringForFilename(_ input: String) -> String {
     // Define a CharacterSet with the characters that are safe for filenames
     let safeCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.")

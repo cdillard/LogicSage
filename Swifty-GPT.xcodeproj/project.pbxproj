@@ -17,7 +17,6 @@
 		B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DA29EAF9B500C45773 /* Terminal.swift */; };
 		B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B44DC29EAFBFE00C45773 /* AsciiText.swift */; };
 		B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17B29F07ACD00993AAF /* Loding.swift */; };
-		B70CF17E29F07E2400993AAF /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17D29F07E2400993AAF /* Globals.swift */; };
 		B70CF18029F08C7C00993AAF /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF17F29F08C7C00993AAF /* Regex.swift */; };
 		B70CF18229F0980800993AAF /* SageWare.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF18129F0980800993AAF /* SageWare.swift */; };
 		B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */; };
@@ -132,7 +131,6 @@
 		B70B44DA29EAF9B500C45773 /* Terminal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Terminal.swift; sourceTree = "<group>"; };
 		B70B44DC29EAFBFE00C45773 /* AsciiText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsciiText.swift; sourceTree = "<group>"; };
 		B70CF17B29F07ACD00993AAF /* Loding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loding.swift; sourceTree = "<group>"; };
-		B70CF17D29F07E2400993AAF /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		B70CF17F29F08C7C00993AAF /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		B70CF18129F0980800993AAF /* SageWare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageWare.swift; sourceTree = "<group>"; };
 		B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplescriptCommand.swift; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
 				B7D6517129EC847E00ED8BAE /* ggml.h */,
-				B70CF17D29F07E2400993AAF /* Globals.swift */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
@@ -327,15 +324,15 @@
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
 				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
+				B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */,
 				B7717D2829EFA624005141AB /* Googler.swift */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
+				B71C62F12A00A47F004296E4 /* Multiprinter.swift */,
+				B71C62EF2A0063A4004296E4 /* Reset.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
-				B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */,
-				B71C62EF2A0063A4004296E4 /* Reset.swift */,
-				B71C62F12A00A47F004296E4 /* Multiprinter.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -571,7 +568,6 @@
 				B729B14029F99DA800BA6752 /* Therapy.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* Utilities.swift in Sources */,
-				B70CF17E29F07E2400993AAF /* Globals.swift in Sources */,
 				B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,

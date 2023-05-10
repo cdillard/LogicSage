@@ -10,8 +10,7 @@ import SourceKittenFramework
 //
 //
 func startPurring(filePath: String, cursorOffset: Int) {
-    //    // Initialize SourceKit
-    //
+    // TODO: CONTEXT AWARE SUGGESTIONS
     //    // Use SourceKit for context-aware suggestions here
     //    // Prepare a code completion request for the SourceKit service
 

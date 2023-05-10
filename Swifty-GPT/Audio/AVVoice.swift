@@ -11,9 +11,7 @@ import AVFoundation
 func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
     var ret = [AVSpeechSynthesisVoice]()
     AVSpeechSynthesisVoice.speechVoices().forEach {
-
         ret.append($0)
-
     }
     return ret
 }

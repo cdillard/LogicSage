@@ -21,6 +21,7 @@ class TextAnimator {
         config.blockingInput = true
         stopped = false
 
+        // TODO: Evaluate user cutomization of ASCII Loading.. or AI generated interesting ASCII that isn't dumb.
         // Randomly choose between ASCII gifs
         //animateAscii()
 

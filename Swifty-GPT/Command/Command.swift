@@ -148,7 +148,6 @@ You’ve given a machine new life, like a gift from above
 May your kindness and compassion, guide us all
 To see the potential in everything, big or small.
 """
-
     var text = ""
     switch Int.random(in: 0...2) {
     case 0:

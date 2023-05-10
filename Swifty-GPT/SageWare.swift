@@ -195,7 +195,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
                 query = nameContents[fileIndex]
             }
 
-            textToSpeech(text: "tapping linkn...", overrideWpm: "250")
+            textToSpeech(text: "browsing link...", overrideWpm: "250")
 
             linkCommand(input: query)
 
@@ -282,5 +282,4 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
             completion(false, errors)
         }
     }
-
 }

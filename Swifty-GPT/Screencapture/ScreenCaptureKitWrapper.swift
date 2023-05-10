@@ -10,8 +10,7 @@ import ScreenCaptureKit
 import AVFoundation
 import Cocoa
 import Quartz
-
-
+// TODO: MAKE THIS WORK. We would like to have real time views of simulators on our mac in Xcode. Looking into the way.
 func getSimulatorWindows() -> [CGWindowID: CGRect] {
     let windowInfoList = CGWindowListCopyWindowInfo(.optionAll, kCGNullWindowID) as? [[String: AnyObject]]
     var simulatorWindows = [CGWindowID: CGRect]()
@@ -32,8 +31,6 @@ func getSimulatorWindows() -> [CGWindowID: CGRect] {
 
     return simulatorWindows
 }
-
-
 
 class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     private var captureSession: AVCaptureSession?
@@ -65,11 +62,8 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         let bitmapRep = NSBitmapImageRep(data: nsImage.tiffRepresentation!)!
         let imageData = bitmapRep.representation(using: .jpeg, properties: [.compressionFactor: 0.8])
 
-        // ... (your streaming logic here)
         localPeerConsole.sendImageData(imageData)
-
     }
-
 
     func startSimulatorWindowCapture(simulatorWindowID: CGWindowID) {
         self.simulatorWindowID = simulatorWindowID
@@ -80,13 +74,11 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         captureTimer?.resume()
     }
 
-
     func captureSimulatorWindow() {
 
 
         let simulatorWindows = getSimulatorWindows()
 
-      //  if let firstSimulatorWindow = simulatorWindows.first {
             let windowInfoList = CGWindowListCopyWindowInfo(.optionOnScreenOnly, kCGNullWindowID) as! [NSDictionary]
         let filteredWindows = windowInfoList.filter { ($0[kCGWindowOwnerName] as? String) == "Simulator" }
 
@@ -127,15 +119,7 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             }
 
             self.processSampleBuffer(sampleBuffer)
-//        }
-//        else {
-//            print("failed")
-//            return
-//        }
-
-
     }
-
 
     private func createSampleBuffer(from pixelBuffer: CVPixelBuffer) -> CMSampleBuffer? {
         var sampleBuffer: CMSampleBuffer? = nil
@@ -175,16 +159,4 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         context.render(ciImage, to: pixelBuffer!)
         return pixelBuffer
     }
-
-
-//    func captureSageSimulator() {
-//        let simulatorWindows = getSimulatorWindows()
-//
-//        if let firstSimulatorWindow = simulatorWindows.first {
-//            startSimulatorWindowCapture(simulatorWindowID: firstSimulatorWindow.key)
-//        } else {
-//            print("No simulator windows found")
-//        }
-//
-//    }
 }

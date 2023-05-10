@@ -52,7 +52,6 @@ func getDirectory() -> String {
     guard arguments.count > 1 else {
         multiPrinter("Please provide the folder path as an argument.")
         return ""
-
     }
 
     let folderPath = arguments[1]
@@ -67,6 +66,3 @@ func getDirectory() -> String {
     }
     return folderURL.path
 }
-
-// Regex / Parsing
-
