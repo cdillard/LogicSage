@@ -12,6 +12,7 @@ var commandTable: [String: (String) -> Void] = [
 
     "1": runAppDesc,
     "2": showLoadedPrompt,
+
     "3": openProjectCommand,
     "4": buildCommand,
     "5": voiceSettingsCommand,
@@ -80,7 +81,7 @@ var commandTable: [String: (String) -> Void] = [
 
     // VERY Experimental
     "simulator": simulatorCommand,
-
+    "wallpaper": wallpaperCommand,
 
     // Testing
     "testLoad": testLoadCommand,

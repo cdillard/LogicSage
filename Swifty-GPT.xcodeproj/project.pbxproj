@@ -88,6 +88,7 @@
 		B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */; };
 		B7E7EE7229F6C86600EF2B25 /* NetService in Frameworks */ = {isa = PBXBuildFile; productRef = B7E7EE7129F6C86600EF2B25 /* NetService */; };
 		B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EE1FC129F4E351007A7B6B /* Debate.swift */; };
+		B7EF2A2D2A0C5A6E0048CFFC /* ImageAssetCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2C2A0C5A6E0048CFFC /* ImageAssetCommands.swift */; };
 		B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */; };
 		B7F50A6D29F3C22E00A8485C /* SwiftSageStatusBar in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */; };
 		B7F50A6E29F3C22E00A8485C /* SwiftSageStatusBar.swiftmodule in CopyFiles */ = {isa = PBXBuildFile; fileRef = B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */; };
@@ -213,6 +214,8 @@
 		B7E576C329EBE6B300CB6A10 /* LibWhisper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibWhisper.swift; sourceTree = "<group>"; };
 		B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swifty-GPT-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7EE1FC129F4E351007A7B6B /* Debate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debate.swift; sourceTree = "<group>"; };
+		B7EF2A2C2A0C5A6E0048CFFC /* ImageAssetCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAssetCommands.swift; sourceTree = "<group>"; };
+		B7EF2A2E2A0C5F4B0048CFFC /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = configure.swift; path = WebSocketServer/Sources/App/configure.swift; sourceTree = "<group>"; };
 		B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageStatusBarXFace.swift; sourceTree = "<group>"; };
 		B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SwiftSageStatusBar; sourceTree = "<group>"; };
 		B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftSageStatusBar.swiftmodule; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
+				B7EF2A2E2A0C5F4B0048CFFC /* configure.swift */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7C3889329F224FE0074659D /* SwiftyGPTTests */,
 				B7139CDD29E147910049ADE1 /* Products */,
@@ -326,6 +330,7 @@
 				B7EE1FC129F4E351007A7B6B /* Debate.swift */,
 				B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */,
 				B7717D2829EFA624005141AB /* Googler.swift */,
+				B7EF2A2C2A0C5A6E0048CFFC /* ImageAssetCommands.swift */,
 				B75AFC4329EA8140003BA454 /* Input.swift */,
 				B7CB60B329F1884F006BFF8D /* Linker.swift */,
 				B748C2F829F5F329000F5F14 /* LocalPeerConsole.swift */,
@@ -575,6 +580,7 @@
 				B71C62F02A0063A4004296E4 /* Reset.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
+				B7EF2A2D2A0C5A6E0048CFFC /* ImageAssetCommands.swift in Sources */,
 				B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,

@@ -11,6 +11,8 @@ import Foundation
 //let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
 let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
 
+let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+
 // sws CONFIG
 var config = Config(
     projectName: "MyApp",
@@ -49,7 +51,8 @@ let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 //
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
-let apiEndpoint = "https://api.openai.com/v1/chat/completions"
+// SwiftyGPTWOrkspace/Wallpaper
+//let dynamicWallpaperFolder = "/Users/sprinchar/Library/Application Support/com.apple.mobileAssetDesktop"
 
 // WE SHOULD SUPPORT FETCHING SUPPORTED MODELS
 //
@@ -76,7 +79,7 @@ enum LoadMode {
 }
 
 // NETWORKING SETTINGS AND MISC
-let PING_INTERVAL: TimeInterval = 22.666
+let PING_INTERVAL: TimeInterval = 60.666
 let bundleID = "com.chrisdillard.SwiftSageServer"
 //let bundleID = "com.chrisdillard.SwiftSageServer"
 

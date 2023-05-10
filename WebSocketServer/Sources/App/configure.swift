@@ -6,11 +6,15 @@ import WebSocketKit
 import func Darwin.fflush
 import var Darwin.stdout
 
-let debugging = true
+// SwiftSageServer
 
-let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] + 
-             ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
-    
+// Run with `vapor run` in the WebSocketServer directory.
+
+let debugging = false
+
+let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] +
+["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
+
 var clients: [String: [WebSocket]] = [:]
 let logoAscii5 = """
 ╭━━━╮╱╱╱╱╱╱╭━┳╮╭━━━╮
@@ -42,176 +46,189 @@ public func configure(_ app: Application) throws {
         if debugging {
             print("Client connected")
         }
-        
+
         connectedClients.append(ws)
 
         ws.onText { ws, text in
 
-            if true {
-                if let user = username {
-                    do {
+            // IF AUTHED
+            if let user = username {
+                do {
+                    if debugging {
                         print("Received MSG from \(user): \(text)")
-                        //ws.send("Echo: \(text)")
-                        let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .allowFragments) as? [String: String]
-
+                    }
+                    let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .allowFragments) as? [String: String]
+                    if debugging {
                         print("parsed to JSON =  \(json)")
+                    }
+// START HANDLE MESSAGES **********************************************************************************************************************************
+                    if let recipient = json?["recipient"] as? String,
+                       let message = json?["message"] as? String {
 
-                            // HANDLE MESSAGES *****************************************************************
-
-                        if let recipient = json?["recipient"] as? String,
-                            let message = json?["message"] as? String {
-
-
-                            let senderSettings = userSettings[user] ?? freshConfig()
-                            let recipientSettings = userSettings[recipient] ?? freshConfig()
-
-                            let fromUser = json?["from"] as? String
-                            print("FROM: \(fromUser)")
-
-                            print("Received message from \(user) or fromUser:\(fromUser) to \(recipient): \(message)") //using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
-
-                            // Send the message only to the intended recipient
-
-                            let resps = clients[recipient] ?? []
-                            print("auth resps = \(resps)")
-                            //let resps = clients[recipient] ?? []
-                           /// print("cmd resps = \(resps)")
-
-                            resps.forEach { recipientSocket in
-
-                                print("Received MESSAGE from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(message)")// using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
-
-                                let logData: [String: String] = ["recipient": recipient, "message": message]
-                                do {
-                                    let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
-                                    let logString = String(data: logJSON, encoding: .utf8)
-
-                                    recipientSocket.send(logString ?? "")
-                                    print("Sent auth cmd from server to Swift binary.")
-                                }
-                                catch {
-                                    print("error writing auth cmd")
-                                }
-
-
-                            }
-                        } 
-                        // HANDLE COMMANDS *****************************************************************
-                        else if let recipient = json?["recipient"] as? String,
-                             let command = json?["command"] as? String {
-
-
-                            let senderSettings = userSettings[user] ?? freshConfig()
-                            let recipientSettings = userSettings[recipient] ?? freshConfig()
-
-
-                           let fromUser = json?["from"] as? String
-                             print("FROM: \(fromUser)")
-
-                            let resps = clients[recipient] ?? []
-                            print("cmd resps = \(resps)")
-
-
-                            resps.forEach { recipientSocket in
-
-                                print("Received COMMAND from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(command) using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
-
-                                let logData: [String: String] = ["recipient": recipient, "command": command]
-                                do {
-                                    let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
-                                    let logString = String(data: logJSON, encoding: .utf8)
-                                    recipientSocket.send(logString ?? "")
-                                    print("Sent auth cmd from server to Swift binary.")
-                                }
-                                catch {
-                                    print("error writing auth cmd")
-                                }
-
-
-                            }
-                        } else {
-                            ws.send("Invalid command format")
+                        if message != "." {
+                            print("\(message)")
                         }
 
+                        let senderSettings = userSettings[user] ?? freshConfig()
+                        let recipientSettings = userSettings[recipient] ?? freshConfig()
 
-                        // if let scalar = unicodeScalarFromString(text), specs.contains(scalar) {
-                        //     print("\(text)", terminator: "")
-                        // }
-                        // else {
-                            print("\(text)")
-                        //}
-                    }
-                    catch {
-                        print("error = \(error)")
-                    }
-                } else {
-
-
-
-                    if debugging {
-                         print("No auth for this req, attempting to auth...")
-                    }
-                    // Try to parse the received text as JSON
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: [.allowFragments]) as? [String: String]
-    
+                        let fromUser = json?["from"] as? String
+                        if debugging {
+                            print("FROM: \(fromUser)")
+                        }
                         if debugging {
 
-                            print("Got JSON = \(json)")
+                            print("Received message from \(user) or fromUser:\(fromUser) to \(recipient): \(message)") //using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
                         }
-                        // Validate username and password
-                        if let user = json?["username"],  let password = json?["password"],
-                        (user == "chris" && password == "swiftsage") 
+                        // Send the message only to the intended recipient
+                        let resps = clients[recipient] ?? []
+                        if debugging {
+                            print("auth resps = \(resps)")
+                        }
+
+                        resps.forEach { recipientSocket in
+                            if debugging {
+                                print("Received MESSAGE from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(message)")// using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
+                            }
+                            let logData: [String: String] = ["recipient": recipient, "message": message]
+                            do {
+                                let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                let logString = String(data: logJSON, encoding: .utf8)
+
+                                recipientSocket.send(logString ?? "")
+                                if debugging {
+                                    print("Sent auth cmd from server to Swift binary.")
+                                }
+                            }
+                            catch {
+                                print("error writing auth cmd")
+                            }
+                        }
+                    }
+// END HANDLE MESSAGES **********************************************************************************************************************************
+
+// START HANDLE COMMANDS ********************************************************************************************************************************
+                    else if let recipient = json?["recipient"] as? String,
+                            let command = json?["command"] as? String {
+                        print("\(command)")
+
+                        let senderSettings = userSettings[user] ?? freshConfig()
+                        let recipientSettings = userSettings[recipient] ?? freshConfig()
+
+
+                        let fromUser = json?["from"] as? String
+                        if debugging {
+                            print("FROM: \(fromUser)")
+                        }
+                        let resps = clients[recipient] ?? []
+                        if debugging {
+                            print("cmd resps = \(resps)")
+                        }
+
+                        resps.forEach { recipientSocket in
+                            if debugging {
+                                print("Received COMMAND from \(user) or fromUser:\(fromUser) to \(recipient): ws\(recipientSocket)command:\(command) using sender settings: \(senderSettings) and recipient settings: \(recipientSettings)")
+                            }
+                            let logData: [String: String] = ["recipient": recipient, "command": command]
+                            do {
+                                let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                let logString = String(data: logJSON, encoding: .utf8)
+                                recipientSocket.send(logString ?? "")
+                                if debugging {
+                                    print("Sent auth cmd from server to Swift binary.")
+                                }
+                            }
+                            catch {
+                                print("error writing auth cmd")
+                            }
+
+
+                        }
+                    } else {
+                        ws.send("Invalid command format")
+                    }
+                }
+                catch {
+                    print("error = \(error)")
+                }
+            }
+// END HANDLE COMMANDS ********************************************************************************************************************************
+
+// START HANDLE AUTH ********************************************************************************************************************************
+
+            // IF NOT AUTHED
+
+            else {
+                if debugging {
+                    print("No auth for this req, attempting to auth...")
+                }
+                // Try to parse the received text as JSON
+                do {
+                    let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: [.allowFragments]) as? [String: String]
+
+                    if debugging {
+
+                        print("Got JSON = \(json)")
+                    }
+                    // Validate username and password
+                    if let user = json?["username"],  let password = json?["password"],
+                       (user == "chris" && password == "swiftsage")
                         ||
-                        (user == "SERVER" && password == "supers3cre3t") 
+                        (user == "SERVER" && password == "supers3cre3t")
                         ||
-                        (user == "hackerman" && password == "swiftsage")                         
+                        (user == "hackerman" && password == "swiftsage")
                         ||
                         (user == "chuck" && password == "swiftsage")  {
-                            
-                            // Authenticate the user
-                            username = user
-                            if clients[user] == nil {
-                                clients[user] = []
-                            }
-                            clients[user]?.append(ws)
 
+                        // Authenticate the user
+                        username = user
+                        if clients[user] == nil {
+                            clients[user] = []
+                        }
+                        clients[user]?.append(ws)
+                        if debugging {
                             print("Authentication of \(user):\(ws) succeeded")
+                        }
 
-
-                            let resps = clients["SERVER"] ?? []
+                        let resps = clients["SERVER"] ?? []
+                        if debugging {
                             print("auth resps = \(resps)")
-
-                            resps.forEach { recipientSocket in
+                        }
+                        resps.forEach { recipientSocket in
+                            if debugging {
                                 print("Received message fpr recipientSocket = \(recipientSocket)")
-                                    // send server auth cmd
-                                    let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
-                                    do {
-                                        let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
-                                        let logString = String(data: logJSON, encoding: .utf8)
-                                        ws.send(logString ?? "")
+                            }
+                            // send server auth cmd
+                            let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
+                            do {
+                                let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                let logString = String(data: logJSON, encoding: .utf8)
+                                ws.send(logString ?? "")
 
-                                       recipientSocket.send(logString ?? "")
-                                       print("Sent auth cmd from server to Swift binary.")
+                                recipientSocket.send(logString ?? "")
+                                if debugging {
+                                    print("Sent auth cmd from server to Swift binary.")
+                                }
 
-
-                                    }
-                                    catch {
-                                        print("error writing auth cmd")
-                                    }
+                            }
+                            catch {
+                                print("error writing auth cmd")
                             }
                         }
-                        else {
-                            print("Invalid username or password)")
-                        }
-                    } catch {
-                        print("Invalid JSON)")
                     }
+                    else {
+                        print("Invalid username or password)")
+                    }
+                } catch {
+                    print("Invalid JSON)")
                 }
             }
             fflush(stdout)
 
         }
+// END HANDLE AUTH ********************************************************************************************************************************
+
+// START BINARY DATA HANDLING ********************************************************************************************************************************
         ws.onBinary { ws, data in
             if debugging {
 
@@ -219,7 +236,7 @@ public func configure(_ app: Application) throws {
             }
             for client in connectedClients {
 
-                guard client !== ws else { 
+                guard client !== ws else {
                     if debugging {
                         print("skipping self")
                     }
@@ -232,6 +249,7 @@ public func configure(_ app: Application) throws {
                 client.send(data)
             }
         }
+// END BINARY DATA HANDLING ********************************************************************************************************************************
 
         ws.onClose.whenComplete { result in
             if true {
@@ -240,29 +258,18 @@ public func configure(_ app: Application) throws {
                     if clients[user]?.isEmpty ?? false {
                         clients.removeValue(forKey: user)
                     }
-                    print("Client disconnected: \(user)")
+                    if debugging {
+                        print("Client disconnected: \(user)")
+                    }
                 }
             }
-            // else {
-
-            //     switch result {
-            //     case .success:
-            //         if debugging {
-
-            //             print("Client disconnected")
-            //         }
-            //     case .failure(let error):
-            //         print("Client disconnected with error: \(error)")
-            //     }
-            // }
         }
     }
-    // dns-sd -R "MyWebSocketServer" _websocket._tcp . 8080
-  advertise()
+    advertise()
 }
 
 func advertise() {
-     // Start advertising the WebSocket server using Bonjour
+    // Start advertising the WebSocket server using Bonjour
     let serviceName = "SwiftSageServer"
     let serviceType = "_sagess._tcp"
     let servicePort = 8080
@@ -278,37 +285,10 @@ func advertise() {
     }
 }
 
-// func unicodeScalarFromString(_ text: String) -> Unicode.Scalar? {
-//     if text != nil && !text.isEmpty {
-//         if text.unicodeScalars.isEmpty { return nil }
-//         if let scalar = text.unicodeScalars.first, text.unicodeScalars.count == 1 {
-//             return scalar
-//         }
-//     }
-//     return nil
-// }
-
-// func updateMessageBuffer(with message: String) {
-//     if !message.hasPrefix("say") {
-//         messageBuffer.append(message)
-//     }
-
-//     if messageBuffer.count > bufferSize {
-//         messageBuffer.removeFirst()
-//     }
-// }
-
-// func sendBufferedMessages(to ws: WebSocket) {
-//     messageBuffer.forEach { message in
-//         ws.send(message)
-//     }
-// }
-
-
+// TODO: Actually implement server side settings.
 var userSettings: [String: Config] = [:]
 
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
-
 
 enum InputMode {
     case loading
@@ -325,30 +305,29 @@ struct TriviaQuestion {
 }
 
 func freshConfig() -> Config {
- Config(
-    projectName: "MyApp",
-    globalErrors: [String](),
-    manualPromptString: "",
-    blockingInput: false,
-    promptingRetryNumber: 0,
-    lastFileContents: [String](),
-    lastNameContents: [String](),
-    searchResultHeadingGlobal: nil,
-    appName: "MyApp",
-    appType: "iOS",
-    appDesc: builtInAppDesc,
-    language: "Swift",
-    conversational: false,
-    streak: 0,
-    chosenTQ: nil,
-    promptMode: .normal,
-    // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-    enableGoogle: false,
-    enableLink: false,
-    loadMode: LoadMode.dots
-)
+    Config(
+        projectName: "MyApp",
+        globalErrors: [String](),
+        manualPromptString: "",
+        blockingInput: false,
+        promptingRetryNumber: 0,
+        lastFileContents: [String](),
+        lastNameContents: [String](),
+        searchResultHeadingGlobal: nil,
+        appName: "MyApp",
+        appType: "iOS",
+        appDesc: builtInAppDesc,
+        language: "Swift",
+        conversational: false,
+        streak: 0,
+        chosenTQ: nil,
+        promptMode: .normal,
+        // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
+        enableGoogle: false,
+        enableLink: false,
+        loadMode: LoadMode.dots
+    )
 }
-
 
 struct Config {
     var projectName: String
@@ -378,7 +357,6 @@ struct Config {
     var enableLink: Bool
 
     var loadMode: LoadMode
-
 }
 
 enum LoadMode {
