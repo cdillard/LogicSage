@@ -8,15 +8,13 @@
 import Foundation
 func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent], accessToken: String, completionHandler: @escaping (Result<Void, Error>) -> Void) {
     let dispatchGroup = DispatchGroup()
-    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+    let documentsDirectory = getDocumentsDirectory()
+    var fDex = 0
     for file in files {
         dispatchGroup.enter()
 
         if file.type == "file", let downloadUrl = file.downloadUrl {
 
-
-            
             var request = URLRequest(url: URL(string: downloadUrl)!)
             request.setValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
 
@@ -41,7 +39,10 @@ func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent],
                     do {
                         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
                         try data.write(to: fileURL)
-                        //logD("Wrote \(fileURL)")
+
+                        fDex += 1
+
+                        logD("Wrote (\(fDex)/\(files.count)): \(fileURL)")
 
                     } catch {
                         logD("error writing file: \(error)")
@@ -54,7 +55,11 @@ func downloadAndStoreFiles(_ rootFile: GitHubContent?, _ files: [GitHubContent],
 
         }
         else if file.type == "dir" && file.children?.isEmpty == false {
-            downloadAndStoreFiles(file, file.children ?? [], accessToken: SettingsViewModel.shared.ghaPat) { success in
+            let childArr = file.children ?? []
+//            logD("Downloading \(childArr.count) files from child dir...")
+            fDex += 1
+
+            downloadAndStoreFiles(file, childArr, accessToken: SettingsViewModel.shared.ghaPat) { success in
                 defer { dispatchGroup.leave() }
                 switch success {
                 case .success(_):

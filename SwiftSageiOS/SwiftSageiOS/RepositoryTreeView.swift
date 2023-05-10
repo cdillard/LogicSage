@@ -74,7 +74,7 @@ struct RepositoryTreeView: View {
     private func fileTapped(_ file: GitHubContent, _ frame: CGRect) {
         print("Tapped file: \(file.path)")
 
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentsDirectory = getDocumentsDirectory()
 
         let fileURL = documentsDirectory.appendingPathComponent(settingsViewModel.gitUser).appendingPathComponent(settingsViewModel.gitRepo).appendingPathComponent(settingsViewModel.gitBranch).appendingPathComponent(file.path)
         let fileContent = readFileContents(url: fileURL) ?? "Failed to read the file"

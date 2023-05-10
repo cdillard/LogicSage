@@ -562,18 +562,23 @@ public class SettingsViewModel: ObservableObject {
 
 
         // BEGIN LOAD SAVED GIT REPO
-        let openRepoKey = "\(gitUser)/\(gitRepo)/\(gitBranch)"
+        let openRepoKey = currentGitRepoKey()
 
-        if let retrievedObject = retrieveGithubContentFromUserDefaults(forKey: openRepoKey) {
+        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
             self.rootFiles = retrievedObject.compactMap { $0 }
 
-            print("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
+            logD("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
 
         } else {
-            print("Failed to retrieve saved git repo...")
+            logD("Failed to retrieve saved git repo...")
         }
         // END LOAD SAVED GIT REPO
     }
+
+    func currentGitRepoKey() -> String {
+        "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
+    }
+    static let gitKeySeparator = "-sws-"
 
 }
 
@@ -619,72 +624,4 @@ extension Color: RawRepresentable {
 }
 #endif
 
- let maxFolderTraversalDepth = 3
 
-extension SettingsViewModel {
-    func loadDirectories() -> [URL] {
-          let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        var retDir = [URL]()
-
-          do {
-              retDir = try listDirectories(at: documentsDirectory, depth: 1)
-          } catch {
-              print("Error loading directories: \(error)")
-          }
-
-        return retDir
-      }
-
-    func listDirectories(at url: URL, depth: Int) throws -> [URL] {
-        guard depth <= maxFolderTraversalDepth else { return [] }
-
-        let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: .skipsHiddenFiles)
-        var retDir = [URL]()
-        for content in directoryContents {
-            let resourceValues = try content.resourceValues(forKeys: Set([URLResourceKey.isDirectoryKey]))
-            let isDirectory = resourceValues.isDirectory ?? false
-            if isDirectory {
-                if depth == 3 {
-                    retDir.append(content)
-                }
-                let childs = try listDirectories(at: content, depth: depth + 1)
-                retDir += childs
-            }
-        }
-        return retDir
-    }
-}
-// Function to save a MyObject instance to UserDefaults
-func saveGithubContentUserDefaults(object: [GitHubContent], forKey key: String) {
-    let userDefaults = UserDefaults.standard
-
-    // 2. Use JSONEncoder to encode your object into Data
-    let encoder = JSONEncoder()
-    do {
-         let encodedData = try encoder.encode(object)
-            // 3. Save the encoded data to UserDefaults
-        userDefaults.set(encodedData, forKey: key)
-
-    }
-    catch {
-        print("failed w error = \(error)")
-    }
-}
-func retrieveGithubContentFromUserDefaults(forKey key: String) -> [GitHubContent]? {
-    let userDefaults = UserDefaults.standard
-
-    // 4. Retrieve the data from UserDefaults
-    if let savedData = userDefaults.object(forKey: key) as? Data {
-        do {
-
-            // 5. Use JSONDecoder to decode the data back into your custom object
-            let decoder = JSONDecoder()
-            return try decoder.decode([GitHubContent].self, from: savedData)
-        }
-        catch {
-            print("failed w error = \(error)")
-
-        }
-    }
-    return nil
-}

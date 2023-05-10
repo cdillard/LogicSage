@@ -39,394 +39,319 @@ struct SettingsView: View {
     @FocusState private var field5IsFocused: Bool
     @FocusState private var field6IsFocused: Bool
     @FocusState private var field7IsFocused: Bool
-
+    @State private var scrollViewID = UUID()
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
+                    Group {
+                        HStack {
+                            Text("Settings:")
+                                .font(.body)
+
+                                .padding(.bottom)
+
+                            Text("for more scroll down 📜⬇️")
+                                .font(.body)
+
+                                .padding(.bottom)
+                        }
+                        // TERMINAL COLORS SETTINGS ZONE
                         Group {
-                            HStack {
-                                Text("Settings:")
-                                    .font(.body)
-
-                                    .padding(.bottom)
-
-                                Text("for more scroll down 📜⬇️")
-                                    .font(.body)
-
-                                    .padding(.bottom)
-                            }
-                            // TERMINAL COLORS SETTINGS ZONE
                             Group {
-                                Group {
-                                    VStack(alignment: .leading, spacing: 3) {
+                                VStack(alignment: .leading, spacing: 3) {
 
-                                        ColorPicker("Terminal Background Color", selection: $settingsViewModel.terminalBackgroundColor)
-                                            .padding(.horizontal, 8)
-                                    }
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Terminal Text Color", selection: $settingsViewModel.terminalTextColor)
-                                            .padding(.horizontal, 8)
-                                    }
+                                    ColorPicker("Terminal Background Color", selection: $settingsViewModel.terminalBackgroundColor)
+                                        .padding(.horizontal, 8)
                                 }
-                                Group {
-                                    VStack(alignment: .leading, spacing: 3) {
+                                VStack(alignment: .leading, spacing: 3) {
 
-                                        ColorPicker("Button Color", selection: $settingsViewModel.buttonColor)
-                                            .padding(.horizontal, 8)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Background Color", selection: $settingsViewModel.backgroundColor)
-                                            .padding(.horizontal, 8)
-                                    }
+                                    ColorPicker("Terminal Text Color", selection: $settingsViewModel.terminalTextColor)
+                                        .padding(.horizontal, 8)
                                 }
                             }
-                            // SOURCE EDITOR COLORS SETTINGS ZONE
                             Group {
-                                Text("\(settingsViewModel.showSourceEditorColorSettings ? "hide" : "show") srceditor colors").font(.body)
-                            }
-                            .onTapGesture {
-                                settingsViewModel.showSourceEditorColorSettings.toggle()
-                            }
-                            if settingsViewModel.showSourceEditorColorSettings {
-                                Group {
-                                    VStack(alignment: .leading, spacing: 3) {
+                                VStack(alignment: .leading, spacing: 3) {
 
-                                        ColorPicker("Plain srceditor clr", selection: $settingsViewModel.plainColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-                                    VStack(alignment: .leading, spacing: 3) {
+                                    ColorPicker("Button Color", selection: $settingsViewModel.buttonColor)
+                                        .padding(.horizontal, 8)
+                                }
 
-                                        ColorPicker("Number srceditor clr", selection: $settingsViewModel.numberColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-                                    VStack(alignment: .leading, spacing: 3) {
+                                VStack(alignment: .leading, spacing: 3) {
 
-                                        ColorPicker("String srceditor clr", selection: $settingsViewModel.stringColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Identifier srceditor clr", selection: $settingsViewModel.identifierColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Keyword srceditor clr", selection: $settingsViewModel.keywordColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Comment srceditor clr", selection: $settingsViewModel.commentColorSrceEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Editor plchold srceditor clr", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Bg srceditor clr", selection: $settingsViewModel.backgroundColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
-                                    VStack(alignment: .leading, spacing: 3) {
-
-                                        ColorPicker("Line number srceditor clr", selection: $settingsViewModel.lineNumbersColorSrcEditor)
-                                            .padding(.horizontal, 8)
-                                    }
+                                    ColorPicker("Background Color", selection: $settingsViewModel.backgroundColor)
+                                        .padding(.horizontal, 8)
                                 }
                             }
-                            // MODE PICKER
+                        }
+                        // SOURCE EDITOR COLORS SETTINGS ZONE
+                        Group {
+                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "hide" : "show") srceditor colors").font(.body)
+                        }
+                        .onTapGesture {
+                            settingsViewModel.showSourceEditorColorSettings.toggle()
+                        }
+                        if settingsViewModel.showSourceEditorColorSettings {
                             Group {
-                                Text("sws mode").font(.body)
-                                DevicePicker(settingsViewModel: settingsViewModel)
-                                
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Plain srceditor clr", selection: $settingsViewModel.plainColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Number srceditor clr", selection: $settingsViewModel.numberColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("String srceditor clr", selection: $settingsViewModel.stringColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Identifier srceditor clr", selection: $settingsViewModel.identifierColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Keyword srceditor clr", selection: $settingsViewModel.keywordColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Comment srceditor clr", selection: $settingsViewModel.commentColorSrceEditor)
+                                        .padding(.horizontal, 8)
+                                }
+
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Editor plchold srceditor clr", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Bg srceditor clr", selection: $settingsViewModel.backgroundColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
+                                VStack(alignment: .leading, spacing: 3) {
+
+                                    ColorPicker("Line number srceditor clr", selection: $settingsViewModel.lineNumbersColorSrcEditor)
+                                        .padding(.horizontal, 8)
+                                }
                             }
-                            VStack(alignment: .leading) {
-                                if settingsViewModel.currentMode == .computer {
-                                    HStack {
-                                        Text("sws username: ").font(.body)
-                                        TextEditor(text: $settingsViewModel.userName)
-                                            .submitLabel(.done)
-                                            .scrollDismissesKeyboard(.interactively)
+                        }
+                        // MODE PICKER
+                        Group {
+                            Text("sws mode").font(.body)
+                            DevicePicker(settingsViewModel: settingsViewModel)
 
-                                            .font(.footnote)
-                                            .autocorrectionDisabled(true)
+                        }
+                        VStack(alignment: .leading) {
+                            if settingsViewModel.currentMode == .computer {
+                                HStack {
+                                    Text("sws username: ").font(.body)
+                                    TextEditor(text: $settingsViewModel.userName)
+                                        .submitLabel(.done)
+                                        .scrollDismissesKeyboard(.interactively)
+
+                                        .font(.footnote)
+                                        .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                                            .autocapitalization(.none)
+                                        .autocapitalization(.none)
 #endif
-
-                                    }
-                                    .frame(height: 22)
-
-                                    HStack {
-                                        Text("sws password: ").font(.body)
-
-                                        TextEditor(text: $settingsViewModel.password)
-                                            .submitLabel(.done)
-                                            .scrollDismissesKeyboard(.interactively)
-
-                                            .font(.footnote)
-                                            .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                            .autocapitalization(.none)
-#endif
-
-
-                                    }
-                                    .frame(height: 22)
 
                                 }
-                                else if settingsViewModel.currentMode == .mobile {
-                                    HStack {
-                                            VStack {
-                                                Group {
-                                                    HStack {
-                                                        Text("A.I. 🔑: ").font(.body)
+                                .frame(height: 22)
 
-                                                        TextField(
-                                                            "",
-                                                            text: $settingsViewModel.openAIKey
-                                                        )
-                                                        .border(.secondary)
-//                                                        .keyboardType(.done)
-                                                        .submitLabel(.done)
-                                                       // TextField("A.I. 🔑:")
+                                HStack {
+                                    Text("sws password: ").font(.body)
 
-                                                      //  TextEditor(text: $settingsViewModel.openAIKey)
-                                                        
-//                                                                        .onChange(of: $settingsViewModel.openAIKey, perform: { newValue in
-//
-//                                                                        })
-                                                          //  .submitLabel(.done)
-                                                            .focused($field1IsFocused)
+                                    TextEditor(text: $settingsViewModel.password)
+                                        .submitLabel(.done)
+                                        .scrollDismissesKeyboard(.interactively)
 
-
-                                                        //                                                        .onChange(of: $settingsViewModel.openAIKey) { _ in
-                                                        //                                                            if !$settingsViewModel.openAIKey.filter({ $0.isNewline }).isEmpty {
-                                                        //                                                                $field1IsFocused = false
-                                                        //                                                            }
-                                                        //                                                        }
-                                                        //                                                        .keyboardType(.done)
-                                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                            .scrollDismissesKeyboard(.interactively)
-                                                            .font(.caption)
-                                                            .autocorrectionDisabled(true)
+                                        .font(.footnote)
+                                        .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                                                            .autocapitalization(.none)
+                                        .autocapitalization(.none)
 #endif
-                                                    }
-                                                    .frame(height: geometry.size.height / 13)
 
-                                                    HStack {
-                                                        Text("A.I. model: ").font(.body)
-//
-//                                                        TextEditor(text: $settingsViewModel.openAIModel)
-                                                        TextField(
-                                                            "",
-                                                            text: $settingsViewModel.openAIModel
-                                                        )
-                                                        .border(.secondary)
-                                                       // .keyboardType(.done)
-                                                        .submitLabel(.done)
-                                                        //    .submitLabel(.done)
-                                                            .focused($field2IsFocused)
-                                                        //                                                        .onChange(of: $settingsViewModel.openAIModel) { _ in
-                                                        //                                                            if !$settingsViewModel.openAIModel.filter({ $0.isNewline }).isEmpty {
-                                                        //                                                                $field2IsFocused = false
-                                                        //                                                            }
-                                                        //                                                        }
-                                                        // .keyboardType(.done)
-                                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                            .scrollDismissesKeyboard(.interactively)
-                                                            .font(.caption)
-                                                            .autocorrectionDisabled(true)
+
+                                }
+                                .frame(height: 22)
+
+                            }
+                            else if settingsViewModel.currentMode == .mobile {
+                                HStack {
+                                    VStack {
+                                        Group {
+                                            HStack {
+                                                Text("A.I. 🔑: ").font(.body)
+
+                                                TextField(
+                                                    "",
+                                                    text: $settingsViewModel.openAIKey
+                                                )
+                                                .border(.secondary)
+                                                .submitLabel(.done)
+
+                                                .focused($field1IsFocused)
+
+                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                .scrollDismissesKeyboard(.interactively)
+                                                .font(.caption)
+                                                .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                                                            .autocapitalization(.none)
-
+                                                .autocapitalization(.none)
 #endif
-                                                    }
-                                                    .frame(height: geometry.size.height / 13)
-                                                }
-                                                Group {
-                                                    HStack {
-                                                        Text("GHA PAT: ").font(.body)
-////                                                        TextField(
-////                                                            "GHA PAT:",
-////                                                            text: $settingsViewModel.ghaPat
-////                                                        )
-//                                                        TextEditor(text: $settingsViewModel.ghaPat)
-
-                                                        TextField(
-                                                            "",
-                                                            text: $settingsViewModel.ghaPat
-                                                        )
-                                                        .border(.secondary)
-                                                     //   .keyboardType(.done)
-                                                        .submitLabel(.done)
-                                                        //    .submitLabel(.done)
-                                                            .focused($field3IsFocused)
-                                                        //                                                        .onChange(of: $settingsViewModel.ghaPat) { _ in
-                                                        //                                                            if !$settingsViewModel.ghaPat.filter({ $0.isNewline }).isEmpty {
-                                                        //                                                                $field3IsFocused = false
-                                                        //                                                            }
-                                                        //                                                        }
-                                                        // .keyboardType(.done)
-                                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                           // .scrollDismissesKeyboard(.interactively)
-
-                                                            .font(.caption)
-                                                            .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                                            .autocapitalization(.none)
-
-#endif
-                                                    }
-                                                    .frame(height: geometry.size.height / 17)
-
-                                                    HStack {
-                                                        Text("git user: ").font(.body)
-//
-//                                                        TextEditor(text: $settingsViewModel.gitUser)
-//
-
-                                                        TextField(
-                                                            "",
-                                                            text: $settingsViewModel.gitUser
-                                                        )
-                                                        .border(.secondary)
-                                                     //   .keyboardType(.done)
-                                                        .submitLabel(.done)
-                                                         //   .submitLabel(.done)
-                                                            .focused($field4IsFocused)
-                                                        //                                                        .onChange(of: $settingsViewModel.gitUser) { _ in
-                                                        //                                                            if !$settingsViewModel.gitUser.filter({ $0.isNewline }).isEmpty {
-                                                        //                                                                $field4IsFocused = false
-                                                        //                                                            }
-                                                        //                                                        }
-                                                        // .keyboardType(.done)
-                                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                            .scrollDismissesKeyboard(.interactively)
-                                                            .font(.caption)
-                                                            .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                                            .autocapitalization(.none)
-
-#endif
-                                                    }
-                                                    .frame(height: geometry.size.height / 17)
-                                                }
-                                                HStack {
-                                                    Text("git repo: ").font(.body)
-//
-//                                                    TextEditor(text: $settingsViewModel.gitRepo)
-                                                    TextField(
-                                                        "",
-                                                        text: $settingsViewModel.gitRepo
-                                                    )
-                                                    .border(.secondary)
-                                                   // .keyboardType(.done)
-                                                    .submitLabel(.done)
-                                                        //.submitLabel(.done)
-                                                        .focused($field5IsFocused)
-//                                                        .onChange(of: $settingsViewModel.gitRepo) { _ in
-//                                                            if !$settingsViewModel.gitRepo.filter({ $0.isNewline }).isEmpty {
-//                                                                $field5IsFocused = false
-//                                                            }
-//                                                        }
-                                                       // .keyboardType(.done)
-                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                        .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
-                                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                                        .autocapitalization(.none)
-
-#endif
-                                                }
-                                                .frame(height: geometry.size.height / 17)
-                                                HStack {
-                                                    Text("git branch: ").font(.body)
-//
-//                                                    TextEditor(text: $settingsViewModel.gitBranch)
-
-                                                    TextField(
-                                                        "",
-                                                        text: $settingsViewModel.gitBranch
-                                                    )
-                                                    .border(.secondary)
-                                                //    .keyboardType(.done)
-                                                    .submitLabel(.done)
-                                                        //.submitLabel(.done)
-                                                        .focused($field6IsFocused)
-//                                                        .onChange(of: $settingsViewModel.gitBranch) { _ in
-//                                                            if !$settingsViewModel.gitBranch.filter({ $0.isNewline }).isEmpty {
-//                                                                $field6IsFocused = false
-//                                                            }
-//                                                        }
-                                                        //.keyboardType(.done)
-                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                        .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
-                                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                                        .autocapitalization(.none)
-
-#endif
-                                                }
-                                                .frame(height: geometry.size.height / 17)
-
-                                                HStack {
-                                                    Text("default webview url: ").font(.body)
-//
-//                                                    TextEditor(text: $settingsViewModel.defaultURL)
-
-                                                    TextField(
-                                                        "",
-                                                        text: $settingsViewModel.defaultURL
-                                                    )
-                                                    .border(.secondary)
-                                                     //   .keyboardType(.done)
-                                                        .submitLabel(.done)
-
-                                                        .focused($field7IsFocused)
-//                                                        .onChange(of: $settingsViewModel.defaultURL) { _ in
-//                                                            if !$settingsViewModel.defaultURL.filter({ $0.isNewline }).isEmpty {
-//                                                                $field7IsFocused = false
-//                                                            }
-//                                                        }
-                                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                        .scrollDismissesKeyboard(.interactively)
-                                                        .font(.caption)
-                                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                                        .autocapitalization(.none)
-
-#endif
-                                                }
-                                                .frame(height: geometry.size.height / 17)
                                             }
+                                            .frame(height: geometry.size.height / 13)
+
+                                            HStack {
+                                                Text("A.I. model: ").font(.body)
+
+                                                TextField(
+                                                    "",
+                                                    text: $settingsViewModel.openAIModel
+                                                )
+                                                .border(.secondary)
+                                                .submitLabel(.done)
+                                                .focused($field2IsFocused)
+
+                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                .scrollDismissesKeyboard(.interactively)
+                                                .font(.caption)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                .autocapitalization(.none)
+
+#endif
+                                            }
+                                            .frame(height: geometry.size.height / 13)
+                                        }
+                                        Group {
+                                            HStack {
+                                                Text("GHA PAT: ").font(.body)
+
+
+                                                TextField(
+                                                    "",
+                                                    text: $settingsViewModel.ghaPat
+                                                )
+                                                .border(.secondary)
+                                                .submitLabel(.done)
+                                                .focused($field3IsFocused)
+                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                .font(.caption)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                .autocapitalization(.none)
+
+#endif
+                                            }
+                                            .frame(height: geometry.size.height / 17)
+
+                                            HStack {
+                                                Text("git user: ").font(.body)
+
+                                                TextField(
+                                                    "",
+                                                    text: $settingsViewModel.gitUser
+                                                )
+                                                .border(.secondary)
+                                                .submitLabel(.done)
+                                                .focused($field4IsFocused)
+
+                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                .scrollDismissesKeyboard(.interactively)
+                                                .font(.caption)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                                .autocapitalization(.none)
+
+#endif
+                                            }
+                                            .frame(height: geometry.size.height / 17)
+                                        }
+                                        HStack {
+                                            Text("git repo: ").font(.body)
+
+                                            TextField(
+                                                "",
+                                                text: $settingsViewModel.gitRepo
+                                            )
+                                            .border(.secondary)
+                                            .submitLabel(.done)
+                                            .focused($field5IsFocused)
                                             .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                            .scrollDismissesKeyboard(.interactively)
+                                            .font(.caption)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                            .autocapitalization(.none)
+#endif
+                                        }
+                                        .frame(height: geometry.size.height / 17)
+                                        HStack {
+                                            Text("git branch: ").font(.body)
+
+                                            TextField(
+                                                "",
+                                                text: $settingsViewModel.gitBranch
+                                            )
+                                            .border(.secondary)
+                                            .submitLabel(.done)
+                                            .focused($field6IsFocused)
+                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                            .scrollDismissesKeyboard(.interactively)
+                                            .font(.caption)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                            .autocapitalization(.none)
+
+#endif
+                                        }
+                                        .frame(height: geometry.size.height / 17)
+
+                                        HStack {
+                                            Text("default webview url: ").font(.body)
+
+                                            TextField(
+                                                "",
+                                                text: $settingsViewModel.defaultURL
+                                            )
+                                            .border(.secondary)
+                                            .submitLabel(.done)
+
+                                            .focused($field7IsFocused)
+                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                            .scrollDismissesKeyboard(.interactively)
+                                            .font(.caption)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                            .autocapitalization(.none)
+
+#endif
+                                        }
+                                        .frame(height: geometry.size.height / 17)
                                     }
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                                 }
                             }
+                        }
                     }
                     VStack(alignment: .leading, spacing: 0) {
                         Group {
@@ -583,7 +508,6 @@ struct SettingsView: View {
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.bottom)
 
-
                     // ENABLE MIC BUTTON
                     Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -594,13 +518,12 @@ struct SettingsView: View {
                             consoleManager.print("Requesing mic permission...")
 #endif
                             requestMicrophoneAccess { granted in
-//                                microphoneAccess = granted
                                 settingsViewModel.hasAcceptedMicrophone = granted == true
                             }
                         }
                     }) {
                         resizableButtonImage(systemName:
-                                            "mic.badge.plus",
+                                                "mic.badge.plus",
                                              size: geometry.size)
                         .fontWeight(.bold)
                         .background(settingsViewModel.buttonColor)
@@ -637,10 +560,6 @@ struct SettingsView: View {
                                                     settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
                                                  size: geometry.size)
                             .fontWeight(.bold)
-                            //.foregroundColor(.white)
-                            //                        .padding(.horizontal, 40)
-                            //                        .padding(.vertical, 12)
-                            //.background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
                         }
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -653,7 +572,6 @@ struct SettingsView: View {
                                     settingsViewModel.duckingAudio.toggle()
                                     
                                 }
-                                
                             } label: {
                                 ZStack {
                                     VStack {
@@ -703,7 +621,6 @@ struct SettingsView: View {
                                 }
                                 .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
                             }
-
                         }
 
                         HStack {
@@ -760,60 +677,15 @@ struct SettingsView: View {
                                     }
                                     .padding(.bottom)
                                 }
-// TODO: Implement changing mac os voice from ios app
-//                                if settingsViewModel.currentMode == .computer {
-//                                    Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") MACOS audio output")
-//                                    Button  {
-//                                        withAnimation {
-//#if !os(macOS)
-//                                            print("TODO: IMPLEMENT ENABLE/DISABLE MAC OS AUDIO FROM IOS")
-//                                            //                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-//                                            //                                    if settingsViewModel.voiceOutputenabled {
-//                                            //                                        stopVoice()
-//                                            //                                    }
-//                                            //                                    else {
-//                                            //                                        configureAudioSession()
-//                                            //                                    }
-//                                            //                                    settingsViewModel.voiceOutputenabled.toggle()
-//                                            //                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
-//
-//#endif
-//                                        }
-//
-//                                    } label: {
-//                                        resizableButtonImage(systemName:
-//                                                                settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
-//                                                             size: geometry.size)
-//                                        .fontWeight(.bold)
-//                                        //                                    .foregroundColor(.white)
-//                                        //                                    .padding(.horizontal, 40)
-//                                        //                                    .padding(.vertical, 12)
-//                                        .background(settingsViewModel.buttonColor)
-//                                        .cornerRadius(8)
-//                                    }
-//                                }
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                             Spacer()
                         }
-
-//                        if settingsViewModel.currentMode == .computer {
-//
-//                            Text("Pick macOS server voice")
-//
-//                            List(cereprocVoicesNames, id: \.self) { name in
-//                                Text(name)
-//                                    .frame(height: 30)
-//                            }
-//                            .frame(height: CGFloat(cereprocVoicesNames.count * 40))
-//                        }
-
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                     Spacer()
-
 
                     HStack {
                         Button(action: {
@@ -825,13 +697,12 @@ struct SettingsView: View {
                                 field5IsFocused = false
                                 field6IsFocused = false
                                 field7IsFocused = false
-
+                                scrollViewID = UUID()
                                 showSettings.toggle()
                             }
                         }) {
                             Text("Close")
                                 .fontWeight(.bold)
-//                                .foregroundColor(.white)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 8)
                                 .background(settingsViewModel.buttonColor)
@@ -856,7 +727,7 @@ struct SettingsView: View {
                 UIScrollView.appearance().bounces = false
 #endif
             }
-
+            .id(self.scrollViewID)
             .scrollIndicators(.visible)
         }
     }
@@ -869,7 +740,7 @@ struct SettingsView: View {
             .tint(settingsViewModel.buttonColor)
 #if !os(macOS)
 
-                .background(settingsViewModel.backgroundColor)
+            .background(settingsViewModel.backgroundColor)
 #endif
 
     }
@@ -887,7 +758,6 @@ struct SettingsView: View {
     }
 }
 
-
 struct DevicePicker: View {
     @State  var isExpanded = true
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -904,7 +774,6 @@ struct DevicePicker: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
-               //     .foregroundColor(settingsViewModel.buttonColor)
 #if !os(macOS)
 
                     .background(settingsViewModel.backgroundColor)
@@ -920,7 +789,6 @@ struct DevicePicker: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
-   //                 .foregroundColor(settingsViewModel.buttonColor)
 #if !os(macOS)
 
                     .background(settingsViewModel.backgroundColor)
@@ -939,10 +807,4 @@ struct DevicePicker: View {
         }
     }
 }
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-#endif
+

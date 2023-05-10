@@ -78,6 +78,8 @@ func main() {
     audioRecorder = AudioRecorder(outputFileURL: audioOut)
 
     if config.voiceInputEnabled {
+        multiPrinter("Voice INPUT ENABLED in sws")
+
         requestMicrophoneAccess { granted in
             if granted {
                 multiPrinter("Microphone access granted.")
@@ -90,9 +92,20 @@ func main() {
         }
     }
     else {
-        multiPrinter("Voice output disabled in sws")
+        multiPrinter("Voice INPUT disabled in sws")
 
     }
+
+    if config.voiceOutputEnabled {
+        multiPrinter("Voice OUTPUT ENABLED in sws")
+
+    }
+    else {
+        multiPrinter("Voice OUTPUT disabled in sws")
+
+    }
+
+
 
     DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 

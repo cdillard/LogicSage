@@ -16,13 +16,9 @@ let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
-//    \(openLinePrintCount == 0 ? "\(randomAscii())" : "")
-//    \(randomAscii())
-//    \((logV == .verbose && overrideV) ? commandsText() : "")
-    let openLine = """
+    """
     🔍:
     """
-    return openLine
 }
 
 var openLinePrintCount = 0

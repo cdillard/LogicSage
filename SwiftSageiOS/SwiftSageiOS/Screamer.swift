@@ -24,10 +24,14 @@ class ScreamClient: WebSocketDelegate {
         case .connected(let headers):
             isConnected = true
 
+#if !os(macOS)
 
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
 
             logD("WebSocket connected a \(devType) device.\n\(headers)\n\(SettingsViewModel.shared.logoAscii5())")
+#else
+            logD("WebSocket connected a Mac device.\n\(headers)\n\(SettingsViewModel.shared.logoAscii5())")
+#endif
 
             let authData: [String: Any] = ["username": SettingsViewModel.shared.userName, "password": SettingsViewModel.shared.password]
             do {
