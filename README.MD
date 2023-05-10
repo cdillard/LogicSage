@@ -35,6 +35,18 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ---
 05-09-2023
+There will be bugs
+
+I'm working to resolve the issues with battery drain and multi-window behavior. I'm working to fix the apps performance when there is many windows or repositories of large size open.
+ROADMAP:
+
+I'm adding "write" git features to this app. You will be able to push and pull, git fetch and view commits, make a branch or a PR. A.I. Will be integrated in such a way that your commit messages and PR titles and descriptions and code such as documenation will be augmented with A.I. generated text.
+
+Movies mode, Debate mode enhancements, and more! 
+
+---
+
+05-09-2023
 
 [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
