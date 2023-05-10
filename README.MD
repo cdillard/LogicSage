@@ -5,7 +5,19 @@
 
 ## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
 
-DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+
+## Table of Contents
+- News, Changelog
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
+- [Features](#features)
+- [Credits](#credits)
+- [Contact](#contact)
 
 ---
 ## Contact
@@ -13,7 +25,6 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
-
 
 SwiftSage is a cutting-edge technology that integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation, streamlines coding in Xcode projects, and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub.
 
@@ -38,6 +49,7 @@ SwiftSage provides numerous features to accelerate software development and impr
 There will be bugs
 
 I'm working to resolve the issues with battery drain and multi-window behavior. I'm working to fix the apps performance when there is many windows or repositories of large size open.
+
 ROADMAP:
 
 I'm adding "write" git features to this app. You will be able to push and pull, git fetch and view commits, make a branch or a PR. A.I. Will be integrated in such a way that your commit messages and PR titles and descriptions and code such as documenation will be augmented with A.I. generated text.
@@ -49,11 +61,6 @@ Movies mode, Debate mode enhancements, and more!
 05-09-2023
 
 [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
-
-For my SwiftSage readers here I have something special: I will provide the latest TestFlight beta version for your feedback and review in my updates. 
-
-https://testflight.apple.com/join/FhTLIHnj
-
 
 Feedback in Github Issues please! Thank you if you try!
 
@@ -173,30 +180,17 @@ More screenshots at the bottom
 
 SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
 
-
-## Why did I make this?
-
-![LogicSage1](Swifty-GPT/assets/iOSsws1.PNG)
-![LogicSage2](Swifty-GPT/assets/iOSsws2.PNG)
-![LogicSage3](Swifty-GPT/assets/iOSsws3.PNG)
-
-
-
-## Table of Contents
-- News, Changelog
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [Features](#features)
-- [Credits](#credits)
-- [Contact](#contact)
-
-
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
 2. Navigate to the project directory: `cd SwiftSage`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
+
+
+## Configuration
+1. Open `Swifty-GPT.xcworkspace`.
+2. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+3. Enjoy!
+
 
 ## Installation
 ### Dependencies
@@ -216,7 +210,6 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 #### Installing XcodeGen and Xcodeproj
 1. Install XcodeGen: `brew install xcodegen`
 2. Install Xcodeproj: `gem install xcodeproj`
-
 
 ## SET API KEYS
 SET API KEYS: You'll need to track down the following keys to fully experience SwiftSage.
@@ -242,12 +235,6 @@ Check Config.swift for the config.
 
 You can turn on asciiAnimations for fun or turn them off for fun. Your choice.
 
-
-## Configuration
-1. Open `Swifty-GPT.xcworkspace`.
-2. Set `OPEN_AI_KEY`.
-3. Enjoy!
-
 -More : Move InputText and IdeaText to your `~Documents/SwiftyGPTWorkspace/`, this will be your primary entry point for idea and gpt prompts. The xcode terminal does not support pasting multiple lines of code so this is the best way. Use gptFile, ideaFile to execute.
 
 ### Path Configuration
@@ -269,36 +256,6 @@ Check the following out for the much shorter list of iOS commands for mobile mod
 https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift
 
 
-### OCR Models (not needed currently)
-Download the necessary OCR models and place them in the corresponding directories:
-1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
-2. [tessdata](https://github.com/tesseract-ocr/tessdata)
-3. [tessdata_best](https://github.com/tesseract-ocr/tessdata_best)
-
-### Voice Command
-Download the desired datasets from [Hugging Face](https://huggingface.co/ggerganov/whisper.cpp/tree/main) and place them in `Swifty-GPT/Swifty-GPT/Model`:
-- ggml-large.bin
-- ggml-medium.en.bin
-- ggml-large-v1.bin
-- ggml-base.en.bin
-- ggml-small.en.bn
-
----
-## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed unless you want decent sounding voices)
-
-If you would not like to hear ANYTHING from this tool please set `let voiceOutputEnabled = false`
-
--MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
-
-WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
-```
-// What YOU don't like the goofy robotic voices built in to Mac OS????
-// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
-```
-Just install the voices you want to Mac OS TTS, once they are installed check out their identifier in Sw-S with (5) and add them to the config.swift.
-
-FIND/BUY/INSTALL THE VOICE YOU FANCY.
-https://www.cereproc.com
 
 
 ## UNDERSTANDING THE SWIFT SAGE COMPONENTS!
@@ -394,3 +351,45 @@ Thanks to Mike Bruin for keeping the Plist safe.
 
 ---
 Unlocking the Power of the Future: Exploring the Intersection of Mobile and Artificial General Intelligence Programming. In this project, an expert in the field of mobile technology works on ways in which these two fields are converging and changing the way we interact with technology. From the impact of machine learning on mobile apps to the future of robotics and automation, this project explores the cutting edge of innovation and speculates on what the future may hold. Join me as we delve into the possibilities of a world transformed by the power of technology.
+
+
+DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
+
+## Why did I make this?
+
+![LogicSage1](Swifty-GPT/assets/iOSsws1.PNG)
+![LogicSage2](Swifty-GPT/assets/iOSsws2.PNG)
+![LogicSage3](Swifty-GPT/assets/iOSsws3.PNG)
+
+MISC 
+
+### OCR Models (not needed currently)
+Download the necessary OCR models and place them in the corresponding directories:
+1. [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast): Place the contents in `../SwiftyGPTWorkspace/tessdata_fast-main`.
+2. [tessdata](https://github.com/tesseract-ocr/tessdata)
+3. [tessdata_best](https://github.com/tesseract-ocr/tessdata_best)
+
+### Voice Command
+Download the desired datasets from [Hugging Face](https://huggingface.co/ggerganov/whisper.cpp/tree/main) and place them in `Swifty-GPT/Swifty-GPT/Model`:
+- ggml-large.bin
+- ggml-medium.en.bin
+- ggml-large-v1.bin
+- ggml-base.en.bin
+- ggml-small.en.bn
+
+---
+## MAKING BUILT IN MAC OS VOICES THE BEST THEY CAN BE  (Not needed unless you want decent sounding voices)
+
+If you would not like to hear ANYTHING from this tool please set `let voiceOutputEnabled = false`
+
+-MAKE SURE YOU HAVE ALL POSSIBLE MAC OS VOICES INSTALLED BY GOING TO Settings -> Voice -> Spoken Content and downloading them all.
+
+WANT A BETTER AND MORE REALISTIC SOUNDING VOICE????
+```
+// What YOU don't like the goofy robotic voices built in to Mac OS????
+// DISABLED BY DEFAULT: SEE README AND https://www.cereproc.com
+```
+Just install the voices you want to Mac OS TTS, once they are installed check out their identifier in Sw-S with (5) and add them to the config.swift.
+
+FIND/BUY/INSTALL THE VOICE YOU FANCY.
+https://www.cereproc.com
