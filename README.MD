@@ -10,12 +10,11 @@
 
 
 ## Table of Contents
-- News, Changelog
+- [News](#news)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
-- [Features](#features)
 - [Credits](#credits)
 - [Contact](#contact)
 
@@ -42,7 +41,14 @@ SwiftSage provides numerous features to accelerate software development and impr
 - Powerful debugging tool [IN-PROGRESS]
 - Personalized memory storage using a consciousness module [IN-PROGRESS]
 
-## News, Changelog
+## news
+
+---
+05-11-2023
+
+There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues remain. 
+
+Finding the balance between fixes and features and real jobs.
 
 ---
 05-09-2023
