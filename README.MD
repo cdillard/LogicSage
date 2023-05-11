@@ -50,6 +50,41 @@ There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues 
 
 Finding the balance between fixes and features and real jobs.
 
+Actual Themes coming soon. For now you can try these verifiably cool ones by manually entering the sRGB values in settings.
+
+Deep Space Sparkle
+```
+APP / Term Colors:
+    Terminal Background Color - Deep Space Sparkle: #4A646C
+    Terminal Text Color - Mint Cream: #F5FFFA
+    Button Color - Sky Blue Crayola: #76D7EA
+    Background Color - Cultured: #F8F8F8
+
+Source Editor Colors:
+    Source Editor Text Color - Jet Stream: #BBD2D1
+    Source Editor Background Color - Blue Charcoal: #232C33
+    Source Editor String Color - Sulu: #C1D82F
+    Source Editor Identifier Color - Cyan Cornflower Blue: #188BC2
+    Source Editor Comment Color - Medium Candy Apple Red: #E2062C
+```
+
+Hackeresque
+```
+APP / Term Colors:
+    Terminal Background Color - Black: #000000
+    Terminal Text Color - Neon Green: #39FF14
+    Button Color - Steel Teal: #5F7D8E
+    Background Color - Gunmetal: #2C3539
+
+Source Editor Colors:
+
+    Source Editor Text Color - White Smoke: #F5F5F5
+    Source Editor Background Color - Dark Jungle Green: #1A2421
+    Source Editor String Color - Electric Lime: #CCFF00
+    Source Editor Identifier Color - Cadmium Green: #006B3C
+    Source Editor Comment Color - Gray: #808080
+```
+
 ---
 05-09-2023
 There will be bugs
