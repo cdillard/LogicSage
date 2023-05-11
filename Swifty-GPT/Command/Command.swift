@@ -12,9 +12,6 @@ import os.log
 import AVFoundation
 import CoreMedia
 
-
-
-
 func deleteCommand(input: String) {
     multiPrinter("backing up and deleting SwiftSage workspace, as requested")
 
@@ -548,12 +545,8 @@ func sayCommand(input: String) {
     }
 }
 
-func simulatorCommand(input: String) {
-    multiPrinter("If No screen recording permission it won't work.")
-    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
-    VideoCapture.shared.captureSimulatorWindow()
 
-}
+
 
 func setLoadMode(input: String) {
     switch input

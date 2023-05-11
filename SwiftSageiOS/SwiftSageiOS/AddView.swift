@@ -17,6 +17,11 @@ struct AddView: View {
     @EnvironmentObject var windowManager: WindowManager
     @State var currentRoot: GitHubContent?
 
+
+    @State var repoListOpen: Bool = false
+    @State var fileListOpen: Bool = false
+    @State var windowListOpen: Bool = false
+
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
@@ -29,21 +34,18 @@ struct AddView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                VStack(spacing: 4) {
-                    HStack(spacing: 4) {
+                VStack {
+                    HStack {
                         Text("open menu:")
-                            .font(.subheadline)
+                            .font(.headline)
                             .foregroundColor(settingsViewModel.buttonColor)
-
-                            .padding(.bottom)
 
                         Text("for more scroll down 📜⬇️")
-                            .font(.subheadline)
+                            .font(.headline)
                             .foregroundColor(settingsViewModel.buttonColor)
 
-                            .padding(.bottom)
                     }
-                    HStack(spacing: 4) {
+                    HStack {
                         Button(action: {
                             withAnimation {
                                 logD("open new File")
@@ -159,63 +161,93 @@ struct AddView: View {
                     }
 
                     if !settingsViewModel.isLoading {
+                        let repoListMoji = repoListOpen ? "🔽" : "▶️"
+
                         let val = max(3, min(15,settingsViewModel.loadDirectories().count))
-                        Text("Downloaded Repositories")
+                        Text("\(repoListMoji) Downloaded Repositories")
                             .font(.title3)
                             .lineLimit(nil)
                             .fontWeight(.bold)
-                        
-                        NavigationView {
-                            RepositoriesListView(settingsViewModel: settingsViewModel)
-                                .environmentObject(windowManager)
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
+                            .padding()
+
+                            .onTapGesture {
+                                repoListOpen.toggle()
+                            }
+                        if repoListOpen {
+
+
+                            NavigationView {
+                                RepositoriesListView(settingsViewModel: settingsViewModel)
+                                    .environmentObject(windowManager)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
 #if !os(macOS)
 
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
+                        }
+
                     }
                     if !settingsViewModel.isLoading {
+                        let filesListMoji = fileListOpen ? "🔽" : "▶️"
 
-                        Text("Open Repo Tree")
+                        Text("\(filesListMoji) Repo File Tree")
                             .font(.title3)
                             .lineLimit(nil)
                             .fontWeight(.bold)
-                        let rootFileCount = max(3, min(15,settingsViewModel.rootFiles.count))
-                        NavigationView {
-                            RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
-                                .environmentObject(windowManager)
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(rootFileCount), maxHeight: geometry.size.height/listHeightFactor * Double(rootFileCount))
+                            .padding()
+                            .onTapGesture {
+                                fileListOpen.toggle()
+                            }
+                        if (fileListOpen) {
+
+
+                            let rootFileCount = max(3, min(15,settingsViewModel.rootFiles.count))
+
+                            NavigationView {
+                                RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
+                                    .environmentObject(windowManager)
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(rootFileCount), maxHeight: geometry.size.height/listHeightFactor * Double(rootFileCount))
 #if !os(macOS)
 
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                        .navigationTitle("Repository Tree")
+                            .navigationTitle("Repository Tree")
+                        }
                     }
-                    Text("Window List")
+                    let windowListMoji = windowListOpen ? "🔽" : "▶️"
+                    Text("\(windowListMoji) Window List")
                         .font(.title3)
                         .lineLimit(nil)
                         .fontWeight(.bold)
-                    let windowCount = max(3, min(15,windowManager.windows.count))
-                    NavigationView {
-                        WindowList(showAddView: $showAddView)
-                            .environmentObject(windowManager)
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
+                        .padding()
+                        .onTapGesture {
+                            windowListOpen.toggle()
+                        }
+                    if windowListOpen {
+                        let windowCount = max(3, min(15,windowManager.windows.count))
+                        NavigationView {
+                            WindowList(showAddView: $showAddView)
+                                .environmentObject(windowManager)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
 #if !os(macOS)
-                    .navigationViewStyle(StackNavigationViewStyle())
+                        .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                    .navigationTitle("Window List:")
+                        .navigationTitle("Window List:")
+                    }
                 }
                 .padding(.bottom, geometry.size.height / 8)
-#if !os(macOS)
 
-                .background(settingsViewModel.backgroundColor)
-#endif
                 .cornerRadius(16)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }
+
         }
+#if !os(macOS)
+
+            .background(settingsViewModel.backgroundColor)
+#endif
     }
 }

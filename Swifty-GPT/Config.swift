@@ -13,6 +13,10 @@ let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
+// TODO:SHOULD SUPPORT FETCHING SUPPORTED MODELS
+//  let modelsApiEndpoint = https://api.openai.com/v1/models
+
+
 // sws CONFIG
 var config = Config(
     projectName: "MyApp",
@@ -53,14 +57,7 @@ let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // SwiftyGPTWOrkspace/Wallpaper
 //let dynamicWallpaperFolder = "/Users/sprinchar/Library/Application Support/com.apple.mobileAssetDesktop"
-
-// WE SHOULD SUPPORT FETCHING SUPPORTED MODELS
-//
-//2
-//3
-//curl https://api.openai.com/v1/models \
-//  -H "Authorization: Bearer $OPENAI_API_KEY" \
-//  -H "OpenAI-Organization: REDACt"
+//let staticWallpaperFolder = "/System/Library/Desktop Pictures"
 
 
 // 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit

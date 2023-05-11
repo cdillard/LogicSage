@@ -66,7 +66,7 @@ struct CommandButtonView: View {
                                     .opacity(0.6)
 
                             }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -82,7 +82,7 @@ struct CommandButtonView: View {
                                 Text("❌")
                                     .opacity(0.6)
                             }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -97,7 +97,7 @@ struct CommandButtonView: View {
                                 settingsViewModel.multiLineText += "debate "
                             }) {
                                 Text( "⚖️")
-                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                     .lineLimit(1)
                                     .foregroundColor(Color.white)
                                     .background(settingsViewModel.buttonColor)
@@ -113,7 +113,7 @@ struct CommandButtonView: View {
                                 settingsViewModel.multiLineText += "i "
                             }) {
                                 Text( "💡")
-                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                     .lineLimit(1)
                                     .foregroundColor(Color.white)
                                     .background(settingsViewModel.buttonColor)
@@ -127,7 +127,7 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText += "g "
                         }) {
                             Text( "g")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -159,7 +159,7 @@ struct CommandButtonView: View {
                                 Text("❌")
                                     .opacity(0.74)
                             }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
 
                             .lineLimit(1)
                             .foregroundColor(Color.white)
@@ -173,7 +173,7 @@ struct CommandButtonView: View {
                             settingsViewModel.multiLineText = ""
                         }) {
                             Text( "🗑️")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -198,7 +198,7 @@ struct CommandButtonView: View {
 
                     }) {
                         Text("🛑")
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
@@ -221,7 +221,7 @@ struct CommandButtonView: View {
 #endif
                         }) {
                             Text("✅")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -249,14 +249,14 @@ struct CommandButtonView: View {
                             ZStack {
                                 Text("🔽")
                             }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
                         }
                         else {
                            Text( "💬")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
@@ -286,10 +286,10 @@ struct CommandButtonView: View {
     }
 }
 struct CustomFontSize: ViewModifier {
-    @Binding var size: CGFloat
+    @Binding var size: Double
 
     func body(content: Content) -> some View {
         content
-            .font(.system(size: size))
+            .font(.system(size: CGFloat(size)))
     }
 }

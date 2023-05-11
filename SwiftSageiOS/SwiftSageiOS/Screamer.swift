@@ -11,6 +11,8 @@ import Combine
 
 let screamer = ScreamClient()
 let reconnectInterval: TimeInterval = 1.0
+let timeoutInterval: TimeInterval = 10
+let PING_INTERVAL: TimeInterval = 60.666
 
 class ScreamClient: WebSocketDelegate {
 
@@ -21,18 +23,15 @@ class ScreamClient: WebSocketDelegate {
 
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
-        case .connected(let headers):
+        case .connected(_):
             isConnected = true
-
 #if !os(macOS)
-
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
 
-            logD("WebSocket connected a \(devType) device.\n\(headers)\n\(SettingsViewModel.shared.logoAscii5())")
+            logD("WebSocket connected \(devType) device.\n\(SettingsViewModel.shared.logoAscii5())")
 #else
-            logD("WebSocket connected a Mac device.\n\(headers)\n\(SettingsViewModel.shared.logoAscii5())")
+            logD("WebSocket connected Mac device.\n\(SettingsViewModel.shared.logoAscii5())")
 #endif
-
             let authData: [String: Any] = ["username": SettingsViewModel.shared.userName, "password": SettingsViewModel.shared.password]
             do {
             let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed]) 
@@ -40,7 +39,7 @@ class ScreamClient: WebSocketDelegate {
                 client.write(string: authString ?? "")
             }
             catch {
-                print("error = \(error)")
+                logD("error = \(error)")
             }
             
             startPingTimer()
@@ -81,11 +80,9 @@ class ScreamClient: WebSocketDelegate {
                         print("recipient: \(recipient)?")
                     }
                 }
-
-                return
             }
             catch {
-                print("error printing text")
+                logD("cmd err = \(error)")
             }
 #endif
         case .binary(let data):
@@ -141,7 +138,7 @@ class ScreamClient: WebSocketDelegate {
         }
 
         var request = URLRequest(url: url)
-        request.timeoutInterval = 10
+        request.timeoutInterval = timeoutInterval
 
         websocket = WebSocket(request: request)
         websocket.callbackQueue = DispatchQueue(label: bundleID)
@@ -161,12 +158,13 @@ class ScreamClient: WebSocketDelegate {
 
         logD("Executing: \(command)")
         if SettingsViewModel.shared.currentMode == .mobile {
-            logD("Handling \(command) as local cmd...")
+            logD("Handling \(command) locally...")
             if callLocalCommand(command) {
                 return
             }
         }
         else {
+            logD("Handling \(command) in sws...")
 
             if websocket != nil {
                 let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
@@ -176,7 +174,7 @@ class ScreamClient: WebSocketDelegate {
                     websocket.write(string: messageString ?? "")
                 }
                 catch {
-                    print("error = \(error)")
+                    logD("error = \(error)")
                 }
 
             }
@@ -196,7 +194,7 @@ class ScreamClient: WebSocketDelegate {
             self.pingTimer?.invalidate()
 
             // Create a new timer that fires every 30 seconds
-            self.pingTimer = Timer.scheduledTimer(withTimeInterval: 22.666, repeats: true) { [weak self] _ in
+            self.pingTimer = Timer.scheduledTimer(withTimeInterval: PING_INTERVAL, repeats: true) { [weak self] _ in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
                     self?.sendPing()
@@ -214,5 +212,4 @@ class ScreamClient: WebSocketDelegate {
         websocket = nil
         isConnected = false
     }
-
 }

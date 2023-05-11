@@ -26,7 +26,7 @@ public struct DefaultSourceCodeTheme: SourceCodeTheme {
     public let font = getFont()
 
     static func getFont() -> Font {
-        Font(name: "Menlo", size: CGFloat(SettingsViewModel.shared.sourceEditorFontSizeFloat))!
+        Font(name: "Menlo", size: CGFloat(SettingsViewModel.shared.fontSizeSrcEditor))!
     }
     public let backgroundColor = Colorv(SettingsViewModel.shared.backgroundColorSrcEditor)
 	

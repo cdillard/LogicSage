@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 import Combine
-let defaultTerminalFontSize: CGFloat = 18.666
-let defaultCommandButtonSize: CGFloat = 38
-let defaultToolbarButtonScale: CGFloat = 0.4
+let defaultTerminalFontSize: Double = 18.666
+let defaultCommandButtonSize: Double = 38
+let defaultToolbarButtonScale: Double = 0.4
 let defaultHandleSize: Double = 28
-let defaultSourceEditorFontSize: CGFloat = 13.666
+let defaultSourceEditorFontSize: Double = 13.666
 
 let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
@@ -21,14 +21,10 @@ let defaultBranch = "main"
 public class SettingsViewModel: ObservableObject {
     func logoAscii5() -> String {
         """
-        ╭╮╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮
-        ┃┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃
         ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
         ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
         ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
         ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
-        ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
-        ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
         client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(gptModel).
         """
     }
@@ -78,7 +74,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var voiceOutputenabled = false
     @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
     @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0
-    @AppStorage("duckingAudio") var duckingAudio = true
+    @AppStorage("duckingAudio") var duckingAudio = false
 
     // TODO
     // add the code for server
@@ -96,36 +92,26 @@ public class SettingsViewModel: ObservableObject {
 
 
     // TOOL BAR BUTOTN SIZE
-    @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale {
-        didSet {
-            buttonScalerFloat = CGFloat(  buttonScale)
-        }
-    }
-    @Published var buttonScalerFloat: CGFloat = defaultToolbarButtonScale
+    @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale
 
     // COMMAND BUTTON SIZE
-    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize {
-        didSet {
-            commandButtonFontSizeFloat = CGFloat(  commandButtonFontSize)
-        }
-    }
-    @Published var commandButtonFontSizeFloat: CGFloat = defaultCommandButtonSize
+    @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize
 
 
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
     @AppStorage("middleHandleSize")var middleHandleSize: Double = defaultHandleSize
 
-    @Published var textSize: CGFloat = defaultTerminalFontSize {
+    @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
         didSet {
             if textSize != 0 {
-                UserDefaults.standard.set(Float(textSize), forKey: "textSize")
+                UserDefaults.standard.set(textSize, forKey: "textSize")
             }
             else {
                 print("failed to set terminal text size")
 
             }
 #if !os(macOS)
-            consoleManager.fontSize = self.textSize
+            consoleManager.fontSize = CGFloat(self.textSize)
 
             consoleManager.refreshAtributedText()
 #endif
@@ -177,13 +163,7 @@ public class SettingsViewModel: ObservableObject {
 
     // BEGIN SUB ZONE FOR SRC EDITOR COLORS ********************************************
 
-    @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize {
-        didSet {
-            sourceEditorFontSizeFloat = CGFloat(  fontSizeSrcEditor)
-        }
-    }
-    @Published var sourceEditorFontSizeFloat: CGFloat = defaultSourceEditorFontSize
-
+    @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize
 
     @Published var plainColorSrcEditor: Color {
         didSet {
@@ -329,30 +309,26 @@ public class SettingsViewModel: ObservableObject {
     init() {
         // BEGIN SIZE SETTING LOAD ZONE FROM DISK
 
-        if UserDefaults.standard.float(forKey: "textSize") != 0 {
-            self.textSize = CGFloat(UserDefaults.standard.float(forKey: "textSize"))
+        if UserDefaults.standard.double(forKey: "textSize") != 0 {
+            self.textSize = CGFloat(UserDefaults.standard.double(forKey: "textSize"))
 
         }
         else {
             self.textSize = defaultTerminalFontSize
         }
 
-        if UserDefaults.standard.float(forKey: "savedButtonSize") != 0 {
-            self.buttonScale = CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize"))
-            self.buttonScalerFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "savedButtonSize")))
+        if UserDefaults.standard.double(forKey: "savedButtonSize") != 0 {
+            self.buttonScale = UserDefaults.standard.double(forKey: "savedButtonSize")
         }
         else {
             self.buttonScale = defaultToolbarButtonScale
-            self.buttonScalerFloat = CGFloat(  defaultToolbarButtonScale)
         }
-        if UserDefaults.standard.float(forKey: "commandButtonFontSize") != 0 {
-            self.commandButtonFontSize = CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize"))
-            self.commandButtonFontSizeFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "commandButtonFontSize")))
+        if UserDefaults.standard.double(forKey: "commandButtonFontSize") != 0 {
+            self.commandButtonFontSize = CGFloat(UserDefaults.standard.double(forKey: "commandButtonFontSize"))
 
         }
         else {
             self.commandButtonFontSize = defaultCommandButtonSize
-            self.commandButtonFontSizeFloat = CGFloat(  defaultCommandButtonSize)
 
         }
         // END SIZE SETTING LOAD ZONE FROM DISK
@@ -363,7 +339,7 @@ public class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
             self.openAIKey = key
-            print("Retrieved value: aiKey")
+          //  print("Retrieved value: aiKey")
         } else {
 //            print("Error retrieving openAIKey")
 //            keychainManager.saveToKeychain(key:openAIKey, value: "")
@@ -372,7 +348,7 @@ public class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
-            print("Retrieved value: ghaPat")
+           // print("Retrieved value: ghaPat")
         } else {
    //         print("Error retrieving ghaPat == reset")
  //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
@@ -383,7 +359,7 @@ public class SettingsViewModel: ObservableObject {
 
             self.password = key
   //          print("Retrieved value: \(ghaPat)")
-            print("Retrieved value: swsPassword")
+          //  print("Retrieved value: swsPassword")
 
         } else {
    //         print("Error retrieving ghaPat == reset")
@@ -438,15 +414,11 @@ public class SettingsViewModel: ObservableObject {
 
         // BEGIN SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
 
-        if UserDefaults.standard.float(forKey: "fontSizeSrcEditor") != 0 {
-            self.fontSizeSrcEditor = CGFloat(UserDefaults.standard.float(forKey: "fontSizeSrcEditor"))
-            self.sourceEditorFontSizeFloat = CGFloat(  CGFloat(UserDefaults.standard.float(forKey: "fontSizeSrcEditor")))
-
-
+        if UserDefaults.standard.double(forKey: "fontSizeSrcEditor") != 0 {
+            self.fontSizeSrcEditor = UserDefaults.standard.double(forKey: "fontSizeSrcEditor")
         }
         else {
             self.fontSizeSrcEditor = defaultSourceEditorFontSize
-
         }
 #if !os(macOS)
 
@@ -526,7 +498,6 @@ public class SettingsViewModel: ObservableObject {
 #else
 
         self.fontSizeSrcEditor = 13.666
-        self.sourceEditorFontSizeFloat = 13.666
         self.plainColorSrcEditor = .black
         self.numberColorSrcEditor = .white
         self.stringColorSrcEditor = .green
@@ -551,13 +522,14 @@ public class SettingsViewModel: ObservableObject {
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
         voiceOutputenabled = voiceOutputenabledUserDefault
 
-        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
-            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+//        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+//            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+//
+//        }
+//        else {
+//            self.selectedVoiceIndexSaved = 0
+//        }
 
-        }
-        else {
-            self.selectedVoiceIndexSaved = 0
-        }
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
 

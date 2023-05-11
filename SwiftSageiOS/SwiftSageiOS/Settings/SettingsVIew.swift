@@ -43,44 +43,45 @@ struct SettingsView: View {
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack( spacing: 8) {
                     Group {
                         HStack {
                             Text("Settings:")
-                                .font(.body)
-
-                                .padding(.bottom)
+                                .font(.headline)
 
                             Text("for more scroll down 📜⬇️")
-                                .font(.body)
+                                .font(.headline)
 
-                                .padding(.bottom)
                         }
                         // TERMINAL COLORS SETTINGS ZONE
                         Group {
                             Group {
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Terminal Background Color", selection: $settingsViewModel.terminalBackgroundColor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack( spacing: 3) {
 
                                     ColorPicker("Terminal Text Color", selection: $settingsViewModel.terminalTextColor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
                             }
                             Group {
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack( spacing: 3) {
 
                                     ColorPicker("Button Color", selection: $settingsViewModel.buttonColor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack( spacing: 3) {
 
                                     ColorPicker("Background Color", selection: $settingsViewModel.backgroundColor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
                             }
                         }
@@ -93,54 +94,62 @@ struct SettingsView: View {
                         }
                         if settingsViewModel.showSourceEditorColorSettings {
                             Group {
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Plain srceditor clr", selection: $settingsViewModel.plainColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
                                 }
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Number srceditor clr", selection: $settingsViewModel.numberColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("String srceditor clr", selection: $settingsViewModel.stringColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Identifier srceditor clr", selection: $settingsViewModel.identifierColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Keyword srceditor clr", selection: $settingsViewModel.keywordColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Comment srceditor clr", selection: $settingsViewModel.commentColorSrceEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Editor plchold srceditor clr", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Bg srceditor clr", selection: $settingsViewModel.backgroundColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(spacing: 3) {
 
                                     ColorPicker("Line number srceditor clr", selection: $settingsViewModel.lineNumbersColorSrcEditor)
-                                        .padding(.horizontal, 8)
+                                        .frame(width: geometry.size.width / 2, alignment: .leading)
+
                                 }
                             }
                         }
@@ -148,7 +157,6 @@ struct SettingsView: View {
                         Group {
                             Text("sws mode").font(.body)
                             DevicePicker(settingsViewModel: settingsViewModel)
-
                         }
                         VStack(alignment: .leading) {
                             if settingsViewModel.currentMode == .computer {
@@ -157,11 +165,9 @@ struct SettingsView: View {
                                     TextEditor(text: $settingsViewModel.userName)
                                         .submitLabel(.done)
                                         .scrollDismissesKeyboard(.interactively)
-
                                         .font(.footnote)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                         .autocapitalization(.none)
 #endif
 
@@ -178,7 +184,6 @@ struct SettingsView: View {
                                         .font(.footnote)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                         .autocapitalization(.none)
 #endif
 
@@ -208,7 +213,6 @@ struct SettingsView: View {
                                                 .font(.caption)
                                                 .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                                 .autocapitalization(.none)
 #endif
                                             }
@@ -230,9 +234,7 @@ struct SettingsView: View {
                                                 .font(.caption)
                                                 .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                                 .autocapitalization(.none)
-
 #endif
                                             }
                                             .frame(height: geometry.size.height / 13)
@@ -240,7 +242,6 @@ struct SettingsView: View {
                                         Group {
                                             HStack {
                                                 Text("GHA PAT: ").font(.body)
-
 
                                                 TextField(
                                                     "",
@@ -253,9 +254,7 @@ struct SettingsView: View {
                                                 .font(.caption)
                                                 .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                                 .autocapitalization(.none)
-
 #endif
                                             }
                                             .frame(height: geometry.size.height / 17)
@@ -276,9 +275,7 @@ struct SettingsView: View {
                                                 .font(.caption)
                                                 .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                                 .autocapitalization(.none)
-
 #endif
                                             }
                                             .frame(height: geometry.size.height / 17)
@@ -320,7 +317,6 @@ struct SettingsView: View {
 #if !os(macOS)
 
                                             .autocapitalization(.none)
-
 #endif
                                         }
                                         .frame(height: geometry.size.height / 17)
@@ -341,9 +337,7 @@ struct SettingsView: View {
                                             .font(.caption)
                                             .autocorrectionDisabled(true)
 #if !os(macOS)
-
                                             .autocapitalization(.none)
-
 #endif
                                         }
                                         .frame(height: geometry.size.height / 17)
@@ -372,11 +366,11 @@ struct SettingsView: View {
                                 .fontWeight(.semibold)
                             HStack {
                                 Text("Small")
-                                Slider(value: $settingsViewModel.sourceEditorFontSizeFloat, in: 4...64, step: 1)
+                                Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 4...64, step: 1)
                                     .accentColor(settingsViewModel.buttonColor)
                                 Text("Large")
                             }
-                            Text("\(settingsViewModel.sourceEditorFontSizeFloat)")
+                            Text("\(settingsViewModel.fontSizeSrcEditor)")
                                 .font(.body)
                                 .lineLimit(nil)
                         }
@@ -440,7 +434,6 @@ struct SettingsView: View {
                                     logD("AUTOCORRECTION: \(settingsViewModel.autoCorrect ? "off" : "on.")")
 
                                     settingsViewModel.autoCorrect.toggle()
-
                                 }
 
                             } label: {
@@ -455,14 +448,13 @@ struct SettingsView: View {
                                             .opacity(0.74)
                                     }
                                 }
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .background(settingsViewModel.buttonColor)
                                 .fontWeight(.bold)
                                 .cornerRadius(8)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
-
                         }
 
                         if settingsViewModel.currentMode == .computer {
@@ -550,8 +542,6 @@ struct SettingsView: View {
                                 }
                                 settingsViewModel.voiceOutputenabled.toggle()
                                 settingsViewModel.voiceOutputenabledUserDefault.toggle()
-
-
 #endif
                             }
 
@@ -570,7 +560,6 @@ struct SettingsView: View {
                                     logD("duck audio: \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
                                     
                                     settingsViewModel.duckingAudio.toggle()
-                                    
                                 }
                             } label: {
                                 ZStack {
@@ -584,7 +573,7 @@ struct SettingsView: View {
                                             .opacity(0.74)
                                     }
                                 }
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSizeFloat))
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .background(settingsViewModel.buttonColor)
                                 .fontWeight(.bold)
@@ -717,7 +706,6 @@ struct SettingsView: View {
                 .padding(geometry.size.width * 0.01)
                 .padding(.bottom, 30)
 #if !os(macOS)
-
                 .background(settingsViewModel.backgroundColor)
 #endif
                 
@@ -763,7 +751,6 @@ struct DevicePicker: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
-        // Your component view will be here
         ZStack {
             RoundedRectangle(cornerRadius: isExpanded ? 10 : 30)
                 .fill(Color.blue)
@@ -798,7 +785,6 @@ struct DevicePicker: View {
                         withAnimation(.spring()) {
                             settingsViewModel.currentMode = .computer
                             logD(settingsViewModel.logoAscii5())
-
                         }
                     }
             }

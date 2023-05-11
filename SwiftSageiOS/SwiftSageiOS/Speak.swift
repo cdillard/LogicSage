@@ -90,17 +90,17 @@ func printVoicesInMyDevice() {
 
 
     // get voice index
-    if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+//    if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
         SettingsViewModel.shared.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
 
         SettingsViewModel.shared.selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
 
 
-    }
-    else {
+  //  }
+  //  else {
         SettingsViewModel.shared.selectedVoiceIndexSaved = 0
 
-    }
+//  }
 #endif
 
 }
