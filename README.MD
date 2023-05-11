@@ -186,6 +186,7 @@ More screenshots at the bottom
 
 SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
 
+
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
 2. Navigate to the project directory: `cd SwiftSage`
