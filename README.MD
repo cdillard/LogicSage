@@ -43,14 +43,7 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ## news
 ---
-05-11-2023
 
-new demo video: 
-
-[LogicSage: The Mobile AI Workspace](https://www.reddit.com/r/LogicSage/comments/13f29vg/logicsage_mobile_ai_workspace_demo_video/) 
-
-
----
 05-11-2023
 
 There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues remain. 
