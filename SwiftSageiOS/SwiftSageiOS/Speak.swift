@@ -7,15 +7,13 @@
 
 import Foundation
 import AVFoundation
+
 let speechSynthesizer = AVSpeechSynthesizer()
 
-
 struct VoicePair: Hashable {
-
     let voiceName: String
     let voiceIdentifier : String
 }
-
 func speak(_ text: String) {
     if !SettingsViewModel.shared.voiceOutputenabled {
         //print("DONT say: \(text)")
@@ -33,7 +31,7 @@ func speak(_ text: String) {
         speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
     }
 
-   // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+    // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
 #endif
     // Optional: Set properties like voice, pitch, rate, or volume if desired
     // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
@@ -53,14 +51,12 @@ func configureAudioSession() {
         do {
             let defOpt: AVAudioSession.CategoryOptions
             if SettingsViewModel.shared.duckingAudio {
-                 defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.duckOthers, AVAudioSession.CategoryOptions.mixWithOthers])
+                defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.duckOthers, AVAudioSession.CategoryOptions.mixWithOthers])
 
             }
             else {
-                 defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.mixWithOthers])
-
+                defOpt = AVAudioSession.CategoryOptions(arrayLiteral: [AVAudioSession.CategoryOptions.mixWithOthers])
             }
-
 
             try audioSession.setCategory(.playback, mode: .spokenAudio, options: defOpt)
             try audioSession.setActive(true)
@@ -71,7 +67,6 @@ func configureAudioSession() {
     }
 #endif
 }
-
 func printVoicesInMyDevice() {
 #if !os(macOS)
     var installedVoices = [VoicePair]()
@@ -88,23 +83,23 @@ func printVoicesInMyDevice() {
         return $0.voiceName < $1.voiceName
     }
 
-
     // get voice index
-//    if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+    if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
         SettingsViewModel.shared.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
 
         SettingsViewModel.shared.selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
 
 
-  //  }
-  //  else {
+    }
+    else {
         SettingsViewModel.shared.selectedVoiceIndexSaved = 0
 
-//  }
+    }
+
+    SettingsViewModel.shared.selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
 #endif
 
 }
-
 func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
     var ret = [AVSpeechSynthesisVoice]()
     AVSpeechSynthesisVoice.speechVoices().forEach {
@@ -114,7 +109,6 @@ func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
     }
     return ret
 }
-
 func requestMicrophoneAccess(completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
 

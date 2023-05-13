@@ -72,9 +72,14 @@ struct InstructionsPopup: View {
                     }
                     .padding(geometry.size.width * 0.01)
                 }
+                .padding(.top, 30)
+                .padding(.bottom, 30)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .edgesIgnoringSafeArea(.all)
+            .background(settingsViewModel.backgroundColor)
             .onAppear {
 #if !os(macOS)
                 UIScrollView.appearance().bounces = false

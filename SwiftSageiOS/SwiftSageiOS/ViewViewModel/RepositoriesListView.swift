@@ -12,19 +12,26 @@ struct RepositoriesListView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     @State private var directories: [URL] = []
+
+
     var body: some View {
         GeometryReader { geometry in
   //          if !directories.isEmpty {
 
                 List(directories, id: \.self) { directory in
-                    Text(directory.pathComponents.suffix(3).joined(separator: "/"))
-                        .font(.title3)
-                        .lineLimit(nil)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                        .onTapGesture {
-                            repoTapped(directory)
+                    HStack {
+                        Text(directory.pathComponents.suffix(3).joined(separator: "/"))
+                            .font(.title3)
+                            .lineLimit(nil)
+                            .fontWeight(.bold)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .onTapGesture {
+                                repoTapped(directory)
+                            }
+                        if settingsViewModel.isLoading {
+                            ProgressView()
                         }
+                    }
                 }
 
                 .onChange(of: settingsViewModel.isLoading) { _ in

@@ -107,7 +107,7 @@ func main() {
 
 
 
-    DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + 1.666) {
 
         _ = localPeerConsole.webSocketClient.websocket
 

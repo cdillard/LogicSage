@@ -30,6 +30,8 @@ public func configure(_ app: Application) throws {
 
     app.http.server.configuration.hostname = "0.0.0.0"
 
+    print(logoAscii5)
+
     app.webSocket("ws") { req, ws in
         var username: String?
 

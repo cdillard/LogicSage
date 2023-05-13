@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-let screamer = ScreamClient()
-let reconnectInterval: TimeInterval = 1.0
+var screamer = ScreamClient()
+let reconnectInterval: TimeInterval = 2.666
 let timeoutInterval: TimeInterval = 10
 let PING_INTERVAL: TimeInterval = 60.666
 
@@ -18,13 +18,11 @@ class ScreamClient: WebSocketDelegate {
 
     var websocket: WebSocket!
     var pingTimer: Timer?
-    public private(set) var isConnected = false
     public private(set) var isViable = false
 
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case .connected(_):
-            isConnected = true
 #if !os(macOS)
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
 
@@ -46,16 +44,15 @@ class ScreamClient: WebSocketDelegate {
         case .disconnected(let reason, let code):
             logD("WebSocket disconnected, reason: \(reason), code: \(code)")
 
-            isConnected = false
             stopPingTimer()
             DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+                self.websocket = nil
 
                 logD("Reconnecting...")
                 self.connect()
             }
         case .text(let text):
 #if !os(macOS)
-
             do {
                 let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
                 if let recipient = json?["recipient"] as? String,
@@ -85,6 +82,7 @@ class ScreamClient: WebSocketDelegate {
                 logD("cmd err = \(error)")
             }
 #endif
+            // TODO HANDLE AUTH json structured data
         case .binary(let data):
 #if !os(macOS)
             print("Received binary data: \(data)")
@@ -125,11 +123,17 @@ class ScreamClient: WebSocketDelegate {
             logD("WebSocket cancelled")
         case .error(let error):
             logD("Error: \(error?.localizedDescription ?? "Unknown error")")
-            isConnected = false
             disconnect()
+
+            websocket = nil
+            screamer = ScreamClient()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+                print("Reconnecting...")
+                self.connect()
+            }
         }
     }
-
     func connectWebSocket(ipAddress: String, port: String) {
         let urlString = "ws://\(ipAddress):\(port)/ws"
         guard let url = URL(string: urlString) else {
@@ -150,12 +154,17 @@ class ScreamClient: WebSocketDelegate {
             websocket.connect()
         }
         else {
+            disconnect()
+            websocket = nil
+            screamer = ScreamClient()
+            screamer.connectWebSocket(ipAddress: SettingsViewModel.shared.ipAddress, port: SettingsViewModel.shared.port)
+
             logD("Attempt to connect non-viable connection - failing.")
+
         }
 
     }
     func sendCommand(command: String) {
-
         logD("Executing: \(command)")
         if SettingsViewModel.shared.currentMode == .mobile {
             logD("Handling \(command) locally...")
@@ -180,13 +189,10 @@ class ScreamClient: WebSocketDelegate {
             }
         }
     }
-
     func sendPing() {
         guard let socket = websocket else { return }
         socket.write(ping: Data())
     }
-
-
     func startPingTimer() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
@@ -206,10 +212,8 @@ class ScreamClient: WebSocketDelegate {
         pingTimer?.invalidate()
         pingTimer = nil
     }
-
     public func disconnect() {
         websocket?.disconnect()
         websocket = nil
-        isConnected = false
     }
 }

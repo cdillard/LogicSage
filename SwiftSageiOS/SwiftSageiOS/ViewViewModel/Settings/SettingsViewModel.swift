@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 import Combine
-let defaultTerminalFontSize: Double = 18.666
-let defaultCommandButtonSize: Double = 38
-let defaultToolbarButtonScale: Double = 0.4
+let defaultTerminalFontSize: Double = 16.666
+let defaultCommandButtonSize: Double = 32
+let defaultToolbarButtonScale: Double = 0.3
 let defaultHandleSize: Double = 28
 let defaultSourceEditorFontSize: Double = 13.666
 
@@ -49,7 +49,16 @@ public class SettingsViewModel: ObservableObject {
     // DONT AUTO SHOW THE STUFF
     @Published var showInstructions: Bool = false //!hasSeenInstructions()
     @Published var showHelp: Bool = false
-        @Published var showSourceEditorColorSettings: Bool = false
+    @Published var showAllColorSettings: Bool = false
+
+    @Published var showSourceEditorColorSettings: Bool = false
+    @Published var showSizeSliders: Bool = false
+
+    @Published var ipAddress: String = ""
+    @Published var port: String = ""
+
+    // TODO Impl
+    @Published var showAudioSettings: Bool = false
 
     // 📙
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
@@ -73,7 +82,13 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var voiceOutputenabled = false
     @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
-    @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0
+    @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0 {
+        didSet {
+            if !installedVoices.isEmpty && selectedVoiceIndexSaved < installedVoices.count {
+                selectedVoice = installedVoices[selectedVoiceIndexSaved]
+            }
+        }
+    }
     @AppStorage("duckingAudio") var duckingAudio = false
 
     // TODO
@@ -127,7 +142,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
-            print("saved terminalBackgroundColor to userdefaults")
+            // print("saved terminalBackgroundColor to userdefaults")
             consoleManager.updateLumaColor()
 #endif
         }
@@ -136,18 +151,27 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
-            print("saved terminalTextColor to userdefaults")
+            // print("saved terminalTextColor to userdefaults")
 
             consoleManager.refreshAtributedText()
 #endif
 
         }
     }
+
+    @Published var appTextColor: Color {
+        didSet {
+#if !os(macOS)
+            UserDefaults.standard.set(appTextColor.rawValue, forKey: "appTextColor")
+          //  print("saved appTextColor to userdefaults")
+#endif
+        }
+    }
     @Published var buttonColor: Color {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
-            print("saved buttonColor to userdefaults")
+         //   print("saved buttonColor to userdefaults")
 #endif
         }
     }
@@ -155,7 +179,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
-            print("saved backgroundColor to userdefaults")
+         //   print("saved backgroundColor to userdefaults")
 #endif
         }
     }
@@ -171,7 +195,7 @@ public class SettingsViewModel: ObservableObject {
 
      //       if let data =  {
             UserDefaults.standard.set(plainColorSrcEditor.rawValue , forKey: "plainColorSrcEditor")
-            print("saved plainColorSrcEditor to userdefaults")
+         //   print("saved plainColorSrcEditor to userdefaults")
 
 #endif
         }
@@ -180,7 +204,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(numberColorSrcEditor.rawValue , forKey: "numberColorSrcEditor")
-            print("saved numberColorSrcEditor to userdefaults")
+           // print("saved numberColorSrcEditor to userdefaults")
 
 #endif
         }
@@ -189,7 +213,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(stringColorSrcEditor.rawValue , forKey: "stringColorSrcEditor")
-            print("saved stringColorSrcEditor to userdefaults")
+           // print("saved stringColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -197,7 +221,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(identifierColorSrcEditor.rawValue, forKey: "identifierColorSrcEditor")
-            print("saved identifierColorSrcEditor to userdefaults")
+           // print("saved identifierColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -205,7 +229,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(keywordColorSrcEditor.rawValue , forKey: "keywordColorSrcEditor")
-            print("saved keywordColorSrcEditor to userdefaults")
+          //  print("saved keywordColorSrcEditor to userdefaults")
 
 #endif
 
@@ -215,7 +239,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
-            print("saved commentColorSrceEditor to userdefaults")
+           // print("saved commentColorSrceEditor to userdefaults")
 
 #endif
 
@@ -225,7 +249,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(editorPlaceholderColorSrcEditor.rawValue , forKey: "editorPlaceholderColorSrcEditor")
-            print("saved editorPlaceholderColorSrcEditor to userdefaults")
+            //print("saved editorPlaceholderColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -233,7 +257,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColorSrcEditor.rawValue, forKey: "backgroundColorSrcEditor")
-            print("saved backgroundColorSrcEditor to userdefaults")
+            //print("saved backgroundColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -241,7 +265,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(lineNumbersColorSrcEditor.rawValue, forKey: "lineNumbersColorSrcEditor")
-            print("saved lineNumbersColorSrcEditor to userdefaults")
+           // print("saved lineNumbersColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -331,6 +355,7 @@ public class SettingsViewModel: ObservableObject {
             self.commandButtonFontSize = defaultCommandButtonSize
 
         }
+        
         // END SIZE SETTING LOAD ZONE FROM DISK
 
 
@@ -372,7 +397,7 @@ public class SettingsViewModel: ObservableObject {
 
 #if !os(macOS)
 
-        // BEGIN COLOR LOAD FROM DISK ZONE ******************************
+        // BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
         if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
 
             self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
@@ -380,6 +405,7 @@ public class SettingsViewModel: ObservableObject {
         else {
             self.terminalBackgroundColor = .black
         }
+
         if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
 
             self.terminalTextColor =  Color(rawValue:colorKey) ?? .white
@@ -404,11 +430,21 @@ public class SettingsViewModel: ObservableObject {
         else {
             self.backgroundColor = .gray
         }
+
+        if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
+
+            self.appTextColor =  Color(rawValue:colorKey) ?? .primary
+        }
+        else {
+            self.appTextColor = .primary
+        }
 #else
         self.terminalBackgroundColor = .black
         self.terminalTextColor = .white
         self.buttonColor = .green
         self.backgroundColor = .gray
+
+        self.appTextColor = .primary
 
 #endif
 
@@ -510,7 +546,6 @@ public class SettingsViewModel: ObservableObject {
         self.backgroundColorSrcEditor = .gray
 
         self.lineNumbersColorSrcEditor = .gray
-
 #endif
         // END SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
 
@@ -522,13 +557,13 @@ public class SettingsViewModel: ObservableObject {
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
         voiceOutputenabled = voiceOutputenabledUserDefault
 
-//        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
-//            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
-//
-//        }
-//        else {
-//            self.selectedVoiceIndexSaved = 0
-//        }
+        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+
+        }
+        else {
+            self.selectedVoiceIndexSaved = 0
+        }
 
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
@@ -597,3 +632,17 @@ extension Color: RawRepresentable {
 #endif
 
 
+// CEREPROC VOICE ZONE
+// Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
+// are using muliple iOS devices for screens, etc.
+let cereprocVoicesNames = [
+    "Heather",
+    "Hannah",
+    "Carolyn",
+    "Sam",
+    "Lauren",
+    "Isabella",
+    "Megan",
+    "Katherine"
+]
+// END CEREPROC VOICE ZONE

@@ -35,7 +35,6 @@ struct SwiftSageiOSApp: App {
 
     init() {
         serviceDiscovery = ServiceDiscovery()
-        serviceDiscovery?.startDiscovering()
 
         printVoicesInMyDevice()
         
@@ -50,7 +49,6 @@ struct SwiftSageiOSApp: App {
                 ContentView()
                     .environmentObject(settingsViewModel)
                     .environmentObject(appState)
-
                     .overlay(
                         Group {
                             if settingsViewModel.showInstructions {
@@ -58,6 +56,12 @@ struct SwiftSageiOSApp: App {
                             }
                         }
                     )
+                    .onAppear {
+                        doDiscover()
+
+                        consoleManager.fontSize = settingsViewModel.textSize
+
+                    }
 #if !os(macOS)
 
 //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
@@ -82,17 +86,13 @@ struct SwiftSageiOSApp: App {
     func doDiscover() {
         serviceDiscovery?.startDiscovering()
     }
-
 }
-
 func setHasSeenInstructions(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
 }
-
 func hasSeenInstructions() -> Bool {
     return UserDefaults.standard.bool(forKey: "hasSeenInstructions")
 }
-
 class AppState: ObservableObject {
     @Published var isInBackground: Bool = false
     private var cancellables: [AnyCancellable] = []
@@ -100,25 +100,25 @@ class AppState: ObservableObject {
     init() {
 #if !os(macOS)
 
-        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-            .map { _ in true }
-            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-            .removeDuplicates()
-
-        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-            .map { _ in false }
-            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-            .removeDuplicates()
-
-        didEnterBackground
-            .merge(with: willEnterForeground)
-            .sink { [weak self] in
-                self?.isInBackground = $0
-                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-                        serviceDiscovery?.startDiscovering()
-                }
-            }
-            .store(in: &cancellables)
+//        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+//            .map { _ in true }
+//            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+//            .removeDuplicates()
+//
+//        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+//            .map { _ in false }
+//            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+//            .removeDuplicates()
+//
+//        didEnterBackground
+//            .merge(with: willEnterForeground)
+//            .sink { [weak self] in
+//                self?.isInBackground = $0
+//                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+//                        serviceDiscovery?.startDiscovering()
+//                }
+//            }
+//            .store(in: &cancellables)
 #endif
     }
 }

@@ -246,10 +246,12 @@ struct ContentView: View {
         )
         .background {
             ZStack {
+                settingsViewModel.backgroundColor
+                    .ignoresSafeArea()
                 Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if its bad")
                     .zIndex(1)
                     .font(.body)
-                settingsViewModel.backgroundColor
+                    .foregroundColor(settingsViewModel.appTextColor)
                     .ignoresSafeArea()
             }
         }
@@ -261,8 +263,8 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-            .tint(settingsViewModel.buttonColor)
-            .background(CustomShape())
+            .tint(settingsViewModel.appTextColor)
+            .background(settingsViewModel.buttonColor)
     }
 }
 

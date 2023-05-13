@@ -385,9 +385,11 @@ If this happens just try again and it _usually_ clears right up.
 - [Vapor](https://github.com/vapor/vapor)
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Blackhole](https://github.com/ExistentialAudio/BlackHole)
-- [https://github.com/louisdh/source-editor]
-- [https://github.com/louisdh/savannakit]
-- [https://github.com/twostraws/Sourceful]
+- [SourceEditor](https://github.com/louisdh/source-editor)
+- [savannakit](https://github.com/louisdh/savannakit)
+- [Sourceful](https://github.com/twostraws/Sourceful)
+- [MiniGit](https://github.com/light-tech/MiniGit)
+
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

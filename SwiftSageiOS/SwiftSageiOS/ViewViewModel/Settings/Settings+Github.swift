@@ -14,7 +14,7 @@ import UIKit
 #endif
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
-let githubDelay: TimeInterval = 1.77
+let githubDelay: TimeInterval = 1.2666
 
 struct GitHubContent: Equatable, Codable, Identifiable {
     static func == (lhs: GitHubContent, rhs: GitHubContent) -> Bool {
@@ -81,23 +81,33 @@ extension SettingsViewModel {
                 saveGithubContentToDisk(object: self.rootFiles, forKey: githubContentKey)
 
                 downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
-                    defer { self.isLoading = false }
                     switch success {
                     case .success(_):
+                        DispatchQueue.main.async {
+
+                            self.isLoading = false
+                        }
                         logD("repo contents dl success.")
 
                     case .failure(let error):
+                        DispatchQueue.main.async {
 
+                            self.isLoading = false
+                        }
                         logD("Error downloading repo contents. \(error)!")
 
+                        return
                     }
                 }
 
             case .failure(let error):
+                logD("Error fetching files: \(error)")
+
                 DispatchQueue.main.async {
+
                     self.isLoading = false
-                    logD("Error fetching files: \(error)")
                 }
+                return
             }
         }
     }
@@ -116,12 +126,19 @@ extension SettingsViewModel {
 
 
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
                 if let error = error {
+                    print("failed to get repotree w error = \(error)")
+                    print(String(data: data ?? Data(), encoding: .utf8))
+
                     completion(.failure(error))
                     return
                 }
 
                 guard let data = data else {
+                    print("failed to get repotree  w error = \(error)")
+                    print(String(data: data ?? Data(), encoding: .utf8))
+
                     completion(.failure(NSError(domain: "No data", code: -1, userInfo: nil)))
                     return
                 }
@@ -130,7 +147,11 @@ extension SettingsViewModel {
                     let decodedData = try JSONDecoder().decode([GitHubContent].self, from: data)
                     completion(.success(decodedData))
                 } catch {
+                    print("failed to get repotree w error = \(error)")
+                    print(String(data: data ?? Data(), encoding: .utf8))
+
                     completion(.failure(error))
+                    return
                 }
             }
             task.resume()
@@ -142,6 +163,7 @@ extension SettingsViewModel {
 
     func fetchSubfolders(path: String, delay: TimeInterval, completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
         fetchRepositoryTreeStructure(path: path) { [weak self] result in
+
             switch result {
             case .success(var githubContents):
                 let directories = githubContents.filter { $0.type == "dir" }
@@ -158,6 +180,8 @@ extension SettingsViewModel {
                                 }
                             case .failure(let error):
                                 print("Error fetching subfolder: \(error)")
+                                completion(.failure(error))
+                                return
                             }
                             group.leave()
                         }
@@ -168,6 +192,8 @@ extension SettingsViewModel {
                     completion(.success(githubContents))
                 }
             case .failure(let error):
+                print("Error fetching subfolder: \(error)")
+
                 completion(.failure(error))
             }
         }

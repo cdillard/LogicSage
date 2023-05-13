@@ -52,6 +52,8 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
 
                 // Use ipAddress and sender.port to connect to the WebSocket server
                 screamer.connectWebSocket(ipAddress: ipAddress, port: String(sender.port))
+                SettingsViewModel.shared.ipAddress = ipAddress
+                SettingsViewModel.shared.port = String(sender.port)
             }
             else {
                 print("failed getnameinfo")
