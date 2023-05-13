@@ -310,33 +310,35 @@ struct AddView: View {
 
                     Group {
                         let filesListMoji = fileListOpen ? "🔽" : "▶️"
+                        VStack {
+                            Text("\(filesListMoji) Repo File Tree")
+                                .font(.title3)
+                                .lineLimit(nil)
+                                .fontWeight(.bold)
+                                .padding()
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .onTapGesture {
+                                    withAnimation {
 
-                        Text("\(filesListMoji) Repo File Tree")
-                            .font(.title3)
-                            .lineLimit(nil)
-                            .fontWeight(.bold)
-                            .padding()
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            .onTapGesture {
-                                withAnimation {
-
-                                    fileListOpen.toggle()
+                                        fileListOpen.toggle()
+                                    }
                                 }
-                            }
-                        if (fileListOpen) {
+                            if (fileListOpen) {
 
-
-                            let rootFileCount = max(3, min(15,settingsViewModel.rootFiles.count))
-
-                            NavigationView {
-                                RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "")
-                                    .environmentObject(windowManager)
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(rootFileCount), maxHeight: geometry.size.height/listHeightFactor * Double(rootFileCount))
+                                NavigationView {
+                                    if let root = settingsViewModel.root {
+                                        RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root)
+                                            .environmentObject(windowManager)
+                                    }
+                                    else {
+                                        Text("No root")
+                                    }
+                                }
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
 #if !os(macOS)
-                            .navigationViewStyle(StackNavigationViewStyle())
+                                .navigationViewStyle(StackNavigationViewStyle())
 #endif
+                            }
                         }
                     }
                     let windowListMoji = windowListOpen ? "🔽" : "▶️"

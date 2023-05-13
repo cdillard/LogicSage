@@ -12,6 +12,8 @@ import Combine
 
 import UIKit
 #endif
+import ZIPFoundation
+
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
 let githubDelay: TimeInterval = 1.2666
@@ -70,46 +72,100 @@ struct GitHubContent: Equatable, Codable, Identifiable {
 extension SettingsViewModel {
     func syncGithubRepo() {
         isLoading = true
-        self.rootFiles = []
-        SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
-            switch result {
-            case .success(let repositoryFiles):
-                logD("All \(repositoryFiles.count) root file and directories structure downloaded.\nNow sws downloading all files in repo...")
-                self.rootFiles = repositoryFiles
-                let githubContentKey = self.currentGitRepoKey()
-                // Save GithubContent struct heirarchy to user defaults with key owner/repo/branch
-                saveGithubContentToDisk(object: self.rootFiles, forKey: githubContentKey)
+        self.root = nil
 
-                downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
-                    switch success {
-                    case .success(_):
-                        DispatchQueue.main.async {
+        let urlString = "http://github.com/\(gitUser)/\(gitRepo)/archive/\(gitBranch).zip"
+        let outputFileName = "\(gitBranch).zip"
 
-                            self.isLoading = false
-                        }
-                        logD("repo contents dl success.")
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL.")
+            return
+        }
 
-                    case .failure(let error):
-                        DispatchQueue.main.async {
+        let destinationUrl = getDocumentsDirectory().appendingPathComponent(outputFileName)
 
-                            self.isLoading = false
-                        }
-                        logD("Error downloading repo contents. \(error)!")
-
-                        return
-                    }
-                }
-
-            case .failure(let error):
-                logD("Error fetching files: \(error)")
-
+        do {
+            try FileManager.default.removeItem(at:  destinationUrl)
+        }
+        catch {
+            print("did not delete or didn't exist old zip")
+        }
+        let task = URLSession.shared.downloadTask(with: url) { (location, response, error) in
+            defer {
                 DispatchQueue.main.async {
-
                     self.isLoading = false
                 }
-                return
+
+            }
+            if let location = location {
+                do {
+                    try FileManager.default.moveItem(at: location, to: destinationUrl)
+                    logD("File downloaded to: \(destinationUrl)")
+
+                    // Unzipping
+
+                    let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
+
+                    try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
+
+                    try FileManager.default.unzipItem(at: destinationUrl, to: fileURL)
+
+                    logD("File unzipped to: \(fileURL)")
+
+                    do {
+                        try FileManager.default.removeItem(at:  destinationUrl)
+                        print("rm .zip sucess")
+                    }
+                    catch {
+                        print("did not delete or didn't exist zip")
+                    }
+
+                } catch {
+                    logD("Error: \(error)")
+                }
             }
         }
+        task.resume()
+
+//        SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
+//            switch result {
+//            case .success(let repositoryFiles):
+//                logD("All \(repositoryFiles.count) root file and directories structure downloaded.\nNow sws downloading all files in repo...")
+//                self.rootFiles = repositoryFiles
+//                let githubContentKey = self.currentGitRepoKey()
+//                // Save GithubContent struct heirarchy to user defaults with key owner/repo/branch
+//                saveGithubContentToDisk(object: self.rootFiles, forKey: githubContentKey)
+//
+//                downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
+//                    switch success {
+//                    case .success(_):
+//                        DispatchQueue.main.async {
+//
+//                            self.isLoading = false
+//                        }
+//                        logD("repo contents dl success.")
+//
+//                    case .failure(let error):
+//                        DispatchQueue.main.async {
+//
+//                            self.isLoading = false
+//                        }
+//                        logD("Error downloading repo contents. \(error)!")
+//
+//                        return
+//                    }
+//                }
+//
+//            case .failure(let error):
+//                logD("Error fetching files: \(error)")
+//
+//                DispatchQueue.main.async {
+//
+//                    self.isLoading = false
+//                }
+//                return
+//            }
+//        }
     }
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {

@@ -388,8 +388,7 @@ If this happens just try again and it _usually_ clears right up.
 - [SourceEditor](https://github.com/louisdh/source-editor)
 - [savannakit](https://github.com/louisdh/savannakit)
 - [Sourceful](https://github.com/twostraws/Sourceful)
-- [MiniGit](https://github.com/light-tech/MiniGit)
-
+- [zip-foundation](https://github.com/weichsel/ZIPFoundation)
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

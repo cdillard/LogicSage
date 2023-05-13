@@ -214,11 +214,19 @@ struct ContentView: View {
                     Spacer()
                 }
             }
+            .onAppear {
+                defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.33), geometry.size.height - (geometry.size.height * 0.33))
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                DispatchQueue.main.async {
+                    defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.33), geometry.size.height - (geometry.size.height * 0.33))
+                }
+
+            }
             .background(
 
                 ZStack {
 #if !os(macOS)
-
                     AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel, currentRoot: nil)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)

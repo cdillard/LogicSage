@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 #if !os(macOS)
 
-let defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
+var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
 struct WindowView: View {
     @EnvironmentObject var windowManager: WindowManager
@@ -22,40 +22,42 @@ struct WindowView: View {
 
     @State private var isMoveGestureActivated = false
     var body: some View {
-        ZStack {
-//            HandleView()
-//                  .zIndex(2)
-//                  .offset(x: -12, y: -12)
-//                  .gesture(
-//                      DragGesture()
-//                          .onChanged { value in
-//                              if !isMoveGestureActivated {
-//                                  self.windowManager.bringWindowToFront(window: self.window)
-//                                  isMoveGestureActivated = true
-//                              }
-//
-//                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-//                          }
-//                          .onEnded { value in
-//                              isMoveGestureActivated = false
-//                          }
-//                  )
+//        GeometryReader { geometry in
+            ZStack {
+                //            HandleView()
+                //                  .zIndex(2)
+                //                  .offset(x: -12, y: -12)
+                //                  .gesture(
+                //                      DragGesture()
+                //                          .onChanged { value in
+                //                              if !isMoveGestureActivated {
+                //                                  self.windowManager.bringWindowToFront(window: self.window)
+                //                                  isMoveGestureActivated = true
+                //                              }
+                //
+                //                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
+                //                          }
+                //                          .onEnded { value in
+                //                              isMoveGestureActivated = false
+                //                          }
+                //                  )
 
-            VStack {
+                VStack {
 
-                windowContent()
-                    .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position))
-                    .environmentObject(windowManager)
+                    windowContent()
+                        .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position))
+                        .environmentObject(windowManager)
+                }
+                .cornerRadius(8)
+                .shadow(radius: 10)
+                .frame(width: window.frame.width, height: window.frame.height)
+                .onTapGesture {
+                    self.windowManager.bringWindowToFront(window: self.window)
+                }
+
             }
-            .cornerRadius(8)
-            .shadow(radius: 10)
-            .frame(width: window.frame.width, height: window.frame.height)
-            .onTapGesture {
-                 self.windowManager.bringWindowToFront(window: self.window)
-             }
-
-        }
-        .offset(position)
+            .offset(position)
+//        }
 
     }
 

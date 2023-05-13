@@ -33,7 +33,8 @@ public class SettingsViewModel: ObservableObject {
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
     let keychainManager = KeychainManager()
 
-    @Published var rootFiles: [GitHubContent] = []
+    @Published var root: RepoFile?
+
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
@@ -570,15 +571,16 @@ public class SettingsViewModel: ObservableObject {
 
         // BEGIN LOAD SAVED GIT REPO
         let openRepoKey = currentGitRepoKey()
-
-        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
-            self.rootFiles = retrievedObject.compactMap { $0 }
-
-            logD("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
-
-        } else {
-            logD("Failed to retrieve saved git repo...")
-        }
+        let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
+        root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
+//        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
+//            self.rootFiles = retrievedObject.compactMap { $0 }
+//
+//            logD("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
+//
+//        } else {
+//            logD("Failed to retrieve saved git repo...")
+//        }
         // END LOAD SAVED GIT REPO
     }
 
@@ -646,3 +648,28 @@ let cereprocVoicesNames = [
     "Katherine"
 ]
 // END CEREPROC VOICE ZONE
+
+
+struct RepoFile: Identifiable, Equatable {
+    var id = UUID()
+    let name: String
+    let url: URL
+    let isDirectory: Bool
+    var children: [RepoFile]?
+}
+func getFiles(in directory: URL) -> [RepoFile] {
+    let fileManager = FileManager.default
+
+    do {
+        let fileURLs = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+
+        return fileURLs.map { url -> RepoFile in
+            var isDirectory: ObjCBool = false
+            fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
+            return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue ? getFiles(in: url) : nil)
+        }
+    } catch {
+        print("Error getting files in directory: \(error)")
+        return []
+    }
+}

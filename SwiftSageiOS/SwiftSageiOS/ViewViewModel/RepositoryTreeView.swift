@@ -9,49 +9,64 @@ import SwiftUI
 
 struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
-    let files: [GitHubContent]
+    let directory: RepoFile
     @EnvironmentObject var windowManager: WindowManager
 
-    init(settingsViewModel: SettingsViewModel, accessToken: String, files: [GitHubContent]? = nil) {
-        self.files = files ?? settingsViewModel.rootFiles
+    init(settingsViewModel: SettingsViewModel, directory: RepoFile) {
         self.settingsViewModel = settingsViewModel
+
+        self.directory = directory
     }
 
     var body: some View {
+//                if !directory.isEmpty {
         GeometryReader { geometry in
             Group {
-                if !files.isEmpty {
-                    List {
-                        ForEach(files) { file in
-                            if file.type == "dir" {
-                                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, accessToken: "", files: file.children)) {
-                                    Text(file.name)
-                                }
-
-                            } else {
-                                Button(action: {
-                                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-#if !os(macOS)
-                                    
-                                    fileTapped(file, defSize)
-#endif
-                                }) {
-                                    Text(file.name)
-                                        .foregroundColor(.blue)
-                                }
+                
+                List(directory.children ?? [RepoFile]()) { file in
+                    if file.isDirectory {
+                        NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
+                            Text(file.name)
+                        }
+                    } else {
+                        HStack {
+                            Button( action: {
+                                fileTapped(file, defSize)
+                            })
+                            {
+                                Text(file.name)
+                                    .foregroundColor(.blue)
                             }
                         }
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
                 }
-                else {
-                    Text("Select a repo and it will appear here")
-                        .frame(height: 30.0)
-
-                }
+                .navigationBarTitle(directory.name)
             }
         }
+    
+//        List {
+//                             ForEach(files) { file in
+//        List(directory.children ?? [RepoFile](), id: \.name) { file in
+//            if file.isDirectory {
+//
+//                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
+//                    Text(file.name)
+//                }
+//
+//            } else {
+//                Button(action: {
+//                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+//#if !os(macOS)
+//
+//                    fileTapped(file, defSize)
+//#endif
+//                }) {
+//                    Text(file.name)
+//                        .foregroundColor(.blue)
+//                }
+//            }
+//        }
+
     }
     func readFileContents(url: URL) -> String? {
         do {
@@ -71,14 +86,12 @@ struct RepositoryTreeView: View {
         }
     }
 
-    private func fileTapped(_ file: GitHubContent, _ frame: CGRect) {
-        print("Tapped file: \(file.path)")
+    private func fileTapped(_ file: RepoFile, _ frame: CGRect) {
+        print("Tapped file: \(file)")
 
         let documentsDirectory = getDocumentsDirectory()
 
-        let fileURL = documentsDirectory.appendingPathComponent(settingsViewModel.gitUser).appendingPathComponent(settingsViewModel.gitRepo).appendingPathComponent(settingsViewModel.gitBranch).appendingPathComponent(file.path)
-        let fileContent = readFileContents(url: fileURL) ?? "Failed to read the file"
-
+        let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
 #if !os(macOS)
 
         windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)

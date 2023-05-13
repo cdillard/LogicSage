@@ -57,15 +57,19 @@ struct RepositoriesListView: View {
         let openRepoKey = pathSuffixComps.joined(separator: SettingsViewModel.gitKeySeparator)
         logD("select repo:  \(openRepoKey)")
 
-        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
+
+        // TODO FIX FOR REPOFILE
+//        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
             settingsViewModel.gitUser = pathSuffixComps[0]
             settingsViewModel.gitRepo = pathSuffixComps[1]
             settingsViewModel.gitBranch = pathSuffixComps[2]
-            settingsViewModel.rootFiles = retrievedObject.compactMap { $0 }
-            logD("Sucessfully restored open repo w/ rootFile count = \(settingsViewModel.rootFiles.count)")
+        let fileURL = getDocumentsDirectory().appendingPathComponent(settingsViewModel.gitUser).appendingPathComponent(settingsViewModel.gitRepo).appendingPathComponent(settingsViewModel.gitBranch)
+        settingsViewModel.root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
 
-        } else {
-            logD("Failed to retrieve saved git repo...")
-        }
+            logD("Sucessfully restored open repo")
+//
+//        } else {
+//            logD("Failed to retrieve saved git repo...")
+//        }
     }
 }

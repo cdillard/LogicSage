@@ -12,7 +12,7 @@ import SwiftUI
 class WindowManager: ObservableObject {
     @Published var windows: [WindowInfo] = []
 
-    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: GitHubContent? = nil, fileContents: String = "", url: String = "") {
+    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "") {
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url)
         windows.append(newWindow)
         sortWindowsByZIndex()
@@ -52,7 +52,7 @@ struct WindowInfo: Identifiable, Equatable {
     var zIndex: Int
     var windowType: WindowType
     var fileContents: String
-    var file: GitHubContent?
+    var file: RepoFile?
     var url: String?
 
     enum WindowType {
