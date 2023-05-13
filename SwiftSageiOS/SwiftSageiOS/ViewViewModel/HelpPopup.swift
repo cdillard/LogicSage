@@ -12,6 +12,7 @@ import SwiftUI
 struct HelpPopup: View {
     @Binding var isPresented: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @State var veryGoodOpen: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,9 +36,17 @@ struct HelpPopup: View {
                                 Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
                                 Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
+                                let verGoodMoji = veryGoodOpen ? "🔽" : "▶️"
 
-                                Text("Tap me! ▶️ , I will expand a section...")
-
+                                Text("Tap me! \(verGoodMoji) , I will expand/collapse a section...")
+                                    .onTapGesture {
+                                        withAnimation {
+                                            veryGoodOpen.toggle()
+                                        }
+                                    }
+                                if veryGoodOpen {
+                                    Text("Nice.")
+                                }
                                 Group {
                                     Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
 

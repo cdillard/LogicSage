@@ -74,44 +74,45 @@ struct AddView: View {
                     .padding(.top, 30)
                     .padding(.leading,8)
                     .padding(.trailing,8)
-                    HStack {
-                        Button(action: {
-                            withAnimation {
-                                logD("open new File")
-#if !os(macOS)
 
-                                if consoleManager.isVisible {
-                                    consoleManager.isVisible = false
+                    HStack {
+
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    logD("open new File")
+    #if !os(macOS)
+
+                                    if consoleManager.isVisible {
+                                        consoleManager.isVisible = false
+                                    }
+    #endif
+                                    showAddView.toggle()
+    #if !os(macOS)
+                                    //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+                                    windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+    #endif
                                 }
-#endif
-                                showAddView.toggle()
-#if !os(macOS)
-                                //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-                                windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
-#endif
-                            }
-                        }) {
-                            VStack {
-                                Text("New File...")
-                                    .font(.subheadline)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .padding(.bottom)
+                            }) {
+                                VStack {
+                                    Text("New File...")
+                                        .font(.subheadline)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .padding(.bottom)
 
-                                resizableButtonImage(systemName:
-                                                        "doc.fill.badge.plus",
-                                                     size: geometry.size)
-                                .fontWeight(.bold)
-                                .background(settingsViewModel.buttonColor)
-                                .cornerRadius(8)
-                            }
+                                    resizableButtonImage(systemName:
+                                                            "doc.fill.badge.plus",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .background(settingsViewModel.buttonColor)
+                                    .cornerRadius(8)
+                                }
 
+                            }
+                            .padding(.bottom)
                         }
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom)
-                    }
-                    .padding(.leading,8)
-                    .padding(.trailing,8)
-                    HStack {
+                        .padding(.leading,8)
+
                         Button(action: {
                             withAnimation {
 
