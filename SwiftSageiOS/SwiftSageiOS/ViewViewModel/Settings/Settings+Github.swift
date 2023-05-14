@@ -126,8 +126,10 @@ extension SettingsViewModel {
                     }
                     try FileManager.default.unzipItem(at: destinationUrl, to: fileURL, progress: myProgress)
 
-
-                    self.unzipProgress = 0.0
+                    DispatchQueue.main.async {
+                        
+                        self.unzipProgress = 0.0
+                    }
                     logD("File unzipped to: \(fileURL)")
                     do {
                         try FileManager.default.removeItem(at:  destinationUrl)
