@@ -15,6 +15,7 @@ enum ViewMode {
     case editor
     case repoTreeView
     case windowListView
+    case changeView
 }
 
 struct SageMultiView: View {
@@ -25,9 +26,9 @@ struct SageMultiView: View {
     @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo
 
-    @EnvironmentObject var sageMultiViewModel: SageMultiViewModel
-    @State var sourceEditorCode = """
-    """
+    @ObservedObject var sageMultiViewModel: SageMultiViewModel
+//    @State var sourceEditorCode = """
+//    """
     @State var isEditing = false
 
     @Binding var frame: CGRect
@@ -54,8 +55,6 @@ struct SageMultiView: View {
                                 // Keep windows from going to close top top
 
                                 position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                                
-                                //print(position)
                             }
                             .onEnded { value in
                                 isMoveGestureActivated = false
@@ -81,6 +80,11 @@ struct SageMultiView: View {
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
                             print("srcEditor didChangeText")
+                            let theNewtext = String(srcCodeTextEditor.text)
+                            sageMultiViewModel.refreshChanges(newText: theNewtext)
+
+                            // We'll keep track of changes per file, right now I think its only going to be showing last edited file for reasons.
+                            settingsViewModel.changes = sageMultiViewModel.changes
 
                         }, insertionPointColor: {
                             Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
@@ -107,7 +111,7 @@ struct SageMultiView: View {
                     case .repoTreeView:
                         NavigationView {
                             if let root = settingsViewModel.root {
-                                RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root, window: window)
+                                RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window)
                                     .environmentObject(windowManager)
                             }
                             else {
@@ -121,6 +125,16 @@ struct SageMultiView: View {
                         NavigationView {
                             WindowList(showAddView: $showAddView)
                                 .environmentObject(windowManager)
+                        }
+#if !os(macOS)
+                        .navigationViewStyle(StackNavigationViewStyle())
+#endif
+                    case .changeView:
+                        NavigationView {
+                            ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                                .environmentObject(windowManager)
+                                .environmentObject(sageMultiViewModel)
+
                         }
 #if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
@@ -277,17 +291,20 @@ struct ResizingHandle: View {
     private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat) {
         let newWidth: CGFloat
         let newHeight: CGFloat
-
+        let minSize: CGFloat = 7.0
         switch positionLocation {
         case .topLeading:
-            newWidth = frame.width - translation.width
-            newHeight = frame.height - translation.height
+            // Compute new width and height based on the direction of the drag gesture
+            newWidth = translation.width < 0 ? max(minSize, frame.width + abs(translation.width)) : max(minSize, frame.width - translation.width)
+            newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
         }
         // TODO: MORE CONSTRAINTS
         // Keep windows from going to close top top
 
-        frame.size.width = newWidth
-        frame.size.height = newHeight
+        // Smoothly interpolate towards the new size
+         let lerpFactor: CGFloat = 0.25
+         frame.size.width += (newWidth - frame.size.width) * lerpFactor
+         frame.size.height += (newHeight - frame.size.height) * lerpFactor
     }
 }
 // END WINDOW RESIZING GESTURE HANDLING ****************************************************************************

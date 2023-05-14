@@ -29,17 +29,13 @@ struct WindowView: View {
     var body: some View {
             ZStack {
                 VStack {
-
                     windowContent()
                         .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position))
                         .environmentObject(windowManager)
                 }
                 .cornerRadius(8)
                 .shadow(color:settingsViewModel.appTextColor, radius: 10)
-
                 .frame(width: window.frame.width, height: window.frame.height)
-
-
             }
             .offset(position)
     }
@@ -56,16 +52,15 @@ struct WindowView: View {
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, frame: $frame, position: $position, webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
         case .file:
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
@@ -74,7 +69,7 @@ struct WindowView: View {
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .repoTreeView, window: window, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .repoTreeView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
@@ -83,12 +78,20 @@ struct WindowView: View {
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .windowListView, window: window, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .windowListView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
-
+        case .changeView:
+            let viewModel = SageMultiViewModel(windowInfo: window)
+            let url = URL(string:SettingsViewModel.shared.defaultURL)
+            return AnyView(
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .changeView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
+            )
         }
     }
 }

@@ -69,6 +69,8 @@ struct WindowList: View {
             return "Repo Tree"
         case .windowListView:
             return "Window List"
+        case .changeView:
+            return "Change List"
         }
     }
 }

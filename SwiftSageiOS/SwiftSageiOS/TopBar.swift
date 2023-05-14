@@ -67,21 +67,17 @@ struct TopBar: View {
         .frame(maxWidth: .infinity, maxHeight: 30)
     }
     func getName() -> String {
-        if windowInfo.windowType == .file {
+        switch windowInfo.windowType {
+        case .file:
             return "\(windowInfo.file?.name ?? "Filename")"
-        }
-
-        else if windowInfo.windowType == .webView {
+        case .webView:
             return  "\(webViewURL?.absoluteString ?? "WebView")"
-
-        }
-        else if windowInfo.windowType == .repoTreeView {
+        case .repoTreeView:
             return "Repo Tree"
-        }
-        else if windowInfo.windowType == .windowListView {
+        case .windowListView:
             return "Window List"
-
+        case .changeView:
+            return "Change View"
         }
-        return "Window"
     }
 }

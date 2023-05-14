@@ -35,6 +35,10 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var root: RepoFile?
 
+
+    @Published var changes = [ChangeRow]()
+
+
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 

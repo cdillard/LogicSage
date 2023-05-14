@@ -75,12 +75,106 @@ struct AddView: View {
                     .padding(.leading,8)
                     .padding(.trailing,8)
 
-                    HStack {
+                    VStack {
+                        HStack {
 
+                            HStack {
+                                Button(action: {
+                                    withAnimation {
+                                        logD("open new File")
+#if !os(macOS)
+
+                                        if consoleManager.isVisible {
+                                            consoleManager.isVisible = false
+                                        }
+#endif
+                                        showAddView.toggle()
+#if !os(macOS)
+                                        windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+#endif
+                                    }
+                                }) {
+                                    VStack {
+                                        Text("New File...")
+                                            .font(.subheadline)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .padding(.bottom)
+
+                                        resizableButtonImage(systemName:
+                                                                "doc.fill.badge.plus",
+                                                             size: geometry.size)
+                                        .fontWeight(.bold)
+                                        .cornerRadius(8)
+                                    }
+
+                                }
+
+                                .padding(.bottom)
+                            }
+                            .padding(.leading,8)
+
+                            Button(action: {
+                                withAnimation {
+
+#if !os(macOS)
+                                    if consoleManager.isVisible {
+                                        consoleManager.isVisible = false
+                                    }
+#endif
+                                    logD("open Webview")
+                                    showAddView.toggle()
+
+#if !os(macOS)
+                                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+
+                                    windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+#endif
+                                }
+                            }) {
+                                VStack {
+                                    HStack {
+                                        Text("New webview: " )
+                                            .font(.subheadline)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+
+                                    }
+                                    resizableButtonImage(systemName:
+                                                            "rectangle.center.inset.filled.badge.plus",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .background(settingsViewModel.buttonColor)
+                                    .cornerRadius(8)
+                                }
+
+                            }
+                            HStack {
+
+                                TextField(
+                                    "",
+                                    text: $settingsViewModel.defaultURL
+                                )
+                                .border(.secondary)
+                                .submitLabel(.done)
+
+                                .focused($field7IsFocused)
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .scrollDismissesKeyboard(.interactively)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                .autocapitalization(.none)
+#endif
+                            }
+                            .frame(height: geometry.size.height / 17)
+                            Spacer()
+                        }
+                        .padding(.leading,8)
+                        .padding(.trailing,8)
                         HStack {
                             Button(action: {
                                 withAnimation {
-                                    logD("open new File")
+                                    logD("open Change View")
     #if !os(macOS)
 
                                     if consoleManager.isVisible {
@@ -89,18 +183,18 @@ struct AddView: View {
     #endif
                                     showAddView.toggle()
     #if !os(macOS)
-                                    windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+                                    windowManager.addWindow(windowType: .changeView, frame: defSize, zIndex: 0)
     #endif
                                 }
                             }) {
                                 VStack {
-                                    Text("New File...")
+                                    Text("View changes...")
                                         .font(.subheadline)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .padding(.bottom)
 
                                     resizableButtonImage(systemName:
-                                                            "doc.fill.badge.plus",
+                                                            "plus.forwardslash.minus",
                                                          size: geometry.size)
                                     .fontWeight(.bold)
                                     .cornerRadius(8)
@@ -111,65 +205,7 @@ struct AddView: View {
                             .padding(.bottom)
                         }
                         .padding(.leading,8)
-
-                        Button(action: {
-                            withAnimation {
-
-#if !os(macOS)
-                                if consoleManager.isVisible {
-                                    consoleManager.isVisible = false
-                                }
-#endif
-                                logD("open Webview")
-                                showAddView.toggle()
-
-#if !os(macOS)
-                                // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-
-                                windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
-                            }
-                        }) {
-                            VStack {
-                                HStack {
-                                    Text("New webview: " )
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                }
-                                resizableButtonImage(systemName:
-                                                        "rectangle.center.inset.filled.badge.plus",
-                                                     size: geometry.size)
-                                .fontWeight(.bold)
-                                .background(settingsViewModel.buttonColor)
-                                .cornerRadius(8)
-                            }
-
-                        }
-                        HStack {
-
-                            TextField(
-                                "",
-                                text: $settingsViewModel.defaultURL
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-
-                            .focused($field7IsFocused)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .scrollDismissesKeyboard(.interactively)
-                            .font(.caption)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .autocorrectionDisabled(true)
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
-                        }
-                        .frame(height: geometry.size.height / 17)
-                        Spacer()
                     }
-                    .padding(.leading,8)
-                    .padding(.trailing,8)
 
                     let repoListMoji = repoSettingsShown ? "🔽" : "▶️"
 
@@ -379,7 +415,10 @@ struct AddView: View {
 
                                 NavigationView {
                                     if let root = settingsViewModel.root {
-                                        RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root, window: nil)
+                                        let newWindow = WindowInfo(frame: defSize, zIndex: 0, windowType: .repoTreeView, fileContents: "", file: nil, url: nil)
+
+                                        let viewModel = SageMultiViewModel(windowInfo: newWindow)
+                                        RepositoryTreeView(sageMultiViewModel: viewModel, settingsViewModel: settingsViewModel, directory: root, window: nil)
                                             .environmentObject(windowManager)
                                     }
                                     else {

@@ -56,7 +56,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         }
     }
     
-    @Binding private var text: String
+    @Binding var text: String
     @Binding private var isEditing: Bool
 
     private var shouldBecomeFirstResponder: Bool
@@ -158,10 +158,11 @@ extension SourceCodeTextEditor {
         }
         
         public func didChangeText(_ syntaxTextView: SyntaxTextView) {
-            DispatchQueue.main.async {
-                self.parent.text = syntaxTextView.text
-            }
-            
+            let myNewText = syntaxTextView.text
+//            DispatchQueue.main.async {
+//            }
+            self.parent.text = myNewText
+
             // allow the client to decide on thread
             parent.custom.didChangeText(parent)
         }

@@ -94,6 +94,7 @@
 		B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9852A07FEC1002343AB /* CommitDownloader.swift */; };
 		B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9872A07FEF3002343AB /* Settings+Github.swift */; };
 		B78DA98A2A080037002343AB /* WindowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9892A080037002343AB /* WindowList.swift */; };
+		B78EAF602A117482003095A2 /* ChangeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF5F2A117482003095A2 /* ChangeList.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
@@ -195,6 +196,7 @@
 		B78DA9852A07FEC1002343AB /* CommitDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitDownloader.swift; sourceTree = "<group>"; };
 		B78DA9872A07FEF3002343AB /* Settings+Github.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Github.swift"; sourceTree = "<group>"; };
 		B78DA9892A080037002343AB /* WindowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowList.swift; sourceTree = "<group>"; };
+		B78EAF5F2A117482003095A2 /* ChangeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeList.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 		B78EAF5D2A108516003095A2 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
+				B78EAF5F2A117482003095A2 /* ChangeList.swift */,
 				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
 				B78DA9892A080037002343AB /* WindowList.swift */,
 			);
@@ -633,6 +636,7 @@
 				B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */,
 				B7191F1929F9F09A00078D8D /* Types.swift in Sources */,
 				B74A2CC429F7F6990051DB52 /* TCPTransport.swift in Sources */,
+				B78EAF602A117482003095A2 /* ChangeList.swift in Sources */,
 				B71C62EC2A00312A004296E4 /* BGHandler.swift in Sources */,
 				B71C62F52A018B5B004296E4 /* GPTCommand.swift in Sources */,
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,

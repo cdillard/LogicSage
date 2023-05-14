@@ -12,8 +12,10 @@ struct RepositoryTreeView: View {
     let directory: RepoFile
     @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo?
+    @ObservedObject var sageMultiViewModel: SageMultiViewModel
 
-    init(settingsViewModel: SettingsViewModel, directory: RepoFile, window: WindowInfo? = nil) {
+    init(sageMultiViewModel: SageMultiViewModel, settingsViewModel: SettingsViewModel, directory: RepoFile, window: WindowInfo? = nil) {
+        self.sageMultiViewModel = sageMultiViewModel
         self.settingsViewModel = settingsViewModel
         self.directory = directory
         self.window = window
@@ -22,7 +24,7 @@ struct RepositoryTreeView: View {
     var body: some View {
         List(directory.children ?? [RepoFile]()) { file in
             if file.isDirectory {
-                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file, window: window)) {
+                NavigationLink(destination: RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: file, window: window)) {
                     Text(file.name + " >")
                         .foregroundColor(settingsViewModel.appTextColor)
                 }

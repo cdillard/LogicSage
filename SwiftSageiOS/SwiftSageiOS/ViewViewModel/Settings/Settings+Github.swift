@@ -314,91 +314,55 @@ extension SettingsViewModel {
     }
 }
 
-let maxFolderTraversalDepth = 3
-
 func getDocumentsDirectory() -> URL {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return paths[0]
 }
 
-extension SettingsViewModel {
-//   func loadDirectories() -> [URL] {
-//       let documentsDirectory = getDocumentsDirectory()
-//
-//       var retDir = [URL]()
-//
-//         do {
-//             retDir = try listDirectories(at: documentsDirectory, depth: 1)
-//         } catch {
-//             print("Error loading directories: \(error)")
-//         }
-//
-//       return retDir
-//     }
-
-   func listDirectories(at url: URL, depth: Int) throws -> [URL] {
-       guard depth <= maxFolderTraversalDepth else { return [] }
-
-       let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [URLResourceKey.isDirectoryKey], options: .skipsHiddenFiles)
-       var retDir = [URL]()
-       for content in directoryContents {
-           let resourceValues = try content.resourceValues(forKeys: Set([URLResourceKey.isDirectoryKey]))
-           let isDirectory = resourceValues.isDirectory ?? false
-           if isDirectory {
-               if depth == 3 {
-                   retDir.append(content)
-               }
-               let childs = try listDirectories(at: content, depth: depth + 1)
-               retDir += childs
-           }
-       }
-       return retDir
-   }
-}
 // Function to save a MyObject instance to UserDefaults
-func saveGithubContentToDisk(object: [GitHubContent], forKey key: String) {
-
-   let encoder = JSONEncoder()
-   do {
-       let encodedData = try encoder.encode(object)
-
-       saveJSONData(encodedData, filename: "\(key).json")
-   }
-   catch {
-       print("failed w error = \(error)")
-   }
-}
-func retrieveGithubContentFromDisk(forKey key: String) -> [GitHubContent]? {
-
-   if let savedData = loadJSONData(filename: "\(key).json") {
-       do {
-           let decoder = JSONDecoder()
-           return try decoder.decode([GitHubContent].self, from: savedData)
-       }
-       catch {
-           print("failed w error = \(error)")
-       }
-   }
-   return nil
-}
-func loadJSONData(filename: String) -> Data? {
-    let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
-
-    do {
-        let data = try Data(contentsOf: fileURL)
-        return data
-    } catch {
-        print("Failed to read JSON data: \(error.localizedDescription)")
-        return nil
-    }
-}
-func saveJSONData(_ data: Data, filename: String) {
-    let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
-
-    do {
-        try data.write(to: fileURL)
-    } catch {
-        print("Failed to write JSON data: \(error.localizedDescription)")
-    }
-}
+//func saveGithubContentToDisk(object: [GitHubContent], forKey key: String) {
+//
+//   let encoder = JSONEncoder()
+//   do {
+//       let encodedData = try encoder.encode(object)
+//
+//       saveJSONData(encodedData, filename: "\(key).json")
+//   }
+//   catch {
+//       print("failed w error = \(error)")
+//   }
+//}
+//func retrieveGithubContentFromDisk(forKey key: String) -> [GitHubContent]? {
+//
+//   if let savedData = loadJSONData(filename: "\(key).json") {
+//       do {
+//           let decoder = JSONDecoder()
+//           return try decoder.decode([GitHubContent].self, from: savedData)
+//       }
+//       catch {
+//           print("failed w error = \(error)")
+//       }
+//   }
+//   return nil
+//}
+//func loadJSONData(filename: String) -> Data? {
+//    let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
+//
+//    do {
+//        let data = try Data(contentsOf: fileURL)
+//        return data
+//    } catch {
+//        print("Failed to read JSON data: \(error.localizedDescription)")
+//        return nil
+//    }
+//}
+//func saveJSONData(_ data: Data, filename: String) {
+//    let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
+//
+//    do {
+//        try data.write(to: fileURL)
+//    } catch {
+//        print("Failed to write JSON data: \(error.localizedDescription)")
+//    }
+//}
 // END GITHUB API HANDLING ZONE **************************************************************************************
