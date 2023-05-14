@@ -579,7 +579,9 @@ public class SettingsViewModel: ObservableObject {
        // Task {
             let fileURL = getDocumentsDirectory()
             //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
-        root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
+        DispatchQueue.global(qos: .default).async {
+            self.root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
+        }
     }
 
     func currentGitRepoKey() -> String {

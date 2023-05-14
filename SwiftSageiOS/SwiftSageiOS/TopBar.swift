@@ -13,6 +13,7 @@ struct TopBar: View {
     var onClose: () -> Void
     @State var windowInfo: WindowInfo
     @State var webViewURL: URL?
+    @EnvironmentObject var windowManager: WindowManager
 
     var body: some View {
         HStack {
@@ -28,13 +29,16 @@ struct TopBar: View {
 
             Spacer()
 
-            Text(getName())
-                .font(.body)
-                .lineLimit(1)
+            if windowInfo.windowType == .file ||
+               windowInfo.windowType == .webView {
 
-                .foregroundColor(SettingsViewModel.shared.buttonColor)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Text(getName())
+                    .font(.body)
+                    .lineLimit(1)
 
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
             Spacer()
 
             if windowInfo.windowType == .file {
@@ -49,6 +53,9 @@ struct TopBar: View {
                 .padding(.trailing, 8)
             }
 
+        }
+        .onTapGesture {
+            self.windowManager.bringWindowToFront(window: self.windowInfo)
         }
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 30)

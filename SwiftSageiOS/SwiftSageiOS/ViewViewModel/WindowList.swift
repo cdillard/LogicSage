@@ -48,7 +48,7 @@ struct WindowList: View {
                     }
                 }
             }
-            listRowBackground(SettingsViewModel.shared.backgroundColor)
+            .listRowBackground(SettingsViewModel.shared.backgroundColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         }
@@ -65,6 +65,10 @@ struct WindowList: View {
             return window.url ?? "Webview"
         case .file:
             return window.file?.name ?? "Filename"
+        case .repoTreeView:
+            return "Repo Tree"
+        case .windowListView:
+            return "Window List"
         }
     }
 }

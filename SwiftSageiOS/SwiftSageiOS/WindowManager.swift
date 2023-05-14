@@ -13,10 +13,17 @@ class WindowManager: ObservableObject {
     @Published var windows: [WindowInfo] = []
 
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "") {
+
+        // TODO: OFFSET NEW WINDOWS
+        
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url)
         windows.append(newWindow)
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
+
+//        originPoint.x += offsetPoint.x
+//        originPoint.y += offsetPoint.y
+
     }
 
     func removeWindow(window: WindowInfo) {
@@ -58,7 +65,8 @@ struct WindowInfo: Identifiable, Equatable {
     enum WindowType {
         case webView
         case file
-        // Add more window types as needed
+        case repoTreeView
+        case windowListView
     }
 }
 

@@ -148,20 +148,6 @@ struct ContentView: View {
                     }) {
                         resizableButtonImage(systemName: "gearshape", size: geometry.size)
                     }
-//                    }
-//                    // PING BUTTON
-//                    Button(action: {
-//                        if screamer.websocket != nil {
-//                            screamer.websocket.write(ping: Data())
-//                        }
-//#if !os(macOS)
-                    //                        consoleManager.print("ping...")
-//#endif
-//                        print("ping...")
-//                    }) {
-//
-//                        resizableButtonImage(systemName: "shippingbox.and.arrow.backward", size: geometry.size)
-//                    }
 
                     // ADD VIEW BUTTON
                     Button(action: {
@@ -180,7 +166,6 @@ struct ContentView: View {
 
                         resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
                     }
-
 
                     Button(action: {
 #if !os(macOS)

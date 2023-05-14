@@ -101,10 +101,7 @@ extension SettingsViewModel {
                     self.root = RepoFile(name: "Root", url: getDocumentsDirectory(), isDirectory: true, children: childs)
 
                     self.isLoading = false
-
-
                 }
-
             }
 
             if let location = location {
@@ -119,7 +116,6 @@ extension SettingsViewModel {
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
                     var myProgress = Progress()
                     unzipObservation = myProgress.observe(\.fractionCompleted) { progress, _ in
-//                      logD("unzip progress:\( progress.fractionCompleted)")
                         DispatchQueue.main.async {
                             self.unzipProgress = progress.fractionCompleted
                         }
@@ -142,6 +138,16 @@ extension SettingsViewModel {
 
                 } catch {
                     logD("Error: \(error)")
+
+                    do {
+                        try FileManager.default.removeItem(at:  destinationUrl)
+                        print("rm .zip sucess")
+                    }
+                    catch {
+                        print("rm .zip fail")
+
+                    }
+
                     syncCompletion(false)
 
                 }
@@ -154,46 +160,6 @@ extension SettingsViewModel {
             }
         }
         task.resume()
-
-//        SettingsViewModel.shared.fetchSubfolders(path: "", delay: githubDelay) { result in
-//            switch result {
-//            case .success(let repositoryFiles):
-//                logD("All \(repositoryFiles.count) root file and directories structure downloaded.\nNow sws downloading all files in repo...")
-//                self.rootFiles = repositoryFiles
-//                let githubContentKey = self.currentGitRepoKey()
-//                // Save GithubContent struct heirarchy to user defaults with key owner/repo/branch
-//                saveGithubContentToDisk(object: self.rootFiles, forKey: githubContentKey)
-//
-//                downloadAndStoreFiles(nil, self.rootFiles, accessToken: SettingsViewModel.shared.ghaPat) { success in
-//                    switch success {
-//                    case .success(_):
-//                        DispatchQueue.main.async {
-//
-//                            self.isLoading = false
-//                        }
-//                        logD("repo contents dl success.")
-//
-//                    case .failure(let error):
-//                        DispatchQueue.main.async {
-//
-//                            self.isLoading = false
-//                        }
-//                        logD("Error downloading repo contents. \(error)!")
-//
-//                        return
-//                    }
-//                }
-//
-//            case .failure(let error):
-//                logD("Error fetching files: \(error)")
-//
-//                DispatchQueue.main.async {
-//
-//                    self.isLoading = false
-//                }
-//                return
-//            }
-//        }
     }
 
     func fetchRepositoryTreeStructure(path: String = "", completion: @escaping (Result<[GitHubContent], Error>) -> Void) {
@@ -332,19 +298,19 @@ func getDocumentsDirectory() -> URL {
 }
 
 extension SettingsViewModel {
-   func loadDirectories() -> [URL] {
-       let documentsDirectory = getDocumentsDirectory()
-
-       var retDir = [URL]()
-
-         do {
-             retDir = try listDirectories(at: documentsDirectory, depth: 1)
-         } catch {
-             print("Error loading directories: \(error)")
-         }
-
-       return retDir
-     }
+//   func loadDirectories() -> [URL] {
+//       let documentsDirectory = getDocumentsDirectory()
+//
+//       var retDir = [URL]()
+//
+//         do {
+//             retDir = try listDirectories(at: documentsDirectory, depth: 1)
+//         } catch {
+//             print("Error loading directories: \(error)")
+//         }
+//
+//       return retDir
+//     }
 
    func listDirectories(at url: URL, depth: Int) throws -> [URL] {
        guard depth <= maxFolderTraversalDepth else { return [] }

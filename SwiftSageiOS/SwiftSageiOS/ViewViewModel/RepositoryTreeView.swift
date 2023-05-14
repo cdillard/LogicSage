@@ -19,58 +19,31 @@ struct RepositoryTreeView: View {
     }
 
     var body: some View {
-//                if !directory.isEmpty {
         GeometryReader { geometry in
-            Group {
-                
-                List(directory.children ?? [RepoFile]()) { file in
-                    if file.isDirectory {
-                        NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
-                            Text(file.name + " >")
-                                .foregroundColor(settingsViewModel.appTextColor)
 
-                        }
-                    } else {
-                        HStack {
-                            Button( action: {
-                                fileTapped(file, defSize)
-                            })
-                            {
-                                Text(file.name)
-                                    .foregroundColor(settingsViewModel.buttonColor)
+            List(directory.children ?? [RepoFile]()) { file in
+                if file.isDirectory {
+                    NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
+                        Text(file.name + " >")
+                            .foregroundColor(settingsViewModel.appTextColor)
 
-                            }
+                    }
+                } else {
+                    HStack {
+                        Button( action: {
+                            fileTapped(file, defSize)
+                        })
+                        {
+                            Text(file.name)
+                                .foregroundColor(settingsViewModel.buttonColor)
+
                         }
                     }
                 }
-                .listRowBackground(settingsViewModel.backgroundColor)
-                .navigationBarTitle(directory.name)
             }
+            .listRowBackground(settingsViewModel.backgroundColor)
+            .navigationBarTitle(directory.name)
         }
-    
-//        List {
-//                             ForEach(files) { file in
-//        List(directory.children ?? [RepoFile](), id: \.name) { file in
-//            if file.isDirectory {
-//
-//                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
-//                    Text(file.name)
-//                }
-//
-//            } else {
-//                Button(action: {
-//                    // let O = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-//#if !os(macOS)
-//
-//                    fileTapped(file, defSize)
-//#endif
-//                }) {
-//                    Text(file.name)
-//                        .foregroundColor(.blue)
-//                }
-//            }
-//        }
-
     }
     func readFileContents(url: URL) -> String? {
         do {
@@ -116,5 +89,9 @@ struct RepositoryTreeView: View {
         //                print("Error fetching file content: \(error.localizedDescription)")
         //            }
         //        }
+    }
+    func delete(at offsets: IndexSet) {
+        print("Should delete folder / file at \(offsets)")
+        //users.remove(atOffsets: offsets)
     }
 }

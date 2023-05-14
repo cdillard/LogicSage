@@ -265,8 +265,12 @@ struct AddView: View {
                             }
                             .frame(height: geometry.size.height / 17)
                         }
+                        .padding(.leading,8)
+                        .padding(.trailing,8)
                     }
-
+                    Text("download: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
+                        .font(.subheadline)
+                        .foregroundColor(settingsViewModel.appTextColor)
                     if !settingsViewModel.isLoading {
                         HStack(spacing: 4) {
                             Button(action: {
@@ -277,9 +281,7 @@ struct AddView: View {
                                 }
                             }) {
                                 VStack {
-                                    Text("download: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
+
                                     resizableButtonImage(systemName:
                                                             "arrow.down.doc",
                                                          size: geometry.size)
@@ -295,65 +297,83 @@ struct AddView: View {
                     }
                     else {
                         if settingsViewModel.unzipProgress > 0.0 {
-                            Text("unzip...")
-                            ProgressView(value: settingsViewModel.unzipProgress)
+                            HStack {
+                                Text("unzip...")
+                                ProgressView(value: settingsViewModel.unzipProgress)
+                            }
+                            .padding(.trailing, 32)
+                            .padding(.leading, 32)
+
                         }
                         if settingsViewModel.downloadProgress > 0.0 {
-                            Text("download...")
+                            HStack {
+                                Text("download...")
 
-                            ProgressView(value: settingsViewModel.downloadProgress)
+                                ProgressView(value: settingsViewModel.downloadProgress)
+                            }
+                            .padding(.trailing, 32)
+                            .padding(.leading, 32)
 
                         }
-
                     }
 
-//                    Group {
-//                        let repoListMoji = repoListOpen ? "🔽" : "▶️"
-//
-//                        let val = max(3, min(15,settingsViewModel.loadDirectories().count))
-//                        Text("\(repoListMoji) Downloaded Repositories")
-//                            .font(.title3)
-//                            .lineLimit(nil)
-//                            .fontWeight(.bold)
-//                            .padding()
-//                            .foregroundColor(settingsViewModel.appTextColor)
-//
-//                            .onTapGesture {
-//                                withAnimation {
-//                                    repoListOpen.toggle()
-//                                }
-//                            }
-//                        if repoListOpen {
-//                            NavigationView {
-//
-//                                RepositoriesListView(settingsViewModel: settingsViewModel)
-//                                    .environmentObject(windowManager)
-//                            }
-//                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
-//#if !os(macOS)
-//                            .navigationViewStyle(StackNavigationViewStyle())
-//#endif
-//                        }
-//                    }
-
-                    // OPEN IN WINDOW
+                    // TODO: IMPL OPEN IN WINDOW for both Repo Tree and Window List.
                     // symbol: "macwindow.on.rectangle"
 
                     Group {
                         let filesListMoji = fileListOpen ? "🔽" : "▶️"
                         VStack {
-                            Text("\(filesListMoji) Repo File Tree")
-                                .font(.title3)
-                                .lineLimit(nil)
-                                .fontWeight(.bold)
-                                .padding()
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .onTapGesture {
-                                    withAnimation {
+                            HStack {
+                                Text("\(filesListMoji) Repo File Tree")
+                                    .font(.title3)
+                                    .lineLimit(nil)
+                                    .fontWeight(.bold)
+                                    .padding()
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .onTapGesture {
+                                        withAnimation {
 
-                                        fileListOpen.toggle()
+                                            fileListOpen.toggle()
+                                        }
+                                    }
+
+
+                                VStack {
+//                                    HStack {
+//                                        Text("New container: " )
+//                                            .font(.subheadline)
+//                                            .foregroundColor(settingsViewModel.appTextColor)
+//
+//                                    }
+                                    resizableButtonImage(systemName:
+                                                            "macwindow.on.rectangle",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .background(settingsViewModel.buttonColor)
+                                    .cornerRadius(8)
+                                    .onTapGesture {
+                                        withAnimation {
+
+                                            logD("Open container containing repo tree")
+
+            #if !os(macOS)
+                                            if consoleManager.isVisible {
+                                                consoleManager.isVisible = false
+                                            }
+            #endif
+                                            logD("open Container")
+                                            showAddView.toggle()
+
+            #if !os(macOS)
+                                            // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+
+                                            windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+            #endif
+                                        }
                                     }
                                 }
+
+                            }
                             if (fileListOpen) {
 
                                 NavigationView {
@@ -372,19 +392,55 @@ struct AddView: View {
                             }
                         }
                     }
-                    let windowListMoji = windowListOpen ? "🔽" : "▶️"
-                    Text("\(windowListMoji) Window List")
-                        .font(.title3)
-                        .lineLimit(nil)
+                    HStack {
+                        let windowListMoji = windowListOpen ? "🔽" : "▶️"
+                        Text("\(windowListMoji) Window List")
+                            .font(.title3)
+                            .lineLimit(nil)
+                            .fontWeight(.bold)
+                            .padding()
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .onTapGesture {
+                                withAnimation {
+
+                                    windowListOpen.toggle()
+                                }
+                            }
+
+//                        HStack {
+//                            Text("New container: " )
+//                                .font(.subheadline)
+//                                .foregroundColor(settingsViewModel.appTextColor)
+//
+//                        }
+                        resizableButtonImage(systemName:
+                                                "macwindow.on.rectangle",
+                                             size: geometry.size)
                         .fontWeight(.bold)
-                        .padding()
-                        .foregroundColor(settingsViewModel.appTextColor)
+                        .background(settingsViewModel.buttonColor)
+                        .cornerRadius(8)
                         .onTapGesture {
                             withAnimation {
 
-                                windowListOpen.toggle()
+                                logD("Open container containing repo tree")
+
+#if !os(macOS)
+                                if consoleManager.isVisible {
+                                    consoleManager.isVisible = false
+                                }
+#endif
+                                logD("open Container")
+                                showAddView.toggle()
+
+#if !os(macOS)
+                                // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+
+                                windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+#endif
                             }
                         }
+                    }
+
                     if windowListOpen {
                         let windowCount = max(3, min(15,windowManager.windows.count))
                         NavigationView {

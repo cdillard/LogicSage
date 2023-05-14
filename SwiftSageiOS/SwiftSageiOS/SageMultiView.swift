@@ -13,8 +13,12 @@ import WebKit
 enum ViewMode {
     case webView
     case editor
+    case repoTreeView
+    case windowListView
 }
+
 struct SageMultiView: View {
+    @Binding var showAddView: Bool
 
     @ObservedObject var settingsViewModel: SettingsViewModel
     @State var viewMode: ViewMode
@@ -31,7 +35,6 @@ struct SageMultiView: View {
     @State private var isMoveGestureActivated = false
     @State var webViewURL: URL?
 // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
-
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -46,22 +49,11 @@ struct SageMultiView: View {
                                     self.windowManager.bringWindowToFront(window: self.window)
                                     isMoveGestureActivated = true
                                 }
-                                let minY = geometry.safeAreaInsets.top
-                                // Keep windows from going to close top top
-                                var newY = max(position.height + value.translation.height, minY)
 
-                                var newWidth = position.width + value.translation.width
-                                if newWidth < 4 {
-                                    newWidth = 4
-                                }
                                 // TODO: MORE CONSTRAINTS
-//                                var newHeight = newY
-//
-//                                if newHeight > geometry.size.height - frame.height {
-//                                    newHeight = geometry.size.height - frame.height
-//                                }
+                                // Keep windows from going to close top top
 
-                                position = CGSize(width: newWidth, height: newY)
+                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
                                 
                                 //print(position)
                             }
@@ -69,10 +61,12 @@ struct SageMultiView: View {
                                 isMoveGestureActivated = false
                             }
                     )
+                    .environmentObject(windowManager)
 
 // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
+                    switch viewMode {
 
-                    if viewMode == .editor {
+                    case .editor:
 #if !os(macOS)
                         let viewModel = SourceCodeTextEditorViewModel()
 
@@ -92,22 +86,43 @@ struct SageMultiView: View {
                         }))
                         .environmentObject(viewModel)
 #endif
-                    }
-                    else {
+                    case .webView:
                         let viewModel = WebViewViewModel()
                         WebView(url:getURL())
                             .environmentObject(viewModel)
+
+                    case .repoTreeView:
+                        NavigationView {
+                            if let root = settingsViewModel.root {
+                                RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root)
+                                    .environmentObject(windowManager)
+                            }
+                            else {
+                                Text("No root")
+                            }
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
+#if !os(macOS)
+                        .navigationViewStyle(StackNavigationViewStyle())
+#endif
+                    case .windowListView:
+                        NavigationView {
+                            WindowList(showAddView: $showAddView)
+                                .environmentObject(windowManager)
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
+
+//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
+#if !os(macOS)
+                        .navigationViewStyle(StackNavigationViewStyle())
+#endif
                     }
                     Spacer()
                 }
-
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
-
+// END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
         }
-
     }
     func getURL() -> URL {
         let webURL: URL
@@ -215,7 +230,6 @@ struct ResizingHandle: View {
                 .position(positionPoint(for: positionLocation))
                 .opacity(0.666)
             // TODO: Add resizing contraints so users don't resize to a place they can't return from.
-
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .updating($dragOffset) { value, state, _ in
@@ -243,7 +257,6 @@ struct ResizingHandle: View {
                 .animation(.interactiveSpring(), value: activeDragOffset)
                 .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
         }
-        
     }
     private func positionPoint(for position: Position) -> CGPoint {
         switch position {
@@ -261,42 +274,11 @@ struct ResizingHandle: View {
             newWidth = frame.width - translation.width
             newHeight = frame.height - translation.height
         }
-        // TOP LEFT CONSTRAINT
+        // TODO: MORE CONSTRAINTS
+        // Keep windows from going to close top top
 
-//        if position.width < 5 {
-//            position.width = 5
-//        }
-//        if position.height < 5 {
-//            position.height = 5
-//        }
         frame.size.width = newWidth
         frame.size.height = newHeight
-
-      //  print(frame)
-      //  print(boundPosition)
-
-//        if newWidth > 4 && newHeight > 4 {
-//            if newWidth > screenWidth {
-//
-//                frame.size.width = newWidth
-//            }
-//            else {
-//                print("resize too wide, preventing")
-//
-//            }
-//            if newHeight > screenHeight {
-//
-//                frame.size.height = newHeight
-//            }
-//            else {
-//                print("resize too tall, preventing")
-//            }
-//
-//        }
-//        else {
-//            print("resize too wide, preventing")
-//
-//        }
     }
 }
 // END WINDOW RESIZING GESTURE HANDLING ****************************************************************************

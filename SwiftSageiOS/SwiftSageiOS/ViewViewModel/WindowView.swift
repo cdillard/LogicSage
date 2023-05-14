@@ -9,7 +9,10 @@ import Foundation
 import SwiftUI
 #if !os(macOS)
 
+// Placeholder replaced by geometry reader.
 var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
+let offsetPoint = CGPoint(x: 50, y: 50)
+var originPoint = CGPoint(x: 0, y: 0)
 
 struct WindowView: View {
     @EnvironmentObject var windowManager: WindowManager
@@ -20,29 +23,11 @@ struct WindowView: View {
     @State private var frame: CGRect = defSize
     @StateObject private var pinchHandler = PinchGestureHandler()
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @State private var showAddView: Bool = false
 
     @State private var isMoveGestureActivated = false
     var body: some View {
-//        GeometryReader { geometry in
             ZStack {
-                //            HandleView()
-                //                  .zIndex(2)
-                //                  .offset(x: -12, y: -12)
-                //                  .gesture(
-                //                      DragGesture()
-                //                          .onChanged { value in
-                //                              if !isMoveGestureActivated {
-                //                                  self.windowManager.bringWindowToFront(window: self.window)
-                //                                  isMoveGestureActivated = true
-                //                              }
-                //
-                //                              position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                //                          }
-                //                          .onEnded { value in
-                //                              isMoveGestureActivated = false
-                //                          }
-                //                  )
-
                 VStack {
 
                     windowContent()
@@ -53,25 +38,31 @@ struct WindowView: View {
                 .shadow(color:settingsViewModel.appTextColor, radius: 10)
 
                 .frame(width: window.frame.width, height: window.frame.height)
-                .onTapGesture {
-                    self.windowManager.bringWindowToFront(window: self.window)
+                .if(shouldApplyTapGest) { view in
+
+                        view.onTapGesture {
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        }
                 }
 
             }
             .offset(position)
-//        }
-
     }
+    private var shouldApplyTapGest: Bool {
+        if window.windowType == .file || window.windowType == .webView {
+            return true
+        }
 
+        return false
+    }
     private func windowContent() -> some View {
         switch window.windowType {
         case .webView:
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, frame: $frame, position: $position, webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, frame: $frame, position: $position, webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
@@ -79,12 +70,45 @@ struct WindowView: View {
             let viewModel = SageMultiViewModel(windowInfo: window)
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
-                SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                    .environmentObject(viewModel).environmentObject(windowManager)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
             )
+        case .repoTreeView:
+            let viewModel = SageMultiViewModel(windowInfo: window)
+            let url = URL(string:SettingsViewModel.shared.defaultURL)
+            return AnyView(
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .repoTreeView, window: window, frame: $frame, position: $position,webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
+            )
+        case .windowListView:
+            let viewModel = SageMultiViewModel(windowInfo: window)
+            let url = URL(string:SettingsViewModel.shared.defaultURL)
+            return AnyView(
+                SageMultiView(showAddView: $showAddView, settingsViewModel: SettingsViewModel.shared, viewMode: .windowListView, window: window, frame: $frame, position: $position,webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
+            )
+
         }
     }
 }
 #endif
+extension View {
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
