@@ -66,7 +66,7 @@ class ScreamClient: WebSocketDelegate {
                             if arr.count > 1 {
                                 logD("speaking...")
                                 let speech = String(arr[1])
-                                speak(speech)
+                                SettingsViewModel.shared.speak(speech)
                             }
                             else {
                                 logD("failed")

@@ -10,8 +10,9 @@ import Foundation
 // OPEN AI SETTING
 // DEFAULT GPT MODEL ON CLIENT SIDE.
 // CONSTANTS FOR GPT in mobile mode
-//let gptModel = "gpt-4"
-let gptModel = "gpt-3.5-turbo"
+//let defaultGPTModel = "gpt-4"
+let defaultGPTModel = "gpt-3.5-turbo"
+
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
 

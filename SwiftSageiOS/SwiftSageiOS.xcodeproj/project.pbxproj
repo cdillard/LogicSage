@@ -50,7 +50,6 @@
 		B71C62FE2A019144004296E4 /* LocalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FD2A019144004296E4 /* LocalCommand.swift */; };
 		B71C63002A01924B004296E4 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FF2A01924B004296E4 /* CommandTable.swift */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
-		B72C50BB2A089DB000875F75 /* RepositoriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72C50BA2A089DB000875F75 /* RepositoriesListView.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
 		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
 		B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */; };
@@ -149,7 +148,6 @@
 		B71C62FD2A019144004296E4 /* LocalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommand.swift; sourceTree = "<group>"; };
 		B71C62FF2A01924B004296E4 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
-		B72C50BA2A089DB000875F75 /* RepositoriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesListView.swift; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B746DFCA29F5E789002804EB /* LogicSageDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicSageDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,11 +333,9 @@
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
 				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
-				B72C50BA2A089DB000875F75 /* RepositoriesListView.swift */,
-				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
+				B78EAF5D2A108516003095A2 /* Lists */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
-				B78DA9892A080037002343AB /* WindowList.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 			);
 			path = ViewViewModel;
@@ -546,6 +542,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		B78EAF5D2A108516003095A2 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
+				B78DA9892A080037002343AB /* WindowList.swift */,
+			);
+			name = Lists;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -666,7 +671,6 @@
 				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
 				B71C63002A01924B004296E4 /* CommandTable.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
-				B72C50BB2A089DB000875F75 /* RepositoriesListView.swift in Sources */,
 				B7191F2829F9F09A00078D8D /* InnerTextView.swift in Sources */,
 				B7191F2929F9F09A00078D8D /* TextViewWrapperView.swift in Sources */,
 				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,

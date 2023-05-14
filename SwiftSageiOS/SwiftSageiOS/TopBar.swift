@@ -50,7 +50,6 @@ struct TopBar: View {
             }
 
         }
-
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 30)
     }

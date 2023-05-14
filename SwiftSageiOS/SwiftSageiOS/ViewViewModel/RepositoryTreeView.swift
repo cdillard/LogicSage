@@ -27,7 +27,7 @@ struct RepositoryTreeView: View {
                     if file.isDirectory {
                         NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
                             Text(file.name + " >")
-                                .foregroundColor(settingsViewModel.buttonColor)
+                                .foregroundColor(settingsViewModel.appTextColor)
 
                         }
                     } else {
@@ -37,12 +37,13 @@ struct RepositoryTreeView: View {
                             })
                             {
                                 Text(file.name)
-                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .foregroundColor(settingsViewModel.buttonColor)
+
                             }
                         }
                     }
                 }
-                .background(settingsViewModel.backgroundColor)
+                .listRowBackground(settingsViewModel.backgroundColor)
                 .navigationBarTitle(directory.name)
             }
         }
@@ -91,8 +92,6 @@ struct RepositoryTreeView: View {
 
     private func fileTapped(_ file: RepoFile, _ frame: CGRect) {
         print("Tapped file: \(file)")
-
-        let documentsDirectory = getDocumentsDirectory()
 
         let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
 #if !os(macOS)

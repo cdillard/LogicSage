@@ -14,9 +14,6 @@ struct WindowList: View {
 
     var body: some View {
         if !windowManager.windows.isEmpty {
-
-
-
             List {
                 Text("tap to open window to foreground")
                     .foregroundColor(SettingsViewModel.shared.appTextColor)
@@ -51,6 +48,7 @@ struct WindowList: View {
                     }
                 }
             }
+            listRowBackground(SettingsViewModel.shared.backgroundColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         }

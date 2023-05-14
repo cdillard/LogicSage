@@ -630,7 +630,7 @@ struct SettingsView: View {
 #if !os(macOS)
                                 consoleManager.print("Requesing mic permission...")
 #endif
-                                requestMicrophoneAccess { granted in
+                                settingsViewModel.requestMicrophoneAccess { granted in
                                     settingsViewModel.hasAcceptedMicrophone = granted == true
                                 }
                             }
@@ -656,11 +656,11 @@ struct SettingsView: View {
 #if !os(macOS)
                                     consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
                                     if settingsViewModel.voiceOutputenabled {
-                                        stopVoice()
+                                        settingsViewModel.stopVoice()
                                     }
                                
-                                    configureAudioSession()
-                                    printVoicesInMyDevice()
+                                    settingsViewModel.configureAudioSession()
+                                    settingsViewModel.printVoicesInMyDevice()
 
                                     settingsViewModel.voiceOutputenabled.toggle()
                                     settingsViewModel.voiceOutputenabledUserDefault.toggle()
@@ -728,6 +728,8 @@ struct SettingsView: View {
                                                     .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
                                             }
                                         }
+                                        .listRowBackground(settingsViewModel.backgroundColor)
+
                                         .contentShape(Rectangle())
                                         .onTapGesture {
                                             settingsViewModel.selectedVoiceIndexSaved = index
@@ -735,6 +737,7 @@ struct SettingsView: View {
                                         .frame(height: 30)
                                     }
                                 }
+                                .listRowBackground(settingsViewModel.backgroundColor)
                                 .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
                             }
                         }

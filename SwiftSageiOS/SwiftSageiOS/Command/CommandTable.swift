@@ -45,7 +45,7 @@ var commandTable: [String: (String) -> Void] = [
 //    "exit": exitCommand,
 //    "e": exitCommand,
     "stop": stopCommand,  "Stop": stopCommand,
-//    "say": sayCommand,     "Say": sayCommand,
+    "say": sayCommand,     "Say": sayCommand,
 //
 //
     "st": stopCommand,
@@ -95,7 +95,12 @@ var commandTable: [String: (String) -> Void] = [
 func stopCommand(input: String) {
     stopRandomSpinner()
 
-    stopVoice()
+    SettingsViewModel.shared.stopVoice()
 
     // TODO: Figure out a way to make this invalidate the potential GPTs requests and Google APIs requests.
+}
+func sayCommand(input: String) {
+    let speech = String(input)
+    SettingsViewModel.shared.speak(speech)
+
 }

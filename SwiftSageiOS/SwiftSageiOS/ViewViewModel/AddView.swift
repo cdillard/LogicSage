@@ -179,7 +179,6 @@ struct AddView: View {
                         .fontWeight(.bold)
                         .padding()
                         .foregroundColor(settingsViewModel.appTextColor)
-
                         .onTapGesture {
                             withAnimation {
                                 repoSettingsShown.toggle()
@@ -207,7 +206,6 @@ struct AddView: View {
                                 .scrollDismissesKeyboard(.interactively)
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
-
                                 .autocorrectionDisabled(true)
 #if !os(macOS)
                                 .autocapitalization(.none)
@@ -273,7 +271,10 @@ struct AddView: View {
                         HStack(spacing: 4) {
                             Button(action: {
                                 logD("Downloading repo...")
-                                settingsViewModel.syncGithubRepo()
+                                settingsViewModel.syncGithubRepo { success in
+                                    repoListOpen = true
+                                    
+                                }
                             }) {
                                 VStack {
                                     Text("download: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
@@ -293,37 +294,47 @@ struct AddView: View {
                         .frame(width: geometry.size.width  - (geometry.size.width * 0.3))
                     }
                     else {
-                        ProgressView()
-                    }
-
-                    Group {
-                        let repoListMoji = repoListOpen ? "🔽" : "▶️"
-
-                        let val = max(3, min(15,settingsViewModel.loadDirectories().count))
-                        Text("\(repoListMoji) Downloaded Repositories")
-                            .font(.title3)
-                            .lineLimit(nil)
-                            .fontWeight(.bold)
-                            .padding()
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            .onTapGesture {
-                                withAnimation {
-                                    repoListOpen.toggle()
-                                }
-                            }
-                        if repoListOpen {
-                            NavigationView {
-
-                                RepositoriesListView(settingsViewModel: settingsViewModel)
-                                    .environmentObject(windowManager)
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
-#if !os(macOS)
-                            .navigationViewStyle(StackNavigationViewStyle())
-#endif
+                        if settingsViewModel.unzipProgress > 0.0 {
+                            Text("unzip...")
+                            ProgressView(value: settingsViewModel.unzipProgress)
                         }
+                        if settingsViewModel.downloadProgress > 0.0 {
+                            Text("download...")
+
+                            ProgressView(value: settingsViewModel.downloadProgress)
+
+                        }
+
                     }
+
+//                    Group {
+//                        let repoListMoji = repoListOpen ? "🔽" : "▶️"
+//
+//                        let val = max(3, min(15,settingsViewModel.loadDirectories().count))
+//                        Text("\(repoListMoji) Downloaded Repositories")
+//                            .font(.title3)
+//                            .lineLimit(nil)
+//                            .fontWeight(.bold)
+//                            .padding()
+//                            .foregroundColor(settingsViewModel.appTextColor)
+//
+//                            .onTapGesture {
+//                                withAnimation {
+//                                    repoListOpen.toggle()
+//                                }
+//                            }
+//                        if repoListOpen {
+//                            NavigationView {
+//
+//                                RepositoriesListView(settingsViewModel: settingsViewModel)
+//                                    .environmentObject(windowManager)
+//                            }
+//                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(val), maxHeight: geometry.size.height/listHeightFactor * Double(val))
+//#if !os(macOS)
+//                            .navigationViewStyle(StackNavigationViewStyle())
+//#endif
+//                        }
+//                    }
 
                     // OPEN IN WINDOW
                     // symbol: "macwindow.on.rectangle"

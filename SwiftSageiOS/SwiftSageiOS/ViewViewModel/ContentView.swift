@@ -215,11 +215,11 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.33), geometry.size.height - (geometry.size.height * 0.33))
+                defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
             }
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 DispatchQueue.main.async {
-                    defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.33), geometry.size.height - (geometry.size.height * 0.33))
+                    defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
                 }
 
             }

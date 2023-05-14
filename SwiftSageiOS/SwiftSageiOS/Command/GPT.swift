@@ -29,7 +29,7 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
 
     // Prepare the request payload
     let requestBody: [String: Any] = [
-        "model": "\(gptModel)",
+        "model": "\(SettingsViewModel.shared.openAIModel)",
         "messages": [
             [
                 "role": "user",

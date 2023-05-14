@@ -36,10 +36,10 @@ struct SwiftSageiOSApp: App {
     init() {
         serviceDiscovery = ServiceDiscovery()
 
-        printVoicesInMyDevice()
-        
-        configureAudioSession()
-
+//        settingsViewModel.printVoicesInMyDevice()
+//        
+//        settingsViewModel.configureAudioSession()
+//
     //    cmdWindows = [LCManager]()
         //Alpha window Beta Gamma Delta Epsilon Zeta Eta Theta, Iota, Kappa, Lambda, Mu,Nu,Xi,Omicron,Pi, Rho,Sigma,Tau      Upsilon       Phi       Chi       Psi       Omega
     }

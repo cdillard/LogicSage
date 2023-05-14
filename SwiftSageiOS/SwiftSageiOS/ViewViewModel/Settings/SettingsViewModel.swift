@@ -25,7 +25,7 @@ public class SettingsViewModel: ObservableObject {
         ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
         ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
         ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
-        client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(gptModel).
+        client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(openAIModel).
         """
     }
     public static let shared = SettingsViewModel()
@@ -54,6 +54,9 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var showSourceEditorColorSettings: Bool = false
     @Published var showSizeSliders: Bool = false
+
+    @Published var downloadProgress: Double = 0.0
+    @Published var unzipProgress: Double = 0.0
 
     @Published var ipAddress: String = ""
     @Published var port: String = ""
@@ -299,7 +302,7 @@ public class SettingsViewModel: ObservableObject {
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
 
-    @AppStorage("openAIModel") var openAIModel = "\(gptModel)"
+    @AppStorage("openAIModel") var openAIModel = defaultGPTModel
 
     // CLIENT API KEYS
     @Published var openAIKey = "" {
@@ -565,23 +568,18 @@ public class SettingsViewModel: ObservableObject {
         else {
             self.selectedVoiceIndexSaved = 0
         }
+        configureAudioSession()
 
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
 
         // BEGIN LOAD SAVED GIT REPO
         let openRepoKey = currentGitRepoKey()
-        let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
+        logD("open repo key = \(openRepoKey)")
+       // Task {
+            let fileURL = getDocumentsDirectory()
+            //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
         root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
-//        if let retrievedObject = retrieveGithubContentFromDisk(forKey: openRepoKey) {
-//            self.rootFiles = retrievedObject.compactMap { $0 }
-//
-//            logD("Sucessfully restored open repo w/ rootFile count = \(self.rootFiles.count)")
-//
-//        } else {
-//            logD("Failed to retrieve saved git repo...")
-//        }
-        // END LOAD SAVED GIT REPO
     }
 
     func currentGitRepoKey() -> String {

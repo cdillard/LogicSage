@@ -57,13 +57,13 @@ Question to Answer:
     sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
 
         if !success {
-            speak("A.P.I. error, try again.")
+            SettingsViewModel.shared.speak("A.P.I. error, try again.")
             return
         }
 
         // multiPrinter("\n🤖: \(content)")
         logD("say: \(content)")
-        speak(content)
+        SettingsViewModel.shared.speak(content)
 
         refreshPrompt(appDesc: config.appDesc)
 

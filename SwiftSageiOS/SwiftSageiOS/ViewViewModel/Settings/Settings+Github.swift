@@ -68,11 +68,12 @@ struct GitHubContent: Equatable, Codable, Identifiable {
         let `self`: URL
     }
 }
+ var unzipObservation: NSKeyValueObservation?
+var downloadobservation: NSKeyValueObservation?
 
 extension SettingsViewModel {
-    func syncGithubRepo() {
+    func syncGithubRepo(_ syncCompletion: @escaping (Bool) -> Void ) {
         isLoading = true
-        self.root = nil
 
         let urlString = "http://github.com/\(gitUser)/\(gitRepo)/archive/\(gitBranch).zip"
         let outputFileName = "\(gitBranch).zip"
@@ -91,12 +92,21 @@ extension SettingsViewModel {
             print("did not delete or didn't exist old zip")
         }
         let task = URLSession.shared.downloadTask(with: url) { (location, response, error) in
+            DispatchQueue.main.async {
+                self.downloadProgress = 0.0
+            }
             defer {
+                let childs = getFiles(in: getDocumentsDirectory())
                 DispatchQueue.main.async {
+                    self.root = RepoFile(name: "Root", url: getDocumentsDirectory(), isDirectory: true, children: childs)
+
                     self.isLoading = false
+
+
                 }
 
             }
+
             if let location = location {
                 do {
                     try FileManager.default.moveItem(at: location, to: destinationUrl)
@@ -104,14 +114,21 @@ extension SettingsViewModel {
 
                     // Unzipping
 
-                    let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
+                    let fileURL = getDocumentsDirectory().appendingPathComponent(self.currentGitRepoKey())
 
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
+                    var myProgress = Progress()
+                    unzipObservation = myProgress.observe(\.fractionCompleted) { progress, _ in
+//                      logD("unzip progress:\( progress.fractionCompleted)")
+                        DispatchQueue.main.async {
+                            self.unzipProgress = progress.fractionCompleted
+                        }
+                    }
+                    try FileManager.default.unzipItem(at: destinationUrl, to: fileURL, progress: myProgress)
 
-                    try FileManager.default.unzipItem(at: destinationUrl, to: fileURL)
 
+                    self.unzipProgress = 0.0
                     logD("File unzipped to: \(fileURL)")
-
                     do {
                         try FileManager.default.removeItem(at:  destinationUrl)
                         print("rm .zip sucess")
@@ -119,10 +136,19 @@ extension SettingsViewModel {
                     catch {
                         print("did not delete or didn't exist zip")
                     }
+                    syncCompletion(true)
 
                 } catch {
                     logD("Error: \(error)")
+                    syncCompletion(false)
+
                 }
+            }
+        }
+        downloadobservation = task.progress.observe(\.fractionCompleted) { progress, _ in
+            DispatchQueue.main.async {
+                
+                self.downloadProgress = progress.fractionCompleted
             }
         }
         task.resume()

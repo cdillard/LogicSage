@@ -35,7 +35,7 @@ struct SageMultiView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack {
+                VStack(spacing: 0) {
                     TopBar(isEditing: $isEditing, onClose: {
                         windowManager.removeWindow(window: window)
                     }, windowInfo: window, webViewURL: getURL())
@@ -98,11 +98,13 @@ struct SageMultiView: View {
                         WebView(url:getURL())
                             .environmentObject(viewModel)
                     }
+                    Spacer()
                 }
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-// END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
+
+            // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
 
         }
 
