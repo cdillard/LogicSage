@@ -16,47 +16,53 @@ struct TopBar: View {
     @EnvironmentObject var windowManager: WindowManager
 
     var body: some View {
-        HStack {
+        ZStack {
+            HStack {
 
-            Button(action: onClose) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.body)
-            }
-            .foregroundColor(SettingsViewModel.shared.buttonColor)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                if windowInfo.windowType == .file ||
+                   windowInfo.windowType == .webView {
 
-
-            Spacer()
-
-            if windowInfo.windowType == .file ||
-               windowInfo.windowType == .webView {
-
-                Text(getName())
-                    .font(.body)
-                    .lineLimit(1)
-
+                    Button(action: onClose) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.body)
+                    }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            Spacer()
-
-            if windowInfo.windowType == .file {
-                Button(action: {
-                    isEditing.toggle()
-                }) {
-                    Text(isEditing ? "Done" : "Edit")
-                        .font(.body)
+                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
                 }
-                .foregroundColor(SettingsViewModel.shared.buttonColor)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.trailing, 8)
-            }
 
+
+
+                    Text(getName())
+                        .font(.body)
+                        .lineLimit(1)
+
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                Spacer()
+
+                if windowInfo.windowType == .file {
+                    Button(action: {
+                        isEditing.toggle()
+                    }) {
+                        Text(isEditing ? "Done" : "Edit")
+                            .font(.body)
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.trailing, 8)
+                }
+
+            }
         }
-        .onTapGesture {
-            self.windowManager.bringWindowToFront(window: self.windowInfo)
-        }
+//        .simultaneousGesture(
+//            TapGesture().onEnded {
+//                self.windowManager.bringWindowToFront(window: self.windowInfo)
+//            }
+//        )
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 30)
     }
@@ -64,9 +70,18 @@ struct TopBar: View {
         if windowInfo.windowType == .file {
             return "\(windowInfo.file?.name ?? "Filename")"
         }
-        else {
+
+        else if windowInfo.windowType == .webView {
             return  "\(webViewURL?.absoluteString ?? "WebView")"
 
         }
+        else if windowInfo.windowType == .repoTreeView {
+            return "Repo Tree"
+        }
+        else if windowInfo.windowType == .windowListView {
+            return "Window List"
+
+        }
+        return "Window"
     }
 }

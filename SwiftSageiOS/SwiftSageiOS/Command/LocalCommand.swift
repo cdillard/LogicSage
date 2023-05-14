@@ -29,7 +29,7 @@ func callLocalCommand(_ command: String) -> Bool {
 
     if command == "Hello" { return true }
     // HERE WE HANDLE LOCAL COMANDS
-    if command == "st" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ; return true  }
+    if command == "st" || command == "stop" || command == "STOP"  { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ; return true  }
 
 
     let commandSplit = command.split(separator: " ", maxSplits: 1)

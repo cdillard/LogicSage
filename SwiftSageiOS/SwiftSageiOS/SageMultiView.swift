@@ -42,7 +42,7 @@ struct SageMultiView: View {
                     TopBar(isEditing: $isEditing, onClose: {
                         windowManager.removeWindow(window: window)
                     }, windowInfo: window, webViewURL: getURL())
-                    .gesture(
+                    .simultaneousGesture(
                         DragGesture()
                             .onChanged { value in
                                 if !isMoveGestureActivated {
@@ -61,6 +61,13 @@ struct SageMultiView: View {
                                 isMoveGestureActivated = false
                             }
                     )
+                    .if(window.windowType == .repoTreeView || window.windowType == .windowListView ) { view in
+                        view.simultaneousGesture(
+                            TapGesture().onEnded {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            }
+                        )
+                    }
                     .environmentObject(windowManager)
 
 // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
@@ -84,24 +91,29 @@ struct SageMultiView: View {
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
                         }))
+                        .onTapGesture {
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        }
                         .environmentObject(viewModel)
 #endif
                     case .webView:
                         let viewModel = WebViewViewModel()
                         WebView(url:getURL())
+                            .onTapGesture {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            }
                             .environmentObject(viewModel)
 
                     case .repoTreeView:
                         NavigationView {
                             if let root = settingsViewModel.root {
-                                RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root)
+                                RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root, window: window)
                                     .environmentObject(windowManager)
                             }
                             else {
                                 Text("No root")
                             }
                         }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
 #if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
 #endif
@@ -110,9 +122,6 @@ struct SageMultiView: View {
                             WindowList(showAddView: $showAddView)
                                 .environmentObject(windowManager)
                         }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
-
-//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
 #if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
 #endif

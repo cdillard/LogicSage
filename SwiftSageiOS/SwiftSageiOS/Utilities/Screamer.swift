@@ -168,6 +168,8 @@ class ScreamClient: WebSocketDelegate {
     }
     func sendCommand(command: String) {
         logD("Executing: \(command)")
+
+
         if SettingsViewModel.shared.currentMode == .mobile {
             logD("Handling \(command) mobile mode...")
             if callLocalCommand(command) {
@@ -176,6 +178,7 @@ class ScreamClient: WebSocketDelegate {
         }
         else {
             logD("Handling \(command) in computer mode...")
+            if command == "st" || command == "stop" || command == "STOP" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ;  }
 
             if websocket != nil {
                 let messageData: [String: Any] = ["recipient": "SERVER", "command": command]

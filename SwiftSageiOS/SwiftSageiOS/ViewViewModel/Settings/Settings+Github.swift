@@ -68,7 +68,32 @@ struct GitHubContent: Equatable, Codable, Identifiable {
         let `self`: URL
     }
 }
- var unzipObservation: NSKeyValueObservation?
+
+struct RepoFile: Identifiable, Equatable {
+    var id = UUID()
+    let name: String
+    let url: URL
+    let isDirectory: Bool
+    var children: [RepoFile]?
+}
+func getFiles(in directory: URL) -> [RepoFile] {
+    let fileManager = FileManager.default
+
+    do {
+        let fileURLs = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+
+        return fileURLs.map { url -> RepoFile in
+            var isDirectory: ObjCBool = false
+            fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
+            return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue ? getFiles(in: url) : nil)
+        }
+    } catch {
+        print("Error getting files in directory: \(error)")
+        return []
+    }
+}
+
+var unzipObservation: NSKeyValueObservation?
 var downloadobservation: NSKeyValueObservation?
 
 extension SettingsViewModel {
@@ -111,10 +136,10 @@ extension SettingsViewModel {
 
                     // Unzipping
 
-                    let fileURL = getDocumentsDirectory().appendingPathComponent(self.currentGitRepoKey())
+                    let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser)
 
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
-                    var myProgress = Progress()
+                    let myProgress = Progress()
                     unzipObservation = myProgress.observe(\.fractionCompleted) { progress, _ in
                         DispatchQueue.main.async {
                             self.unzipProgress = progress.fractionCompleted
@@ -149,7 +174,6 @@ extension SettingsViewModel {
                     }
 
                     syncCompletion(false)
-
                 }
             }
         }

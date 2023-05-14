@@ -51,6 +51,10 @@ class WindowManager: ObservableObject {
     private func sortWindowsByZIndex() {
         windows.sort(by: { $0.zIndex < $1.zIndex })
     }
+
+    func topWindow() -> WindowInfo? {
+        windows.first
+    }
 }
 
 struct WindowInfo: Identifiable, Equatable {

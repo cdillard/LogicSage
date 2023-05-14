@@ -38,7 +38,6 @@
 		B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */; };
 		B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62DE29FCAD3E004296E4 /* Screamer.swift */; };
 		B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E029FDE0D7004296E4 /* Speak.swift */; };
-		B71C62E329FE0FF2004296E4 /* Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E229FE0FF2004296E4 /* Code.swift */; };
 		B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E429FEB794004296E4 /* SpeechRecog.swift */; };
 		B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C62E629FEB7BB004296E4 /* Speech.framework */; };
 		B71C62EC2A00312A004296E4 /* BGHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62EB2A00312A004296E4 /* BGHandler.swift */; };
@@ -135,7 +134,6 @@
 		B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextEditor.swift; sourceTree = "<group>"; };
 		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B71C62E029FDE0D7004296E4 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
-		B71C62E229FE0FF2004296E4 /* Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
 		B71C62E429FEB794004296E4 /* SpeechRecog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecog.swift; sourceTree = "<group>"; };
 		B71C62E629FEB7BB004296E4 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/Speech.framework; sourceTree = DEVELOPER_DIR; };
 		B71C62EB2A00312A004296E4 /* BGHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGHandler.swift; sourceTree = "<group>"; };
@@ -324,16 +322,16 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B7EFB8662A0F57A700D6E2A6 /* SageMultiView.swift */,
-				B7EFB8672A0F57A700D6E2A6 /* TopBar.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
 				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
 				B78EAF5D2A108516003095A2 /* Lists */,
+				B7EFB8662A0F57A700D6E2A6 /* SageMultiView.swift */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
+				B7EFB8672A0F57A700D6E2A6 /* TopBar.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 			);
 			path = ViewViewModel;
@@ -363,25 +361,16 @@
 			isa = PBXGroup;
 			children = (
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
-				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
-				B71C62E229FE0FF2004296E4 /* Code.swift */,
 				B71C62F32A018B4A004296E4 /* Command */,
-				B78DA9852A07FEC1002343AB /* CommitDownloader.swift */,
 				B71C62F62A018C4F004296E4 /* Config */,
 				B748C2FA29F5FF4A000F5F14 /* Info.plist */,
 				B78DA9602A02AF3A002343AB /* Loading */,
-				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B746DFD429F5E78A002804EB /* Preview Content */,
-				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
-				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
-				B71C62E029FDE0D7004296E4 /* Speak.swift */,
-				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */,
 				B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */,
 				B78DA97C2A06F401002343AB /* Utilities */,
 				B72645312A0E814D00AE3668 /* ViewViewModel */,
-				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
 			);
 			path = SwiftSageiOS;
 			sourceTree = "<group>";
@@ -522,9 +511,9 @@
 		B78DA97B2A06F3E4002343AB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B78EAF5E2A116D76003095A2 /* Github */,
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
-				B78DA9872A07FEF3002343AB /* Settings+Github.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -532,9 +521,16 @@
 		B78DA97C2A06F401002343AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */,
-				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
+				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
 				B78DA9732A04A083002343AB /* KeychainManager.swift */,
+				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
+				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
+				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
+				B71C62E029FDE0D7004296E4 /* Speak.swift */,
+				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
+				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
+				B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */,
+				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -546,6 +542,15 @@
 				B78DA9892A080037002343AB /* WindowList.swift */,
 			);
 			name = Lists;
+			sourceTree = "<group>";
+		};
+		B78EAF5E2A116D76003095A2 /* Github */ = {
+			isa = PBXGroup;
+			children = (
+				B78DA9852A07FEC1002343AB /* CommitDownloader.swift */,
+				B78DA9872A07FEF3002343AB /* Settings+Github.swift */,
+			);
+			name = Github;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,7 +677,6 @@
 				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,
 				B7191F2C29F9F09A00078D8D /* Paragraphs.swift in Sources */,
 				B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */,
-				B71C62E329FE0FF2004296E4 /* Code.swift in Sources */,
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
 				B78DA9672A02AF3A002343AB /* Loading.swift in Sources */,

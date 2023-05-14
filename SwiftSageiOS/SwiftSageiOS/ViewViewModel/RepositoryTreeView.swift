@@ -11,39 +11,35 @@ struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     let directory: RepoFile
     @EnvironmentObject var windowManager: WindowManager
+    var window: WindowInfo?
 
-    init(settingsViewModel: SettingsViewModel, directory: RepoFile) {
+    init(settingsViewModel: SettingsViewModel, directory: RepoFile, window: WindowInfo? = nil) {
         self.settingsViewModel = settingsViewModel
-
         self.directory = directory
+        self.window = window
     }
 
     var body: some View {
-        GeometryReader { geometry in
-
-            List(directory.children ?? [RepoFile]()) { file in
-                if file.isDirectory {
-                    NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
-                        Text(file.name + " >")
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                    }
-                } else {
-                    HStack {
-                        Button( action: {
-                            fileTapped(file, defSize)
-                        })
-                        {
-                            Text(file.name)
-                                .foregroundColor(settingsViewModel.buttonColor)
-
-                        }
+        List(directory.children ?? [RepoFile]()) { file in
+            if file.isDirectory {
+                NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file, window: window)) {
+                    Text(file.name + " >")
+                        .foregroundColor(settingsViewModel.appTextColor)
+                }
+            } else {
+                HStack {
+                    Button( action: {
+                        fileTapped(file, defSize)
+                    })
+                    {
+                        Text(file.name)
+                            .foregroundColor(settingsViewModel.buttonColor)
                     }
                 }
             }
-            .listRowBackground(settingsViewModel.backgroundColor)
-            .navigationBarTitle(directory.name)
         }
+        .listRowBackground(settingsViewModel.backgroundColor)
+        .navigationBarTitle(directory.name)
     }
     func readFileContents(url: URL) -> String? {
         do {

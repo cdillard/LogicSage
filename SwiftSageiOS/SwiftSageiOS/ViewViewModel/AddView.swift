@@ -349,6 +349,7 @@ struct AddView: View {
                                                             "macwindow.on.rectangle",
                                                          size: geometry.size)
                                     .fontWeight(.bold)
+                                    .foregroundColor(settingsViewModel.appTextColor)
                                     .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
                                     .onTapGesture {
@@ -378,7 +379,7 @@ struct AddView: View {
 
                                 NavigationView {
                                     if let root = settingsViewModel.root {
-                                        RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root)
+                                        RepositoryTreeView(settingsViewModel: settingsViewModel, directory: root, window: nil)
                                             .environmentObject(windowManager)
                                     }
                                     else {
@@ -417,6 +418,7 @@ struct AddView: View {
                                                 "macwindow.on.rectangle",
                                              size: geometry.size)
                         .fontWeight(.bold)
+                        .foregroundColor(settingsViewModel.appTextColor)
                         .background(settingsViewModel.buttonColor)
                         .cornerRadius(8)
                         .onTapGesture {

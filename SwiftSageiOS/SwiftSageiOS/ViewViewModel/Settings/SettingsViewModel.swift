@@ -580,7 +580,10 @@ public class SettingsViewModel: ObservableObject {
             let fileURL = getDocumentsDirectory()
             //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
         DispatchQueue.global(qos: .default).async {
-            self.root = RepoFile(name: "Root", url: fileURL, isDirectory: true, children: getFiles(in: fileURL))
+            let files = getFiles(in: fileURL)
+            DispatchQueue.main.async {
+                self.root = RepoFile(name: "LogicSage", url: fileURL, isDirectory: true, children: files)
+            }
         }
     }
 
@@ -648,28 +651,3 @@ let cereprocVoicesNames = [
     "Katherine"
 ]
 // END CEREPROC VOICE ZONE
-
-
-struct RepoFile: Identifiable, Equatable {
-    var id = UUID()
-    let name: String
-    let url: URL
-    let isDirectory: Bool
-    var children: [RepoFile]?
-}
-func getFiles(in directory: URL) -> [RepoFile] {
-    let fileManager = FileManager.default
-
-    do {
-        let fileURLs = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-
-        return fileURLs.map { url -> RepoFile in
-            var isDirectory: ObjCBool = false
-            fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
-            return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue ? getFiles(in: url) : nil)
-        }
-    } catch {
-        print("Error getting files in directory: \(error)")
-        return []
-    }
-}

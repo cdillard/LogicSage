@@ -38,12 +38,7 @@ struct WindowView: View {
                 .shadow(color:settingsViewModel.appTextColor, radius: 10)
 
                 .frame(width: window.frame.width, height: window.frame.height)
-                .if(shouldApplyTapGest) { view in
 
-                        view.onTapGesture {
-                            self.windowManager.bringWindowToFront(window: self.window)
-                        }
-                }
 
             }
             .offset(position)
