@@ -99,10 +99,11 @@ struct SageMultiView: View {
                             .environmentObject(viewModel)
                     }
                 }
+
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
 
-                Spacer()
-            }
         }
 
     }

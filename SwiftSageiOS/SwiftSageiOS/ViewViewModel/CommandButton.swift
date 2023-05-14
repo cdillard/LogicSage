@@ -272,7 +272,7 @@ struct CommandButtonView: View {
                     // MAIN INPUT TEXTFIELD
                     TextEditor(text: $settingsViewModel.multiLineText)
                         .frame(height: 200)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
                         .lineLimit(nil)
                         .border(settingsViewModel.buttonColor, width: 2)
                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)

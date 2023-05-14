@@ -26,7 +26,9 @@ struct RepositoryTreeView: View {
                 List(directory.children ?? [RepoFile]()) { file in
                     if file.isDirectory {
                         NavigationLink(destination: RepositoryTreeView(settingsViewModel: settingsViewModel, directory: file)) {
-                            Text(file.name)
+                            Text(file.name + " >")
+                                .foregroundColor(settingsViewModel.buttonColor)
+
                         }
                     } else {
                         HStack {
@@ -35,11 +37,12 @@ struct RepositoryTreeView: View {
                             })
                             {
                                 Text(file.name)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(settingsViewModel.appTextColor)
                             }
                         }
                     }
                 }
+                .background(settingsViewModel.backgroundColor)
                 .navigationBarTitle(directory.name)
             }
         }
@@ -55,7 +58,7 @@ struct RepositoryTreeView: View {
 //
 //            } else {
 //                Button(action: {
-//                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
+//                    // let O = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
 //#if !os(macOS)
 //
 //                    fileTapped(file, defSize)

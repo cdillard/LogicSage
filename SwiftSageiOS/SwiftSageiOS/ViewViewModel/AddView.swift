@@ -17,10 +17,10 @@ struct AddView: View {
     @EnvironmentObject var windowManager: WindowManager
     @State var currentRoot: GitHubContent?
 
-
-    @State var repoListOpen: Bool = false
-    @State var fileListOpen: Bool = false
-    @State var windowListOpen: Bool = false
+    @AppStorage("repoSettingsShown") var repoSettingsShown: Bool = false
+    @AppStorage("repoListOpen") var repoListOpen: Bool = false
+    @AppStorage("fileListOpen") var fileListOpen: Bool = false
+    @AppStorage("windowListOpen") var windowListOpen: Bool = false
 
     @FocusState private var field4IsFocused: Bool
 
@@ -32,8 +32,8 @@ struct AddView: View {
             .resizable()
             .scaledToFit()
             .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-            .tint(settingsViewModel.buttonColor)
-            .background(CustomShape())
+            .tint(settingsViewModel.appTextColor)
+            .background(settingsViewModel.buttonColor)
     }
 
     var body: some View {
@@ -89,7 +89,6 @@ struct AddView: View {
     #endif
                                     showAddView.toggle()
     #if !os(macOS)
-                                    //let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
                                     windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
     #endif
                                 }
@@ -104,11 +103,11 @@ struct AddView: View {
                                                             "doc.fill.badge.plus",
                                                          size: geometry.size)
                                     .fontWeight(.bold)
-                                    .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
                                 }
 
                             }
+
                             .padding(.bottom)
                         }
                         .padding(.leading,8)
@@ -172,82 +171,102 @@ struct AddView: View {
                     .padding(.leading,8)
                     .padding(.trailing,8)
 
-                    VStack {
+                    let repoListMoji = repoSettingsShown ? "🔽" : "▶️"
 
-                        HStack {
-                            Text("user: ").font(.caption)                                    .foregroundColor(settingsViewModel.appTextColor)
+                    Text("\(repoListMoji) git settings")
+                        .font(.title3)
+                        .lineLimit(nil)
+                        .fontWeight(.bold)
+                        .padding()
+                        .foregroundColor(settingsViewModel.appTextColor)
 
-
-                            TextField(
-                                "",
-                                text: $settingsViewModel.gitUser
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-                            .focused($field4IsFocused)
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .scrollDismissesKeyboard(.interactively)
-                            .font(.caption)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            .autocorrectionDisabled(true)
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
+                        .onTapGesture {
+                            withAnimation {
+                                repoSettingsShown.toggle()
+                            }
                         }
-                        .frame(height: geometry.size.height / 17)
 
-                        HStack {
-                            Text("repo: ").font(.caption)                                    .foregroundColor(settingsViewModel.appTextColor)
+                    if repoSettingsShown {
+                        VStack {
+
+                            HStack {
+                                Text("user: ").font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
 
 
-                            TextField(
-                                "",
-                                text: $settingsViewModel.gitRepo
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-                            .focused($field5IsFocused)
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .scrollDismissesKeyboard(.interactively)
-                            .font(.caption)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .autocorrectionDisabled(true)
+                                TextField(
+                                    "",
+                                    text: $settingsViewModel.gitUser
+                                )
+                                .border(.secondary)
+                                .submitLabel(.done)
+                                .focused($field4IsFocused)
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .scrollDismissesKeyboard(.interactively)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                .autocorrectionDisabled(true)
 #if !os(macOS)
-
-                            .autocapitalization(.none)
+                                .autocapitalization(.none)
 #endif
-                        }
-                        .frame(height: geometry.size.height / 17)
-                        HStack {
-                            Text("branch: ").font(.caption)                                    .foregroundColor(settingsViewModel.appTextColor)
+                            }
+                            .frame(height: geometry.size.height / 17)
+
+                            HStack {
+                                Text("repo: ").font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
 
 
-                            TextField(
-                                "",
-                                text: $settingsViewModel.gitBranch
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-                            .focused($field6IsFocused)
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .scrollDismissesKeyboard(.interactively)
-                            .font(.caption)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            .autocorrectionDisabled(true)
+                                TextField(
+                                    "",
+                                    text: $settingsViewModel.gitRepo
+                                )
+                                .border(.secondary)
+                                .submitLabel(.done)
+                                .focused($field5IsFocused)
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .scrollDismissesKeyboard(.interactively)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .autocorrectionDisabled(true)
 #if !os(macOS)
 
-                            .autocapitalization(.none)
+                                .autocapitalization(.none)
 #endif
+                            }
+                            .frame(height: geometry.size.height / 17)
+                            HStack {
+                                Text("branch: ").font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+
+
+                                TextField(
+                                    "",
+                                    text: $settingsViewModel.gitBranch
+                                )
+                                .border(.secondary)
+                                .submitLabel(.done)
+                                .focused($field6IsFocused)
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .scrollDismissesKeyboard(.interactively)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                .autocorrectionDisabled(true)
+#if !os(macOS)
+
+                                .autocapitalization(.none)
+#endif
+                            }
+                            .frame(height: geometry.size.height / 17)
                         }
-                        .frame(height: geometry.size.height / 17)
                     }
 
                     if !settingsViewModel.isLoading {

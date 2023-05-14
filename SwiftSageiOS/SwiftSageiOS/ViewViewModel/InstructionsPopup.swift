@@ -42,7 +42,7 @@ struct InstructionsPopup: View {
                             Group {
                                 Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
                                 Text("Check out LogicSage GitHub: https://github.com/cdillard/SwiftSage#readme for more help and Discussions and my contact info.")
-
+                                    .accentColor(settingsViewModel.buttonColor)
                                 Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
                                 Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
@@ -56,6 +56,9 @@ struct InstructionsPopup: View {
                         }
                         Text("Without these 3 steps, the LogicSage server will not work.")
                     }
+                    .padding(.leading, 15)
+                    .padding(.trailing, 15)
+                    .foregroundColor(settingsViewModel.appTextColor)
                     .background(settingsViewModel.backgroundColor)
                     .padding(geometry.size.width * 0.01)
 

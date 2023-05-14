@@ -14,23 +14,35 @@ struct WindowList: View {
 
     var body: some View {
         if !windowManager.windows.isEmpty {
+
+
+
             List {
+                Text("tap to open window to foreground")
+                    .foregroundColor(SettingsViewModel.shared.appTextColor)
+                    .font(.caption2)
                 ForEach(windowManager.windows.reversed()) { window in
                     VStack(alignment: .leading) {
                         Text(windowTitle(window: window))
                             .font(.headline)
+                            .foregroundColor(SettingsViewModel.shared.appTextColor)
+
                         HStack {
                             Text("Frame:")
                                 .font(.subheadline)
                             Text("X: \(window.frame.origin.x, specifier: "%.1f"), Y: \(window.frame.origin.y, specifier: "%.1f"), Width: \(window.frame.width, specifier: "%.1f"), Height: \(window.frame.height, specifier: "%.1f")")
                                 .font(.footnote)
                         }
+                        .foregroundColor(SettingsViewModel.shared.appTextColor)
+
                         HStack {
                             Text("Z-Index:")
                                 .font(.subheadline)
                             Text("\(window.zIndex)")
                                 .font(.footnote)
                         }
+                        .foregroundColor(SettingsViewModel.shared.appTextColor)
+
                     }
                     .onTapGesture {
                         logD("bringing tapped view to front")
@@ -45,6 +57,7 @@ struct WindowList: View {
         else {
             Text("Open window and it will appear here")
                 .frame(height: 30.0)
+                .foregroundColor(SettingsViewModel.shared.appTextColor)
         }
     }
 

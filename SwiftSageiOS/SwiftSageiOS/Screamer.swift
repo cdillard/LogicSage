@@ -151,6 +151,8 @@ class ScreamClient: WebSocketDelegate {
     }
     func connect() {
         if isViable && websocket != nil {
+            logD("connect websocket...")
+
             websocket.connect()
         }
         else {
@@ -167,13 +169,13 @@ class ScreamClient: WebSocketDelegate {
     func sendCommand(command: String) {
         logD("Executing: \(command)")
         if SettingsViewModel.shared.currentMode == .mobile {
-            logD("Handling \(command) locally...")
+            logD("Handling \(command) mobile mode...")
             if callLocalCommand(command) {
                 return
             }
         }
         else {
-            logD("Handling \(command) in sws...")
+            logD("Handling \(command) in computer mode...")
 
             if websocket != nil {
                 let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
@@ -186,6 +188,9 @@ class ScreamClient: WebSocketDelegate {
                     logD("error = \(error)")
                 }
 
+            }
+            else {
+                print("Websocket nil, not handling command")
             }
         }
     }

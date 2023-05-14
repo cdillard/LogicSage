@@ -19,6 +19,7 @@ struct WindowView: View {
 
     @State private var frame: CGRect = defSize
     @StateObject private var pinchHandler = PinchGestureHandler()
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
     @State private var isMoveGestureActivated = false
     var body: some View {
@@ -49,7 +50,8 @@ struct WindowView: View {
                         .environmentObject(windowManager)
                 }
                 .cornerRadius(8)
-                .shadow(radius: 10)
+                .shadow(color:settingsViewModel.appTextColor, radius: 10)
+
                 .frame(width: window.frame.width, height: window.frame.height)
                 .onTapGesture {
                     self.windowManager.bringWindowToFront(window: self.window)
@@ -68,6 +70,8 @@ struct WindowView: View {
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
                 SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .webView, window: window, frame: $frame, position: $position, webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
@@ -76,6 +80,8 @@ struct WindowView: View {
             let url = URL(string:SettingsViewModel.shared.defaultURL)
             return AnyView(
                 SageMultiView(settingsViewModel: SettingsViewModel.shared, viewMode: .editor, window: window, frame: $frame, position: $position,webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                     .environmentObject(viewModel).environmentObject(windowManager)
             )
         }

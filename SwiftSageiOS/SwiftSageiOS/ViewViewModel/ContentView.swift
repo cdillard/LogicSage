@@ -73,7 +73,7 @@ struct ContentView: View {
 #if !os(macOS)
 // START WINDOW MANAGER ZONE *************************************************
             ForEach(windowManager.windows) { window in
-                WindowView(window: window)
+                WindowView(window: window, settingsViewModel: settingsViewModel)
                     .padding(SettingsViewModel.shared.cornerHandleSize)
                     .background(.clear)
                     .environmentObject(windowManager)

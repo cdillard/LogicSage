@@ -27,6 +27,8 @@ struct SettingsView: View {
     @FocusState private var field7IsFocused: Bool
     @State private var scrollViewID = UUID()
 
+    @State private var showAPISettings = false
+
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -80,140 +82,156 @@ struct SettingsView: View {
                             DevicePicker(settingsViewModel: settingsViewModel)
                         }
                         VStack {
-                            if settingsViewModel.currentMode == .computer {
-                                HStack {
-                                    Text("sws username: ").font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                    TextField("", text: $settingsViewModel.userName)
-                                        .submitLabel(.done)
-                                        .scrollDismissesKeyboard(.interactively)
-                                        .font(.footnote)
-                                        .border(.secondary)
-
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    Spacer()
-
-                                }
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                                .frame(height: 22)
-
-                                HStack {
-                                    Text("sws password: ").font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                    TextField("", text: $settingsViewModel.password)
-                                        .submitLabel(.done)
-                                        .scrollDismissesKeyboard(.interactively)
-                                        .border(.secondary)
-
-                                        .font(.footnote)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    Spacer()
-
-                                }
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-
-                                .frame(height: 22)
+                            Group {
+                                Text("\(showAPISettings ? "🔽" : "▶️") API settings").font(.body)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .padding(4)
 
                             }
-                            else if settingsViewModel.currentMode == .mobile {
-                                HStack {
-                                    VStack {
-                                        Group {
-                                            HStack {
-                                                Text("A.I. 🔑: ").font(.caption)
-                                                    .foregroundColor(settingsViewModel.appTextColor)
+                            .onTapGesture {
+                                withAnimation {
+                                    showAPISettings.toggle()
+                                }
+                            }
+                            if showAPISettings {
+                                if settingsViewModel.currentMode == .computer {
+                                    HStack {
+                                        Text("sws username: ").font(.caption)
+                                            .foregroundColor(settingsViewModel.appTextColor)
 
-                                                TextField(
-                                                    "",
-                                                    text: $settingsViewModel.openAIKey
-                                                )
-                                                .border(.secondary)
-                                                .submitLabel(.done)
+                                        TextField("", text: $settingsViewModel.userName)
+                                            .submitLabel(.done)
+                                            .scrollDismissesKeyboard(.interactively)
+                                            .font(.footnote)
+                                            .border(.secondary)
 
-                                                .focused($field1IsFocused)
-
-                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                .scrollDismissesKeyboard(.interactively)
-                                                .font(.caption)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-
-                                                .autocorrectionDisabled(true)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .autocorrectionDisabled(true)
 #if !os(macOS)
-                                                .autocapitalization(.none)
+                                            .autocapitalization(.none)
 #endif
-                                                Spacer()
-
-                                            }
-                                            .frame(height: geometry.size.height / 13)
-
-                                            HStack {
-                                                Text("A.I. model: ").font(.caption)
-                                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                                TextField(
-                                                    "",
-                                                    text: $settingsViewModel.openAIModel
-                                                )
-                                                .border(.secondary)
-                                                .submitLabel(.done)
-                                                .focused($field2IsFocused)
-
-                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                .scrollDismissesKeyboard(.interactively)
-                                                .font(.caption)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                .autocapitalization(.none)
-#endif
-                                                Spacer()
-
-                                            }
-                                            .padding(.leading, 8)
-                                            .padding(.trailing, 8)
-                                            .frame(height: geometry.size.height / 13)
-                                        }
+                                        Spacer()
 
                                     }
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame(height: 22)
+
+                                    HStack {
+                                        Text("sws password: ").font(.caption)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+
+                                        TextField("", text: $settingsViewModel.password)
+                                            .submitLabel(.done)
+                                            .scrollDismissesKeyboard(.interactively)
+                                            .border(.secondary)
+
+                                            .font(.footnote)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .autocorrectionDisabled(true)
+#if !os(macOS)
+                                            .autocapitalization(.none)
+#endif
+                                        Spacer()
+
+                                    }
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+
+                                    .frame(height: 22)
+
+                                }
+                                else if settingsViewModel.currentMode == .mobile {
+                                    HStack {
+                                        VStack {
+                                            Group {
+                                                HStack {
+                                                    Text("A.I. 🔑: ").font(.caption)
+                                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                                    TextField(
+                                                        "",
+                                                        text: $settingsViewModel.openAIKey
+                                                    )
+                                                    .border(.secondary)
+                                                    .submitLabel(.done)
+
+                                                    .focused($field1IsFocused)
+
+                                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                    .scrollDismissesKeyboard(.interactively)
+                                                    .font(.caption)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+
+                                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                    .autocapitalization(.none)
+#endif
+                                                    Spacer()
+
+                                                }
+                                                .frame(height: geometry.size.height / 13)
+
+                                                HStack {
+                                                    Text("A.I. model: ").font(.caption)
+                                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                                    TextField(
+                                                        "",
+                                                        text: $settingsViewModel.openAIModel
+                                                    )
+                                                    .border(.secondary)
+                                                    .submitLabel(.done)
+                                                    .focused($field2IsFocused)
+
+                                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                    .scrollDismissesKeyboard(.interactively)
+                                                    .font(.caption)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+                                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                    .autocapitalization(.none)
+#endif
+                                                    Spacer()
+
+                                                }
+                                                .padding(.leading, 8)
+                                                .padding(.trailing, 8)
+                                                .frame(height: geometry.size.height / 13)
+                                            }
+
+                                        }
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    }
                                 }
                             }
                         }
-                        Group {
-                            HStack {
-                                Text("GHA PAT: ").font(.caption)
+                        if showAPISettings {
+                            
+                            Group {
+                                HStack {
+                                    Text("GHA PAT: ").font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                    
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.ghaPat
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .focused($field3IsFocused)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
-
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.ghaPat
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-                                .focused($field3IsFocused)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
+                                    .autocorrectionDisabled(true)
 #if !os(macOS)
-                                .autocapitalization(.none)
+                                    .autocapitalization(.none)
 #endif
+                                }
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                                .frame(height: geometry.size.height / 17)
                             }
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .frame(height: geometry.size.height / 17)
                         }
 
 
@@ -439,6 +457,13 @@ struct SettingsView: View {
                         // TERMINAL COLORS SETTINGS ZONE
                         Group {
                             Group {
+                                Text("Themes:").font(.body)
+
+                                HStack {
+                                    Text("Deep Space Sparkle").font(.body)
+                                    Text("Hackeresque").font(.body)
+                                }
+
                                 VStack(spacing: 3) {
 
                                     ColorPicker("Terminal Background Color", selection:
@@ -863,7 +888,7 @@ struct DevicePicker: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: isExpanded ? 10 : 30)
-                .fill(settingsViewModel.appTextColor)
+                .fill(settingsViewModel.buttonColor)
                 .frame(width: isExpanded ? 250 : 60, height: 60)
 
             HStack(spacing: 30) {
@@ -871,7 +896,7 @@ struct DevicePicker: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
-                    .foregroundColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
                     .opacity(settingsViewModel.currentMode == .mobile ? 1 : 0.5)
                     .onTapGesture {
                         withAnimation(.spring()) {
@@ -883,7 +908,7 @@ struct DevicePicker: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 30, height: 30)
-                    .foregroundColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
 
                     .opacity(settingsViewModel.currentMode == .computer ? 1 : 0.5)
                     .onTapGesture {

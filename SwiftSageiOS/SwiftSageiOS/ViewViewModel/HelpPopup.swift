@@ -32,6 +32,8 @@ struct HelpPopup: View {
                                 Text("Welcome to your AI workspace. See your toolbar at the bottom left, see your command bar at the bottom right.")
 
                                 Text("Check out LogicSage GitHub: https://github.com/cdillard/SwiftSage#readme for more help and Discussions and my contact info.")
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .accentColor(settingsViewModel.buttonColor)
 
                                 Text("This app/project is an ALPHA. email me with issues/suggestions.")
 
@@ -45,7 +47,7 @@ struct HelpPopup: View {
                                         }
                                     }
                                 if veryGoodOpen {
-                                    Text("Nice.")
+                                    Text("Nice. You did good.")
                                 }
                                 Group {
                                     Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
@@ -60,11 +62,18 @@ struct HelpPopup: View {
 
 
                                     Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/SwiftSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .accentColor(settingsViewModel.buttonColor)
+
                                 }
                             }
                         }
                     }
+                    .foregroundColor(settingsViewModel.appTextColor)
                     .background(settingsViewModel.backgroundColor)
+                    .padding(.leading, 15)
+                    .padding(.trailing, 15)
+
                     .padding(geometry.size.width * 0.02)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 

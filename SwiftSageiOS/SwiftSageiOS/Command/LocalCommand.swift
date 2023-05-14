@@ -28,6 +28,8 @@ func callLocalCommand(_ command: String) -> Bool {
     logD("SWIFTSAGE: \(command)")
 
     if command == "Hello" { return true }
+    // HERE WE HANDLE LOCAL COMANDS
+    if command == "st" { stopVoice() ; stopRandomSpinner() ; return true  }
 
     let commandSplit = command.split(separator: " ", maxSplits: 1)
 
@@ -50,8 +52,6 @@ func callLocalCommand(_ command: String) -> Bool {
 
         }
     }
-    // HERE WE HANDLE LOCAL COMANDS
-    if command == "st" { stopVoice() ; stopRandomSpinner() ; return true  }
 
     logD("Invalid sws command. Please try again. (c) for help")
 
