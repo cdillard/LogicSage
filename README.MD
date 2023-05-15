@@ -33,33 +33,31 @@ NOTE: ethics exist. Approach AI and GPT like anything, with respect for balance.
 
 ## Features
 LogicSage is an open-source AI workspace for everyone. Chat w/ GPTs. Developers and AI enthusiasts can use it to work with gpts to view code, edit code, and submit PRs!
-
 - This app is perfect for anyone who wants to get started with AI and learning how to prompt. 
 - This app is also fantastic for developers who want to learn programming languages better using GPT.
-
-iOS app allows working in phone mode for interaction without a mac. And also allows for more with the SwiftSage CLI for Mac including a server. Swift Vapor Server records GPT interaction and allows remote control of computer for building A.I. generated Xcode projects.
+Gist of modes: 
 - This app allows you to check out and examine this apps, or any git repositories source code. The source code viewing file windows are fully color customizable.
 - This app allows you to talk with GPTs via views in the app.
 - This app allows you to talk with chat API via a command line interface including a toolbar and a command bar.
 - All you need is a A.I. API Key to be entered in the Settings menu.
-
+iOS app allows working in phone mode for interaction without a mac. 
+more with the SwiftSage CLI for Mac including a server...
+- Swift Vapor Server records GPT interaction and allows remote control of computer for building A.I. generated Xcode projects.
 - Keep in mind this is an alpha project/app. Please email me or get in touch via support issues to help me finish this app.
 - Integration with text to speech software in both the client and server.
 - In computer mode: Debate mode: pit the GPT personas against one another with "debate" and "debate your topic”
-
 ---
 Supported modes can be toggled in the Settings(gear icon) menu.
 mobile: this mode allows you to interact with GPT by prefixing your prompt in the command entry window with the g key.
 ---
 computer:  this more advanced mode allows you to create apps automatically in Xcode with the (i) command.
-
+—-
 Future of LogicSage:
 Google and Link cmd support coming soon!
 —-
 Demo video (please download to mac or iOS device to view): https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV
 —-
 - DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.
-
 ## news
 ---
 
