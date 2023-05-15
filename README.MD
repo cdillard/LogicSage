@@ -1,5 +1,5 @@
 
-# LogicSage: The mobile AI workspace - The Ultimate AI Integration for Xcode
+# LogicSage: The mobile AI workspace
 
 ### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs], THANK YOU!
 
@@ -43,20 +43,6 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 ## news
 ---
-
-05-15-2023
-
-Rolling out LogicSage 1.1.4, with features galore!
-
-In this alpha you pushe PRs, the Working Stages view  raise the bars,
-
-Bugs squashed, UI refined, for a better user time.
-
-Enjoy the new Settings and Add/Open view!
-
-[Demo Video](https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV)
-
---------
 
 05-11-2023
 
