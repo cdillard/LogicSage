@@ -44,6 +44,20 @@ SwiftSage provides numerous features to accelerate software development and impr
 ## news
 ---
 
+05-15-2023
+
+Rolling out LogicSage 1.1.4, with features galore!
+
+Alpha pushes PRs, Working Stages raise the bars,
+
+Bugs squashed, UI refined, for a better user time.
+
+Enjoy the new Settings and Add/Open view!
+
+[Demo Video](https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV)
+
+--------
+
 05-11-2023
 
 There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues remain. 
