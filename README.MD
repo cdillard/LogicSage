@@ -48,7 +48,7 @@ SwiftSage provides numerous features to accelerate software development and impr
 
 Rolling out LogicSage 1.1.4, with features galore!
 
-Alpha pushes PRs, Working Stages raise the bars,
+In this alpha you pushe PRs, the Working Stages view  raise the bars,
 
 Bugs squashed, UI refined, for a better user time.
 
