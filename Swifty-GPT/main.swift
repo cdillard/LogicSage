@@ -93,21 +93,17 @@ func main() {
     }
     else {
         multiPrinter("Voice INPUT disabled in sws")
-
     }
 
     if config.voiceOutputEnabled {
         multiPrinter("Voice OUTPUT ENABLED in sws")
-
     }
     else {
         multiPrinter("Voice OUTPUT disabled in sws")
 
     }
 
-
-
-    DispatchQueue.global().asyncAfter(deadline: .now() + 1.666) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + 3) {
 
         _ = localPeerConsole.webSocketClient.websocket
 
