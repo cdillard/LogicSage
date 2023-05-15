@@ -46,8 +46,7 @@ let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 
-// 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit
-// your fancy and you know i'll add more.
+// 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit your fancy and you know i'll add more.
 
 var defaultLoadMode = LoadMode.dots
 
