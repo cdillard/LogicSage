@@ -72,6 +72,8 @@ struct WindowInfo: Identifiable, Equatable {
         case repoTreeView
         case windowListView
         case changeView
+        case workingChangesView
+
     }
 }
 

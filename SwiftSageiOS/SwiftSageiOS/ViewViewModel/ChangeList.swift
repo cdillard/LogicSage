@@ -20,9 +20,11 @@ struct ChangeList: View {
                 ForEach(settingsViewModel.changes) { change in
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("- \(change.oldLine)")
+                            Text("- \(change.oldLine ?? "")")
+                                .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                                 .foregroundColor(.red)
-                            Text("+ \(change.newLine)")
+                            Text("+ \(change.newLine ?? "")")
+                                .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                                 .foregroundColor(.green)
                         }
                         Spacer()

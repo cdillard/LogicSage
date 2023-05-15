@@ -71,6 +71,8 @@ struct WindowList: View {
             return "Window List"
         case .changeView:
             return "Change List"
+        case .workingChangesView:
+            return "Working Changes"
         }
     }
 }

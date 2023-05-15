@@ -10,12 +10,14 @@ import Foundation
 import SwiftUI
 import UIKit
 import WebKit
+
 enum ViewMode {
     case webView
     case editor
     case repoTreeView
     case windowListView
     case changeView
+    case workingChangesView
 }
 
 struct SageMultiView: View {
@@ -27,8 +29,7 @@ struct SageMultiView: View {
     var window: WindowInfo
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
-//    @State var sourceEditorCode = """
-//    """
+
     @State var isEditing = false
 
     @Binding var frame: CGRect
@@ -59,13 +60,9 @@ struct SageMultiView: View {
                             .onEnded { value in
                                 isMoveGestureActivated = false
                             }
-                    )
-                    .if(window.windowType == .repoTreeView || window.windowType == .windowListView ) { view in
-                        view.simultaneousGesture(
-                            TapGesture().onEnded {
-                                self.windowManager.bringWindowToFront(window: self.window)
-                            }
-                        )
+                    ).onTapGesture {
+                        self.windowManager.bringWindowToFront(window: self.window)
+
                     }
                     .environmentObject(windowManager)
 
@@ -79,19 +76,48 @@ struct SageMultiView: View {
                         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
-                            print("srcEditor didChangeText")
-                            let theNewtext = String(srcCodeTextEditor.text)
-                            sageMultiViewModel.refreshChanges(newText: theNewtext)
+                            DispatchQueue.global(qos: .default).async {
 
-                            // We'll keep track of changes per file, right now I think its only going to be showing last edited file for reasons.
-                            settingsViewModel.changes = sageMultiViewModel.changes
+                                let theNewtext = String(srcCodeTextEditor.text)
+                                sageMultiViewModel.refreshChanges(newText: theNewtext)
+
+                         
+                                if let fileURL = window.file?.url {
+                                    // add or replace this files change entry from this arr
+
+                                    var found = false
+
+                                    for (index,fileChange) in settingsViewModel.unstagedFileChanges.enumerated() {
+                                        if fileURL == fileChange.fileURL {
+                                            DispatchQueue.main.async {
+                                                settingsViewModel.changes = sageMultiViewModel.changes
+
+                                                settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes)])
+                                            }
+                                            found = true
+                                            break
+                                        }
+                                    }
+                                    if !found {
+                                        DispatchQueue.main.async {
+                                            settingsViewModel.changes = sageMultiViewModel.changes
+
+                                            settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes)]
+                                        }
+                                    }
+
+                                }
+                                else {
+                                    print("no file url, no file changes")
+                                }
+                            }
 
                         }, insertionPointColor: {
                             Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
                         }, lexerForSource: { lexer in
                             SwiftLexer()
                         }, textViewDidBeginEditing: { srcEditor in
-                            print("srcEditor textViewDidBeginEditing")
+//                            print("srcEditor textViewDidBeginEditing")
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
                         }))
@@ -132,6 +158,16 @@ struct SageMultiView: View {
                     case .changeView:
                         NavigationView {
                             ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                                .environmentObject(windowManager)
+                                .environmentObject(sageMultiViewModel)
+
+                        }
+#if !os(macOS)
+                        .navigationViewStyle(StackNavigationViewStyle())
+#endif
+                    case .workingChangesView:
+                        NavigationView {
+                            WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                                 .environmentObject(windowManager)
                                 .environmentObject(sageMultiViewModel)
 

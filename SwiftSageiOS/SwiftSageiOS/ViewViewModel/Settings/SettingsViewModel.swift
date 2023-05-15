@@ -37,7 +37,8 @@ public class SettingsViewModel: ObservableObject {
 
 
     @Published var changes = [ChangeRow]()
-
+    @Published var unstagedFileChanges = [FileChange]()
+    @Published var stagedFileChanges = [FileChange]()
 
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
@@ -586,7 +587,7 @@ public class SettingsViewModel: ObservableObject {
         DispatchQueue.global(qos: .default).async {
             let files = getFiles(in: fileURL)
             DispatchQueue.main.async {
-                self.root = RepoFile(name: "LogicSage", url: fileURL, isDirectory: true, children: files)
+                self.root = RepoFile(name: "repos", url: fileURL, isDirectory: true, children: files)
             }
         }
     }

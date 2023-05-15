@@ -78,6 +78,8 @@ struct TopBar: View {
             return "Window List"
         case .changeView:
             return "Change View"
+        case .workingChangesView:
+            return "Working Changes"
         }
     }
 }

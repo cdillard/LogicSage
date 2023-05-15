@@ -34,28 +34,47 @@ class SageMultiViewModel: ObservableObject {
 
 import SwiftUI
 
-struct ChangeRow: Identifiable {
+struct ChangeRow: Identifiable, Equatable {
     var id = UUID()
-    var oldLine: String
-    var newLine: String
+    var oldLine: String?
+    var newLine: String?
+    var lineNumber: Int
 }
+
 func getLineChanges(original: String, edited: String) -> [ChangeRow] {
-    let originalLines = original.split(separator: "\n")
-    let editedLines = edited.split(separator: "\n")
+    let originalLines = original.split(separator: "\n", omittingEmptySubsequences: false).map(String.init)
+    let editedLines = edited.split(separator: "\n", omittingEmptySubsequences: false).map(String.init)
+
     var changes: [ChangeRow] = []
-    for (index, (originalLine, editedLine)) in zip(originalLines, editedLines).enumerated() {
-        if originalLine != editedLine {
-            changes.append(ChangeRow(oldLine: String(originalLine), newLine: String(editedLine)))
+    var oldIndex = 0
+    var newIndex = 0
+
+    while oldIndex < originalLines.count && newIndex < editedLines.count {
+        if originalLines[oldIndex].trimmingCharacters(in: .whitespacesAndNewlines) == editedLines[newIndex].trimmingCharacters(in: .whitespacesAndNewlines) {
+            oldIndex += 1
+            newIndex += 1
+        } else if editedLines[newIndex].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            changes.append(ChangeRow(oldLine: nil, newLine: editedLines[newIndex], lineNumber: newIndex + 1))
+            newIndex += 1
+        } else if originalLines[oldIndex].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            changes.append(ChangeRow(oldLine: originalLines[oldIndex], newLine: nil, lineNumber: oldIndex + 1))
+            oldIndex += 1
+        } else {
+            changes.append(ChangeRow(oldLine: originalLines[oldIndex], newLine: editedLines[newIndex], lineNumber: newIndex + 1))
+            oldIndex += 1
+            newIndex += 1
         }
     }
-    if originalLines.count < editedLines.count {
-        for line in editedLines[originalLines.count...] {
-            changes.append(ChangeRow(oldLine: "", newLine: String(line)))
-        }
-    } else if originalLines.count > editedLines.count {
-        for line in originalLines[editedLines.count...] {
-            changes.append(ChangeRow(oldLine: String(line), newLine: ""))
-        }
+
+    while newIndex < editedLines.count {
+        changes.append(ChangeRow(oldLine: nil, newLine: editedLines[newIndex], lineNumber: newIndex + 1))
+        newIndex += 1
     }
+
+    while oldIndex < originalLines.count {
+        changes.append(ChangeRow(oldLine: originalLines[oldIndex], newLine: nil, lineNumber: oldIndex + 1))
+        oldIndex += 1
+    }
+
     return changes
 }

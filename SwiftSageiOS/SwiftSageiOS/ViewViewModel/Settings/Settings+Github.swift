@@ -123,7 +123,7 @@ extension SettingsViewModel {
             defer {
                 let childs = getFiles(in: getDocumentsDirectory())
                 DispatchQueue.main.async {
-                    self.root = RepoFile(name: "Root", url: getDocumentsDirectory(), isDirectory: true, children: childs)
+                    self.root = RepoFile(name: "repos", url: getDocumentsDirectory(), isDirectory: true, children: childs)
 
                     self.isLoading = false
                 }

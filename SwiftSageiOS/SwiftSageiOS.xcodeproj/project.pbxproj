@@ -95,6 +95,7 @@
 		B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9872A07FEF3002343AB /* Settings+Github.swift */; };
 		B78DA98A2A080037002343AB /* WindowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9892A080037002343AB /* WindowList.swift */; };
 		B78EAF602A117482003095A2 /* ChangeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF5F2A117482003095A2 /* ChangeList.swift */; };
+		B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
@@ -197,6 +198,7 @@
 		B78DA9872A07FEF3002343AB /* Settings+Github.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Github.swift"; sourceTree = "<group>"; };
 		B78DA9892A080037002343AB /* WindowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowList.swift; sourceTree = "<group>"; };
 		B78EAF5F2A117482003095A2 /* ChangeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeList.swift; sourceTree = "<group>"; };
+		B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingChangesList.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				B78EAF5F2A117482003095A2 /* ChangeList.swift */,
 				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
 				B78DA9892A080037002343AB /* WindowList.swift */,
+				B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */,
 			);
 			name = Lists;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B71C62FC2A0190AA004296E4 /* Googler.swift in Sources */,
+				B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */,
 				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
 				B71C63002A01924B004296E4 /* CommandTable.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,

@@ -171,7 +171,40 @@ struct AddView: View {
                         }
                         .padding(.leading,8)
                         .padding(.trailing,8)
+
+                        // Open Change View , Open Working Changes View Stack
+
                         HStack {
+
+                            Button(action: {
+                                withAnimation {
+                                    logD("open Working Changes View")
+    #if !os(macOS)
+
+                                    if consoleManager.isVisible {
+                                        consoleManager.isVisible = false
+                                    }
+    #endif
+                                    showAddView.toggle()
+    #if !os(macOS)
+                                    windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
+    #endif
+                                }
+                            }) {
+                                VStack {
+                                    Text("View Working Changes...")
+                                        .font(.subheadline)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .padding(.bottom)
+
+                                    resizableButtonImage(systemName:
+                                                            "lasso.and.sparkles",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .cornerRadius(8)
+                                }
+                            }
+
                             Button(action: {
                                 withAnimation {
                                     logD("open Change View")
@@ -201,11 +234,11 @@ struct AddView: View {
                                 }
 
                             }
-
-                            .padding(.bottom)
                         }
                         .padding(.leading,8)
                     }
+
+                    // GIT SETTINGS
 
                     let repoListMoji = repoSettingsShown ? "🔽" : "▶️"
 
@@ -375,12 +408,7 @@ struct AddView: View {
 
 
                                 VStack {
-//                                    HStack {
-//                                        Text("New container: " )
-//                                            .font(.subheadline)
-//                                            .foregroundColor(settingsViewModel.appTextColor)
-//
-//                                    }
+
                                     resizableButtonImage(systemName:
                                                             "macwindow.on.rectangle",
                                                          size: geometry.size)
@@ -409,7 +437,6 @@ struct AddView: View {
                                         }
                                     }
                                 }
-
                             }
                             if (fileListOpen) {
 
@@ -446,13 +473,6 @@ struct AddView: View {
                                     windowListOpen.toggle()
                                 }
                             }
-
-//                        HStack {
-//                            Text("New container: " )
-//                                .font(.subheadline)
-//                                .foregroundColor(settingsViewModel.appTextColor)
-//
-//                        }
                         resizableButtonImage(systemName:
                                                 "macwindow.on.rectangle",
                                              size: geometry.size)
@@ -512,7 +532,6 @@ struct AddView: View {
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
                     }
-
                 }
                 .padding(.bottom, geometry.size.height / 8)
                 .cornerRadius(16)
