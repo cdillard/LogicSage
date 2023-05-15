@@ -212,7 +212,7 @@ struct ContentView: View {
 
                 ZStack {
 #if !os(macOS)
-                    AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel, currentRoot: nil)
+                    AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)
 

@@ -15,6 +15,7 @@ struct FileChange: Identifiable, Equatable {
     var status: String
     var lineChanges: [ChangeRow]
 
+    var newFileContents: String
 }
 let unstagedTitle =  "Unstaged Changes"
 let stagedTitle = "Staged Changes"

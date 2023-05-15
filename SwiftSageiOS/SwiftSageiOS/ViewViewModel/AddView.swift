@@ -15,7 +15,6 @@ struct AddView: View {
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var windowManager: WindowManager
-    @State var currentRoot: GitHubContent?
 
     @AppStorage("repoSettingsShown") var repoSettingsShown: Bool = false
     @AppStorage("repoListOpen") var repoListOpen: Bool = false
@@ -234,6 +233,29 @@ struct AddView: View {
                                 }
 
                             }
+
+
+                            Button(action: {
+                                withAnimation {
+                                    logD("CREATE draft PR on github")
+                                    settingsViewModel.actualCreateDraftPR()
+                                }
+                            }) {
+                                VStack {
+                                    Text("Push Draft PR...")
+                                        .font(.subheadline)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .padding(.bottom)
+
+                                    resizableButtonImage(systemName:
+                                                            "square.and.pencil",
+                                                         size: geometry.size)
+                                    .fontWeight(.bold)
+                                    .cornerRadius(8)
+                                }
+
+                            }
+
                         }
                         .padding(.leading,8)
                     }
@@ -426,7 +448,6 @@ struct AddView: View {
                                                 consoleManager.isVisible = false
                                             }
             #endif
-                                            logD("open Container")
                                             showAddView.toggle()
 
             #if !os(macOS)
@@ -490,7 +511,6 @@ struct AddView: View {
                                     consoleManager.isVisible = false
                                 }
 #endif
-                                logD("open Container")
                                 showAddView.toggle()
 
 #if !os(macOS)

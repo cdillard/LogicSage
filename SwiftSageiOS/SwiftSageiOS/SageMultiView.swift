@@ -92,7 +92,7 @@ struct SageMultiView: View {
                                             DispatchQueue.main.async {
                                                 settingsViewModel.changes = sageMultiViewModel.changes
 
-                                                settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes)])
+                                                settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: srcCodeTextEditor.text)])
                                             }
                                             found = true
                                             break
@@ -102,7 +102,7 @@ struct SageMultiView: View {
                                         DispatchQueue.main.async {
                                             settingsViewModel.changes = sageMultiViewModel.changes
 
-                                            settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes)]
+                                            settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: srcCodeTextEditor.text)]
                                         }
                                     }
 

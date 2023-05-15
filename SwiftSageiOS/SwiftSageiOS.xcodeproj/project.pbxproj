@@ -96,6 +96,7 @@
 		B78DA98A2A080037002343AB /* WindowList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9892A080037002343AB /* WindowList.swift */; };
 		B78EAF602A117482003095A2 /* ChangeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF5F2A117482003095A2 /* ChangeList.swift */; };
 		B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */; };
+		B78EAF642A11C242003095A2 /* Settings+WriteGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
@@ -199,6 +200,7 @@
 		B78DA9892A080037002343AB /* WindowList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowList.swift; sourceTree = "<group>"; };
 		B78EAF5F2A117482003095A2 /* ChangeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeList.swift; sourceTree = "<group>"; };
 		B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingChangesList.swift; sourceTree = "<group>"; };
+		B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WriteGithub.swift"; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 			children = (
 				B78DA9852A07FEC1002343AB /* CommitDownloader.swift */,
 				B78DA9872A07FEF3002343AB /* Settings+Github.swift */,
+				B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */,
 			);
 			name = Github;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
 				B74A2CC529F7F6990051DB52 /* Security.swift in Sources */,
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
+				B78EAF642A11C242003095A2 /* Settings+WriteGithub.swift in Sources */,
 				B7191F2D29F9F09A00078D8D /* SourceCodeTheme.swift in Sources */,
 				B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */,
 				B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */,
