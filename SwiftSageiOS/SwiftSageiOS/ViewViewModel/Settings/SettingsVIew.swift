@@ -457,11 +457,33 @@ struct SettingsView: View {
                         // TERMINAL COLORS SETTINGS ZONE
                         Group {
                             Group {
-                                Text("Themes:").font(.body)
 
                                 HStack {
-                                    Text("Deep Space Sparkle").font(.body)
-                                    Text("Hackeresque").font(.body)
+                                    Text("Themes:").font(.body)
+
+                                    Text("Deep Space Sparkle")
+//                                        .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
+//                                        .background( UIColor(red: 74, green: 100, blue: 108))
+                                        .font(.body)
+                                        .padding()
+                                        .onTapGesture {
+                                            print("Tapped Deep Space Sparkle theme")
+
+                                            settingsViewModel.applyTheme(theme: .deepSpace)
+
+
+                                        }
+                                    Text("Hackeresque")
+//                                        .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
+//                                        .background( UIColor.black)
+                                        .font(.body)
+                                        .padding()
+                                        .onTapGesture {
+                                            print("Tapped Hackeresque theme")
+
+                                            settingsViewModel.applyTheme(theme: .hacker)
+
+                                        }
                                 }
 
                                 VStack(spacing: 3) {

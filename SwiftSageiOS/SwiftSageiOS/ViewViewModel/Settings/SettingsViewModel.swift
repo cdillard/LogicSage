@@ -177,7 +177,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(appTextColor.rawValue, forKey: "appTextColor")
-          //  print("saved appTextColor to userdefaults")
+            //  print("saved appTextColor to userdefaults")
 #endif
         }
     }
@@ -185,7 +185,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
-         //   print("saved buttonColor to userdefaults")
+            //   print("saved buttonColor to userdefaults")
 #endif
         }
     }
@@ -193,7 +193,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
-         //   print("saved backgroundColor to userdefaults")
+            //   print("saved backgroundColor to userdefaults")
 #endif
         }
     }
@@ -207,9 +207,9 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
 
-     //       if let data =  {
+            //       if let data =  {
             UserDefaults.standard.set(plainColorSrcEditor.rawValue , forKey: "plainColorSrcEditor")
-         //   print("saved plainColorSrcEditor to userdefaults")
+            //   print("saved plainColorSrcEditor to userdefaults")
 
 #endif
         }
@@ -218,7 +218,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(numberColorSrcEditor.rawValue , forKey: "numberColorSrcEditor")
-           // print("saved numberColorSrcEditor to userdefaults")
+            // print("saved numberColorSrcEditor to userdefaults")
 
 #endif
         }
@@ -227,7 +227,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(stringColorSrcEditor.rawValue , forKey: "stringColorSrcEditor")
-           // print("saved stringColorSrcEditor to userdefaults")
+            // print("saved stringColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -235,7 +235,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(identifierColorSrcEditor.rawValue, forKey: "identifierColorSrcEditor")
-           // print("saved identifierColorSrcEditor to userdefaults")
+            // print("saved identifierColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -243,7 +243,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(keywordColorSrcEditor.rawValue , forKey: "keywordColorSrcEditor")
-          //  print("saved keywordColorSrcEditor to userdefaults")
+            //  print("saved keywordColorSrcEditor to userdefaults")
 
 #endif
 
@@ -253,7 +253,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
-           // print("saved commentColorSrceEditor to userdefaults")
+            // print("saved commentColorSrceEditor to userdefaults")
 
 #endif
 
@@ -279,7 +279,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(lineNumbersColorSrcEditor.rawValue, forKey: "lineNumbersColorSrcEditor")
-           // print("saved lineNumbersColorSrcEditor to userdefaults")
+            // print("saved lineNumbersColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -318,7 +318,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var openAIKey = "" {
         didSet {
             if keychainManager.saveToKeychain(key:aiKeyKey, value: openAIKey) {
-               // print("openAIKey saved successfully")
+                // print("openAIKey saved successfully")
             } else {
                 print("Error saving ai key")
             }
@@ -381,31 +381,31 @@ public class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
             self.openAIKey = key
-          //  print("Retrieved value: aiKey")
+            //  print("Retrieved value: aiKey")
         } else {
-//            print("Error retrieving openAIKey")
-//            keychainManager.saveToKeychain(key:openAIKey, value: "")
+            //            print("Error retrieving openAIKey")
+            //            keychainManager.saveToKeychain(key:openAIKey, value: "")
 
         }
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
-           // print("Retrieved value: ghaPat")
+            // print("Retrieved value: ghaPat")
         } else {
-   //         print("Error retrieving ghaPat == reset")
- //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
+            //         print("Error retrieving ghaPat == reset")
+            //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
 
 
         }
         if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
 
             self.password = key
-  //          print("Retrieved value: \(ghaPat)")
-          //  print("Retrieved value: swsPassword")
+            //          print("Retrieved value: \(ghaPat)")
+            //  print("Retrieved value: swsPassword")
 
         } else {
-   //         print("Error retrieving ghaPat == reset")
- //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
+            //         print("Error retrieving ghaPat == reset")
+            //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
 
 
         }
@@ -587,29 +587,74 @@ public class SettingsViewModel: ObservableObject {
         // BEGIN LOAD SAVED GIT REPO
         let openRepoKey = currentGitRepoKey()
         logD("open repo key = \(openRepoKey)")
-       // Task {
-            let fileURL = getDocumentsDirectory()
-            //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
+        // Task {
+        let fileURL = getDocumentsDirectory()
+        //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
         DispatchQueue.global(qos: .default).async {
             let files = getFiles(in: fileURL)
             DispatchQueue.main.async {
                 self.root = RepoFile(name: "repos", url: fileURL, isDirectory: true, children: files)
             }
         }
+
+
     }
 
     func currentGitRepoKey() -> String {
         "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
     }
     static let gitKeySeparator = "-sws-"
+
+
+    func applyTheme(theme: AppTheme) {
+        switch theme {
+        case .deepSpace:
+            terminalBackgroundColor = Color(hex: 0x4A646C, alpha: 1)
+            terminalTextColor = Color(hex: 0xF5FFFA, alpha: 1)
+            appTextColor = Color(hex: 0xF5FFFA, alpha: 1)
+            buttonColor = Color(hex: 0x76D7EA, alpha: 1)
+            backgroundColor = Color(hex: 0x008CB4, alpha: 1)
+
+            plainColorSrcEditor = Color(hex: 0xBBD2D1, alpha: 1)
+            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+            stringColorSrcEditor =  Color(hex: 0xC1D82F, alpha: 1)
+            identifierColorSrcEditor = Color(hex: 0x188BC2, alpha: 1)
+            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+            commentColorSrceEditor =  Color(hex: 0xE2062C, alpha: 1)
+            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+            backgroundColorSrcEditor = Color(hex: 0x232C33, alpha: 1)
+            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+
+
+        case .hacker:
+
+            terminalBackgroundColor = Color(hex: 0x000000, alpha: 1)
+            terminalTextColor = Color(hex: 0x39FF14, alpha: 1)
+            appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
+            buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
+            backgroundColor = Color(hex: 0x2C3539, alpha: 1)
+
+            plainColorSrcEditor = Color(hex: 0xF5F5F5, alpha: 1)
+            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1)
+            stringColorSrcEditor =  Color(hex: 0xCCFF00, alpha: 1) // FIND A NEW COLOR
+            identifierColorSrcEditor = Color(hex: 0x006B3C, alpha: 1)
+            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+            commentColorSrceEditor =  Color(hex: 0x808080, alpha: 1)
+            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+            backgroundColorSrcEditor = Color(hex: 0x1A2421, alpha: 1)
+            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+
+        }
+    }
+}
+enum AppTheme {
+    case deepSpace
+    case hacker
 }
 
 enum Device: Int {
     case mobile, computer
 }
-
-
-
 
 // CEREPROC VOICE ZONE
 // Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
