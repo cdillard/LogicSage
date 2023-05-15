@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
-import UIKit
 
 #if !os(macOS)
+import UIKit
+
 
 extension Color: RawRepresentable {
 
