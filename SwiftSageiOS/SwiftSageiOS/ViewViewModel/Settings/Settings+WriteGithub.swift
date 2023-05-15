@@ -8,6 +8,8 @@
 import Foundation
 
 extension SettingsViewModel {
+
+// The pyramid of Doom!
     func actualCreateDraftPR(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString) {
 #if !os(macOS)
         var hasSentPRCreation = false
