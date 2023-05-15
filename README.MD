@@ -1,5 +1,5 @@
 
-# LogicSage: The mobile AI workspace - The Ultimate AI Integration for Xcode
+# LogicSage: The mobile AI workspace 
 
 ### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs], THANK YOU!
 
