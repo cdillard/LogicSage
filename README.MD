@@ -10,13 +10,13 @@
 
 
 ## Table of Contents
+- [Contact](#contact)
 - [News](#news)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Credits](#credits)
-- [Contact](#contact)
 
 ---
 ## Contact
@@ -25,14 +25,12 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
 
-LogicSage is an open-source AI workspace for everyone. Chat w/ GPTs. Developers and AI enthusiasts can use it to work with gpts to view code, edit code, and submit PRs!
-
-SwiftSage integrates with Xcode to simplify app development across platforms such as iOS, tvOS, iPadOS, and MacOS. It automates app generation and offers a user-friendly interface. SwiftSage is free, open-source, and MIT licensed on GitHub. [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) on the app store.
-
-NOTE: ethics exist. Approach AI and GPT like anything, with respect for balance. It's very powerful and addictive.
-
 ## Description
+
 LogicSage is an open-source AI workspace for everyone. Chat w/ GPTs. Developers and AI enthusiasts can use it to work with gpts to view code, edit code, and submit PRs!
+
+ [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) on the app store.
+
 - This app is perfect for anyone who wants to get started with AI and learning how to prompt. 
 - This app is also fantastic for developers who want to learn programming languages better using GPT.
 - This app allows you to check out and examine this apps, or any git repositories source code. The source code viewing file windows are fully color customizable.
@@ -72,7 +70,7 @@ Demo video (please download to mac or iOS device to view): https://github.com/cd
 
 Rolling out LogicSage 1.1.4, with features galore!
 
-In this alpha you pushe PRs, the Working Stages view  raise the bars,
+In this alpha you push PRs, the Working Stages view raises the bars,
 
 Bugs squashed, UI refined, for a better user time.
 
@@ -88,40 +86,8 @@ There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues 
 
 Finding the balance between fixes and features and real jobs.
 
-Actual Themes coming soon. For now you can try these verifiably cool ones by manually entering the sRGB values in settings.
-
-Deep Space Sparkle
-```
-APP / Term Colors:
-    Terminal Background Color - Deep Space Sparkle: #4A646C
-    Terminal Text Color - Mint Cream: #F5FFFA
-    Button Color - Sky Blue Crayola: #76D7EA
-    Background Color - Cultured: #F8F8F8
-
-Source Editor Colors:
-    Source Editor Text Color - Jet Stream: #BBD2D1
-    Source Editor Background Color - Blue Charcoal: #232C33
-    Source Editor String Color - Sulu: #C1D82F
-    Source Editor Identifier Color - Cyan Cornflower Blue: #188BC2
-    Source Editor Comment Color - Medium Candy Apple Red: #E2062C
-```
-
-Hackeresque
-```
-APP / Term Colors:
-    Terminal Background Color - Black: #000000
-    Terminal Text Color - Neon Green: #39FF14
-    Button Color - Steel Teal: #5F7D8E
-    Background Color - Gunmetal: #2C3539
-
-Source Editor Colors:
-
-    Source Editor Text Color - White Smoke: #F5F5F5
-    Source Editor Background Color - Dark Jungle Green: #1A2421
-    Source Editor String Color - Electric Lime: #CCFF00
-    Source Editor Identifier Color - Cadmium Green: #006B3C
-    Source Editor Comment Color - Gray: #808080
-```
+Update 5/15
+Theme buttons added to settings!
 
 ---
 05-09-2023

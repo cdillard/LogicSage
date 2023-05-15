@@ -126,13 +126,18 @@ struct CommandButtonView: View {
                             isTextFieldFocused = true
                             settingsViewModel.multiLineText += "g "
                         }) {
-                            Text( "g")
+                            Text( "  g  ")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
+                                .multilineTextAlignment(.center)
+//                                .padding(.leading, 8)
+//                                .padding(.trailing, 8)
+
 
                         }
+
                         .padding(.bottom)
 
                     }
