@@ -18,6 +18,9 @@ let defaultOwner = "cdillard"
 let defaultRepo = "SwiftSage"
 let defaultBranch = "main"
 
+let defaultYourGithubUsername = "cdillard"
+
+
 public class SettingsViewModel: ObservableObject {
     func logoAscii5() -> String {
         """
@@ -37,9 +40,10 @@ public class SettingsViewModel: ObservableObject {
 
 
     @Published var changes = [ChangeRow]()
+#if !os(macOS)
     @Published var unstagedFileChanges = [FileChange]()
     @Published var stagedFileChanges = [FileChange]()
-
+#endif
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
@@ -59,6 +63,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var showSourceEditorColorSettings: Bool = false
     @Published var showSizeSliders: Bool = false
+    @Published var repoSettingsShown: Bool = false
 
     @Published var downloadProgress: Double = 0.0
     @Published var unzipProgress: Double = 0.0
@@ -330,6 +335,9 @@ public class SettingsViewModel: ObservableObject {
 
     }
 
+    @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
+
+
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
 
     @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
@@ -452,9 +460,7 @@ public class SettingsViewModel: ObservableObject {
         self.terminalTextColor = .white
         self.buttonColor = .green
         self.backgroundColor = .gray
-
         self.appTextColor = .primary
-
 #endif
 
         // BEGIN SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
@@ -596,50 +602,13 @@ public class SettingsViewModel: ObservableObject {
         "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
     }
     static let gitKeySeparator = "-sws-"
-
 }
 
 enum Device: Int {
     case mobile, computer
 }
 
-#if !os(macOS)
 
-
-extension Color: RawRepresentable {
-
-    public init?(rawValue: String) {
-
-        guard let data = Data(base64Encoded: rawValue) else{
-            self = .black
-            return
-        }
-
-        do{
-            let color = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? UIColor ?? .black
-            self = Color(color)
-        }catch{
-            self = .black
-        }
-
-    }
-
-    public var rawValue: String {
-
-        do{
-            let data = try NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false) as Data
-            return data.base64EncodedString()
-
-        }catch{
-
-            return ""
-
-        }
-
-    }
-
-}
-#endif
 
 
 // CEREPROC VOICE ZONE

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#if !os(macOS)
+
 struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     let directory: RepoFile
@@ -65,10 +67,8 @@ struct RepositoryTreeView: View {
         print("Tapped file: \(file)")
 
         let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
-#if !os(macOS)
 
         windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
-#endif
 
         settingsViewModel.showAddView = false
 
@@ -93,3 +93,4 @@ struct RepositoryTreeView: View {
         //users.remove(atOffsets: offsets)
     }
 }
+#endif

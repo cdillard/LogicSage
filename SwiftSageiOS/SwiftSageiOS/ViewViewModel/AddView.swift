@@ -16,7 +16,6 @@ struct AddView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var windowManager: WindowManager
 
-    @AppStorage("repoSettingsShown") var repoSettingsShown: Bool = false
     @AppStorage("repoListOpen") var repoListOpen: Bool = false
     @AppStorage("fileListOpen") var fileListOpen: Bool = false
     @AppStorage("windowListOpen") var windowListOpen: Bool = false
@@ -26,6 +25,8 @@ struct AddView: View {
     @FocusState private var field5IsFocused: Bool
     @FocusState private var field6IsFocused: Bool
     @FocusState private var field7IsFocused: Bool
+    @FocusState private var field8IsFocused: Bool
+
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
@@ -49,6 +50,7 @@ struct AddView: View {
                                 field5IsFocused = false
                                 field6IsFocused = false
                                 field7IsFocused = false
+                                field8IsFocused = false
                             }
                         }) {
                             Image(systemName: "xmark.circle.fill")
@@ -105,9 +107,7 @@ struct AddView: View {
                                         .fontWeight(.bold)
                                         .cornerRadius(8)
                                     }
-
                                 }
-
                                 .padding(.bottom)
                             }
                             .padding(.leading,8)
@@ -144,10 +144,8 @@ struct AddView: View {
                                     .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
                                 }
-
                             }
                             HStack {
-
                                 TextField(
                                     "",
                                     text: $settingsViewModel.defaultURL
@@ -204,57 +202,36 @@ struct AddView: View {
                                 }
                             }
 
-                            Button(action: {
-                                withAnimation {
-                                    logD("open Change View")
-    #if !os(macOS)
+//                            Button(action: {
+//                                withAnimation {
+//                                    logD("open Change View")
+//    #if !os(macOS)
+//
+//                                    if consoleManager.isVisible {
+//                                        consoleManager.isVisible = false
+//                                    }
+//    #endif
+//                                    showAddView.toggle()
+//    #if !os(macOS)
+//                                    windowManager.addWindow(windowType: .changeView, frame: defSize, zIndex: 0)
+//    #endif
+//                                }
+//                            }) {
+//                                VStack {
+//                                    Text("View changes...")
+//                                        .font(.subheadline)
+//                                        .foregroundColor(settingsViewModel.appTextColor)
+//                                        .padding(.bottom)
+//
+//                                    resizableButtonImage(systemName:
+//                                                            "plus.forwardslash.minus",
+//                                                         size: geometry.size)
+//                                    .fontWeight(.bold)
+//                                    .cornerRadius(8)
+//                                }
+//                            }
 
-                                    if consoleManager.isVisible {
-                                        consoleManager.isVisible = false
-                                    }
-    #endif
-                                    showAddView.toggle()
-    #if !os(macOS)
-                                    windowManager.addWindow(windowType: .changeView, frame: defSize, zIndex: 0)
-    #endif
-                                }
-                            }) {
-                                VStack {
-                                    Text("View changes...")
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .padding(.bottom)
 
-                                    resizableButtonImage(systemName:
-                                                            "plus.forwardslash.minus",
-                                                         size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(8)
-                                }
-
-                            }
-
-
-                            Button(action: {
-                                withAnimation {
-                                    logD("CREATE draft PR on github")
-                                    settingsViewModel.actualCreateDraftPR()
-                                }
-                            }) {
-                                VStack {
-                                    Text("Push Draft PR...")
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .padding(.bottom)
-
-                                    resizableButtonImage(systemName:
-                                                            "square.and.pencil",
-                                                         size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(8)
-                                }
-
-                            }
 
                         }
                         .padding(.leading,8)
@@ -262,7 +239,7 @@ struct AddView: View {
 
                     // GIT SETTINGS
 
-                    let repoListMoji = repoSettingsShown ? "🔽" : "▶️"
+                    let repoListMoji = settingsViewModel.repoSettingsShown ? "🔽" : "▶️"
 
                     Text("\(repoListMoji) git settings")
                         .font(.title3)
@@ -272,21 +249,56 @@ struct AddView: View {
                         .foregroundColor(settingsViewModel.appTextColor)
                         .onTapGesture {
                             withAnimation {
-                                repoSettingsShown.toggle()
+                            settingsViewModel.repoSettingsShown.toggle()
                             }
                         }
 
-                    if repoSettingsShown {
+                    if settingsViewModel.repoSettingsShown {
                         VStack {
-
+                            // YOUR GITHUB USERNAME
+                            Text("User Settings")
                             HStack {
-                                Text("user: ").font(.caption)
+                                Text("git username: ")
+                                    .font(.body)
+                                    .lineLimit(nil)
+                                    .fontWeight(.bold)
+                                    .padding()
                                     .foregroundColor(settingsViewModel.appTextColor)
-
 
                                 TextField(
                                     "",
                                     text: $settingsViewModel.gitUser
+                                )
+                                .border(.secondary)
+                                .submitLabel(.done)
+                                .focused($field8IsFocused)
+                                .padding(.leading, 8)
+                                .padding(.trailing, 8)
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .scrollDismissesKeyboard(.interactively)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                .autocapitalization(.none)
+#endif
+                            }
+                            .frame(height: geometry.size.height / 17)
+
+
+                            Text("Remote repo settings:")
+                                .font(.body)
+                                .lineLimit(nil)
+                                .fontWeight(.bold)
+                                .padding()
+                                .foregroundColor(settingsViewModel.appTextColor)
+                            HStack {
+                                Text("user: ").font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+
+                                TextField(
+                                    "",
+                                    text: $settingsViewModel.yourGitUser
                                 )
                                 .border(.secondary)
                                 .submitLabel(.done)
@@ -359,9 +371,11 @@ struct AddView: View {
                         .padding(.leading,8)
                         .padding(.trailing,8)
                     }
+
                     Text("download: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
                         .font(.subheadline)
                         .foregroundColor(settingsViewModel.appTextColor)
+
                     if !settingsViewModel.isLoading {
                         HStack(spacing: 4) {
                             Button(action: {
@@ -412,21 +426,23 @@ struct AddView: View {
                     // symbol: "macwindow.on.rectangle"
 
                     Group {
-                        let filesListMoji = fileListOpen ? "🔽" : "▶️"
+//                        let filesListMoji = fileListOpen ? "🔽" : "▶️"
                         VStack {
                             HStack {
-                                Text("\(filesListMoji) Repo File Tree")
+                                Text("Repo File Tree")
+
+                              //  Text("\(filesListMoji) Repo File Tree")
                                     .font(.title3)
                                     .lineLimit(nil)
                                     .fontWeight(.bold)
                                     .padding()
                                     .foregroundColor(settingsViewModel.appTextColor)
-                                    .onTapGesture {
-                                        withAnimation {
-
-                                            fileListOpen.toggle()
-                                        }
-                                    }
+//                                    .onTapGesture {
+//                                        withAnimation {
+//
+//                                            fileListOpen.toggle()
+//                                        }
+//                                    }
 
 
                                 VStack {
@@ -459,41 +475,43 @@ struct AddView: View {
                                     }
                                 }
                             }
-                            if (fileListOpen) {
-
-                                NavigationView {
-                                    if let root = settingsViewModel.root {
-                                        let newWindow = WindowInfo(frame: defSize, zIndex: 0, windowType: .repoTreeView, fileContents: "", file: nil, url: nil)
-
-                                        let viewModel = SageMultiViewModel(windowInfo: newWindow)
-                                        RepositoryTreeView(sageMultiViewModel: viewModel, settingsViewModel: settingsViewModel, directory: root, window: nil)
-                                            .environmentObject(windowManager)
-                                    }
-                                    else {
-                                        Text("No root")
-                                    }
-                                }
-                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
-#if !os(macOS)
-                                .navigationViewStyle(StackNavigationViewStyle())
-#endif
-                            }
+//                            if (fileListOpen) {
+//
+//                                NavigationView {
+//                                    if let root = settingsViewModel.root {
+//                                        let newWindow = WindowInfo(frame: defSize, zIndex: 0, windowType: .repoTreeView, fileContents: "", file: nil, url: nil)
+//
+//                                        let viewModel = SageMultiViewModel(windowInfo: newWindow)
+//                                        RepositoryTreeView(sageMultiViewModel: viewModel, settingsViewModel: settingsViewModel, directory: root, window: nil)
+//                                            .environmentObject(windowManager)
+//                                    }
+//                                    else {
+//                                        Text("No root")
+//                                    }
+//                                }
+//                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
+//#if !os(macOS)
+//                                .navigationViewStyle(StackNavigationViewStyle())
+//#endif
+//                            }
                         }
                     }
                     HStack {
-                        let windowListMoji = windowListOpen ? "🔽" : "▶️"
-                        Text("\(windowListMoji) Window List")
+//                        let windowListMoji = windowListOpen ? "🔽" : "▶️"
+                       // Text("\(windowListMoji) Window List")
+                        Text("Window List")
+
                             .font(.title3)
                             .lineLimit(nil)
                             .fontWeight(.bold)
                             .padding()
                             .foregroundColor(settingsViewModel.appTextColor)
-                            .onTapGesture {
-                                withAnimation {
-
-                                    windowListOpen.toggle()
-                                }
-                            }
+//                            .onTapGesture {
+//                                withAnimation {
+//
+//                                    windowListOpen.toggle()
+//                                }
+//                            }
                         resizableButtonImage(systemName:
                                                 "macwindow.on.rectangle",
                                              size: geometry.size)
@@ -522,17 +540,17 @@ struct AddView: View {
                         }
                     }
 
-                    if windowListOpen {
-                        let windowCount = max(3, min(15,windowManager.windows.count))
-                        NavigationView {
-                            WindowList(showAddView: $showAddView)
-                                .environmentObject(windowManager)
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
-#if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
-#endif
-                    }
+//                    if windowListOpen {
+//                        let windowCount = max(3, min(15,windowManager.windows.count))
+//                        NavigationView {
+//                            WindowList(showAddView: $showAddView)
+//                                .environmentObject(windowManager)
+//                        }
+//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
+//#if !os(macOS)
+//                        .navigationViewStyle(StackNavigationViewStyle())
+//#endif
+//                    }
                     Button(action: {
                         withAnimation {
                             showAddView.toggle()
@@ -541,6 +559,8 @@ struct AddView: View {
                             field5IsFocused = false
                             field6IsFocused = false
                             field7IsFocused = false
+                            field8IsFocused = false
+
                         }
                     }) {
                         Image(systemName: "xmark.circle.fill")

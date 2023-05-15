@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+#if !os(macOS)
 
 struct FileChange: Identifiable, Equatable {
 
@@ -26,34 +27,100 @@ struct WorkingChangesView: View {
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @ObservedObject var settingsViewModel: SettingsViewModel
 
-
+    @State private var isPresentingAlert: Bool = false
     var body: some View {
-        NavigationView {
+        GeometryReader { geometry in
             VStack {
-                ListSectionView(title: unstagedTitle, changes: $settingsViewModel.unstagedFileChanges, settingsViewModel: settingsViewModel)
-                Divider()
-                ListSectionView(title: stagedTitle, changes: $settingsViewModel.stagedFileChanges, settingsViewModel: settingsViewModel)
+                HStack {
+                    NavigationView {
+                        VStack {
+                            ListSectionView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, title: unstagedTitle, changes: $settingsViewModel.unstagedFileChanges)
+                            Divider()
+                            ListSectionView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, title: stagedTitle, changes: $settingsViewModel.stagedFileChanges)
+                        }
+                    }
+#if !os(macOS)
+                    .navigationViewStyle(StackNavigationViewStyle())
+#endif
+                    Divider()
+                    // IF IPAD , show change list to the right of staging changes
+                    NavigationView {
+                        ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                            .environmentObject(windowManager)
+                            .environmentObject(sageMultiViewModel)
+                    }
+#if !os(macOS)
+                    .navigationViewStyle(StackNavigationViewStyle())
+#endif
+                }
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            logD("Confirm ??? CREATE draft PR on github")
+                            isPresentingAlert = true
+                        }
+                    }) {
+                        HStack {
+                            Text("Push Draft PR...")
+                                .font(.subheadline)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .padding(.bottom)
+
+                            resizableButtonImage(systemName:
+                                                    "square.and.pencil",
+                                                 size: geometry.size)
+                            .fontWeight(.bold)
+                            .cornerRadius(8)
+                        }
+
+                    }
+                    .disabled(settingsViewModel.stagedFileChanges.isEmpty)
+                    .padding(.trailing, 16)
+                }
+                .confirmationDialog("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?", isPresented: $isPresentingAlert) {
+                      Button("Yes") {
+                          settingsViewModel.actualCreateDraftPR()
+                      }
+
+                      Button("Cancel", role: .cancel) { }
+                  } message: {
+                      Text("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?")
+                  }
+
             }
         }
-#if !os(macOS)
-        .navigationViewStyle(StackNavigationViewStyle())
-#endif
+    }
+    func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .tint(settingsViewModel.appTextColor)
+            .background(settingsViewModel.buttonColor)
     }
 }
 
 struct ListSectionView: View {
+
+    @EnvironmentObject var windowManager: WindowManager
+    @Binding var showAddView: Bool
+
+    @ObservedObject var sageMultiViewModel: SageMultiViewModel
+    @ObservedObject var settingsViewModel: SettingsViewModel
+
     var title: String
     @Binding var changes: [FileChange]
-    @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(title)
-                .font(.system(size: settingsViewModel.fontSizeSrcEditor))
-                .foregroundColor(settingsViewModel.appTextColor)
-                .padding(.leading, 15)
-                .padding(.top, 5)
-
+            HStack {
+                Text(title)
+                    .font(.system(size: settingsViewModel.fontSizeSrcEditor))
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .padding(.leading, 15)
+                    .padding(.top, 5)
+            }
             List {
                 ForEach(changes) { change in
                     HStack {
@@ -88,3 +155,4 @@ struct ListSectionView: View {
         }
     }
 }
+#endif

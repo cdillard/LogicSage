@@ -8,13 +8,14 @@
 import Foundation
 
 extension SettingsViewModel {
-    func actualCreateDraftPR() {
+    func actualCreateDraftPR(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString) {
+#if !os(macOS)
         var hasSentPRCreation = false
         print("actually creating draft pr")
-        getDefaultHeadSha(defaultBranch: "main") { sha in
-            let newBranchName = UUID().uuidString
+        getDefaultHeadSha(defaultBranch: defaulBranch) { sha in
             self.createDrafBranch(newBranchName: newBranchName, commitSha: sha) { success in
                 if success {
+                    print("excecuting staged file content upload... \(self.stagedFileChanges.count) files being deployed...")
                     // For each file in the staged Changes, get the sha ref and put the new file Contents.
                     for file in self.stagedFileChanges {
                         let pathString = file.fileURL.absoluteString
@@ -30,7 +31,7 @@ extension SettingsViewModel {
 
                                         if !hasSentPRCreation {
                                             hasSentPRCreation = true
-                                            self.createPR(branchName: newBranchName) { success in
+                                            self.createPR(titleOfPR: titleOfPR, branchName: newBranchName) { success in
                                                 if success {
                                                     print("Successful PR creation")
 
@@ -46,20 +47,18 @@ extension SettingsViewModel {
                                     }
                                 }
                             }
-
                         }
                         else {
                             print("failed to extract trailing path")
                         }
-
                     }
-
                 }
                 else {
                     print("fail to create draf branch")
                 }
             }
         }
+#endif
     }
     func getDefaultHeadSha(defaultBranch: String, completion: @escaping (String) -> Void) {
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/branches/\(defaultBranch)")!
@@ -87,7 +86,7 @@ extension SettingsViewModel {
         }
         task.resume()
     }
-    func createDrafBranch(newBranchName: String = UUID().uuidString, commitSha: String, completion: @escaping (Bool) -> Void) {
+    func createDrafBranch(newBranchName: String, commitSha: String, completion: @escaping (Bool) -> Void) {
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/git/refs")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -111,7 +110,7 @@ extension SettingsViewModel {
         }
         task.resume()
     }
-    func createPR(titleOfPR: String = UUID().uuidString, branchName: String, baseBranch: String = "main", completion: @escaping (Bool) -> Void) {
+    func createPR(titleOfPR: String, branchName: String, baseBranch: String = "main", completion: @escaping (Bool) -> Void) {
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/pulls")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -162,24 +161,19 @@ extension SettingsViewModel {
         }
         task.resume()
     }
-
     func updateFileWithNewContent(branch: String, commitMessage: String = UUID().uuidString, sha: String, path: String, fileContent: String, completion: @escaping (Bool) -> Void) {
-
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/contents/\(path)")!
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("token \(SettingsViewModel.shared.ghaPat)", forHTTPHeaderField: "Authorization")
-
         let newFileContent = "\(fileContent)".data(using: .utf8)!.base64EncodedString()
-        let json: [String: Any] = ["message": "\(commitMessage)", // Replace <commit-message> with your commit message
+        let json: [String: Any] = ["message": "\(commitMessage)",
                                    "content": newFileContent,
-                                   "sha": "\(sha)", // Replace <file-sha> with the SHA of the file you got from the previous request
-                                   "branch": "\(branch)"] // The branch where you want to commit your changes
+                                   "sha": "\(sha)",
+                                   "branch": "\(branch)"]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
         request.httpBody = jsonData
-
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error: \(error)")
@@ -190,7 +184,6 @@ extension SettingsViewModel {
                 completion(true)
             }
         }
-
         task.resume()
     }
 }

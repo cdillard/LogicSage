@@ -85,6 +85,14 @@ extension SettingsViewModel {
 
                     let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser)
 
+                    // TODO: Double check this for multiple repos in same user/org....
+                    do {
+                        try FileManager.default.removeItem(at:  fileURL)
+                    }
+                    catch {
+                        print("did not delete or didn't exist old REPO")
+                    }
+
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
                     let myProgress = Progress()
                     unzipObservation = myProgress.observe(\.fractionCompleted) { progress, _ in

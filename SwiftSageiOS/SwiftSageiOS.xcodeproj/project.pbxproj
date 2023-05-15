@@ -97,6 +97,7 @@
 		B78EAF602A117482003095A2 /* ChangeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF5F2A117482003095A2 /* ChangeList.swift */; };
 		B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */; };
 		B78EAF642A11C242003095A2 /* Settings+WriteGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */; };
+		B78EAF662A127865003095A2 /* Color+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF652A127865003095A2 /* Color+Base64.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
@@ -201,6 +202,7 @@
 		B78EAF5F2A117482003095A2 /* ChangeList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeList.swift; sourceTree = "<group>"; };
 		B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingChangesList.swift; sourceTree = "<group>"; };
 		B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WriteGithub.swift"; sourceTree = "<group>"; };
+		B78EAF652A127865003095A2 /* Color+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Base64.swift"; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				B71C62EB2A00312A004296E4 /* BGHandler.swift */,
+				B78EAF652A127865003095A2 /* Color+Base64.swift */,
 				B78DA9732A04A083002343AB /* KeychainManager.swift */,
 				B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */,
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
@@ -654,6 +657,7 @@
 				B7191F2429F9F09A00078D8D /* Token.swift in Sources */,
 				B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */,
 				B78DA9682A02AF3A002343AB /* AsciiText.swift in Sources */,
+				B78EAF662A127865003095A2 /* Color+Base64.swift in Sources */,
 				B71C62EE2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift in Sources */,
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,

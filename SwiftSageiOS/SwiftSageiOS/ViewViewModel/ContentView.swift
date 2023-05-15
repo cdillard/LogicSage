@@ -27,8 +27,6 @@ struct ContentView: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
     @State private var buttonScale: CGFloat = 1.0
-   // @StateObject private var keyboardObserver = KeyboardObserver()
-
     @ObservedObject var settingsViewModel = SettingsViewModel.shared
 
     @StateObject private var windowManager = WindowManager()
@@ -199,6 +197,7 @@ struct ContentView: View {
                     Spacer()
                 }
             }
+#if !os(macOS)
             .onAppear {
                 defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
             }
@@ -206,10 +205,9 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
                 }
-
             }
+#endif
             .background(
-
                 ZStack {
 #if !os(macOS)
                     AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
@@ -249,7 +247,6 @@ struct ContentView: View {
             }
         }
 // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
@@ -299,10 +296,3 @@ func openTerminalAndRunCommand(command: String) {
 }
 
 #endif
-struct CustomShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.addRect(rect)
-        return path
-    }
-}

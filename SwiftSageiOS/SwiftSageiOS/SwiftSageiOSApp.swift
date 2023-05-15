@@ -37,7 +37,7 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
 
 //        settingsViewModel.printVoicesInMyDevice()
-//        
+//
 //        settingsViewModel.configureAudioSession()
 //
     //    cmdWindows = [LCManager]()
@@ -58,8 +58,9 @@ struct SwiftSageiOSApp: App {
                     )
                     .onAppear {
                         doDiscover()
-
+#if !os(macOS)
                         consoleManager.fontSize = settingsViewModel.textSize
+#endif
 
                     }
 #if !os(macOS)
