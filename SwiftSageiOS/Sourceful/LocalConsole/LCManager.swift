@@ -438,15 +438,13 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             consoleViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             updateConsoleOrigin()
-            
-            SwizzleTool().swizzleContextMenuReverseOrder()
-            
-            // Ensure console view always stays above other views.
 
-            // TODO Fix for multiple
-            SwizzleTool().swizzleDidAddSubview {
-                window.bringSubviewToFront(self.consoleViewController.view)
-            }
+            // we don't want the terminal on top all the time, we want it like other windows
+//            SwizzleTool().swizzleContextMenuReverseOrder()
+//            SwizzleTool().swizzleDidAddSubview {
+//                window.bringSubviewToFront(self.consoleViewController.view)
+//            }
+
         }
         
         /// Ensures the window is configured (i.e. scene has been found). If not, delay and wait for a scene to prepare itself, then try again.
@@ -914,13 +912,26 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         let share: UIAction = {
             // Something here causes a crash < iOS 15. Fall back to copy text for iOS 15 and below.
             if #available(iOS 16, *) {
-                return UIAction(title: "Share Text...", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+
+
+
+                return UIAction(title: "Share Text...", image: UIImage(systemName: "square.and.arrow.up")) { [self] _ in
                     let activityViewController = UIActivityViewController(
                         activityItems: [self.consoleTextView.text ?? ""],
                         applicationActivities: nil
                     )
+
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        activityViewController.popoverPresentationController?.sourceView = menuButton
+                    }
+
                     self.consoleViewController.present(activityViewController, animated: true)
+
+                    // Crashing when nil-input view for popover ...
+
                 }
+
+
             } else {
                 return UIAction(title: "Copy Text", image: UIImage(systemName: "doc.on.doc")) { _ in
                     UIPasteboard.general.string = self.consoleTextView.text
@@ -1348,12 +1359,12 @@ class ConsoleMenuButton: UIButton {
     override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willDisplayMenuFor configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
         super.contextMenuInteraction(interaction, willDisplayMenuFor: configuration, animator: animator)
         
-        SwizzleTool.pauseDidAddSubviewSwizzledClosure = true
+       // SwizzleTool.pauseDidAddSubviewSwizzledClosure = true
     }
     
     override func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willEndFor configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
         
-        SwizzleTool.pauseDidAddSubviewSwizzledClosure = false
+      //  SwizzleTool.pauseDidAddSubviewSwizzledClosure = false
     }
 }
 
@@ -1397,51 +1408,51 @@ extension UIView {
     }
 }
 
-class SwizzleTool: NSObject {
-    
-    /// Ensure context menus always show in a non reversed order.
-    func swizzleContextMenuReverseOrder() {
-        guard let originalMethod = class_getInstanceMethod(NSClassFromString("_" + "UI" + "Context" + "Menu" + "List" + "View").self, NSSelectorFromString("reverses" + "Action" + "Order")),
-              let swizzledMethod = class_getInstanceMethod(SwizzleTool.self, #selector(swizzled_reverses_Action_Order))
-        else { Swift.print("Swizzle Error Occurred"); return }
-        
-        method_exchangeImplementations(originalMethod, swizzledMethod)
-    }
-
-    @objc func swizzled_reverses_Action_Order() -> Bool {
-        if let menu = self.value(forKey: "displayed" + "Menu") as? UIMenu,
-           menu.title == "Debug" || menu.title == "User" + "Defaults" {
-            return false
-        }
-        
-        if let orig = self.value(forKey: "_" + "reverses" + "Action" + "Order") as? Bool {
-            return orig
-        }
-        
-        return false
-    }
-    
-    static var swizzledDidAddSubviewClosure: (() -> Void)?
-    static var pauseDidAddSubviewSwizzledClosure: Bool = false
-    
-    func swizzleDidAddSubview(_ closure: @escaping () -> Void) {
-        guard let originalMethod = class_getInstanceMethod(UIWindow.self, #selector(UIWindow.didAddSubview(_:))),
-              let swizzledMethod = class_getInstanceMethod(SwizzleTool.self, #selector(swizzled_did_add_subview(_:)))
-        else { Swift.print("Swizzle Error Occurred"); return }
-        
-        method_exchangeImplementations(originalMethod, swizzledMethod)
-        
-        Self.swizzledDidAddSubviewClosure = closure
-    }
-
-    @objc func swizzled_did_add_subview(_ subview: UIView) {
-        guard !Self.pauseDidAddSubviewSwizzledClosure else { return }
-        
-        if let closure = Self.swizzledDidAddSubviewClosure {
-            closure()
-        }
-    }
-}
+//class SwizzleTool: NSObject {
+//
+//    /// Ensure context menus always show in a non reversed order.
+//    func swizzleContextMenuReverseOrder() {
+//        guard let originalMethod = class_getInstanceMethod(NSClassFromString("_" + "UI" + "Context" + "Menu" + "List" + "View").self, NSSelectorFromString("reverses" + "Action" + "Order")),
+//              let swizzledMethod = class_getInstanceMethod(SwizzleTool.self, #selector(swizzled_reverses_Action_Order))
+//        else { Swift.print("Swizzle Error Occurred"); return }
+//
+//        method_exchangeImplementations(originalMethod, swizzledMethod)
+//    }
+//
+//    @objc func swizzled_reverses_Action_Order() -> Bool {
+//        if let menu = self.value(forKey: "displayed" + "Menu") as? UIMenu,
+//           menu.title == "Debug" || menu.title == "User" + "Defaults" {
+//            return false
+//        }
+//
+//        if let orig = self.value(forKey: "_" + "reverses" + "Action" + "Order") as? Bool {
+//            return orig
+//        }
+//
+//        return false
+//    }
+//
+//    static var swizzledDidAddSubviewClosure: (() -> Void)?
+//    static var pauseDidAddSubviewSwizzledClosure: Bool = false
+//
+//    func swizzleDidAddSubview(_ closure: @escaping () -> Void) {
+//        guard let originalMethod = class_getInstanceMethod(UIWindow.self, #selector(UIWindow.didAddSubview(_:))),
+//              let swizzledMethod = class_getInstanceMethod(SwizzleTool.self, #selector(swizzled_did_add_subview(_:)))
+//        else { Swift.print("Swizzle Error Occurred"); return }
+//
+//        method_exchangeImplementations(originalMethod, swizzledMethod)
+//
+//        Self.swizzledDidAddSubviewClosure = closure
+//    }
+//
+//    @objc func swizzled_did_add_subview(_ subview: UIView) {
+//        guard !Self.pauseDidAddSubviewSwizzledClosure else { return }
+//
+//        if let closure = Self.swizzledDidAddSubviewClosure {
+//            closure()
+//        }
+//    }
+//}
 
 class LumaView: UIView {
     lazy var visualEffectView: UIView = {

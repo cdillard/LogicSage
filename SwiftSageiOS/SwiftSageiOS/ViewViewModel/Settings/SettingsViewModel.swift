@@ -584,9 +584,10 @@ public class SettingsViewModel: ObservableObject {
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
 
-        // BEGIN LOAD SAVED GIT REPO
-        let openRepoKey = currentGitRepoKey()
-        logD("open repo key = \(openRepoKey)")
+//        // BEGIN LOAD SAVED GIT REPO
+//        let openRepoKey = currentGitRepoKey()
+//        logD("open repo key = \(openRepoKey)")
+
         // Task {
         let fileURL = getDocumentsDirectory()
         //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
