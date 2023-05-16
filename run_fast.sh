@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Start Vapor server
-rm -rf ./WebSocketServer/.build
+#rm -rf ./WebSocketServer/.build
+
 
 ### USE THIS FOR Terminal.app
-
 cwd=$(pwd)
 bar="${cwd}/WebSocketServer"
 osascript -  "$bar"  <<EOF
@@ -18,7 +18,6 @@ osascript -  "$bar"  <<EOF
 EOF
 
 ### USE THIS FOR iTerm2.app
-
 # cwd=$(pwd)
 # bar="${cwd}/WebSocketServer"
 # osascript -  "$bar"  <<EOF
@@ -26,17 +25,17 @@ EOF
 #         tell application "iTerm2"
 #             set newWindow to (create window with default profile)
 #             tell current session of newWindow
-#                 do script( "cd " & quoted form of item 1 of argv & " ; vapor run")
+#                 write text "cd " & quoted form of item 1 of argv & " ; vapor run"
 #             end tell
 #         end tell
 #     end run
 # EOF
 
-rm -rf dd
+
+#rm -rf dd
 
 ## LAUNCH SWIFT SERVER COMMAND LINE BINARY
 
-xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug clean build
+xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug build
 
 ./dd/Build/Products/Debug/Swifty-GPT
-

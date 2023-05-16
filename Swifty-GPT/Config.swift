@@ -213,7 +213,7 @@ let barkVoicesEnabled = false
 
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
 let enableMacSage = false
-let swiftSageIOSEnabled = false
+let swiftSageIOSEnabled = true
 let swiftSageIOSAudioStreaming = false
 
 // DO NOT USE
