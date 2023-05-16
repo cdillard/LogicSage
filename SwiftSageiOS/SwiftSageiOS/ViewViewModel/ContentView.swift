@@ -199,11 +199,11 @@ struct ContentView: View {
             }
 #if !os(macOS)
             .onAppear {
-                defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
+                recalculateWindowSize(size: geometry.size)
             }
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 DispatchQueue.main.async {
-                    defSize = CGRectMake(0, 0, geometry.size.width - (geometry.size.width * 0.22), geometry.size.height - (geometry.size.height * 0.22))
+                    recalculateWindowSize(size: geometry.size)
                 }
             }
 #endif
@@ -213,7 +213,6 @@ struct ContentView: View {
                     AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)
-
                         .environmentObject(windowManager)
                     SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -247,6 +246,11 @@ struct ContentView: View {
             }
         }
 // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+    }
+
+    private func recalculateWindowSize(size: CGSize) {
+        defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
+
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)

@@ -98,14 +98,35 @@
 		B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */; };
 		B78EAF642A11C242003095A2 /* Settings+WriteGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */; };
 		B78EAF662A127865003095A2 /* Color+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF652A127865003095A2 /* Color+Base64.swift */; };
+		B78EAF692A13B68D003095A2 /* SageMultiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF672A13B68D003095A2 /* SageMultiView.swift */; };
+		B78EAF6A2A13B68D003095A2 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF682A13B68D003095A2 /* TopBar.swift */; };
+		B78EAF812A13B7D4003095A2 /* SwiftSageiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF802A13B7D4003095A2 /* SwiftSageiOSTests.swift */; };
+		B78EAF882A13B820003095A2 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF872A13B820003095A2 /* SettingsViewModelTests.swift */; };
+		B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */; };
+		B78EAF922A13B955003095A2 /* SwiftSageiOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF912A13B955003095A2 /* SwiftSageiOSUITestsLaunchTests.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
-		B7EFB8682A0F57A700D6E2A6 /* SageMultiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFB8662A0F57A700D6E2A6 /* SageMultiView.swift */; };
-		B7EFB8692A0F57A700D6E2A6 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EFB8672A0F57A700D6E2A6 /* TopBar.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B78EAF822A13B7D4003095A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B746DFC229F5E789002804EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B746DFC929F5E789002804EB;
+			remoteInfo = SwiftSageiOS;
+		};
+		B78EAF932A13B955003095A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B746DFC229F5E789002804EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B746DFC929F5E789002804EB;
+			remoteInfo = SwiftSageiOS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalConsoleExtensions.swift; sourceTree = "<group>"; };
@@ -203,11 +224,17 @@
 		B78EAF612A11ADA5003095A2 /* WorkingChangesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingChangesList.swift; sourceTree = "<group>"; };
 		B78EAF632A11C242003095A2 /* Settings+WriteGithub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+WriteGithub.swift"; sourceTree = "<group>"; };
 		B78EAF652A127865003095A2 /* Color+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Base64.swift"; sourceTree = "<group>"; };
+		B78EAF672A13B68D003095A2 /* SageMultiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SageMultiView.swift; sourceTree = "<group>"; };
+		B78EAF682A13B68D003095A2 /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
+		B78EAF7E2A13B7D4003095A2 /* SwiftSageiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSageiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B78EAF802A13B7D4003095A2 /* SwiftSageiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSTests.swift; sourceTree = "<group>"; };
+		B78EAF872A13B820003095A2 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
+		B78EAF8D2A13B955003095A2 /* SwiftSageiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSageiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITests.swift; sourceTree = "<group>"; };
+		B78EAF912A13B955003095A2 /* SwiftSageiOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
-		B7EFB8662A0F57A700D6E2A6 /* SageMultiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SageMultiView.swift; path = SwiftSageiOS/SageMultiView.swift; sourceTree = SOURCE_ROOT; };
-		B7EFB8672A0F57A700D6E2A6 /* TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopBar.swift; path = SwiftSageiOS/TopBar.swift; sourceTree = SOURCE_ROOT; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +246,20 @@
 			files = (
 				B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */,
 				B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B78EAF7B2A13B7D4003095A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B78EAF8A2A13B955003095A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +280,7 @@
 				B7191F1229F9F09A00078D8D /* Themes */,
 				B7191F1429F9F09A00078D8D /* SwiftUI */,
 			);
-			path = Sourceful;
+			name = Sourceful;
 			sourceTree = "<group>";
 		};
 		B7191EF629F9F09A00078D8D /* Util */ = {
@@ -336,10 +377,10 @@
 				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
 				B78EAF5D2A108516003095A2 /* Lists */,
-				B7EFB8662A0F57A700D6E2A6 /* SageMultiView.swift */,
+				B78EAF672A13B68D003095A2 /* SageMultiView.swift */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
-				B7EFB8672A0F57A700D6E2A6 /* TopBar.swift */,
+				B78EAF682A13B68D003095A2 /* TopBar.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 			);
 			path = ViewViewModel;
@@ -349,9 +390,9 @@
 			isa = PBXGroup;
 			children = (
 				B746DFCC29F5E789002804EB /* SwiftSageiOS */,
-				B767E9BA29F6DAED003EC13F /* LocalConsole */,
-				B74A2CA329F7F6990051DB52 /* Starscream */,
-				B7191EF429F9F09A00078D8D /* Sourceful */,
+				B78EAF982A13B964003095A2 /* Third party */,
+				B78EAF7F2A13B7D4003095A2 /* SwiftSageiOSTests */,
+				B78EAF8E2A13B955003095A2 /* SwiftSageiOSUITests */,
 				B746DFCB29F5E789002804EB /* Products */,
 				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
 			);
@@ -361,6 +402,8 @@
 			isa = PBXGroup;
 			children = (
 				B746DFCA29F5E789002804EB /* LogicSageDev.app */,
+				B78EAF7E2A13B7D4003095A2 /* SwiftSageiOSTests.xctest */,
+				B78EAF8D2A13B955003095A2 /* SwiftSageiOSUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -565,6 +608,35 @@
 			name = Github;
 			sourceTree = "<group>";
 		};
+		B78EAF7F2A13B7D4003095A2 /* SwiftSageiOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				B78EAF872A13B820003095A2 /* SettingsViewModelTests.swift */,
+				B78EAF802A13B7D4003095A2 /* SwiftSageiOSTests.swift */,
+			);
+			path = SwiftSageiOSTests;
+			sourceTree = "<group>";
+		};
+		B78EAF8E2A13B955003095A2 /* SwiftSageiOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */,
+				B78EAF912A13B955003095A2 /* SwiftSageiOSUITestsLaunchTests.swift */,
+			);
+			path = SwiftSageiOSUITests;
+			sourceTree = "<group>";
+		};
+		B78EAF982A13B964003095A2 /* Third party */ = {
+			isa = PBXGroup;
+			children = (
+				B767E9BA29F6DAED003EC13F /* LocalConsole */,
+				B74A2CA329F7F6990051DB52 /* Starscream */,
+				B7191EF429F9F09A00078D8D /* Sourceful */,
+			);
+			name = "Third party";
+			path = Sourceful;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -588,6 +660,42 @@
 			productReference = B746DFCA29F5E789002804EB /* LogicSageDev.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B78EAF7D2A13B7D4003095A2 /* SwiftSageiOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B78EAF842A13B7D4003095A2 /* Build configuration list for PBXNativeTarget "SwiftSageiOSTests" */;
+			buildPhases = (
+				B78EAF7A2A13B7D4003095A2 /* Sources */,
+				B78EAF7B2A13B7D4003095A2 /* Frameworks */,
+				B78EAF7C2A13B7D4003095A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B78EAF832A13B7D4003095A2 /* PBXTargetDependency */,
+			);
+			name = SwiftSageiOSTests;
+			productName = SwiftSageiOSTests;
+			productReference = B78EAF7E2A13B7D4003095A2 /* SwiftSageiOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B78EAF8C2A13B955003095A2 /* SwiftSageiOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B78EAF952A13B955003095A2 /* Build configuration list for PBXNativeTarget "SwiftSageiOSUITests" */;
+			buildPhases = (
+				B78EAF892A13B955003095A2 /* Sources */,
+				B78EAF8A2A13B955003095A2 /* Frameworks */,
+				B78EAF8B2A13B955003095A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B78EAF942A13B955003095A2 /* PBXTargetDependency */,
+			);
+			name = SwiftSageiOSUITests;
+			productName = SwiftSageiOSUITests;
+			productReference = B78EAF8D2A13B955003095A2 /* SwiftSageiOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -600,6 +708,14 @@
 				TargetAttributes = {
 					B746DFC929F5E789002804EB = {
 						CreatedOnToolsVersion = 14.3;
+					};
+					B78EAF7D2A13B7D4003095A2 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = B746DFC929F5E789002804EB;
+					};
+					B78EAF8C2A13B955003095A2 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = B746DFC929F5E789002804EB;
 					};
 				};
 			};
@@ -620,6 +736,8 @@
 			projectRoot = "";
 			targets = (
 				B746DFC929F5E789002804EB /* SwiftSageiOS */,
+				B78EAF7D2A13B7D4003095A2 /* SwiftSageiOSTests */,
+				B78EAF8C2A13B955003095A2 /* SwiftSageiOSUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -631,6 +749,20 @@
 			files = (
 				B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */,
 				B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B78EAF7C2A13B7D4003095A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B78EAF8B2A13B955003095A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +783,6 @@
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,
 				B71C62F82A018C6D004296E4 /* Reset.swift in Sources */,
 				B7191F1C29F9F09A00078D8D /* OCamlLexer.swift in Sources */,
-				B7EFB8692A0F57A700D6E2A6 /* TopBar.swift in Sources */,
 				B74A2CC629F7F6990051DB52 /* FoundationSecurity.swift in Sources */,
 				B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */,
 				B7191F2429F9F09A00078D8D /* Token.swift in Sources */,
@@ -676,10 +807,10 @@
 				B78DA9802A070EC9002343AB /* WindowView.swift in Sources */,
 				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
 				B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */,
-				B7EFB8682A0F57A700D6E2A6 /* SageMultiView.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
 				B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */,
+				B78EAF692A13B68D003095A2 /* SageMultiView.swift in Sources */,
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B71C62FC2A0190AA004296E4 /* Googler.swift in Sources */,
@@ -695,6 +826,7 @@
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
 				B78DA9672A02AF3A002343AB /* Loading.swift in Sources */,
+				B78EAF6A2A13B68D003095A2 /* TopBar.swift in Sources */,
 				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
 				B78DA98A2A080037002343AB /* WindowList.swift in Sources */,
 				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
@@ -738,7 +870,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B78EAF7A2A13B7D4003095A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B78EAF812A13B7D4003095A2 /* SwiftSageiOSTests.swift in Sources */,
+				B78EAF882A13B820003095A2 /* SettingsViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B78EAF892A13B955003095A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B78EAF922A13B955003095A2 /* SwiftSageiOSUITestsLaunchTests.swift in Sources */,
+				B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B78EAF832A13B7D4003095A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B746DFC929F5E789002804EB /* SwiftSageiOS */;
+			targetProxy = B78EAF822A13B7D4003095A2 /* PBXContainerItemProxy */;
+		};
+		B78EAF942A13B955003095A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B746DFC929F5E789002804EB /* SwiftSageiOS */;
+			targetProxy = B78EAF932A13B955003095A2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B746DFD729F5E78A002804EB /* Debug */ = {
@@ -859,6 +1022,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 72WEN2C47N;
@@ -910,6 +1074,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -948,6 +1113,86 @@
 			};
 			name = Release;
 		};
+		B78EAF852A13B7D4003095A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LogicSageDev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LogicSageDev";
+			};
+			name = Debug;
+		};
+		B78EAF862A13B7D4003095A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LogicSageDev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LogicSageDev";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B78EAF962A13B955003095A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SwiftSageiOS;
+			};
+			name = Debug;
+		};
+		B78EAF972A13B955003095A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 72WEN2C47N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SwiftSageiOS;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -965,6 +1210,24 @@
 			buildConfigurations = (
 				B746DFDA29F5E78A002804EB /* Debug */,
 				B746DFDB29F5E78A002804EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B78EAF842A13B7D4003095A2 /* Build configuration list for PBXNativeTarget "SwiftSageiOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B78EAF852A13B7D4003095A2 /* Debug */,
+				B78EAF862A13B7D4003095A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B78EAF952A13B955003095A2 /* Build configuration list for PBXNativeTarget "SwiftSageiOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B78EAF962A13B955003095A2 /* Debug */,
+				B78EAF972A13B955003095A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

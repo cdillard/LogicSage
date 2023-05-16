@@ -44,7 +44,7 @@ public func configure(_ app: Application) throws {
         // BEGIN onText
         ws.onText { ws, text in
 
-            // IF AUTHED
+            // IF ALREADY AUTHED....
             if let user = username {
                 do {
                     if debugging {
@@ -134,8 +134,6 @@ public func configure(_ app: Application) throws {
                             catch {
                                 print("error writing auth cmd")
                             }
-
-
                         }
                     } else {
                         ws.send("Invalid command format")
@@ -147,10 +145,7 @@ public func configure(_ app: Application) throws {
             }
 // END HANDLE COMMANDS ********************************************************************************************************************************
 
-// START HANDLE AUTH ********************************************************************************************************************************
-
-            // IF NOT AUTHED
-
+// START HANDLE AUTH IF NOT ALREADY AUTHED ********************************************************************************************************************************
             else {
                 if debugging {
                     print("No auth for this req, attempting to auth...")

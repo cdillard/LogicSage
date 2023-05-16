@@ -28,6 +28,41 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B78EAF6E2A13B76A003095A2"
+               BuildableName = "LogicSageTests.xctest"
+               BlueprintName = "LogicSageTests"
+               ReferencedContainer = "container:SwiftSageiOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B78EAF7D2A13B7D4003095A2"
+               BuildableName = "SwiftSageiOSTests.xctest"
+               BlueprintName = "SwiftSageiOSTests"
+               ReferencedContainer = "container:SwiftSageiOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B78EAF8C2A13B955003095A2"
+               BuildableName = "SwiftSageiOSUITests.xctest"
+               BlueprintName = "SwiftSageiOSUITests"
+               ReferencedContainer = "container:SwiftSageiOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

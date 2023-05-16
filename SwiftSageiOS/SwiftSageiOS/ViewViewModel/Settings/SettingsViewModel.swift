@@ -608,7 +608,6 @@ public class SettingsViewModel: ObservableObject {
 
     func applyTheme(theme: AppTheme) {
 #if !os(macOS)
-
         switch theme {
         case .deepSpace:
             terminalBackgroundColor = Color(hex: 0x4A646C, alpha: 1)
@@ -627,7 +626,6 @@ public class SettingsViewModel: ObservableObject {
             backgroundColorSrcEditor = Color(hex: 0x232C33, alpha: 1)
             lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
 
-
         case .hacker:
 
             terminalBackgroundColor = Color(hex: 0x000000, alpha: 1)
@@ -645,7 +643,6 @@ public class SettingsViewModel: ObservableObject {
             editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
             backgroundColorSrcEditor = Color(hex: 0x1A2421, alpha: 1)
             lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-
         }
 #endif
     }

@@ -176,8 +176,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "f7c46552983b06b0958a1a4c8bc5199406ae4c8a",
-        "version" : "2.51.0"
+        "revision" : "2d8e6ca36fe3e8ed74b0883f593757a45463c34d",
+        "version" : "2.53.0"
       }
     },
     {
@@ -203,8 +203,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-ssl.git",
       "state" : {
-        "revision" : "9d0d5d8798a576fbf674a823734e65e15ca5f2ec",
-        "version" : "2.23.1"
+        "revision" : "e866a626e105042a6a72a870c88b4c531ba05f83",
+        "version" : "2.24.0"
       }
     },
     {
@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-transport-services.git",
       "state" : {
-        "revision" : "59b966415dd336db6f388bbfe3fb43cfa549b981",
-        "version" : "1.16.0"
+        "revision" : "41f4098903878418537020075a4d8a6e20a0b182",
+        "version" : "1.17.0"
       }
     },
     {
@@ -240,7 +240,7 @@
       "location" : "https://github.com/scinfu/SwiftSoup.git",
       "state" : {
         "branch" : "master",
-        "revision" : "f707b8680cddb96dc1855632340a572ef37bbb98"
+        "revision" : "0e96a20ffd37a515c5c963952d4335c89bed50a6"
       }
     },
     {
@@ -257,8 +257,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/drmohundro/SWXMLHash.git",
       "state" : {
-        "revision" : "4d0f62f561458cbe1f732171e625f03195151b60",
-        "version" : "7.0.1"
+        "revision" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+        "version" : "7.0.2"
       }
     },
     {
@@ -267,7 +267,7 @@
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
         "branch" : "main",
-        "revision" : "582e6c953555419ab4ce36d9269b19b82cda0c02"
+        "revision" : "ac263f742e1a918e95faacaa4672d552c3c0d5bd"
       }
     },
     {
@@ -276,7 +276,7 @@
       "location" : "https://github.com/vapor/websocket-kit.git",
       "state" : {
         "branch" : "main",
-        "revision" : "2166cbe932b29b6419f9cd751e8b27c647e1238e"
+        "revision" : "17c0afbf24f4e288e183bc34317dc97b5cd084bd"
       }
     },
     {

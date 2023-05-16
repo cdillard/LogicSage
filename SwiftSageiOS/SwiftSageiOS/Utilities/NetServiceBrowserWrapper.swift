@@ -48,15 +48,17 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
             let sockaddrPtr = pointer.bindMemory(to: sockaddr.self).baseAddress!
             if getnameinfo(sockaddrPtr, socklen_t(addressData.count), &hostname, socklen_t(hostname.count), nil, 0, NI_NUMERICHOST) == 0 {
                 let ipAddress = String(cString: hostname)
-                logD("Resolved service (\(sender.name)) IP address: \(ipAddress), port: \(sender.port)")
+//                logD("Resolved service (\(sender.name)) IP address: \(ipAddress), port: \(sender.port)")
 
                 // Use ipAddress and sender.port to connect to the WebSocket server
                 screamer.connectWebSocket(ipAddress: ipAddress, port: String(sender.port))
                 SettingsViewModel.shared.ipAddress = ipAddress
                 SettingsViewModel.shared.port = String(sender.port)
+                logD("Resolved service \(sender.name) successfully.")
+
             }
             else {
-                print("failed getnameinfo")
+                logD("failed getnameinfo -- no server connection possible")
             }
         }
     }

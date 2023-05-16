@@ -1,13 +1,9 @@
 
 # LogicSage: The mobile AI workspace 
 
-### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs], THANK YOU!
-
-## An AI Workspace for Mac OS, iOS, and iPadOS - Open Source in Swift - MIT licensed 
-
+## for Mac OS command line, iOS, and iPadOS - Open Source in Swift
 
 [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
-
 
 ## Table of Contents
 - [Contact](#contact)
@@ -26,6 +22,8 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 ---
 
 ## Description
+
+### Powered by - [OpenAI GPT-4, GPT-3.5 turbo APIs], THANK YOU!
 
 LogicSage is an open-source AI workspace for everyone. Chat w/ GPTs. Developers and AI enthusiasts can use it to work with gpts to view code, edit code, and submit PRs!
 
@@ -48,12 +46,15 @@ more with the SwiftSage CLI for Mac including a server...
 ---
 
 Supported modes can be toggled in the Settings(gear icon) menu.
+
 mobile: this mode allows you to interact with GPT by prefixing your prompt in the command entry window with the g key.
+
 ---
 
 computer:  this more advanced mode allows you to create apps automatically in Xcode with the (i) command.
 
 —-
+
 Future of LogicSage:
 Google and Link cmd support coming soon!
 
@@ -61,7 +62,6 @@ Google and Link cmd support coming soon!
 
 Demo video (please download to mac or iOS device to view): https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV
 —-
-- DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.
 
 ## news
 ---
@@ -440,3 +440,5 @@ Just install the voices you want to Mac OS TTS, once they are installed check ou
 
 FIND/BUY/INSTALL THE VOICE YOU FANCY.
 https://www.cereproc.com
+
+DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.

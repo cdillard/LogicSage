@@ -57,7 +57,7 @@ struct AddView: View {
                                 .fontWeight(.bold)
                                 .font(.body)
                                 .padding(.horizontal, 8)
-                                     .padding(.vertical, 8)
+                                .padding(.vertical, 8)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
@@ -108,7 +108,9 @@ struct AddView: View {
                                         .cornerRadius(8)
                                     }
                                 }
-                                .padding(.bottom)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 8)
+
                             }
                             .padding(.leading,8)
 
@@ -124,8 +126,6 @@ struct AddView: View {
                                     showAddView.toggle()
 
 #if !os(macOS)
-                                    // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-
                                     windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
                                 }
@@ -145,6 +145,9 @@ struct AddView: View {
                                     .cornerRadius(8)
                                 }
                             }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 8)
+
                             HStack {
                                 TextField(
                                     "",
@@ -176,16 +179,16 @@ struct AddView: View {
                             Button(action: {
                                 withAnimation {
                                     logD("open Working Changes View")
-    #if !os(macOS)
+#if !os(macOS)
 
                                     if consoleManager.isVisible {
                                         consoleManager.isVisible = false
                                     }
-    #endif
+#endif
                                     showAddView.toggle()
-    #if !os(macOS)
+#if !os(macOS)
                                     windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
-    #endif
+#endif
                                 }
                             }) {
                                 VStack {
@@ -201,38 +204,6 @@ struct AddView: View {
                                     .cornerRadius(8)
                                 }
                             }
-
-//                            Button(action: {
-//                                withAnimation {
-//                                    logD("open Change View")
-//    #if !os(macOS)
-//
-//                                    if consoleManager.isVisible {
-//                                        consoleManager.isVisible = false
-//                                    }
-//    #endif
-//                                    showAddView.toggle()
-//    #if !os(macOS)
-//                                    windowManager.addWindow(windowType: .changeView, frame: defSize, zIndex: 0)
-//    #endif
-//                                }
-//                            }) {
-//                                VStack {
-//                                    Text("View changes...")
-//                                        .font(.subheadline)
-//                                        .foregroundColor(settingsViewModel.appTextColor)
-//                                        .padding(.bottom)
-//
-//                                    resizableButtonImage(systemName:
-//                                                            "plus.forwardslash.minus",
-//                                                         size: geometry.size)
-//                                    .fontWeight(.bold)
-//                                    .cornerRadius(8)
-//                                }
-//                            }
-
-
-
                         }
                         .padding(.leading,8)
                     }
@@ -245,11 +216,12 @@ struct AddView: View {
                         .font(.title3)
                         .lineLimit(nil)
                         .fontWeight(.bold)
-                        .padding()
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 8)
                         .foregroundColor(settingsViewModel.appTextColor)
                         .onTapGesture {
                             withAnimation {
-                            settingsViewModel.repoSettingsShown.toggle()
+                                settingsViewModel.repoSettingsShown.toggle()
                             }
                         }
 
@@ -320,7 +292,6 @@ struct AddView: View {
                                 Text("repo: ").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
-
                                 TextField(
                                     "",
                                     text: $settingsViewModel.gitRepo
@@ -359,7 +330,6 @@ struct AddView: View {
                                 .scrollDismissesKeyboard(.interactively)
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
-
                                 .autocorrectionDisabled(true)
 #if !os(macOS)
 
@@ -418,39 +388,24 @@ struct AddView: View {
                             }
                             .padding(.trailing, 32)
                             .padding(.leading, 32)
-
                         }
                     }
 
-                    // TODO: IMPL OPEN IN WINDOW for both Repo Tree and Window List.
-                    // symbol: "macwindow.on.rectangle"
-
                     Group {
-//                        let filesListMoji = fileListOpen ? "🔽" : "▶️"
                         VStack {
-                            HStack {
+                            HStack(spacing: 4) {
                                 Text("Repo File Tree")
-
-                              //  Text("\(filesListMoji) Repo File Tree")
-                                    .font(.title3)
+                                    .font(.subheadline)
                                     .lineLimit(nil)
                                     .fontWeight(.bold)
                                     .padding()
                                     .foregroundColor(settingsViewModel.appTextColor)
-//                                    .onTapGesture {
-//                                        withAnimation {
-//
-//                                            fileListOpen.toggle()
-//                                        }
-//                                    }
-
 
                                 VStack {
 
                                     resizableButtonImage(systemName:
                                                             "macwindow.on.rectangle",
                                                          size: geometry.size)
-                                    .fontWeight(.bold)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
@@ -459,59 +414,30 @@ struct AddView: View {
 
                                             logD("Open container containing repo tree")
 
-            #if !os(macOS)
+#if !os(macOS)
                                             if consoleManager.isVisible {
                                                 consoleManager.isVisible = false
                                             }
-            #endif
+#endif
                                             showAddView.toggle()
 
-            #if !os(macOS)
-                                            // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-
+#if !os(macOS)
                                             windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-            #endif
+#endif
                                         }
                                     }
                                 }
                             }
-//                            if (fileListOpen) {
-//
-//                                NavigationView {
-//                                    if let root = settingsViewModel.root {
-//                                        let newWindow = WindowInfo(frame: defSize, zIndex: 0, windowType: .repoTreeView, fileContents: "", file: nil, url: nil)
-//
-//                                        let viewModel = SageMultiViewModel(windowInfo: newWindow)
-//                                        RepositoryTreeView(sageMultiViewModel: viewModel, settingsViewModel: settingsViewModel, directory: root, window: nil)
-//                                            .environmentObject(windowManager)
-//                                    }
-//                                    else {
-//                                        Text("No root")
-//                                    }
-//                                }
-//                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 300, maxHeight: 600)
-//#if !os(macOS)
-//                                .navigationViewStyle(StackNavigationViewStyle())
-//#endif
-//                            }
                         }
                     }
-                    HStack {
-//                        let windowListMoji = windowListOpen ? "🔽" : "▶️"
-                       // Text("\(windowListMoji) Window List")
-                        Text("Window List")
+                    HStack(spacing: 4) {
 
-                            .font(.title3)
+                        Text("Window List")
+                            .font(.subheadline)
                             .lineLimit(nil)
-                            .fontWeight(.bold)
                             .padding()
                             .foregroundColor(settingsViewModel.appTextColor)
-//                            .onTapGesture {
-//                                withAnimation {
-//
-//                                    windowListOpen.toggle()
-//                                }
-//                            }
+
                         resizableButtonImage(systemName:
                                                 "macwindow.on.rectangle",
                                              size: geometry.size)
@@ -521,7 +447,6 @@ struct AddView: View {
                         .cornerRadius(8)
                         .onTapGesture {
                             withAnimation {
-
                                 logD("Open container containing repo tree")
 
 #if !os(macOS)
@@ -530,27 +455,13 @@ struct AddView: View {
                                 }
 #endif
                                 showAddView.toggle()
-
 #if !os(macOS)
-                                // let defSize = CGRect(x: 0, y: 0, width: geometry.size.width - geometry.size.width / 3, height: geometry.size.height - geometry.size.height / 3)
-
                                 windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
                             }
                         }
                     }
 
-//                    if windowListOpen {
-//                        let windowCount = max(3, min(15,windowManager.windows.count))
-//                        NavigationView {
-//                            WindowList(showAddView: $showAddView)
-//                                .environmentObject(windowManager)
-//                        }
-//                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: geometry.size.height/listHeightFactor * Double(windowCount), maxHeight: geometry.size.height/listHeightFactor * Double(windowCount))
-//#if !os(macOS)
-//                        .navigationViewStyle(StackNavigationViewStyle())
-//#endif
-//                    }
                     Button(action: {
                         withAnimation {
                             showAddView.toggle()
@@ -560,14 +471,13 @@ struct AddView: View {
                             field6IsFocused = false
                             field7IsFocused = false
                             field8IsFocused = false
-
                         }
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .fontWeight(.bold)
                             .font(.body)
                             .padding(.horizontal, 8)
-                                 .padding(.vertical, 8)
+                            .padding(.vertical, 8)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
