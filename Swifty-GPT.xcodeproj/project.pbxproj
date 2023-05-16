@@ -795,7 +795,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.swiftsage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";
@@ -837,7 +837,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.swiftsage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(inherited)/** Swifty-GPT/cerevoice_sdk_6.1.0/**";
 				SWIFT_OBJC_BRIDGING_HEADER = "Swifty-GPT/Swifty-GPT-Bridging-Header.h";

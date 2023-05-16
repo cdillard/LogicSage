@@ -123,108 +123,7 @@ Introducing multiple window support. Introducing smooth resizability. Introducin
 Introducing your repository in LogicSage: Simply set your github PAT, github owner, github repo, and github branch and then tap Download Repo in the Add View This will grab the repo from Github. Cool!
 
 Ability to Create PRs, Create Branches, View working Changes, View Commits coming Soon!
-
 ---
-05-05-2023
-
-What is it? A workspace, a git client, an AI project generator? A song maker? A debate practice tool? 
-Help me decide!
-
-Welcome to LogicSage. 
-
-Now with GIT REPO SUPPORT!
-
-Your precious API Keys are now stored in the Keychain :)
-
-You can now enter a Github PAT in settings, then go to the Addiew and tap "Download sws repo" , hide the add view, once the download completes open the add view and browse away! Select files and drill down to check out the LogicSage mobile AI workspace code.
-
----
-05-04-2023
-
-Another day full of excitement for LogicSage!
-
--You can now choose whatever gpt model you would like to use with the chat/completions API.
--It's starting out with gpt-3.5-turbo, but you can use gpt-4 too.
-
--Keep in mind you must manually set your GPT model in the Config of Swifty-GPT command line app. So go ahead and do that if you plan on using GPT-4. I've left it as gpt-3.5-turbo.
-
----- 
-05-02-2023
-
-You can now use the Swift Sage app without the server, Have fun! 
-
-Coming to an app store near you for free soon.
-
-![modez](Swifty-GPT/assets/modez.png)
-
-
----- 
-05-01-2023
-
-Resizable Webview windows and Resizable File windows. Bug fixes galore.
-
-Rewrote Vapor server to support multiple users authenticating :).
-
-Redid SwiftSage iOS UI for more screen real estate.
-
-Google Command Progress, try it with `g` command, turn off enableGoogle in server if causing issues.
-
----- 
-04-30-2023
-
-Swift Sage is getting mroe mobile!
-
-Voice synthesis with configurable voice, in the iOS app. Voice recognition using the mic button in the iOS app. Have fun!
-
-Check it out. Email me with questions or suggestions.
-
----- 
-04-28-2023
-
-DEBATE MODE UPGRADE:
-
-`debates`
-`debates subject`
-
-CEREPROC instructions updated, you should be able to use the ones that install into Mac OS voices by default now.
-Customize to use cereproc voices in Debates.swift . See COnfig.swift for detailed voice setup instructions :thumbup:
-
----- 
-04-26-2023
-
-Files using twostraws excellent Sourceful (see creds)
-
-Webviews for GPT-4!
-
-See Screenshots at bottom
-
-Stay TUNED for multiple TERM windows AND MORE!
-
-----
-04-26-2023
-
-iOS input works quite well, give your feedback in Discussions
-
-"debate your topic" mode BETA
-
-Customizable Terminal and app colors (Restart or fresh install app to apply/reset colors for now please.)
-
-CommandButton and wonderful SwiftUI code thanks to GPT-4 and I's coding chemistry.
-
-----
-04-24-2023
-
-iOS Swift Sage??? Whattttt??? Yep.
-More screenshots at the bottom
-
-----
-04-23-2023: DEBATE MODE introduced.
-
-----
-04-22-2023
-
-SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
-
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
@@ -234,7 +133,9 @@ SwiftSage evolves with real-time voice synthesis and Google command integration 
 
 ## Configuration
 1. Open `Swifty-GPT.xcworkspace`.
+2. Change to your Development Code Signing info.
 2. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+3. Run `./run.sh` from within SwiftSage folder root to run the Swift Sage Server and Swifty-GPT server binary.
 3. Enjoy!
 
 
@@ -442,3 +343,105 @@ FIND/BUY/INSTALL THE VOICE YOU FANCY.
 https://www.cereproc.com
 
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.
+
+new archvie 
+
+05-05-2023
+
+What is it? A workspace, a git client, an AI project generator? A song maker? A debate practice tool? 
+Help me decide!
+
+Welcome to LogicSage. 
+
+Now with GIT REPO SUPPORT!
+
+Your precious API Keys are now stored in the Keychain :)
+
+You can now enter a Github PAT in settings, then go to the Addiew and tap "Download sws repo" , hide the add view, once the download completes open the add view and browse away! Select files and drill down to check out the LogicSage mobile AI workspace code.
+
+---
+05-04-2023
+
+Another day full of excitement for LogicSage!
+
+-You can now choose whatever gpt model you would like to use with the chat/completions API.
+-It's starting out with gpt-3.5-turbo, but you can use gpt-4 too.
+
+-Keep in mind you must manually set your GPT model in the Config of Swifty-GPT command line app. So go ahead and do that if you plan on using GPT-4. I've left it as gpt-3.5-turbo.
+
+---- 
+05-02-2023
+
+You can now use the Swift Sage app without the server, Have fun! 
+
+Coming to an app store near you for free soon.
+
+![modez](Swifty-GPT/assets/modez.png)
+
+
+---- 
+05-01-2023
+
+Resizable Webview windows and Resizable File windows. Bug fixes galore.
+
+Rewrote Vapor server to support multiple users authenticating :).
+
+Redid SwiftSage iOS UI for more screen real estate.
+
+Google Command Progress, try it with `g` command, turn off enableGoogle in server if causing issues.
+
+---- 
+04-30-2023
+
+Swift Sage is getting mroe mobile!
+
+Voice synthesis with configurable voice, in the iOS app. Voice recognition using the mic button in the iOS app. Have fun!
+
+Check it out. Email me with questions or suggestions.
+
+---- 
+04-28-2023
+
+DEBATE MODE UPGRADE:
+
+`debates`
+`debates subject`
+
+CEREPROC instructions updated, you should be able to use the ones that install into Mac OS voices by default now.
+Customize to use cereproc voices in Debates.swift . See COnfig.swift for detailed voice setup instructions :thumbup:
+
+---- 
+04-26-2023
+
+Files using twostraws excellent Sourceful (see creds)
+
+Webviews for GPT-4!
+
+See Screenshots at bottom
+
+Stay TUNED for multiple TERM windows AND MORE!
+
+----
+04-26-2023
+
+iOS input works quite well, give your feedback in Discussions
+
+"debate your topic" mode BETA
+
+Customizable Terminal and app colors (Restart or fresh install app to apply/reset colors for now please.)
+
+CommandButton and wonderful SwiftUI code thanks to GPT-4 and I's coding chemistry.
+
+----
+04-24-2023
+
+iOS Swift Sage??? Whattttt??? Yep.
+More screenshots at the bottom
+
+----
+04-23-2023: DEBATE MODE introduced.
+
+----
+04-22-2023
+
+SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
