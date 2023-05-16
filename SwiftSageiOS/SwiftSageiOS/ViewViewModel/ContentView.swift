@@ -249,7 +249,10 @@ struct ContentView: View {
     }
 
     private func recalculateWindowSize(size: CGSize) {
+#if !os(macOS)
+
         defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
+#endif
 
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
