@@ -65,6 +65,19 @@ Demo video (please download to mac or iOS device to view): https://github.com/cd
 
 ## news
 
+---
+
+05-17-2023
+
+## LogicSage 1.1.6 rolling out! 
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+
+Introducing the revolutionary….. Fork button! 
+bugs with multiple repos fixed. 
+
+more fixes for git features and git commit graph display comjng soon folks!
 
 
 ---
