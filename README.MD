@@ -64,6 +64,21 @@ Demo video (please download to mac or iOS device to view): https://github.com/cd
 —-
 
 ## news
+
+
+
+---
+
+05-16-2023
+
+## LogicSage 1.1.5 rolling out! 
+
+fixes thet nasty crash trying to share output from GPT terminal on iPad
+
+MORE feat/fixes in the works folks! I made this PR in LogicSage ;).  . 
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
 ---
 
 05-15-2023
