@@ -8,10 +8,10 @@
 import Foundation
 
 extension SettingsViewModel {
-    func actualCreateDraftPR(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString) {
+    func actualCreateDraftPR(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
         var hasSentPRCreation = false
-        print("actually creating draft pr")
+        logD("actually creating draft pr")
         getDefaultHeadSha(defaultBranch: defaulBranch) { sha in
             self.createDrafBranch(newBranchName: newBranchName, commitSha: sha) { success in
                 if success {
@@ -24,37 +24,37 @@ extension SettingsViewModel {
                             let trailingPath = trailingPathComps[1]
 
                             self.getShaOfFileFromPath(path: trailingPath) { sha in
-                                print("got sha of changed file")
+                                logD("got sha of changed file")
                                 self.updateFileWithNewContent(branch: newBranchName, sha: sha, path: trailingPath, fileContent: file.newFileContents) { success in
                                     if success {
-                                        print("Update file success")
+                                        logD("Update file success")
 
                                         if !hasSentPRCreation {
                                             hasSentPRCreation = true
                                             self.createPR(titleOfPR: titleOfPR, branchName: newBranchName) { success in
                                                 if success {
-                                                    print("Successful PR creation")
+                                                    logD("Successful PR creation")
 
                                                 }
                                                 else {
-                                                    print("fail to create draft PR")
+                                                    logD("fail to create draft PR")
                                                 }
                                             }
                                         }
                                     }
                                     else {
-                                        print("Update file FAIL")
+                                        logD("Update file FAIL")
                                     }
                                 }
                             }
                         }
                         else {
-                            print("failed to extract trailing path")
+                            logD("failed to extract trailing path")
                         }
                     }
                 }
                 else {
-                    print("fail to create draf branch")
+                    logD("fail to create draf branch")
                 }
             }
         }
@@ -69,17 +69,17 @@ extension SettingsViewModel {
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                logD("Error: \(error)")
             } else if let data = data {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                        let commit = json["commit"] as? [String: Any] {
-                        print(commit["sha"] as? String ?? "")
+                        logD(commit["sha"] as? String ?? "")
 
                         completion(commit["sha"] as? String ?? "")
                     }
                 } catch {
-                    print("Error: \(error)")
+                    logD("Error: \(error)")
                     completion("")
                 }
             }
@@ -98,13 +98,13 @@ extension SettingsViewModel {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                logD("Error: \(error)")
                 completion(false)
             } else if let data = data {
                 let str = String(data: data, encoding: .utf8)
-                print("Received data:\n\(str ?? "")")
+                logD("Received data:\n\(str ?? "")")
 
-                print("Continuing on to create PR")
+                logD("Continuing on to create PR")
                 completion(true)
             }
         }
@@ -123,14 +123,14 @@ extension SettingsViewModel {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                logD("Error: \(error)")
             } else if let data = data {
                 do {
                     let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(jsonResponse)
+                    logD("\(jsonResponse)")
                     completion(true)
                 } catch {
-                    print("Error: \(error)")
+                    logD("Error: \(error)")
                     completion(false)
                 }
             }
@@ -145,16 +145,16 @@ extension SettingsViewModel {
         request.addValue("token \(SettingsViewModel.shared.ghaPat)", forHTTPHeaderField: "Authorization")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                logD("Error: \(error)")
                 completion("")
             } else if let data = data {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        print(json["sha"] as? String ?? "")
+                        logD(json["sha"] as? String ?? "")
                         completion(json["sha"] as? String ?? "")
                     }
                 } catch {
-                    print("Error: \(error)")
+                    logD("Error: \(error)")
                     completion("")
                 }
             }
@@ -176,11 +176,11 @@ extension SettingsViewModel {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                logD("Error: \(error)")
                 completion(false)
             } else if let data = data {
                 let str = String(data: data, encoding: .utf8)
-                print("Received data:\n\(str ?? "")")
+                logD("Received data:\n\(str ?? "")")
                 completion(true)
             }
         }

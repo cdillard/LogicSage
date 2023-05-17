@@ -393,28 +393,7 @@ struct SettingsView: View {
 
                                         .lineLimit(nil)
                                 }
-                                Group {
-                                    Text("middle handle size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                    HStack {
-                                        Text("Small")                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Slider(value: $settingsViewModel.middleHandleSize, in:  18...48, step: 1)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    Text("\(settingsViewModel.middleHandleSize)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                        .lineLimit(nil)
-                                }
+                     
                                 Group {
                                     Text("corner handle size")
                                         .fontWeight(.semibold)

@@ -67,6 +67,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var downloadProgress: Double = 0.0
     @Published var unzipProgress: Double = 0.0
+    @Published var forkProgress: Double = 0.0
 
     @Published var ipAddress: String = ""
     @Published var port: String = ""
@@ -128,7 +129,6 @@ public class SettingsViewModel: ObservableObject {
 
 
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
-    @AppStorage("middleHandleSize")var middleHandleSize: Double = defaultHandleSize
 
     @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
         didSet {
@@ -584,13 +584,9 @@ public class SettingsViewModel: ObservableObject {
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
 
-//        // BEGIN LOAD SAVED GIT REPO
-//        let openRepoKey = currentGitRepoKey()
-//        logD("open repo key = \(openRepoKey)")
+        // START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
 
-        // Task {
         let fileURL = getDocumentsDirectory()
-        //.appendingPathComponent(self.gitUser).appendingPathComponent(self.gitRepo).appendingPathComponent(self.gitBranch)
         DispatchQueue.global(qos: .default).async {
             let files = getFiles(in: fileURL)
             DispatchQueue.main.async {
@@ -598,14 +594,21 @@ public class SettingsViewModel: ObservableObject {
             }
         }
 
+        // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
 
     }
 
+    enum Device: Int {
+        case mobile, computer
+    }
+    
     func currentGitRepoKey() -> String {
         "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
     }
     static let gitKeySeparator = "-sws-"
 
+
+    // START THEME ZONE
 
     func applyTheme(theme: AppTheme) {
 #if !os(macOS)
@@ -653,9 +656,8 @@ enum AppTheme {
     case hacker
 }
 
-enum Device: Int {
-    case mobile, computer
-}
+// END THEME ZONE
+
 
 // CEREPROC VOICE ZONE
 // Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and

@@ -85,9 +85,12 @@ extension SettingsViewModel {
 
                     let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser)
 
+
+                    let existingExtraction = fileURL.appendingPathComponent(self.gitRepo + "-" + self.gitBranch)
+
                     // TODO: Double check this for multiple repos in same user/org....
                     do {
-                        try FileManager.default.removeItem(at:  fileURL)
+                        try FileManager.default.removeItem(at:  existingExtraction)
                     }
                     catch {
                         print("did not delete or didn't exist old REPO")

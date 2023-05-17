@@ -16,6 +16,8 @@ struct AddView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var windowManager: WindowManager
 
+
+    // TODO: Reuse this to handle open / not open and restore repo / filw and window list
     @AppStorage("repoListOpen") var repoListOpen: Bool = false
     @AppStorage("fileListOpen") var fileListOpen: Bool = false
     @AppStorage("windowListOpen") var windowListOpen: Bool = false
@@ -96,16 +98,17 @@ struct AddView: View {
                                     }
                                 }) {
                                     VStack {
-                                        Text("New File...")
-                                            .font(.subheadline)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .padding(.bottom)
+
 
                                         resizableButtonImage(systemName:
                                                                 "doc.fill.badge.plus",
                                                              size: geometry.size)
                                         .fontWeight(.bold)
                                         .cornerRadius(8)
+
+                                        Text("New File...")
+                                            .font(.subheadline)
+                                            .foregroundColor(settingsViewModel.appTextColor)
                                     }
                                 }
                                 .padding(.horizontal, 8)
@@ -131,18 +134,18 @@ struct AddView: View {
                                 }
                             }) {
                                 VStack {
-                                    HStack {
-                                        Text("New webview: " )
-                                            .font(.subheadline)
-                                            .foregroundColor(settingsViewModel.appTextColor)
 
-                                    }
                                     resizableButtonImage(systemName:
                                                             "rectangle.center.inset.filled.badge.plus",
                                                          size: geometry.size)
                                     .fontWeight(.bold)
                                     .background(settingsViewModel.buttonColor)
                                     .cornerRadius(8)
+
+                                    Text("New webview: " )
+                                        .font(.subheadline)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
                                 }
                             }
                             .padding(.horizontal, 8)
@@ -192,16 +195,18 @@ struct AddView: View {
                                 }
                             }) {
                                 VStack {
-                                    Text("View Working Changes...")
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .padding(.bottom)
+
 
                                     resizableButtonImage(systemName:
                                                             "lasso.and.sparkles",
                                                          size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(8)
+                                        .fontWeight(.bold)
+                                        .cornerRadius(8)
+
+                                    Text("View Working Changes...")
+                                        .font(.subheadline)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .padding(.bottom)
                                 }
                             }
                         }
@@ -228,9 +233,118 @@ struct AddView: View {
                     if settingsViewModel.repoSettingsShown {
                         VStack {
                             // YOUR GITHUB USERNAME
-                            Text("User Settings")
+//                            Text("User Settings")
+//                                .font(.body)
+//                                .lineLimit(nil)
+//                                .fontWeight(.bold)
+//                                .padding()
+//                                .foregroundColor(settingsViewModel.appTextColor)
                             HStack {
-                                Text("git username: ")
+
+                                if !settingsViewModel.isLoading {
+
+                                    HStack(spacing: 4) {
+                                        VStack {
+                                            Button(action: {
+                                                logD("FORKING repo...")
+                                                settingsViewModel.forkGithubRepo { success in
+                                                    repoListOpen = true
+                                                    logD("fork repo success = \(success)")
+
+                                                }
+                                            }) {
+                                                VStack {
+                                                    resizableButtonImage(systemName:
+                                                                            "tuningfork",
+                                                                         size: geometry.size)
+                                                    .fontWeight(.bold)
+                                                    .background(settingsViewModel.buttonColor)
+                                                    .cornerRadius(8)
+                                                }
+                                            }
+                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                            .padding(.bottom)
+
+                                            Text("\(settingsViewModel.yourGitUser):\(settingsViewModel.gitRepo):\(settingsViewModel.gitBranch)")
+                                                .font(.caption)
+                                                .scaledToFill()
+                                                .minimumScaleFactor(0.01)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                        }
+
+                                        VStack {
+                                            HStack(spacing: 4) {
+                                                Button(action: {
+                                                    logD("Downloading repo...")
+                                                    settingsViewModel.syncGithubRepo { success in
+                                                        repoListOpen = true
+                                                        logD("download repo success = \(success)")
+                                                    }
+                                                }) {
+                                                    VStack {
+                                                        resizableButtonImage(systemName:
+                                                                                "arrow.down.doc",
+                                                                             size: geometry.size)
+                                                        .fontWeight(.bold)
+                                                        .background(settingsViewModel.buttonColor)
+                                                        .cornerRadius(8)
+                                                    }
+                                                }
+                                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                                .padding(.bottom)
+                                            }
+
+                                            Text("dl/replace: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
+                                                .font(.caption)
+                                                .scaledToFill()
+                                                .minimumScaleFactor(0.01)
+
+                                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                        }
+
+                                    }
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+
+
+                                }
+                                else {
+                                    if settingsViewModel.unzipProgress > 0.0 {
+                                        HStack {
+                                            Text("unzip...")
+                                            ProgressView(value: settingsViewModel.unzipProgress)
+                                        }
+                                        .padding(.trailing, 32)
+                                        .padding(.leading, 32)
+
+                                    }
+                                    if settingsViewModel.downloadProgress > 0.0 {
+                                        HStack {
+                                            Text("download...")
+
+                                            ProgressView(value: settingsViewModel.downloadProgress)
+                                        }
+                                        .padding(.trailing, 32)
+                                        .padding(.leading, 32)
+                                    }
+//
+                                    if settingsViewModel.forkProgress > 0.0 {
+                                        HStack {
+                                            Text("forking...")
+
+                                            ProgressView(value: settingsViewModel.forkProgress)
+                                        }
+                                        .padding(.trailing, 32)
+                                        .padding(.leading, 32)
+                                    }
+                                }
+                            }
+                            .frame(height: geometry.size.height / 17)
+
+                            HStack {
+
+                                Text("your github username:")
                                     .font(.body)
                                     .lineLimit(nil)
                                     .fontWeight(.bold)
@@ -239,7 +353,7 @@ struct AddView: View {
 
                                 TextField(
                                     "",
-                                    text: $settingsViewModel.gitUser
+                                    text: $settingsViewModel.yourGitUser
                                 )
                                 .border(.secondary)
                                 .submitLabel(.done)
@@ -255,9 +369,6 @@ struct AddView: View {
                                 .autocapitalization(.none)
 #endif
                             }
-                            .frame(height: geometry.size.height / 17)
-
-
                             Text("Remote repo settings:")
                                 .font(.body)
                                 .lineLimit(nil)
@@ -270,7 +381,7 @@ struct AddView: View {
 
                                 TextField(
                                     "",
-                                    text: $settingsViewModel.yourGitUser
+                                    text: $settingsViewModel.gitUser
                                 )
                                 .border(.secondary)
                                 .submitLabel(.done)
@@ -289,7 +400,7 @@ struct AddView: View {
                             .frame(height: geometry.size.height / 17)
 
                             HStack {
-                                Text("repo: ").font(.caption)
+                                Text("repo:").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
                                 TextField(
@@ -313,10 +424,8 @@ struct AddView: View {
                             }
                             .frame(height: geometry.size.height / 17)
                             HStack {
-                                Text("branch: ").font(.caption)
+                                Text("branch:").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
-
-
                                 TextField(
                                     "",
                                     text: $settingsViewModel.gitBranch
@@ -342,67 +451,12 @@ struct AddView: View {
                         .padding(.trailing,8)
                     }
 
-                    Text("download: \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
-                        .font(.subheadline)
-                        .foregroundColor(settingsViewModel.appTextColor)
-
-                    if !settingsViewModel.isLoading {
-                        HStack(spacing: 4) {
-                            Button(action: {
-                                logD("Downloading repo...")
-                                settingsViewModel.syncGithubRepo { success in
-                                    repoListOpen = true
-                                    
-                                }
-                            }) {
-                                VStack {
-
-                                    resizableButtonImage(systemName:
-                                                            "arrow.down.doc",
-                                                         size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
-                                }
-                            }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .padding(.bottom)
-                        }
-                        .frame(width: geometry.size.width  - (geometry.size.width * 0.3))
-                    }
-                    else {
-                        if settingsViewModel.unzipProgress > 0.0 {
-                            HStack {
-                                Text("unzip...")
-                                ProgressView(value: settingsViewModel.unzipProgress)
-                            }
-                            .padding(.trailing, 32)
-                            .padding(.leading, 32)
-
-                        }
-                        if settingsViewModel.downloadProgress > 0.0 {
-                            HStack {
-                                Text("download...")
-
-                                ProgressView(value: settingsViewModel.downloadProgress)
-                            }
-                            .padding(.trailing, 32)
-                            .padding(.leading, 32)
-                        }
-                    }
 
                     Group {
                         VStack {
                             HStack(spacing: 4) {
-                                Text("Repo File Tree")
-                                    .font(.subheadline)
-                                    .lineLimit(nil)
-                                    .fontWeight(.bold)
-                                    .padding()
-                                    .foregroundColor(settingsViewModel.appTextColor)
 
                                 VStack {
-
                                     resizableButtonImage(systemName:
                                                             "macwindow.on.rectangle",
                                                          size: geometry.size)
@@ -426,17 +480,20 @@ struct AddView: View {
 #endif
                                         }
                                     }
+                                    Text("Repo File Tree")
+                                        .font(.subheadline)
+                                        .lineLimit(nil)
+                                        .fontWeight(.bold)
+                                        .padding()
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
                                 }
                             }
                         }
                     }
-                    HStack(spacing: 4) {
+                    VStack {
 
-                        Text("Window List")
-                            .font(.subheadline)
-                            .lineLimit(nil)
-                            .padding()
-                            .foregroundColor(settingsViewModel.appTextColor)
+
 
                         resizableButtonImage(systemName:
                                                 "macwindow.on.rectangle",
@@ -460,6 +517,11 @@ struct AddView: View {
 #endif
                             }
                         }
+                        Text("Window List")
+                            .font(.subheadline)
+                            .lineLimit(nil)
+                            .padding()
+                            .foregroundColor(settingsViewModel.appTextColor)
                     }
 
                     Button(action: {

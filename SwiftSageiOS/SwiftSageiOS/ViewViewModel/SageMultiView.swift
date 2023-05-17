@@ -237,7 +237,7 @@ struct WebView: UIViewRepresentable {
 struct HandleView: View {
     var body: some View {
         Circle()
-            .frame(width: SettingsViewModel.shared.middleHandleSize, height: SettingsViewModel.shared.middleHandleSize)
+            .frame(width: SettingsViewModel.shared.cornerHandleSize, height: SettingsViewModel.shared.cornerHandleSize)
             .foregroundColor(Color.white.opacity(0.666))
     }
 }

@@ -57,7 +57,7 @@ struct WorkingChangesView: View {
                     Spacer()
                     Button(action: {
                         withAnimation {
-                            logD("Confirm ??? CREATE draft PR on github")
+                            logD("Confirm ?? Create PR on \(settingsViewModel.currentGitRepoKey().replacingOccurrences(of: SettingsViewModel.gitKeySeparator, with: "/"))")
                             isPresentingAlert = true
                         }
                     }) {
@@ -80,7 +80,10 @@ struct WorkingChangesView: View {
                 }
                 .confirmationDialog("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?", isPresented: $isPresentingAlert) {
                       Button("Yes") {
-                          settingsViewModel.actualCreateDraftPR()
+                          settingsViewModel.actualCreateDraftPR { success in
+                              logD("success when creating pr = \(success)")
+
+                          }
                       }
 
                       Button("Cancel", role: .cancel) { }
