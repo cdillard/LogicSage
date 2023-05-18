@@ -15,7 +15,7 @@ let defaultHandleSize: Double = 28
 let defaultSourceEditorFontSize: Double = 13.666
 
 let defaultOwner = "cdillard"
-let defaultRepo = "SwiftSage"
+let defaultRepo = "swiftsage"
 let defaultBranch = "main"
 
 let defaultYourGithubUsername = "cdillard"
@@ -81,14 +81,13 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("defaultURL") var defaultURL = "https://"
 
 #if !os(macOS)
-    @Published var receivedImage: UIImage? = nil
-    func updateImage(data: Data) {
-        if let image = UIImage(data: data) {
-            self.receivedImage = image
-        } else {
-            print("Failed to convert data to UIImage")
+    @Published var receivedImageData: Data? = nil {
+        didSet {
+            actualReceivedImage = UIImage(data: receivedImageData  ?? Data())
         }
     }
+    @Published var actualReceivedImage: UIImage?
+
 #endif
 
     // END SAVED UI SETTINGS ZONE **************************************************************************************
@@ -340,7 +339,20 @@ public class SettingsViewModel: ObservableObject {
 
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
 
-    @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
+
+    // TODO: verify its okay to only allow lowercase????? It should be fine as long as users match case in all the checkouts?????
+
+    @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)" {
+        didSet {
+            for char in gitRepo {
+                if char.isUppercase {
+                    gitRepo = gitRepo.lowercased()
+                    logD("lowercase only allowed in git repo names, lemme know if thats an issue in Github issue plz")
+                    return
+                }
+            }
+        }
+    }
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 

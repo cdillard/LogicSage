@@ -92,66 +92,6 @@ MORE feat/fixes in the works folks! I made this PR in LogicSage ;).  .
 
 [LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
----
-
-05-15-2023
-
-Rolling out LogicSage 1.1.4, with features galore!
-
-In this alpha you push PRs, the Working Stages view raises the bars,
-
-Bugs squashed, UI refined, for a better user time.
-
-Enjoy the new Settings and Add/Open view!
-
-[Demo Video](https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV)
-
---------
-
-05-11-2023
-
-There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues remain. 
-
-Finding the balance between fixes and features and real jobs.
-
-Update 5/15
-Theme buttons added to settings!
-
----
-05-09-2023
-There will be bugs
-
-I'm working to resolve the issues with battery drain and multi-window behavior. I'm working to fix the apps performance when there is many windows or repositories of large size open.
-
-ROADMAP:
-
-I'm adding "write" git features to this app. You will be able to push and pull, git fetch and view commits, make a branch or a PR. A.I. Will be integrated in such a way that your commit messages and PR titles and descriptions and code such as documenation will be augmented with A.I. generated text.
-
-Movies mode, Debate mode enhancements, and more! 
-
----
-
-05-09-2023
-
-[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
-
-Feedback in Github Issues please! Thank you if you try!
-
----
-05-08-2023
-
-Multiple repositories can be downloaded to your device! Woo! Enjoy all those tasty codes even on the go in the tunnel. Stay tuned for the next updates folks.
----
-
-05-07-2023
-Introducing customizable Source Editor colors! Check it out in Settings :)
-
-Introducing multiple window support. Introducing smooth resizability. Introducing Window List in Add View.
-
-Introducing your repository in LogicSage: Simply set your github PAT, github owner, github repo, and github branch and then tap Download Repo in the Add View This will grab the repo from Github. Cool!
-
-Ability to Create PRs, Create Branches, View working Changes, View Commits coming Soon!
----
 
 ## Getting Started
 1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
@@ -373,6 +313,67 @@ https://www.cereproc.com
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.
 
 new archvie 
+
+---
+
+05-15-2023
+
+Rolling out LogicSage 1.1.4, with features galore!
+
+In this alpha you push PRs, the Working Stages view raises the bars,
+
+Bugs squashed, UI refined, for a better user time.
+
+Enjoy the new Settings and Add/Open view!
+
+[Demo Video](https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV)
+
+--------
+
+05-11-2023
+
+There will be fixes. 1.1.3 is out there now. Many things are fixed. Many issues remain. 
+
+Finding the balance between fixes and features and real jobs.
+
+Update 5/15
+Theme buttons added to settings!
+
+---
+05-09-2023
+There will be bugs
+
+I'm working to resolve the issues with battery drain and multi-window behavior. I'm working to fix the apps performance when there is many windows or repositories of large size open.
+
+ROADMAP:
+
+I'm adding "write" git features to this app. You will be able to push and pull, git fetch and view commits, make a branch or a PR. A.I. Will be integrated in such a way that your commit messages and PR titles and descriptions and code such as documenation will be augmented with A.I. generated text.
+
+Movies mode, Debate mode enhancements, and more! 
+
+---
+
+05-09-2023
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+Feedback in Github Issues please! Thank you if you try!
+
+---
+05-08-2023
+
+Multiple repositories can be downloaded to your device! Woo! Enjoy all those tasty codes even on the go in the tunnel. Stay tuned for the next updates folks.
+---
+
+05-07-2023
+Introducing customizable Source Editor colors! Check it out in Settings :)
+
+Introducing multiple window support. Introducing smooth resizability. Introducing Window List in Add View.
+
+Introducing your repository in LogicSage: Simply set your github PAT, github owner, github repo, and github branch and then tap Download Repo in the Add View This will grab the repo from Github. Cool!
+
+Ability to Create PRs, Create Branches, View working Changes, View Commits coming Soon!
+---
 
 05-05-2023
 

@@ -101,24 +101,19 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     
     public func updateUIView(_ view: SyntaxTextView, context: Context) {
         if shouldBecomeFirstResponder {
-            view.becomeFirstResponder()
+            _ = view.becomeFirstResponder()
         }
-        //view.text = text
 
-        view.textView.isEditable = isEditing
-//
-////        view.textView.isUserInteractionEnabled = isEditing
-//
-        view.contentTextView.isEditable = isEditing
-//
-//
-//        view.contentTextView.isUserInteractionEnabled = isEditing
+        DispatchQueue.main.async {
+            view.textView.isEditable = isEditing
 
+            view.contentTextView.isEditable = isEditing
 
-        view.isEditing = isEditing
-        view.textView.isSelectable = isEditing
-        view.contentTextView.isSelectable = isEditing
-//        view.isUserInteractionEnabled = isEditing
+            
+            view.isEditing = isEditing
+            view.textView.isSelectable = isEditing
+            view.contentTextView.isSelectable = isEditing
+        }
     }
     #endif
     

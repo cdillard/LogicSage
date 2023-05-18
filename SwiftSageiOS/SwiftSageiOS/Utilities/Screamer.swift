@@ -20,6 +20,8 @@ class ScreamClient: WebSocketDelegate {
     var pingTimer: Timer?
     public private(set) var isViable = false
 
+    var receivedData = Data()
+
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case .connected(_):
@@ -85,15 +87,21 @@ class ScreamClient: WebSocketDelegate {
             // TODO HANDLE AUTH json structured data
         case .binary(let data):
 #if !os(macOS)
-            print("Received binary data: \(data)")
-            if let receivedImage = UIImage(data: data) {
+//            print("Received binary data: \(data)")
+
+            if data == "START_OF_DATA".data(using: .utf8)! {
+                receivedData = Data()
+                logD("receiving background data...")
+            }
+            else if data == "END_OF_DATA".data(using: .utf8)! {
+                logD("Received all data of size = \(receivedData.count)")
+
                 DispatchQueue.main.async {
-                    SettingsViewModel.shared.receivedImage = receivedImage
+                    SettingsViewModel.shared.receivedImageData = self.receivedData
                 }
             }
-            // parse audio chunks
             else {
-                print("fail parse is it audio????")
+                receivedData.append(data)
             }
 #endif
         case .ping:

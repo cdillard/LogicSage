@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 import Combine
+
 #if os(macOS)
 
 import AppKit
@@ -21,7 +22,6 @@ let consoleManager = LCManager.shared//cmdWindows[0]
 
 struct ContentView: View {
     @State private var showSettings = false
-    @State private var isLabelVisible: Bool = true
     @State private var  code: String = ""
     @FocusState private var isTextFieldFocused: Bool
     @State private var currentScale: CGFloat = 1.0
@@ -31,6 +31,7 @@ struct ContentView: View {
 
     @StateObject private var windowManager = WindowManager()
 
+    
     var body: some View {
 
         GeometryReader { geometry in
@@ -78,17 +79,6 @@ struct ContentView: View {
             }
 // END WINDOW MANAGER ZONE *************************************************
 
-            // HANDLE SIMULATOR
-
-            if let image = settingsViewModel.receivedImage {
-                HStack {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.leading,geometry.size.width * 0.01)
-                    Spacer()
-                }
-            }
 #endif
 
 // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
@@ -120,7 +110,6 @@ struct ContentView: View {
                         if settingsViewModel.showAddView  {
                             settingsViewModel.showAddView = false
                         }
-                        settingsViewModel.receivedImage = nil
 #endif
                     }) {
                         resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
@@ -236,14 +225,25 @@ struct ContentView: View {
         )
         .background {
             ZStack {
-                settingsViewModel.backgroundColor
-                    .ignoresSafeArea()
-                Text("Force quit and reboot app if you encounter issues, OK?\nFresh install if its bad")
-                    .zIndex(1)
-                    .font(.body)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .ignoresSafeArea()
+
+                // Use
+                // settingsViewModel.receivedImage = nil
+                // To clear background image
+                if let image = settingsViewModel.actualReceivedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .ignoresSafeArea()
+
+
+                }
+                else {
+                    settingsViewModel.backgroundColor
+                        .ignoresSafeArea()
+                }
             }
+            .ignoresSafeArea()
+
         }
 // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
     }

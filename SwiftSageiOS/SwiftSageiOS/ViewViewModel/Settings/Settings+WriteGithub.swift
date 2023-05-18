@@ -8,11 +8,26 @@
 import Foundation
 
 extension SettingsViewModel {
-    func actualCreateDraftPR(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
+
+    func resetLoaders() {
+        DispatchQueue.main.async {
+            self.downloadProgress = 0.0
+            downloadobservation = nil
+            self.forkProgress = 0.0
+            forkObservation = nil
+            self.unzipProgress = 0.0
+            unzipObservation = nil
+        }
+
+    }
+
+    func actualCreateDraftPR(newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
         var hasSentPRCreation = false
         logD("actually creating draft pr")
-        getDefaultHeadSha(defaultBranch: defaulBranch) { sha in
+        isLoading = true
+
+        getDefaultHeadSha(defaultBranch: gitBranch) { sha in
             self.createDrafBranch(newBranchName: newBranchName, commitSha: sha) { success in
                 if success {
                     print("excecuting staged file content upload... \(self.stagedFileChanges.count) files being deployed...")
@@ -32,6 +47,17 @@ extension SettingsViewModel {
                                         if !hasSentPRCreation {
                                             hasSentPRCreation = true
                                             self.createPR(titleOfPR: titleOfPR, branchName: newBranchName) { success in
+
+                                                defer {
+                                                    DispatchQueue.main.async {
+                                                        
+                                                        self.isLoading = false
+                                                        
+                                                        self.resetLoaders()
+                                                    }
+
+                                                }
+
                                                 if success {
                                                     logD("Successful PR creation")
 
@@ -43,17 +69,44 @@ extension SettingsViewModel {
                                         }
                                     }
                                     else {
+                                        defer {
+                                            DispatchQueue.main.async {
+
+                                                self.isLoading = false
+
+                                                self.resetLoaders()
+                                            }
+
+                                        }
                                         logD("Update file FAIL")
                                     }
                                 }
                             }
                         }
                         else {
+                            defer {
+                                DispatchQueue.main.async {
+
+                                    self.isLoading = false
+
+                                    self.resetLoaders()
+                                }
+
+                            }
                             logD("failed to extract trailing path")
                         }
                     }
                 }
                 else {
+                    defer {
+                        DispatchQueue.main.async {
+
+                            self.isLoading = false
+
+                            self.resetLoaders()
+                        }
+
+                    }
                     logD("fail to create draf branch")
                 }
             }

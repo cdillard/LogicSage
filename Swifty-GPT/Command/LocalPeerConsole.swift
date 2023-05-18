@@ -44,7 +44,20 @@ class LocalPeerConsole: NSObject {
             print("failed")
             return
         }
-        webSocketClient.websocket.write(data: data)
+        let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
+
+
+        let startMessage = "START_OF_DATA".data(using: .utf8)!
+        webSocketClient.websocket.write(data: startMessage)
+
+        var offset = 0
+        while offset < data.count {
+            let chunk = data.subdata(in: offset..<min(offset + chunkSize, data.count))
+            webSocketClient.websocket.write(data: chunk)
+            offset += chunkSize
+        }
+        let endMessage = "END_OF_DATA".data(using: .utf8)!
+        webSocketClient.websocket.write(data: endMessage)
     }
 }
 

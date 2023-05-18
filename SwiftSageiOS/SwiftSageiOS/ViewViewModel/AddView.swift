@@ -232,13 +232,6 @@ struct AddView: View {
 
                     if settingsViewModel.repoSettingsShown {
                         VStack {
-                            // YOUR GITHUB USERNAME
-//                            Text("User Settings")
-//                                .font(.body)
-//                                .lineLimit(nil)
-//                                .fontWeight(.bold)
-//                                .padding()
-//                                .foregroundColor(settingsViewModel.appTextColor)
                             HStack {
 
                                 if !settingsViewModel.isLoading {
@@ -306,37 +299,39 @@ struct AddView: View {
                                     }
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
-
-
                                 }
                                 else {
-                                    if settingsViewModel.unzipProgress > 0.0 {
-                                        HStack {
-                                            Text("unzip...")
-                                            ProgressView(value: settingsViewModel.unzipProgress)
-                                        }
-                                        .padding(.trailing, 32)
-                                        .padding(.leading, 32)
+                                    ZStack {
+                                        if settingsViewModel.unzipProgress > 0.0 {
+                                            HStack {
+                                                Text("unzip...")
+                                                ProgressView(value: settingsViewModel.unzipProgress)
+                                            }
+                                            .padding(.trailing, 32)
+                                            .padding(.leading, 32)
 
-                                    }
-                                    if settingsViewModel.downloadProgress > 0.0 {
-                                        HStack {
-                                            Text("download...")
-
-                                            ProgressView(value: settingsViewModel.downloadProgress)
                                         }
-                                        .padding(.trailing, 32)
-                                        .padding(.leading, 32)
-                                    }
-//
-                                    if settingsViewModel.forkProgress > 0.0 {
-                                        HStack {
-                                            Text("forking...")
+                                        else if settingsViewModel.downloadProgress > 0.0 {
+                                            HStack {
+                                                Text("download...")
 
-                                            ProgressView(value: settingsViewModel.forkProgress)
+                                                ProgressView(value: settingsViewModel.downloadProgress)
+                                            }
+                                            .padding(.trailing, 32)
+                                            .padding(.leading, 32)
                                         }
-                                        .padding(.trailing, 32)
-                                        .padding(.leading, 32)
+                                        else if settingsViewModel.forkProgress > 0.0 {
+                                            HStack {
+                                                Text("forking...")
+
+                                                ProgressView(value: settingsViewModel.forkProgress)
+                                            }
+                                            .padding(.trailing, 32)
+                                            .padding(.leading, 32)
+                                        }
+                                        else if settingsViewModel.isLoading {
+                                            ProgressView()
+                                        }
                                     }
                                 }
                             }

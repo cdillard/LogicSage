@@ -7,15 +7,21 @@
 
 import Foundation
 
-
 var forkObservation: NSKeyValueObservation?
 
 extension SettingsViewModel {
-    func forkGithubRepo(defaulBranch: String = "main", newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, forkCompletion: @escaping (Bool) -> Void) {
+    func forkGithubRepo(forkCompletion: @escaping (Bool) -> Void) {
+
+        self.isLoading = true
+
 #if !os(macOS)
         // Create the URL for the request
         guard let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/forks") else {
             logD("Invalid URL")
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.resetLoaders()
+            }
             return
         }
 
@@ -26,6 +32,14 @@ extension SettingsViewModel {
 
         // Create the URLSession task
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            defer {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.resetLoaders()
+                }
+            }
+
             if let error = error {
                 logD("Error: \(error)")
                 forkCompletion(false)

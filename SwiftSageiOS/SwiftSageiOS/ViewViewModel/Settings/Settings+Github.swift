@@ -32,7 +32,9 @@ func getFiles(in directory: URL) -> [RepoFile] {
         return fileURLs.map { url -> RepoFile in
             var isDirectory: ObjCBool = false
             fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
-            return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue ? getFiles(in: url) : nil)
+            // Recursively call getFiles or return file
+            return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue
+                            ? getFiles(in: url) : nil)
         }
     } catch {
         print("Error getting files in directory: \(error)")
