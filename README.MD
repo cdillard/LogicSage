@@ -473,3 +473,7 @@ More screenshots at the bottom
 04-22-2023
 
 SwiftSage evolves with real-time voice synthesis and Google command integration for enhanced SwiftSage features.
+
+
+
+# This Github project is hooked up to Xcode cloud. new branches will be tested on Apples testing infrastructure.
