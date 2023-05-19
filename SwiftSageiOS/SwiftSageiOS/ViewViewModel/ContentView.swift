@@ -230,12 +230,10 @@ struct ContentView: View {
                 // settingsViewModel.receivedImage = nil
                 // To clear background image
                 if let image = settingsViewModel.actualReceivedImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .ignoresSafeArea()
-
-
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
                 }
                 else {
                     settingsViewModel.backgroundColor

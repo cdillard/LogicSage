@@ -81,7 +81,15 @@ func listFiles(at url: URL) throws -> [URL] {
     let directoryContents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
     var retDir = [URL]()
     for content in directoryContents {
-        retDir.append(content)
+        if content.pathExtension == "heic" ||
+           content.pathExtension == "jpg"  ||
+           content.pathExtension == "jpeg" ||
+            content.pathExtension == "png" {
+            retDir.append(content)
+        }
+        else {
+            print("non supported image")
+        }
     }
     return retDir
 }
