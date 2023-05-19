@@ -229,6 +229,8 @@ struct ContentView: View {
                 // Use
                 // settingsViewModel.receivedImage = nil
                 // To clear background image
+#if !os(macOS)
+
                 if let image = settingsViewModel.actualReceivedImage {
                     Image(uiImage: image)
                         .resizable()
@@ -239,6 +241,13 @@ struct ContentView: View {
                     settingsViewModel.backgroundColor
                         .ignoresSafeArea()
                 }
+
+#else
+                settingsViewModel.backgroundColor
+                    .ignoresSafeArea()
+
+#endif
+
             }
             .ignoresSafeArea()
 
