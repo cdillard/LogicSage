@@ -31,7 +31,7 @@ struct HelpPopup: View {
                             Group {
                                 Text("Welcome to your AI workspace. See your toolbar at the bottom left, see your command bar at the bottom right.")
 
-                                Text("Check out LogicSage GitHub: https://github.com/cdillard/SwiftSage#readme for more help and Discussions and my contact info.")
+                                Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and Discussions and my contact info.")
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .accentColor(settingsViewModel.buttonColor)
 
@@ -61,7 +61,7 @@ struct HelpPopup: View {
                                     Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
 
 
-                                    Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/SwiftSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/SwiftSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                    Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .accentColor(settingsViewModel.buttonColor)
 

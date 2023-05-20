@@ -85,10 +85,18 @@ func debateCommand(input: String) {
     else if (usePrePrompt) {
         multiPrinter("DEBATE STAGE:")
         let usePrompt = input.isEmpty ? prePrompt() : prePrompt(input)
-        sendPromptToGPT(prompt: usePrompt, currentRetry: 0, disableSpinner: false) { content, success in
+        GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: usePrompt, currentRetry: 0, disableSpinner: false) { content, success, isDone in
             if !success { return multiPrinter("Failed to think of debating...") }
 
-            deepConversation(currentPersonality: personalityA, initialPrompt: content, depth: depthLimit)
+            if !isDone {
+
+                multiPrinter(content, terminator: "")
+            }
+            else {
+
+
+                deepConversation(currentPersonality: personalityA, initialPrompt: content, depth: depthLimit)
+            }
         }
     }
 }
@@ -126,30 +134,37 @@ func deepConversation(currentPersonality: String, initialPrompt: String, depth: 
 }
 
 func sendPromptWithPersonality(prompt: String, currentRetry: Int, personality: String, completionHandler: @escaping (String, Bool) -> Void) {
-    sendPromptToGPT(prompt: prompt, currentRetry: currentRetry, disableSpinner: false) { content, success in
+    GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: prompt, currentRetry: currentRetry, disableSpinner: false) { content, success, isDone in
         if !success {
             textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
             completionHandler("", false)
             return
         }
 
-        let array = content.components(separatedBy: "\n")
-        guard !array.isEmpty else {
-            multiPrinter("Failed to think deeply")
-            return
+        if !isDone {
+
+            multiPrinter(content, terminator: "")
         }
+        else {
 
-        let newPrompt = array[0]
+            let array = content.components(separatedBy: "\n")
+            guard !array.isEmpty else {
+                multiPrinter("Failed to think deeply")
+                return
+            }
 
-        let personalityPrefix = personality == "\(personAsName)" ?  "\(personBsName): " : "\(personAsName): "
-        let newResponse = newPrompt
-            .replacingOccurrences(of: "\(personAsName):", with: "")
-            .replacingOccurrences(of: "\(personBsName):", with: "")
-        // avg loading for prompt duration for session.... (MIGHT BE 1 righ???)
-        let duration = textToSpeech(text: newResponse, overrideVoice: personality) - 0.6
+            let newPrompt = array[0]
 
-        DispatchQueue.global().asyncAfter(deadline: .now() + duration) {
-            completionHandler(personalityPrefix + newPrompt, true)
+            let personalityPrefix = personality == "\(personAsName)" ?  "\(personBsName): " : "\(personAsName): "
+            let newResponse = newPrompt
+                .replacingOccurrences(of: "\(personAsName):", with: "")
+                .replacingOccurrences(of: "\(personBsName):", with: "")
+            // avg loading for prompt duration for session.... (MIGHT BE 1 righ???)
+            let duration = textToSpeech(text: newResponse, overrideVoice: personality) - 0.6
+
+            DispatchQueue.global().asyncAfter(deadline: .now() + duration) {
+                completionHandler(personalityPrefix + newPrompt, true)
+            }
         }
     }
 }

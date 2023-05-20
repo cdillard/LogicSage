@@ -265,6 +265,8 @@ func gptCommand(input: String) {
 }
 
 func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
+    config.conversational = false
+    config.manualPromptString = ""
 
     let googleTextSegment = """
         1. Use the google command to find more information or if it requires information past your knowledge cutoff.
@@ -306,42 +308,50 @@ Question to Answer:
     }
     config.manualPromptString += "\n\(input)"
 
-    sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
+    GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
-        if !success {
-            textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
-            return
+
+        if !isDone {
+
+            multiPrinter(content, terminator: "")
         }
+        else {
 
-        // multiPrinter("\n🤖: \(content)")
+            if !success {
+                textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+                return
+            }
 
-        textToSpeech(text: content)
+            // multiPrinter("\n🤖: \(content)")
 
-        refreshPrompt(appDesc: config.appDesc)
+            textToSpeech(text: content)
 
-        multiPrinter(generatedOpenLine())
-        openLinePrintCount += 1
+            refreshPrompt(appDesc: config.appDesc)
 
-
-        if conversational {
-
-                  if content.hasPrefix("google:") {
-                      let split  = content.split(separator: " ", maxSplits: 1)
+            multiPrinter(generatedOpenLine())
+            openLinePrintCount += 1
 
 
-                      if split.count > 1 {
+            if conversational {
 
-                          multiPrinter("googling...")
+                if content.hasPrefix("google:") {
+                    let split  = content.split(separator: " ", maxSplits: 1)
 
-                          googleCommand(input: String(split[1]))
 
-                          if conversational {
-                             // multiPrinter("Exited conversational mode.")
-                              conversational = false
-                          }
-                      }
-                  }
-               }
+                    if split.count > 1 {
+
+                        multiPrinter("googling...")
+
+                        googleCommand(input: String(split[1]))
+
+                        if conversational {
+                            // multiPrinter("Exited conversational mode.")
+                            conversational = false
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -439,22 +449,33 @@ func gptVoiceCommand(input: String) {
         let promper = comps[0]
 
         let gptVoiceCommandOverrideVoice = comps[1].replacingOccurrences(of: "--voice ", with: "")
-
+        config.conversational = false
+        config.manualPromptString = ""
         config.manualPromptString = promper
-        sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
-            if !success {
-                textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
-                return
+        GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
+
+
+            
+            if !isDone {
+
+                multiPrinter(content, terminator: "")
             }
+            else {
+                
+                if !success {
+                    textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+                    return
+                }
 
-            multiPrinter("\n🤖: \(content)")
-            let modContent = content.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted)
-            textToSpeech(text: modContent, overrideVoice: gptVoiceCommandOverrideVoice)
+                multiPrinter("\n🤖: \(content)")
+                let modContent = content.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: validCharacterSet.inverted)
+                textToSpeech(text: modContent, overrideVoice: gptVoiceCommandOverrideVoice)
 
-            refreshPrompt(appDesc: config.appDesc)
+                refreshPrompt(appDesc: config.appDesc)
 
-            multiPrinter(generatedOpenLine())
-            openLinePrintCount += 1
+                multiPrinter(generatedOpenLine())
+                openLinePrintCount += 1
+            }
         }
     }
     else {

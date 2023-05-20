@@ -28,6 +28,4 @@ func stopRandomSpinner() {
     spinner.stop()
 
     if asciAnimations() { animator.stop() }
-    logD("SWIFTSAGE:")
 }
-

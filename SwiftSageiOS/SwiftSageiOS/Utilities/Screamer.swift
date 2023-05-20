@@ -61,7 +61,11 @@ class ScreamClient: WebSocketDelegate {
                    let message = json?["message"] as? String {
 
                     if recipient == SettingsViewModel.shared.userName {
-                        logD(message)
+
+                        #if !os(macOS)
+                            consoleManager.printNoNewLine(message)
+                        #endif
+                        print(message, terminator: "")
 
                         if message.hasPrefix("say:") {
                             let arr = message.split(separator: ": ", maxSplits: 1)

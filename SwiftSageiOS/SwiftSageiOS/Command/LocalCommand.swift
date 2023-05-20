@@ -7,25 +7,7 @@
 
 import Foundation
 
-//func executeLocalCommand(command: String, args: )  {
-//    switch command {
-//    case "g", "G" :
-//        gptCommand(input: <#T##String#>)
-//        break
-//    case "open":
-//        logD("Opening new file...")
-//
-//        return
-//    case "st":
-//        logD("client executed stop...")
-//        stopVoice()
-//    default:
-//        logD("unknown cmd: \(command)")
-//        break
-//    }
-//}
 func callLocalCommand(_ command: String) -> Bool {
-    logD("SWIFTSAGE: \(command)")
 
     if command == "Hello" { return true }
     // HERE WE HANDLE LOCAL COMANDS

@@ -13,6 +13,8 @@ func gptCommand(input: String) {
 }
 
 func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
+    config.conversational = false
+    config.manualPromptString = ""
 
     let googleTextSegment = """
         1. Use the google command to find more information or if it requires information past your knowledge cutoff.
@@ -54,42 +56,54 @@ Question to Answer:
     }
     config.manualPromptString += "\n\(input)"
 
-    sendPromptToGPT(prompt: config.manualPromptString, currentRetry: 0) { content, success in
+    GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
+        
         if !success {
             SettingsViewModel.shared.speak("A.P.I. error, try again.")
             return
         }
 
-        // multiPrinter("\n🤖: \(content)")
-        logD("say: \(content)")
-        SettingsViewModel.shared.speak(content)
 
-        refreshPrompt(appDesc: config.appDesc)
+        if !isDone {
+        #if !os(macOS)
+            consoleManager.printNoNewLine(content)
+        #endif
+            print(content, terminator: "")
 
-        logD(generatedOpenLine())
-        openLinePrintCount += 1
+        }
+        else {
+
+            // multiPrinter("\n🤖: \(content)")
+            logD("say: \(content)")
+            SettingsViewModel.shared.speak(content)
+
+            refreshPrompt(appDesc: config.appDesc)
+
+            logD(generatedOpenLine())
+            openLinePrintCount += 1
 
 
-        if config.conversational {
+            if config.conversational {
 
-                  if content.hasPrefix("google:") {
-                      let split  = content.split(separator: " ", maxSplits: 1)
+                if content.hasPrefix("google:") {
+                    let split  = content.split(separator: " ", maxSplits: 1)
 
 
-                      if split.count > 1 {
+                    if split.count > 1 {
 
-                          logD("googling...")
+                        logD("googling...")
 
-                          googleCommand(input: String(split[1]))
+                        googleCommand(input: String(split[1]))
 
-                          if config.conversational {
-                             // multiPrinter("Exited conversational mode.")
-                              config.conversational = false
-                          }
-                      }
-                  }
-               }
+                        if config.conversational {
+                            // multiPrinter("Exited conversational mode.")
+                            config.conversational = false
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

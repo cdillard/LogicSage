@@ -356,8 +356,15 @@ public class SettingsViewModel: ObservableObject {
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 
-    
     // END CLIENT APIS ZONE **************************************************************************************
+
+
+    // GPT CONVERSATION
+    @Published var conversations: [Conversation] = []
+    @Published var conversationErrors: [Conversation.ID: Error] = [:]
+    @Published var selectedConversationID: Conversation.ID?
+
+
 
     init() {
         // BEGIN SIZE SETTING LOAD ZONE FROM DISK

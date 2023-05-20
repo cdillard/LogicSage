@@ -1,5 +1,11 @@
 //
 //  GPT.swift
+//  SwiftSageiOS
+//
+//  Created by Chris Dillard on 5/2/23.
+//
+//
+//  GPT.swift
 //  Swifty-GPT
 //
 //  Created by Chris Dillard on 4/15/23.
@@ -7,39 +13,23 @@
 
 import Foundation
 
-// Function to send a prompt to GPT via the OpenAI API
-func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,  voiceOverride: String? = nil, disableSpinner: Bool = false, completion: @escaping (String, Bool) -> Void) {
+class GPT: NSObject {
+    static let shared = GPT()
 
-    let url = URL(string: apiEndpoint)!
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
+    let openAI: OpenAI
 
-    // Set the required headers
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("Bearer \(OPEN_AI_KEY)", forHTTPHeaderField: "Authorization")
-    // GPT-4 seems slow, but awesome
-    request.timeoutInterval = 360 // seconds
-    let maxTokens = 8192
-    let temp = 1.0
+    override init() {
 
-    // TODO: IMPLEMENT CUSTOMIZATION FOR THESE MAGIC NUMBERS RELATED TO OPENAI APIS.
-    // Prepare the request payload
-    let requestBody: [String: Any] = [
-        "model": "\(gptModel)",
-        "messages": [
-            [
-//                "max_tokens": "\(maxTokens)",
-//                "temperature": "\(temp)",
-                "role": "user",
-                "content": manualPrompt ? config.manualPromptString : prompt,
-            ]
-        ]
-    ]
-    do {
-        // Convert the payload to JSON data
-        let jsonData = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+        let configuration = OpenAI.Configuration(token: OPEN_AI_KEY, timeoutInterval: 120.0)
+        //let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, organizationIdentifier: "", timeoutInterval: 120.0)
+        openAI = OpenAI(configuration: configuration)
 
-        request.httpBody = jsonData
+        super.init()
+    }
+
+    // Function to send a prompt to GPT via the OpenAI API
+    func sendPromptToGPT( conversationId: Conversation.ID, prompt: String, currentRetry: Int, isFix: Bool = false, manualPrompt: Bool = false,
+                          voiceOverride: String? = nil, disableSpinner: Bool = false, completion: @escaping (String, Bool, Bool) -> Void) {
 
         if currentRetry == 0 {
             multiPrinter("👨: \(prompt)")
@@ -58,50 +48,65 @@ func sendPromptToGPT(prompt: String, currentRetry: Int, isFix: Bool = false, man
             multiPrinter("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-        if !disableSpinner {
-            startRandomSpinner()
-        }
+//        if !disableSpinner {
+//            startRandomSpinner()
+//        }
 
-        multiPrinter("Prompting \(prompt.count)")
-        // textToSpeech(text: "Prompting \(prompt.count)")
+        multiPrinter("Prompting \(prompt.count)...\n🐑🐑🐑\n")
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-
-            if !disableSpinner {
-                stopRandomSpinner()
-            }
-
-            if let error = error {
-                multiPrinter("Error occurred: \(error.localizedDescription)")
-                completion("Failed networking w/ error = \(error)", false)
-                return
-            }
-
-            guard let data  else {
-                completion("Failed networking w/ error = \(String(describing: error))", false)
-                return multiPrinter("failed to laod data")
-            }
-
+        Task {
             do {
-                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) as? [String: Any],
-                   let choices = jsonResponse["choices"] as? [[String: Any]],
-                   let firstChoice = choices.first,
-                   let message = firstChoice["message"] as? [String: Any],
-                   let content = message["content"] as? String {
-                    completion(content, true)
+                // TODO: CHECK OUT  "gpt4_32k" and support all future models easily
+                let model: Model = gptModel == "gpt-3.5-turbo" ? .gpt3_5Turbo : .gpt4
+                var query = ChatQuery(model: model, messages: [.init(role: .user, content: manualPrompt ? config.manualPromptString : prompt)])
+                query.stream = true
+
+                let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
+                    query: query
+                )
+                var completeMessage = ""
+                for try await partialChatResult in chatsStream {
+                    for choice in partialChatResult.choices {
+                        let message = Message(
+                            id: partialChatResult.id,
+                            role: choice.delta.role ?? .assistant,
+                            content: choice.delta.content ?? "",
+                            createdAt: Date(timeIntervalSince1970: TimeInterval(partialChatResult.created))
+                        )
+
+                        completion(message.content, true, false)
+                        completeMessage += message.content
+                    }
                 }
-            } catch {
-                multiPrinter("Error parsing JSON: \(error.localizedDescription)")
-                completion("Failed parsing JSON w/ error = \(error)",false)
-                completion("", false)
+                completion(completeMessage, true, true)
 
             }
+            catch {
+                multiPrinter("failed wit error = \(error)")
+            }
         }
-        multiPrinter("🐑🐑🐑")
-        task.resume()
-    }
-    catch {
-        return completion("Failed parsing w/ error = \(error)", false)
     }
 }
 
+struct Message {
+    var id: String
+    var role: Chat.Role
+    var content: String
+    var createdAt: Date
+}
+
+extension Message: Equatable, Codable, Hashable, Identifiable {}
+
+struct Conversation {
+    init(id: String, messages: [Message] = []) {
+        self.id = id
+        self.messages = messages
+    }
+
+    typealias ID = String
+
+    let id: String
+    var messages: [Message]
+}
+
+extension Conversation: Equatable, Identifiable {}

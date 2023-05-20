@@ -10,12 +10,13 @@ import Foundation
 // OPEN AI SETTIN
 //let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
 let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
+// OPEN AI SETTINGS
+
+// TODO: MOVE TO CONFIG
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
-// TODO:SHOULD SUPPORT FETCHING SUPPORTED MODELS
 //  let modelsApiEndpoint = https://api.openai.com/v1/models
-
 
 // sws CONFIG
 var config = Config(

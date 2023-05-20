@@ -236,12 +236,25 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         return
     }
 
-    sendPromptToGPT(prompt: prompt, currentRetry: currentRetry, isFix: !errors.isEmpty) { response, success in
-        if success {
-            completion(response)
-        } else {
-            multiPrinter("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
-            generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)
+    GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: prompt, currentRetry: currentRetry, isFix: !errors.isEmpty) { response, success, isDone in
+        if !success {
+            textToSpeech(text: "A.P.I. error, try again.", overrideWpm: "242")
+            completion("")
+            return
+        }
+
+        if !isDone {
+
+            multiPrinter(response, terminator: "")
+        }
+        else {
+
+            if success {
+                completion(response)
+            } else {
+                multiPrinter("Code did not compile successfully, trying again... (attempt \(currentRetry + 1)/\(retryLimit))")
+                generateCodeUntilSuccessfulCompilation(prompt: prompt, retryLimit: retryLimit, currentRetry: currentRetry + 1, errors: errors, completion: completion)
+            }
         }
     }
 }

@@ -280,6 +280,8 @@ If this happens just try again and it _usually_ clears right up.
 - [savannakit](https://github.com/louisdh/savannakit)
 - [Sourceful](https://github.com/twostraws/Sourceful)
 - [zip-foundation](https://github.com/weichsel/ZIPFoundation)
+- [MacPaw's excellent OpenAI](https://github.com/MacPaw/OpenAI)
+
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

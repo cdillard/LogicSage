@@ -3,6 +3,7 @@
 # Start Vapor server
 rm -rf ./WebSocketServer/.build
 
+lsof -i :8080 -sTCP:LISTEN | awk 'NR > 1 {print $2}' | xargs kill -15
 ### USE THIS FOR Terminal.app
 
 cwd=$(pwd)
@@ -36,7 +37,8 @@ rm -rf dd
 
 ## LAUNCH SWIFT SERVER COMMAND LINE BINARY
 
+killall Swifty-GPT
+
 xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug clean build
 
 ./dd/Build/Products/Debug/Swifty-GPT
-

@@ -18,22 +18,22 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     public static let shared = LCManager()
 
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared2 = LCManager()
-
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared3 = LCManager()
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared4 = LCManager()
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared5 = LCManager()
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared6 = LCManager()
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared7 = LCManager()
-    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-    public static let shared8 = LCManager()
-
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared2 = LCManager()
+//
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared3 = LCManager()
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared4 = LCManager()
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared5 = LCManager()
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared6 = LCManager()
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared7 = LCManager()
+//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
+//    public static let shared8 = LCManager()
+//
 
 
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
@@ -649,18 +649,25 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
         return nil
     }
+
+    public func printNoNewLine(_ items: Any) {
+
+        print(items, noNewLine: true)
+    }
+
     /// Print items to the console view.
-    public func print(_ items: Any) {
+    public func print(_ items: Any, noNewLine: Bool = false) {
         
         var dotMsg = false
         if let singleString = items as? String {
-
-
-            if specs.contains(singleString ?? "") {
+            if specs.contains(singleString) {
                 dotMsg = true
             }
         }
 
+        if noNewLine {
+            dotMsg = true
+        }
 
         let _currentText: String = {
             if currentText == ""  {
