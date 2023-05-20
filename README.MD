@@ -62,13 +62,31 @@ Google and Link cmd support coming soon!
 
 Demo video (please download to mac or iOS device to view): https://github.com/cdillard/SwiftSage/blob/main/LogicSageDemo.MOV
 —-
+----------------
 
 ## news
+----------------
+
+05-20-2023
+
+## LogicSage 1.1.7 rolling out! 
+
+LogicSage 1.1.7 build 2 coming to the App Store ASAP!
+
+Build from source if you want to try Streaming CHAT!
+
+LogicSage is the AI workspace for everyone. Create AI generated iOS apps! Streaming CHAT! No more waiting for responses! Deep color, settings, and background customizing.
+
+LogicSage is the AI workspace for everyone. Chat w/ GPTs. Developers and AI enthusiasts can use it to work with gpts to view code, edit code, and submit PRs!
+
+This app and its server are 100% open source, written in Swift, and available on github here: https://github.com/cdillard/LogicSage.
+
+What's New:
+Features: Streaming CHAT! No more waiting for responses. Change your LogicSage background! Transparent UIs!
+Fixes: Squashed repo forking/downloading bugs!
 
 ----------------
 05-19-2023
-
-## LogicSage 1.1.7 rolling out! 
 
 CUSTOMIZABLE WALLPAPERS MAC -> LogicSage!!!!
 
@@ -79,33 +97,6 @@ WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complet
 Search the internet for "4K Wallapaper zip + Space" replacing Space with whatever type of background you want. Download the heic, jpeg, jpg, and png images you'd like to use as wallpapers.
 
 AI Generated PR titles and commit messages (coming soon)
-
----
-
-05-17-2023
-
-## LogicSage 1.1.6 rolling out! 
-
-[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
-
-
-Introducing the revolutionary….. Fork button! 
-bugs with multiple repos fixed. 
-
-more fixes for git features and git commit graph display comjng soon folks!
-
-
----
-
-05-16-2023
-
-## LogicSage 1.1.5 rolling out! 
-
-fixes thet nasty crash trying to share output from GPT terminal on iPad
-
-MORE feat/fixes in the works folks! I made this PR in LogicSage ;).  . 
-
-[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
 
 ## Getting Started
@@ -332,7 +323,35 @@ https://www.cereproc.com
 
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in the SwiftSage repository or using the LogicSage app. This is an experimental project, and I cannot guarantee its contents.
 
-new archvie 
+new archvie -- becuase if its not today, its old news :P
+
+---
+
+05-17-2023
+
+## LogicSage 1.1.6 rolling out! 
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+
+Introducing the revolutionary….. Fork button! 
+bugs with multiple repos fixed. 
+
+more fixes for git features and git commit graph display comjng soon folks!
+
+
+---
+
+05-16-2023
+
+## LogicSage 1.1.5 rolling out! 
+
+fixes thet nasty crash trying to share output from GPT terminal on iPad
+
+MORE feat/fixes in the works folks! I made this PR in LogicSage ;).  . 
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
 
 ---
 
