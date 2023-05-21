@@ -57,7 +57,8 @@ class GPT: NSObject {
         Task {
             do {
                 // TODO: CHECK OUT  "gpt4_32k" and support all future models easily
-                let model: Model = gptModel == "gpt-3.5-turbo" ? .gpt3_5Turbo : .gpt4
+                let model: Model = Model(gptModel)
+
                 var query = ChatQuery(model: model, messages: [.init(role: .user, content: manualPrompt ? config.manualPromptString : prompt)])
                 query.stream = true
 

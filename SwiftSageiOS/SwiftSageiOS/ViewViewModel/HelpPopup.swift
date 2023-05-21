@@ -60,11 +60,15 @@ struct HelpPopup: View {
                                     Text("1. Start Swifty-GPT swift binary in Xcode with the play button")
                                     Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
 
-
-                                    Text("## COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                    Text("-COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .accentColor(settingsViewModel.buttonColor)
 
+                                    Text("-CREDITS: https://github.com/cdillard/LogicSage#credits")
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .accentColor(settingsViewModel.buttonColor)
+
+                                    Text("Thank you!!! to the open source maintainers who created the MIT and Apache 2.0 Licensed source included in this project.")
                                 }
                             }
                         }

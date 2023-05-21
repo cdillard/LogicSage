@@ -261,7 +261,6 @@ If this happens just try again and it _usually_ clears right up.
 - [SwiftSoup](https://github.com/scinfu/SwiftSoup)
 - [SwiftNLC](https://github.com/JacopoMangiavacchi/SwiftNLC)
 - [SourceKitten](https://github.com/jpsim/SourceKitten)
-- [MultiPeerKit](https://github.com/insidegui/MultiPeerKit)
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Starscream](https://github.com/daltoniam/Starscream)
 - [Vapor](https://github.com/vapor/vapor)

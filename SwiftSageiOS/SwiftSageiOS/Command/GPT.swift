@@ -57,7 +57,7 @@ class GPT: NSObject {
         Task {
             do {
                 // TODO: CHECK OUT  "gpt4_32k"
-                let model: Model = await SettingsViewModel.shared.openAIModel == "gpt-3.5-turbo" ? .gpt3_5Turbo : .gpt4
+                let model: Model = await Model(SettingsViewModel.shared.openAIModel)
                 var query = ChatQuery(model: model, messages: [.init(role: .user, content: manualPrompt ? config.manualPromptString : prompt)])
                 query.stream = true
 

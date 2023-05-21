@@ -76,17 +76,18 @@ struct SettingsView: View {
 
                         // MODE PICKER
                         Group {
-                            Text("sws mode").font(.body)
-                                .foregroundColor(settingsViewModel.appTextColor)
 
                             DevicePicker(settingsViewModel: settingsViewModel)
+
+                            Text("sws mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
+                                .foregroundColor(settingsViewModel.appTextColor)
+
                         }
                         VStack {
                             Group {
                                 Text("\(showAPISettings ? "🔽" : "▶️") API settings").font(.body)
                                     .foregroundColor(settingsViewModel.appTextColor)
-                                    .padding(4)
-
+                                    .padding(8)
                             }
                             .onTapGesture {
                                 withAnimation {
@@ -424,7 +425,7 @@ struct SettingsView: View {
                     Group {
                         Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color settings").font(.body)
                             .foregroundColor(settingsViewModel.appTextColor)
-                            .padding(4)
+                            .padding(8)
                     }
                     .onTapGesture {
                         withAnimation {
@@ -611,7 +612,7 @@ struct SettingsView: View {
                     Group {
                         Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings").font(.body)
                             .foregroundColor(settingsViewModel.appTextColor)
-                            .padding(4)
+                            .padding(8)
 
                     }
                     .onTapGesture {
@@ -645,7 +646,7 @@ struct SettingsView: View {
 
                         }
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom)
+                        .padding(8)
 
                         // IOS AUDIO SETTING ON/OFF
                         Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")
@@ -676,6 +677,7 @@ struct SettingsView: View {
                                 .cornerRadius(8)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .padding(8)
 
                             if settingsViewModel.voiceOutputenabled {
                                 Button  {
@@ -703,6 +705,7 @@ struct SettingsView: View {
                                     .fontWeight(.bold)
                                     .cornerRadius(8)
                                 }
+                                .padding(8)
                                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                             }
                         }

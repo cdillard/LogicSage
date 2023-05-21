@@ -15,44 +15,10 @@ let defaultGPTModel = "gpt-3.5-turbo"
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
-
-func generatedOpenLine(overrideV: Bool = false) -> String {
-    """
-    🔍:
-    """
-}
-
-var openLinePrintCount = 0
-
-var openingLine = generatedOpenLine()
-
-func updateOpeningLine() {
-
-    openingLine = generatedOpenLine()
-}
-
-
-// Configurable settings for AI.
-let retryLimit = 10
-let fixItRetryLimit = 3
-
-// set to false and it should go til successful build automatically using built in prompt, if it actually does anything good or not is up to chance though.
-let interactiveMode = true
-let aiNamedProject = true
-
 // WORKSPACE SETTING
 let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
-
-
-// 1. change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit your fancy and you know i'll add more.
-
-var defaultLoadMode = LoadMode.dots
-
-func asciAnimations() -> Bool {
-    config.loadMode == LoadMode.matrix
-}
 
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
 
@@ -78,6 +44,37 @@ var config = Config(
     enableLink: false,
     loadMode: LoadMode.dots
 )
+
+// Configurable settings for AI.
+let retryLimit = 10
+let fixItRetryLimit = 3
+
+// set to false and it should go til successful build automatically using built in prompt, if it actually does anything good or not is up to chance though.
+let interactiveMode = true
+let aiNamedProject = true
+
+// OPEN LINE ZONE
+func generatedOpenLine(overrideV: Bool = false) -> String {
+    """
+    🔍:
+    """
+}
+var openLinePrintCount = 0
+var openingLine = generatedOpenLine()
+func updateOpeningLine() {
+    openingLine = generatedOpenLine()
+}
+// END OPEN LINE ZONE
+
+// LOAD MOAD ZONE
+// . change your loading mode, matrix is fun but busy, waves is classy, dots are minimal. Let me know if these chocices don't suit your fancy and you know i'll add more.
+var defaultLoadMode = LoadMode.dots
+// END LOAD MOAD ZONE
+
+func asciAnimations() -> Bool {
+    config.loadMode == LoadMode.matrix
+}
+
 struct TriviaQuestion {
     let question: String
     let code: String?

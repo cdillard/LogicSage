@@ -32,6 +32,8 @@ EOF
 #     end run
 # EOF
 
+# Vapor starts too fast :*()
+sleep 5
 
 #rm -rf dd
 
