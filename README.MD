@@ -254,6 +254,7 @@ If this happens just try again and it _usually_ clears right up.
 
 ---
 ## Credits
+
 - [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
 - [SwiftyTesseract](https://github.com/SwiftyTesseract/SwiftyTesseract)
 - [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com)
@@ -269,6 +270,7 @@ If this happens just try again and it _usually_ clears right up.
 - [Sourceful](https://github.com/twostraws/Sourceful)
 - [zip-foundation](https://github.com/weichsel/ZIPFoundation)
 - [MacPaw's excellent OpenAI](https://github.com/MacPaw/OpenAI)
+- [swift-png](https://github.com/kelvin13/swift-png)
 
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
