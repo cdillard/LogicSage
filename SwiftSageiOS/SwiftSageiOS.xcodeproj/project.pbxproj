@@ -207,6 +207,10 @@
 		B71C62FD2A019144004296E4 /* LocalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommand.swift; sourceTree = "<group>"; };
 		B71C62FF2A01924B004296E4 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
+		B72BFBAC2A1AAAED00E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B72BFBAD2A1AAAF900E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B72BFBAE2A1AAB0500E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B72BFBAF2A1AAB1300E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B746DFCA29F5E789002804EB /* LogicSageDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicSageDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -343,6 +347,7 @@
 		B7191EF429F9F09A00078D8D /* Sourceful */ = {
 			isa = PBXGroup;
 			children = (
+				B72BFBAF2A1AAB1300E13C71 /* LICENSE */,
 				B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */,
 				B7191EF629F9F09A00078D8D /* Util */,
 				B7191EFB29F9F09A00078D8D /* Languages */,
@@ -520,6 +525,7 @@
 		B74A2CA329F7F6990051DB52 /* Starscream */ = {
 			isa = PBXGroup;
 			children = (
+				B72BFBAE2A1AAB0500E13C71 /* LICENSE */,
 				B74A2CA429F7F6990051DB52 /* Transport */,
 				B74A2CA829F7F6990051DB52 /* Security */,
 				B74A2CAB29F7F6990051DB52 /* DataBytes */,
@@ -612,6 +618,7 @@
 		B7544DFC2A191BCE00961F4C /* OpenAI */ = {
 			isa = PBXGroup;
 			children = (
+				B72BFBAC2A1AAAED00E13C71 /* LICENSE */,
 				B7544DFD2A191BCE00961F4C /* OpenAI.swift */,
 				B7544DFE2A191BCE00961F4C /* Public */,
 				B7544E1F2A191BCE00961F4C /* Private */,
@@ -712,6 +719,7 @@
 		B767E9BA29F6DAED003EC13F /* LocalConsole */ = {
 			isa = PBXGroup;
 			children = (
+				B72BFBAD2A1AAAF900E13C71 /* LICENSE */,
 				B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */,
 				B767E9BB29F6DAED003EC13F /* ResizeController.swift */,
 				B767E9BC29F6DAED003EC13F /* LCManager.swift */,
