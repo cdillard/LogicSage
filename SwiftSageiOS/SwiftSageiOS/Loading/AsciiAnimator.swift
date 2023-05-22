@@ -19,7 +19,7 @@ let ASCII_CHARS: [Character] = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ","
 
 let heightProp: CGFloat = 0.92
 // ASCII MOVIES ZONE ///////////////////////////////
-// IF the movie is TOO big/blurry for you and your tastes try manually setting your sws/Xcode console font to 2 or 3 and then  turn movie width up :).
+// IF the movie is TOO big/blurry for you and your tastes try manually setting your LogicSage/Xcode console font to 2 or 3 and then  turn movie width up :).
 // We'll need to sync each clients terminal window/s widths to make sure the animations and movies play properly.
 let movieWidth = 100
 let matrixScreenWidth = 100

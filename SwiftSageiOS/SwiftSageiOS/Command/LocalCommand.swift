@@ -36,7 +36,7 @@ func callLocalCommand(_ command: String) -> Bool {
         }
     }
 
-    logD("Invalid sws command. Please try again. (c) for help")
+    logD("Invalid LOCAL command. Please try again. (c) for help")
 
     return false
 }

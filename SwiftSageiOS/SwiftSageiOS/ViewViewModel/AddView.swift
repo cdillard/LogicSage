@@ -225,6 +225,8 @@ struct AddView: View {
                         .padding(.vertical, 8)
                         .foregroundColor(settingsViewModel.appTextColor)
                         .onTapGesture {
+                            playSelect()
+
                             withAnimation {
                                 settingsViewModel.repoSettingsShown.toggle()
                             }

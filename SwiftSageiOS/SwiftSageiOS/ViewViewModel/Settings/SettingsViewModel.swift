@@ -38,6 +38,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var root: RepoFile?
 
+    @Published var hapticsEnabled: Bool = true
 
     @Published var changes = [ChangeRow]()
 #if !os(macOS)

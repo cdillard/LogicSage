@@ -79,7 +79,7 @@ struct SettingsView: View {
 
                             DevicePicker(settingsViewModel: settingsViewModel)
 
-                            Text("sws mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
+                            Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
                                 .foregroundColor(settingsViewModel.appTextColor)
 
                         }
@@ -90,6 +90,8 @@ struct SettingsView: View {
                                     .padding(8)
                             }
                             .onTapGesture {
+                                playSelect()
+
                                 withAnimation {
                                     showAPISettings.toggle()
                                 }
@@ -97,7 +99,7 @@ struct SettingsView: View {
                             if showAPISettings {
                                 if settingsViewModel.currentMode == .computer {
                                     HStack {
-                                        Text("sws username: ").font(.caption)
+                                        Text("swiftsage username: ").font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                         TextField("", text: $settingsViewModel.userName)
@@ -119,7 +121,7 @@ struct SettingsView: View {
                                     .frame(height: 22)
 
                                     HStack {
-                                        Text("sws password: ").font(.caption)
+                                        Text("swiftsage password: ").font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                         TextField("", text: $settingsViewModel.password)
@@ -267,6 +269,44 @@ struct SettingsView: View {
                                 .cornerRadius(8)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                            Group {
+                                VStack {
+                                    Text("feedback won't play when low battery (< 0.30)")
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                    Button  {
+                                        withAnimation {
+                                            logD("Haptic feedback: \(settingsViewModel.hapticsEnabled ? "off" : "on.")")
+
+                                            settingsViewModel.hapticsEnabled.toggle()
+                                        }
+
+                                    } label: {
+                                        ZStack {
+                                            VStack {
+
+                                                Text("Haptic Feedback?")
+                                                    .font(.body)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+
+                                                Text("📳")
+                                            }
+                                            if settingsViewModel.hapticsEnabled {
+                                                Text("❌")
+                                                    .opacity(0.74)
+                                            }
+                                        }
+                                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                        .lineLimit(1)
+                                        .background(settingsViewModel.buttonColor)
+                                        .fontWeight(.bold)
+                                        .cornerRadius(8)
+                                    }
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                }
+                            }
                         }
 
                         if settingsViewModel.currentMode == .computer {
@@ -300,6 +340,8 @@ struct SettingsView: View {
                         }
                         .onTapGesture {
                             withAnimation {
+                                playSelect()
+
                                 settingsViewModel.showSizeSliders.toggle()
                             }
                         }
@@ -428,6 +470,8 @@ struct SettingsView: View {
                             .padding(8)
                     }
                     .onTapGesture {
+                        playSelect()
+
                         withAnimation {
 
                             settingsViewModel.showAllColorSettings.toggle()
@@ -514,6 +558,8 @@ struct SettingsView: View {
 
                         }
                         .onTapGesture {
+                            playSelect()
+
                             withAnimation {
 
                                 settingsViewModel.showSourceEditorColorSettings.toggle()
@@ -616,7 +662,10 @@ struct SettingsView: View {
 
                     }
                     .onTapGesture {
+                        playSelect()
+
                         withAnimation {
+
                             settingsViewModel.showAudioSettings.toggle()
                         }
                     }
@@ -906,9 +955,12 @@ struct DevicePicker: View {
                     .foregroundColor(settingsViewModel.appTextColor)
                     .opacity(settingsViewModel.currentMode == .mobile ? 1 : 0.5)
                     .onTapGesture {
+                        playSelect()
+
                         withAnimation(.spring()) {
                             settingsViewModel.currentMode = .mobile
                             logD(settingsViewModel.logoAscii5())
+
                         }
                     }
                 Image(systemName: "desktopcomputer")
@@ -919,9 +971,12 @@ struct DevicePicker: View {
 
                     .opacity(settingsViewModel.currentMode == .computer ? 1 : 0.5)
                     .onTapGesture {
+                        playSelect()
+
                         withAnimation(.spring()) {
                             settingsViewModel.currentMode = .computer
                             logD(settingsViewModel.logoAscii5())
+
                         }
                     }
             }

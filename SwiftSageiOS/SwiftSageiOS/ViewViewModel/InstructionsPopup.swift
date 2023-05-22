@@ -55,6 +55,12 @@ struct InstructionsPopup: View {
                             Text("2. Running the vapor server.")
                         }
                         Text("Without these 3 steps, the LogicSage server will not work.")
+
+                        Text("-CREDITS: https://github.com/cdillard/LogicSage#credits")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .accentColor(settingsViewModel.buttonColor)
+
+                        Text("Thank you!!! to the open source maintainers who created the MIT and Apache 2.0 Licensed source included in this project.")
                     }
                     .padding(.leading, 15)
                     .padding(.trailing, 15)

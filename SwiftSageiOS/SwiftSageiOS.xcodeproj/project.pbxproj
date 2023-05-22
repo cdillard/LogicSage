@@ -49,6 +49,7 @@
 		B71C62FE2A019144004296E4 /* LocalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FD2A019144004296E4 /* LocalCommand.swift */; };
 		B71C63002A01924B004296E4 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FF2A01924B004296E4 /* CommandTable.swift */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
+		B7378BFD2A1B192600A1D44C /* HapticMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7378BFC2A1B192500A1D44C /* HapticMan.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
 		B737F40D29F8395B00E57577 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40C29F8395B00E57577 /* SettingsViewModel.swift */; };
 		B746DFCE29F5E789002804EB /* SwiftSageiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B746DFCD29F5E789002804EB /* SwiftSageiOSApp.swift */; };
@@ -211,6 +212,7 @@
 		B72BFBAD2A1AAAF900E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B72BFBAE2A1AAB0500E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B72BFBAF2A1AAB1300E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B7378BFC2A1B192500A1D44C /* HapticMan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticMan.swift; sourceTree = "<group>"; };
 		B737F40A29F837CE00E57577 /* SettingsVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVIew.swift; sourceTree = "<group>"; };
 		B737F40C29F8395B00E57577 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B746DFCA29F5E789002804EB /* LogicSageDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogicSageDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -765,6 +767,7 @@
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */,
 				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
+				B7378BFC2A1B192500A1D44C /* HapticMan.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1021,6 +1024,7 @@
 				B71C63002A01924B004296E4 /* CommandTable.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
 				B7191F2829F9F09A00078D8D /* InnerTextView.swift in Sources */,
+				B7378BFD2A1B192600A1D44C /* HapticMan.swift in Sources */,
 				B7191F2929F9F09A00078D8D /* TextViewWrapperView.swift in Sources */,
 				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,
 				B7544E302A191BCE00961F4C /* AudioTranscriptionQuery.swift in Sources */,
@@ -1241,7 +1245,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1272,7 +1276,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1293,7 +1297,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1322,7 +1326,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
 				PRODUCT_NAME = LogicSage;
 				SDKROOT = auto;
