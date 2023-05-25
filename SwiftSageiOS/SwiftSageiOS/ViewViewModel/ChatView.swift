@@ -54,7 +54,7 @@ struct ChatView: View {
             HStack(spacing: 0) {
                 ZStack(alignment: .leading) {
                     Text(chatText)
-                        .font(.system(.body))
+                        .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(.clear)
                         .background(GeometryReader {
                             Color.clear.preference(key: ViewHeightKey.self,
@@ -63,6 +63,7 @@ struct ChatView: View {
 
                     TextEditor(text: $chatText)
                         .lineLimit(nil)
+                        .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(settingsViewModel.appTextColor)
                         .frame(height: max( 40, textEditorHeight))
                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)
@@ -81,9 +82,11 @@ struct ChatView: View {
                             }
                         }
                     // Placeholder...
-                    Text("Type Msg..")
+                    Text("Type Msg...")
                         .padding(.leading,4)
                         .fontWeight(.light)
+                        .font(.system(size: settingsViewModel.fontSizeSrcEditor))
+                        .allowsHitTesting(false)
                         .foregroundColor(settingsViewModel.appTextColor.opacity(0.5)).opacity(!isTextFieldFocused && chatText.isEmpty ? 1.0 : 0.0)
                 }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
 

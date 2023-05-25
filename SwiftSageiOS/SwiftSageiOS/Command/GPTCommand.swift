@@ -92,6 +92,8 @@ Question to Answer:
             logD(generatedOpenLine())
             openLinePrintCount += 1
 
+            
+            SettingsViewModel.shared.saveConversationContentToDisk(object: SettingsViewModel.shared.conversations, forKey: "conversations")
 
             if config.conversational {
 

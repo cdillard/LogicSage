@@ -92,14 +92,15 @@ struct ContentView: View {
                         }
                     }) {
                         resizableButtonImage(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3", size: geometry.size)
-                            .font(.caption)
-                            .imageScale(.small)
                             .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                     }
                     Spacer()
                 }
+                .padding(8)
                 Spacer()
             }
+            .padding(8)
+
 // END CPNVERSATION HAMBURGER ZONE *************************************************
 
 
@@ -233,6 +234,9 @@ struct ContentView: View {
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             )
+            .padding(.leading,8)
+
+            .padding(.bottom,8)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         }
         .overlay(
@@ -287,14 +291,14 @@ struct ContentView: View {
 #if !os(macOS)
         defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
         defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.5), size.height - (size.height * 0.5))
-
 #endif
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .padding(3)
+            .frame(width: size.width * 0.25 * settingsViewModel.buttonScale, height: size.width * 0.25 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }

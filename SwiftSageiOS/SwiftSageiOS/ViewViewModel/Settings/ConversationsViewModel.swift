@@ -28,4 +28,4 @@ struct Conversation {
     var messages: [Message]
 }
 
-extension Conversation: Equatable, Identifiable {}
+extension Conversation: Equatable, Codable, Hashable, Identifiable {}

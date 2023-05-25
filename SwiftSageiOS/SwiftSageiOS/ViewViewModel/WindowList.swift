@@ -68,7 +68,7 @@ struct WindowList: View {
         case .simulator:
             return "Simulator"
         case .chat:
-            return "Chat \(window.convoId ?? "")"
+            return "Chat \(window.convoId?.prefix(4) ?? "")"
 
         case .repoTreeView:
             return "Repo Tree"

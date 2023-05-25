@@ -108,7 +108,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         if shouldBecomeFirstResponder {
             _ = view.becomeFirstResponder()
         }
-        var overrideText = custom.overrideText()
+
+        let overrideText = custom.overrideText()
 
         DispatchQueue.main.async {
             view.textView.isEditable = isEditing
@@ -121,7 +122,20 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             view.contentTextView.isSelectable = isEditing
 
             if let overrideText = overrideText {
+                let preText = view.textView.text
                 view.textView.text = overrideText
+
+                if preText == view.textView.text {
+
+                }
+                else {
+                    // scroll text virew to bottom
+                    if view.textView.text.count > 0 {
+                        let location = view.textView.text.count - 1
+                        let bottom = NSMakeRange(location, 1)
+                        view.textView.scrollRangeToVisible(bottom)
+                    }
+                }
             }
         }
     }

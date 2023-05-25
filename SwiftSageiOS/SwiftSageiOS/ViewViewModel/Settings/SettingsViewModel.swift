@@ -334,12 +334,6 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-    @Published var selectedConversationID: Conversation.ID? {
-        didSet {
-           // logD("selected = \(selectedConversationID)")
-        }
-
-    }
 
     func appendMessageToConvoIndex(index: Int, message: Message) async {
         conversations[index].messages.append(message)
@@ -357,19 +351,6 @@ public class SettingsViewModel: ObservableObject {
     let idProvider: () -> String
     let dateProvider: () -> Date
 
-    var selectedConversation: Conversation? {
-        selectedConversationID.flatMap { id in
-            conversations.first { $0.id == id }
-        }
-    }
-
-//    var selectedConversationPublisher: AnyPublisher<Conversation?, Never> {
-//        $selectedConversationID.receive(on: RunLoop.main).map { id in
-//            self.conversations.first(where: { $0.id == id })
-//        }
-//        .eraseToAnyPublisher()
-//    }
-
     func sendChatText(_ convoID: Conversation.ID, chatText: String) {
         gptCommand(conversationId: convoID, input: chatText)
     }
@@ -379,10 +360,6 @@ public class SettingsViewModel: ObservableObject {
         conversations.append(conversation)
         logD("created new convo = \(conversation.id)")
         return conversation.id
-    }
-
-    func selectConversation(_ conversationId: Conversation.ID?) {
-        selectedConversationID = conversationId
     }
 
     func deleteConversation(_ conversationId: Conversation.ID) {
@@ -396,14 +373,58 @@ public class SettingsViewModel: ObservableObject {
         openConversation(convo)
     }
     func openConversation(_ convoId: Conversation.ID) {
-        selectConversation(convoId)
 #if !os(macOS)
-
         WindowManager.shared.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
 #endif
     }
-// END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
+    // Function to save a MyObject instance to UserDefaults
+    func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
+
+       let encoder = JSONEncoder()
+       do {
+           let encodedData = try encoder.encode(object)
+
+           saveJSONData(encodedData, filename: "\(key).json")
+       }
+       catch {
+           print("failed w error = \(error)")
+       }
+    }
+    func retrieveConversationContentFromDisk(forKey key: String) -> [Conversation]? {
+
+       if let savedData = loadJSONData(filename: "\(key).json") {
+           do {
+               let decoder = JSONDecoder()
+               return try decoder.decode([Conversation].self, from: savedData)
+           }
+           catch {
+               print("failed w error = \(error)")
+           }
+       }
+       return nil
+    }
+    func loadJSONData(filename: String) -> Data? {
+        let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
+
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        } catch {
+            print("Failed to read JSON data: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    func saveJSONData(_ data: Data, filename: String) {
+        let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
+
+        do {
+            try data.write(to: fileURL)
+        } catch {
+            print("Failed to write JSON data: \(error.localizedDescription)")
+        }
+    }
+// END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
     init() {
 
@@ -416,7 +437,6 @@ public class SettingsViewModel: ObservableObject {
 
         if UserDefaults.standard.double(forKey: "textSize") != 0 {
             self.textSize = CGFloat(UserDefaults.standard.double(forKey: "textSize"))
-
         }
         else {
             self.textSize = defaultTerminalFontSize
@@ -430,15 +450,12 @@ public class SettingsViewModel: ObservableObject {
         }
         if UserDefaults.standard.double(forKey: "commandButtonFontSize") != 0 {
             self.commandButtonFontSize = CGFloat(UserDefaults.standard.double(forKey: "commandButtonFontSize"))
-
         }
         else {
             self.commandButtonFontSize = defaultCommandButtonSize
-
         }
         
         // END SIZE SETTING LOAD ZONE FROM DISK
-
 
         // BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
@@ -449,7 +466,6 @@ public class SettingsViewModel: ObservableObject {
         } else {
             //            print("Error retrieving openAIKey")
             //            keychainManager.saveToKeychain(key:openAIKey, value: "")
-
         }
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
@@ -458,8 +474,6 @@ public class SettingsViewModel: ObservableObject {
         } else {
             //         print("Error retrieving ghaPat == reset")
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
-
-
         }
         if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
 
@@ -470,8 +484,6 @@ public class SettingsViewModel: ObservableObject {
         } else {
             //         print("Error retrieving ghaPat == reset")
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
-
-
         }
 
         // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
@@ -493,7 +505,6 @@ public class SettingsViewModel: ObservableObject {
         }
         else {
             self.terminalTextColor = .white
-
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
@@ -501,11 +512,9 @@ public class SettingsViewModel: ObservableObject {
         }
         else {
             self.buttonColor = .green
-            
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "backgroundColor") {
-
             self.backgroundColor =  Color(rawValue:colorKey) ?? .gray
         }
         else {
@@ -513,7 +522,6 @@ public class SettingsViewModel: ObservableObject {
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
-
             self.appTextColor =  Color(rawValue:colorKey) ?? .primary
         }
         else {
@@ -538,7 +546,6 @@ public class SettingsViewModel: ObservableObject {
 #if !os(macOS)
 
         if let colorKey = UserDefaults.standard.string(forKey: "plainColorSrcEditor") {
-
             self.plainColorSrcEditor =  Color(rawValue:colorKey) ?? .white
         }
         else {
@@ -546,7 +553,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defautColornumberColor = Color(red: 116/255, green: 109/255, blue: 176/255)
         if let colorKey = UserDefaults.standard.string(forKey: "numberColorSrcEditor") {
-
             self.numberColorSrcEditor =  Color(rawValue:colorKey) ?? defautColornumberColor
         }
         else {
@@ -554,7 +560,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defaultStringColor = Color(red: 211/255, green: 35/255, blue: 46/255)
         if let colorKey = UserDefaults.standard.string(forKey: "stringColorSrcEditor") {
-
             self.stringColorSrcEditor =  Color(rawValue:colorKey) ?? defaultStringColor
         }
         else {
@@ -563,7 +568,6 @@ public class SettingsViewModel: ObservableObject {
 
         let defaultIdentifierColor = Color(red: 20/255, green: 156/255, blue: 146/255)
         if let colorKey = UserDefaults.standard.string(forKey: "identifierColorSrcEditor") {
-
             self.identifierColorSrcEditor =  Color(rawValue:colorKey) ?? defaultIdentifierColor
         }
         else {
@@ -571,7 +575,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defaultKeywordColor = Color(red: 215/255, green: 0, blue: 143/255)
         if let colorKey = UserDefaults.standard.string(forKey: "keywordColorSrcEditor") {
-
             self.keywordColorSrcEditor =  Color(rawValue:colorKey) ?? defaultKeywordColor
         }
         else {
@@ -579,7 +582,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defaultCommentColor = Color(red: 69.0/255.0, green: 187.0/255.0, blue: 62.0/255.0)
         if let colorKey = UserDefaults.standard.string(forKey: "commentColorSrceEditor") {
-
             self.commentColorSrceEditor =  Color(rawValue:colorKey) ?? defaultCommentColor
         }
         else {
@@ -587,7 +589,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defaultEditorPlaceholderColor = Color(red: 31/255.0, green: 32/255, blue: 41/255)
         if let colorKey = UserDefaults.standard.string(forKey: "editorPlaceholderColorSrcEditor") {
-
             self.editorPlaceholderColorSrcEditor =  Color(rawValue:colorKey) ?? defaultEditorPlaceholderColor
         }
         else {
@@ -595,7 +596,6 @@ public class SettingsViewModel: ObservableObject {
         }
         let defaultBackgroundColorSrcEditor = Color(red: 31/255.0, green: 32/255, blue: 41/255)
         if let colorKey = UserDefaults.standard.string(forKey: "backgroundColorSrcEditor") {
-
             self.backgroundColorSrcEditor =  Color(rawValue:colorKey) ?? defaultBackgroundColorSrcEditor
         }
         else {
@@ -604,14 +604,12 @@ public class SettingsViewModel: ObservableObject {
 
         let defaultlineNumbersColorSrcEditor = Color( red: 100/255, green: 100/255, blue: 100/255)
         if let colorKey = UserDefaults.standard.string(forKey: "lineNumbersColorSrcEditor") {
-
             self.lineNumbersColorSrcEditor =  Color(rawValue:colorKey) ?? defaultlineNumbersColorSrcEditor
         }
         else {
             self.lineNumbersColorSrcEditor = defaultlineNumbersColorSrcEditor
         }
 #else
-
         self.fontSizeSrcEditor = 13.666
         self.plainColorSrcEditor = .black
         self.numberColorSrcEditor = .white
@@ -629,7 +627,6 @@ public class SettingsViewModel: ObservableObject {
         // END SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
 
 
-
         // END COLOR LOAD FROM DISK ZONE ******************************
 
         // BEGIN AUDIO SETTING LOAD ZONE FROM DISK
@@ -638,7 +635,6 @@ public class SettingsViewModel: ObservableObject {
 
         if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
             self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
-
         }
         else {
             self.selectedVoiceIndexSaved = 0
@@ -669,7 +665,9 @@ public class SettingsViewModel: ObservableObject {
         }
 
         // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
-
+        if let convos = retrieveConversationContentFromDisk(forKey: "conversations") {
+            self.conversations = convos
+        }
     }
 
     enum Device: Int {

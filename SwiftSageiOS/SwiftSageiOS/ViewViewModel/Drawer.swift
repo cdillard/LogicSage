@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-var drawerWidth: CGFloat = 140
+var drawerWidth: CGFloat = UIScreen.main.bounds.width / 5
 
 struct DrawerContent: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -21,8 +21,8 @@ struct DrawerContent: View {
                 Text("➕ New Chat")
                     .padding(3)
                     .lineLimit(1)
-                    .border(settingsViewModel.buttonColor, width: 2)
-                    .font(.caption)
+                    .border(settingsViewModel.appTextColor, width: 2)
+                    .font(.body)
 
                     .fontWeight(.bold)
                     .foregroundColor(settingsViewModel.appTextColor)
@@ -32,16 +32,26 @@ struct DrawerContent: View {
                         settingsViewModel.createAndOpenNewConvo()
                     }
                 ForEach(Array(conversations.enumerated()), id: \.offset) { index, convo in
-                    Text("💬 Chat: \(index): \(String(convo.id.prefix(4)))")
-                        .lineLimit(1)
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                        .padding(3)
-                        .onTapGesture {
-                            settingsViewModel.selectConversation(convo.id)
-                            settingsViewModel.openConversation(convo.id)
-                        }
-
+                    HStack {
+                        Text("💬 Chat: \(String(convo.id.prefix(4)))")
+                            .lineLimit(1)
+                            .font(.body)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .padding(3)
+                            .onTapGesture {
+                                // settingsViewModel.selectConversation(convo.id)
+                                settingsViewModel.openConversation(convo.id)
+                            }
+                        Text("🗑️")
+                            .lineLimit(1)
+                            .font(.caption)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .padding(3)
+                            .onTapGesture {
+                                // settingsViewModel.selectConversation(convo.id)
+                                settingsViewModel.deleteConversation(convo.id)
+                            }
+                    }
 
                 }
                 Spacer()

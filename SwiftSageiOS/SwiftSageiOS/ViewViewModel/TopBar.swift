@@ -58,7 +58,7 @@ struct TopBar: View {
         case .simulator:
             return "Simulator"
         case .chat:
-            return "Chat \(windowInfo.convoId ?? "")"
+            return "Chat \(windowInfo.convoId?.prefix(4) ?? "")"
 
         case .file:
             return "\(windowInfo.file?.name ?? "Filename")"
