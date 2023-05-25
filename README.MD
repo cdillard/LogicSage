@@ -66,7 +66,7 @@ Demo video (please download to mac or iOS device to view): https://github.com/cd
 
 ## news
 ----------------
-05-22-2023
+05-25-2023
 
 ## LogicSage 1.1.9 rolling out! 
 
