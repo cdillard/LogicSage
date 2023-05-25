@@ -33,257 +33,272 @@ struct ContentView: View {
     @StateObject private var windowManager = WindowManager.shared
 
     @Binding var isDrawerOpen: Bool
-
+    @ObservedObject private var keyboardResponder = KeyboardResponder()
     var body: some View {
 
         GeometryReader { geometry in
             ZStack {
                 ZStack {
-// START MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
+                    ZStack {
+                        // START MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
 #if os(macOS)
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button(action: {
-                            openTerminal()
-                        }) {
-                            Text("Open Terminal")
+                        VStack(alignment: .leading, spacing: 8) {
+                            Button(action: {
+                                openTerminal()
+                            }) {
+                                Text("Open Terminal")
+                            }
+                            .zIndex(2)
+
+
+                            Button(action: {
+                                openiTerm2()
+                            }) {
+                                Text("Open iTerm2")
+                            }
+                            .zIndex(2)
+
+                            Button(action: {
+                                openTerminalAndRunCommand(command: "echo 'Hello, Terminal!'")
+
+                            }) {
+                                Text("Open Terminal.app and run cmd.")
+                            }
+                            .zIndex(2)
                         }
                         .zIndex(2)
-
-
-                        Button(action: {
-                            openiTerm2()
-                        }) {
-                            Text("Open iTerm2")
-                        }
-                        .zIndex(2)
-
-                        Button(action: {
-                            openTerminalAndRunCommand(command: "echo 'Hello, Terminal!'")
-
-                        }) {
-                            Text("Open Terminal.app and run cmd.")
-                        }
-                        .zIndex(2)
-                    }
-                    .zIndex(2)
 #endif
+                    }
+                    // END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
                 }
-// END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
-            }
 
 #if !os(macOS)
-// START WINDOW MANAGER ZONE *************************************************
-            ForEach(windowManager.windows) { window in
-                WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel)
-                    .padding(SettingsViewModel.shared.cornerHandleSize)
-                    .background(.clear)
-                    .environmentObject(windowManager)
-            }
-// END WINDOW MANAGER ZONE *************************************************
+                // START WINDOW MANAGER ZONE *************************************************
+                ForEach(windowManager.windows) { window in
+                    WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel)
+                        .padding(SettingsViewModel.shared.cornerHandleSize)
+                        .edgesIgnoringSafeArea(.all)
+
+                        .background(.clear)
+                        .environmentObject(windowManager)
+                }
+                // END WINDOW MANAGER ZONE *************************************************
 
 #endif
 
-// START CPNVERSATION HAMBURGER ZONE *************************************************
-            VStack {
-                HStack {
-                    Button(action: {
-                        withAnimation {
-                            self.isDrawerOpen.toggle()
+                // START CPNVERSATION HAMBURGER ZONE *************************************************
+                VStack {
+                    HStack {
+                        Button(action: {
+                            withAnimation {
+                                self.isDrawerOpen.toggle()
+                            }
+                        }) {
+                            Image(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3")
+                                .resizable()
+                                .scaledToFit()
+                                .tint(settingsViewModel.appTextColor)
+                                .background(settingsViewModel.buttonColor)
+                                .padding(3)
+                                .frame(width: 50, height: 50 )
+                                .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                         }
-                    }) {
-                        resizableButtonImage(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3", size: geometry.size)
-                            .animation(.easeIn(duration:0.25), value: isDrawerOpen)
+                        Spacer()
                     }
+                    .padding(8)
                     Spacer()
                 }
                 .padding(8)
-                Spacer()
-            }
-            .padding(8)
 
-// END CPNVERSATION HAMBURGER ZONE *************************************************
+                // END CPNVERSATION HAMBURGER ZONE *************************************************
 
 
-// START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-            VStack {
-                Spacer()
-                CommandButtonView(settingsViewModel: settingsViewModel)
-                    .environmentObject(windowManager)
-            }
+                // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+                VStack {
+                    Spacer()
+                    CommandButtonView(settingsViewModel: settingsViewModel)
+                        .environmentObject(windowManager)
+                }
 
-            VStack {
-                Spacer()
-                HStack(alignment: .bottom, spacing: 0) {
-                    // OPEN TERM BUTTON
+                VStack {
+                    Spacer()
+                    HStack(alignment: .bottom, spacing: 0) {
+                        // OPEN TERM BUTTON
 
-                    Button(action: {
+                        Button(action: {
 #if !os(macOS)
 
-                        hideKeyboard()
+                            hideKeyboard()
 #endif
 #if !os(macOS)
-                        if consoleManager.isVisible {
-                            consoleManager.isVisible = false
-
-                        } else {
-                            consoleManager.isVisible = true
-                        }
-                        if showSettings {
-                            showSettings = false
-                        }
-                        if settingsViewModel.showAddView  {
-                            settingsViewModel.showAddView = false
-                        }
-#endif
-                    }) {
-                        resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
-                    }
-
-                    // SETTINGS BUTTON
-                    Button(action: {
-#if !os(macOS)
-
-                        hideKeyboard()
-#endif
-
-                        withAnimation {
-                            showSettings.toggle()
-#if !os(macOS)
-
                             if consoleManager.isVisible {
                                 consoleManager.isVisible = false
+
+                            } else {
+                                consoleManager.isVisible = true
+                            }
+                            if showSettings {
+                                showSettings = false
+                            }
+                            if settingsViewModel.showAddView  {
+                                settingsViewModel.showAddView = false
                             }
 #endif
-
+                        }) {
+                            resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
                         }
-                    }) {
-                        resizableButtonImage(systemName: "gearshape", size: geometry.size)
-                    }
 
-                    // ADD VIEW BUTTON
-                    Button(action: {
+                        // SETTINGS BUTTON
+                        Button(action: {
 #if !os(macOS)
-                        hideKeyboard()
+
+                            hideKeyboard()
 #endif
 
+                            withAnimation {
+                                showSettings.toggle()
 #if !os(macOS)
-                        consoleManager.isVisible = false
-#endif
-                        settingsViewModel.showAddView.toggle()
-                        if showSettings {
-                            showSettings = false
-                        }
-                    }) {
 
-                        resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
-                    }
-
-                    Button(action: {
-#if !os(macOS)
-                        hideKeyboard()
-#endif
-                        if !settingsViewModel.hasAcceptedMicrophone {
-                            logD("Enable mic in Settings...")
-                            return
-                        }
-                        if settingsViewModel.isRecording {
-                            settingsViewModel.speechRecognizer.stopRecording()
-                        } else {
-                            settingsViewModel.speechRecognizer.startRecording()
-                        }
-                        settingsViewModel.isRecording.toggle()
-                    }) {
-                        resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
-                            .font(.body)
-                            .overlay(
-                                Group {
-                                    if !settingsViewModel.hasAcceptedMicrophone {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .foregroundColor(Color.white.opacity(0.5))
-                                    }
+                                if consoleManager.isVisible {
+                                    consoleManager.isVisible = false
                                 }
-                            )
-                    }
+#endif
 
-                    Text(settingsViewModel.recognizedText)
-                        .font(.body)
-                    Spacer()
-                }
-            }
+                            }
+                        }) {
+                            resizableButtonImage(systemName: "gearshape", size: geometry.size)
+                        }
+
+                        // ADD VIEW BUTTON
+                        Button(action: {
 #if !os(macOS)
-            .onAppear {
-                recalculateWindowSize(size: geometry.size)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                DispatchQueue.main.async {
+                            hideKeyboard()
+#endif
+
+#if !os(macOS)
+                            consoleManager.isVisible = false
+#endif
+                            settingsViewModel.showAddView.toggle()
+                            if showSettings {
+                                showSettings = false
+                            }
+                        }) {
+
+                            resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
+                        }
+
+                        Button(action: {
+#if !os(macOS)
+                            hideKeyboard()
+#endif
+                            if !settingsViewModel.hasAcceptedMicrophone {
+                                logD("Enable mic in Settings...")
+                                return
+                            }
+                            if settingsViewModel.isRecording {
+                                settingsViewModel.speechRecognizer.stopRecording()
+                            } else {
+                                settingsViewModel.speechRecognizer.startRecording()
+                            }
+                            settingsViewModel.isRecording.toggle()
+                        }) {
+                            resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
+                                .overlay(
+                                    Group {
+                                        if !settingsViewModel.hasAcceptedMicrophone {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .foregroundColor(Color.white.opacity(0.5))
+                                        }
+                                    }
+                                )
+                        }
+
+                        Text(settingsViewModel.recognizedText)
+                            .font(.body)
+                        Spacer()
+                    }
+                }
+#if !os(macOS)
+                .onAppear {
                     recalculateWindowSize(size: geometry.size)
                 }
-            }
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    DispatchQueue.main.async {
+                        recalculateWindowSize(size: geometry.size)
+                    }
+                }
 #endif
-            .background(
+                .background(
+                    ZStack {
+#if !os(macOS)
+                        AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)
+                            .environmentObject(windowManager)
+                        SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .opacity(showSettings ? 1.0 : 0.0)
+#endif
+                    }
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                )
+                .padding(.leading,8)
+
+                .padding(.bottom,8)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            }
+            .overlay(
+                Group {
+                    if settingsViewModel.showInstructions {
+                        InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
+                    }
+                    else if settingsViewModel.showHelp {
+                        HelpPopup(isPresented: $settingsViewModel.showHelp ,settingsViewModel: settingsViewModel )
+
+                    }
+                }
+            )
+            // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+
+            // BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
+            .background {
                 ZStack {
 #if !os(macOS)
-                    AddView(showAddView: $settingsViewModel.showAddView, settingsViewModel: settingsViewModel)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        .opacity(settingsViewModel.showAddView ? 1.0 : 0.0)
-                        .environmentObject(windowManager)
-                    SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                        .opacity(showSettings ? 1.0 : 0.0)
-#endif
-                }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            )
-            .padding(.leading,8)
+                    // Use
+                    // settingsViewModel.receivedImage = nil
+                    // To clear background image
+                    if let image = settingsViewModel.actualReceivedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .zIndex(2)
+                            .ignoresSafeArea()
+                            .animation(.easeIn(duration: 0.28), value: image)
+                    }
+                    else {
+                        settingsViewModel.backgroundColor
+                            .ignoresSafeArea()
+                    }
 
-            .padding(.bottom,8)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        }
-        .overlay(
-            Group {
-                if settingsViewModel.showInstructions {
-                    InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
-                }
-                else if settingsViewModel.showHelp {
-                    HelpPopup(isPresented: $settingsViewModel.showHelp ,settingsViewModel: settingsViewModel )
-
-                }
-            }
-        )
-// END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-
-// BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
-        .background {
-            ZStack {
-#if !os(macOS)
-                // Use
-                // settingsViewModel.receivedImage = nil
-                // To clear background image
-                if let image = settingsViewModel.actualReceivedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .zIndex(2)
-                        .ignoresSafeArea()
-                        .animation(.easeIn(duration: 0.28), value: image)
-                }
-                else {
-                    settingsViewModel.backgroundColor
-                        .ignoresSafeArea()
-                }
-
-//                let fileURL = getDocumentsDirectory().appendingPathComponent("recording.mov")
-//
-//                VideoPlayer(player: AVPlayer(url:  fileURL))
-//                    .frame(height: 400)
+                    //                let fileURL = getDocumentsDirectory().appendingPathComponent("recording.mov")
+                    //
+                    //                VideoPlayer(player: AVPlayer(url:  fileURL))
+                    //                    .frame(height: 400)
 
 #else
-                settingsViewModel.backgroundColor
-                    .ignoresSafeArea()
+                    settingsViewModel.backgroundColor
+                        .ignoresSafeArea()
 #endif
+                }
+                .padding(.bottom, keyboardResponder.currentHeight)
+                //.animation(.easeOut(duration: 0.16))
+//                .animation(.easeOut(duration: 16), value: keyboardResponder.currentHeight)
+
+                .edgesIgnoringSafeArea(.all)
+
             }
-            .ignoresSafeArea()
         }
+        
     }
 // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
@@ -297,8 +312,8 @@ struct ContentView: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .padding(3)
-            .frame(width: size.width * 0.25 * settingsViewModel.buttonScale, height: size.width * 0.25 * settingsViewModel.buttonScale)
+//            .padding(3)
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }
@@ -342,3 +357,24 @@ func openTerminalAndRunCommand(command: String) {
 }
 
 #endif
+class KeyboardResponder: ObservableObject {
+    @Published var currentHeight: CGFloat = 0
+    var keyboardShow: AnyCancellable?
+    var keyboardHide: AnyCancellable?
+
+    init() {
+        keyboardShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .map { $0.keyboardHeight }
+            .assign(to: \.currentHeight, on: self)
+
+        keyboardHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+            .map { _ in CGFloat(0) }
+            .assign(to: \.currentHeight, on: self)
+    }
+}
+
+extension Notification {
+    var keyboardHeight: CGFloat {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+    }
+}

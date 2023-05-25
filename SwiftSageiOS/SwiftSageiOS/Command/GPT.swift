@@ -19,12 +19,8 @@ class GPT {
     let openAI: OpenAI
 
     init() {
-
         let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
-        //let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, organizationIdentifier: "", timeoutInterval: 120.0)
         openAI = OpenAI(configuration: configuration)
-
-        //        super.init()
     }
 
     // Function to send a prompt to GPT via the OpenAI API

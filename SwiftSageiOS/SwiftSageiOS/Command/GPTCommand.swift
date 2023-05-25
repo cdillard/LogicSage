@@ -84,6 +84,8 @@ Question to Answer:
             playSoftImpact()
 
             // multiPrinter("\n🤖: \(content)")
+
+
             logD("say: \(content)")
             SettingsViewModel.shared.speak(content)
 
@@ -93,7 +95,7 @@ Question to Answer:
             openLinePrintCount += 1
 
             
-            SettingsViewModel.shared.saveConversationContentToDisk(object: SettingsViewModel.shared.conversations, forKey: "conversations")
+            SettingsViewModel.shared.saveConvosToDisk()
 
             if config.conversational {
 

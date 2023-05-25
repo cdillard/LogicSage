@@ -59,6 +59,14 @@ class WindowManager: ObservableObject {
     func topWindow() -> WindowInfo? {
         windows.first
     }
+
+    func removeWindowsWithConvoId(convoID: Conversation.ID) {
+        for window in windows {
+            if window.convoId == convoID {
+                removeWindow(window: window)
+            }
+        }
+    }
 }
 
 struct WindowInfo: Identifiable, Equatable {

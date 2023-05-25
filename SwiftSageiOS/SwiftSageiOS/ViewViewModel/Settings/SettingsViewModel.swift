@@ -335,6 +335,12 @@ public class SettingsViewModel: ObservableObject {
         }
     }
 
+    @AppStorage("serverChatID") var serverChatID = ""
+
+    func saveConvosToDisk() {
+        saveConversationContentToDisk(object: conversations, forKey: "conversations")
+
+    }
     func appendMessageToConvoIndex(index: Int, message: Message) async {
         conversations[index].messages.append(message)
     }
@@ -364,21 +370,38 @@ public class SettingsViewModel: ObservableObject {
 
     func deleteConversation(_ conversationId: Conversation.ID) {
         conversations.removeAll(where: { $0.id == conversationId })
+
+        WindowManager.shared.removeWindowsWithConvoId(convoID: conversationId)
+        saveConvosToDisk()
     }
 
     func createAndOpenNewConvo() {
 
         let convo = createConversation()
 
+        saveConvosToDisk()
+
         openConversation(convo)
     }
     func openConversation(_ convoId: Conversation.ID) {
+        WindowManager.shared.removeWindowsWithConvoId(convoID: convoId)
+
 #if !os(macOS)
         WindowManager.shared.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
 #endif
     }
 
-    // Function to save a MyObject instance to UserDefaults
+    func createAndOpenServerChat() {
+        if serverChatID.isEmpty {
+           // serverChatID = idProvider()
+            let convoID = createConversation()
+            serverChatID = convoID
+        }
+
+        openConversation(serverChatID)
+
+    }
+
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
 
        let encoder = JSONEncoder()

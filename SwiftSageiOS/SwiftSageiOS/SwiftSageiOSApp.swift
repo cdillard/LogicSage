@@ -53,14 +53,16 @@ struct SwiftSageiOSApp: App {
                     }
 
                     ContentView(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+
                         .environmentObject(appState)
 
-                    Spacer() 
+//                    Spacer() 
                 }
                 .overlay(
                     Group {
                         if settingsViewModel.showInstructions {
-                            InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
+                            InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel)
                         }
                     }
                 )

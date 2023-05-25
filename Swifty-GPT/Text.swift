@@ -13,35 +13,35 @@ func commandsText() -> String {
     """
     return text
 }
+//    8. 🧠 GPT Voice (gv) `gv I'm Bubbles, I like Kitties. --voice com.apple.speech.synthesis.voice.Bubbles`
+//   12. 🧠 Run GPT from file (gf)
+// 13. 💡 Run Idea from file (if)
+//    5 📂 Voice settings (See more voices in Config.swift- you coding today) CEREPROC VOICES ROCK!
 
 func fullProjText() -> String {
 """
  🔸 Project Management:
-   1. ✨ Run loaded prompt (r)
-   2. 🚀 Show loaded prompt (s)
-   3. 📂 Open project (o)
-   4. 🏗️ Build Project (b)
-   5. 📂 Voice settings (See more voices in Config.swift- you coding today) CEREPROC VOICES ROCK!
+   r ✨ Run loaded prompt
+   s 🚀 Show loaded prompt
+   o 📂 Open project
+   b 🏗️ Build Project
  🔸 GPT Interaction:
-   6. 💡 Idea prompt (i)
-   7. 🧠 Talk to GPT (g)
-   8. 🧠 GPT Voice (gv) `gv I'm Bubbles, I like Kitties. --voice com.apple.speech.synthesis.voice.Bubbles`
+   i 💡 Idea prompt
+   g 🧠 Talk to GPT
  🔸 Speak:
   \(config.voiceInputEnabled == false ? "" :" -  🗣️: tap 0 to start listening, tap 0 to capture." )
-   -  💬 `say anything`
+  say  💬 `say anything`
  🔸 Miscellaneous:
-   9. 💥 Build random app (rand)
-  10. 🧠 List built-in prompts (p)
-  11. 📲 List Commands (c)
-  12. 🧠 Run GPT from file (gf)
-  13. 💡 Run Idea from file (if)
-  14. 🛑 Stop voices/commands (st)
-  15. 🎵 Sing a built-in song (sn)
-  16. 🎤 Play iOS dev trivia (t)
-  17. 🔁 Reset prompt state (rs)
-  18. 🗑️ Backup & delete workspace (del)
-  19. 🚪 Exit the program (e)
-  20. 👥 Debate (`debate`, or `debate your topic`) [  MORE: ethics, movies, and encourage ]
+  rand  💥 Build random app
+  p     🧠 List built-in prompts
+  c     📲 List Commands
+  st    🛑 Stop voices/commands
+  sn    🎵 Sing a built-in song
+  t     🎤 Play iOS dev trivia
+  rs    🔁 Reset prompt state
+  del   🗑️ Backup & delete workspace
+  e     🚪 Exit the program
+  debate👥 Debate (`debate`, or `debate your topic`) [  MORE: ethics, movies, and encourage ]
 """
 }
 

@@ -13,18 +13,17 @@
 
 import Foundation
 
-class GPT: NSObject {
+class GPT {
     static let shared = GPT()
 
     let openAI: OpenAI
 
-    override init() {
+    init() {
 
         let configuration = OpenAI.Configuration(token: OPEN_AI_KEY, timeoutInterval: 120.0)
         //let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, organizationIdentifier: "", timeoutInterval: 120.0)
         openAI = OpenAI(configuration: configuration)
 
-        super.init()
     }
 
     // Function to send a prompt to GPT via the OpenAI API

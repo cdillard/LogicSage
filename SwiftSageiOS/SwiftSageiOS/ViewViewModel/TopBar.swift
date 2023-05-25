@@ -17,25 +17,35 @@ struct TopBar: View {
 
     var body: some View {
         ZStack {
-            HStack {
+            HStack(spacing: 2) {
                 Button(action: onClose) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.body)
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+//                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                if windowInfo.windowType == .chat {
 
+                    Button(action: {
+                        logD("elips tap")
+                    }) {
+                        Image(systemName: "ellipsis")
+                            .font(.body)
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                }
                 Text(getName())
                     .font(.body)
                     .lineLimit(1)
 
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
 
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                Spacer()
 
                 if windowInfo.windowType == .file {
                     Button(action: {
@@ -48,10 +58,12 @@ struct TopBar: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.trailing, 8)
                 }
+
+                Spacer()
             }
         }
         .background(SettingsViewModel.shared.backgroundColor)
-        .frame(maxWidth: .infinity, maxHeight: 30)
+        .frame(maxWidth: .infinity, maxHeight: 28)
     }
     func getName() -> String {
         switch windowInfo.windowType {

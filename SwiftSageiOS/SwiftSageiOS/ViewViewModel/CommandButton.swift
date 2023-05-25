@@ -55,61 +55,63 @@ struct CommandButtonView: View {
 //#endif
 
                     if settingsViewModel.isInputViewShown {
-                        // GOOGLE button
-                         Button(action: {
-
-                             logD("CHOOSE RANDOM WALLPAPER")
-                             // cmd send st
-                             settingsViewModel.multiLineText = "wallpaper random"
-                             DispatchQueue.main.async {
-
-                                 // Execute your action here
-                                 screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-                                 self.settingsViewModel.isInputViewShown = false
-
-                                 settingsViewModel.multiLineText = ""
-                             }
-                         }) {
-                             ZStack {
-                                 Text("🖼️")
-//                                 Text("❌")
-//                                     .opacity(0.6)
-
-                             }
-                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                 .lineLimit(1)
-                                 .foregroundColor(Color.white)
-                                 .background(settingsViewModel.buttonColor)
-                                 .cornerRadius(10)
-                         }
-                         .padding(.bottom)
-
-                         Button(action: {
-                             logD("RUN SIMULATOR")
-
-                             settingsViewModel.multiLineText = "simulator"
-                             DispatchQueue.main.async {
-
-                                 // Execute your action here
-                                 screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-                                 self.settingsViewModel.isInputViewShown = false
-
-                                 settingsViewModel.multiLineText = ""
-                             }
-                         }) {
-                             ZStack {
-                                 Text("📲")
-//                                 Text("❌")
-//                                     .opacity(0.6)
-                             }
-                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                 .lineLimit(1)
-                                 .foregroundColor(Color.white)
-                                 .background(settingsViewModel.buttonColor)
-                         }
-                         .padding(.bottom)
+                        if  settingsViewModel.currentMode == .computer {
+                            // GOOGLE button
+                            Button(action: {
+                                
+                                logD("CHOOSE RANDOM WALLPAPER")
+                                // cmd send st
+                                settingsViewModel.multiLineText = "wallpaper random"
+                                DispatchQueue.main.async {
+                                    
+                                    // Execute your action here
+                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                    
+                                    self.settingsViewModel.isInputViewShown = false
+                                    
+                                    settingsViewModel.multiLineText = ""
+                                }
+                            }) {
+                                ZStack {
+                                    Text("🖼️")
+                                    //                                 Text("❌")
+                                    //                                     .opacity(0.6)
+                                    
+                                }
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(10)
+                            }
+                            .padding(.bottom)
+                            
+                            Button(action: {
+                                logD("RUN SIMULATOR")
+                                
+                                settingsViewModel.multiLineText = "simulator"
+                                DispatchQueue.main.async {
+                                    
+                                    // Execute your action here
+                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                    
+                                    self.settingsViewModel.isInputViewShown = false
+                                    
+                                    settingsViewModel.multiLineText = ""
+                                }
+                            }) {
+                                ZStack {
+                                    Text("📲")
+                                    //                                 Text("❌")
+                                    //                                     .opacity(0.6)
+                                }
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
+                            }
+                            .padding(.bottom)
+                        }
 //                        // GOOGLE button
 //                        Button(action: {
 //

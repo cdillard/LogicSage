@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct ChatView: View {
     @EnvironmentObject var windowManager: WindowManager
@@ -105,9 +106,7 @@ struct ChatView: View {
                             isTextFieldFocused = false
 
                             self.settingsViewModel.isInputViewShown = false
-#if !os(macOS)
-                            consoleManager.isVisible = true
-#endif
+                            
                         }
                         else {
                             logD("failed to chat")
@@ -139,7 +138,7 @@ func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> Strin
     var retString  = ""
     if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
         for msg in conversation.messages {
-            retString += "\(msg.role):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
+            retString += "\(msg.role == .user ? "👨" : "🤖"):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }
 
     }
