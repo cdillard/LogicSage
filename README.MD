@@ -65,6 +65,16 @@ Demo video (please download to mac or iOS device to view): https://github.com/cd
 ----------------
 
 ## news
+----------------
+05-22-2023
+
+## LogicSage 1.1.9 rolling out! 
+
+https://apps.apple.com/us/app/logicsage/id6448485441?platform=iphone
+
+Feat: 
+-New Proper GPT Chat w/ history and multiple chats and windows! 
+- iOS Simulator mirrors mac simulator in computer mode.Easy random wallpaper and simulator button.
 
 ----------------
 05-22-2023
