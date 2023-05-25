@@ -51,13 +51,8 @@ struct SwiftSageiOSApp: App {
                             .background(settingsViewModel.buttonColor)
                             .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
                     }
-
                     ContentView(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
                         .environmentObject(appState)
-
-//                    Spacer() 
                 }
                 .overlay(
                     Group {
@@ -79,20 +74,20 @@ struct SwiftSageiOSApp: App {
                 }
 #if !os(macOS)
 
-                //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-                //                        print("didFinishLaunchingNotification")
-                //                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-                //                    }
-                //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                //                        print("applicationDidBecomeActive")
-                //                    }
-                //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                //                        print("applicationWillEnterForeground")
-                //                    }
-                //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                //                        print("didEnterBackgroundNotification")
-                //                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
-                //                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+//                        print("didFinishLaunchingNotification")
+//                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+//                        print("applicationDidBecomeActive")
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+//                        print("applicationWillEnterForeground")
+//                    }
+//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+//                        print("didEnterBackgroundNotification")
+//                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
+//                    }
 #endif
             }
 
@@ -114,26 +109,25 @@ class AppState: ObservableObject {
 
     init() {
 #if !os(macOS)
-
-        //        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-        //            .map { _ in true }
-        //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-        //            .removeDuplicates()
-        //
-        //        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-        //            .map { _ in false }
-        //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-        //            .removeDuplicates()
-        //
-        //        didEnterBackground
-        //            .merge(with: willEnterForeground)
-        //            .sink { [weak self] in
-        //                self?.isInBackground = $0
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-        //                        serviceDiscovery?.startDiscovering()
-        //                }
-        //            }
-        //            .store(in: &cancellables)
+    //        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+    //            .map { _ in true }
+    //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+    //            .removeDuplicates()
+    //
+    //        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+    //            .map { _ in false }
+    //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+    //            .removeDuplicates()
+    //
+    //        didEnterBackground
+    //            .merge(with: willEnterForeground)
+    //            .sink { [weak self] in
+    //                self?.isInBackground = $0
+    //                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
+    //                        serviceDiscovery?.startDiscovering()
+    //                }
+    //            }
+    //            .store(in: &cancellables)
 #endif
     }
 }

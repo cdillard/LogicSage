@@ -71,21 +71,17 @@ struct ContentView: View {
                     }
                     // END MAC OS SPECIFIC PANE FOR OPENING TERMINALS AND POTENTIALLY MORE. *********************
                 }
-
 #if !os(macOS)
                 // START WINDOW MANAGER ZONE *************************************************
                 ForEach(windowManager.windows) { window in
                     WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel)
                         .padding(SettingsViewModel.shared.cornerHandleSize)
                         .edgesIgnoringSafeArea(.all)
-
                         .background(.clear)
                         .environmentObject(windowManager)
                 }
                 // END WINDOW MANAGER ZONE *************************************************
-
 #endif
-
                 // START CPNVERSATION HAMBURGER ZONE *************************************************
                 VStack {
                     HStack {
@@ -100,7 +96,7 @@ struct ContentView: View {
                                 .tint(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                                 .padding(3)
-                                .frame(width: 50, height: 50 )
+                                .frame(width: UIScreen.main.bounds.width / 15, height: UIScreen.main.bounds.height / 15 )
                                 .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                         }
                         Spacer()
@@ -109,7 +105,6 @@ struct ContentView: View {
                     Spacer()
                 }
                 .padding(8)
-
                 // END CPNVERSATION HAMBURGER ZONE *************************************************
 
 
@@ -312,7 +307,6 @@ struct ContentView: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-//            .padding(3)
             .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)

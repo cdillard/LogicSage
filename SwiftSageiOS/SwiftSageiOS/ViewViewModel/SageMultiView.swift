@@ -46,7 +46,7 @@ struct SageMultiView: View {
                 VStack(spacing: 0) {
                     TopBar(isEditing: $isEditing, onClose: {
                         windowManager.removeWindow(window: window)
-                    }, windowInfo: window, webViewURL: getURL())
+                    }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel)
                     .simultaneousGesture(
                         DragGesture()
                             .onChanged { value in

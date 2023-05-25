@@ -14,7 +14,9 @@ struct TopBar: View {
     @State var windowInfo: WindowInfo
     @State var webViewURL: URL?
     @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
+    let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
     var body: some View {
         ZStack {
             HStack(spacing: 2) {
@@ -25,18 +27,7 @@ struct TopBar: View {
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
-                if windowInfo.windowType == .chat {
 
-                    Button(action: {
-                        logD("elips tap")
-                    }) {
-                        Image(systemName: "ellipsis")
-                            .font(.body)
-                    }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
-                }
                 Text(getName())
                     .font(.body)
                     .lineLimit(1)
@@ -46,6 +37,24 @@ struct TopBar: View {
 
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
+
+
+                if windowInfo.windowType == .chat {
+
+                    Button(action: {
+                        logD("elips tap")
+                    }) {
+                        let convoText = convoText(settingsViewModel.conversations, window: windowInfo)
+                        ShareLink(item: "\(link.absoluteString)\n\(convoText)", message: Text("LogicSage conversation")) {
+
+                            Image(systemName: "ellipsis")
+                                .font(.body)
+                        }
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                }
 
                 if windowInfo.windowType == .file {
                     Button(action: {

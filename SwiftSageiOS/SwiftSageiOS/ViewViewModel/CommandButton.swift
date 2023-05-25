@@ -23,7 +23,7 @@ struct CommandButtonView: View {
         self.settingsViewModel.isInputViewShown.toggle()
 #if !os(macOS)
 
-       // consoleManager.isVisible = !settingsViewModel.isInputViewShown
+        // consoleManager.isVisible = !settingsViewModel.isInputViewShown
 #endif
     }
 
@@ -34,25 +34,25 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
-//#if !os(macOS)
-//
-//                    if !settingsViewModel.isInputViewShown {
-//                        // PLugItIn BUTTON
-//                        Button("🔌") {
-//                            print("🔌 Force reconnecting websocket...")
-//                            consoleManager.print("🔌 Force reconnect...")
-//                            consoleManager.print("You can always force quit / restart you know...")
-//
-//                            screamer.connect()
-//                        }
-//                        .font(.body)
-//                        .lineLimit(nil)
-////                        .foregroundColor(Color.white)
-////                        .padding(.bottom)
-//                        .background(settingsViewModel.buttonColor)
-////                        .cornerRadius(10)
-//                    }
-//#endif
+                    //#if !os(macOS)
+                    //
+                    //                    if !settingsViewModel.isInputViewShown {
+                    //                        // PLugItIn BUTTON
+                    //                        Button("🔌") {
+                    //                            print("🔌 Force reconnecting websocket...")
+                    //                            consoleManager.print("🔌 Force reconnect...")
+                    //                            consoleManager.print("You can always force quit / restart you know...")
+                    //
+                    //                            screamer.connect()
+                    //                        }
+                    //                        .font(.body)
+                    //                        .lineLimit(nil)
+                    ////                        .foregroundColor(Color.white)
+                    ////                        .padding(.bottom)
+                    //                        .background(settingsViewModel.buttonColor)
+                    ////                        .cornerRadius(10)
+                    //                    }
+                    //#endif
 
                     if settingsViewModel.isInputViewShown {
                         if  settingsViewModel.currentMode == .computer {
@@ -84,7 +84,7 @@ struct CommandButtonView: View {
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(10)
                             }
-                            .padding(.bottom)
+                            //                            .padding(.bottom)
                             
                             Button(action: {
                                 logD("RUN SIMULATOR")
@@ -110,42 +110,42 @@ struct CommandButtonView: View {
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
                             }
-                            .padding(.bottom)
+                            //                            .padding(.bottom)
                         }
-//                        // GOOGLE button
-//                        Button(action: {
-//
-//                            logD("toggling google mode")
-//
-//                        }) {
-//                            ZStack {
-//                                Text("🌐")
-//                                Text("❌")
-//                                    .opacity(0.6)
-//
-//                            }
-//                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//                                .lineLimit(1)
-//                                .foregroundColor(Color.white)
-//                                .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(10)
-//                        }
-//                        .padding(.bottom)
-//
-//                        Button(action: {
-//                            logD("toggling linking mode")
-//                        }) {
-//                            ZStack {
-//                                Text("🔗")
-//                                Text("❌")
-//                                    .opacity(0.6)
-//                            }
-//                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//                                .lineLimit(1)
-//                                .foregroundColor(Color.white)
-//                                .background(settingsViewModel.buttonColor)
-//                        }
-//                        .padding(.bottom)
+                        //                        // GOOGLE button
+                        //                        Button(action: {
+                        //
+                        //                            logD("toggling google mode")
+                        //
+                        //                        }) {
+                        //                            ZStack {
+                        //                                Text("🌐")
+                        //                                Text("❌")
+                        //                                    .opacity(0.6)
+                        //
+                        //                            }
+                        //                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        //                                .lineLimit(1)
+                        //                                .foregroundColor(Color.white)
+                        //                                .background(settingsViewModel.buttonColor)
+                        //                                .cornerRadius(10)
+                        //                        }
+                        //                        .padding(.bottom)
+                        //
+                        //                        Button(action: {
+                        //                            logD("toggling linking mode")
+                        //                        }) {
+                        //                            ZStack {
+                        //                                Text("🔗")
+                        //                                Text("❌")
+                        //                                    .opacity(0.6)
+                        //                            }
+                        //                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        //                                .lineLimit(1)
+                        //                                .foregroundColor(Color.white)
+                        //                                .background(settingsViewModel.buttonColor)
+                        //                        }
+                        //                        .padding(.bottom)
 
                         if settingsViewModel.currentMode == .computer {
 
@@ -160,7 +160,7 @@ struct CommandButtonView: View {
                                     .foregroundColor(Color.white)
                                     .background(settingsViewModel.buttonColor)
                             }
-                            .padding(.bottom)
+                            // .padding(.bottom)
                         }
 
 
@@ -176,38 +176,67 @@ struct CommandButtonView: View {
                                     .foregroundColor(Color.white)
                                     .background(settingsViewModel.buttonColor)
                             }
-                            .padding(.bottom)
+                            //.padding(.bottom)
                         }
 
-                        // g BUTTON
-                        Button(action: {
-                 
-                            self.settingsViewModel.isInputViewShown = false
-                            settingsViewModel.multiLineText = ""
-
-                            settingsViewModel.createAndOpenNewConvo()
-
-                        }) {
-                            Text( "➕")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                                .multilineTextAlignment(.center)
-//                                .padding(.leading, 8)
-//                                .padding(.trailing, 8)
-
-
-                        }
-
-                        .padding(.bottom)
+                        //                        // g BUTTON
+                        //                        Button(action: {
+                        //
+                        //                            self.settingsViewModel.isInputViewShown = false
+                        //                            settingsViewModel.multiLineText = ""
+                        //
+                        //                            settingsViewModel.createAndOpenNewConvo()
+                        //
+                        //                        }) {
+                        //                            Text( "➕")
+                        //                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        //                                .lineLimit(1)
+                        //                                .foregroundColor(Color.white)
+                        //                                .background(settingsViewModel.buttonColor)
+                        //                                .multilineTextAlignment(.center)
+                        ////                                .padding(.leading, 8)
+                        ////                                .padding(.trailing, 8)
+                        //
+                        //
+                        //                        }
+                        //
+                        //                        .padding(.bottom)
 
                     }
+                    //                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
+                    //
+                    //                        // STOP // EXIT CONVERSATIONAL MODE BUTTON
+                    //                        Button(action: {
+                    //
+                    //                            // cmd send st
+                    //                            settingsViewModel.multiLineText = "g end"
+                    //                            DispatchQueue.main.async {
+                    //
+                    //                                // Execute your action here
+                    //                                screamer.sendCommand(command: settingsViewModel.multiLineText)
+                    //
+                    //                                self.settingsViewModel.isInputViewShown = false
+                    //
+                    //                                settingsViewModel.multiLineText = ""
+                    //                            }
+                    //
+                    //                        }) {
+                    //                            ZStack {
+                    //                                Text("🧠")
+                    //                                Text("❌")
+                    //                                    .opacity(0.74)
+                    //                            }
+                    //                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                    //
+                    //                            .lineLimit(1)
+                    //                            .foregroundColor(Color.white)
+                    //                            .background(settingsViewModel.buttonColor)
+                    //                        }
+                    //                        .padding(.bottom)
+                    //                    }
                     if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
-
-                        // STOP // EXIT CONVERSATIONAL MODE BUTTON
+                        // X BUTTON
                         Button(action: {
-
                             // cmd send st
                             settingsViewModel.multiLineText = "g end"
                             DispatchQueue.main.async {
@@ -221,31 +250,13 @@ struct CommandButtonView: View {
                             }
 
                         }) {
-                            ZStack {
-                                Text("🧠")
-                                Text("❌")
-                                    .opacity(0.74)
-                            }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-
-                            .lineLimit(1)
-                            .foregroundColor(Color.white)
-                            .background(settingsViewModel.buttonColor)
-                        }
-                        .padding(.bottom)
-                    }
-                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
-                        // X BUTTON
-                        Button(action: {
-                            settingsViewModel.multiLineText = ""
-                        }) {
                             Text( "🗑️")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
                         }
-                        .padding(.bottom)
+                        //.padding(.bottom)
                     }
 
                     // STOP BUTTON
@@ -269,7 +280,7 @@ struct CommandButtonView: View {
                             .lineLimit(1)
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
-                            .padding(.bottom)
+                        //                            .padding(.bottom)
                     }
                     if settingsViewModel.multiLineText.count > 0 {
                         // EXEC BUTTON
@@ -292,7 +303,7 @@ struct CommandButtonView: View {
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
                                 .background(settingsViewModel.buttonColor)
-                                .padding(.bottom)
+                            // .padding(.bottom)
                         }
                     }
 
@@ -313,16 +324,14 @@ struct CommandButtonView: View {
                         }
                     }) {
                         if self.settingsViewModel.isInputViewShown {
-                            ZStack {
-                                Text("🔽")
-                            }
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .foregroundColor(Color.white)
-                            .background(settingsViewModel.buttonColor)
+                            Text("🔽")
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
                         }
                         else {
-                           Text( "⬆️")
+                            Text( "⬆️")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
                                 .foregroundColor(Color.white)
@@ -330,35 +339,36 @@ struct CommandButtonView: View {
                         }
 
                     }
-                    .padding(.trailing, 16)
-                    .padding(.bottom)
                 }
+                .padding(.leading,8)
+                .padding(.trailing,8)
+                .padding(.bottom,8)
                 .edgesIgnoringSafeArea([.top])
 
                 if settingsViewModel.isInputViewShown {
                     // MAIN INPUT TEXTFIELD
 
                     ZStack(alignment: .leading) {
-                         Text(settingsViewModel.multiLineText)
-                             .font(.system(.body))
-                             .foregroundColor(.clear)
-                             .padding(14)
-                             .background(GeometryReader {
-                                 Color.clear.preference(key: ViewHeightKey.self,
-                                                        value: $0.frame(in: .local).size.height)
-                             })
+                        Text(settingsViewModel.multiLineText)
+                            .font(.system(.body))
+                            .foregroundColor(.clear)
+                            .padding(14)
+                            .background(GeometryReader {
+                                Color.clear.preference(key: ViewHeightKey.self,
+                                                       value: $0.frame(in: .local).size.height)
+                            })
 
-                    TextEditor(text: $settingsViewModel.multiLineText)
-                        .lineLimit(nil)
-                        .border(settingsViewModel.buttonColor, width: 2)
-                        .frame(height: max(40,textEditorHeight))
-                        .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
-                        .autocorrectionDisabled(!settingsViewModel.autoCorrect)
+                        TextEditor(text: $settingsViewModel.multiLineText)
+                            .lineLimit(nil)
+                            .border(settingsViewModel.buttonColor, width: 2)
+                            .frame(height: max(40,textEditorHeight))
+                            .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
+                            .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
-                        .autocapitalization(.none)
+                            .autocapitalization(.none)
 #endif
-                        .focused($isTextFieldFocused)
-                        .scrollDismissesKeyboard(.interactively)
+                            .focused($isTextFieldFocused)
+                            .scrollDismissesKeyboard(.interactively)
 
                     }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 }

@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-var drawerWidth: CGFloat = UIScreen.main.bounds.width / 3
+var drawerWidth: CGFloat = UIScreen.main.bounds.width / 2.5
 
 struct DrawerContent: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -26,7 +26,7 @@ struct DrawerContent: View {
                         .lineLimit(1)
                         .border(settingsViewModel.appTextColor, width: 2)
                         .font(.body)
-                    
+
                         .fontWeight(.bold)
                         .foregroundColor(settingsViewModel.appTextColor)
                         .padding(3)
@@ -55,7 +55,7 @@ struct DrawerContent: View {
                                         isDeletingIndex = -1
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
-                                
+
                                 Text("✔️")
                                     .lineLimit(1)
                                     .font(.body)
@@ -64,11 +64,11 @@ struct DrawerContent: View {
                                     .onTapGesture {
                                         isDeleting = false
                                         isDeletingIndex = -1
-                                        
+
                                         settingsViewModel.deleteConversation(convo.id)
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
-                                
+
                             }
                             else {
                                 Text("🗑️")
@@ -93,18 +93,15 @@ struct DrawerContent: View {
                         .onTapGesture {
                             settingsViewModel.createAndOpenServerChat()
                         }
-                    
+
                     Spacer()
                 }
-                .minimumScaleFactor(0.75)
-                
+                .minimumScaleFactor(0.85)
                 .foregroundColor(settingsViewModel.appTextColor)
-                
                 .padding(.leading,3)
                 .padding(.top,3)
-                
                 .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
-                
+
                 Spacer()
             }
         }
