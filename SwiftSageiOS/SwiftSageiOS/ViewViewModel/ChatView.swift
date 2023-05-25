@@ -10,7 +10,10 @@ import SwiftUI
 
 struct ChatView: View {
     @EnvironmentObject var windowManager: WindowManager
+#if !os(macOS)
+
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
+#endif
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     @Binding var conversations: [Conversation]
