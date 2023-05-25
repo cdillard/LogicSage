@@ -20,7 +20,10 @@
 
 import SwiftUI
 import Combine
+
+#if !os(macOS)
 import UIKit
+#endif
 
 // TODO MAKE SURE ITS OKAY TO UP THIS SO MUCH
 let STRING_LIMIT = 150000
@@ -36,7 +39,11 @@ struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel.shared
     @StateObject private var appState = AppState()
     @State private var isDrawerOpen = false
+#if !os(macOS)
+
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
+#endif
+
     init() {
         serviceDiscovery = ServiceDiscovery()
     }
@@ -44,6 +51,8 @@ struct SwiftSageiOSApp: App {
         WindowGroup {
             ZStack {
                 HStack(spacing: 0) {
+#if !os(macOS)
+
                     if self.isDrawerOpen {
                         DrawerContent(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait)
                             .environmentObject(appState)
@@ -52,6 +61,7 @@ struct SwiftSageiOSApp: App {
                             .background(settingsViewModel.buttonColor)
                             .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
                     }
+#endif
                     ContentView(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen)
                         .environmentObject(appState)
                 }
@@ -68,16 +78,22 @@ struct SwiftSageiOSApp: App {
                     consoleManager.fontSize = settingsViewModel.textSize
 #endif
                     DispatchQueue.main.async {
+#if !os(macOS)
+
                         isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
+#endif
                         settingsViewModel.printVoicesInMyDevice()
                         settingsViewModel.configureAudioSession()
                     }
 
                 }
+#if !os(macOS)
+
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
                     self.isPortrait = scene.interfaceOrientation.isPortrait
                 }
+#endif
 #if !os(macOS)
 
 //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in

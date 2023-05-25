@@ -33,7 +33,10 @@ struct ContentView: View {
     @StateObject private var windowManager = WindowManager.shared
 
     @Binding var isDrawerOpen: Bool
+#if !os(macOS)
+
     @ObservedObject private var keyboardResponder = KeyboardResponder()
+#endif
     var body: some View {
 
         GeometryReader { geometry in
@@ -96,7 +99,9 @@ struct ContentView: View {
                                 .tint(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                                 .padding(3)
+#if !os(macOS)
                                 .frame(width: UIScreen.main.bounds.width / 15, height: UIScreen.main.bounds.height / 15 )
+#endif
                                 .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                         }
                         Spacer()
@@ -285,7 +290,9 @@ struct ContentView: View {
                         .ignoresSafeArea()
 #endif
                 }
+#if !os(macOS)
                 .padding(.bottom, keyboardResponder.currentHeight)
+#endif
                 //.animation(.easeOut(duration: 0.16))
 //                .animation(.easeOut(duration: 16), value: keyboardResponder.currentHeight)
 
@@ -351,6 +358,8 @@ func openTerminalAndRunCommand(command: String) {
 }
 
 #endif
+#if !os(macOS)
+
 class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
     var keyboardShow: AnyCancellable?
@@ -372,3 +381,4 @@ extension Notification {
         return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
     }
 }
+#endif

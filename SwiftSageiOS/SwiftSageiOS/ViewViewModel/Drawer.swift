@@ -7,8 +7,11 @@
 
 import Foundation
 import SwiftUI
+
+#if !os(macOS)
 var drawerWidth: CGFloat = UIScreen.main.bounds.width / 2.5
 var drawerWidthLandscape: CGFloat = UIScreen.main.bounds.width / 6
+#endif
 
 struct DrawerContent: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -102,8 +105,9 @@ struct DrawerContent: View {
                 .foregroundColor(settingsViewModel.appTextColor)
                 .padding(.leading,2)
                 .padding(.top,2)
+#if !os(macOS)
                 .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
-
+#endif
                 Spacer()
             }
         }
