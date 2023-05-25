@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B70A00EF2A1E96BB00ADEF5A /* ConversationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00EE2A1E96BA00ADEF5A /* ConversationsViewModel.swift */; };
+		B70A00F12A1EA23F00ADEF5A /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F02A1EA23F00ADEF5A /* ChatView.swift */; };
+		B70A00F32A1EB48200ADEF5A /* IDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F22A1EB48200ADEF5A /* IDProvider.swift */; };
+		B70A00F52A1EB72900ADEF5A /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F42A1EB72900ADEF5A /* DateProvider.swift */; };
+		B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */; };
 		B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */; };
 		B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B70D330A2A10282A00D7290E /* ZIPFoundation */; };
 		B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */; };
@@ -76,6 +81,7 @@
 		B74A2CD329F7F6990051DB52 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBE29F7F6990051DB52 /* Engine.swift */; };
 		B74A2CD429F7F6990051DB52 /* NativeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */; };
 		B74A2CD529F7F6990051DB52 /* WSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74A2CC029F7F6990051DB52 /* WSEngine.swift */; };
+		B74B21DB2A1D452700B3282E /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74B21DA2A1D452700B3282E /* Drawer.swift */; };
 		B7544E292A191BCE00961F4C /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544DFD2A191BCE00961F4C /* OpenAI.swift */; };
 		B7544E2A2A191BCE00961F4C /* ModerationsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E002A191BCE00961F4C /* ModerationsQuery.swift */; };
 		B7544E2B2A191BCE00961F4C /* ChatQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E012A191BCE00961F4C /* ChatQuery.swift */; };
@@ -167,6 +173,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B70A00EE2A1E96BA00ADEF5A /* ConversationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewModel.swift; sourceTree = "<group>"; };
+		B70A00F02A1EA23F00ADEF5A /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		B70A00F22A1EB48200ADEF5A /* IDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDProvider.swift; sourceTree = "<group>"; };
+		B70A00F42A1EB72900ADEF5A /* DateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
+		B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSourceCodeTheme.swift; sourceTree = "<group>"; };
 		B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalConsoleExtensions.swift; sourceTree = "<group>"; };
 		B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeRegexLexer.swift; sourceTree = "<group>"; };
 		B7191EF729F9F09A00078D8D /* String+Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Range.swift"; sourceTree = "<group>"; };
@@ -244,6 +255,7 @@
 		B74A2CBE29F7F6990051DB52 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 		B74A2CBF29F7F6990051DB52 /* NativeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeEngine.swift; sourceTree = "<group>"; };
 		B74A2CC029F7F6990051DB52 /* WSEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSEngine.swift; sourceTree = "<group>"; };
+		B74B21DA2A1D452700B3282E /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 		B7544DFD2A191BCE00961F4C /* OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
 		B7544E002A191BCE00961F4C /* ModerationsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModerationsQuery.swift; sourceTree = "<group>"; };
 		B7544E012A191BCE00961F4C /* ChatQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatQuery.swift; sourceTree = "<group>"; };
@@ -416,6 +428,7 @@
 		B7191F1229F9F09A00078D8D /* Themes */ = {
 			isa = PBXGroup;
 			children = (
+				B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */,
 				B7191F1329F9F09A00078D8D /* DefaultSourceCodeTheme.swift */,
 			);
 			path = Themes;
@@ -452,9 +465,11 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B70A00F02A1EA23F00ADEF5A /* ChatView.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
+				B74B21DA2A1D452700B3282E /* Drawer.swift */,
 				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
 				B78EAF5D2A108516003095A2 /* Lists */,
@@ -463,6 +478,8 @@
 				B78DA97B2A06F3E4002343AB /* Settings */,
 				B78EAF682A13B68D003095A2 /* TopBar.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
+				B70A00F22A1EB48200ADEF5A /* IDProvider.swift */,
+				B70A00F42A1EB72900ADEF5A /* DateProvider.swift */,
 			);
 			path = ViewViewModel;
 			sourceTree = "<group>";
@@ -746,6 +763,7 @@
 		B78DA97B2A06F3E4002343AB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B70A00EE2A1E96BA00ADEF5A /* ConversationsViewModel.swift */,
 				B78EAF5E2A116D76003095A2 /* Github */,
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
@@ -971,9 +989,11 @@
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,
 				B71C62F82A018C6D004296E4 /* Reset.swift in Sources */,
 				B7191F1C29F9F09A00078D8D /* OCamlLexer.swift in Sources */,
+				B70A00F12A1EA23F00ADEF5A /* ChatView.swift in Sources */,
 				B74A2CC629F7F6990051DB52 /* FoundationSecurity.swift in Sources */,
 				B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */,
 				B7191F2429F9F09A00078D8D /* Token.swift in Sources */,
+				B70A00F52A1EB72900ADEF5A /* DateProvider.swift in Sources */,
 				B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */,
 				B7544E342A191BCE00961F4C /* Models.swift in Sources */,
 				B78DA9682A02AF3A002343AB /* AsciiText.swift in Sources */,
@@ -981,6 +1001,7 @@
 				B71C62EE2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift in Sources */,
 				B7544E332A191BCE00961F4C /* ModelQuery.swift in Sources */,
 				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
+				B70A00F32A1EB48200ADEF5A /* IDProvider.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
 				B7544E2D2A191BCE00961F4C /* ChatStreamResult.swift in Sources */,
 				B7544E2A2A191BCE00961F4C /* ModerationsQuery.swift in Sources */,
@@ -995,6 +1016,7 @@
 				B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */,
 				B78DA9742A04A083002343AB /* KeychainManager.swift in Sources */,
 				B78DA9662A02AF3A002343AB /* SpinnerThread.swift in Sources */,
+				B70A00EF2A1E96BB00ADEF5A /* ConversationsViewModel.swift in Sources */,
 				B74A2CC329F7F6990051DB52 /* FoundationTransport.swift in Sources */,
 				B74A2CCD29F7F6990051DB52 /* StringHTTPHandler.swift in Sources */,
 				B7191F2B29F9F09A00078D8D /* SyntaxTextViewLayoutManager.swift in Sources */,
@@ -1011,6 +1033,7 @@
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
 				B7544E402A191BCE00961F4C /* Utilities.swift in Sources */,
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
+				B74B21DB2A1D452700B3282E /* Drawer.swift in Sources */,
 				B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */,
 				B78EAF692A13B68D003095A2 /* SageMultiView.swift in Sources */,
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
@@ -1056,6 +1079,7 @@
 				B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */,
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
+				B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B7544E322A191BCE00961F4C /* ModelsResult.swift in Sources */,
@@ -1276,7 +1300,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1326,7 +1350,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
 				PRODUCT_NAME = LogicSage;
 				SDKROOT = auto;

@@ -9,10 +9,11 @@ import Foundation
 
 // we can use "g end" to stop that particular gpt conversation and exit conversational mode.
 func gptCommand(input: String) {
-    gptCommand(input: input, useGoogle: true, useLink: true, qPrompt: true)
+    let convo = SettingsViewModel.shared.createConversation()
+    gptCommand(conversationId: convo, input: input, useGoogle: true, useLink: true, qPrompt: true)
 }
 
-func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
+func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
     config.conversational = false
     config.manualPromptString = ""
 
@@ -58,7 +59,7 @@ Question to Answer:
 
     playMediunImpact()
 
-    GPT.shared.sendPromptToGPT(conversationId: Conversation.ID(1), prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
+    GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
         
         if !success {
@@ -69,16 +70,14 @@ Question to Answer:
 
         if !isDone {
 
+            logDNoNewLine(content)
 
-#if !os(macOS)
-            consoleManager.printNoNewLine(content)
-#endif
-            print(content, terminator: "")
-            if content == "." {
-                playSoftImpact()
+            if content.contains( "." ) || content.contains(","){
+                playLightImpact()
+
             }
             else {
-                playLightImpact()
+                playSoftImpact()
             }
         }
         else {
@@ -122,6 +121,14 @@ func logD(_ text: String) {
     consoleManager.print(text)
 #endif
     print(text)
+
+}
+
+func logDNoNewLine(_ text: String) {
+#if !os(macOS)
+            consoleManager.printNoNewLine(text)
+#endif
+            print(text, terminator: "")
 
 }
 
@@ -199,8 +206,8 @@ func googleCommand(input: String) {
 
                 // SHOULD LINK??? no we wait for GPT to link...
 
-
-                gptCommand(input: results, useGoogle: false, useLink: true)
+                let convo = SettingsViewModel.shared.createConversation()
+                gptCommand(conversationId: convo, input: results, useGoogle: false, useLink: true)
 
                 return
             }

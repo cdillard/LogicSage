@@ -8,6 +8,7 @@
 import SwiftUI
 import Foundation
 import Combine
+import AVKit
 
 #if os(macOS)
 
@@ -27,11 +28,12 @@ struct ContentView: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var lastScaleValue: CGFloat = 1.0
     @State private var buttonScale: CGFloat = 1.0
-    @ObservedObject var settingsViewModel = SettingsViewModel.shared
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
-    @StateObject private var windowManager = WindowManager()
+    @StateObject private var windowManager = WindowManager.shared
 
-    
+    @Binding var isDrawerOpen: Bool
+
     var body: some View {
 
         GeometryReader { geometry in
@@ -72,7 +74,7 @@ struct ContentView: View {
 #if !os(macOS)
 // START WINDOW MANAGER ZONE *************************************************
             ForEach(windowManager.windows) { window in
-                WindowView(window: window, settingsViewModel: settingsViewModel)
+                WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel)
                     .padding(SettingsViewModel.shared.cornerHandleSize)
                     .background(.clear)
                     .environmentObject(windowManager)
@@ -81,10 +83,31 @@ struct ContentView: View {
 
 #endif
 
+// START CPNVERSATION HAMBURGER ZONE *************************************************
+            VStack {
+                HStack {
+                    Button(action: {
+                        withAnimation {
+                            self.isDrawerOpen.toggle()
+                        }
+                    }) {
+                        resizableButtonImage(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3", size: geometry.size)
+                            .font(.caption)
+                            .imageScale(.small)
+                            .animation(.easeIn(duration:0.25), value: isDrawerOpen)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
+// END CPNVERSATION HAMBURGER ZONE *************************************************
+
+
 // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
             VStack {
                 Spacer()
                 CommandButtonView(settingsViewModel: settingsViewModel)
+                    .environmentObject(windowManager)
             }
 
             VStack {
@@ -223,44 +246,49 @@ struct ContentView: View {
                 }
             }
         )
+// END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+
+// BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
         .background {
             ZStack {
-
+#if !os(macOS)
                 // Use
                 // settingsViewModel.receivedImage = nil
                 // To clear background image
-#if !os(macOS)
-
                 if let image = settingsViewModel.actualReceivedImage {
                     Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        .zIndex(2)
                         .ignoresSafeArea()
+                        .animation(.easeIn(duration: 0.28), value: image)
                 }
                 else {
                     settingsViewModel.backgroundColor
                         .ignoresSafeArea()
                 }
 
+//                let fileURL = getDocumentsDirectory().appendingPathComponent("recording.mov")
+//
+//                VideoPlayer(player: AVPlayer(url:  fileURL))
+//                    .frame(height: 400)
+
 #else
                 settingsViewModel.backgroundColor
                     .ignoresSafeArea()
-
 #endif
-
             }
             .ignoresSafeArea()
-
         }
-// END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
     }
+// END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)
-
         defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
-#endif
+        defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.5), size.height - (size.height * 0.5))
 
+#endif
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)

@@ -27,15 +27,12 @@
 		B7139CE029E147910049ADE1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7139CDF29E147910049ADE1 /* main.swift */; };
 		B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719B22829ECB8AF003358C2 /* AEyes.swift */; };
 		B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */ = {isa = PBXBuildFile; productRef = B719B22B29ECBA24003358C2 /* SwiftyTesseract */; };
+		B71BE6C82A1DB4E500DAEC34 /* PixelScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71BE6C72A1DB4E500DAEC34 /* PixelScan.swift */; };
 		B71C62F02A0063A4004296E4 /* Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62EF2A0063A4004296E4 /* Reset.swift */; };
 		B71C62F22A00A47F004296E4 /* Multiprinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62F12A00A47F004296E4 /* Multiprinter.swift */; };
 		B729B14029F99DA800BA6752 /* Therapy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B13F29F99DA800BA6752 /* Therapy.swift */; };
 		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
-		B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41029F8953300E57577 /* CaptureEngine.swift */; };
-		B737F41329F8953300E57577 /* ScreenRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41129F8953300E57577 /* ScreenRecorder.swift */; };
 		B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B737F41429F8955100E57577 /* ScreenCaptureKit.framework */; };
-		B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41629F8958D00E57577 /* AudioPlayer.swift */; };
-		B737F41929F8958D00E57577 /* PowerMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41729F8958D00E57577 /* PowerMeter.swift */; };
 		B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */; };
 		B737F41D29F897DE00E57577 /* Eggland.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41C29F897DE00E57577 /* Eggland.swift */; };
 		B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74486DD29E79D7C002D1D5A /* Prompt.swift */; };
@@ -169,16 +166,13 @@
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
+		B71BE6C72A1DB4E500DAEC34 /* PixelScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelScan.swift; sourceTree = "<group>"; };
 		B71C62EF2A0063A4004296E4 /* Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reset.swift; sourceTree = "<group>"; };
 		B71C62F12A00A47F004296E4 /* Multiprinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiprinter.swift; sourceTree = "<group>"; };
 		B729B13F29F99DA800BA6752 /* Therapy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Therapy.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
-		B737F41029F8953300E57577 /* CaptureEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureEngine.swift; sourceTree = "<group>"; };
-		B737F41129F8953300E57577 /* ScreenRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenRecorder.swift; sourceTree = "<group>"; };
 		B737F41429F8955100E57577 /* ScreenCaptureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenCaptureKit.framework; path = System/Library/Frameworks/ScreenCaptureKit.framework; sourceTree = SDKROOT; };
-		B737F41629F8958D00E57577 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		B737F41729F8958D00E57577 /* PowerMeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PowerMeter.swift; sourceTree = "<group>"; };
 		B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureKitWrapper.swift; sourceTree = "<group>"; };
 		B737F41C29F897DE00E57577 /* Eggland.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggland.swift; sourceTree = "<group>"; };
 		B740F56529E7B891007ADED8 /* CommonErrors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CommonErrors.txt; sourceTree = "<group>"; };
@@ -334,7 +328,6 @@
 		B7139CDE29E147910049ADE1 /* Swifty-GPT */ = {
 			isa = PBXGroup;
 			children = (
-				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B7BACF6029E25D03006B065B /* add_file_to_project.rb */,
 				B719B22829ECB8AF003358C2 /* AEyes.swift */,
 				B713384D29ED80F000020CC9 /* app_screenshot.applescript */,
@@ -346,13 +339,13 @@
 				B7A4404A29E7499000E7C065 /* exampleOutput */,
 				B7D6517029EC847E00ED8BAE /* ggml.c */,
 				B7D6517129EC847E00ED8BAE /* ggml.h */,
+				71FD62B029EF739900C6EC34 /* GPT-Info.plist */,
 				B70B44D729EAD91900C45773 /* GPT.swift */,
 				B7BACF6129E25F4B006B065B /* Info.plist */,
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D1609D29F30CF300244188 /* movies */,
 				B7D160A629F30D4900244188 /* Movies.swift */,
-				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
 				B7FB0BCF29FC17F200421573 /* Reminders.swift */,
@@ -361,17 +354,14 @@
 				B737F40429F8153B00E57577 /* Spotify.swift */,
 				B774605B29FBF12F00E7C46B /* StarTrekSimuilator.swift */,
 				B774605929FBE2FA00E7C46B /* Stocks.swift */,
-				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
-				B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */,
-				B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */,
-				B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */,
+				B74B21D72A1D1D1100B3282E /* SwiftStageStatusBar */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
+				B76BF95D29E4AF5400F6420E /* SwiftyGPTUtilities.swift */,
 				B70B44D329EAD61900C45773 /* Text.swift */,
 				B729B13F29F99DA800BA6752 /* Therapy.swift */,
-				B7D1609729F2B48C00244188 /* Trivia.swift */,
+				B74B21D62A1D1CF700B3282E /* trivia */,
 				B729B14329F9B42800BA6752 /* Utilities */,
-				B76BF95D29E4AF5400F6420E /* SwiftyGPTUtilities.swift */,
 				B7D6517329EC847E00ED8BAE /* whisper.h */,
 				B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */,
 				B7CB60B129F184F3006BFF8D /* WrapSoup.swift */,
@@ -433,12 +423,29 @@
 			isa = PBXGroup;
 			children = (
 				B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */,
-				B737F41629F8958D00E57577 /* AudioPlayer.swift */,
-				B737F41729F8958D00E57577 /* PowerMeter.swift */,
-				B737F41029F8953300E57577 /* CaptureEngine.swift */,
-				B737F41129F8953300E57577 /* ScreenRecorder.swift */,
+				B71BE6C72A1DB4E500DAEC34 /* PixelScan.swift */,
 			);
 			path = Screencapture;
+			sourceTree = "<group>";
+		};
+		B74B21D62A1D1CF700B3282E /* trivia */ = {
+			isa = PBXGroup;
+			children = (
+				B7D1609729F2B48C00244188 /* Trivia.swift */,
+				B7D1609A29F2B4CC00244188 /* objective-c-quiz.md */,
+				B7D1609929F2B4CC00244188 /* swift-quiz.md */,
+			);
+			name = trivia;
+			sourceTree = "<group>";
+		};
+		B74B21D72A1D1D1100B3282E /* SwiftStageStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */,
+				B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */,
+				B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */,
+			);
+			name = SwiftStageStatusBar;
 			sourceTree = "<group>";
 		};
 		B7544E4E2A193B0300961F4C /* OpenAI */ = {
@@ -708,11 +715,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7544E9B2A193B0400961F4C /* URLSessionProtocol.swift in Sources */,
-				B737F41229F8953300E57577 /* CaptureEngine.swift in Sources */,
 				B70FD6B729EBB3290099A0D1 /* SWWrapper.swift in Sources */,
 				B70B44DD29EAFBFE00C45773 /* AsciiText.swift in Sources */,
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
-				B737F41329F8953300E57577 /* ScreenRecorder.swift in Sources */,
 				B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */,
 				B7544E982A193B0400961F4C /* MultipartFormDataBodyBuilder.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
@@ -721,6 +726,7 @@
 				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
 				B7544E9A2A193B0400961F4C /* MultipartFormDataEntry.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
+				B71BE6C82A1DB4E500DAEC34 /* PixelScan.swift in Sources */,
 				B7544E892A193B0400961F4C /* EmbeddingsResult.swift in Sources */,
 				B7544E872A193B0400961F4C /* ModelResult.swift in Sources */,
 				B774605C29FBF12F00E7C46B /* StarTrekSimuilator.swift in Sources */,
@@ -744,7 +750,6 @@
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
 				B7544E8A2A193B0400961F4C /* AudioTranslationResult.swift in Sources */,
 				B7EF2A2D2A0C5A6E0048CFFC /* ImageAssetCommands.swift in Sources */,
-				B737F41829F8958D00E57577 /* AudioPlayer.swift in Sources */,
 				B791552D29EDBB0300DE34FC /* Speak.swift in Sources */,
 				B7E15E6E29E6F8920056A325 /* Xcodegen.swift in Sources */,
 				B7544E902A193B0400961F4C /* AudioTranslationQuery.swift in Sources */,
@@ -771,7 +776,6 @@
 				B7544E952A193B0400961F4C /* OpenAIProtocol+Async.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */,
-				B737F41929F8958D00E57577 /* PowerMeter.swift in Sources */,
 				B70B44D629EAD85B00C45773 /* Files.swift in Sources */,
 				B7F50A6729F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift in Sources */,
 				B7544E7C2A193B0400961F4C /* ModerationsQuery.swift in Sources */,
@@ -951,7 +955,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPTDebug.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Swifty-GPT/Swifty-GPT.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -963,6 +967,7 @@
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses your screen to capture your window content.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
@@ -970,6 +975,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MARKETING_VERSION = 1.0;
+				MODULE_NAME = "Swifty-GPT";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.swiftsage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -996,6 +1002,7 @@
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = "$(SRCROOT)/Swifty-GPT/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SwiftSage;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "Uses apple events to control your computer";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Uses your screen to capture your window content.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Uses your local network to communicate with Swift Sage";
@@ -1003,6 +1010,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "$(inherited)/**";
 				MARKETING_VERSION = 1.0;
+				MODULE_NAME = "Swifty-GPT";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.swiftsage;
 				PRODUCT_NAME = "$(TARGET_NAME)";

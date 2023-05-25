@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 import Combine
-let defaultTerminalFontSize: Double = 16.666
-let defaultCommandButtonSize: Double = 32
-let defaultToolbarButtonScale: Double = 0.3
+let defaultTerminalFontSize: Double = 13.666
+let defaultCommandButtonSize: Double = 28
+let defaultToolbarButtonScale: Double = 0.27
 let defaultHandleSize: Double = 28
-let defaultSourceEditorFontSize: Double = 13.666
+let defaultSourceEditorFontSize: Double = 12.666
 
 let defaultOwner = "cdillard"
 let defaultRepo = "swiftsage"
@@ -38,7 +38,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var root: RepoFile?
 
-    @Published var hapticsEnabled: Bool = true
+    @AppStorage("hapticsEnabled") var hapticsEnabled: Bool = true
 
     @Published var changes = [ChangeRow]()
 #if !os(macOS)
@@ -73,14 +73,13 @@ public class SettingsViewModel: ObservableObject {
     @Published var ipAddress: String = ""
     @Published var port: String = ""
 
-    // TODO Impl
     @Published var showAudioSettings: Bool = false
-
-    // 📙
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
-
     @AppStorage("defaultURL") var defaultURL = "https://"
 
+// END SAVED UI SETTINGS ZONE **************************************************************************************
+
+// BEGIN STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
 #if !os(macOS)
     @Published var receivedImageData: Data? = nil {
         didSet {
@@ -89,12 +88,28 @@ public class SettingsViewModel: ObservableObject {
     }
     @Published var actualReceivedImage: UIImage?
 
+    @Published var receivedSimulatorFrameData: Data? = nil {
+        didSet {
+
+
+            actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
+
+
+            if oldValue == nil {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+#if !os(macOS)
+                    WindowManager.shared.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
 #endif
+                }
+            }
+        }
+    }
+    @Published var actualReceivedSimulatorFrame: UIImage?
 
-    // END SAVED UI SETTINGS ZONE **************************************************************************************
+#endif
+// END STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
 
-    // BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
-
+// BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
     @Published var voiceOutputenabled = false
     @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
     @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0 {
@@ -106,8 +121,7 @@ public class SettingsViewModel: ObservableObject {
     }
     @AppStorage("duckingAudio") var duckingAudio = false
 
-    // TODO
-    // add the code for server
+    // TODO: Add more server controls for server voice
     @Published var serverVoiceOutputEnabled = false
     @Published var installedVoices = [VoicePair]()
     @Published var selectedVoice: VoicePair?
@@ -115,48 +129,35 @@ public class SettingsViewModel: ObservableObject {
     @StateObject var speechRecognizer = SpeechRecognizer()
     @Published var recognizedText: String = ""
 
-
     // END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
     // BEGIN SAVED SIZES ZONE **************************************************************************************
-
-
     // TOOL BAR BUTOTN SIZE
     @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale
-
     // COMMAND BUTTON SIZE
     @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize
-
-
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
-
     @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
         didSet {
             if textSize != 0 {
                 UserDefaults.standard.set(textSize, forKey: "textSize")
             }
             else {
-                print("failed to set terminal text size")
-
+                logD("failed to set terminal text size")
             }
 #if !os(macOS)
             consoleManager.fontSize = CGFloat(self.textSize)
-
             consoleManager.refreshAtributedText()
 #endif
-
         }
     }
-
     // END SAVED SIZES ZONE ********************************************************************************************
 
     // BEGIN SAVED COLORS ZONE **************************************************************************************
-
     @Published var terminalBackgroundColor: Color {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
-            // print("saved terminalBackgroundColor to userdefaults")
             consoleManager.updateLumaColor()
 #endif
         }
@@ -165,11 +166,9 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
-            // print("saved terminalTextColor to userdefaults")
 
             consoleManager.refreshAtributedText()
 #endif
-
         }
     }
 
@@ -177,7 +176,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(appTextColor.rawValue, forKey: "appTextColor")
-            //  print("saved appTextColor to userdefaults")
 #endif
         }
     }
@@ -185,7 +183,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
-            //   print("saved buttonColor to userdefaults")
 #endif
         }
     }
@@ -193,24 +190,16 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
-            //   print("saved backgroundColor to userdefaults")
 #endif
         }
     }
 
-
     // BEGIN SUB ZONE FOR SRC EDITOR COLORS ********************************************
-
     @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize
-
     @Published var plainColorSrcEditor: Color {
         didSet {
 #if !os(macOS)
-
-            //       if let data =  {
             UserDefaults.standard.set(plainColorSrcEditor.rawValue , forKey: "plainColorSrcEditor")
-            //   print("saved plainColorSrcEditor to userdefaults")
-
 #endif
         }
     }
@@ -218,8 +207,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(numberColorSrcEditor.rawValue , forKey: "numberColorSrcEditor")
-            // print("saved numberColorSrcEditor to userdefaults")
-
 #endif
         }
     }
@@ -227,7 +214,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(stringColorSrcEditor.rawValue , forKey: "stringColorSrcEditor")
-            // print("saved stringColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -235,7 +221,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(identifierColorSrcEditor.rawValue, forKey: "identifierColorSrcEditor")
-            // print("saved identifierColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -243,18 +228,13 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(keywordColorSrcEditor.rawValue , forKey: "keywordColorSrcEditor")
-            //  print("saved keywordColorSrcEditor to userdefaults")
-
 #endif
-
         }
     }
     @Published var commentColorSrceEditor: Color {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
-            // print("saved commentColorSrceEditor to userdefaults")
-
 #endif
 
         }
@@ -263,7 +243,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(editorPlaceholderColorSrcEditor.rawValue , forKey: "editorPlaceholderColorSrcEditor")
-            //print("saved editorPlaceholderColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -271,7 +250,6 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(backgroundColorSrcEditor.rawValue, forKey: "backgroundColorSrcEditor")
-            //print("saved backgroundColorSrcEditor to userdefaults")
 #endif
         }
     }
@@ -279,20 +257,13 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 #if !os(macOS)
             UserDefaults.standard.set(lineNumbersColorSrcEditor.rawValue, forKey: "lineNumbersColorSrcEditor")
-            // print("saved lineNumbersColorSrcEditor to userdefaults")
 #endif
         }
     }
-
-
-
     // END SUB ZONE FOR SRC EDITOR COLORS********************************************
-
     // END SAVED COLORS ZONE **************************************************************************************
 
-    // BEGIN SAVED SECRETS ZONE **************************************************************************************
-
-
+    // BEGIN CLIENT API KEYS ZONE ******************************************************************************
     // TODO: React to user name and password change
     @AppStorage("userName") var userName = "chris" {
         didSet {
@@ -307,14 +278,11 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-
-
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
 
     @AppStorage("openAIModel") var openAIModel = defaultGPTModel
 
-    // CLIENT API KEYS
     @Published var openAIKey = "" {
         didSet {
             if keychainManager.saveToKeychain(key:aiKeyKey, value: openAIKey) {
@@ -334,15 +302,9 @@ public class SettingsViewModel: ObservableObject {
         }
 
     }
-
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
-
-
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
-
-
     // TODO: verify its okay to only allow lowercase????? It should be fine as long as users match case in all the checkouts?????
-
     @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)" {
         didSet {
             for char in gitRepo {
@@ -356,18 +318,100 @@ public class SettingsViewModel: ObservableObject {
     }
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
+// END CLIENT APIS ZONE **************************************************************************************
 
-    // END CLIENT APIS ZONE **************************************************************************************
 
+// START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
+    @Published var conversations: [Conversation] = [] {
+        didSet {
+            //logD("new convo state:\n\(conversations)")
+        }
+    }
+    @Published var conversationErrors: [Conversation.ID: Error] = [:] {
+        didSet {
+            if !conversationErrors.isEmpty {
+                //logD("new convo error state = \(conversationErrors)")
+            }
+        }
+    }
+    @Published var selectedConversationID: Conversation.ID? {
+        didSet {
+           // logD("selected = \(selectedConversationID)")
+        }
 
-    // GPT CONVERSATION
-    @Published var conversations: [Conversation] = []
-    @Published var conversationErrors: [Conversation.ID: Error] = [:]
-    @Published var selectedConversationID: Conversation.ID?
+    }
 
+    func appendMessageToConvoIndex(index: Int, message: Message) async {
+        conversations[index].messages.append(message)
+    }
+    func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) async {
+        conversations[index].messages[existingMessageIndex] = message
+    }
+
+    func nilOutConversationErrorsAt(convoId: Conversation.ID) async {
+        conversationErrors[convoId] = nil
+    }
+    func setConversationError(convoId: Conversation.ID, error: Error) async {
+        conversationErrors[convoId] = error
+    }
+    let idProvider: () -> String
+    let dateProvider: () -> Date
+
+    var selectedConversation: Conversation? {
+        selectedConversationID.flatMap { id in
+            conversations.first { $0.id == id }
+        }
+    }
+
+//    var selectedConversationPublisher: AnyPublisher<Conversation?, Never> {
+//        $selectedConversationID.receive(on: RunLoop.main).map { id in
+//            self.conversations.first(where: { $0.id == id })
+//        }
+//        .eraseToAnyPublisher()
+//    }
+
+    func sendChatText(_ convoID: Conversation.ID, chatText: String) {
+        gptCommand(conversationId: convoID, input: chatText)
+    }
+
+    func createConversation() -> Conversation.ID {
+        let conversation = Conversation(id: idProvider(), messages: [])
+        conversations.append(conversation)
+        logD("created new convo = \(conversation.id)")
+        return conversation.id
+    }
+
+    func selectConversation(_ conversationId: Conversation.ID?) {
+        selectedConversationID = conversationId
+    }
+
+    func deleteConversation(_ conversationId: Conversation.ID) {
+        conversations.removeAll(where: { $0.id == conversationId })
+    }
+
+    func createAndOpenNewConvo() {
+
+        let convo = createConversation()
+
+        openConversation(convo)
+    }
+    func openConversation(_ convoId: Conversation.ID) {
+        selectConversation(convoId)
+#if !os(macOS)
+
+        WindowManager.shared.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
+#endif
+    }
+// END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
 
     init() {
+
+        self.idProvider = {
+            UUID().uuidString
+        }
+        self.dateProvider = Date.init
+
         // BEGIN SIZE SETTING LOAD ZONE FROM DISK
 
         if UserDefaults.standard.double(forKey: "textSize") != 0 {
@@ -600,7 +644,17 @@ public class SettingsViewModel: ObservableObject {
             self.selectedVoiceIndexSaved = 0
         }
         configureAudioSession()
+        DispatchQueue.main.async {
+            if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
+                self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
 
+            }
+            else {
+                self.selectedVoiceIndexSaved = 0
+            }
+            self.configureAudioSession()
+        }
+        
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
 

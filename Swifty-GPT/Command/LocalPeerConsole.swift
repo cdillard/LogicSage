@@ -13,6 +13,10 @@ let localPeerConsole = LocalPeerConsole()
 class LocalPeerConsole: NSObject {
     let webSocketClient = WebSocketClient()
 
+    var isSendingSimulatorData = false
+
+    var isSendingImageData = false
+
     func sendLog(to recipient: String, text: String) {
          let logData: [String: String] = ["recipient": recipient, "message": text]
         do {
@@ -37,17 +41,22 @@ class LocalPeerConsole: NSObject {
             print( "error = \(error)")
         }
      }
+    let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
 
     // TODO: Fix binary data sending now that we have Auth
     func sendImageData(_ imageData: Data?) {
+
+        guard !isSendingImageData else { return multiPrinter("busy can't image ")}
+
+        guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+
         guard let data = imageData else {
             print("failed")
             return
         }
-        let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
-
-
-        let startMessage = "START_OF_DATA".data(using: .utf8)!
+        
+        isSendingImageData = true
+        let startMessage = "START_OF_IMG_DATA".data(using: .utf8)!
         webSocketClient.websocket.write(data: startMessage)
 
         var offset = 0
@@ -56,8 +65,37 @@ class LocalPeerConsole: NSObject {
             webSocketClient.websocket.write(data: chunk)
             offset += chunkSize
         }
-        let endMessage = "END_OF_DATA".data(using: .utf8)!
+        let endMessage = "END_OF_IMG_DATA".data(using: .utf8)!
         webSocketClient.websocket.write(data: endMessage)
+
+        isSendingImageData = false
+
+    }
+
+    func sendSimulatorData(_ simData: Data?) {
+        guard !isSendingImageData else { return multiPrinter("busy can't image ")}
+
+        guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+
+        guard let data = simData else {
+            print("failed")
+            return
+        }
+        isSendingSimulatorData = true
+
+        let startMessage = "START_OF_SIM_DATA".data(using: .utf8)!
+        webSocketClient.websocket.write(data: startMessage)
+
+        var offset = 0
+        while offset < data.count {
+            let chunk = data.subdata(in: offset..<min(offset + chunkSize, data.count))
+            webSocketClient.websocket.write(data: chunk)
+            offset += chunkSize
+        }
+        let endMessage = "END_OF_SIM_DATA".data(using: .utf8)!
+        webSocketClient.websocket.write(data: endMessage)
+        isSendingSimulatorData = false
+
     }
 }
 

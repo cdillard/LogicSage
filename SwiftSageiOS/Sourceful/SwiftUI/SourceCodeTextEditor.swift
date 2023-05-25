@@ -32,7 +32,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         var lexerForSource: (String) -> Lexer
         var textViewDidBeginEditing: (SourceCodeTextEditor) -> Void
         var theme: () -> SourceCodeTheme
-        
+        var overrideText: () -> String?
+
         /// Creates a **Customization** to pass into the *init()* of a **SourceCodeTextEditor**.
         ///
         /// - Parameters:
@@ -46,13 +47,16 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             insertionPointColor: @escaping () -> Colorv,
             lexerForSource: @escaping (String) -> Lexer,
             textViewDidBeginEditing: @escaping (SourceCodeTextEditor) -> Void,
-            theme: @escaping () -> SourceCodeTheme
+            theme: @escaping () -> SourceCodeTheme,
+            overrideText: @escaping () -> String?
+
         ) {
             self.didChangeText = didChangeText
             self.insertionPointColor = insertionPointColor
             self.lexerForSource = lexerForSource
             self.textViewDidBeginEditing = textViewDidBeginEditing
             self.theme = theme
+            self.overrideText = overrideText
         }
     }
     
@@ -71,7 +75,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             insertionPointColor: { Colorv.white },
             lexerForSource: { _ in SwiftLexer() },
             textViewDidBeginEditing: { _ in },
-            theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) }
+            theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) },
+            overrideText: { nil }
         ),
         shouldBecomeFirstResponder: Bool = false
     ) {
@@ -103,6 +108,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         if shouldBecomeFirstResponder {
             _ = view.becomeFirstResponder()
         }
+        var overrideText = custom.overrideText()
 
         DispatchQueue.main.async {
             view.textView.isEditable = isEditing
@@ -113,6 +119,10 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             view.isEditing = isEditing
             view.textView.isSelectable = isEditing
             view.contentTextView.isSelectable = isEditing
+
+            if let overrideText = overrideText {
+                view.textView.text = overrideText
+            }
         }
     }
     #endif

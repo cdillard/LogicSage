@@ -20,7 +20,11 @@ class ScreamClient: WebSocketDelegate {
     var pingTimer: Timer?
     public private(set) var isViable = false
 
+    var receivedSimData = Data()
     var receivedData = Data()
+
+    var isTransferringSim = false
+    var isTransferringWallpaper = false
 
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
@@ -62,10 +66,15 @@ class ScreamClient: WebSocketDelegate {
 
                     if recipient == SettingsViewModel.shared.userName {
 
-                        #if !os(macOS)
-                            consoleManager.printNoNewLine(message)
-                        #endif
-                        print(message, terminator: "")
+                        logDNoNewLine(message)
+
+                        if message.contains( "." ) || message.contains(","){
+                            playLightImpact()
+
+                        }
+                        else {
+                            playSoftImpact()
+                        }
 
                         if message.hasPrefix("say:") {
                             let arr = message.split(separator: ": ", maxSplits: 1)
@@ -93,19 +102,45 @@ class ScreamClient: WebSocketDelegate {
 #if !os(macOS)
 //            print("Received binary data: \(data)")
 
-            if data == "START_OF_DATA".data(using: .utf8)! {
-                receivedData = Data()
-                logD("receiving background data...")
+
+            // BEGIN HANDLE SIM STREAM ZONE
+            if data == "START_OF_SIM_DATA".data(using: .utf8)! {
+                isTransferringSim = true
+                receivedSimData = Data()
+              //  logD("receiving sim frame data...")
+
             }
-            else if data == "END_OF_DATA".data(using: .utf8)! {
-                logD("Received all data of size = \(receivedData.count)")
+            else if data == "END_OF_SIM_DATA".data(using: .utf8)! {
+//                logD("Received all sim frame data of size = \(receivedSimData.count)")
+                isTransferringSim = false
+
+                DispatchQueue.main.async {
+                    SettingsViewModel.shared.receivedSimulatorFrameData = self.receivedSimData
+                }
+            }
+            // END HANDLE SIM STREAM ZONE
+
+            // BEGIN HANDLE WALLPAPER STREAM ZONE
+            else if data == "START_OF_IMG_DATA".data(using: .utf8)! {
+                isTransferringWallpaper = true
+                receivedData = Data()
+               // logD("receiving wallpaper data...")
+            }
+            else if data == "END_OF_IMG_DATA".data(using: .utf8)! {
+//                logD("Received all data of size = \(receivedData.count)")
+                isTransferringWallpaper = false
 
                 DispatchQueue.main.async {
                     SettingsViewModel.shared.receivedImageData = self.receivedData
                 }
             }
-            else {
+            // END HANDLE WALLPAPER STREAM ZONE
+
+            else if isTransferringWallpaper {
                 receivedData.append(data)
+            }
+            else if isTransferringSim {
+                receivedSimData.append(data)
             }
 #endif
         case .ping:
@@ -174,9 +209,7 @@ class ScreamClient: WebSocketDelegate {
             screamer.connectWebSocket(ipAddress: SettingsViewModel.shared.ipAddress, port: SettingsViewModel.shared.port)
 
             logD("Attempt to connect non-viable connection - failing.")
-
         }
-
     }
     func sendCommand(command: String) {
         logD("Executing: \(command)")

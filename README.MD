@@ -291,7 +291,7 @@ If this happens just try again and it _usually_ clears right up.
 - [zip-foundation](https://github.com/weichsel/ZIPFoundation)
 - [MacPaw's excellent OpenAI](https://github.com/MacPaw/OpenAI)
 - [swift-png](https://github.com/kelvin13/swift-png)
-
+- [nonstrict-hq ScreenCaptureKit-Recording-example](https://github.com/nonstrict-hq/ScreenCaptureKit-Recording-example/)
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

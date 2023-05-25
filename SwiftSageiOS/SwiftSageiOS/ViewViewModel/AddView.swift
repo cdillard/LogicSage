@@ -82,6 +82,38 @@ struct AddView: View {
                         HStack {
 
                             HStack {
+//                                Button(action: {
+//                                    withAnimation {
+//                                        logD("open new simulator")
+//#if !os(macOS)
+//
+//                                        if consoleManager.isVisible {
+//                                            consoleManager.isVisible = false
+//                                        }
+//#endif
+//                                        showAddView.toggle()
+//#if !os(macOS)
+//                                        windowManager.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
+//#endif
+//                                    }
+//                                }) {
+//                                    VStack {
+//
+//
+//                                        resizableButtonImage(systemName:
+//                                                                "doc.fill.badge.plus",
+//                                                             size: geometry.size)
+//                                        .fontWeight(.bold)
+//                                        .cornerRadius(8)
+//
+//                                        Text("New SIM")
+//                                            .font(.subheadline)
+//                                            .foregroundColor(settingsViewModel.appTextColor)
+//                                    }
+//                                }
+//                                .padding(.horizontal, 8)
+//                                .padding(.vertical, 8)
+
                                 Button(action: {
                                     withAnimation {
                                         logD("open new File")

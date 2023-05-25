@@ -7,11 +7,14 @@
 
 import Foundation
 func simulatorCommand(input: String) {
-        multiPrinter("Not implemented... yet")
 
-//    multiPrinter("If No screen recording permission it won't work.")
-//    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
-   // VideoCapture.shared.captureSimulatorWindow()
+    multiPrinter("If No screen recording permission it won't work.")
+    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
+    multiPrinter("* Only works running Swifty-GPT from Terminal or iTerm2 *")
+
+    Task {
+        await VideoCapture.shared.captureSimulatorWindow()
+    }
 
 }
 func pathToWallpapers() -> String {
@@ -37,7 +40,7 @@ func wallpaperCommand(input: String) {
             multiPrinter("- \(file.lastPathComponent)")
         }
     }
-    else if input == "random" {
+    else if input == "random" || input == "rand" || input == "rand " || input == "random " {
         multiPrinter("searching \(wallpaperFolder)")
         let files = try? listFiles(at: wallpaperFolder)
 

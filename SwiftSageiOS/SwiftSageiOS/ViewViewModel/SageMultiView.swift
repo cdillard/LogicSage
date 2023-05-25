@@ -14,6 +14,9 @@ import WebKit
 enum ViewMode {
     case webView
     case editor
+    case simulator
+    case chat
+
     case repoTreeView
     case windowListView
     case changeView
@@ -120,12 +123,16 @@ struct SageMultiView: View {
 //                            print("srcEditor textViewDidBeginEditing")
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-                        }))
+                        }, overrideText: { nil }))
                         .onTapGesture {
                             self.windowManager.bringWindowToFront(window: self.window)
                         }
                         .environmentObject(viewModel)
 #endif
+                    case .chat:
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window)
+                            .environmentObject(windowManager)
+
                     case .webView:
                         let viewModel = WebViewViewModel()
                         WebView(url:getURL())
@@ -133,7 +140,13 @@ struct SageMultiView: View {
                                 self.windowManager.bringWindowToFront(window: self.window)
                             }
                             .environmentObject(viewModel)
-
+                    case .simulator:
+                        ZStack {
+                            Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .ignoresSafeArea()
+                        }
                     case .repoTreeView:
                         NavigationView {
                             if let root = settingsViewModel.root {

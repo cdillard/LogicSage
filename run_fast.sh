@@ -4,6 +4,7 @@
 #rm -rf ./WebSocketServer/.build
 
 lsof -i :8080 -sTCP:LISTEN | awk 'NR > 1 {print $2}' | xargs kill -15
+killall SwiftSageStatusBar
 
 ### USE THIS FOR Terminal.app
 cwd=$(pwd)
@@ -33,7 +34,7 @@ EOF
 # EOF
 
 # Vapor starts too fast :*()
-sleep 5
+sleep 20
 
 #rm -rf dd
 

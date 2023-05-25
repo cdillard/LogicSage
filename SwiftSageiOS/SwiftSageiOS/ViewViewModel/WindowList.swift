@@ -65,6 +65,11 @@ struct WindowList: View {
             return window.url ?? "Webview"
         case .file:
             return window.file?.name ?? "Filename"
+        case .simulator:
+            return "Simulator"
+        case .chat:
+            return "Chat \(window.convoId ?? "")"
+
         case .repoTreeView:
             return "Repo Tree"
         case .windowListView:

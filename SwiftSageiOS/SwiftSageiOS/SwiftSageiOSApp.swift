@@ -21,47 +21,60 @@
 import SwiftUI
 import Combine
 
-let STRING_LIMIT = 50000
+// TODO MAKE SURE ITS OKAY TO UP THIS SO MUCH
+let STRING_LIMIT = 500000
 
 // TODO BEFORE RELEASE: PROD BUNDLE ID
+// TODO USE BUILT IN BundleID var.
 let bundleID = "com.chrisdillard.SwiftSage"
-//let bundleID = "com.chrisdillard.SwiftSage"
 
 var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct SwiftSageiOSApp: App {
-    @StateObject private var settingsViewModel = SettingsViewModel()
+    @StateObject private var settingsViewModel = SettingsViewModel.shared
     @StateObject private var appState = AppState()
+    @State private var isDrawerOpen = false
 
     init() {
         serviceDiscovery = ServiceDiscovery()
-
     }
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ContentView()
-                    .environmentObject(settingsViewModel)
-                    .environmentObject(appState)
-                    .overlay(
-                        Group {
-                            if settingsViewModel.showInstructions {
-                                InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
-                            }
-                        }
-                    )
-                    .onAppear {
-                        doDiscover()
-#if !os(macOS)
-                        consoleManager.fontSize = settingsViewModel.textSize
-#endif
-                        DispatchQueue.main.async {
-                            settingsViewModel.printVoicesInMyDevice()
-                            settingsViewModel.configureAudioSession()
-                        }
-
+                HStack(spacing: 0) {
+                    if self.isDrawerOpen {
+                        DrawerContent(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations)
+                            .environmentObject(appState)
+                            .environmentObject(WindowManager.shared)
+                            .transition(.move(edge: .leading))
+                            .background(settingsViewModel.buttonColor)
+                            .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
                     }
+
+                    ContentView(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen)
+                        .environmentObject(appState)
+
+                    Spacer() 
+                }
+                .overlay(
+                    Group {
+                        if settingsViewModel.showInstructions {
+                            InstructionsPopup(isPresented: $settingsViewModel.showInstructions ,settingsViewModel: settingsViewModel )
+                        }
+                    }
+                )
+                .onAppear {
+                    doDiscover()
+#if !os(macOS)
+                    consoleManager.fontSize = settingsViewModel.textSize
+#endif
+                    DispatchQueue.main.async {
+                        settingsViewModel.printVoicesInMyDevice()
+                        settingsViewModel.configureAudioSession()
+                    }
+
+                }
 #if !os(macOS)
 
                 //                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in

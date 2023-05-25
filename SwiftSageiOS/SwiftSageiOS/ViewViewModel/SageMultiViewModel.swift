@@ -9,15 +9,26 @@ import Foundation
 #if !os(macOS)
 
 class SageMultiViewModel: ObservableObject {
+    @ObservedObject var settingsViewModel: SettingsViewModel
+
     @Published var windowInfo: WindowInfo
     @Published var sourceCode: String
     @Published var changes: [ChangeRow] = []
-    
+
     var originalSourceCode: String
 
-    init(windowInfo: WindowInfo) {
+    init(settingsViewModel: SettingsViewModel, windowInfo: WindowInfo) {
+        self.settingsViewModel = settingsViewModel
         self.windowInfo = windowInfo
-        self.sourceCode = windowInfo.fileContents
+
+        if let convoId = windowInfo.convoId {
+            let existingConvo = convoText(settingsViewModel.conversations, window: windowInfo)
+            self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
+        }
+        else {
+            self.sourceCode = windowInfo.fileContents
+        }
+
         self.originalSourceCode = windowInfo.fileContents
     }
 

@@ -18,29 +18,22 @@ struct TopBar: View {
     var body: some View {
         ZStack {
             HStack {
-
-                if windowInfo.windowType == .file ||
-                   windowInfo.windowType == .webView {
-
-                    Button(action: onClose) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.body)
-                    }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
-                }
-
-
-
-                    Text(getName())
+                Button(action: onClose) {
+                    Image(systemName: "xmark.circle.fill")
                         .font(.body)
-                        .lineLimit(1)
+                }
+                .foregroundColor(SettingsViewModel.shared.buttonColor)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
 
-                        .foregroundColor(SettingsViewModel.shared.buttonColor)
-                        .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                Text(getName())
+                    .font(.body)
+                    .lineLimit(1)
 
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 Spacer()
 
@@ -55,19 +48,18 @@ struct TopBar: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.trailing, 8)
                 }
-
             }
         }
-//        .simultaneousGesture(
-//            TapGesture().onEnded {
-//                self.windowManager.bringWindowToFront(window: self.windowInfo)
-//            }
-//        )
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 30)
     }
     func getName() -> String {
         switch windowInfo.windowType {
+        case .simulator:
+            return "Simulator"
+        case .chat:
+            return "Chat \(windowInfo.convoId ?? "")"
+
         case .file:
             return "\(windowInfo.file?.name ?? "Filename")"
         case .webView:

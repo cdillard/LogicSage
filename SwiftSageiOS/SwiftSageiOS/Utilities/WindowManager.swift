@@ -10,13 +10,17 @@ import Combine
 import SwiftUI
 
 class WindowManager: ObservableObject {
+
+    public static let shared = WindowManager()
+
+
     @Published var windows: [WindowInfo] = []
 
-    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "") {
+    func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {
 
         // TODO: OFFSET NEW WINDOWS
         
-        let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url)
+        let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url, convoId: convoId)
         windows.append(newWindow)
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
@@ -65,10 +69,14 @@ struct WindowInfo: Identifiable, Equatable {
     var fileContents: String
     var file: RepoFile?
     var url: String?
+    var convoId: Conversation.ID?
 
     enum WindowType {
         case webView
         case file
+        case simulator
+        case chat
+
         case repoTreeView
         case windowListView
         case changeView

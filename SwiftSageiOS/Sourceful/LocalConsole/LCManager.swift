@@ -18,24 +18,6 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
     
     public static let shared = LCManager()
 
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared2 = LCManager()
-//
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared3 = LCManager()
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared4 = LCManager()
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared5 = LCManager()
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared6 = LCManager()
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared7 = LCManager()
-//    // right now there is a strong association between 1 term window... this could be alieviated wit some work
-//    public static let shared8 = LCManager()
-//
-
-
     /// Set the font size. The font can be set to a minimum value of 5.0 and a maximum value of 20.0. The default value is 8.
     public var fontSize: CGFloat =  defaultTerminalFontSize {
         didSet {
@@ -438,13 +420,6 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             consoleViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             updateConsoleOrigin()
-
-            // we don't want the terminal on top all the time, we want it like other windows
-//            SwizzleTool().swizzleContextMenuReverseOrder()
-//            SwizzleTool().swizzleDidAddSubview {
-//                window.bringSubviewToFront(self.consoleViewController.view)
-//            }
-
         }
         
         /// Ensures the window is configured (i.e. scene has been found). If not, delay and wait for a scene to prepare itself, then try again.
@@ -694,17 +669,6 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
             currentText = shortenedString.stringAfterFirstOccurenceOf(delimiter: "\n") ?? shortenedString
         } else {
             currentText = _currentText
-        }
-        if let singleString = items as? String {
-            if specs.contains( singleString)  {
-                return
-            }
-
-
-        }
-        DispatchQueue.main.async {
-            let bottomOffset = CGPoint(x: 0, y: self.consoleTextView.contentSize.height - self.consoleTextView.bounds.size.height)
-            self.consoleTextView.setContentOffset(bottomOffset, animated: true)
         }
     }
     
