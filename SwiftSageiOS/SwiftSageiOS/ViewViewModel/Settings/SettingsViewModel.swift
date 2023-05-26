@@ -305,17 +305,18 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
     // TODO: verify its okay to only allow lowercase????? It should be fine as long as users match case in all the checkouts?????
-    @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)" {
-        didSet {
-            for char in gitRepo {
-                if char.isUppercase {
-                    gitRepo = gitRepo.lowercased()
-                    logD("lowercase only allowed in git repo names, lemme know if thats an issue in Github issue plz")
-                    return
-                }
-            }
-        }
-    }
+    @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
+//    {
+//        didSet {
+//            for char in gitRepo {
+//                if char.isUppercase {
+//                    gitRepo = gitRepo.lowercased()
+//                    logD("lowercase only allowed in git repo names, lemme know if thats an issue in Github issue plz")
+//                    return
+//                }
+//            }
+//        }
+//    }
 
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 // END CLIENT APIS ZONE **************************************************************************************
