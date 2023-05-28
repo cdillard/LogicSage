@@ -19,14 +19,14 @@ public struct DefaultSourceCodeTheme: SourceCodeTheme {
         Colorv(SettingsViewModel.shared.lineNumbersColorSrcEditor)
 	}
 	
-	public let lineNumbersStyle: LineNumbersStyle? = LineNumbersStyle(font: Font(name: "Menlo", size: 9)!, textColor: lineNumbersColor)
+	public let lineNumbersStyle: LineNumbersStyle? = LineNumbersStyle(font: Fontv(name: "Menlo", size: 9)!, textColor: lineNumbersColor)
 	
 	public let gutterStyle: GutterStyle = GutterStyle(backgroundColor: Colorv(red: 21/255.0, green: 22/255, blue: 31/255, alpha: 1.0), minimumWidth: 32)
 	
     public let font = getFont()
 
-    static func getFont() -> Font {
-        Font(name: "Menlo", size: CGFloat(SettingsViewModel.shared.fontSizeSrcEditor))!
+    static func getFont() -> Fontv {
+        Fontv(name: "Menlo", size: CGFloat(SettingsViewModel.shared.fontSizeSrcEditor))!
     }
     public let backgroundColor = Colorv(SettingsViewModel.shared.backgroundColorSrcEditor)
 	

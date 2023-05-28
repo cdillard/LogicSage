@@ -63,7 +63,7 @@ extension SettingsViewModel {
                 try audioSession.setActive(true)
 
             } catch {
-                print("Failed to configure audio session: \(error.localizedDescription)")
+                logD("Failed to configure audio session: \(error.localizedDescription)")
             }
         }
     #endif

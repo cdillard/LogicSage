@@ -16,6 +16,7 @@ enum ViewMode {
     case editor
     case simulator
     case chat
+    case project
 
     case repoTreeView
     case windowListView
@@ -111,7 +112,7 @@ struct SageMultiView: View {
 
                                 }
                                 else {
-                                    print("no file url, no file changes")
+                                    logD("no file url, no file changes")
                                 }
                             }
 
@@ -132,7 +133,9 @@ struct SageMultiView: View {
                     case .chat:
                         ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window)
                             .environmentObject(windowManager)
-
+                    case .project:
+                        ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                            .environmentObject(windowManager)
                     case .webView:
                         let viewModel = WebViewViewModel()
                         WebView(url:getURL())

@@ -556,8 +556,8 @@ open class SyntaxTextView: UIView {
 
                 textStorage.addAttributes(theme.attributes(for: token), range: contentRange)
 
-                textStorage.addAttributes([.foregroundColor: Colorv.clear, .font: Font.systemFont(ofSize: 0.01)], range: startRange)
-                textStorage.addAttributes([.foregroundColor: Colorv.clear, .font: Font.systemFont(ofSize: 0.01)], range: endRange)
+                textStorage.addAttributes([.foregroundColor: Colorv.clear, .font: Fontv.systemFont(ofSize: 0.01)], range: startRange)
+                textStorage.addAttributes([.foregroundColor: Colorv.clear, .font: Fontv.systemFont(ofSize: 0.01)], range: endRange)
 
                 textStorage.addAttributes(attr, range: range)
                 continue

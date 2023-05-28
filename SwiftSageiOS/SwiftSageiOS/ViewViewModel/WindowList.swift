@@ -71,13 +71,16 @@ struct WindowList: View {
             return "Chat \(window.convoId?.prefix(4) ?? "")"
 
         case .repoTreeView:
-            return "Repo Tree"
+            return "Files"
         case .windowListView:
-            return "Window List"
+            return "Windows"
         case .changeView:
-            return "Change List"
+            return "Changes"
         case .workingChangesView:
-            return "Working Changes"
+            return "Changes"
+
+        case .project:
+            return "Project"
         }
     }
 }

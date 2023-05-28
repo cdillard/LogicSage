@@ -12,10 +12,10 @@ import CoreGraphics
 
 public struct LineNumbersStyle {
 	
-	public let font: Font
+	public let font: Fontv
 	public let textColor: Colorv
 	
-	public init(font: Font, textColor: Colorv) {
+	public init(font: Fontv, textColor: Colorv) {
 		self.font = font
 		self.textColor = textColor
 	}
@@ -46,7 +46,7 @@ public protocol SyntaxColorTheme {
 
 #if !os(macOS)
 
-	var font: Font { get }
+	var font: Fontv { get }
     #endif
 	
 	var backgroundColor: Colorv { get }

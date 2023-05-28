@@ -16,8 +16,49 @@ let maxScreenRecordingDuration: TimeInterval = 600.0
 
 @MainActor
 class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-  //  private var captureSession: AVCaptureSession?
+
     static let shared = VideoCapture()
+
+    func captureAppWindow(applicationName: String, windowName: String) async {
+        // Check for screen recording permission, make sure your Terminal.app or iTerm2.app has screen recording permission
+        guard CGPreflightScreenCaptureAccess() else {
+            multiPrinter("No screen capture permission `mirror` failed!")
+            return
+        }
+        do {
+            let recordURL = pathToRecordingAssets(name: "recording-\(applicationName).mov")
+
+            do {
+                try FileManager.default.removeItem(atPath: recordURL)
+            }
+            catch {
+                multiPrinter("did not exist or delete old \(recordURL)")
+            }
+            let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: CGMainDisplayID(), isSimulator: false, appName:applicationName, windowName: windowName, cropRect: nil)
+
+            multiPrinter("Starting mirror recording of \(applicationName)")
+
+            try await screenRecorder.start()
+
+            // We should stop and delete recording periodically and determine if the avasset writing is really needed to get the sample buffers
+            DispatchQueue.global().asyncAfter(deadline: .now() + maxScreenRecordingDuration) {
+                Task {
+                    do {
+                        try await screenRecorder.stop()
+                        multiPrinter("stopped sim capture. Please run `mirror` again to restart")
+
+                    }
+                    catch {
+                        multiPrinter("err mirror screen recording = \(error)")
+                    }
+                }
+            }
+        }
+        catch {
+            multiPrinter(error)
+        }
+
+    }
 
     func captureSimulatorWindow() async {
         // Check for screen recording permission, make sure your Terminal.app or iTerm2.app has screen recording permission
@@ -26,13 +67,14 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             return
         }
         do {
+            let recordURL = pathToRecordingAssets(name: "recording-sim.mov")
             do {
-                try FileManager.default.removeItem(atPath: pathToRecordingAssets())
+                try FileManager.default.removeItem(atPath: recordURL)
             }
             catch {
                 multiPrinter("did not exist or delete old recording.mov")
             }
-            let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: pathToRecordingAssets()), displayID: CGMainDisplayID(), cropRect: nil)
+            let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: CGMainDisplayID(), cropRect: nil)
 
             multiPrinter("Starting screen recording of main display")
 
@@ -56,8 +98,8 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             multiPrinter(error)
         }
     }
-    func pathToRecordingAssets() -> String {
-        "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/\("recording.mov")"
+    func pathToRecordingAssets(name: String = "recording.mov") -> String {
+        "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/\(name)"
     }
 }
 struct ScreenRecorder2 {
@@ -69,7 +111,7 @@ struct ScreenRecorder2 {
     private var stream: SCStream
 
 
-    init(url: URL, displayID: CGDirectDisplayID, cropRect: CGRect?) async throws {
+    init(url: URL, displayID: CGDirectDisplayID, isSimulator: Bool = true, appName: String? = nil, windowName: String? = nil, cropRect: CGRect?) async throws {
 
         // Create AVAssetWriter for a QuickTime movie file
         self.assetWriter = try AVAssetWriter(url: url, fileType: .mov)
@@ -77,17 +119,25 @@ struct ScreenRecorder2 {
         // Create a filter for the specified display
         let sharableContent = try await SCShareableContent.current
 
-
+        if let appName = appName, let windowName = windowName, !isSimulator {
+            multiPrinter("Hunting for  window \(appName ) \(windowName)\n")
+        }
         for window in sharableContent.windows {
-            if window.displayName.contains("Simulator:") {
-                multiPrinter("found wind = \(window.displayName) : \(window.frame) size: \(window.frame.size)")
+            if isSimulator && window.displayName.contains("Simulator:") {
+                multiPrinter("found wind = \(window.displayName) : \(window.frame) size: \(window.frame.size)\n")
             }
+
+            if let appName = appName, let windowName = windowName, !isSimulator {
+                multiPrinter("found wind = \(window.displayName) : \(window.frame) size: \(window.frame.size)\n")
+
+            }
+            
         }
         guard let simWindow = sharableContent.windows.first(where: {
             $0.displayName.contains("Simulator:") && $0.frame.origin.x != 0 && $0.frame.origin.y != 0
 
         }) else {
-            multiPrinter("Cannot find sim window")
+            multiPrinter("Cannot find sim window\n")
             throw RecordingError("Cannot find sim window")
         }
 
@@ -139,7 +189,8 @@ struct ScreenRecorder2 {
         // MARK: SCStream setup
 
         let configuration = SCStreamConfiguration()
-        configuration.queueDepth = 6
+        // 6 was OG, testing 4.
+        configuration.queueDepth = 4
 
         // Create SCStream and add local StreamOutput object to receive samples
         stream = SCStream(filter: filter, configuration: configuration, delegate: nil)
@@ -250,7 +301,7 @@ struct ScreenRecorder2 {
                 if videoInput.isReadyForMoreMediaData {
 
                     // Only send 1 frame per second over the websocket.
-                    let frameInterval: Double = 1.0 // this means one frame per second
+                    let frameInterval: Double = 2.0 // this means one frame per second
                     let currentTime = CMTimeGetSeconds(sampleBuffer.presentationTimeStamp)
                     let lastFrameTimeSeconds = CMTimeGetSeconds(lastFrameTime)
                     if currentTime - lastFrameTimeSeconds >= frameInterval {

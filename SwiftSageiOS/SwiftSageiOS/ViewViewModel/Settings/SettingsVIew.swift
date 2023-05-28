@@ -29,6 +29,18 @@ struct SettingsView: View {
 
     @State private var showAPISettings = false
 
+
+    @State var presentRenamer: Bool = false
+    @State private var newName: String = ""
+    @State var renamingConvo: Conversation? = nil
+
+
+    @State var presentUserAvatarRenamer: Bool = false
+    @State var presentGptAvatarRenamer: Bool = false
+
+    @State private var newUsersName: String = ""
+    @State private var newGPTName: String = ""
+
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -54,7 +66,7 @@ struct SettingsView: View {
                                             .fontWeight(.bold)
                                             .font(.body)
                                             .padding(.horizontal, 8)
-                                                 .padding(.vertical, 8)
+                                            .padding(.vertical, 8)
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
@@ -76,11 +88,37 @@ struct SettingsView: View {
 
                         // MODE PICKER
                         Group {
+                            HStack {
+                                VStack {
+                                    DevicePicker(settingsViewModel: settingsViewModel)
+                                    
+                                    Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                }
 
-                            DevicePicker(settingsViewModel: settingsViewModel)
+                                // PLugItIn BUTTON
+                                Button("🔌") {
+                                    logD("force reconnect")
+                                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
 
-                            Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
-                                .foregroundColor(settingsViewModel.appTextColor)
+                                    serviceDiscovery?.startDiscovering()
+
+                                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
+#if !os(macOS)
+                                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                                            UIApplication.shared.open(url)
+                                        }
+#endif
+                                    }
+                                    else {
+                                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
+
+                                    }
+                                }
+                                .font(.body)
+                                .lineLimit(nil)
+                                .background(settingsViewModel.buttonColor)
+                            }
 
                         }
                         VStack {
@@ -237,9 +275,6 @@ struct SettingsView: View {
                             }
                         }
 
-
-
-
                         Group {
                             Button  {
                                 withAnimation {
@@ -251,14 +286,19 @@ struct SettingsView: View {
                             } label: {
                                 ZStack {
                                     VStack {
-                                        Text("Autocorrect?")
-                                            .font(.body)
-                                            .foregroundColor(settingsViewModel.appTextColor)
+
 
                                         Text("📙")
+                                            .font(.caption)
+
+                                        Text("Autocorrect?")
+                                            .font(.caption)
+                                            .foregroundColor(settingsViewModel.appTextColor)
                                     }
                                     if settingsViewModel.autoCorrect {
                                         Text("❌")
+                                            .font(.caption)
+
                                             .opacity(0.74)
                                     }
                                 }
@@ -272,9 +312,7 @@ struct SettingsView: View {
 
                             Group {
                                 VStack {
-                                    Text("feedback won't play when low battery (< 0.30)")
-                                        .font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
+
 
                                     Button  {
                                         withAnimation {
@@ -286,15 +324,17 @@ struct SettingsView: View {
                                     } label: {
                                         ZStack {
                                             VStack {
+                                                Text("📳")
+                                                    .font(.caption)
 
                                                 Text("Haptic Feedback?")
-                                                    .font(.body)
+                                                    .font(.caption)
                                                     .foregroundColor(settingsViewModel.appTextColor)
-
-                                                Text("📳")
                                             }
                                             if settingsViewModel.hapticsEnabled {
                                                 Text("❌")
+                                                    .font(.caption)
+
                                                     .opacity(0.74)
                                             }
                                         }
@@ -305,15 +345,17 @@ struct SettingsView: View {
                                         .cornerRadius(8)
                                     }
                                     .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                                    Text("feedback won't play when low battery (< 0.30)")
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
                                 }
                             }
                         }
 
                         if settingsViewModel.currentMode == .computer {
                             Group {
-                                Text("LoadMode")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .fontWeight(.semibold)
+
                                 HStack {
                                     Button(action: {
                                         withAnimation {
@@ -325,12 +367,14 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .cornerRadius(8)
                                     }
-                                    .padding(.bottom)
                                 }
+                                Text("load mode")
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
                         }
-
 
                         Group {
                             Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") size sliders").font(.body)
@@ -436,7 +480,7 @@ struct SettingsView: View {
 
                                         .lineLimit(nil)
                                 }
-                     
+
                                 Group {
                                     Text("corner handle size")
                                         .fontWeight(.semibold)
@@ -486,24 +530,24 @@ struct SettingsView: View {
                                     Text("Themes:").font(.body)
 
                                     Text("Deep Space Sparkle")
-//                                        .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
-//                                        .background( UIColor(red: 74, green: 100, blue: 108))
+                                    //                                        .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
+                                    //                                        .background( UIColor(red: 74, green: 100, blue: 108))
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
-                                            print("Tapped Deep Space Sparkle theme")
+                                            logD("Tapped Deep Space Sparkle theme")
 
                                             settingsViewModel.applyTheme(theme: .deepSpace)
 
 
                                         }
                                     Text("Hackeresque")
-//                                        .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
-//                                        .background( UIColor.black)
+                                    //                                        .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
+                                    //                                        .background( UIColor.black)
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
-                                            print("Tapped Hackeresque theme")
+                                            logD("Tapped Hackeresque theme")
 
                                             settingsViewModel.applyTheme(theme: .hacker)
 
@@ -632,28 +676,51 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    HStack {
+                        Group {
+                            Button(action: {
+                                withAnimation {
+                                    logD("change your name")
+                                    presentUserAvatarRenamer = true
+                                }
+                            }) {
+                                VStack {
+                                    Text("Avatar")
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .font(.body)
 
+                                    Text("\(settingsViewModel.savedUserAvatar)")
+                                        .fontWeight(.bold)
+                                        .background(settingsViewModel.buttonColor)
+                                        .cornerRadius(8)
+                                }
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .padding(.bottom)
 
-//                    Button(action: {
-//                        withAnimation {
-//#if !os(macOS)
-//                            consoleManager.print("Patience... soon this will select your avatar. Then we'll add the customization of GPT bot avatars in time.")
-//#endif
-//                        }
-//                    }) {
-//                        VStack {
-//                            Text("Choose Avatar")
-//                                .foregroundColor(settingsViewModel.appTextColor)
-//                                .font(.body)
-//
-//                            Text("👨")
-//                                .fontWeight(.bold)
-//                                .background(settingsViewModel.buttonColor)
-//                                .cornerRadius(8)
-//                        }
-//                    }
-//                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-//                    .padding(.bottom)
+                            Button(action: {
+                                withAnimation {
+                                    logD("change gpt name")
+                                    presentGptAvatarRenamer = true
+
+                                }
+                            }) {
+                                VStack {
+                                    Text("Gpt")
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .font(.body)
+
+                                    Text("\(settingsViewModel.savedBotAvatar)")
+                                        .fontWeight(.bold)
+                                        .background(settingsViewModel.buttonColor)
+                                        .cornerRadius(8)
+                                }
+
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .padding(.bottom)
+                        }
+                    }
 
                     Group {
                         Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings").font(.body)
@@ -678,9 +745,7 @@ struct SettingsView: View {
 
                         Button(action: {
                             withAnimation {
-#if !os(macOS)
-                                consoleManager.print("Requesing mic permission...")
-#endif
+                                logD("Requesing mic permission...")
                                 settingsViewModel.requestMicrophoneAccess { granted in
                                     settingsViewModel.hasAcceptedMicrophone = granted == true
                                 }
@@ -709,7 +774,7 @@ struct SettingsView: View {
                                     if settingsViewModel.voiceOutputenabled {
                                         settingsViewModel.stopVoice()
                                     }
-                               
+
                                     settingsViewModel.configureAudioSession()
                                     settingsViewModel.printVoicesInMyDevice()
 
@@ -782,7 +847,6 @@ struct SettingsView: View {
                                             }
                                         }
                                         .listRowBackground(settingsViewModel.backgroundColor)
-
                                         .contentShape(Rectangle())
                                         .onTapGesture {
                                             settingsViewModel.selectedVoiceIndexSaved = index
@@ -824,12 +888,8 @@ struct SettingsView: View {
                                         // Button for (help)
                                         Text("help")
                                             .foregroundColor(settingsViewModel.appTextColor)
-
-
                                     }
                                     VStack {
-
-
                                         Button(action: {
                                             withAnimation {
                                                 showSettings.toggle()
@@ -845,7 +905,7 @@ struct SettingsView: View {
                                             }
                                         }) {
                                             resizableButtonImage(systemName:
-                                                                    "info.windshield",
+                                                                    "info.bubble.fill",
                                                                  size: geometry.size)
                                             .fontWeight(.bold)
                                             .background(settingsViewModel.buttonColor)
@@ -888,7 +948,6 @@ struct SettingsView: View {
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                     Spacer()
-
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding(geometry.size.width * 0.01)
@@ -896,10 +955,34 @@ struct SettingsView: View {
 #if !os(macOS)
                 .background(settingsViewModel.backgroundColor)
 #endif
-                
             }
-            .edgesIgnoringSafeArea(.all)
-            .background(settingsViewModel.backgroundColor)
+            .alert("Rename self", isPresented: $presentUserAvatarRenamer, actions: {
+                TextField("New name", text: $newUsersName)
+
+                Button("Rename", action: {
+                    settingsViewModel.savedUserAvatar = newUsersName
+
+                })
+                Button("Cancel", role: .cancel, action: {
+                    presentGptAvatarRenamer = false
+                })
+            }, message: {
+                Text("Please enter new name for yourself")
+            })
+            .alert("Rename gpt", isPresented: $presentGptAvatarRenamer, actions: {
+                TextField("New name", text: $newGPTName)
+
+                Button("Rename", action: {
+                    settingsViewModel.savedBotAvatar = newGPTName
+
+                })
+                Button("Cancel", role: .cancel, action: {
+                    presentGptAvatarRenamer = false
+                })
+            }, message: {
+                Text("Please enter new name for gpt")
+            })
+            .background(settingsViewModel.backgroundColor             .edgesIgnoringSafeArea(.all))
 
             .onAppear {
 #if !os(macOS)
@@ -961,6 +1044,8 @@ struct DevicePicker: View {
                             settingsViewModel.currentMode = .mobile
                             logD(settingsViewModel.logoAscii5())
 
+                            settingsViewModel.doDiscover()
+
                         }
                     }
                 Image(systemName: "desktopcomputer")
@@ -977,6 +1062,7 @@ struct DevicePicker: View {
                             settingsViewModel.currentMode = .computer
                             logD(settingsViewModel.logoAscii5())
 
+                            settingsViewModel.doDiscover()
                         }
                     }
             }

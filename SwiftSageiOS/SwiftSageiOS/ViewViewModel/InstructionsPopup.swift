@@ -50,11 +50,9 @@ struct InstructionsPopup: View {
 
                             Text("Check out the repo for info on setting up server.")
                             Text("To Run The server: Make sure you have at minimum taken these steps:")
-                            Text("0. Set your Computers API Key for A.I. in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the LogicSage Xcode project.")
-                            Text("1. Running SwiftSage Swifty-GPT cmd line target on your command line Mac.")
-                            Text("2. Running the vapor server.")
+                            Text("0. Set your Computers API Key for A.I. in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the LogicSage ./run.sh")
                         }
-                        Text("Without these 3 steps, the LogicSage server will not work.")
+                        Text("Without this step, the LogicSage server will not work.")
 
                         Text("-CREDITS: https://github.com/cdillard/LogicSage#credits")
                             .foregroundColor(settingsViewModel.appTextColor)

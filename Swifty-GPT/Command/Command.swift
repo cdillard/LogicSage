@@ -186,9 +186,15 @@ func stopCommand(input: String) {
 
 func ideaCommand(input: String) {
 
-    let newPrompt = createIdeaPrompt(command: input)
+    if input.isEmpty {
+        randomCommand(input: "")
+        return
+    }
+    else {
+        let newPrompt = createIdeaPrompt(command: input)
 
-    doPrompting(overridePrompt: newPrompt)
+        doPrompting(overridePrompt: newPrompt)
+    }
 }
 
 func zeroCommand(input: String) {
@@ -218,7 +224,6 @@ func zeroCommand(input: String) {
             }
         }
     }
-
 }
 
 func gptFileCommand(input: String) {

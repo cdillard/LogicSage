@@ -6,7 +6,33 @@
 //
 
 import Foundation
+
+func mirrorCommand(input: String) {
+
+    let inputComps = input.components(separatedBy: " ")
+    guard inputComps.count > 1 else {
+        multiPrinter("Invalid `mirror` invocation.")
+        multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
+
+        return
+    }
+    multiPrinter("mirror \(inputComps[0]) \(inputComps[1])")
+
+    multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
+    multiPrinter("If No screen recording permission it won't work.")
+    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
+    multiPrinter("* Only works running Swifty-GPT from Terminal or iTerm2 *")
+
+    Task {
+        await VideoCapture.shared.captureAppWindow(applicationName: inputComps[0], windowName: inputComps[1])
+    }
+
+}
+
+
 func simulatorCommand(input: String) {
+
+    // TODO: ALLOW SELECTION, of simulator, start if not already running
 
     multiPrinter("If No screen recording permission it won't work.")
     multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
@@ -52,7 +78,7 @@ func wallpaperCommand(input: String) {
 
             multiPrinter("Send chunked file \(chosenFile.lastPathComponent) w/ size \(data)....")
 
-            localPeerConsole.sendImageData(data)
+            localPeerConsole.sendImageData(data, name: chosenFile.lastPathComponent)
         }
         catch {
             multiPrinter("error setting your random wallpaper")

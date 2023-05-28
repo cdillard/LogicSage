@@ -13,14 +13,25 @@ import BackgroundTasks
 class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
 
     static func applicationDidFinishLaunching() {
+        logD("applicationDidFinishLaunching starts")
+
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "\(bundleID)bger", using: nil) { task in
             self.handleWebSocketRefresh(task: task as! BGAppRefreshTask)
         }
+
+
+        logD("applicationDidFinishLaunching ends")
+
     }
     static func applicationDidEnterBackground() {
+        logD("applicationDidEnterBG starts")
+
         screamer.sendPing()
 
         scheduleWebSocketRefresh()
+
+        logD("applicationDidEnterBG ends")
+
     }
 
     static func handleWebSocketRefresh(task: BGAppRefreshTask) {
@@ -28,8 +39,6 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
             task.setTaskCompleted(success: false)
         }
 
-        // Refresh your WebSocket connection or perform necessary actions here
-        // ...
         serviceDiscovery?.startDiscovering()
         screamer.connect()
         screamer.sendPing()
@@ -44,9 +53,13 @@ class SwiftSageiOSAppDelegate: NSObject, UIApplicationDelegate, ObservableObject
         request.earliestBeginDate = Date(timeIntervalSinceNow: 60 * 2) // 1 minutes from now
 
         do {
+            logD("scheduleWebSocketRefresh attempt")
+
             try BGTaskScheduler.shared.submit(request)
+            logD("scheduleWebSocketRefresh success")
+
         } catch {
-            print("Could not schedule WebSocket refresh task: \(error)")
+            logD("Could not schedule WebSocket refresh task: \(error)")
         }
     }
 }

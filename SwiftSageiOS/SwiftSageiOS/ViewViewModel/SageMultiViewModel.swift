@@ -22,7 +22,7 @@ class SageMultiViewModel: ObservableObject {
         self.windowInfo = windowInfo
 
         if let convoId = windowInfo.convoId {
-            let existingConvo = convoText(settingsViewModel.conversations, window: windowInfo)
+            let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
             self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
         }
         else {

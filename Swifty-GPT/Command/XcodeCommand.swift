@@ -63,7 +63,6 @@ func buildProject(projectPath: String, scheme: String, completion: @escaping (Bo
     task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "name=iPhone 14", "-verbose"]
  //  "-IDEBuildingContinueBuildingAfterErrors=YES",
 
-    
     let outputPipe = Pipe()
     task.standardOutput = outputPipe
 

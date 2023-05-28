@@ -24,7 +24,7 @@ class PTTWrapper: NSObject, PTChannelManagerDelegate, PTChannelRestorationDelega
                                                                        restorationDelegate: self)
         }
         catch {
-            print("error w ptt = \(error)")
+            logD("error w ptt = \(error)")
         }
     }
 

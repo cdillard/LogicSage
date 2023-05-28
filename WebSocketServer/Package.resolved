@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-server/async-http-client.git",
       "state" : {
-        "revision" : "333e60cc90f52973f7ee29cd8e3a7f6adfe79f4e",
-        "version" : "1.17.0"
+        "revision" : "78db67e5bf4a8543075787f228e8920097319281",
+        "version" : "1.18.0"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/postgres-kit.git",
       "state" : {
-        "revision" : "69d85952c4e17a891ea01352564b0ff37de31edf",
-        "version" : "2.11.1"
+        "revision" : "875e8c191ea776802fddf6773146349803629754",
+        "version" : "2.11.2"
       }
     },
     {
@@ -239,8 +239,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
-        "revision" : "f4b00a5350238fe896d865d96d64f12fcbbeda95",
-        "version" : "4.76.0"
+        "revision" : "8b79ff0bd264a33bd0b7471dcf50dd1be983f992",
+        "version" : "4.76.3"
       }
     },
     {
@@ -248,8 +248,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/websocket-kit.git",
       "state" : {
-        "revision" : "17c0afbf24f4e288e183bc34317dc97b5cd084bd",
-        "version" : "2.9.0"
+        "revision" : "2ec14506d5f8199926906dc5a620ac22b147db86",
+        "version" : "2.13.0"
       }
     }
   ],

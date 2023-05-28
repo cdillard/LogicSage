@@ -30,6 +30,9 @@
 		B71BE6C82A1DB4E500DAEC34 /* PixelScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71BE6C72A1DB4E500DAEC34 /* PixelScan.swift */; };
 		B71C62F02A0063A4004296E4 /* Reset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62EF2A0063A4004296E4 /* Reset.swift */; };
 		B71C62F22A00A47F004296E4 /* Multiprinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62F12A00A47F004296E4 /* Multiprinter.swift */; };
+		B71EB8752A20F8D000D87C6F /* LogicWebsocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */; };
+		B71EB8772A213F5400D87C6F /* WorkspaceCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EB8762A213F5400D87C6F /* WorkspaceCommands.swift */; };
+		B71EB87A2A21510D00D87C6F /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B71EB8792A21510D00D87C6F /* ZIPFoundation */; };
 		B729B14029F99DA800BA6752 /* Therapy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B13F29F99DA800BA6752 /* Therapy.swift */; };
 		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
 		B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B737F41429F8955100E57577 /* ScreenCaptureKit.framework */; };
@@ -169,6 +172,8 @@
 		B71BE6C72A1DB4E500DAEC34 /* PixelScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelScan.swift; sourceTree = "<group>"; };
 		B71C62EF2A0063A4004296E4 /* Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reset.swift; sourceTree = "<group>"; };
 		B71C62F12A00A47F004296E4 /* Multiprinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiprinter.swift; sourceTree = "<group>"; };
+		B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicWebsocketClient.swift; sourceTree = "<group>"; };
+		B71EB8762A213F5400D87C6F /* WorkspaceCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceCommands.swift; sourceTree = "<group>"; };
 		B729B13F29F99DA800BA6752 /* Therapy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Therapy.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
@@ -282,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */,
+				B71EB87A2A21510D00D87C6F /* ZIPFoundation in Frameworks */,
 				B78C6C2729F3129300AA568A /* PNG in Frameworks */,
 				B768CE9D29EB3F8500B8A9E4 /* AudioUnit.framework in Frameworks */,
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
@@ -372,6 +378,7 @@
 		B729B13B29F975F600BA6752 /* Command */ = {
 			isa = PBXGroup;
 			children = (
+				B71EB8762A213F5400D87C6F /* WorkspaceCommands.swift */,
 				B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */,
 				B775BF7829EB78B0007FA7AE /* Command.swift */,
 				B74746A729F40FCD00075010 /* CommandTable.swift */,
@@ -386,6 +393,7 @@
 				B71C62EF2A0063A4004296E4 /* Reset.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
+				B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -630,6 +638,7 @@
 				B74A169329F1FA54006A0605 /* SourceKittenFramework */,
 				B78C6C2629F3129300AA568A /* PNG */,
 				B7CA77A129F6A84500A9DBE6 /* Starscream */,
+				B71EB8792A21510D00D87C6F /* ZIPFoundation */,
 			);
 			productName = "Swifty-GPT";
 			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
@@ -688,6 +697,7 @@
 				B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */,
 				B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */,
 				B7CA77A029F6A84500A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
+				B71EB8782A21510D00D87C6F /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
@@ -743,6 +753,7 @@
 				B7544E972A193B0400961F4C /* MultipartFormDataRequest.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7717D2729EFA56D005141AB /* AssisAI.swift in Sources */,
+				B71EB8752A20F8D000D87C6F /* LogicWebsocketClient.swift in Sources */,
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B7544E802A193B0400961F4C /* EditsQuery.swift in Sources */,
 				B71C62F02A0063A4004296E4 /* Reset.swift in Sources */,
@@ -797,6 +808,7 @@
 				B7544E912A193B0400961F4C /* ModerationsResult.swift in Sources */,
 				B7544E842A193B0400961F4C /* ModelsResult.swift in Sources */,
 				B7544E962A193B0400961F4C /* OpenAIProtocol+Combine.swift in Sources */,
+				B71EB8772A213F5400D87C6F /* WorkspaceCommands.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B774605A29FBE2FA00E7C46B /* Stocks.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
@@ -1105,6 +1117,14 @@
 				kind = branch;
 			};
 		};
+		B71EB8782A21510D00D87C6F /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.16;
+			};
+		};
 		B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jpsim/SourceKitten.git";
@@ -1149,6 +1169,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B719B22A29ECBA24003358C2 /* XCRemoteSwiftPackageReference "SwiftyTesseract" */;
 			productName = SwiftyTesseract;
+		};
+		B71EB8792A21510D00D87C6F /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B71EB8782A21510D00D87C6F /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		B7225D7829F3A8AD001FCE33 /* StatusBar */ = {
 			isa = XCSwiftPackageProductDependency;

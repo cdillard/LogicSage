@@ -72,9 +72,18 @@ struct SwiftSageiOSApp: App {
                         }
                     }
                 )
+
                 .onAppear {
-                    doDiscover()
 #if !os(macOS)
+
+                    SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+#endif
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        serviceDiscovery?.startDiscovering()
+                    }
+#if !os(macOS)
+
                     consoleManager.fontSize = settingsViewModel.textSize
 #endif
                     DispatchQueue.main.async {
@@ -88,6 +97,10 @@ struct SwiftSageiOSApp: App {
 
                 }
 #if !os(macOS)
+                .onAppear {
+                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                    self.isPortrait = scene.interfaceOrientation.isPortrait
+                }
 
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
@@ -96,27 +109,26 @@ struct SwiftSageiOSApp: App {
 #endif
 #if !os(macOS)
 
-//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-//                        print("didFinishLaunchingNotification")
-//                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-//                    }
-//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-//                        print("applicationDidBecomeActive")
-//                    }
-//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-//                        print("applicationWillEnterForeground")
-//                    }
-//                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-//                        print("didEnterBackgroundNotification")
-//                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
-//                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+                        logD("didFinishLaunchingNotification")
+                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                        logD("applicationDidBecomeActive")
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        logD("applicationWillEnterForeground")
+
+                        screamer.discoReconnect()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        logD("didEnterBackgroundNotification")
+                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
+                    }
 #endif
             }
 
         }
-    }
-    func doDiscover() {
-        serviceDiscovery?.startDiscovering()
     }
 }
 func setHasSeenInstructions(_ hasSeen: Bool) {

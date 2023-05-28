@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 import Combine
+import StoreKit
+
 let defaultTerminalFontSize: Double = 13.666
 let defaultCommandButtonSize: Double = 28
 let defaultToolbarButtonScale: Double = 0.27
@@ -15,11 +17,12 @@ let defaultHandleSize: Double = 28
 let defaultSourceEditorFontSize: Double = 12.666
 
 let defaultOwner = "cdillard"
-let defaultRepo = "swiftsage"
+let defaultRepo = "LogicSage"
 let defaultBranch = "main"
 
 let defaultYourGithubUsername = "cdillard"
 
+let jsonFileName = "conversations"
 
 public class SettingsViewModel: ObservableObject {
     func logoAscii5() -> String {
@@ -32,6 +35,13 @@ public class SettingsViewModel: ObservableObject {
         """
     }
     public static let shared = SettingsViewModel()
+
+    var serviceDiscovery: ServiceDiscovery?
+    func doDiscover() {
+        serviceDiscovery?.startDiscovering()
+    }
+    @AppStorage("savedUserAvatar") var savedUserAvatar: String = "👨"
+    @AppStorage("savedBotAvatar") var savedBotAvatar: String = "🤖"
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
     let keychainManager = KeychainManager()
@@ -84,19 +94,61 @@ public class SettingsViewModel: ObservableObject {
     @Published var receivedImageData: Data? = nil {
         didSet {
             actualReceivedImage = UIImage(data: receivedImageData  ?? Data())
+
+            // received
+            if let  receivedWallpaperFileName, let receivedImageData {
+                let receivedWallpaperFileName = receivedWallpaperFileName.replacingOccurrences(of: " ", with: "%20")
+                logD("REC -- going to write -- \(receivedWallpaperFileName) c: \(receivedWallpaperFileSize ?? 0)")
+
+
+                do {
+                    try FileManager.default.createDirectory(at: getDocumentsDirectory().appendingPathComponent("LogicSageWallpapers"), withIntermediateDirectories: true, attributes: nil)
+                }
+                catch {
+                    logD("fail to create LogicSageWallpapers dir")
+                }
+
+                let fileURL = getDocumentsDirectory().appendingPathComponent("LogicSageWallpapers/\(receivedWallpaperFileName)")
+
+
+                do {
+                    try FileManager.default.removeItem(at: fileURL)
+                }
+                catch {
+                    logD("didnt rmv or exist old m")
+
+                }
+
+                do {
+                    try receivedImageData.write(to: fileURL)
+
+                    logD("Successfully wrote out wallpaper  \(fileURL)")
+
+                }
+                catch {
+                    logD("Failed to write out rec wallpaper")
+
+                }
+
+
+                self.receivedWallpaperFileName = nil
+                receivedWallpaperFileSize = nil
+                
+                refreshDocuments()
+            }
         }
     }
     @Published var actualReceivedImage: UIImage?
+    @Published var receivedWallpaperFileName: String?
+    @Published var receivedWallpaperFileSize: Int?
 
     @Published var receivedSimulatorFrameData: Data? = nil {
         didSet {
-
-
             actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
 
 
             if oldValue == nil {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
 #if !os(macOS)
                     WindowManager.shared.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
 #endif
@@ -105,6 +157,63 @@ public class SettingsViewModel: ObservableObject {
         }
     }
     @Published var actualReceivedSimulatorFrame: UIImage?
+
+    @Published var receivedWorkspaceData: Data? = nil {
+        didSet {
+            if let receivedWorkspaceData {
+                logD("received workspace data of size = \(receivedWorkspaceData.count)")
+                let fileURL = getDocumentsDirectory().appendingPathComponent("workspace_archive.zip")
+
+                do {
+                    try FileManager.default.removeItem(at: fileURL)
+
+                }
+                catch {
+                    logD("fil enot exist or deketed")
+                }
+                do {
+                    try receivedWorkspaceData.write(to: fileURL)
+
+
+                    logD("wrote file \(fileURL) out successfully")
+                    let existingExtraction = getDocumentsDirectory().appendingPathComponent("Workspace")
+
+
+                    // TODO: Double check this for multiple repos in same user/org....
+                    do {
+                        try FileManager.default.removeItem(at:  existingExtraction)
+                    }
+                    catch {
+                        logD("did not delete or didn't exist old REPO")
+                    }
+                    let myProgress = Progress()
+                    do {
+                        // Workspace is already included in this folder.
+                        try FileManager.default.unzipItem(at: fileURL, to: getDocumentsDirectory(), progress: myProgress)
+
+                        logD("unzipped to \(existingExtraction) successfully")
+
+                        do {
+                            try FileManager.default.removeItem(at:  fileURL)
+                        }
+                        catch {
+                            print("did not delete or didn't exist old REPO")
+                        }
+
+                        self.refreshDocuments()
+                    }
+                    catch {
+                        logD("failed to unzip workspace")
+
+                    }
+                }
+                catch {
+                    logD("failed to write out zip")
+                }
+
+            }
+        }
+    }
 
 #endif
 // END STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
@@ -128,10 +237,9 @@ public class SettingsViewModel: ObservableObject {
     @Published var isRecording = false
     @StateObject var speechRecognizer = SpeechRecognizer()
     @Published var recognizedText: String = ""
+// END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
-    // END SAVED AUDIO SETTINGS ZONE *****************************************************************
-
-    // BEGIN SAVED SIZES ZONE **************************************************************************************
+// BEGIN SAVED SIZES ZONE **************************************************************************************
     // TOOL BAR BUTOTN SIZE
     @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale
     // COMMAND BUTTON SIZE
@@ -151,7 +259,7 @@ public class SettingsViewModel: ObservableObject {
 #endif
         }
     }
-    // END SAVED SIZES ZONE ********************************************************************************************
+// END SAVED SIZES ZONE ********************************************************************************************
 
     // BEGIN SAVED COLORS ZONE **************************************************************************************
     @Published var terminalBackgroundColor: Color {
@@ -236,7 +344,6 @@ public class SettingsViewModel: ObservableObject {
 #if !os(macOS)
             UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
 #endif
-
         }
     }
     @Published var editorPlaceholderColorSrcEditor: Color {
@@ -304,23 +411,10 @@ public class SettingsViewModel: ObservableObject {
     }
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
-    // TODO: verify its okay to only allow lowercase????? It should be fine as long as users match case in all the checkouts?????
+    // It's not okay to only allow lowercase. The forking API is case-sensitive with repos so we must be vigilant and use the same case when working with Github. OK?
     @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
-//    {
-//        didSet {
-//            for char in gitRepo {
-//                if char.isUppercase {
-//                    gitRepo = gitRepo.lowercased()
-//                    logD("lowercase only allowed in git repo names, lemme know if thats an issue in Github issue plz")
-//                    return
-//                }
-//            }
-//        }
-//    }
-
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
 // END CLIENT APIS ZONE **************************************************************************************
-
 
 // START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
     @Published var conversations: [Conversation] = [] {
@@ -335,11 +429,22 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-
     @AppStorage("serverChatID") var serverChatID = ""
 
+    func renameConvo(_ convoId: Conversation.ID, newName: String) {
+
+        logD("rename convo id = \(convoId) to \(newName)")
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        SettingsViewModel.shared.conversations[conversationIndex].name = newName
+
+        saveConvosToDisk()
+    }
     func saveConvosToDisk() {
-        saveConversationContentToDisk(object: conversations, forKey: "conversations")
+        saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
 
     }
     func appendMessageToConvoIndex(index: Int, message: Message) async {
@@ -348,7 +453,6 @@ public class SettingsViewModel: ObservableObject {
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) async {
         conversations[index].messages[existingMessageIndex] = message
     }
-
     func nilOutConversationErrorsAt(convoId: Conversation.ID) async {
         conversationErrors[convoId] = nil
     }
@@ -361,23 +465,19 @@ public class SettingsViewModel: ObservableObject {
     func sendChatText(_ convoID: Conversation.ID, chatText: String) {
         gptCommand(conversationId: convoID, input: chatText)
     }
-
     func createConversation() -> Conversation.ID {
         let conversation = Conversation(id: idProvider(), messages: [])
         conversations.append(conversation)
         logD("created new convo = \(conversation.id)")
         return conversation.id
     }
-
     func deleteConversation(_ conversationId: Conversation.ID) {
         conversations.removeAll(where: { $0.id == conversationId })
 
         WindowManager.shared.removeWindowsWithConvoId(convoID: conversationId)
         saveConvosToDisk()
     }
-
     func createAndOpenNewConvo() {
-
         let convo = createConversation()
 
         saveConvosToDisk()
@@ -391,7 +491,6 @@ public class SettingsViewModel: ObservableObject {
         WindowManager.shared.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
 #endif
     }
-
     func createAndOpenServerChat() {
         if serverChatID.isEmpty {
            // serverChatID = idProvider()
@@ -400,9 +499,7 @@ public class SettingsViewModel: ObservableObject {
         }
 
         openConversation(serverChatID)
-
     }
-
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
 
        let encoder = JSONEncoder()
@@ -448,7 +545,46 @@ public class SettingsViewModel: ObservableObject {
             print("Failed to write JSON data: \(error.localizedDescription)")
         }
     }
+
+    func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
+        var retString  = ""
+        if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
+            for msg in conversation.messages {
+                retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
+            }
+
+        }
+        return retString
+    }
+
+    func convoName(_ convoId: Conversation.ID) -> String {
+        if let conversation = conversations.first(where: { $0.id == convoId }) {
+            return conversation.name ?? String(convoId.prefix(4))
+        }
+        return "Name"
+    }
+
 // END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
+
+// START DEBUGGER VIEWMODEL ZONE ***********************************************************************
+    @Published var isDebugging: Bool = false
+    @Published var targetName: String = "SwiftSageiOS"
+    @Published var deviceName: String = "Chris🚀🙌♾🦍"
+    @Published var debuggingStatus: String = ""
+    @Published var warningCount: Int = 0
+    @Published var errorCount: Int = 0
+
+// END DEBUGGER VIEWMODEL ZONE ***********************************************************************
+
+// START STOREKIT ZONE ***********************************************************************
+
+    func requestReview() {
+        guard Int.random(in: 0...12) == 0 else {
+            return print("no review today")
+        }
+        SKStoreReviewController.requestReview()
+    }
+// END STOREKIT ZONE ***********************************************************************
 
     init() {
 
@@ -680,16 +816,10 @@ public class SettingsViewModel: ObservableObject {
 
         // START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
 
-        let fileURL = getDocumentsDirectory()
-        DispatchQueue.global(qos: .default).async {
-            let files = getFiles(in: fileURL)
-            DispatchQueue.main.async {
-                self.root = RepoFile(name: "repos", url: fileURL, isDirectory: true, children: files)
-            }
-        }
+        refreshDocuments()
 
         // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
-        if let convos = retrieveConversationContentFromDisk(forKey: "conversations") {
+        if let convos = retrieveConversationContentFromDisk(forKey: jsonFileName) {
             self.conversations = convos
         }
     }
@@ -703,6 +833,15 @@ public class SettingsViewModel: ObservableObject {
     }
     static let gitKeySeparator = "-sws-"
 
+    func refreshDocuments() {
+        let fileURL = getDocumentsDirectory()
+        DispatchQueue.global(qos: .default).async {
+            let files = getFiles(in: fileURL)
+            DispatchQueue.main.async {
+                self.root = RepoFile(name: fileRootName, url: fileURL, isDirectory: true, children: files)
+            }
+        }
+    }
 
     // START THEME ZONE
 

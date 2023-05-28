@@ -84,6 +84,7 @@ struct WindowInfo: Identifiable, Equatable {
         case file
         case simulator
         case chat
+        case project
 
         case repoTreeView
         case windowListView

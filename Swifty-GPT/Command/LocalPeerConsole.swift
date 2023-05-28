@@ -13,17 +13,25 @@ let localPeerConsole = LocalPeerConsole()
 class LocalPeerConsole: NSObject {
     let webSocketClient = WebSocketClient()
 
+    let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
+    let imgStartSentinel = "START_OF_IMG_DATA"
+    let imgEndSentinel   = "END_OF_IMG_DATA"
+    let simStartSentinel = "START_OF_SIM_DATA"
+    let simEndSentinel   = "END_OF_SIM_DATA"
+    let workspaceStartSentinel = "START_OF_WORKSPACE_DATA"
+    let workspaceEndSentinel   = "END_OF_WORKSPACE_DATA"
+
     var isSendingSimulatorData = false
-
     var isSendingImageData = false
+    var isSendingWorkspaceData = false
 
+// SEND TEXT OVER WEBSOCKET ZONE ***************************************
     func sendLog(to recipient: String, text: String) {
          let logData: [String: String] = ["recipient": recipient, "message": text]
         do {
             let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
             let logString = String(data: logJSON, encoding: .utf8)
             webSocketClient.websocket.write(string: logString ?? "")
-
         }
         catch {
             print( "error = \(error)")
@@ -41,23 +49,34 @@ class LocalPeerConsole: NSObject {
             print( "error = \(error)")
         }
      }
-    let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
+// END TEXT OVER WEBSOCKET ZONE ***************************************
 
+// SEND DATA OVER WEBSOCKET ZONE ***************************************
     // TODO: Fix binary data sending now that we have Auth
-    func sendImageData(_ imageData: Data?) {
-
+    func sendImageData(_ imageData: Data?, name: String = "image.heic") {
         guard !isSendingImageData else { return multiPrinter("busy can't image ")}
-
         guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+        guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
 
         guard let data = imageData else {
-            print("failed")
+            multiPrinter("failed to get img data")
             return
         }
         
         isSendingImageData = true
-        let startMessage = "START_OF_IMG_DATA".data(using: .utf8)!
+        let startMessage = imgStartSentinel.data(using: .utf8)!
         webSocketClient.websocket.write(data: startMessage)
+
+
+        // Prepare and send JSON metadata
+        let jsonMetadata: [String: Any] = ["filename": name, "filesize": data.count]
+        if let jsonData = try? JSONSerialization.data(withJSONObject: jsonMetadata, options: []) {
+            webSocketClient.websocket.write(data: jsonData)
+        } else {
+            multiPrinter("Failed to encode JSON")
+            return
+        }
+
 
         var offset = 0
         while offset < data.count {
@@ -65,25 +84,23 @@ class LocalPeerConsole: NSObject {
             webSocketClient.websocket.write(data: chunk)
             offset += chunkSize
         }
-        let endMessage = "END_OF_IMG_DATA".data(using: .utf8)!
+        let endMessage = imgEndSentinel.data(using: .utf8)!
         webSocketClient.websocket.write(data: endMessage)
 
         isSendingImageData = false
-
     }
-
     func sendSimulatorData(_ simData: Data?) {
         guard !isSendingImageData else { return multiPrinter("busy can't image ")}
-
         guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+        guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
 
         guard let data = simData else {
-            print("failed")
+            multiPrinter("failed to get sim data")
             return
         }
         isSendingSimulatorData = true
 
-        let startMessage = "START_OF_SIM_DATA".data(using: .utf8)!
+        let startMessage = simStartSentinel.data(using: .utf8)!
         webSocketClient.websocket.write(data: startMessage)
 
         var offset = 0
@@ -92,152 +109,33 @@ class LocalPeerConsole: NSObject {
             webSocketClient.websocket.write(data: chunk)
             offset += chunkSize
         }
-        let endMessage = "END_OF_SIM_DATA".data(using: .utf8)!
+        let endMessage = simEndSentinel.data(using: .utf8)!
         webSocketClient.websocket.write(data: endMessage)
         isSendingSimulatorData = false
-
     }
-}
+    func sendWorkspaceData(_ workspaceData: Data?) {
+        guard !isSendingImageData else { return multiPrinter("busy can't image ")}
+        guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+        guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
 
-class WebSocketClient: WebSocketDelegate {
-    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
-        switch event {
-        case .connected(let headers):
-            print("Conneted to server:  w/ headers \(headers))")
-            // TODO: FIX HARDCODE CREDZ
-            let authData: [String: String] = ["username": "SERVER", "password": "supers3cre3t"]
-            do {
-                let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed])
-                let authString = String(data: authJSON, encoding: .utf8)
-                client.write(string: authString ?? "")
-            }
-            catch {
-                print("fail = \(error)")
-            }
-          //  startPingTimer()
-        case .disconnected(let reason, let code):
-            print("Disconnected from server: \(reason), code: \(code)")
-            stopPingTimer()
-            
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                print("Reconnecting...")
-                self.connect()
-            }
-        case .text(let text):
-           // print("\(text)")
-
-            do {
-                let json = try JSONSerialization.jsonObject(with:
-                                                    Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
-
-                // HANDLE MESSAGES *****************************************************************
-
-                if let recipient = json?["recipient"] as? String,
-                   let command = json?["command"] as? String {
-
-                  // print("recipient=\(recipient) , command=\(command)")
-                    let commandSplit = command.split(separator: " ", maxSplits: 1)
-
-                    if !commandSplit.isEmpty {
-                        var comp2 = ""
-                        if commandSplit.count > 1 {
-                            comp2 = String(commandSplit[1])
-                        }
-
-                        callCommandCommand(String(commandSplit[0]), comp2, recipient: recipient)
-                    }
-                }
-                
-
-                break
-            }
-            catch {
-                print("failed to parse command as JSON: \(error), trying normal...")
-            }
-        case .binary(let data):
-            print("Received binary data: \(data)")
-        case .pong( _):
-            break
-//            print("Received PONG data: \(data ?? Data())")
-        case .ping( _):
-            break
-//            print("Received PING data: \(data ?? Data())")
-        case .error(let error):
-            print("Error: \(error?.localizedDescription ?? "error")")
-        case .viabilityChanged(let isViable):
-            print("Viability changed: \(isViable)")
-        case .reconnectSuggested(let shouldReconnect):
-            print("Reconnect suggested: \(shouldReconnect)")
-            if shouldReconnect {
-                DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                    print("Reconnecting...")
-                    self.connect()
-                }
-            } else {
-                print("shouldn't reconnect")
-            }
-        case .cancelled:
-            print("WebSocket cancelled")
-            DispatchQueue.global().asyncAfter(deadline: .now() + reconnectInterval) {
-                print("Reconnecting...")
-                self.connect()
-            }
+        guard let data = workspaceData else {
+            multiPrinter("failed to get workspace data")
+            return
         }
-    }
+        isSendingWorkspaceData = true
 
-    var websocket: WebSocket!
-    let reconnectInterval: TimeInterval = 1.0
-    private let timer: DispatchSourceTimer
-    private var isRunning: Bool
+        let startMessage = workspaceStartSentinel.data(using: .utf8)!
+        webSocketClient.websocket.write(data: startMessage)
 
-    init() {
-
-        let urlString = "ws://127.0.0.1:8080/ws"
-        guard let url = URL(string: urlString) else {
-            fatalError("Invalid URL")
+        var offset = 0
+        while offset < data.count {
+            let chunk = data.subdata(in: offset..<min(offset + chunkSize, data.count))
+            webSocketClient.websocket.write(data: chunk)
+            offset += chunkSize
         }
-
-        var request = URLRequest(url: url)
-        request.timeoutInterval = 10
-        timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
-        isRunning = false
-
-        websocket = WebSocket(request: request)
-        websocket.callbackQueue = DispatchQueue(label: "\(bundleID)websocket")
-
-        websocket.delegate = self
-        websocket.connect()
+        let endMessage = workspaceEndSentinel.data(using: .utf8)!
+        webSocketClient.websocket.write(data: endMessage)
+        isSendingWorkspaceData = false
     }
-    func connect() {
-        websocket.connect()
-
-    }
-
-    func startPingTimer() {
-        guard !isRunning else { return }
-        isRunning = true
-
-        let delay: TimeInterval = PING_INTERVAL
-
-        timer.schedule(deadline: .now(), repeating: delay)
-        timer.setEventHandler { [weak self] in
-            guard let self = self else { return }
-
-            if !self.isRunning {
-                return
-            }
-
-           sendPing()
-        }
-
-        timer.resume()
-    }
-
-    func stopPingTimer() {
-        isRunning = false
-    }
-
-    func sendPing() {
-        websocket.write(ping: Data())
-    }
+// END SEND DATA OVER WEBSOCKET ZONE ***************************************
 }

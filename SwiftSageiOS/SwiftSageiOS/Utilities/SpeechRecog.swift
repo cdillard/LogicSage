@@ -56,7 +56,7 @@ extension SpeechRecognizer {
                     self.stopRecording()
                 }
             } else if let error = error {
-                print("Error: \(error.localizedDescription)")
+                logD("Error: \(error.localizedDescription)")
             }
         }
 
@@ -75,10 +75,10 @@ extension SpeechRecognizer {
 
     func stopRecording() {
 #if !os(macOS)
-        print("Stopped recording...")
+        logD("Stopped recording...")
         consoleManager.print("Stopped recording...")
 
-        print("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
+        logD("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
         consoleManager.print("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)

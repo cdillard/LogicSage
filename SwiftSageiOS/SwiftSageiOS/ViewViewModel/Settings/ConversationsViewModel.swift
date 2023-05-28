@@ -26,6 +26,9 @@ struct Conversation {
 
     let id: String
     var messages: [Message]
+
+    //Everything fromt his point for must be OPtional so we retain compat with early LogicSage versions.
+    var name: String?
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

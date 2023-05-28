@@ -121,6 +121,15 @@ struct WindowView: View {
                     .environmentObject(viewModel)
                     .environmentObject(windowManager)
             )
+        case .project:
+            let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
+            let url = URL(string:settingsViewModel.defaultURL)
+            return AnyView(
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .project, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .environmentObject(viewModel)
+                    .environmentObject(windowManager)
+            )
         }
     }
 }

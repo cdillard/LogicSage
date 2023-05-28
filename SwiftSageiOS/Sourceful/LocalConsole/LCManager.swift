@@ -47,20 +47,13 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
     }
     
-    let defaultConsoleSize = CGSize(width: UIScreen.size.width - 10, height: UIScreen.size.height - (UIScreen.size.height / 3))
+    let defaultConsoleSize = CGSize(width: UIScreen.size.width - (UIScreen.size.width / 2), height: UIScreen.size.height - (UIScreen.size.height / 2))
 
     lazy var borderView = UIView()
     
     var lumaWidthAnchor: NSLayoutConstraint!
     var lumaHeightAnchor: NSLayoutConstraint!
     let lumaView = LumaView()
-
-//    var lumaView: LumaView = {
-//
-//
-//
-//        return lumaView
-//    }
     
     lazy var unhideButton: UIButton = {
         let button = UIButton()

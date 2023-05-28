@@ -30,7 +30,7 @@ extension SettingsViewModel {
         getDefaultHeadSha(defaultBranch: gitBranch) { sha in
             self.createDrafBranch(newBranchName: newBranchName, commitSha: sha) { success in
                 if success {
-                    print("excecuting staged file content upload... \(self.stagedFileChanges.count) files being deployed...")
+                    logD("excecuting staged file content upload... \(self.stagedFileChanges.count) files being deployed...")
                     // For each file in the staged Changes, get the sha ref and put the new file Contents.
                     for file in self.stagedFileChanges {
                         let pathString = file.fileURL.absoluteString

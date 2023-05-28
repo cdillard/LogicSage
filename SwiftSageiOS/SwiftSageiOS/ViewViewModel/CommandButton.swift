@@ -34,26 +34,6 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
-                    //#if !os(macOS)
-                    //
-                    //                    if !settingsViewModel.isInputViewShown {
-                    //                        // PLugItIn BUTTON
-                    //                        Button("🔌") {
-                    //                            print("🔌 Force reconnecting websocket...")
-                    //                            consoleManager.print("🔌 Force reconnect...")
-                    //                            consoleManager.print("You can always force quit / restart you know...")
-                    //
-                    //                            screamer.connect()
-                    //                        }
-                    //                        .font(.body)
-                    //                        .lineLimit(nil)
-                    ////                        .foregroundColor(Color.white)
-                    ////                        .padding(.bottom)
-                    //                        .background(settingsViewModel.buttonColor)
-                    ////                        .cornerRadius(10)
-                    //                    }
-                    //#endif
-
                     if settingsViewModel.isInputViewShown {
                         if  settingsViewModel.currentMode == .computer {
                             // GOOGLE button
@@ -362,6 +342,7 @@ struct CommandButtonView: View {
                             .lineLimit(nil)
                             .border(settingsViewModel.buttonColor, width: 2)
                             .frame(height: max(40,textEditorHeight))
+                            .padding(.leading, 8)
                             .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
                             .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
@@ -369,6 +350,17 @@ struct CommandButtonView: View {
 #endif
                             .focused($isTextFieldFocused)
                             .scrollDismissesKeyboard(.interactively)
+                            .toolbar {
+                                if isTextFieldFocused {
+                                    ToolbarItemGroup(placement: .keyboard) {
+                                        Spacer()
+
+                                        Button("Done") {
+                                            isTextFieldFocused = false
+                                        }
+                                    }
+                                }
+                            }
 
                     }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 }

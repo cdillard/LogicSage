@@ -20,7 +20,13 @@ class GPT {
 
     init() {
         let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
-        openAI = OpenAI(configuration: configuration)
+
+
+        let identifier = "\(bundleID)bger"
+        let urlConfig = URLSessionConfiguration.background(withIdentifier: identifier)
+        let session = URLSession(configuration: urlConfig)
+
+        openAI = OpenAI(configuration: configuration, session: session)
     }
 
     // Function to send a prompt to GPT via the OpenAI API

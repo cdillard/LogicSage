@@ -82,6 +82,13 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.all)
                         .background(.clear)
                         .environmentObject(windowManager)
+#if !os(macOS)
+                .padding(.bottom,
+                          keyboardResponder.currentHeight > 0 ?
+                         keyboardResponder.currentHeight + geometry.size.height * 0.25 :
+                            0
+                )
+#endif
                 }
                 // END WINDOW MANAGER ZONE *************************************************
 #endif
@@ -100,7 +107,7 @@ struct ContentView: View {
                                 .background(settingsViewModel.buttonColor)
                                 .padding(3)
 #if !os(macOS)
-                                .frame(width: UIScreen.main.bounds.width / 15, height: UIScreen.main.bounds.height / 15 )
+                                .frame(width: UIScreen.main.bounds.width / 15, height: 27.666 )
 #endif
                                 .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                         }
@@ -119,6 +126,8 @@ struct ContentView: View {
                     CommandButtonView(settingsViewModel: settingsViewModel)
                         .environmentObject(windowManager)
                 }
+                .padding(.leading, 8)
+                .padding(.trailing, 8)
 
                 VStack {
                     Spacer()
@@ -218,6 +227,8 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
+                .padding(.leading,8)
+                .padding(.bottom,8)
 #if !os(macOS)
                 .onAppear {
                     recalculateWindowSize(size: geometry.size)
@@ -242,11 +253,10 @@ struct ContentView: View {
                     }
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 )
-                .padding(.leading,8)
 
-                .padding(.bottom,8)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }
+
             .overlay(
                 Group {
                     if settingsViewModel.showInstructions {
@@ -264,14 +274,10 @@ struct ContentView: View {
             .background {
                 ZStack {
 #if !os(macOS)
-                    // Use
-                    // settingsViewModel.receivedImage = nil
-                    // To clear background image
                     if let image = settingsViewModel.actualReceivedImage {
                         Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .zIndex(2)
                             .ignoresSafeArea()
                             .animation(.easeIn(duration: 0.28), value: image)
                     }
@@ -280,21 +286,14 @@ struct ContentView: View {
                             .ignoresSafeArea()
                     }
 
-                    //                let fileURL = getDocumentsDirectory().appendingPathComponent("recording.mov")
-                    //
-                    //                VideoPlayer(player: AVPlayer(url:  fileURL))
-                    //                    .frame(height: 400)
-
+                    LoadingLogicView()
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .ignoresSafeArea()
 #else
                     settingsViewModel.backgroundColor
                         .ignoresSafeArea()
 #endif
                 }
-#if !os(macOS)
-                .padding(.bottom, keyboardResponder.currentHeight)
-#endif
-                //.animation(.easeOut(duration: 0.16))
-//                .animation(.easeOut(duration: 16), value: keyboardResponder.currentHeight)
 
                 .edgesIgnoringSafeArea(.all)
 
@@ -308,6 +307,9 @@ struct ContentView: View {
 #if !os(macOS)
         defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
         defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.5), size.height - (size.height * 0.5))
+
+
+        hideKeyboard()
 #endif
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
@@ -320,44 +322,7 @@ struct ContentView: View {
     }
 }
 
-#if os(macOS)
-func openTerminal() {
-    if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
-        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-    }
-}
 
-func openiTerm2() {
-    if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.googlecode.iterm2") {
-        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-    }
-}
-
-func openTerminalAndRunCommand(command: String) {
-    let scriptContent = "#!/bin/sh\n" +
-    "\(command)\n"
-
-    do {
-        let tempDirectory = FileManager.default.temporaryDirectory
-        let appDirectory = tempDirectory.appendingPathComponent("SwiftSageiOS")
-        try FileManager.default.createDirectory(at: appDirectory, withIntermediateDirectories: true, attributes: nil)
-
-        let scriptURL = appDirectory.appendingPathComponent("temp_script.sh")
-        try scriptContent.write(to: scriptURL, atomically: true, encoding: .utf8)
-        try FileManager.default.setAttributes([.posixPermissions: NSNumber(value: 0o755)], ofItemAtPath: scriptURL.path)
-
-        let configuration = NSWorkspace.OpenConfiguration()
-        configuration.arguments = [scriptURL.path]
-        configuration.promptsUserIfNeeded = true
-        if let terminalURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
-            NSWorkspace.shared.openApplication(at: terminalURL, configuration: configuration, completionHandler: nil)
-        }
-    } catch {
-        print("Error: \(error)")
-    }
-}
-
-#endif
 #if !os(macOS)
 
 class KeyboardResponder: ObservableObject {

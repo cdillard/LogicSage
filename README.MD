@@ -16,6 +16,16 @@
 
 ## news
 ----------------
+
+05-28-2023
+
+LogicSage 1.2.0
+
+
+----------------
+
+05-25-2023
+
 JUST THE BEGINNING 
 
 LOGICSAGE 1.1.9
@@ -35,20 +45,11 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 - With a little help from my GPT🤖. Thank you, OpenAI!
 ---
 
-CUSTOMIZABLE WALLPAPERS MAC -> LogicSage!!!!
-
-Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
-
-WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complete-collection-of-mac-os-wallpapers-updated.2036834/ download and unzip this bad boy to the `~/SwiftyGPTWorkspace/Wallpaper` folder.
-
-Search the internet for "4K Wallapaper zip + Space" replacing Space with whatever type of background you want. Download the heic, jpeg, jpg, and png images you'd like to use as wallpapers.
-
-AI Generated PR titles and commit messages (coming soon)
 
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/cdillard/SwiftSage.git`
-2. Navigate to the project directory: `cd SwiftSage`
+1. Clone the repository: `git clone https://github.com/cdillard/LogicSage.git`
+2. Navigate to the project directory: `cd LogicSage`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
 
 
@@ -60,8 +61,26 @@ AI Generated PR titles and commit messages (coming soon)
 	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
 3. Run `./run.sh` from within SwiftSage folder root to run the Swift Sage Server and Swifty-GPT server binary.
+
+	- Now you might be able to use `./run_fash.sh` for subsequent runs of th Swifty-GPT server. YAY.
+
 3. Enjoy!
 
+Optional steps:
+
+CUSTOMIZABLE WALLPAPERS MAC -> LogicSage!!!!
+
+Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
+
+WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complete-collection-of-mac-os-wallpapers-updated.2036834/ download and unzip this bad boy to the `~/SwiftyGPTWorkspace/Wallpaper` folder.
+
+Search the internet for "4K Wallapaper zip + Space" replacing Space with whatever type of background you want. Download the heic, jpeg, jpg, and png images you'd like to use as wallpapers.
+
+AI Generated PR titles and commit messages (coming soon)
+
+
+Simulator and WINDOW mirroring requirings running the Swifty-GPT server binary in Terminal or iTerm2. 
+// Check for screen recording permission, make sure your Terminal.app or iTerm2.app has screen recording permission
 
 ## Installation
 - [Homebrew](https://brew.sh/)
@@ -69,7 +88,6 @@ AI Generated PR titles and commit messages (coming soon)
 - [Xcode](https://developer.apple.com/xcode/)
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 - [Xcodeproj](https://github.com/CocoaPods/Xcodeproj)
-
 - [Swift Toolchain Xcode 14.3](https://www.swift.org/download/)
 
 #### Installing Homebrew and Ruby
@@ -111,5 +129,4 @@ Unlocking the Power of the Future: Exploring the Intersection of Mobile and Arti
 DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
 
 
-
-Please view the old [READNE_OLD.md](README_OLD.md).
+Please view the old README for some more fun. [README_OLD.md](README_OLD.md).

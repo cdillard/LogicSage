@@ -16,6 +16,8 @@ import ZIPFoundation
 
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
+let fileRootName = "Files"
+
 struct RepoFile: Identifiable, Equatable {
     var id = UUID()
     let name: String
@@ -37,7 +39,7 @@ func getFiles(in directory: URL) -> [RepoFile] {
                             ? getFiles(in: url) : nil)
         }
     } catch {
-        print("Error getting files in directory: \(error)")
+        logD("Error getting files in directory: \(error)")
         return []
     }
 }
@@ -53,7 +55,7 @@ extension SettingsViewModel {
         let outputFileName = "\(gitBranch).zip"
 
         guard let url = URL(string: urlString) else {
-            print("Invalid URL.")
+            logD("Invalid URL.")
             return
         }
 
@@ -63,19 +65,23 @@ extension SettingsViewModel {
             try FileManager.default.removeItem(at:  destinationUrl)
         }
         catch {
-            print("did not delete or didn't exist old zip")
+            logD("did not delete or didn't exist old zip")
         }
         let task = URLSession.shared.downloadTask(with: url) { (location, response, error) in
+
+            defer {
+                DispatchQueue.main.async {
+                    
+                    self.isLoading = false
+                }
+            }
+
+
             DispatchQueue.main.async {
                 self.downloadProgress = 0.0
             }
             defer {
-                let childs = getFiles(in: getDocumentsDirectory())
-                DispatchQueue.main.async {
-                    self.root = RepoFile(name: "repos", url: getDocumentsDirectory(), isDirectory: true, children: childs)
-
-                    self.isLoading = false
-                }
+                self.refreshDocuments()
             }
 
             if let location = location {
@@ -95,7 +101,7 @@ extension SettingsViewModel {
                         try FileManager.default.removeItem(at:  existingExtraction)
                     }
                     catch {
-                        print("did not delete or didn't exist old REPO")
+                        logD("did not delete or didn't exist old REPO")
                     }
 
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
@@ -114,10 +120,10 @@ extension SettingsViewModel {
                     logD("File unzipped to: \(fileURL)")
                     do {
                         try FileManager.default.removeItem(at:  destinationUrl)
-                        print("rm .zip sucess")
+                        logD("rm .zip sucess")
                     }
                     catch {
-                        print("did not delete or didn't exist zip")
+                        logD("did not delete or didn't exist zip")
                     }
                     syncCompletion(true)
 
@@ -126,10 +132,10 @@ extension SettingsViewModel {
 
                     do {
                         try FileManager.default.removeItem(at:  destinationUrl)
-                        print("rm .zip sucess")
+                        logD("rm .zip sucess")
                     }
                     catch {
-                        print("rm .zip fail")
+                        logD("rm .zip fail")
 
                     }
 
@@ -165,7 +171,7 @@ extension SettingsViewModel {
                 .eraseToAnyPublisher()
         }
         else {
-                print("catastrophic error dling github repo. faling...")
+            logD("catastrophic error dling github repo. faling...")
                 throw URLError(.badURL)
         }
     }
@@ -182,7 +188,7 @@ extension SettingsViewModel {
                 })
         }
         catch {
-            print("failed to fetch file content w/ error = \(error)")
+            logD("failed to fetch file content w/ error = \(error)")
         }
     }
 }

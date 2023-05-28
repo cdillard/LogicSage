@@ -28,7 +28,6 @@ struct ChatView: View {
     @Environment(\.dateProviderValue) var dateProvider
     @Environment(\.idProviderValue) var idProvider
 
-    
     var body: some View {
 #if !os(macOS)
         VStack(spacing: 0) {
@@ -49,7 +48,7 @@ struct ChatView: View {
             }, theme: {
                 ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
             // The Magic
-            }, overrideText:  { convoText(conversations, window: window) } ))
+            }, overrideText:  { settingsViewModel.convoText(conversations, window: window) } ))
             .environmentObject(viewModel)
 
             HStack(spacing: 0) {
@@ -62,10 +61,16 @@ struct ChatView: View {
                                                    value: $0.frame(in: .local).size.height)
                         })
 
+//                    TextField("Type msg...", text: $chatText, onCommit: {
+//                            logD("submit text \(chatText)")
+//                        })
                     TextEditor(text: $chatText)
+
                         .lineLimit(nil)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
-                        .foregroundColor(settingsViewModel.appTextColor)
+                        .foregroundColor(settingsViewModel.plainColorSrcEditor)
+                        .background(settingsViewModel.backgroundColorSrcEditor)
+
                         .frame(height: max( 40, textEditorHeight))
                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
@@ -74,11 +79,13 @@ struct ChatView: View {
                         .focused($isTextFieldFocused)
                         .scrollDismissesKeyboard(.interactively)
                         .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
+                            if isTextFieldFocused {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
 
-                                Button("Done") {
-                                    isTextFieldFocused = false
+                                    Button("Done") {
+                                        isTextFieldFocused = false
+                                    }
                                 }
                             }
                         }
@@ -94,23 +101,7 @@ struct ChatView: View {
                 if chatText.count > 0 {
                     // EXEC BUTTON
                     Button(action: {
-                        if chatText.isEmpty {
-                            logD("nothing to exec.")
-
-                            return
-                        }
-                        if let convoID = window?.convoId {
-                            settingsViewModel.sendChatText(convoID, chatText: chatText)
-
-                            chatText = ""
-                            isTextFieldFocused = false
-
-                            self.settingsViewModel.isInputViewShown = false
-                            
-                        }
-                        else {
-                            logD("failed to chat")
-                        }
+                        doChat()
                     }) {
                         Text("✅")
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
@@ -126,21 +117,29 @@ struct ChatView: View {
         VStack { }
 #endif
     }
+    func doChat() {
+        if chatText.isEmpty {
+            logD("nothing to exec.")
+
+            return
+        }
+        if let convoID = window?.convoId {
+            settingsViewModel.sendChatText(convoID, chatText: chatText)
+
+            chatText = ""
+            isTextFieldFocused = false
+
+            self.settingsViewModel.isInputViewShown = false
+
+        }
+        else {
+            logD("failed to chat")
+        }
+    }
     struct ViewHeightKey: PreferenceKey {
         static var defaultValue: CGFloat { 0 }
         static func reduce(value: inout Value, nextValue: () -> Value) {
             value = value + nextValue()
         }
     }
-}
-
-func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
-    var retString  = ""
-    if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
-        for msg in conversation.messages {
-            retString += "\(msg.role == .user ? "👨" : "🤖"):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
-        }
-
-    }
-    return retString
 }

@@ -38,7 +38,7 @@ struct ChangeList: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear
         {
-            print("Change list wit count = \(settingsViewModel.changes)")
+            logD("Change list wit count = \(settingsViewModel.changes)")
 
         }
 //        }

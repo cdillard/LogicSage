@@ -213,7 +213,7 @@ let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 let barkVoicesEnabled = false
 
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
-let enableMacSage = false
+let enableMacSage = true
 let swiftSageIOSEnabled = true
 let swiftSageIOSAudioStreaming = false
 

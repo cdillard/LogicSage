@@ -7,7 +7,6 @@
 
 import Foundation
 
-// we can use "g end" to stop that particular gpt conversation and exit conversational mode.
 func gptCommand(input: String) {
     let convo = SettingsViewModel.shared.createConversation()
     gptCommand(conversationId: convo, input: input, useGoogle: true, useLink: true, qPrompt: true)
@@ -32,7 +31,6 @@ func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool 
         config.manualPromptString = ""
         return
     }
-
 
     if config.enableGoogle && useGoogle {
         // conversational mode
@@ -61,20 +59,14 @@ Question to Answer:
 
     GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
-        
         if !success {
             SettingsViewModel.shared.speak("A.P.I. error, try again.")
             return
         }
 
-
         if !isDone {
-
-            logDNoNewLine(content)
-
             if content.contains( "." ) || content.contains(","){
                 playLightImpact()
-
             }
             else {
                 playSoftImpact()
@@ -83,20 +75,14 @@ Question to Answer:
         else {
             playSoftImpact()
 
-            // multiPrinter("\n🤖: \(content)")
-
-
-            logD("say: \(content)")
             SettingsViewModel.shared.speak(content)
 
             refreshPrompt(appDesc: config.appDesc)
 
-            logD(generatedOpenLine())
-            openLinePrintCount += 1
-
-            
             SettingsViewModel.shared.saveConvosToDisk()
 
+            SettingsViewModel.shared.requestReview()
+            
             if config.conversational {
 
                 if content.hasPrefix("google:") {

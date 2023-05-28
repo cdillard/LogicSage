@@ -18,7 +18,7 @@ func scheduleWebSocketRefresh() {
     do {
         try BGTaskScheduler.shared.submit(request)
     } catch {
-        print("Could not schedule WebSocket refresh task: \(error)")
+        logD("Could not schedule WebSocket refresh task: \(error)")
     }
 
 #endif

@@ -19,32 +19,59 @@ struct TopBar: View {
     let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
     var body: some View {
         ZStack {
-            HStack(spacing: 2) {
+            HStack(spacing: 1) {
                 Button(action: onClose) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.body)
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
 
+                if windowInfo.windowType == .project {
+                    Button(action: {
+                        logD("on side bar tap")
+                    }) {
+                        Image(systemName: "sidebar.left")
+                            .font(.body)
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                    // IF Debugger is running....
+                    if settingsViewModel.isDebugging {
+                        Button(action: {
+                            logD("on STOP tap")
+                        }) {
+                            Image(systemName: "stop.fill")
+                                .font(.body)
+                        }
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+
+                    Button(action: {
+                        logD("on PLAY tap")
+                    }) {
+                        Image(systemName: "play.fill")
+                            .font(.body)
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+              
                 Text(getName())
                     .font(.body)
                     .lineLimit(1)
-
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
-
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-
 
                 if windowInfo.windowType == .chat {
 
                     Button(action: {
                         logD("elips tap")
                     }) {
-                        let convoText = convoText(settingsViewModel.conversations, window: windowInfo)
+                        let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
                         ShareLink(item: "\(link.absoluteString)\n\(convoText)", message: Text("LogicSage conversation")) {
 
                             Image(systemName: "ellipsis")
@@ -53,7 +80,6 @@ struct TopBar: View {
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
                 }
 
                 if windowInfo.windowType == .file {
@@ -65,7 +91,7 @@ struct TopBar: View {
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.trailing, 8)
+                    .padding(.trailing, 4)
                 }
 
                 Spacer()
@@ -79,20 +105,21 @@ struct TopBar: View {
         case .simulator:
             return "Simulator"
         case .chat:
-            return "Chat \(windowInfo.convoId?.prefix(4) ?? "")"
-
+            return "\(settingsViewModel.convoName(windowInfo.convoId ?? Conversation.ID(-1)))"
+        case .project:
+            return "SwiftSageiOS"
         case .file:
             return "\(windowInfo.file?.name ?? "Filename")"
         case .webView:
             return  "\(webViewURL?.absoluteString ?? "WebView")"
         case .repoTreeView:
-            return "Repo Tree"
+            return "Files"
         case .windowListView:
-            return "Window List"
+            return "Windows"
         case .changeView:
-            return "Change View"
+            return "Changes"
         case .workingChangesView:
-            return "Working Changes"
+            return "Changes"
         }
     }
 }

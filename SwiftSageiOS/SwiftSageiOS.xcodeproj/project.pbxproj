@@ -12,6 +12,7 @@
 		B70A00F32A1EB48200ADEF5A /* IDProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F22A1EB48200ADEF5A /* IDProvider.swift */; };
 		B70A00F52A1EB72900ADEF5A /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F42A1EB72900ADEF5A /* DateProvider.swift */; };
 		B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */; };
+		B70A00FA2A20E0CA00ADEF5A /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F92A20E0C900ADEF5A /* ProjectView.swift */; };
 		B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */; };
 		B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B70D330A2A10282A00D7290E /* ZIPFoundation */; };
 		B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */; };
@@ -53,6 +54,7 @@
 		B71C62FC2A0190AA004296E4 /* Googler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FB2A0190AA004296E4 /* Googler.swift */; };
 		B71C62FE2A019144004296E4 /* LocalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FD2A019144004296E4 /* LocalCommand.swift */; };
 		B71C63002A01924B004296E4 /* CommandTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62FF2A01924B004296E4 /* CommandTable.swift */; };
+		B71EB87C2A21C29500D87C6F /* LoadingLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */; };
 		B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B14129F9B25600BA6752 /* UIColorExt.swift */; };
 		B7378BFD2A1B192600A1D44C /* HapticMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7378BFC2A1B192500A1D44C /* HapticMan.swift */; };
 		B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40A29F837CE00E57577 /* SettingsVIew.swift */; };
@@ -126,6 +128,7 @@
 		B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BE29F6DAED003EC13F /* SystemReport.swift */; };
 		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
 		B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */; };
+		B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */; };
 		B78DA95F2A02AF01002343AB /* InstructionsPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */; };
 		B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */; };
 		B78DA9662A02AF3A002343AB /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9622A02AF3A002343AB /* SpinnerThread.swift */; };
@@ -178,6 +181,7 @@
 		B70A00F22A1EB48200ADEF5A /* IDProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDProvider.swift; sourceTree = "<group>"; };
 		B70A00F42A1EB72900ADEF5A /* DateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
 		B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSourceCodeTheme.swift; sourceTree = "<group>"; };
+		B70A00F92A20E0C900ADEF5A /* ProjectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalConsoleExtensions.swift; sourceTree = "<group>"; };
 		B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeRegexLexer.swift; sourceTree = "<group>"; };
 		B7191EF729F9F09A00078D8D /* String+Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Range.swift"; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 		B71C62FB2A0190AA004296E4 /* Googler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Googler.swift; sourceTree = "<group>"; };
 		B71C62FD2A019144004296E4 /* LocalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCommand.swift; sourceTree = "<group>"; };
 		B71C62FF2A01924B004296E4 /* CommandTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTable.swift; sourceTree = "<group>"; };
+		B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLogic.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		B72BFBAC2A1AAAED00E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B72BFBAD2A1AAAF900E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -300,6 +305,7 @@
 		B767E9BE29F6DAED003EC13F /* SystemReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemReport.swift; sourceTree = "<group>"; };
 		B767E9C029F6DAED003EC13F /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
 		B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+ForkGithub.swift"; sourceTree = "<group>"; };
+		B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+MacOS.swift"; sourceTree = "<group>"; };
 		B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPopup.swift; sourceTree = "<group>"; };
 		B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
 		B78DA9622A02AF3A002343AB /* SpinnerThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
@@ -465,21 +471,24 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B70A00F02A1EA23F00ADEF5A /* ChatView.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
+				B70A00F02A1EA23F00ADEF5A /* ChatView.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
+				B70A00F42A1EB72900ADEF5A /* DateProvider.swift */,
 				B74B21DA2A1D452700B3282E /* Drawer.swift */,
 				B78DA96B2A0312F1002343AB /* HelpPopup.swift */,
+				B70A00F22A1EB48200ADEF5A /* IDProvider.swift */,
 				B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */,
 				B78EAF5D2A108516003095A2 /* Lists */,
+				B70A00F92A20E0C900ADEF5A /* ProjectView.swift */,
 				B78EAF672A13B68D003095A2 /* SageMultiView.swift */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
 				B78EAF682A13B68D003095A2 /* TopBar.swift */,
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
-				B70A00F22A1EB48200ADEF5A /* IDProvider.swift */,
-				B70A00F42A1EB72900ADEF5A /* DateProvider.swift */,
+				B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */,
+				B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */,
 			);
 			path = ViewViewModel;
 			sourceTree = "<group>";
@@ -1029,6 +1038,7 @@
 				B78DA9802A070EC9002343AB /* WindowView.swift in Sources */,
 				B7544E3E2A191BCE00961F4C /* AudioTranslationQuery.swift in Sources */,
 				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
+				B71EB87C2A21C29500D87C6F /* LoadingLogic.swift in Sources */,
 				B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
 				B7544E402A191BCE00961F4C /* Utilities.swift in Sources */,
@@ -1079,6 +1089,7 @@
 				B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */,
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
+				B70A00FA2A20E0CA00ADEF5A /* ProjectView.swift in Sources */,
 				B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
@@ -1095,6 +1106,7 @@
 				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
 				B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */,
+				B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */,
 				B7544E3A2A191BCE00961F4C /* ChatResult.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,
 				B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */,
@@ -1269,7 +1281,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1321,7 +1333,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;

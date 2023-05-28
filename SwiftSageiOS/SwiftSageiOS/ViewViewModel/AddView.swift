@@ -80,132 +80,226 @@ struct AddView: View {
 
                     VStack {
                         HStack {
-
-                            HStack {
-//                                Button(action: {
-//                                    withAnimation {
-//                                        logD("open new simulator")
-//#if !os(macOS)
-//
-//                                        if consoleManager.isVisible {
-//                                            consoleManager.isVisible = false
-//                                        }
-//#endif
-//                                        showAddView.toggle()
-//#if !os(macOS)
-//                                        windowManager.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
-//#endif
-//                                    }
-//                                }) {
-//                                    VStack {
-//
-//
-//                                        resizableButtonImage(systemName:
-//                                                                "doc.fill.badge.plus",
-//                                                             size: geometry.size)
-//                                        .fontWeight(.bold)
-//                                        .cornerRadius(8)
-//
-//                                        Text("New SIM")
-//                                            .font(.subheadline)
-//                                            .foregroundColor(settingsViewModel.appTextColor)
-//                                    }
-//                                }
-//                                .padding(.horizontal, 8)
-//                                .padding(.vertical, 8)
-
-                                Button(action: {
-                                    withAnimation {
-                                        logD("open new File")
+                            VStack {
+                                // start top row
+                                if settingsViewModel.currentMode == .computer {
+                                    HStack {
+                                        // PROJECT/DEBUGGER WINDOW
+                                        Button(action: {
+                                            withAnimation {
+                                                logD("Upload Workspace")
 #if !os(macOS)
-
-                                        if consoleManager.isVisible {
-                                            consoleManager.isVisible = false
+                                                
+                                                if consoleManager.isVisible {
+                                                    consoleManager.isVisible = false
+                                                }
+#endif
+                                                //        showAddView.toggle()
+                                                
+                                                
+                                                logD("UPLOAD Workspace")
+                                                
+                                                //     showAddView.toggle()
+                                                
+                                                settingsViewModel.multiLineText = "upload"
+                                                DispatchQueue.main.async {
+                                                    
+                                                    // Execute your action here
+                                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                                    
+                                                    self.settingsViewModel.isInputViewShown = false
+                                                    
+                                                    settingsViewModel.multiLineText = ""
+                                                }
+                                            }
+                                        }) {
+                                            VStack {
+                                                resizableButtonImage(systemName:
+                                                                        "arrow.up.circle.fill",
+                                                                     size: geometry.size)
+                                                .fontWeight(.bold)
+                                                .cornerRadius(8)
+                                                
+                                                Text("Upload")
+                                                    .font(.caption)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+                                            }
                                         }
-#endif
-                                        showAddView.toggle()
+                                        
+                                        // NEW FILE WINDOW
+                                        Button(action: {
+                                            withAnimation {
+                                                logD("Download Workspace")
 #if !os(macOS)
-                                        windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+                                                
+                                                if consoleManager.isVisible {
+                                                    consoleManager.isVisible = false
+                                                }
 #endif
-                                    }
-                                }) {
-                                    VStack {
-
-
-                                        resizableButtonImage(systemName:
-                                                                "doc.fill.badge.plus",
-                                                             size: geometry.size)
-                                        .fontWeight(.bold)
-                                        .cornerRadius(8)
-
-                                        Text("New File...")
-                                            .font(.subheadline)
-                                            .foregroundColor(settingsViewModel.appTextColor)
+                                                showAddView.toggle()
+                                                
+                                                
+                                                logD("DO WORKSPACE DOWNLOAD!")
+                                                
+                                                settingsViewModel.multiLineText = "download"
+                                                DispatchQueue.main.async {
+                                                    
+                                                    // Execute your action here
+                                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                                    
+                                                    self.settingsViewModel.isInputViewShown = false
+                                                    
+                                                    settingsViewModel.multiLineText = ""
+                                                }
+                                            }
+                                        }) {
+                                            VStack {
+                                                
+                                                
+                                                resizableButtonImage(systemName:
+                                                                        "arrow.down.circle.fill",
+                                                                     size: geometry.size)
+                                                .fontWeight(.bold)
+                                                .cornerRadius(8)
+                                                
+                                                Text("Download")
+                                                    .font(.caption)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+                                            }
+                                        }
+                                        
                                     }
                                 }
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 8)
+                                //.padding(.leading,8)
+                                // end top row
 
-                            }
-                            .padding(.leading,8)
-
-                            Button(action: {
-                                withAnimation {
+                                // BOTTOM ROW
+                                HStack {
+                                    // PROJECT/DEBUGGER WINDOW
+                                    Button(action: {
+                                        withAnimation {
+                                            logD("open new project window")
+                                            logD("open new debugger window")
 
 #if !os(macOS)
-                                    if consoleManager.isVisible {
-                                        consoleManager.isVisible = false
+
+                                            if consoleManager.isVisible {
+                                                consoleManager.isVisible = false
+                                            }
+#endif
+                                            showAddView.toggle()
+#if !os(macOS)
+                                            windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
+#endif
+                                        }
+                                    }) {
+                                        VStack {
+
+
+                                            resizableButtonImage(systemName:
+                                                                    "iphone.badge.play",
+                                                                 size: geometry.size)
+                                            .fontWeight(.bold)
+                                            .cornerRadius(8)
+
+                                            Text("Project")
+                                                .font(.caption)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                        }
                                     }
+
+
+                                    // NEW FILE WINDOW
+                                    Button(action: {
+                                        withAnimation {
+                                            logD("open new File")
+#if !os(macOS)
+
+                                            if consoleManager.isVisible {
+                                                consoleManager.isVisible = false
+                                            }
 #endif
-                                    logD("open Webview")
-                                    showAddView.toggle()
+                                            showAddView.toggle()
+#if !os(macOS)
+                                            windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+#endif
+                                        }
+                                    }) {
+                                        VStack {
+
+
+                                            resizableButtonImage(systemName:
+                                                                    "doc.fill.badge.plus",
+                                                                 size: geometry.size)
+                                            .fontWeight(.bold)
+                                            .cornerRadius(8)
+
+                                            Text("File")
+                                                .font(.caption)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                        }
+                                    }
+                                    Button(action: {
+                                        withAnimation {
 
 #if !os(macOS)
-                                    windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+                                            if consoleManager.isVisible {
+                                                consoleManager.isVisible = false
+                                            }
 #endif
-                                }
-                            }) {
-                                VStack {
+                                            logD("open Webview")
+                                            showAddView.toggle()
 
-                                    resizableButtonImage(systemName:
-                                                            "rectangle.center.inset.filled.badge.plus",
-                                                         size: geometry.size)
-                                    .fontWeight(.bold)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
-
-                                    Text("New webview: " )
-                                        .font(.subheadline)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                }
-                            }
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 8)
-
-                            HStack {
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.defaultURL
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-
-                                .focused($field7IsFocused)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .scrollDismissesKeyboard(.interactively)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
 #if !os(macOS)
-                                .autocapitalization(.none)
+                                            windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
+                                        }
+                                    }) {
+                                        VStack {
+
+                                            resizableButtonImage(systemName:
+                                                                    "rectangle.center.inset.filled.badge.plus",
+                                                                 size: geometry.size)
+                                            .fontWeight(.bold)
+                                            .background(settingsViewModel.buttonColor)
+                                            .cornerRadius(8)
+
+                                            Text("Webview" )
+                                                .font(.caption)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                        }
+                                    }
+
+                                }
+
+                                HStack {
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.defaultURL
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+
+                                    .focused($field7IsFocused)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .scrollDismissesKeyboard(.interactively)
+                                    .font(.caption)
+                                    .padding(.leading,8)
+
+                                    .padding(.trailing,8)
+
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
+                                .frame(height: geometry.size.height / 17)
+                                Spacer()
                             }
-                            .frame(height: geometry.size.height / 17)
-                            Spacer()
+                            // end bottom row
                         }
-                        .padding(.leading,8)
-                        .padding(.trailing,8)
 
                         // Open Change View , Open Working Changes View Stack
 
@@ -232,17 +326,88 @@ struct AddView: View {
                                     resizableButtonImage(systemName:
                                                             "lasso.and.sparkles",
                                                          size: geometry.size)
-                                        .fontWeight(.bold)
-                                        .cornerRadius(8)
+                                    .fontWeight(.bold)
+                                    .cornerRadius(8)
 
-                                    Text("View Working Changes...")
-                                        .font(.subheadline)
+                                    Text("Changes")
+                                        .font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
-                                        .padding(.bottom)
+                                        //.padding(.bottom)
                                 }
                             }
+
+                            Group {
+                                VStack {
+                                    HStack(spacing: 0) {
+
+                                        VStack {
+                                            resizableButtonImage(systemName:
+                                                                    "macwindow.on.rectangle",
+                                                                 size: geometry.size)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .background(settingsViewModel.buttonColor)
+                                            .cornerRadius(8)
+                                            .onTapGesture {
+                                                withAnimation {
+
+                                                    logD("Open container containing repo tree")
+
+#if !os(macOS)
+                                                    if consoleManager.isVisible {
+                                                        consoleManager.isVisible = false
+                                                    }
+#endif
+                                                    showAddView.toggle()
+
+#if !os(macOS)
+                                                    windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+#endif
+                                                }
+                                            }
+                                            Text("Files")
+                                                .font(.caption)
+                                                .lineLimit(nil)
+                                                //.fontWeight(.bold)
+                                              //  .padding()
+                                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                        }
+                                    }
+                                }
+                            }
+                            VStack {
+
+
+
+                                resizableButtonImage(systemName:
+                                                        "macwindow.on.rectangle",
+                                                     size: geometry.size)
+                                .fontWeight(.bold)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .background(settingsViewModel.buttonColor)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    withAnimation {
+                                        logD("Open container containing repo tree")
+
+#if !os(macOS)
+                                        if consoleManager.isVisible {
+                                            consoleManager.isVisible = false
+                                        }
+#endif
+                                        showAddView.toggle()
+#if !os(macOS)
+                                        windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+#endif
+                                    }
+                                }
+                                Text("Windows")
+                                    .font(.caption)
+                                    .lineLimit(nil)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                            }
                         }
-                        .padding(.leading,8)
+//                        .padding(.leading,8)
                     }
 
                     // GIT SETTINGS
@@ -481,77 +646,7 @@ struct AddView: View {
                     }
 
 
-                    Group {
-                        VStack {
-                            HStack(spacing: 4) {
 
-                                VStack {
-                                    resizableButtonImage(systemName:
-                                                            "macwindow.on.rectangle",
-                                                         size: geometry.size)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
-                                    .onTapGesture {
-                                        withAnimation {
-
-                                            logD("Open container containing repo tree")
-
-#if !os(macOS)
-                                            if consoleManager.isVisible {
-                                                consoleManager.isVisible = false
-                                            }
-#endif
-                                            showAddView.toggle()
-
-#if !os(macOS)
-                                            windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
-                                        }
-                                    }
-                                    Text("Repo File Tree")
-                                        .font(.subheadline)
-                                        .lineLimit(nil)
-                                        .fontWeight(.bold)
-                                        .padding()
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                }
-                            }
-                        }
-                    }
-                    VStack {
-
-
-
-                        resizableButtonImage(systemName:
-                                                "macwindow.on.rectangle",
-                                             size: geometry.size)
-                        .fontWeight(.bold)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                        .background(settingsViewModel.buttonColor)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            withAnimation {
-                                logD("Open container containing repo tree")
-
-#if !os(macOS)
-                                if consoleManager.isVisible {
-                                    consoleManager.isVisible = false
-                                }
-#endif
-                                showAddView.toggle()
-#if !os(macOS)
-                                windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
-                            }
-                        }
-                        Text("Window List")
-                            .font(.subheadline)
-                            .lineLimit(nil)
-                            .padding()
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
 
                     Button(action: {
                         withAnimation {

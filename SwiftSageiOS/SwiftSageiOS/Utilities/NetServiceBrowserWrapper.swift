@@ -27,13 +27,13 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
     }
     // MARK: - NetServiceBrowserDelegate
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        print("Found service: \(service)")
+        logD("Found service: \(service)")
         discoveredServices.append(service)
         service.delegate = self
         service.resolve(withTimeout: 10.0)
     }
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        print("Removed service: \(service)")
+        logD("Removed service: \(service)")
         if let index = discoveredServices.firstIndex(of: service) {
             discoveredServices.remove(at: index)
         }
@@ -65,5 +65,8 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
 
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
         logD("Failed to resolve service (\(sender.name)) with error: \(errorDict)")
+        for service in discoveredServices {
+            service.resolve(withTimeout: 5.0)
+        }
     }
 }

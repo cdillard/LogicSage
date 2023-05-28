@@ -66,6 +66,26 @@ struct RepositoryTreeView: View {
     private func fileTapped(_ file: RepoFile, _ frame: CGRect) {
         print("Tapped file: \(file)")
 
+
+        if file.url.pathExtension == "heic" ||
+            file.url.pathExtension == "jpg"  ||
+            file.url.pathExtension == "jpeg" ||
+            file.url.pathExtension == "png" {
+
+            // Handle double duty of setting this wallpape
+            do {
+                let fileData = try Data(contentsOf: file.url)
+
+                settingsViewModel.receivedImageData = fileData
+            }
+            catch {
+                logD("fail to set wallpaper from disk w e \(error)")
+            }
+            return
+
+        }
+
+
         let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
 
         windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
