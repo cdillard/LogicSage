@@ -19,8 +19,9 @@ struct CommandButtonView: View {
     @State var textEditorHeight : CGFloat = 20
     @EnvironmentObject var windowManager: WindowManager
 
+    @Binding var isInputViewShown: Bool
     func openText() {
-        self.settingsViewModel.isInputViewShown.toggle()
+       isInputViewShown.toggle()
 #if !os(macOS)
 
         // consoleManager.isVisible = !settingsViewModel.isInputViewShown
@@ -34,7 +35,7 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
-                    if settingsViewModel.isInputViewShown {
+                    if isInputViewShown {
                         if  settingsViewModel.currentMode == .computer {
                             // GOOGLE button
                             Button(action: {
@@ -47,7 +48,7 @@ struct CommandButtonView: View {
                                     // Execute your action here
                                     screamer.sendCommand(command: settingsViewModel.multiLineText)
                                     
-                                    self.settingsViewModel.isInputViewShown = false
+                                    isInputViewShown = false
                                     
                                     settingsViewModel.multiLineText = ""
                                 }
@@ -68,14 +69,16 @@ struct CommandButtonView: View {
                             
                             Button(action: {
                                 logD("RUN SIMULATOR")
-                                
+
+                                settingsViewModel.latestWindowManager = windowManager
+
                                 settingsViewModel.multiLineText = "simulator"
                                 DispatchQueue.main.async {
                                     
                                     // Execute your action here
                                     screamer.sendCommand(command: settingsViewModel.multiLineText)
                                     
-                                    self.settingsViewModel.isInputViewShown = false
+                                    isInputViewShown = false
                                     
                                     settingsViewModel.multiLineText = ""
                                 }
@@ -214,7 +217,7 @@ struct CommandButtonView: View {
                     //                        }
                     //                        .padding(.bottom)
                     //                    }
-                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
+                    if !settingsViewModel.multiLineText.isEmpty && isInputViewShown {
                         // X BUTTON
                         Button(action: {
                             // cmd send st
@@ -224,7 +227,7 @@ struct CommandButtonView: View {
                                 // Execute your action here
                                 screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                                self.settingsViewModel.isInputViewShown = false
+                                isInputViewShown = false
 
                                 settingsViewModel.multiLineText = ""
                             }
@@ -249,7 +252,7 @@ struct CommandButtonView: View {
                             // Execute your action here
                             screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                            self.settingsViewModel.isInputViewShown = false
+                            isInputViewShown = false
 
                             settingsViewModel.multiLineText = ""
                         }
@@ -273,7 +276,7 @@ struct CommandButtonView: View {
                             // Execute your action here
                             screamer.sendCommand(command: settingsViewModel.multiLineText)
                             
-                            self.settingsViewModel.isInputViewShown = false
+                            isInputViewShown = false
 #if !os(macOS)
                             consoleManager.isVisible = true
 #endif
@@ -293,7 +296,7 @@ struct CommandButtonView: View {
                             // Execute your action here
                             screamer.sendCommand(command: settingsViewModel.multiLineText)
 
-                            self.settingsViewModel.isInputViewShown = false
+                            isInputViewShown = false
                             settingsViewModel.commandMode = .commandBar
                         }
                         else {
@@ -303,7 +306,7 @@ struct CommandButtonView: View {
                             openText()
                         }
                     }) {
-                        if self.settingsViewModel.isInputViewShown {
+                        if isInputViewShown {
                             Text("🔽")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
@@ -325,7 +328,7 @@ struct CommandButtonView: View {
                 .padding(.bottom,8)
                 .edgesIgnoringSafeArea([.top])
 
-                if settingsViewModel.isInputViewShown {
+                if isInputViewShown {
                     // MAIN INPUT TEXTFIELD
 
                     ZStack(alignment: .leading) {

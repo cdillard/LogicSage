@@ -47,7 +47,7 @@ public class LCManager: NSObject, UIGestureRecognizerDelegate {
         }
     }
     
-    let defaultConsoleSize = CGSize(width: UIScreen.size.width - (UIScreen.size.width / 2), height: UIScreen.size.height - (UIScreen.size.height / 2))
+    let defaultConsoleSize = CGSize(width: UIScreen.size.width - (UIScreen.size.width / 1.5), height: UIScreen.size.height - (UIScreen.size.height / 1.5))
 
     lazy var borderView = UIView()
     

@@ -21,6 +21,17 @@
 
 LogicSage 1.2.0
 
+Features:
+- Rename GPT conversations to stay organized.
+- Fix syntax highlighting / text selection in chats.
+- Customizable name for  GPT and Self.
+- Wallpaper saved to disk for offline usage.
+Fixes:
+- Multiple window support improved.
+
+
+[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
 
 ----------------
 

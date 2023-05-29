@@ -28,6 +28,7 @@ struct AddView: View {
     @FocusState private var field6IsFocused: Bool
     @FocusState private var field7IsFocused: Bool
     @FocusState private var field8IsFocused: Bool
+    @Binding var isInputViewShown: Bool
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
@@ -89,26 +90,26 @@ struct AddView: View {
                                             withAnimation {
                                                 logD("Upload Workspace")
 #if !os(macOS)
-                                                
+
                                                 if consoleManager.isVisible {
                                                     consoleManager.isVisible = false
                                                 }
 #endif
                                                 //        showAddView.toggle()
-                                                
-                                                
+
+
                                                 logD("UPLOAD Workspace")
-                                                
+
                                                 //     showAddView.toggle()
-                                                
+
                                                 settingsViewModel.multiLineText = "upload"
                                                 DispatchQueue.main.async {
-                                                    
+
                                                     // Execute your action here
                                                     screamer.sendCommand(command: settingsViewModel.multiLineText)
-                                                    
-                                                    self.settingsViewModel.isInputViewShown = false
-                                                    
+
+                                                   isInputViewShown = false
+
                                                     settingsViewModel.multiLineText = ""
                                                 }
                                             }
@@ -119,55 +120,55 @@ struct AddView: View {
                                                                      size: geometry.size)
                                                 .fontWeight(.bold)
                                                 .cornerRadius(8)
-                                                
+
                                                 Text("Upload")
                                                     .font(.caption)
                                                     .foregroundColor(settingsViewModel.appTextColor)
                                             }
                                         }
-                                        
+
                                         // NEW FILE WINDOW
                                         Button(action: {
                                             withAnimation {
                                                 logD("Download Workspace")
 #if !os(macOS)
-                                                
+
                                                 if consoleManager.isVisible {
                                                     consoleManager.isVisible = false
                                                 }
 #endif
                                                 showAddView.toggle()
-                                                
-                                                
+
+
                                                 logD("DO WORKSPACE DOWNLOAD!")
-                                                
+
                                                 settingsViewModel.multiLineText = "download"
                                                 DispatchQueue.main.async {
-                                                    
+
                                                     // Execute your action here
                                                     screamer.sendCommand(command: settingsViewModel.multiLineText)
-                                                    
-                                                    self.settingsViewModel.isInputViewShown = false
-                                                    
+
+                                                    isInputViewShown = false
+
                                                     settingsViewModel.multiLineText = ""
                                                 }
                                             }
                                         }) {
                                             VStack {
-                                                
-                                                
+
+
                                                 resizableButtonImage(systemName:
                                                                         "arrow.down.circle.fill",
                                                                      size: geometry.size)
                                                 .fontWeight(.bold)
                                                 .cornerRadius(8)
-                                                
+
                                                 Text("Download")
                                                     .font(.caption)
                                                     .foregroundColor(settingsViewModel.appTextColor)
                                             }
                                         }
-                                        
+
                                     }
                                 }
                                 //.padding(.leading,8)

@@ -10,7 +10,7 @@ import Foundation
 
 class SageMultiViewModel: ObservableObject {
     @ObservedObject var settingsViewModel: SettingsViewModel
-
+    
     @Published var windowInfo: WindowInfo
     @Published var sourceCode: String
     @Published var changes: [ChangeRow] = []

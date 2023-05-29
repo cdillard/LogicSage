@@ -25,20 +25,12 @@ import Combine
 import UIKit
 #endif
 
-// TODO MAKE SURE ITS OKAY TO UP THIS SO MUCH
-let STRING_LIMIT = 150000
-
-// TODO BEFORE RELEASE: PROD BUNDLE ID
-// TODO USE BUILT IN BundleID var.
-let bundleID = "com.chrisdillard.SwiftSage"
 
 var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct SwiftSageiOSApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel.shared
-    @StateObject private var appState = AppState()
-    @State private var isDrawerOpen = false
 #if !os(macOS)
 
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
@@ -51,19 +43,8 @@ struct SwiftSageiOSApp: App {
         WindowGroup {
             ZStack {
                 HStack(spacing: 0) {
-#if !os(macOS)
 
-                    if self.isDrawerOpen {
-                        DrawerContent(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait)
-                            .environmentObject(appState)
-                            .environmentObject(WindowManager.shared)
-                            .transition(.move(edge: .leading))
-                            .background(settingsViewModel.buttonColor)
-                            .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
-                    }
-#endif
-                    ContentView(settingsViewModel: settingsViewModel, isDrawerOpen: $isDrawerOpen)
-                        .environmentObject(appState)
+                    ContentView(settingsViewModel: settingsViewModel)
                 }
                 .overlay(
                     Group {
@@ -113,9 +94,6 @@ struct SwiftSageiOSApp: App {
                         logD("didFinishLaunchingNotification")
                         SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                        logD("applicationDidBecomeActive")
-                    }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                         logD("applicationWillEnterForeground")
 
@@ -123,7 +101,7 @@ struct SwiftSageiOSApp: App {
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                         logD("didEnterBackgroundNotification")
-                        SwiftSageiOSAppDelegate.applicationDidEnterBackground()
+                        //SwiftSageiOSAppDelegate.applicationDidEnterBackground()
                     }
 #endif
             }

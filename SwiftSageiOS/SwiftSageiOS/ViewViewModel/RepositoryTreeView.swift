@@ -90,7 +90,7 @@ struct RepositoryTreeView: View {
 
         windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
 
-        settingsViewModel.showAddView = false
+//        settingsViewModel.showAddView = false
 
         //        // FETCH FILE FROM NETWORK, VS FETCH FILE FROM DISK
         //        SettingsViewModel.shared.fetchFileContent(accessToken: SettingsViewModel.shared.ghaPat, filePath: file.path) { result in

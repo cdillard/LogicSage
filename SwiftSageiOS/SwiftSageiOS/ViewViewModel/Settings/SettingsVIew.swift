@@ -1012,7 +1012,8 @@ struct SettingsView: View {
         settingsViewModel.multiLineText = "setLoadMode \(modes[currentModeIndex])"
         DispatchQueue.main.async {
 
-            self.settingsViewModel.isInputViewShown = false
+            // isInputViewShown = false
+
             // Execute your action here
             screamer.sendCommand(command: settingsViewModel.multiLineText)
             settingsViewModel.multiLineText = ""

@@ -82,7 +82,7 @@ struct TopBar: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
 
-                if windowInfo.windowType == .file {
+                if windowInfo.windowType == .file || windowInfo.windowType == .chat {
                     Button(action: {
                         isEditing.toggle()
                     }) {

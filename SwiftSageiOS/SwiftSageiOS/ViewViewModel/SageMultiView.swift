@@ -131,7 +131,7 @@ struct SageMultiView: View {
                         .environmentObject(viewModel)
 #endif
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window)
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing)
                             .environmentObject(windowManager)
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
@@ -276,7 +276,6 @@ struct ResizableViewModifier: ViewModifier {
             .frame(width: frame.width, height: frame.height)
             .overlay(
                 ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window, boundPosition: $boundPosition)
-                    .environmentObject(windowManager)
             )
     }
 }

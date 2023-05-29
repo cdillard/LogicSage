@@ -11,9 +11,6 @@ import SwiftUI
 
 class WindowManager: ObservableObject {
 
-    public static let shared = WindowManager()
-
-
     @Published var windows: [WindowInfo] = []
 
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {

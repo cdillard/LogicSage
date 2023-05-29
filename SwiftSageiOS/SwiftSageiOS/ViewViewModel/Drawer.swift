@@ -15,6 +15,8 @@ var drawerWidthLandscape: CGFloat = UIScreen.main.bounds.width / (UIDevice.curre
 
 struct DrawerContent: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @ObservedObject var windowManager: WindowManager
+
     @Binding var isDrawerOpen: Bool
     @Binding var conversations: [Conversation]
     @Binding var isPortrait: Bool
@@ -39,12 +41,16 @@ struct DrawerContent: View {
                         .foregroundColor(settingsViewModel.buttonColor)
                         .padding(3)
                         .onTapGesture {
+
+                            settingsViewModel.latestWindowManager = windowManager
+
                             settingsViewModel.createAndOpenNewConvo()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
                                 playSelect()
-
-                                isDrawerOpen.toggle()
+                                withAnimation {
+                                    isDrawerOpen = false
+                                }
                             }
 
                         }
@@ -59,8 +65,10 @@ struct DrawerContent: View {
                                 .font(.body)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .onTapGesture {
-                                    isDrawerOpen.toggle()
-
+                                    withAnimation {
+                                        isDrawerOpen = false
+                                    }
+                                    settingsViewModel.latestWindowManager = windowManager
 
                                     playSelect()
 
@@ -89,7 +97,12 @@ struct DrawerContent: View {
                                     .onTapGesture {
                                         isDeleting = false
                                         isDeletingIndex = -1
-                                        isDrawerOpen.toggle()
+                                        settingsViewModel.latestWindowManager = windowManager
+
+
+                                        withAnimation {
+                                            isDrawerOpen = false
+                                        }
                                         settingsViewModel.deleteConversation(convo.id)
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
@@ -128,7 +141,13 @@ struct DrawerContent: View {
                         .foregroundColor(settingsViewModel.appTextColor)
                         .padding(2)
                         .onTapGesture {
+                            settingsViewModel.latestWindowManager = windowManager
+
                             settingsViewModel.createAndOpenServerChat()
+
+                            withAnimation {
+                                isDrawerOpen = false
+                            }
                         }
 
                     Spacer()
@@ -143,6 +162,8 @@ struct DrawerContent: View {
                     TextField("New name", text: $newName)
 
                     Button("Rename", action: {
+                        settingsViewModel.latestWindowManager = windowManager
+
                         presentRenamer = false
                         if let convoID = renamingConvo?.id {
                             settingsViewModel.renameConvo(convoID, newName: newName)
@@ -153,13 +174,16 @@ struct DrawerContent: View {
                             logD("no rn")
                         }
 
-                        isDrawerOpen = false
+                        //isDrawerOpen = false
+                        renamingConvo = nil
+                        newName = ""
 
                     })
                     Button("Cancel", role: .cancel, action: {
                         renamingConvo = nil
                         presentRenamer = false
-                        isDrawerOpen = false
+                        newName = ""
+                        // was42isDrawerOpen = false
                     })
                 }, message: {
                     if let renamingConvo {

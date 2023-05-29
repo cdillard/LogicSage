@@ -112,24 +112,26 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         let overrideText = custom.overrideText()
 
         DispatchQueue.main.async {
+
             view.textView.isEditable = isEditing
 
             view.contentTextView.isEditable = isEditing
 
-            
+
             view.isEditing = isEditing
             view.textView.isSelectable = isEditing
             view.contentTextView.isSelectable = isEditing
-
             if let overrideText = overrideText {
+
+
                 let preText = view.textView.text
-                view.textView.text = overrideText
+                context.coordinator.wrappedView.text = overrideText
 
                 if preText == view.textView.text {
 
                 }
                 else {
-                    // scroll text virew to bottom
+                    // scroll text view to bottom
                     if view.textView.text.count > 0 {
                         let location = view.textView.text.count - 1
                         let bottom = NSMakeRange(location, 1)

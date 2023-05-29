@@ -70,6 +70,9 @@ struct InstructionsPopup: View {
 
                         isPresented = false
                         setHasSeenInstructions(true)
+
+                        settingsViewModel.initalAnim = true
+
                     }) {
                         Text("Got it!")
                             .foregroundColor(.white)

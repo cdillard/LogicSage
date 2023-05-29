@@ -18,9 +18,10 @@ struct ChatView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     @Binding var conversations: [Conversation]
-    var window: WindowInfo?
 
-    @State var isEditing = false
+    var window: WindowInfo?
+    @Binding var isEditing: Bool
+
     @State var chatText = ""
     @State var textEditorHeight : CGFloat = 40
     @FocusState private var isTextFieldFocused: Bool
@@ -69,6 +70,7 @@ struct ChatView: View {
                         .lineLimit(nil)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
+                        .scrollContentBackground(.hidden) // <- Hide it
                         .background(settingsViewModel.backgroundColorSrcEditor)
 
                         .frame(height: max( 40, textEditorHeight))
@@ -94,6 +96,8 @@ struct ChatView: View {
                         .padding(.leading,4)
                         .fontWeight(.light)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
+                        .foregroundColor(settingsViewModel.plainColorSrcEditor)
+
                         .allowsHitTesting(false)
                         .foregroundColor(settingsViewModel.appTextColor.opacity(0.5)).opacity(!isTextFieldFocused && chatText.isEmpty ? 1.0 : 0.0)
                 }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
@@ -128,9 +132,6 @@ struct ChatView: View {
 
             chatText = ""
             isTextFieldFocused = false
-
-            self.settingsViewModel.isInputViewShown = false
-
         }
         else {
             logD("failed to chat")

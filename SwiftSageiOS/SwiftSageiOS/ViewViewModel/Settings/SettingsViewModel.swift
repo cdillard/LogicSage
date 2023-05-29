@@ -24,6 +24,15 @@ let defaultYourGithubUsername = "cdillard"
 
 let jsonFileName = "conversations"
 
+
+// TODO MAKE SURE ITS OKAY TO UP THIS SO MUCH
+let STRING_LIMIT = 150000
+
+// TODO BEFORE RELEASE: PROD BUNDLE ID
+// TODO USE BUILT IN BundleID var.
+let bundleID = "com.chrisdillard.SwiftSage"
+
+
 public class SettingsViewModel: ObservableObject {
     func logoAscii5() -> String {
         """
@@ -35,6 +44,8 @@ public class SettingsViewModel: ObservableObject {
         """
     }
     public static let shared = SettingsViewModel()
+
+    var latestWindowManager: WindowManager?
 
     var serviceDiscovery: ServiceDiscovery?
     func doDiscover() {
@@ -58,7 +69,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
-    @Published var isInputViewShown = false
+//    @Published var isInputViewShown = false
     @Published var commandMode: EntryMode = .commandBar
 
     @AppStorage("savedText") var multiLineText = ""
@@ -66,9 +77,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var hasAcceptedMicrophone = false
     @AppStorage("device") var currentMode: Device = .mobile
 
-    @Published var showAddView = false
-    // DONT AUTO SHOW THE STUFF
-    @Published var showInstructions: Bool = false //!hasSeenInstructions()
+    @Published var showInstructions: Bool = !hasSeenInstructions()
     @Published var showHelp: Bool = false
     @Published var showAllColorSettings: Bool = false
 
@@ -87,6 +96,9 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
     @AppStorage("defaultURL") var defaultURL = "https://"
 
+
+    @Published var initalAnim: Bool = false
+    
 // END SAVED UI SETTINGS ZONE **************************************************************************************
 
 // BEGIN STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
@@ -150,7 +162,7 @@ public class SettingsViewModel: ObservableObject {
             if oldValue == nil {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
 #if !os(macOS)
-                    WindowManager.shared.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
+                    self.latestWindowManager?.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
 #endif
                 }
             }
@@ -430,6 +442,7 @@ public class SettingsViewModel: ObservableObject {
         }
     }
     @AppStorage("serverChatID") var serverChatID = ""
+    @AppStorage("completedMessages") var completedMessages = 0
 
     func renameConvo(_ convoId: Conversation.ID, newName: String) {
 
@@ -474,7 +487,7 @@ public class SettingsViewModel: ObservableObject {
     func deleteConversation(_ conversationId: Conversation.ID) {
         conversations.removeAll(where: { $0.id == conversationId })
 
-        WindowManager.shared.removeWindowsWithConvoId(convoID: conversationId)
+        latestWindowManager?.removeWindowsWithConvoId(convoID: conversationId)
         saveConvosToDisk()
     }
     func createAndOpenNewConvo() {
@@ -485,10 +498,10 @@ public class SettingsViewModel: ObservableObject {
         openConversation(convo)
     }
     func openConversation(_ convoId: Conversation.ID) {
-        WindowManager.shared.removeWindowsWithConvoId(convoID: convoId)
+        latestWindowManager?.removeWindowsWithConvoId(convoID: convoId)
 
 #if !os(macOS)
-        WindowManager.shared.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
+        latestWindowManager?.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
 #endif
     }
     func createAndOpenServerChat() {
@@ -579,10 +592,18 @@ public class SettingsViewModel: ObservableObject {
 // START STOREKIT ZONE ***********************************************************************
 
     func requestReview() {
-        guard Int.random(in: 0...12) == 0 else {
-            return print("no review today")
+        DispatchQueue.main.async {
+            self.completedMessages += 1
+            let newCompletionMsgs = self.completedMessages
+            logD("\(newCompletionMsgs) % 7 = will review")
+
+            guard newCompletionMsgs % 7 == 0 else {
+                return logD("no review today")
+            }
+
+            logD("SKStoreReviewController.requestReview")
+            SKStoreReviewController.requestReview()
         }
-        SKStoreReviewController.requestReview()
     }
 // END STOREKIT ZONE ***********************************************************************
 
