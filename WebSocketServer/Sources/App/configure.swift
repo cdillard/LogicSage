@@ -10,7 +10,7 @@ import var Darwin.stdout
 
 // Run with `vapor run` in the WebSocketServer directory.
 
-let debugging = false
+let debugging = true
 
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] +
 ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]
