@@ -14,7 +14,7 @@ let listHeightFactor = 13.666
 struct AddView: View {
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
-    @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var windowManager: WindowManager
 
 
     // TODO: Reuse this to handle open / not open and restore repo / filw and window list

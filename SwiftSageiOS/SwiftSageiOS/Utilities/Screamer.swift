@@ -292,7 +292,7 @@ class ScreamClient: WebSocketDelegate {
             }
             else {
                 logD("Websocket nil, not handling command")
-                logD("0. Set your Computers API Key for A.I. in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the LogicSage ./run.sh")
+                logD("0. Set your Computers API Key for A.I. in GPT-Info.plist before building and running the LogicSage ./run.sh")
 
                 disconnect()
             }

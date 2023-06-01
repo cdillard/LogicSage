@@ -17,7 +17,7 @@ let offsetPoint = CGPoint(x: 50, y: 50)
 var originPoint = CGPoint(x: 0, y: 0)
 
 struct WindowView: View {
-    @EnvironmentObject var windowManager: WindowManager
+//    @EnvironmentObject var windowManager: WindowManager
     var window: WindowInfo
     @State private var position: CGSize = CGSize.zero
 
@@ -25,6 +25,8 @@ struct WindowView: View {
     @State var frame: CGRect
     @StateObject private var pinchHandler = PinchGestureHandler()
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @ObservedObject var windowManager: WindowManager
+
     @State private var showAddView: Bool = false
 
     @State private var isMoveGestureActivated = false
@@ -32,8 +34,7 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position))
-                        .environmentObject(windowManager)
+                        .modifier(ResizableViewModifier(frame: $frame, zoomScale: $pinchHandler.scale, window: window, boundPosition: $position, windowManager: windowManager))
                 }
                 .cornerRadius(8)
                 .shadow(color:settingsViewModel.appTextColor, radius: 10)
@@ -41,94 +42,70 @@ struct WindowView: View {
             }
             .offset(position)
     }
-    private var shouldApplyTapGest: Bool {
-        if window.windowType == .file || window.windowType == .webView {
-            return true
-        }
-
-        return false
-    }
     private func windowContent() -> some View {
         switch window.windowType {
         case .webView:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .webView, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .webView, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(windowManager)
             )
         case .file:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .editor, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .editor, windowManager: windowManager, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .chat:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .chat, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .chat, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .simulator:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .simulator, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .simulator, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .repoTreeView:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .repoTreeView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .repoTreeView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .windowListView:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .windowListView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .windowListView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .changeView:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .changeView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .changeView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .workingChangesView:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .workingChangesView, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .workingChangesView,  windowManager: windowManager, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         case .project:
             let viewModel = SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window)
             let url = URL(string:settingsViewModel.defaultURL)
             return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .project, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
+                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .project,  windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .environmentObject(viewModel)
-                    .environmentObject(windowManager)
             )
         }
     }

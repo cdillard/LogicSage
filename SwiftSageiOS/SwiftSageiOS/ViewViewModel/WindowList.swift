@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct WindowList: View {
-    @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var windowManager: WindowManager
     @Binding var showAddView: Bool
 
     var body: some View {

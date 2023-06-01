@@ -62,6 +62,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     
     @Binding var text: String
     @Binding private var isEditing: Bool
+    @Binding private var isLocktoBottom: Bool
 
     private var shouldBecomeFirstResponder: Bool
     private var custom: Customization
@@ -69,7 +70,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     public init(
         text: Binding<String>,
         isEditing: Binding<Bool>,
-
+        isLockToBottom: Binding<Bool>,
         customization: Customization = Customization(
             didChangeText: {_ in },
             insertionPointColor: { Colorv.white },
@@ -82,7 +83,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     ) {
         self._text = text
         self._isEditing = isEditing
-
+        self._isLocktoBottom = isLockToBottom
         self.custom = customization
         self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
     }
@@ -127,16 +128,10 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
                 let preText = view.textView.text
                 context.coordinator.wrappedView.text = overrideText
 
-                if preText == view.textView.text {
-
-                }
-                else {
-                    // scroll text view to bottom
-                    if view.textView.text.count > 0 {
-                        let location = view.textView.text.count - 1
-                        let bottom = NSMakeRange(location, 1)
-                        view.textView.scrollRangeToVisible(bottom)
-                    }
+                if isLocktoBottom {
+                    let location = view.textView.text.count - 1
+                    let bottom = NSMakeRange(location, 1)
+                    view.textView.scrollRangeToVisible(bottom)
                 }
             }
         }

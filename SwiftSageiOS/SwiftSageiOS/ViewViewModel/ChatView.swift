@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 
 struct ChatView: View {
-    @EnvironmentObject var windowManager: WindowManager
 #if !os(macOS)
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
@@ -21,6 +20,7 @@ struct ChatView: View {
 
     var window: WindowInfo?
     @Binding var isEditing: Bool
+    @Binding var isLockToBottom: Bool
 
     @State var chatText = ""
     @State var textEditorHeight : CGFloat = 40
@@ -29,13 +29,15 @@ struct ChatView: View {
     @Environment(\.dateProviderValue) var dateProvider
     @Environment(\.idProviderValue) var idProvider
 
+
     var body: some View {
 #if !os(macOS)
         VStack(spacing: 0) {
             let viewModel = SourceCodeTextEditorViewModel()
+            let convoText = settingsViewModel.convoText(conversations, window: window)
 
             // We reuse the SourceCodeEditor as GPT chat view :)
-            SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
+            SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
                                     SourceCodeTextEditor.Customization(didChangeText:
                                                                         { srcCodeTextEditor in
                 // do nothing
@@ -49,7 +51,7 @@ struct ChatView: View {
             }, theme: {
                 ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
             // The Magic
-            }, overrideText:  { settingsViewModel.convoText(conversations, window: window) } ))
+            }, overrideText:  { convoText } ))
             .environmentObject(viewModel)
 
             HStack(spacing: 0) {
@@ -62,17 +64,12 @@ struct ChatView: View {
                                                    value: $0.frame(in: .local).size.height)
                         })
 
-//                    TextField("Type msg...", text: $chatText, onCommit: {
-//                            logD("submit text \(chatText)")
-//                        })
                     TextEditor(text: $chatText)
-
                         .lineLimit(nil)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
                         .scrollContentBackground(.hidden) // <- Hide it
                         .background(settingsViewModel.backgroundColorSrcEditor)
-
                         .frame(height: max( 40, textEditorHeight))
                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)
 #if !os(macOS)
@@ -114,6 +111,20 @@ struct ChatView: View {
                             .background(settingsViewModel.buttonColor)
                     }
                 }
+
+                if !convoText.isEmpty {
+                    // EXEC BUTTON
+                    Button(action: {
+                        setLockToBottom()
+                    }) {
+                        Text("\(!isLockToBottom ? "🔽": "🔒")")
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(Color.white)
+                            .background(settingsViewModel.buttonColor)
+                    }
+                }
+
             }
         }
 
@@ -136,6 +147,9 @@ struct ChatView: View {
         else {
             logD("failed to chat")
         }
+    }
+    func setLockToBottom() {
+        isLockToBottom.toggle()
     }
     struct ViewHeightKey: PreferenceKey {
         static var defaultValue: CGFloat { 0 }

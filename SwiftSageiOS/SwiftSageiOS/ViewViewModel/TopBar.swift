@@ -13,7 +13,7 @@ struct TopBar: View {
     var onClose: () -> Void
     @State var windowInfo: WindowInfo
     @State var webViewURL: URL?
-    @EnvironmentObject var windowManager: WindowManager
+    //@EnvironmentObject var windowManager: WindowManager
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!

@@ -88,7 +88,7 @@ func sendNotification(buttonTapped: Bool? = nil, switchChanged: Bool? = nil) {
         userInfo["switchChanged"] = switchChanged
     }
 
-    distributedNotificationCenter.post(name: NSNotification.Name(rawValue: "com.example.yourapp.notification"), object: nil, userInfo: userInfo)
+    distributedNotificationCenter.post(name: NSNotification.Name(rawValue: "com.chrisswiftygpt.SwiftSage.notification"), object: nil, userInfo: userInfo)
 }
 func isStatusBarAppRunning(bundleIdentifier: String) -> Bool {
     let runningApps = NSWorkspace.shared.runningApplications

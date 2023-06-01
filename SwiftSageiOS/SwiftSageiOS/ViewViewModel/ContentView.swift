@@ -40,10 +40,7 @@ struct ContentView: View {
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
 #endif
 
-#if !os(macOS)
 
-    @ObservedObject private var keyboardResponder = KeyboardResponder()
-#endif
 
     @State private var isInputViewShown = false
 
@@ -54,7 +51,6 @@ struct ContentView: View {
 #if !os(macOS)
                 if isDrawerOpen {
                     DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait)
-                        .environmentObject(windowManager)
                         .transition(.move(edge: .leading))
                         .background(settingsViewModel.buttonColor)
                         .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
@@ -99,18 +95,10 @@ struct ContentView: View {
     #if !os(macOS)
                     // START WINDOW MANAGER ZONE *************************************************
                     ForEach(windowManager.windows) { window in
-                        WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel)
+                        WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel, windowManager: windowManager)
                             .padding(SettingsViewModel.shared.cornerHandleSize)
                             .edgesIgnoringSafeArea(.all)
                             .background(.clear)
-                            .environmentObject(windowManager)
-    //#if !os(macOS)
-    //                .padding(.bottom,
-    //                          keyboardResponder.currentHeight > 0 ?
-    //                         keyboardResponder.currentHeight + geometry.size.height * 0.25 :
-    //                            0
-    //                )
-    //#endif
                     }
                     // END WINDOW MANAGER ZONE *************************************************
     #endif
@@ -145,10 +133,11 @@ struct ContentView: View {
                         // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
                         VStack {
                             Spacer()
-                            CommandButtonView(settingsViewModel: settingsViewModel, isInputViewShown: $isInputViewShown)
-                                .environmentObject(windowManager)
+                            CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
                         }
                         .padding(.horizontal)
+                        .padding(.vertical)
+
                         .padding(.leading, 8)
                         .padding(.trailing, 8)
                     }
@@ -269,10 +258,9 @@ struct ContentView: View {
                     .background(
                         ZStack {
     #if !os(macOS)
-                            AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, isInputViewShown: $isInputViewShown)
+                            AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                                 .opacity(showAddView ? 1.0 : 0.0)
-                                .environmentObject(windowManager)
                             SettingsView(showSettings: $showSettings, settingsViewModel: settingsViewModel)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                                 .opacity(showSettings ? 1.0 : 0.0)
@@ -280,17 +268,6 @@ struct ContentView: View {
                         }
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     )
-    #if !os(macOS)
-                    .onAppear {
-                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                        self.isPortrait = scene.interfaceOrientation.isPortrait
-                    }
-
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                        self.isPortrait = scene.interfaceOrientation.isPortrait
-                    }
-    #endif
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 }
 
@@ -332,14 +309,10 @@ struct ContentView: View {
                             .ignoresSafeArea()
     #endif
                     }
-
                     .edgesIgnoringSafeArea(.all)
-
                 }
             }
-
         }
-        
     }
 // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
@@ -347,6 +320,10 @@ struct ContentView: View {
 #if !os(macOS)
         defSize = CGRectMake(0, 0, size.width - (size.width * 0.22), size.height - (size.height * 0.22))
         defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.5), size.height - (size.height * 0.5))
+
+        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+        self.isPortrait = scene.interfaceOrientation.isPortrait
+
 #endif
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
@@ -360,27 +337,3 @@ struct ContentView: View {
 }
 
 
-#if !os(macOS)
-
-class KeyboardResponder: ObservableObject {
-    @Published var currentHeight: CGFloat = 0
-    var keyboardShow: AnyCancellable?
-    var keyboardHide: AnyCancellable?
-
-    init() {
-        keyboardShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-            .map { $0.keyboardHeight }
-            .assign(to: \.currentHeight, on: self)
-
-        keyboardHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
-            .assign(to: \.currentHeight, on: self)
-    }
-}
-
-extension Notification {
-    var keyboardHeight: CGFloat {
-        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
-    }
-}
-#endif

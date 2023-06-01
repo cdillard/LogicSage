@@ -351,7 +351,6 @@
 				B7139CDF29E147910049ADE1 /* main.swift */,
 				B7D6517B29EC88C000ED8BAE /* MOdel */,
 				B7D1609D29F30CF300244188 /* movies */,
-				B7D160A629F30D4900244188 /* Movies.swift */,
 				B74486DD29E79D7C002D1D5A /* Prompt.swift */,
 				B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */,
 				B7FB0BCF29FC17F200421573 /* Reminders.swift */,
@@ -363,8 +362,6 @@
 				B74B21D72A1D1D1100B3282E /* SwiftStageStatusBar */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
-				B76BF95D29E4AF5400F6420E /* SwiftyGPTUtilities.swift */,
-				B70B44D329EAD61900C45773 /* Text.swift */,
 				B729B13F29F99DA800BA6752 /* Therapy.swift */,
 				B74B21D62A1D1CF700B3282E /* trivia */,
 				B729B14329F9B42800BA6752 /* Utilities */,
@@ -422,7 +419,9 @@
 				B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */,
 				B74A169529F1FA63006A0605 /* SrcCat.swift */,
 				B74E620C29EFB61C0065DF88 /* StringSLug.swift */,
+				B76BF95D29E4AF5400F6420E /* SwiftyGPTUtilities.swift */,
 				B70B44DA29EAF9B500C45773 /* Terminal.swift */,
+				B70B44D329EAD61900C45773 /* Text.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -598,6 +597,7 @@
 		B7D1609D29F30CF300244188 /* movies */ = {
 			isa = PBXGroup;
 			children = (
+				B7D160A629F30D4900244188 /* Movies.swift */,
 				B7D160A029F30D0A00244188 /* IMG_5563.PNG */,
 				B7D160A129F30D0A00244188 /* IMG_5564.png */,
 				B7D1609E29F30D0A00244188 /* IMG_5565.png */,

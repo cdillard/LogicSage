@@ -12,21 +12,22 @@ import SwiftUI
 struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     let directory: RepoFile
-    @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var windowManager: WindowManager
     var window: WindowInfo?
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
 
-    init(sageMultiViewModel: SageMultiViewModel, settingsViewModel: SettingsViewModel, directory: RepoFile, window: WindowInfo? = nil) {
+    init(sageMultiViewModel: SageMultiViewModel, settingsViewModel: SettingsViewModel, directory: RepoFile, window: WindowInfo? = nil, windowManager: WindowManager) {
         self.sageMultiViewModel = sageMultiViewModel
         self.settingsViewModel = settingsViewModel
         self.directory = directory
         self.window = window
+        self.windowManager = windowManager
     }
 
     var body: some View {
         List(directory.children ?? [RepoFile]()) { file in
             if file.isDirectory {
-                NavigationLink(destination: RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: file, window: window)) {
+                NavigationLink(destination: RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: file, window: window, windowManager: windowManager)) {
                     Text(file.name + " >")
                         .foregroundColor(settingsViewModel.appTextColor)
                 }

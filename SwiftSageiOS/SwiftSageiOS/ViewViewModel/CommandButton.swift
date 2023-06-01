@@ -17,7 +17,7 @@ struct CommandButtonView: View {
     @StateObject var settingsViewModel: SettingsViewModel
     @FocusState var isTextFieldFocused: Bool
     @State var textEditorHeight : CGFloat = 20
-    @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var windowManager: WindowManager
 
     @Binding var isInputViewShown: Bool
     func openText() {
@@ -323,10 +323,7 @@ struct CommandButtonView: View {
 
                     }
                 }
-                .padding(.leading,8)
-                .padding(.trailing,8)
-                .padding(.bottom,8)
-                .edgesIgnoringSafeArea([.top])
+
 
                 if isInputViewShown {
                     // MAIN INPUT TEXTFIELD

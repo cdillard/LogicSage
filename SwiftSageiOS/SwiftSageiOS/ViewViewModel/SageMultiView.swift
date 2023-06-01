@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import UIKit
 import WebKit
+import Combine
 
 enum ViewMode {
     case webView
@@ -28,18 +29,25 @@ struct SageMultiView: View {
     @Binding var showAddView: Bool
 
     @ObservedObject var settingsViewModel: SettingsViewModel
+
     @State var viewMode: ViewMode
-    @EnvironmentObject var windowManager: WindowManager
+
+    @ObservedObject var windowManager: WindowManager
+
     var window: WindowInfo
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
 
     @State var isEditing = false
+    @State var isLockToBottom = true
 
     @Binding var frame: CGRect
     @Binding var position: CGSize
     @State private var isMoveGestureActivated = false
     @State var webViewURL: URL?
+
+    @ObservedObject private var keyboardResponder = KeyboardResponder()
+
 // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
         GeometryReader { geometry in
@@ -68,16 +76,14 @@ struct SageMultiView: View {
                         self.windowManager.bringWindowToFront(window: self.window)
 
                     }
-                    .environmentObject(windowManager)
 
 // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
 
                     case .editor:
-#if !os(macOS)
                         let viewModel = SourceCodeTextEditorViewModel()
 
-                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, customization:
+                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
                             DispatchQueue.global(qos: .default).async {
@@ -129,13 +135,11 @@ struct SageMultiView: View {
                             self.windowManager.bringWindowToFront(window: self.window)
                         }
                         .environmentObject(viewModel)
-#endif
+
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing)
-                            .environmentObject(windowManager)
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom)
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                            .environmentObject(windowManager)
                     case .webView:
                         let viewModel = WebViewViewModel()
                         WebView(url:getURL())
@@ -153,44 +157,33 @@ struct SageMultiView: View {
                     case .repoTreeView:
                         NavigationView {
                             if let root = settingsViewModel.root {
-                                RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window)
-                                    .environmentObject(windowManager)
+                                RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window, windowManager: windowManager)
                             }
                             else {
                                 Text("No root")
                             }
                         }
-#if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
-#endif
+                       .navigationViewStyle(StackNavigationViewStyle())
+
                     case .windowListView:
                         NavigationView {
-                            WindowList(showAddView: $showAddView)
-                                .environmentObject(windowManager)
+                            WindowList(windowManager: windowManager, showAddView: $showAddView)
                         }
-#if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
-#endif
                     case .changeView:
                         NavigationView {
                             ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                                .environmentObject(windowManager)
-                                .environmentObject(sageMultiViewModel)
 
                         }
-#if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
-#endif
+
                     case .workingChangesView:
                         NavigationView {
                             WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                                .environmentObject(windowManager)
-                                .environmentObject(sageMultiViewModel)
 
                         }
-#if !os(macOS)
                         .navigationViewStyle(StackNavigationViewStyle())
-#endif
+
                     }
                     Spacer()
                 }
@@ -257,25 +250,25 @@ struct HandleView: View {
             .foregroundColor(Color.white.opacity(0.666))
     }
 }
-#endif
 // END HANDLE WINDOW MOVEMENT GESTURE *************************************************
 
 // START WINDOW RESIZING GESTURE ************************************************************************************
-#if !os(macOS)
 struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
     @Binding var zoomScale: CGFloat
     var window: WindowInfo
 
     var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
-    @EnvironmentObject var windowManager: WindowManager
+
     @Binding var boundPosition: CGSize
+
+    @ObservedObject var windowManager: WindowManager
 
     func body(content: Content) -> some View {
         content
             .frame(width: frame.width, height: frame.height)
             .overlay(
-                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, window: window, boundPosition: $boundPosition)
+                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, windowManager: windowManager, window: window, boundPosition: $boundPosition)
             )
     }
 }
@@ -292,7 +285,7 @@ struct ResizingHandle: View {
     @GestureState private var dragOffset: CGSize = .zero
     @State private var activeDragOffset: CGSize = .zero
     @State private var isResizeGestureActive = false
-    @EnvironmentObject var windowManager: WindowManager
+    @ObservedObject var windowManager: WindowManager
     var window: WindowInfo
     @Binding var boundPosition: CGSize
 
@@ -360,4 +353,26 @@ struct ResizingHandle: View {
 }
 // END WINDOW RESIZING GESTURE HANDLING ****************************************************************************
 
+
+class KeyboardResponder: ObservableObject {
+    @Published var currentHeight: CGFloat = 0
+    var keyboardShow: AnyCancellable?
+    var keyboardHide: AnyCancellable?
+
+    init() {
+        keyboardShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .map { $0.keyboardHeight }
+            .assign(to: \.currentHeight, on: self)
+
+        keyboardHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+            .map { _ in CGFloat(0) }
+            .assign(to: \.currentHeight, on: self)
+    }
+}
+
+extension Notification {
+    var keyboardHeight: CGFloat {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+    }
+}
 #endif

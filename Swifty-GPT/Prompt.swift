@@ -26,7 +26,7 @@ func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
     """
     - The Link url command can be used to get more information by accessing a link. Pass the link: {\"command\": \"Link\",\"name\": \"www.nytimes.com\"}. I will reply with a message containing the text from the link.
     """
-    let appName = config.appName ?? "DefaultName"
+    let appName = config.appName
     let googSteps = !noGoogle  ? "Google, Link," : ""
     return """
     Develop an iOS app in \(config.language) for a SwiftUI-based \(config.appDesc). Name it \(aiNamedProject ? "a unique name" : appName). Return necessary, valid, and formatted Swift code files as a JSON array. It is essential you return your response as a JSON array matching the structure:. [\(googleStringInclude)\(linkStringInclude){"command": "Create project","name": "UniqueName"}, {"command": "Create file","name": "Filename.swift","fileContents": "SWIFT_FILE_CONTENTS"}, {"command": "Open project", "name": "\(aiNamedProject ? "UniqueName" : appName)"},{"command": "Close project", "name": "UniqueName"}]

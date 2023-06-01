@@ -69,7 +69,6 @@ public class SettingsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
-//    @Published var isInputViewShown = false
     @Published var commandMode: EntryMode = .commandBar
 
     @AppStorage("savedText") var multiLineText = ""

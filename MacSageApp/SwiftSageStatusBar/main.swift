@@ -11,6 +11,11 @@ import AppKit
 import Cocoa
 var tickCount = 0
 class AppDelegate: NSObject, NSApplicationDelegate {
+
+    // Define green colors
+    let lightGreen = NSColor(calibratedRed: 0.5, green: 0.9, blue: 0.5, alpha: 1.0)
+    let darkGreen = NSColor(calibratedRed: 0.2, green: 0.6, blue: 0.2, alpha: 1.0)
+
     var statusItem: NSStatusItem?
     private var timer: Timer?
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -22,20 +27,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         statusItem?.button?.title = "."
         let menu = NSMenu()
-        menu.addItem(withTitle: "✨SwiftSage🧠💥", action: #selector(doNothing), keyEquivalent: "")
+        menu.addItem(withTitle: "LogicSage", action: nil, keyEquivalent: "")
 
-        let switchMenuItem = NSMenuItem(title: "Toggle Switch", action: #selector(toggleSwitch(_:)), keyEquivalent: "")
-        switchMenuItem.state = .off
-        menu.addItem(switchMenuItem)
+//        let switchMenuItem = NSMenuItem(title: "Keep LogicSage Alive?", action: #selector(toggleSwitch(_:)), keyEquivalent: "")
+//        switchMenuItem.state = .off
+//        menu.addItem(switchMenuItem)
+        menu.addItem(withTitle: "Swifty-GPT Running (restart)", action: #selector(swiftyGptRunning), keyEquivalent: "")
+        menu.addItem(withTitle: "SwiftSageServer Running (restart)", action: #selector(serverRunning), keyEquivalent: "")
 
 
-        menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q")
+        menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "")
         statusItem?.menu = menu
         // we can adjust this to convey more effort occur by the toool.
         let timerInterval = 3.2
         timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(updateTitle), userInfo: nil, repeats: true)
 
-        DistributedNotificationCenter.default().addObserver(self, selector: #selector(handleNotification(_:)), name: NSNotification.Name(rawValue: "com.example.yourapp.notification"), object: nil)
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(handleNotification(_:)), name: NSNotification.Name(rawValue: "com.chrisswiftygpt.SwiftSage.notification"), object: nil)
     }
 
     @objc func handleNotification(_ notification: Notification) {
@@ -51,9 +58,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     @objc func updateTitle() {
-          let dateFormatter = DateFormatter()
-          dateFormatter.dateFormat = "HH:mm:ss"
-//          let currentTime = dateFormatter.string(from: Date())
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
 
         if tickCount > 2 {
             tickCount = 0
@@ -62,34 +68,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.button?.title = "\(String(Array(repeating: ".", count: tickCount)))"
 
         tickCount += 1
-      }
+    }
 
     @objc func quit() {
         NSApp.terminate(nil)
     }
 
-    @objc func doNothing() {
+    @objc func swiftyGptRunning() {
+        print("Is Swifty GPT Running?")
 
     }
 
-    
+    @objc func serverRunning() {
+        print("Is the Vapor Server Running?")
 
-    @objc func toggleSwitch(_ sender: NSMenuItem) {
-        if sender.state == .on {
-            sender.state = .off
-        } else {
-            sender.state = .on
-        }
-        // Perform any additional actions based on the state of the switch
     }
 
     func createColoredImage(size: NSSize) -> NSImage {
         let image = NSImage(size: size)
         image.lockFocus()
-
-        // Define green colors
-        let lightGreen = NSColor(calibratedRed: 0.5, green: 0.9, blue: 0.5, alpha: 1.0)
-        let darkGreen = NSColor(calibratedRed: 0.2, green: 0.6, blue: 0.2, alpha: 1.0)
 
         // Create the bird body shape
         let bodyPath = NSBezierPath()
