@@ -1,6 +1,3 @@
-import Fluent
-import FluentPostgresDriver
-import Leaf
 import Vapor
 import WebSocketKit
 import func Darwin.fflush
@@ -8,7 +5,7 @@ import var Darwin.stdout
 
 // SwiftSageServer
 
-// Run with `vapor run` in the WebSocketServer directory.
+// Run with `swift run` in the SwiftSageServer directory.
 
 let debugging = true
 

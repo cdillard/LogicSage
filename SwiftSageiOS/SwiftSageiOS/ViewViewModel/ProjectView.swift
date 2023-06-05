@@ -10,16 +10,12 @@ import SwiftUI
 import Combine
 
 struct ProjectView: View {
-    //@EnvironmentObject var windowManager: WindowManager
 #if !os(macOS)
-
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
 #endif
     @ObservedObject var settingsViewModel: SettingsViewModel
-
     var window: WindowInfo?
 
-    
     var body: some View {
         HStack(spacing: 2) {
             HStack {
@@ -58,7 +54,6 @@ struct ProjectView: View {
         }
         .foregroundColor(SettingsViewModel.shared.buttonColor)
         .font(.body)
-
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: 28)
     }

@@ -75,11 +75,9 @@ extension SpeechRecognizer {
 
     func stopRecording() {
 #if !os(macOS)
-        logD("Stopped recording...")
-        consoleManager.print("Stopped recording...")
+        logD("Stopped recording spoken command...")
 
         logD("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
-        consoleManager.print("Spoken Command received: \(SettingsViewModel.shared.recognizedText)")
         audioEngine.stop()
         audioEngine.inputNode.removeTap(onBus: 0)
         recognitionRequest = nil
@@ -90,7 +88,7 @@ extension SpeechRecognizer {
 
         
         // clear out speech regognition text after sending command
-        SettingsViewModel.shared.multiLineText = SettingsViewModel.shared.recognizedText
+//        SettingsViewModel.shared.multiLineText = SettingsViewModel.shared.recognizedText
         SettingsViewModel.shared.recognizedText = ""
 #endif
 

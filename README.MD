@@ -122,7 +122,6 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 - [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Starscream](https://github.com/daltoniam/Starscream)
 - [Vapor](https://github.com/vapor/vapor)
-- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [SourceEditor](https://github.com/louisdh/source-editor)
 - [savannakit](https://github.com/louisdh/savannakit)
 - [Sourceful](https://github.com/twostraws/Sourceful)

@@ -13,6 +13,8 @@ import UIKit
 
 struct SettingsView: View {
     @Binding var showSettings: Bool
+    @Binding var showHelp: Bool
+    @Binding var showInstructions: Bool
 
     @ObservedObject var settingsViewModel: SettingsViewModel
     let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
@@ -554,20 +556,20 @@ struct SettingsView: View {
                                         }
                                 }
 
-                                VStack(spacing: 3) {
-
-                                    ColorPicker("Terminal Background Color", selection:
-                                                    $settingsViewModel.terminalBackgroundColor)
-                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                }
-                                VStack( spacing: 3) {
-
-                                    ColorPicker("Terminal Text Color", selection:
-                                                    $settingsViewModel.terminalTextColor)
-                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                }
+//                                VStack(spacing: 3) {
+//
+//                                    ColorPicker("Terminal Background Color", selection:
+//                                                    $settingsViewModel.terminalBackgroundColor)
+//                                    .frame(width: geometry.size.width / 2, alignment: .leading)
+//                                    .foregroundColor(settingsViewModel.appTextColor)
+//                                }
+//                                VStack( spacing: 3) {
+//
+//                                    ColorPicker("Terminal Text Color", selection:
+//                                                    $settingsViewModel.terminalTextColor)
+//                                    .frame(width: geometry.size.width / 2, alignment: .leading)
+//                                    .foregroundColor(settingsViewModel.appTextColor)
+//                                }
                             }
                             Group {
                                 VStack( spacing: 3) {
@@ -690,7 +692,7 @@ struct SettingsView: View {
                                         .font(.body)
 
                                     Text("\(settingsViewModel.savedUserAvatar)")
-                                        .fontWeight(.bold)
+                                        .foregroundColor(settingsViewModel.appTextColor)
                                         .background(settingsViewModel.buttonColor)
                                         .cornerRadius(8)
                                 }
@@ -711,7 +713,7 @@ struct SettingsView: View {
                                         .font(.body)
 
                                     Text("\(settingsViewModel.savedBotAvatar)")
-                                        .fontWeight(.bold)
+                                        .foregroundColor(settingsViewModel.appTextColor)
                                         .background(settingsViewModel.buttonColor)
                                         .cornerRadius(8)
                                 }
@@ -738,29 +740,29 @@ struct SettingsView: View {
                     }
 
                     if settingsViewModel.showAudioSettings {
-                        // ENABLE MIC BUTTON
-                        Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                        Button(action: {
-                            withAnimation {
-                                logD("Requesing mic permission...")
-                                settingsViewModel.requestMicrophoneAccess { granted in
-                                    settingsViewModel.hasAcceptedMicrophone = granted == true
-                                }
-                            }
-                        }) {
-                            resizableButtonImage(systemName:
-                                                    "mic.badge.plus",
-                                                 size: geometry.size)
-                            .fontWeight(.bold)
-                            .background(settingsViewModel.buttonColor)
-                            .cornerRadius(8)
-
-                        }
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(8)
+//                        // ENABLE MIC BUTTON
+//                        Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
+//                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+//                            .foregroundColor(settingsViewModel.appTextColor)
+//
+//                        Button(action: {
+//                            withAnimation {
+//                                logD("Requesing mic permission...")
+//                                settingsViewModel.requestMicrophoneAccess { granted in
+//                                    settingsViewModel.hasAcceptedMicrophone = granted == true
+//                                }
+//                            }
+//                        }) {
+//                            resizableButtonImage(systemName:
+//                                                    "mic.badge.plus",
+//                                                 size: geometry.size)
+//                            .fontWeight(.bold)
+//                            .background(settingsViewModel.buttonColor)
+//                            .cornerRadius(8)
+//
+//                        }
+//                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+//                        .padding(8)
 
                         // IOS AUDIO SETTING ON/OFF
                         Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")
@@ -770,7 +772,7 @@ struct SettingsView: View {
                             Button  {
                                 withAnimation {
 #if !os(macOS)
-                                    consoleManager.print("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+                                    SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
                                     if settingsViewModel.voiceOutputenabled {
                                         settingsViewModel.stopVoice()
                                     }
@@ -866,16 +868,11 @@ struct SettingsView: View {
                                         Button(action: {
                                             withAnimation {
                                                 showSettings.toggle()
-                                                settingsViewModel.showHelp.toggle()
+                                                showHelp.toggle()
 
                                                 logD("HELP tapped")
 
 
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.34) {
-#if !os(macOS)
-                                                    consoleManager.isVisible = false
-#endif
-                                                }
                                             }
                                         }) {
                                             resizableButtonImage(systemName:
@@ -893,15 +890,10 @@ struct SettingsView: View {
                                         Button(action: {
                                             withAnimation {
                                                 showSettings.toggle()
-                                                settingsViewModel.showInstructions.toggle()
+                                                showInstructions.toggle()
 
                                                 logD("info tapped")
 
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.34) {
-#if !os(macOS)
-                                                    consoleManager.isVisible = false
-#endif
-                                                }
                                             }
                                         }) {
                                             resizableButtonImage(systemName:
@@ -1009,12 +1001,10 @@ struct SettingsView: View {
     private func updateMode() {
         currentModeIndex = (currentModeIndex + 1) % modes.count
 
-        settingsViewModel.multiLineText = "setLoadMode \(modes[currentModeIndex])"
         DispatchQueue.main.async {
 
             // Execute your action here
-            screamer.sendCommand(command: settingsViewModel.multiLineText)
-            settingsViewModel.multiLineText = ""
+            screamer.sendCommand(command: "setLoadMode \(modes[currentModeIndex])")
         }
     }
 }

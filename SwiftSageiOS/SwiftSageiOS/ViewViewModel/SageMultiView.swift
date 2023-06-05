@@ -27,7 +27,6 @@ enum ViewMode {
 
 struct SageMultiView: View {
     @Binding var showAddView: Bool
-
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     @State var viewMode: ViewMode
@@ -40,15 +39,22 @@ struct SageMultiView: View {
 
     @State var isEditing = false
     @State var isLockToBottom = true
-
     @Binding var frame: CGRect
     @Binding var position: CGSize
-    @State private var isMoveGestureActivated = false
+    @State var isMoveGestureActivated = false
     @State var webViewURL: URL?
+    @State var initialViewFrame = CGRect.zero
+    @State var isDragDisabled = false
+    @Binding var viewSize: CGRect
+    @Binding var resizeOffset: CGSize
+    @Binding var bumping: Bool
+    @Binding var isResizeGestureActive: Bool
 
-    @ObservedObject private var keyboardResponder = KeyboardResponder()
+    @State private var lastDragTime = Date()
 
-// START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
+    let dragDelay = 0.333666
+    let dragsPerSecond = 45.0
+    // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -56,28 +62,26 @@ struct SageMultiView: View {
                     TopBar(isEditing: $isEditing, onClose: {
                         windowManager.removeWindow(window: window)
                     }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel)
-                    .simultaneousGesture(
-                        DragGesture()
-                            .onChanged { value in
-                                if !isMoveGestureActivated {
-                                    self.windowManager.bringWindowToFront(window: self.window)
-                                    isMoveGestureActivated = true
+                    .if(!isDragDisabled) { view in
+                        view.gesture(
+                            DragGesture(minimumDistance: 3)
+                                .onChanged { value in
+                                    let now = Date()
+                                    if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) { // throttle duration
+                                        self.lastDragTime = now
+                                        dragsOnChange(value: value, geometrySafeAreaInsetLeading: geometry.safeAreaInsets.leading, geometrySafeAreaTop: geometry.safeAreaInsets.top)
+
+                                    }
                                 }
-
-                                // TODO: MORE CONSTRAINTS
-                                // Keep windows from going to close top top
-
-                                position = CGSize(width: position.width + value.translation.width, height: position.height + value.translation.height)
-                            }
-                            .onEnded { value in
-                                isMoveGestureActivated = false
-                            }
-                    ).onTapGesture {
-                        self.windowManager.bringWindowToFront(window: self.window)
-
+                                .onEnded { value in
+                                    isMoveGestureActivated = false
+                                }
+                        ).onTapGesture {
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        }
                     }
 
-// START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
+                    // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
 
                     case .editor:
@@ -91,7 +95,7 @@ struct SageMultiView: View {
                                 let theNewtext = String(srcCodeTextEditor.text)
                                 sageMultiViewModel.refreshChanges(newText: theNewtext)
 
-                         
+
                                 if let fileURL = window.file?.url {
                                     // add or replace this files change entry from this arr
 
@@ -127,7 +131,7 @@ struct SageMultiView: View {
                         }, lexerForSource: { lexer in
                             SwiftLexer()
                         }, textViewDidBeginEditing: { srcEditor in
-//                            print("srcEditor textViewDidBeginEditing")
+                            //                            print("srcEditor textViewDidBeginEditing")
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
                         }, overrideText: { nil }))
@@ -137,7 +141,10 @@ struct SageMultiView: View {
                         .environmentObject(viewModel)
 
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom)
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager)
+                            .onTapGesture {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            }
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                     case .webView:
@@ -158,12 +165,13 @@ struct SageMultiView: View {
                         NavigationView {
                             if let root = settingsViewModel.root {
                                 RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window, windowManager: windowManager)
+                                
                             }
                             else {
                                 Text("No root")
                             }
                         }
-                       .navigationViewStyle(StackNavigationViewStyle())
+                        .navigationViewStyle(StackNavigationViewStyle())
 
                     case .windowListView:
                         NavigationView {
@@ -187,9 +195,59 @@ struct SageMultiView: View {
                     }
                     Spacer()
                 }
+                .onChange(of: viewSize) { newViewSize in
+                    recalculateWindowSize(size: newViewSize.size)
+
+                }
+                .onChange(of: geometry.size) { size in
+                    recalculateWindowSize(size: geometry.size)
+                    //                        logD("contentView viewSize update = \(viewSize)")
+                }
+                .onAppear {
+                     position = CGSize(width: geometry.size.width * 0.025, height: geometry.size.height * 0.1)
+                }
+                .background(
+                    GeometryReader { viewGeometry in
+                        Color.clear.onAppear {
+                            let startFrame = viewGeometry.frame(in: .global)
+                            self.initialViewFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frame.width - resizeOffset.width, frame.height - resizeOffset.height)
+                            logD("initial view = \(initialViewFrame)")
+                        }
+                    }
+                )
+                // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
+
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-// END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
+        }
+    }
+    func recalculateWindowSize(size: CGSize) {
+        if !isResizeGestureActive {
+            //                    resizeOffset = .zero
+            if frame.size.width > size.width {
+                frame.size.width = size.width - size.width * 0.1 - 30
+            }
+            if frame.size.height > size.height {
+                frame.size.height = size.height - size.height * 0.1 - 30
+            }
+            var newPosX = position.width
+            var newPosY = position.height
+            if resizeOffset.width < 0 {
+                newPosX = size.width * 0.05 + abs(resizeOffset.width) / 2
+            }
+            else  {
+                newPosX = size.width * 0.05 + resizeOffset.width / 2
+            }
+
+            if resizeOffset.height < 0 {
+                newPosY = size.height * 0.075  + abs(resizeOffset.height) / 2
+            }
+            else {
+                newPosY = size.height * 0.075 + resizeOffset.height / 2
+            }
+
+            position = CGSize(width: newPosX, height: newPosY)
+
         }
     }
     func getURL() -> URL {
@@ -251,108 +309,6 @@ struct HandleView: View {
     }
 }
 // END HANDLE WINDOW MOVEMENT GESTURE *************************************************
-
-// START WINDOW RESIZING GESTURE ************************************************************************************
-struct ResizableViewModifier: ViewModifier {
-    @Binding var frame: CGRect
-    @Binding var zoomScale: CGFloat
-    var window: WindowInfo
-
-    var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
-
-    @Binding var boundPosition: CGSize
-
-    @ObservedObject var windowManager: WindowManager
-
-    func body(content: Content) -> some View {
-        content
-            .frame(width: frame.width, height: frame.height)
-            .overlay(
-                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, zoomScale: $zoomScale, windowManager: windowManager, window: window, boundPosition: $boundPosition)
-            )
-    }
-}
-
-struct ResizingHandle: View {
-    enum Position {
-        case topLeading
-    }
-
-    var positionLocation: Position
-    @Binding var frame: CGRect
-    var handleSize: CGFloat
-    @Binding var zoomScale: CGFloat
-    @GestureState private var dragOffset: CGSize = .zero
-    @State private var activeDragOffset: CGSize = .zero
-    @State private var isResizeGestureActive = false
-    @ObservedObject var windowManager: WindowManager
-    var window: WindowInfo
-    @Binding var boundPosition: CGSize
-
-    var body: some View {
-        GeometryReader { reader in
-            Circle()
-                .fill(SettingsViewModel.shared.buttonColor)
-                .frame(width: handleSize, height: handleSize)
-                .position(positionPoint(for: positionLocation))
-                .opacity(0.666)
-            // TODO: Add resizing contraints so users don't resize to a place they can't return from.
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .updating($dragOffset) { value, state, _ in
-                            state = value.translation
-                        }
-                        .onChanged { value in
-                            activeDragOffset = value.translation
-
-                            if !isResizeGestureActive {
-                                isResizeGestureActive = true
-                                self.windowManager.bringWindowToFront(window: self.window)
-                            }
-                        }
-                        .onEnded { value in
-                            updateFrame(with: value.translation, reader.size.width, reader.size.height)
-                            activeDragOffset = .zero
-                            isResizeGestureActive = false
-                        }
-                )
-                .onChange(of: activeDragOffset) { newValue in
-                    withAnimation(.interactiveSpring()) {
-                        updateFrame(with: newValue, reader.size.width, reader.size.height)
-                    }
-                }
-                .animation(.interactiveSpring(), value: activeDragOffset)
-                .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
-        }
-    }
-    private func positionPoint(for position: Position) -> CGPoint {
-        switch position {
-        case .topLeading:
-            return CGPoint(x: frame.minX, y: frame.minY)
-        }
-    }
-
-    private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat) {
-        let newWidth: CGFloat
-        let newHeight: CGFloat
-        let minSize: CGFloat = 7.0
-        switch positionLocation {
-        case .topLeading:
-            // Compute new width and height based on the direction of the drag gesture
-            newWidth = translation.width < 0 ? max(minSize, frame.width + abs(translation.width)) : max(minSize, frame.width - translation.width)
-            newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
-        }
-        // TODO: MORE CONSTRAINTS
-        // Keep windows from going to close top top
-
-        // Smoothly interpolate towards the new size
-         let lerpFactor: CGFloat = 0.25
-         frame.size.width += (newWidth - frame.size.width) * lerpFactor
-         frame.size.height += (newHeight - frame.size.height) * lerpFactor
-    }
-}
-// END WINDOW RESIZING GESTURE HANDLING ****************************************************************************
-
 
 class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0

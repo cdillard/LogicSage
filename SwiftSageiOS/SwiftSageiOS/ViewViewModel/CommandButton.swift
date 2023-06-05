@@ -35,66 +35,10 @@ struct CommandButtonView: View {
 
                 HStack {
                     Spacer()
-                    if isInputViewShown {
-                        if  settingsViewModel.currentMode == .computer {
-                            // GOOGLE button
-                            Button(action: {
-                                
-                                logD("CHOOSE RANDOM WALLPAPER")
-                                // cmd send st
-                                settingsViewModel.multiLineText = "wallpaper random"
-                                DispatchQueue.main.async {
-                                    
-                                    // Execute your action here
-                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
-                                    
-                                    isInputViewShown = false
-                                    
-                                    settingsViewModel.multiLineText = ""
-                                }
-                            }) {
-                                ZStack {
-                                    Text("🖼️")
-                                    //                                 Text("❌")
-                                    //                                     .opacity(0.6)
-                                    
-                                }
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                                .cornerRadius(10)
-                            }
-                            //                            .padding(.bottom)
-                            
-                            Button(action: {
-                                logD("RUN SIMULATOR")
+//                    if isInputViewShown {
 
-                                settingsViewModel.latestWindowManager = windowManager
-
-                                settingsViewModel.multiLineText = "simulator"
-                                DispatchQueue.main.async {
-                                    
-                                    // Execute your action here
-                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
-                                    
-                                    isInputViewShown = false
-                                    
-                                    settingsViewModel.multiLineText = ""
-                                }
-                            }) {
-                                ZStack {
-                                    Text("📲")
-                                    //                                 Text("❌")
-                                    //                                     .opacity(0.6)
-                                }
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                            }
                             //                            .padding(.bottom)
-                        }
+//                        }
                         //                        // GOOGLE button
                         //                        Button(action: {
                         //
@@ -130,37 +74,37 @@ struct CommandButtonView: View {
                         //                        }
                         //                        .padding(.bottom)
 
-                        if settingsViewModel.currentMode == .computer {
-
-                            // Debate BUTTON
-                            Button(action: {
-                                isTextFieldFocused = true
-                                settingsViewModel.multiLineText += "debate "
-                            }) {
-                                Text( "⚖️")
-                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                    .lineLimit(1)
-                                    .foregroundColor(Color.white)
-                                    .background(settingsViewModel.buttonColor)
-                            }
-                            // .padding(.bottom)
-                        }
-
-
-                        if settingsViewModel.currentMode == .computer {
-                            // i BUTTON
-                            Button(action: {
-                                isTextFieldFocused = true
-                                settingsViewModel.multiLineText += "i "
-                            }) {
-                                Text( "💡")
-                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                    .lineLimit(1)
-                                    .foregroundColor(Color.white)
-                                    .background(settingsViewModel.buttonColor)
-                            }
-                            //.padding(.bottom)
-                        }
+//                        if settingsViewModel.currentMode == .computer {
+//
+//                            // Debate BUTTON
+//                            Button(action: {
+//                                isTextFieldFocused = true
+//                                settingsViewModel.multiLineText += "debate "
+//                            }) {
+//                                Text( "⚖️")
+//                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                                    .lineLimit(1)
+//                                    .foregroundColor(Color.white)
+//                                    .background(settingsViewModel.buttonColor)
+//                            }
+//                            // .padding(.bottom)
+//                        }
+//
+//
+//                        if settingsViewModel.currentMode == .computer {
+//                            // i BUTTON
+//                            Button(action: {
+//                                isTextFieldFocused = true
+//                                settingsViewModel.multiLineText += "i "
+//                            }) {
+//                                Text( "💡")
+//                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                                    .lineLimit(1)
+//                                    .foregroundColor(Color.white)
+//                                    .background(settingsViewModel.buttonColor)
+//                            }
+//                            //.padding(.bottom)
+//                        }
 
                         //                        // g BUTTON
                         //                        Button(action: {
@@ -185,7 +129,7 @@ struct CommandButtonView: View {
                         //
                         //                        .padding(.bottom)
 
-                    }
+//                    }
                     //                    if !settingsViewModel.multiLineText.isEmpty && settingsViewModel.isInputViewShown {
                     //
                     //                        // STOP // EXIT CONVERSATIONAL MODE BUTTON
@@ -217,44 +161,23 @@ struct CommandButtonView: View {
                     //                        }
                     //                        .padding(.bottom)
                     //                    }
-                    if !settingsViewModel.multiLineText.isEmpty && isInputViewShown {
-                        // X BUTTON
-                        Button(action: {
-                            // cmd send st
-                            settingsViewModel.multiLineText = "g end"
-                            DispatchQueue.main.async {
-
-                                // Execute your action here
-                                screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-                                isInputViewShown = false
-
-                                settingsViewModel.multiLineText = ""
-                            }
-
-                        }) {
-                            Text( "🗑️")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                        }
-                        //.padding(.bottom)
-                    }
+//                    if !settingsViewModel.multiLineText.isEmpty && isInputViewShown {
+//
+//                        //.padding(.bottom)
+//                    }
 
                     // STOP BUTTON
                     Button(action: {
 
                         // cmd send st
-                        settingsViewModel.multiLineText = "st"
+                      //  settingsViewModel.multiLineText = "st"
                         DispatchQueue.main.async {
 
                             // Execute your action here
-                            screamer.sendCommand(command: settingsViewModel.multiLineText)
+                            screamer.sendCommand(command: "st")
 
                             isInputViewShown = false
 
-                            settingsViewModel.multiLineText = ""
                         }
 
                     }) {
@@ -265,105 +188,105 @@ struct CommandButtonView: View {
                             .background(settingsViewModel.buttonColor)
                         //                            .padding(.bottom)
                     }
-                    if settingsViewModel.multiLineText.count > 0 {
-                        // EXEC BUTTON
-                        Button(action: {
-                            if settingsViewModel.multiLineText.isEmpty {
-                                logD("nothing to exec.")
-                                
-                                return
-                            }
-                            // Execute your action here
-                            screamer.sendCommand(command: settingsViewModel.multiLineText)
-                            
-                            isInputViewShown = false
-#if !os(macOS)
-                            consoleManager.isVisible = true
-#endif
-                        }) {
-                            Text("✅")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                            // .padding(.bottom)
-                        }
-                    }
+                    // change into use into send in charview
+//                    if settingsViewModel.multiLineText.count > 0 {
+//                        // EXEC BUTTON
+//                        Button(action: {
+//                            if settingsViewModel.multiLineText.isEmpty {
+//                                logD("nothing to exec.")
+//
+//                                return
+//                            }
+//                            // Execute your action here
+//                            screamer.sendCommand(command: settingsViewModel.multiLineText)
+//
+//                            isInputViewShown = false
+//
+//                            // TODO: Hide or show terminal chat?
+//
+//                        }) {
+//                            Text("✅")
+//                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                                .lineLimit(1)
+//                                .foregroundColor(Color.white)
+//                                .background(settingsViewModel.buttonColor)
+//                            // .padding(.bottom)
+//                        }
+//                    }
 
                     // TERM/COMMAND BUTTON
-                    Button(action: {
-                        if settingsViewModel.commandMode == .commandText {
-                            // Execute your action here
-                            screamer.sendCommand(command: settingsViewModel.multiLineText)
-
-                            isInputViewShown = false
-                            settingsViewModel.commandMode = .commandBar
-                        }
-                        else {
-#if !os(macOS)
-                            consoleManager.isVisible = false
-#endif
-                            openText()
-                        }
-                    }) {
-                        if isInputViewShown {
-                            Text("🔽")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                        }
-                        else {
-                            Text( "⬆️")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                        }
-
-                    }
+//                    Button(action: {
+//                        if settingsViewModel.commandMode == .commandText {
+//                            // Execute your action here
+//                            screamer.sendCommand(command: settingsViewModel.multiLineText)
+//
+//                            isInputViewShown = false
+//                            settingsViewModel.commandMode = .commandBar
+//                        }
+//                        else {
+//                            // TODO: Hide or show terminal chat?
+//
+//                            openText()
+//                        }
+//                    }) {
+//                        if isInputViewShown {
+//                            Text("🔽")
+//                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                                .lineLimit(1)
+//                                .foregroundColor(Color.white)
+//                                .background(settingsViewModel.buttonColor)
+//                        }
+//                        else {
+//                            Text( "⬆️")
+//                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                                .lineLimit(1)
+//                                .foregroundColor(Color.white)
+//                                .background(settingsViewModel.buttonColor)
+//                        }
+//
+//                    }
                 }
-
-
-                if isInputViewShown {
-                    // MAIN INPUT TEXTFIELD
-
-                    ZStack(alignment: .leading) {
-                        Text(settingsViewModel.multiLineText)
-                            .font(.system(.body))
-                            .foregroundColor(.clear)
-                            .padding(14)
-                            .background(GeometryReader {
-                                Color.clear.preference(key: ViewHeightKey.self,
-                                                       value: $0.frame(in: .local).size.height)
-                            })
-
-                        TextEditor(text: $settingsViewModel.multiLineText)
-                            .lineLimit(nil)
-                            .border(settingsViewModel.buttonColor, width: 2)
-                            .frame(height: max(40,textEditorHeight))
-                            .padding(.leading, 8)
-                            .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
-                            .autocorrectionDisabled(!settingsViewModel.autoCorrect)
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
-                            .focused($isTextFieldFocused)
-                            .scrollDismissesKeyboard(.interactively)
-                            .toolbar {
-                                if isTextFieldFocused {
-                                    ToolbarItemGroup(placement: .keyboard) {
-                                        Spacer()
-
-                                        Button("Done") {
-                                            isTextFieldFocused = false
-                                        }
-                                    }
-                                }
-                            }
-
-                    }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
-                }
+//
+//
+//                if isInputViewShown {
+//                    // MAIN INPUT TEXTFIELD
+//
+//                    ZStack(alignment: .leading) {
+//                        Text(settingsViewModel.multiLineText)
+//                            .font(.system(.body))
+//                            .foregroundColor(.clear)
+//                            .padding(14)
+//                            .background(GeometryReader {
+//                                Color.clear.preference(key: ViewHeightKey.self,
+//                                                       value: $0.frame(in: .local).size.height)
+//                            })
+//
+//                        TextEditor(text: $settingsViewModel.multiLineText)
+//                            .lineLimit(nil)
+//                            .border(settingsViewModel.buttonColor, width: 2)
+//                            .frame(height: max(40,textEditorHeight))
+//                            .padding(.leading, 8)
+//                            .padding(.bottom, 30 + settingsViewModel.commandButtonFontSize)
+//                            .autocorrectionDisabled(!settingsViewModel.autoCorrect)
+//#if !os(macOS)
+//                            .autocapitalization(.none)
+//#endif
+//                            .focused($isTextFieldFocused)
+//                            .scrollDismissesKeyboard(.interactively)
+//                            .toolbar {
+//                                if isTextFieldFocused {
+//                                    ToolbarItemGroup(placement: .keyboard) {
+//                                        Spacer()
+//
+//                                        Button("Done") {
+//                                            isTextFieldFocused = false
+//                                        }
+//                                    }
+//                                }
+//                            }
+//
+//                    }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+//                }
             }
         }
     }

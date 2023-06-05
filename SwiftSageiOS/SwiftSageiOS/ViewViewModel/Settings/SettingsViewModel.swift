@@ -43,7 +43,22 @@ public class SettingsViewModel: ObservableObject {
         client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(openAIModel).
         """
     }
+    static let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
+
     public static let shared = SettingsViewModel()
+
+    @State private var lastConsoleUpdate: Date?
+    func logText(_ text: String, terminator: String = "\n") {
+        let now = Date()
+        if lastConsoleUpdate == nil ||  now.timeIntervalSince(self.lastConsoleUpdate ?? Date()) >= 4.666 {
+            self.lastConsoleUpdate = now
+            DispatchQueue.main.async {
+                self.consoleManagerText.append(text)
+                self.consoleManagerText.append(terminator)
+            }
+        }
+    }
+    @Published var consoleManagerText: String = ""
 
     var latestWindowManager: WindowManager?
 
@@ -71,13 +86,11 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var commandMode: EntryMode = .commandBar
 
-    @AppStorage("savedText") var multiLineText = ""
+//    @AppStorage("savedText") var multiLineText = ""
 
     @Published var hasAcceptedMicrophone = false
     @AppStorage("device") var currentMode: Device = .mobile
 
-    @Published var showInstructions: Bool = !hasSeenInstructions()
-    @Published var showHelp: Bool = false
     @Published var showAllColorSettings: Bool = false
 
     @Published var showSourceEditorColorSettings: Bool = false
@@ -185,12 +198,9 @@ public class SettingsViewModel: ObservableObject {
                 do {
                     try receivedWorkspaceData.write(to: fileURL)
 
-
                     logD("wrote file \(fileURL) out successfully")
                     let existingExtraction = getDocumentsDirectory().appendingPathComponent("Workspace")
 
-
-                    // TODO: Double check this for multiple repos in same user/org....
                     do {
                         try FileManager.default.removeItem(at:  existingExtraction)
                     }
@@ -264,32 +274,26 @@ public class SettingsViewModel: ObservableObject {
             else {
                 logD("failed to set terminal text size")
             }
-#if !os(macOS)
-            consoleManager.fontSize = CGFloat(self.textSize)
-            consoleManager.refreshAtributedText()
-#endif
+
         }
     }
 // END SAVED SIZES ZONE ********************************************************************************************
 
     // BEGIN SAVED COLORS ZONE **************************************************************************************
-    @Published var terminalBackgroundColor: Color {
-        didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
-            consoleManager.updateLumaColor()
-#endif
-        }
-    }
-    @Published var terminalTextColor: Color {
-        didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
-
-            consoleManager.refreshAtributedText()
-#endif
-        }
-    }
+//    @Published var terminalBackgroundColor: Color {
+//        didSet {
+//#if !os(macOS)
+//            UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
+//#endif
+//        }
+//    }
+//    @Published var terminalTextColor: Color {
+//        didSet {
+//#if !os(macOS)
+//            UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
+//#endif
+//        }
+//    }
 
     @Published var appTextColor: Color {
         didSet {
@@ -440,7 +444,6 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-    @AppStorage("serverChatID") var serverChatID = ""
     @AppStorage("completedMessages") var completedMessages = 0
 
     func renameConvo(_ convoId: Conversation.ID, newName: String) {
@@ -504,13 +507,8 @@ public class SettingsViewModel: ObservableObject {
 #endif
     }
     func createAndOpenServerChat() {
-        if serverChatID.isEmpty {
-           // serverChatID = idProvider()
-            let convoID = createConversation()
-            serverChatID = convoID
-        }
 
-        openConversation(serverChatID)
+        openConversation(Conversation.ID(-1))
     }
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
 
@@ -521,7 +519,7 @@ public class SettingsViewModel: ObservableObject {
            saveJSONData(encodedData, filename: "\(key).json")
        }
        catch {
-           print("failed w error = \(error)")
+           logD("failed w error = \(error)")
        }
     }
     func retrieveConversationContentFromDisk(forKey key: String) -> [Conversation]? {
@@ -532,7 +530,7 @@ public class SettingsViewModel: ObservableObject {
                return try decoder.decode([Conversation].self, from: savedData)
            }
            catch {
-               print("failed w error = \(error)")
+               logD("failed w error = \(error)")
            }
        }
        return nil
@@ -544,7 +542,7 @@ public class SettingsViewModel: ObservableObject {
             let data = try Data(contentsOf: fileURL)
             return data
         } catch {
-            print("Failed to read JSON data: \(error.localizedDescription)")
+            logD("Failed to read JSON data: \(error.localizedDescription)")
             return nil
         }
     }
@@ -554,7 +552,7 @@ public class SettingsViewModel: ObservableObject {
         do {
             try data.write(to: fileURL)
         } catch {
-            print("Failed to write JSON data: \(error.localizedDescription)")
+            logD("Failed to write JSON data: \(error.localizedDescription)")
         }
     }
 
@@ -573,7 +571,8 @@ public class SettingsViewModel: ObservableObject {
         if let conversation = conversations.first(where: { $0.id == convoId }) {
             return conversation.name ?? String(convoId.prefix(4))
         }
-        return "Name"
+
+        return "Term"
     }
 
 // END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
@@ -671,34 +670,34 @@ public class SettingsViewModel: ObservableObject {
 #if !os(macOS)
 
         // BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
-        if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
-
-            self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
-        }
-        else {
-            self.terminalBackgroundColor = .black
-        }
-
-        if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
-
-            self.terminalTextColor =  Color(rawValue:colorKey) ?? .white
-        }
-        else {
-            self.terminalTextColor = .white
-        }
+//        if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
+//
+//            self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
+//        }
+//        else {
+//            self.terminalBackgroundColor = .black
+//        }
+//
+//        if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
+//
+//            self.terminalTextColor =  Color(rawValue:colorKey) ?? .white
+//        }
+//        else {
+//            self.terminalTextColor = .white
+//        }
 
         if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
-            self.buttonColor = Color(rawValue:colorKey) ?? .green
+            self.buttonColor = Color(rawValue:colorKey) ?? .accentColor
         }
         else {
-            self.buttonColor = .green
+            self.buttonColor = .accentColor
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "backgroundColor") {
-            self.backgroundColor =  Color(rawValue:colorKey) ?? .gray
+            self.backgroundColor =  Color(rawValue:colorKey) ?? Color(UIColor.systemBackground)
         }
         else {
-            self.backgroundColor = .gray
+            self.backgroundColor =  Color(UIColor.systemBackground)
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
@@ -708,8 +707,8 @@ public class SettingsViewModel: ObservableObject {
             self.appTextColor = .primary
         }
 #else
-        self.terminalBackgroundColor = .black
-        self.terminalTextColor = .white
+//        self.terminalBackgroundColor = .black
+//        self.terminalTextColor = .white
         self.buttonColor = .green
         self.backgroundColor = .gray
         self.appTextColor = .primary
@@ -839,8 +838,11 @@ public class SettingsViewModel: ObservableObject {
         refreshDocuments()
 
         // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
-        if let convos = retrieveConversationContentFromDisk(forKey: jsonFileName) {
-            self.conversations = convos
+        DispatchQueue.main.async {
+
+            if let convos = self.retrieveConversationContentFromDisk(forKey: jsonFileName) {
+                self.conversations = convos
+            }
         }
     }
 
@@ -869,8 +871,8 @@ public class SettingsViewModel: ObservableObject {
 #if !os(macOS)
         switch theme {
         case .deepSpace:
-            terminalBackgroundColor = Color(hex: 0x4A646C, alpha: 1)
-            terminalTextColor = Color(hex: 0xF5FFFA, alpha: 1)
+//            terminalBackgroundColor = Color(hex: 0x4A646C, alpha: 1)
+//            terminalTextColor = Color(hex: 0xF5FFFA, alpha: 1)
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1)
             buttonColor = Color(hex: 0x76D7EA, alpha: 1)
             backgroundColor = Color(hex: 0x008CB4, alpha: 1)
@@ -887,8 +889,8 @@ public class SettingsViewModel: ObservableObject {
 
         case .hacker:
 
-            terminalBackgroundColor = Color(hex: 0x000000, alpha: 1)
-            terminalTextColor = Color(hex: 0x39FF14, alpha: 1)
+//            terminalBackgroundColor = Color(hex: 0x000000, alpha: 1)
+//            terminalTextColor = Color(hex: 0x39FF14, alpha: 1)
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
             buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
             backgroundColor = Color(hex: 0x2C3539, alpha: 1)

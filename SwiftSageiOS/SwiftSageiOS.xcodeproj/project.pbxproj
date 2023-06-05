@@ -13,7 +13,6 @@
 		B70A00F52A1EB72900ADEF5A /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F42A1EB72900ADEF5A /* DateProvider.swift */; };
 		B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */; };
 		B70A00FA2A20E0CA00ADEF5A /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70A00F92A20E0C900ADEF5A /* ProjectView.swift */; };
-		B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */; };
 		B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B70D330A2A10282A00D7290E /* ZIPFoundation */; };
 		B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */; };
 		B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EF729F9F09A00078D8D /* String+Range.swift */; };
@@ -122,11 +121,6 @@
 		B7544E4C2A191BCE00961F4C /* JSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E272A191BCE00961F4C /* JSONRequest.swift */; };
 		B7544E4D2A191BCE00961F4C /* URLSessionDataTaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */; };
 		B75B329329FA11870049EB55 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329229FA11870049EB55 /* AddView.swift */; };
-		B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BB29F6DAED003EC13F /* ResizeController.swift */; };
-		B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BC29F6DAED003EC13F /* LCManager.swift */; };
-		B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */; };
-		B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9BE29F6DAED003EC13F /* SystemReport.swift */; };
-		B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767E9C029F6DAED003EC13F /* BorderManager.swift */; };
 		B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */; };
 		B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */; };
 		B78DA95F2A02AF01002343AB /* InstructionsPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */; };
@@ -153,6 +147,8 @@
 		B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
+		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
+		B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */; };
 		B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
@@ -183,7 +179,6 @@
 		B70A00F42A1EB72900ADEF5A /* DateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
 		B70A00F62A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSourceCodeTheme.swift; sourceTree = "<group>"; };
 		B70A00F92A20E0C900ADEF5A /* ProjectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
-		B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalConsoleExtensions.swift; sourceTree = "<group>"; };
 		B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeRegexLexer.swift; sourceTree = "<group>"; };
 		B7191EF729F9F09A00078D8D /* String+Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Range.swift"; sourceTree = "<group>"; };
 		B7191EF829F9F09A00078D8D /* NSTextView+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTextView+UIKit.swift"; sourceTree = "<group>"; };
@@ -226,7 +221,6 @@
 		B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLogic.swift; sourceTree = "<group>"; };
 		B729B14129F9B25600BA6752 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		B72BFBAC2A1AAAED00E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		B72BFBAD2A1AAAF900E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B72BFBAE2A1AAB0500E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B72BFBAF2A1AAB1300E13C71 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B7378BFC2A1B192500A1D44C /* HapticMan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticMan.swift; sourceTree = "<group>"; };
@@ -300,11 +294,6 @@
 		B7544E272A191BCE00961F4C /* JSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequest.swift; sourceTree = "<group>"; };
 		B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskProtocol.swift; sourceTree = "<group>"; };
 		B75B329229FA11870049EB55 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		B767E9BB29F6DAED003EC13F /* ResizeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeController.swift; sourceTree = "<group>"; };
-		B767E9BC29F6DAED003EC13F /* LCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LCManager.swift; sourceTree = "<group>"; };
-		B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureEndpointPredictor.swift; sourceTree = "<group>"; };
-		B767E9BE29F6DAED003EC13F /* SystemReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemReport.swift; sourceTree = "<group>"; };
-		B767E9C029F6DAED003EC13F /* BorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderManager.swift; sourceTree = "<group>"; };
 		B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+ForkGithub.swift"; sourceTree = "<group>"; };
 		B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+MacOS.swift"; sourceTree = "<group>"; };
 		B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPopup.swift; sourceTree = "<group>"; };
@@ -333,6 +322,8 @@
 		B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITests.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
+		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
+		B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizingHandle.swift; sourceTree = "<group>"; };
 		B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ColorGen.swift"; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
@@ -485,6 +476,8 @@
 				B78EAF5D2A108516003095A2 /* Lists */,
 				B70A00F92A20E0C900ADEF5A /* ProjectView.swift */,
 				B78EAF672A13B68D003095A2 /* SageMultiView.swift */,
+				B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */,
+				B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
 				B78EAF682A13B68D003095A2 /* TopBar.swift */,
@@ -746,20 +739,6 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
-		B767E9BA29F6DAED003EC13F /* LocalConsole */ = {
-			isa = PBXGroup;
-			children = (
-				B72BFBAD2A1AAAF900E13C71 /* LICENSE */,
-				B70D33042A10230F00D7290E /* LocalConsoleExtensions.swift */,
-				B767E9BB29F6DAED003EC13F /* ResizeController.swift */,
-				B767E9BC29F6DAED003EC13F /* LCManager.swift */,
-				B767E9BD29F6DAED003EC13F /* GestureEndpointPredictor.swift */,
-				B767E9BE29F6DAED003EC13F /* SystemReport.swift */,
-				B767E9C029F6DAED003EC13F /* BorderManager.swift */,
-			);
-			path = LocalConsole;
-			sourceTree = "<group>";
-		};
 		B78DA9602A02AF3A002343AB /* Loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -845,7 +824,6 @@
 			isa = PBXGroup;
 			children = (
 				B7544DFC2A191BCE00961F4C /* OpenAI */,
-				B767E9BA29F6DAED003EC13F /* LocalConsole */,
 				B74A2CA329F7F6990051DB52 /* Starscream */,
 				B7191EF429F9F09A00078D8D /* Sourceful */,
 			);
@@ -1006,13 +984,11 @@
 				B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */,
 				B7191F2429F9F09A00078D8D /* Token.swift in Sources */,
 				B70A00F52A1EB72900ADEF5A /* DateProvider.swift in Sources */,
-				B70D33052A10230F00D7290E /* LocalConsoleExtensions.swift in Sources */,
 				B7544E342A191BCE00961F4C /* Models.swift in Sources */,
 				B78DA9682A02AF3A002343AB /* AsciiText.swift in Sources */,
 				B78EAF662A127865003095A2 /* Color+Base64.swift in Sources */,
 				B71C62EE2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift in Sources */,
 				B7544E332A191BCE00961F4C /* ModelQuery.swift in Sources */,
-				B767E9C329F6DAED003EC13F /* GestureEndpointPredictor.swift in Sources */,
 				B70A00F32A1EB48200ADEF5A /* IDProvider.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
 				B7544E2D2A191BCE00961F4C /* ChatStreamResult.swift in Sources */,
@@ -1048,6 +1024,7 @@
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
 				B74B21DB2A1D452700B3282E /* Drawer.swift in Sources */,
 				B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */,
+				B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */,
 				B78EAF692A13B68D003095A2 /* SageMultiView.swift in Sources */,
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
@@ -1056,7 +1033,6 @@
 				B71C62FC2A0190AA004296E4 /* Googler.swift in Sources */,
 				B7544E412A191BCE00961F4C /* APIError.swift in Sources */,
 				B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */,
-				B767E9C129F6DAED003EC13F /* ResizeController.swift in Sources */,
 				B71C63002A01924B004296E4 /* CommandTable.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
 				B7191F2829F9F09A00078D8D /* InnerTextView.swift in Sources */,
@@ -1075,10 +1051,8 @@
 				B7544E2F2A191BCE00961F4C /* CompletionsResult.swift in Sources */,
 				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
 				B78DA98A2A080037002343AB /* WindowList.swift in Sources */,
-				B767E9C629F6DAED003EC13F /* BorderManager.swift in Sources */,
 				B7544E462A191BCE00961F4C /* MultipartFormDataBodyBuilder.swift in Sources */,
 				B7544E4C2A191BCE00961F4C /* JSONRequest.swift in Sources */,
-				B767E9C229F6DAED003EC13F /* LCManager.swift in Sources */,
 				B74A2CC529F7F6990051DB52 /* Security.swift in Sources */,
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
 				B7544E3C2A191BCE00961F4C /* ImagesResult.swift in Sources */,
@@ -1091,6 +1065,7 @@
 				B7544E2C2A191BCE00961F4C /* AudioTranscriptionResult.swift in Sources */,
 				B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */,
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
+				B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
 				B70A00FA2A20E0CA00ADEF5A /* ProjectView.swift in Sources */,
 				B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */,
@@ -1107,7 +1082,6 @@
 				B7191F1F29F9F09A00078D8D /* JavaScriptLexer.swift in Sources */,
 				B7191F1E29F9F09A00078D8D /* JavaLexer.swift in Sources */,
 				B7191F2529F9F09A00078D8D /* RegexLexer.swift in Sources */,
-				B767E9C429F6DAED003EC13F /* SystemReport.swift in Sources */,
 				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
 				B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */,
 				B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */,
@@ -1283,9 +1257,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1300,7 +1275,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LogicSage uses your mic to capture commands";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "LogicSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1337,7 +1312,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1350,7 +1325,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "LogicSage uses your mic to capture commands";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "LogicSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

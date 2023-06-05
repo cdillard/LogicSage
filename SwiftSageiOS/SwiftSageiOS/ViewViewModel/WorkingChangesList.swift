@@ -21,8 +21,6 @@ struct FileChange: Identifiable, Equatable {
 let unstagedTitle =  "Unstaged Changes"
 let stagedTitle = "Staged Changes"
 struct WorkingChangesView: View {
-
-    //@EnvironmentObject var windowManager: WindowManager
     @Binding var showAddView: Bool
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -43,7 +41,7 @@ struct WorkingChangesView: View {
                     .navigationViewStyle(StackNavigationViewStyle())
 #endif
                     Divider()
-                    // IF IPAD , show change list to the right of staging changes
+
                     NavigationView {
                         ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                     }

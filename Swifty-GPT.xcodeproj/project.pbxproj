@@ -254,6 +254,7 @@
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7C3889229F224FE0074659D /* SwiftyGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C3889429F224FE0074659D /* SwiftyGPTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyGPTTests.swift; sourceTree = "<group>"; };
+		B7C446312A2A34E400B03FF5 /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = configure.swift; path = SwiftSageServer/Sources/App/configure.swift; sourceTree = "<group>"; };
 		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
 		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
 		B7D1609129F2497200244188 /* Gitstar */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gitstar; sourceTree = "<group>"; };
@@ -274,7 +275,6 @@
 		B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Swifty-GPT-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7EE1FC129F4E351007A7B6B /* Debate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debate.swift; sourceTree = "<group>"; };
 		B7EF2A2C2A0C5A6E0048CFFC /* ImageAssetCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAssetCommands.swift; sourceTree = "<group>"; };
-		B7EF2A2E2A0C5F4B0048CFFC /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = configure.swift; path = WebSocketServer/Sources/App/configure.swift; sourceTree = "<group>"; };
 		B7F50A6629F3BCBD00A8485C /* SwiftSageStatusBarXFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageStatusBarXFace.swift; sourceTree = "<group>"; };
 		B7F50A6B29F3C21200A8485C /* SwiftSageStatusBar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = SwiftSageStatusBar; sourceTree = "<group>"; };
 		B7F50A6C29F3C21200A8485C /* SwiftSageStatusBar.swiftmodule */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SwiftSageStatusBar.swiftmodule; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 		B7139CD329E147910049ADE1 = {
 			isa = PBXGroup;
 			children = (
-				B7EF2A2E2A0C5F4B0048CFFC /* configure.swift */,
+				B7C446312A2A34E400B03FF5 /* configure.swift */,
 				B7139CDE29E147910049ADE1 /* Swifty-GPT */,
 				B7544E4E2A193B0300961F4C /* OpenAI */,
 				B7C3889329F224FE0074659D /* SwiftyGPTTests */,

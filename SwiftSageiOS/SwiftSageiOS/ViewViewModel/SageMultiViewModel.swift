@@ -7,7 +7,7 @@
 
 import Foundation
 #if !os(macOS)
-
+private var lastConsoleUpdate = Date()
 class SageMultiViewModel: ObservableObject {
     @ObservedObject var settingsViewModel: SettingsViewModel
     
@@ -21,9 +21,13 @@ class SageMultiViewModel: ObservableObject {
         self.settingsViewModel = settingsViewModel
         self.windowInfo = windowInfo
 
-        if let convoId = windowInfo.convoId {
+         if let convoId = windowInfo.convoId {
             let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
             self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
+        }
+        else if windowInfo.convoId == Conversation.ID(-1) {
+            self.sourceCode = settingsViewModel.consoleManagerText
+
         }
         else {
             self.sourceCode = windowInfo.fileContents

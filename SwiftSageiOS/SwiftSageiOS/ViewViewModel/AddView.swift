@@ -89,12 +89,9 @@ struct AddView: View {
                                         Button(action: {
                                             withAnimation {
                                                 logD("Upload Workspace")
-#if !os(macOS)
 
-                                                if consoleManager.isVisible {
-                                                    consoleManager.isVisible = false
-                                                }
-#endif
+                                                // TODO: Hide or show terminal chat?
+
                                                 //        showAddView.toggle()
 
 
@@ -102,15 +99,13 @@ struct AddView: View {
 
                                                 //     showAddView.toggle()
 
-                                                settingsViewModel.multiLineText = "upload"
                                                 DispatchQueue.main.async {
 
                                                     // Execute your action here
-                                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                                    screamer.sendCommand(command: "upload")
 
                                                    isInputViewShown = false
 
-                                                    settingsViewModel.multiLineText = ""
                                                 }
                                             }
                                         }) {
@@ -131,26 +126,22 @@ struct AddView: View {
                                         Button(action: {
                                             withAnimation {
                                                 logD("Download Workspace")
-#if !os(macOS)
 
-                                                if consoleManager.isVisible {
-                                                    consoleManager.isVisible = false
-                                                }
-#endif
+                                                // TODO: Hide or show terminal chat?
+
+
                                                 showAddView.toggle()
 
 
                                                 logD("DO WORKSPACE DOWNLOAD!")
 
-                                                settingsViewModel.multiLineText = "download"
                                                 DispatchQueue.main.async {
 
                                                     // Execute your action here
-                                                    screamer.sendCommand(command: settingsViewModel.multiLineText)
+                                                    screamer.sendCommand(command:  "download")
 
                                                     isInputViewShown = false
 
-                                                    settingsViewModel.multiLineText = ""
                                                 }
                                             }
                                         }) {
@@ -182,12 +173,10 @@ struct AddView: View {
                                             logD("open new project window")
                                             logD("open new debugger window")
 
-#if !os(macOS)
 
-                                            if consoleManager.isVisible {
-                                                consoleManager.isVisible = false
-                                            }
-#endif
+                                            // TODO: Hide or show terminal chat?
+
+
                                             showAddView.toggle()
 #if !os(macOS)
                                             windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
@@ -214,12 +203,8 @@ struct AddView: View {
                                     Button(action: {
                                         withAnimation {
                                             logD("open new File")
-#if !os(macOS)
+                                            // TODO: Hide or show terminal chat?
 
-                                            if consoleManager.isVisible {
-                                                consoleManager.isVisible = false
-                                            }
-#endif
                                             showAddView.toggle()
 #if !os(macOS)
                                             windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
@@ -243,13 +228,9 @@ struct AddView: View {
                                     Button(action: {
                                         withAnimation {
 
-#if !os(macOS)
-                                            if consoleManager.isVisible {
-                                                consoleManager.isVisible = false
-                                            }
-#endif
                                             logD("open Webview")
                                             showAddView.toggle()
+                                            // TODO: Hide or show terminal chat?
 
 #if !os(macOS)
                                             windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
@@ -309,12 +290,8 @@ struct AddView: View {
                             Button(action: {
                                 withAnimation {
                                     logD("open Working Changes View")
-#if !os(macOS)
+                                    // TODO: Hide or show terminal chat?
 
-                                    if consoleManager.isVisible {
-                                        consoleManager.isVisible = false
-                                    }
-#endif
                                     showAddView.toggle()
 #if !os(macOS)
                                     windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
@@ -353,13 +330,7 @@ struct AddView: View {
 
                                                     logD("Open container containing repo tree")
 
-#if !os(macOS)
-                                                    if consoleManager.isVisible {
-                                                        consoleManager.isVisible = false
-                                                    }
-#endif
                                                     showAddView.toggle()
-
 #if !os(macOS)
                                                     windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
 #endif
@@ -391,11 +362,6 @@ struct AddView: View {
                                     withAnimation {
                                         logD("Open container containing repo tree")
 
-#if !os(macOS)
-                                        if consoleManager.isVisible {
-                                            consoleManager.isVisible = false
-                                        }
-#endif
                                         showAddView.toggle()
 #if !os(macOS)
                                         windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
@@ -491,11 +457,8 @@ struct AddView: View {
                                                 .font(.caption)
                                                 .scaledToFill()
                                                 .minimumScaleFactor(0.01)
-
                                                 .foregroundColor(settingsViewModel.appTextColor)
-
                                         }
-
                                     }
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
@@ -505,6 +468,10 @@ struct AddView: View {
                                         if settingsViewModel.unzipProgress > 0.0 {
                                             HStack {
                                                 Text("unzip...")
+                                                    .font(.body)
+                                                    .lineLimit(nil)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+
                                                 ProgressView(value: settingsViewModel.unzipProgress)
                                             }
                                             .padding(.trailing, 32)
@@ -514,6 +481,10 @@ struct AddView: View {
                                         else if settingsViewModel.downloadProgress > 0.0 {
                                             HStack {
                                                 Text("download...")
+                                                    .font(.body)
+                                                    .lineLimit(nil)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+
 
                                                 ProgressView(value: settingsViewModel.downloadProgress)
                                             }
@@ -523,6 +494,10 @@ struct AddView: View {
                                         else if settingsViewModel.forkProgress > 0.0 {
                                             HStack {
                                                 Text("forking...")
+                                                    .font(.body)
+                                                    .lineLimit(nil)
+                                                    .foregroundColor(settingsViewModel.appTextColor)
+
 
                                                 ProgressView(value: settingsViewModel.forkProgress)
                                             }

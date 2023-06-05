@@ -125,7 +125,6 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             if let overrideText = overrideText {
 
 
-                let preText = view.textView.text
                 context.coordinator.wrappedView.text = overrideText
 
                 if isLocktoBottom {

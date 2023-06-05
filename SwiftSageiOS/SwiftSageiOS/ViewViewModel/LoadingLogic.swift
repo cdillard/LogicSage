@@ -15,7 +15,6 @@ the spark ⚡️ Creativity
 LogicSage 👽 🤖
 """
 let logoAscii6 = """
-
 ╭╮╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮
 ┃┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃
 ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
@@ -60,7 +59,7 @@ func getRandomGreen() -> Color {
 
 let delay = 0.366
 let greenShades = [//[Color.lightGreen, Color.limeGreen, Color.emeraldGreen,
-                   Color.forestGreen, Color.darkGreen]
+    Color.forestGreen, Color.darkGreen]
 
 struct LoadingLogicView: View {
 
@@ -83,31 +82,31 @@ struct LoadingLogicView: View {
     var body: some View {
         if !chosenLogo.isEmpty {
             ZStack {
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(chosenLogo.lines.indices, id: \.self) { lineIndex in
-                    HStack(alignment: .top, spacing: 0) {
-                        let line = chosenLogo.lines[lineIndex]
-                        ForEach(0..<line.count, id: \.self) { index in
-                            let characterIndex = chosenLogo.indexForLine(lineIndex: lineIndex, characterIndex: index)
-                            Text(String(line[line.index(line.startIndex, offsetBy: index)]))
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(chosenLogo.lines.indices, id: \.self) { lineIndex in
+                        HStack(alignment: .top, spacing: 0) {
+                            let line = chosenLogo.lines[lineIndex]
+                            ForEach(0..<line.count, id: \.self) { index in
+                                let characterIndex = chosenLogo.indexForLine(lineIndex: lineIndex, characterIndex: index)
+                                Text(String(line[line.index(line.startIndex, offsetBy: index)]))
 #if !os(macOS)
-                                .font(Font(UIFont(name: "Menlo", size: 23)!))
+                                    .font(Font(UIFont(name: "Menlo", size: 23)!))
 #endif
-                                .foregroundColor(randomColor)
-                                .scaleEffect(showText[characterIndex] ? 1: 0.2)
-                                .offset(x: showText[characterIndex] ? 0 : positions[characterIndex].width, y: showText[characterIndex] ? 0 : positions[characterIndex].height)
-                                .opacity(showText[characterIndex] ? 1 : 0)
-                                .animation(.timingCurve(0.3, -0.3, 0.7, 1.3, duration: Double(showText[characterIndex] ? delay : 0))
-                                    .delay(Double(characterIndex) * animFrameDuration), value: showText)
+                                    .foregroundColor(randomColor)
+                                    .scaleEffect(showText[characterIndex] ? 1: 0.2)
+                                    .offset(x: showText[characterIndex] ? 0 : positions[characterIndex].width, y: showText[characterIndex] ? 0 : positions[characterIndex].height)
+                                    .opacity(showText[characterIndex] ? 1 : 0)
+                                    .animation(.timingCurve(0.3, -0.3, 0.7, 1.3, duration: Double(showText[characterIndex] ? delay : 0))
+                                        .delay(Double(characterIndex) * animFrameDuration), value: showText)
+                            }
                         }
                     }
                 }
-            }
-            RadialGradient(gradient: Gradient(colors: [.black.opacity(0.666), .clear]),
-                           center: .center,
-                           startRadius: 0,
-                           endRadius: 666)
-            .edgesIgnoringSafeArea(.all)
+                RadialGradient(gradient: Gradient(colors: [.black.opacity(0.666), .clear]),
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 666)
+                .edgesIgnoringSafeArea(.all)
             }
 
             .onAppear {
@@ -128,17 +127,9 @@ struct LoadingLogicView: View {
                     }
                 }
             }
-    }
-//        .edgesIgnoringSafeArea(.all)
+        }
     }
 }
-
-
-
-
-
-
-
 
 struct GreenColors {
     static let lightGreen = Color(red: 0.6, green: 0.9, blue: 0.6)

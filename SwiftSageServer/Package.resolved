@@ -28,51 +28,6 @@
       }
     },
     {
-      "identity" : "fluent",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/fluent.git",
-      "state" : {
-        "revision" : "4b4d8bf15a06fd60137e9c543e5503c4b842654e",
-        "version" : "4.8.0"
-      }
-    },
-    {
-      "identity" : "fluent-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/fluent-kit.git",
-      "state" : {
-        "revision" : "e53acf986e32c54fe522b2c12f737baa01828c1c",
-        "version" : "1.42.2"
-      }
-    },
-    {
-      "identity" : "fluent-postgres-driver",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/fluent-postgres-driver.git",
-      "state" : {
-        "revision" : "bb3ab8e861152157f712cd08fc473e885bd0b4df",
-        "version" : "2.7.2"
-      }
-    },
-    {
-      "identity" : "leaf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/leaf.git",
-      "state" : {
-        "revision" : "6fe0e843c6599f5189e45c7b08739ebc5c410c3b",
-        "version" : "4.2.4"
-      }
-    },
-    {
-      "identity" : "leaf-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/leaf-kit.git",
-      "state" : {
-        "revision" : "13f2fc4c8479113cd23876d9a434ef4573e368bb",
-        "version" : "1.10.2"
-      }
-    },
-    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
@@ -82,39 +37,12 @@
       }
     },
     {
-      "identity" : "postgres-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-kit.git",
-      "state" : {
-        "revision" : "875e8c191ea776802fddf6773146349803629754",
-        "version" : "2.11.2"
-      }
-    },
-    {
-      "identity" : "postgres-nio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio.git",
-      "state" : {
-        "revision" : "2df54bc94607f44584ae6ffa74e3cd754fffafc7",
-        "version" : "1.14.2"
-      }
-    },
-    {
       "identity" : "routing-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/routing-kit.git",
       "state" : {
         "revision" : "611bc45c5dfb1f54b84d99b89d1f72191fb6b71b",
         "version" : "4.7.2"
-      }
-    },
-    {
-      "identity" : "sql-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/sql-kit.git",
-      "state" : {
-        "revision" : "5026e7c0f2e464ea1af9f5948701aa8922ab14eb",
-        "version" : "3.27.0"
       }
     },
     {
@@ -239,8 +167,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
-        "revision" : "9a340de4995e5a9dade4ff4c51cd2e6ae30c12d6",
-        "version" : "4.77.0"
+        "branch" : "main",
+        "revision" : "65877a5db28cd0e97bed0cc667be58d3c7e575a6"
       }
     },
     {

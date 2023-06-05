@@ -58,9 +58,8 @@ struct HelpPopup: View {
 
                                     Text("Follow this order when running LogicSage in computer mode.")
 
-                                    Text("0. Start Swift Vapor Server with `vapor run`")
-                                    Text("1. Start Swifty-GPT swift binary in Xcode with the play button")
-                                    Text("2. Force Quit / Restart your LogicSage clients, you should see websocket connected. ")
+                                    Text("0. run SwiftSageServer and Swifty-GPT with ./run.sh in the Project root")
+                                    Text("1. Background/Foreground your LogicSage clients, you should see websocket connected. ")
 
                                     Text("-COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
                                         .foregroundColor(settingsViewModel.appTextColor)

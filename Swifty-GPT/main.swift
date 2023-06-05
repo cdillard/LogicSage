@@ -202,7 +202,7 @@ func createFixItPrompt(errors: [String] = [], currentRetry: Int) -> String {
     var newPrompt = prompt
     if !errors.isEmpty {
         newPrompt += fixItPrompt
-        if !errors.isEmpty { //currentRetry > 0 {
+        if !errors.isEmpty {
             newPrompt += Array(Set(errors)).joined(separator: "\(swiftnewLine)\(swiftnewLine)\n")
             newPrompt += swiftnewLine
 

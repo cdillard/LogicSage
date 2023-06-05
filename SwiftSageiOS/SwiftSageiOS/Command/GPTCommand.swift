@@ -107,19 +107,13 @@ Question to Answer:
 }
 
 func logD(_ text: String) {
-#if !os(macOS)
-    consoleManager.print(text)
-#endif
+    SettingsViewModel.shared.logText(text)
     print(text)
-
 }
 
 func logDNoNewLine(_ text: String) {
-#if !os(macOS)
-            consoleManager.printNoNewLine(text)
-#endif
-            print(text, terminator: "")
-
+    SettingsViewModel.shared.logText(text, terminator: "")
+    print(text, terminator: "")
 }
 
 func refreshPrompt(appDesc: String) {

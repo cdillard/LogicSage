@@ -211,7 +211,7 @@ TURN OFF YOUR FIREWALLS ON ALL USED DEVICES
 USE THIS COMMAND TO RUN VAPOR SERVER
 
 ```
-cd  WebSocketServer
+cd  SwiftSageServer
 rm -rf .build
 vapor build
 vapor run
@@ -258,28 +258,6 @@ No names found... failing..
 ```
 If this happens just try again and it _usually_ clears right up.
 
-
----
-## Credits
-
-- [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
-- [SwiftyTesseract](https://github.com/SwiftyTesseract/SwiftyTesseract)
-- [OpenAI GPT-4, GPT-3.5 turbo APIs](https://www.openai.com)
-- [AudioKit](https://github.com/AudioKit/AudioKit)
-- [SwiftSoup](https://github.com/scinfu/SwiftSoup)
-- [SourceKitten](https://github.com/jpsim/SourceKitten)
-- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
-- [Starscream](https://github.com/daltoniam/Starscream)
-- [Vapor](https://github.com/vapor/vapor)
-- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
-- [SourceEditor](https://github.com/louisdh/source-editor)
-- [savannakit](https://github.com/louisdh/savannakit)
-- [Sourceful](https://github.com/twostraws/Sourceful)
-- [zip-foundation](https://github.com/weichsel/ZIPFoundation)
-- [MacPaw's excellent OpenAI](https://github.com/MacPaw/OpenAI)
-- [swift-png](https://github.com/kelvin13/swift-png)
-- [nonstrict-hq ScreenCaptureKit-Recording-example](https://github.com/nonstrict-hq/ScreenCaptureKit-Recording-example/)
----
 Thanks to Mike Bruin for keeping the Plist safe.
 
 ---

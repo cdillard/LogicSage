@@ -11,7 +11,6 @@ import SwiftUI
 #if !os(macOS)
 
 struct ChangeList: View {
-    //@EnvironmentObject var windowManager: WindowManager
     @Binding var showAddView: Bool
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @ObservedObject var settingsViewModel: SettingsViewModel

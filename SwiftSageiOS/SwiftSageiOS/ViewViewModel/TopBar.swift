@@ -13,10 +13,7 @@ struct TopBar: View {
     var onClose: () -> Void
     @State var windowInfo: WindowInfo
     @State var webViewURL: URL?
-    //@EnvironmentObject var windowManager: WindowManager
     @ObservedObject var settingsViewModel: SettingsViewModel
-
-    let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
     var body: some View {
         ZStack {
             HStack(spacing: 1) {
@@ -72,7 +69,7 @@ struct TopBar: View {
                         logD("elips tap")
                     }) {
                         let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-                        ShareLink(item: "\(link.absoluteString)\n\(convoText)", message: Text("LogicSage conversation")) {
+                        ShareLink(item: "\(SettingsViewModel.link.absoluteString)\n\(convoText)", message: Text("LogicSage convo")) {
 
                             Image(systemName: "ellipsis")
                                 .font(.body)
@@ -86,7 +83,7 @@ struct TopBar: View {
                     Button(action: {
                         isEditing.toggle()
                     }) {
-                        Text(isEditing ? "Done" : "Edit")
+                        Text(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit")
                             .font(.body)
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)

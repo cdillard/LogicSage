@@ -10,9 +10,7 @@ import Combine
 import SwiftUI
 
 class WindowManager: ObservableObject {
-
     @Published var windows: [WindowInfo] = []
-
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {
 
         // TODO: OFFSET NEW WINDOWS
@@ -21,18 +19,12 @@ class WindowManager: ObservableObject {
         windows.append(newWindow)
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
-
-//        originPoint.x += offsetPoint.x
-//        originPoint.y += offsetPoint.y
-
     }
-
     func removeWindow(window: WindowInfo) {
         if let index = windows.firstIndex(of: window) {
             windows.remove(at: index)
         }
     }
-
     func updateWindow(window: WindowInfo, frame: CGRect, zIndex: Int? = nil) {
         if let index = windows.firstIndex(of: window) {
             windows[index].frame = frame
@@ -48,15 +40,12 @@ class WindowManager: ObservableObject {
         windows[index].zIndex = maxZIndex + 1
         sortWindowsByZIndex()
     }
-    
     private func sortWindowsByZIndex() {
         windows.sort(by: { $0.zIndex < $1.zIndex })
     }
-
     func topWindow() -> WindowInfo? {
         windows.first
     }
-
     func removeWindowsWithConvoId(convoID: Conversation.ID) {
         for window in windows {
             if window.convoId == convoID {
@@ -87,9 +76,5 @@ struct WindowInfo: Identifiable, Equatable {
         case windowListView
         case changeView
         case workingChangesView
-
     }
 }
-
-
-

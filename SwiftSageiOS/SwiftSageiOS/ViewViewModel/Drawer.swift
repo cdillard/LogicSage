@@ -20,6 +20,8 @@ struct DrawerContent: View {
     @Binding var isDrawerOpen: Bool
     @Binding var conversations: [Conversation]
     @Binding var isPortrait: Bool
+    @Binding var viewSize: CGRect
+
     @State var presentRenamer: Bool = false
     @State private var newName: String = ""
     @State var renamingConvo: Conversation? = nil
@@ -29,128 +31,139 @@ struct DrawerContent: View {
     func rowString(convo: Conversation) -> String {
         convo.name ?? String(convo.id.prefix(4))
     }
+    private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width * 0.4 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .tint(settingsViewModel.appTextColor)
+            .background(settingsViewModel.buttonColor)
+    }
     var body: some View {
         HStack(alignment: .top, spacing: 1) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("➕ New 💬")
+            VStack(alignment: .leading, spacing: 1) {
+                ScrollView {
+                    HStack(spacing: 0) {
+                        resizableButtonImage(systemName:
+                                                "xmark.circle.fill",
+                                             size: viewSize.size)
                         .padding(2)
-                        .lineLimit(1)
-                        .font(.body)
-                        .fontWeight(.heavy)
-                        .foregroundColor(settingsViewModel.buttonColor)
-                        .padding(3)
                         .onTapGesture {
 
-                            settingsViewModel.latestWindowManager = windowManager
-
-                            settingsViewModel.createAndOpenNewConvo()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
-                                playSelect()
-                                withAnimation {
-                                    isDrawerOpen = false
-                                }
+                            withAnimation {
+                                isDrawerOpen = false
                             }
 
                         }
-                        .background(settingsViewModel.appTextColor)
+                        Spacer()
+                        Text("➕ New 💬")
+                            .padding(2)
+                            .lineLimit(1)
+                            .font(.body)
+                            .fontWeight(.heavy)
+                            .foregroundColor(settingsViewModel.buttonColor)
+                            .padding(3)
+                            .onTapGesture {
+
+                                withAnimation {
+                                    isDrawerOpen = false
+
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        settingsViewModel.latestWindowManager = windowManager
+
+                                        settingsViewModel.createAndOpenNewConvo()
+
+                                        playSelect()
+                                    }
+                                }
+                            }
+                            .background(settingsViewModel.appTextColor)
+                    }
                     ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
                         Divider()
                             .foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
 
-                        HStack {
+                        HStack(spacing: 0) {
                             Text("💬 \(rowString(convo: convo))")
-                                .lineLimit(2)
+                                .lineLimit(4)
+                                .padding(.leading, 2)
                                 .font(.body)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .onTapGesture {
                                     withAnimation {
                                         isDrawerOpen = false
+
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+                                            settingsViewModel.latestWindowManager = windowManager
+
+                                            playSelect()
+
+                                            settingsViewModel.openConversation(convo.id)
+                                        }
                                     }
-                                    settingsViewModel.latestWindowManager = windowManager
-
-                                    playSelect()
-
-                                    settingsViewModel.openConversation(convo.id)
                                 }
 
                             Spacer()
 
                             if isDeleting && isDeletingIndex > -1 && isDeletingIndex == index {
-                                Text("❌")
-                                    .lineLimit(1)
-                                    .font(.body)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .padding(2)
+                                resizableButtonImage(systemName:
+                                                        "x.circle.fill",
+                                                     size: viewSize.size)
+                                .lineLimit(1)
+
                                     .onTapGesture {
                                         isDeleting = false
                                         isDeletingIndex = -1
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
 
-                                Text("✔️")
-                                    .lineLimit(1)
-                                    .font(.body)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .padding(2)
+
+
+                                resizableButtonImage(systemName:
+                                                        "checkmark.circle.fill",
+                                                     size: viewSize.size)
+                                .lineLimit(1)
                                     .onTapGesture {
-                                        isDeleting = false
-                                        isDeletingIndex = -1
-                                        settingsViewModel.latestWindowManager = windowManager
-
-
                                         withAnimation {
                                             isDrawerOpen = false
+
+                                            isDeleting = false
+
+                                            isDeletingIndex = -1
+                                            settingsViewModel.latestWindowManager = windowManager
+
+                                            settingsViewModel.deleteConversation(convo.id)
+
                                         }
-                                        settingsViewModel.deleteConversation(convo.id)
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
                             }
                             else {
-                                HStack {
-                                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                                        .lineLimit(1)
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .onTapGesture {
+                                resizableButtonImage(systemName:
+                                                        "rectangle.and.pencil.and.ellipsis",
+                                                     size: viewSize.size)
+                                .lineLimit(1)
+                                .onTapGesture {
 
-                                            presentRenamer = true
-                                            renamingConvo = convo
-                                        }
-                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
-
-                                    Text("🗑️")
-                                        .lineLimit(1)
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .padding(.trailing, 2)
-                                        .onTapGesture {
-                                            isDeleting = true
-                                            isDeletingIndex = index
-                                        }
-                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                    presentRenamer = true
+                                    renamingConvo = convo
                                 }
+                                .animation(.easeIn(duration: 0.25), value: isDeleting)
+
+                                resizableButtonImage(systemName:
+                                                        "trash.circle.fill",
+                                                     size: viewSize.size)
+                                .lineLimit(1)
+
+                                .onTapGesture {
+                                    isDeleting = true
+                                    isDeletingIndex = index
+                                }
+                                .animation(.easeIn(duration: 0.25), value: isDeleting)
                             }
                         }
-                        .padding(2)
                     }
-                    Text("💬 Server")
-                        .lineLimit(1)
-                        .font(.body)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                        .padding(2)
-                        .onTapGesture {
-                            settingsViewModel.latestWindowManager = windowManager
-
-                            settingsViewModel.createAndOpenServerChat()
-
-                            withAnimation {
-                                isDrawerOpen = false
-                            }
-                        }
-
-                    Spacer()
                 }
                 .minimumScaleFactor(0.9666)
                 .foregroundColor(settingsViewModel.appTextColor)
@@ -174,7 +187,6 @@ struct DrawerContent: View {
                             logD("no rn")
                         }
 
-                        //isDrawerOpen = false
                         renamingConvo = nil
                         newName = ""
 
@@ -183,7 +195,6 @@ struct DrawerContent: View {
                         renamingConvo = nil
                         presentRenamer = false
                         newName = ""
-                        // was42isDrawerOpen = false
                     })
                 }, message: {
                     if let renamingConvo {
@@ -194,12 +205,10 @@ struct DrawerContent: View {
                     }
 
                 })
-                Spacer()
             }
         }
-        .zIndex(9)
-        .padding(.leading,3)
-        .padding(.top,3)
-
+                .zIndex(9)
+        //        .padding(.leading,3)
+        //        .padding(.top,3)
     }
 }
