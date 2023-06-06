@@ -35,82 +35,83 @@ struct DrawerContent: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: size.width * 0.4 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .frame(width: size.width * 0.75 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }
     var body: some View {
-        HStack(alignment: .top, spacing: 1) {
-            VStack(alignment: .leading, spacing: 1) {
-                ScrollView {
-                    HStack(spacing: 0) {
-                        resizableButtonImage(systemName:
-                                                "xmark.circle.fill",
-                                             size: viewSize.size)
-                        .padding(2)
-                        .onTapGesture {
-
-                            withAnimation {
-                                isDrawerOpen = false
-                            }
-
-                        }
-                        Spacer()
-                        Text("➕ New 💬")
+        GeometryReader { geometry in
+            HStack(alignment: .top, spacing: 1) {
+                VStack(alignment: .leading, spacing: 1) {
+                    ScrollView {
+                        HStack(spacing: 0) {
+                            resizableButtonImage(systemName:
+                                                    "xmark.circle.fill",
+                                                 size: geometry.size)
                             .padding(2)
-                            .lineLimit(1)
-                            .font(.body)
-                            .fontWeight(.heavy)
-                            .foregroundColor(settingsViewModel.buttonColor)
-                            .padding(3)
                             .onTapGesture {
 
                                 withAnimation {
                                     isDrawerOpen = false
-
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        settingsViewModel.latestWindowManager = windowManager
-
-                                        settingsViewModel.createAndOpenNewConvo()
-
-                                        playSelect()
-                                    }
                                 }
-                            }
-                            .background(settingsViewModel.appTextColor)
-                    }
-                    ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
-                        Divider()
-                            .foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
 
-                        HStack(spacing: 0) {
-                            Text("💬 \(rowString(convo: convo))")
-                                .lineLimit(4)
-                                .padding(.leading, 2)
+                            }
+                            Spacer()
+                            Text("➕ New 💬")
+                                .padding(2)
+                                .lineLimit(1)
                                 .font(.body)
-                                .foregroundColor(settingsViewModel.appTextColor)
+                                .fontWeight(.heavy)
+                                .foregroundColor(settingsViewModel.buttonColor)
+                                .padding(3)
                                 .onTapGesture {
+
                                     withAnimation {
                                         isDrawerOpen = false
 
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
                                             settingsViewModel.latestWindowManager = windowManager
 
-                                            playSelect()
+                                            settingsViewModel.createAndOpenNewConvo()
 
-                                            settingsViewModel.openConversation(convo.id)
+                                            playSelect()
                                         }
                                     }
                                 }
+                                .background(settingsViewModel.appTextColor)
+                        }
+                        ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
+                            Divider()
+                                .foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
 
-                            Spacer()
+                            HStack(spacing: 0) {
+                                Text("💬 \(rowString(convo: convo))")
+                                    .lineLimit(4)
+                                    .padding(.leading, 2)
+                                    .font(.body)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            isDrawerOpen = false
 
-                            if isDeleting && isDeletingIndex > -1 && isDeletingIndex == index {
-                                resizableButtonImage(systemName:
-                                                        "x.circle.fill",
-                                                     size: viewSize.size)
-                                .lineLimit(1)
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+                                                settingsViewModel.latestWindowManager = windowManager
+
+                                                playSelect()
+
+                                                settingsViewModel.openConversation(convo.id)
+                                            }
+                                        }
+                                    }
+
+                                Spacer()
+
+                                if isDeleting && isDeletingIndex > -1 && isDeletingIndex == index {
+                                    resizableButtonImage(systemName:
+                                                            "x.circle.fill",
+                                                         size: geometry.size)
+                                    .lineLimit(1)
 
                                     .onTapGesture {
                                         isDeleting = false
@@ -120,10 +121,10 @@ struct DrawerContent: View {
 
 
 
-                                resizableButtonImage(systemName:
-                                                        "checkmark.circle.fill",
-                                                     size: viewSize.size)
-                                .lineLimit(1)
+                                    resizableButtonImage(systemName:
+                                                            "checkmark.circle.fill",
+                                                         size: geometry.size)
+                                    .lineLimit(1)
                                     .onTapGesture {
                                         withAnimation {
                                             isDrawerOpen = false
@@ -138,77 +139,78 @@ struct DrawerContent: View {
                                         }
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
-                            }
-                            else {
-                                resizableButtonImage(systemName:
-                                                        "rectangle.and.pencil.and.ellipsis",
-                                                     size: viewSize.size)
-                                .lineLimit(1)
-                                .onTapGesture {
-
-                                    presentRenamer = true
-                                    renamingConvo = convo
                                 }
-                                .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                else {
+                                    resizableButtonImage(systemName:
+                                                            "rectangle.and.pencil.and.ellipsis",
+                                                         size: geometry.size)
+                                    .lineLimit(1)
+                                    .onTapGesture {
 
-                                resizableButtonImage(systemName:
-                                                        "trash.circle.fill",
-                                                     size: viewSize.size)
-                                .lineLimit(1)
+                                        presentRenamer = true
+                                        renamingConvo = convo
+                                    }
+                                    .animation(.easeIn(duration: 0.25), value: isDeleting)
 
-                                .onTapGesture {
-                                    isDeleting = true
-                                    isDeletingIndex = index
+                                    resizableButtonImage(systemName:
+                                                            "trash.circle.fill",
+                                                         size: geometry.size)
+                                    .lineLimit(1)
+
+                                    .onTapGesture {
+                                        isDeleting = true
+                                        isDeletingIndex = index
+                                    }
+                                    .animation(.easeIn(duration: 0.25), value: isDeleting)
                                 }
-                                .animation(.easeIn(duration: 0.25), value: isDeleting)
                             }
                         }
                     }
-                }
-                .minimumScaleFactor(0.9666)
-                .foregroundColor(settingsViewModel.appTextColor)
+                    .minimumScaleFactor(0.9666)
+                    .foregroundColor(settingsViewModel.appTextColor)
 
 #if !os(macOS)
-                .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
+                    .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
 #endif
-                .alert("Rename convo", isPresented: $presentRenamer, actions: {
-                    TextField("New name", text: $newName)
+                    .alert("Rename convo", isPresented: $presentRenamer, actions: {
+                        TextField("New name", text: $newName)
 
-                    Button("Rename", action: {
-                        settingsViewModel.latestWindowManager = windowManager
+                        Button("Rename", action: {
+                            settingsViewModel.latestWindowManager = windowManager
 
-                        presentRenamer = false
-                        if let convoID = renamingConvo?.id {
-                            settingsViewModel.renameConvo(convoID, newName: newName)
+                            presentRenamer = false
+                            if let convoID = renamingConvo?.id {
+                                settingsViewModel.renameConvo(convoID, newName: newName)
+                                renamingConvo = nil
+
+                            }
+                            else {
+                                logD("no rn")
+                            }
+
                             renamingConvo = nil
+                            newName = ""
 
+                        })
+                        Button("Cancel", role: .cancel, action: {
+                            renamingConvo = nil
+                            presentRenamer = false
+                            newName = ""
+                        })
+                    }, message: {
+                        if let renamingConvo {
+                            Text("Please enter new name for convo \(rowString(convo:renamingConvo))")
                         }
                         else {
-                            logD("no rn")
+                            Text("Please enter new name")
                         }
 
-                        renamingConvo = nil
-                        newName = ""
-
                     })
-                    Button("Cancel", role: .cancel, action: {
-                        renamingConvo = nil
-                        presentRenamer = false
-                        newName = ""
-                    })
-                }, message: {
-                    if let renamingConvo {
-                        Text("Please enter new name for convo \(rowString(convo:renamingConvo))")
-                    }
-                    else {
-                        Text("Please enter new name")
-                    }
-
-                })
+                }
             }
+            .zIndex(9)
+            //        .padding(.leading,3)
+            //        .padding(.top,3)
         }
-                .zIndex(9)
-        //        .padding(.leading,3)
-        //        .padding(.top,3)
     }
 }

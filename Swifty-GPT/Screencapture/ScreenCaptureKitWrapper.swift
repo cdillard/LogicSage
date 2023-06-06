@@ -13,6 +13,7 @@ import Quartz
 import Combine
 
 let maxScreenRecordingDuration: TimeInterval = 600.0
+let frameInterval: Double = 1.0 // this means one frame per second
 
 @MainActor
 class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -301,7 +302,6 @@ struct ScreenRecorder2 {
                 if videoInput.isReadyForMoreMediaData {
 
                     // Only send 1 frame per second over the websocket.
-                    let frameInterval: Double = 1.0 // this means one frame per second
                     let currentTime = CMTimeGetSeconds(sampleBuffer.presentationTimeStamp)
                     let lastFrameTimeSeconds = CMTimeGetSeconds(lastFrameTime)
                     if currentTime - lastFrameTimeSeconds >= frameInterval {

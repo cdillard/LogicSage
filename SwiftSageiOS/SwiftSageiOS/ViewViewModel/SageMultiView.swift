@@ -201,16 +201,17 @@ struct SageMultiView: View {
                 }
                 .onChange(of: geometry.size) { size in
                     recalculateWindowSize(size: geometry.size)
-                    //                        logD("contentView viewSize update = \(viewSize)")
+                    logD("SageMultiView viewSize update = \(geometry.size)")
+
                 }
                 .onAppear {
-                     position = CGSize(width: geometry.size.width * 0.025, height: geometry.size.height * 0.1)
+                    position = CGSize(width: initialViewFrame.origin.x, height: initialViewFrame.origin.y)
                 }
                 .background(
                     GeometryReader { viewGeometry in
                         Color.clear.onAppear {
                             let startFrame = viewGeometry.frame(in: .global)
-                            self.initialViewFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frame.width - resizeOffset.width, frame.height - resizeOffset.height)
+                            self.initialViewFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frame.width, frame.height)
                             logD("initial view = \(initialViewFrame)")
                         }
                     }
@@ -228,26 +229,37 @@ struct SageMultiView: View {
                 frame.size.width = size.width - size.width * 0.1 - 30
             }
             if frame.size.height > size.height {
-                frame.size.height = size.height - size.height * 0.1 - 30
+                frame.size.height = size.height
             }
             var newPosX = position.width
             var newPosY = position.height
-            if resizeOffset.width < 0 {
-                newPosX = size.width * 0.05 + abs(resizeOffset.width) / 2
+            if resizeOffset.width == 0 {
+
+            }
+            else if resizeOffset.width < 0 {
+                newPosX = size.width * 0.025 + newPosX - abs(resizeOffset.width) / 2
             }
             else  {
-                newPosX = size.width * 0.05 + resizeOffset.width / 2
+                // the view got bigger , move it to top left
+                newPosX = size.width * 0.025 + newPosX //+ resizeOffset.width / 2
             }
+            if resizeOffset.height == 0 {
 
-            if resizeOffset.height < 0 {
-                newPosY = size.height * 0.075  + abs(resizeOffset.height) / 2
+            }
+            // The view got smaller, move
+            else if resizeOffset.height < 0 {
+                newPosY = newPosY - size.height * 0.075  //- abs(resizeOffset.height) / 2
             }
             else {
-                newPosY = size.height * 0.075 + resizeOffset.height / 2
+                newPosY = newPosY - size.height * 0.075 //+ resizeOffset.height / 2
             }
 
-            position = CGSize(width: newPosX, height: newPosY)
+            position = CGSize(width: max(size.width * 0.025, newPosX), height: max(size.width * 0.075, newPosY))
 
+
+  //          if !isMoveGestureActivated {
+                dragsOnChange(value: nil, geometrySafeAreaInsetLeading: 20, geometrySafeAreaTop: 40)
+//            }
         }
     }
     func getURL() -> URL {

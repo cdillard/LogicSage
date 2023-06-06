@@ -13,7 +13,7 @@ import WebKit
 import Combine
 
 extension SageMultiView {
-    func dragsOnChange(value: DragGesture.Value, geometrySafeAreaInsetLeading: CGFloat, geometrySafeAreaTop: CGFloat) {
+    func dragsOnChange(value: DragGesture.Value?, geometrySafeAreaInsetLeading: CGFloat, geometrySafeAreaTop: CGFloat) {
         if !isDragDisabled {
             if !isMoveGestureActivated {
                 self.windowManager.bringWindowToFront(window: self.window)
@@ -29,9 +29,11 @@ extension SageMultiView {
                 }
             }
             let fudge: CGFloat = 33.666
+            let widthTrans = value?.translation.width ?? 0
+            let heightTrans = value?.translation.height ?? 0
 
-            var newX = position.width + value.translation.width
-            var newY = position.height + value.translation.height
+            var newX = position.width + widthTrans
+            var newY = position.height + heightTrans
 // START: Handle Three LEADING edge cases....
             if resizeOffset.width == 0 {
                 let globX = newX + initialViewFrame.origin.x
