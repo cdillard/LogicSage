@@ -49,11 +49,11 @@ struct ContentView: View {
             HStack(spacing: 0) {
 #if !os(macOS)
                 if isDrawerOpen {
-                    DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait, viewSize: $viewSize)
+                    DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView)
                         .transition(.move(edge: .leading))
                         .background(settingsViewModel.buttonColor)
                         .padding(.leading, 0)
-                        .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
+                        .frame(minWidth: geometry.size.width / 3, minHeight: 0, maxHeight: .infinity)
                 }
 #endif
                 ZStack {
@@ -146,96 +146,13 @@ struct ContentView: View {
                     
                     VStack {
                         Spacer()
-                        if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
-
-                            HStack(alignment: .bottom, spacing: 0) {
-                                // OPEN TERM BUTTON
-
-                                Button(action: {
-#if !os(macOS)
-                                    hideKeyboard()
-
-                                    // TODO : SHOw / h9de terminal / server chat.
-
-                                    if showSettings {
-                                        showSettings = false
-                                    }
-                                    if showAddView  {
-                                        showAddView = false
-                                    }
-
-                                    settingsViewModel.latestWindowManager = windowManager
-
-                                    settingsViewModel.createAndOpenServerChat()
-#endif
-                                }) {
-                                    resizableButtonImage(systemName: "text.and.command.macwindow", size: geometry.size)
-                                }
-
-                                // SETTINGS BUTTON
-                                Button(action: {
-#if !os(macOS)
-                                    hideKeyboard()
-#endif
-                                    withAnimation {
-                                        showSettings.toggle()
-                                    }
-                                }) {
-                                    resizableButtonImage(systemName: "gearshape", size: geometry.size)
-                                }
-
-                                // ADD VIEW BUTTON
-                                Button(action: {
-#if !os(macOS)
-                                    hideKeyboard()
-#endif
-                                    // TODO : SHOw / h9de terminal / server chat.
-
-                                    showAddView.toggle()
-                                    if showSettings {
-                                        showSettings = false
-                                    }
-                                }) {
-
-                                    resizableButtonImage(systemName: "plus.rectangle", size: geometry.size)
-                                }
-
-                                if settingsViewModel.hasAcceptedMicrophone {
-                                    Button(action: {
-#if !os(macOS)
-                                        hideKeyboard()
-#endif
-                                        if !settingsViewModel.hasAcceptedMicrophone {
-                                            logD("Enable mic in Settings...")
-                                            return
-                                        }
-                                        if settingsViewModel.isRecording {
-                                            settingsViewModel.speechRecognizer.stopRecording()
-                                        } else {
-                                            settingsViewModel.speechRecognizer.startRecording()
-                                        }
-                                        settingsViewModel.isRecording.toggle()
-                                    }) {
-                                        resizableButtonImage(systemName: settingsViewModel.isRecording ? "mic.fill" : "mic.slash.fill", size: geometry.size)
-                                            .overlay(
-                                                Group {
-                                                    if !settingsViewModel.hasAcceptedMicrophone {
-                                                        RoundedRectangle(cornerRadius: 8)
-                                                            .foregroundColor(Color.white.opacity(0.5))
-                                                    }
-                                                }
-                                            )
-                                    }
-                                    
-                                    Text(settingsViewModel.recognizedText)
-                                        .font(.body)
-                                }
-                                Spacer()
-                            }
-                            .zIndex(-9)
-                            .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
-
-                        }
+//                        if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
+//
+//                            HStack(alignment: .bottom, spacing: 0) {
+//                            }
+//                            .zIndex(-9)
+//                            .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
+//                        }
                     }
                     .padding(.leading,8)
                     .padding(.bottom,8)
@@ -333,18 +250,22 @@ struct ContentView: View {
     // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
     private func recalculateWindowSize(size: CGSize) {
-        DispatchQueue.main.async {
+        if viewSize.size != size {
 
 #if !os(macOS)
-            defSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.5))
-            defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.52))
+                DispatchQueue.main.async {
+
+                defSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.5))
+                defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.52))
 
             // set parentViewSize
-            viewSize = CGRectMake(0, 0, size.width, size.height)
-            logD("contentView viewSize update = \(viewSize)")
+                viewSize = CGRectMake(0, 0, size.width, size.height)
+                logD("contentView viewSize update = \(viewSize)")
 
-            guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-            self.isPortrait = scene.interfaceOrientation.isPortrait
+                guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                self.isPortrait = scene.interfaceOrientation.isPortrait
+            }
+
 
 #endif
         }

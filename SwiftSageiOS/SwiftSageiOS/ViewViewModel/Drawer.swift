@@ -21,6 +21,8 @@ struct DrawerContent: View {
     @Binding var conversations: [Conversation]
     @Binding var isPortrait: Bool
     @Binding var viewSize: CGRect
+    @Binding var showSettings: Bool
+    @Binding var showAddView: Bool
 
     @State var presentRenamer: Bool = false
     @State private var newName: String = ""
@@ -35,7 +37,7 @@ struct DrawerContent: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: size.width * 0.75 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .frame(width: 33, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }
@@ -44,6 +46,63 @@ struct DrawerContent: View {
             HStack(alignment: .top, spacing: 1) {
                 VStack(alignment: .leading, spacing: 1) {
                     ScrollView {
+                        HStack(spacing: 0) {
+                            resizableButtonImage(systemName:
+                                                    "text.and.command.macwindow",
+                                                 size: geometry.size)
+                            .padding(2)
+                            .onTapGesture {
+                                withAnimation {
+                                    isDrawerOpen = false
+
+                                    // TODO : SHOw / h9de terminal / server chat.
+
+
+                                    settingsViewModel.latestWindowManager = windowManager
+
+                                    settingsViewModel.createAndOpenServerChat()
+                                }
+
+                            }
+                            resizableButtonImage(systemName:
+                                                    "gearshape",
+                                                 size: geometry.size)
+                            .padding(2)
+                            .onTapGesture {
+                                withAnimation {
+                                    isDrawerOpen = false
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            showSettings = true
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            resizableButtonImage(systemName:
+                                                    "plus.rectangle",
+                                                 size: geometry.size)
+                            .padding(2)
+                            .onTapGesture {
+                                withAnimation {
+                                    isDrawerOpen = false
+                                    if showSettings {
+                                        showSettings = false
+                                    }
+
+                                    DispatchQueue.main.async {
+                                        withAnimation {
+                                            
+                                            showAddView = true
+                                        }
+                                    }
+                                }
+
+                            }
+                            Spacer()
+                        }
+
                         HStack(spacing: 0) {
                             resizableButtonImage(systemName:
                                                     "xmark.circle.fill",
@@ -164,6 +223,7 @@ struct DrawerContent: View {
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
                                 }
                             }
+                            .padding(.horizontal)
                         }
                     }
                     .minimumScaleFactor(0.9666)
