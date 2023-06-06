@@ -17,6 +17,18 @@
 ## news
 ----------------
 
+06-06-2023
+
+LogicSage 1.2.1-2 in development!!!!
+
+Features:
+Light on features as I have rethought the applications UI. Clutter free is the new game! 
+
+Fixes:
+Proper window management! Drag and resize your windows to your hearts content, the windows should resize when required. Though this app is certainly best on iPadOS with a keyboard attached, to minimize the view size reducing, the app will also resize youre chats to fit in the area provided when keyboard is shown. :+1:
+
+----------------
+
 05-28-2023
 
 LogicSage 1.2.0

@@ -53,7 +53,7 @@ struct ContentView: View {
                         .transition(.move(edge: .leading))
                         .background(settingsViewModel.buttonColor)
                         .padding(.leading, 0)
-                        .frame(minWidth: geometry.size.width / 3, minHeight: 0, maxHeight: .infinity)
+                        .frame(minWidth: geometry.size.width - (geometry.size.width / 3), maxWidth: geometry.size.width - (geometry.size.width / 3), minHeight: 0, maxHeight: .infinity)
                 }
 #endif
                 ZStack {
@@ -93,6 +93,7 @@ struct ContentView: View {
                             .padding(SettingsViewModel.shared.cornerHandleSize)
                             .edgesIgnoringSafeArea(.all)
                             .background(.clear)
+                            .opacity(isDrawerOpen ? 0.0 : 1.0)
                             .allowsHitTesting(!isDrawerOpen)
                     }
                     // END WINDOW MANAGER ZONE *************************************************
