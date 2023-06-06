@@ -21,6 +21,8 @@ struct ChatView: View {
     var window: WindowInfo?
     @Binding var isEditing: Bool
     @Binding var isLockToBottom: Bool
+
+
     @ObservedObject var windowManager: WindowManager
 
     @State var chatText = ""
@@ -30,7 +32,10 @@ struct ChatView: View {
     @Environment(\.dateProviderValue) var dateProvider
     @Environment(\.idProviderValue) var idProvider
 
+    @Binding var isMoveGestureActive: Bool
+    @Binding var isResizeGestureActive: Bool
 
+    
     var body: some View {
         GeometryReader { geometry in
 #if !os(macOS)
@@ -55,7 +60,7 @@ struct ChatView: View {
                 }, theme: {
                     ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
                     // The Magic
-                }, overrideText:  { convoText } ))
+                }, overrideText:  { convoText } ), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
                 .environmentObject(viewModel)
                 
                 HStack(spacing: 0) {

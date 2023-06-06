@@ -134,14 +134,15 @@ struct SageMultiView: View {
                             //                            print("srcEditor textViewDidBeginEditing")
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-                        }, overrideText: { nil }))
+                        }, overrideText: { nil }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
                         .onTapGesture {
                             self.windowManager.bringWindowToFront(window: self.window)
                         }
                         .environmentObject(viewModel)
 
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager)
+
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
                             .onTapGesture {
                                 self.windowManager.bringWindowToFront(window: self.window)
                             }
@@ -201,7 +202,7 @@ struct SageMultiView: View {
                 }
                 .onChange(of: geometry.size) { size in
                     recalculateWindowSize(size: geometry.size)
-                    logD("SageMultiView viewSize update = \(geometry.size)")
+//                    logD("SageMultiView viewSize update = \(geometry.size)")
 
                 }
                 .onAppear {
@@ -212,7 +213,7 @@ struct SageMultiView: View {
                         Color.clear.onAppear {
                             let startFrame = viewGeometry.frame(in: .global)
                             self.initialViewFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frame.width, frame.height)
-                            logD("initial view = \(initialViewFrame)")
+//                            logD("initial view = \(initialViewFrame)")
                         }
                     }
                 )

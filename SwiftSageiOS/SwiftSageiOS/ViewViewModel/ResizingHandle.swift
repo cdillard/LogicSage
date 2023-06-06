@@ -129,7 +129,6 @@ struct ResizingHandle: View {
             resizeOffset.height += newOffsetY
             frame.size.height += newOffsetY
         }
-
-        print("resizeOffset = \(resizeOffset)")
+//        print("resizeOffset = \(resizeOffset)")
     }
 }

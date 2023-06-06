@@ -64,13 +64,19 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     @Binding private var isEditing: Bool
     @Binding private var isLocktoBottom: Bool
 
+
     private var shouldBecomeFirstResponder: Bool
     private var custom: Customization
+
+    @Binding private var isMoveGestureActive: Bool
+    @Binding private var isResizeGestureActive: Bool
     
     public init(
         text: Binding<String>,
         isEditing: Binding<Bool>,
         isLockToBottom: Binding<Bool>,
+
+
         customization: Customization = Customization(
             didChangeText: {_ in },
             insertionPointColor: { Colorv.white },
@@ -79,13 +85,19 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) },
             overrideText: { nil }
         ),
-        shouldBecomeFirstResponder: Bool = false
+        shouldBecomeFirstResponder: Bool = false,
+        isMoveGestureActive: Binding<Bool>,
+        isResizeGestureActive: Binding<Bool>
     ) {
         self._text = text
         self._isEditing = isEditing
         self._isLocktoBottom = isLockToBottom
         self.custom = customization
         self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
+
+        self._isMoveGestureActive = isMoveGestureActive
+        self._isResizeGestureActive = isResizeGestureActive
+
     }
     
     public func makeCoordinator() -> Coordinator {
@@ -111,7 +123,6 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         }
 
         let overrideText = custom.overrideText()
-
         DispatchQueue.main.async {
 
             view.textView.isEditable = isEditing
@@ -126,6 +137,9 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
 
 
                 context.coordinator.wrappedView.text = overrideText
+
+                // Only auto scroll when not gesturing
+                guard !isResizeGestureActive && !isMoveGestureActive else { return }
 
                 if isLocktoBottom {
                     let location = view.textView.text.count - 1
