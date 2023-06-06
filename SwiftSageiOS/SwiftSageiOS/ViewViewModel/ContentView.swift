@@ -126,6 +126,7 @@ struct ContentView: View {
                         .padding(8)
                     }
                     // END CPNVERSATION HAMBURGER ZONE *************************************************
+#if !os(macOS)
 
                     if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
                         // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
@@ -143,6 +144,8 @@ struct ContentView: View {
                         .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
 
                     }
+#endif
+
                     
                     VStack {
                         Spacer()
