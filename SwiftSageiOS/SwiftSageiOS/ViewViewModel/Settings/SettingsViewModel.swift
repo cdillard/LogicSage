@@ -407,7 +407,8 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var openAIKey = "" {
         didSet {
-            if keychainManager.saveToKeychain(key:aiKeyKey, value: openAIKey) {
+            let trimmedKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
+            if keychainManager.saveToKeychain(key:aiKeyKey, value: trimmedKey) {
                 // print("openAIKey saved successfully")
             } else {
                 print("Error saving ai key")
@@ -416,7 +417,9 @@ public class SettingsViewModel: ObservableObject {
     }
     @Published var ghaPat = ""  {
         didSet {
-            if keychainManager.saveToKeychain(key: ghaKeyKey, value: ghaPat) {
+            let trimmedKey = ghaPat.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            if keychainManager.saveToKeychain(key: ghaKeyKey, value: trimmedKey) {
                 //print("ghPat saved successfully")
             } else {
                 print("Error saving gha pat")

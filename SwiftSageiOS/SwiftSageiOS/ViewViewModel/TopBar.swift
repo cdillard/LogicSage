@@ -16,24 +16,25 @@ struct TopBar: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     var body: some View {
         ZStack {
-            HStack(spacing: 1) {
+            HStack(spacing: 0) {
+                Spacer()
                 Button(action: onClose) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.body)
+                        .minimumScaleFactor(0.75)
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.leading, SettingsViewModel.shared.cornerHandleSize)
+                .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
 
                 if windowInfo.windowType == .project {
                     Button(action: {
                         logD("on side bar tap")
                     }) {
                         Image(systemName: "sidebar.left")
-                            .font(.body)
+                            .font(.caption)
+                            .minimumScaleFactor(0.75)
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                     // IF Debugger is running....
                     if settingsViewModel.isDebugging {
@@ -41,61 +42,70 @@ struct TopBar: View {
                             logD("on STOP tap")
                         }) {
                             Image(systemName: "stop.fill")
-                                .font(.body)
+                                .font(.caption)
+                                .minimumScaleFactor(0.75)
                         }
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
 
                     Button(action: {
                         logD("on PLAY tap")
                     }) {
                         Image(systemName: "play.fill")
-                            .font(.body)
+                            .font(.caption)
+                            .minimumScaleFactor(0.75)
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
               
                 Text(getName())
                     .font(.body)
+                    .minimumScaleFactor(0.75)
                     .lineLimit(1)
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                Spacer()
 
                 if windowInfo.windowType == .chat {
 
-                    Button(action: {
-                        logD("elips tap")
-                    }) {
-                        let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-                        ShareLink(item: "\(SettingsViewModel.link.absoluteString)\n\(convoText)", message: Text("LogicSage convo")) {
+                    if isEditing {
+                        Button {
+                            isEditing.toggle()
+                        } label: {
+                            Label( "Done", systemImage: "checkmark")
+                                .foregroundColor(SettingsViewModel.shared.buttonColor)
 
-                            Image(systemName: "ellipsis")
-                                .font(.body)
                         }
+                        
                     }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+                    else {
 
-                if windowInfo.windowType == .file || windowInfo.windowType == .chat {
-                    Button(action: {
-                        isEditing.toggle()
-                    }) {
-                        Text(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit")
-                            .font(.body)
+                        Menu {
+                            Button {
+                                isEditing.toggle()
+
+                            } label: {
+                                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
+                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+
+                            }
+
+                            let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
+                            ShareLink(item: "\(SettingsViewModel.link.absoluteString)\n\(convoText)", message: Text("LogicSage convo"))
+                                .foregroundColor(SettingsViewModel.shared.buttonColor)
+
+
+                        } label: {
+                            Label("", systemImage: "ellipsis")
+                        }
+
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.trailing, 4)
                 }
-
-                Spacer()
             }
         }
         .background(SettingsViewModel.shared.backgroundColor)
-        .frame(maxWidth: .infinity, maxHeight: 28)
+        .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
     }
     func getName() -> String {
         switch windowInfo.windowType {

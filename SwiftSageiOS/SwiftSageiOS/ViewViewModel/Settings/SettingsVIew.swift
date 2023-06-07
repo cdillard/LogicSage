@@ -281,18 +281,18 @@ struct SettingsView: View {
                             Button  {
                                 withAnimation {
                                     logD("AUTOCORRECTION: \(settingsViewModel.autoCorrect ? "off" : "on.")")
-
+                                    
                                     settingsViewModel.autoCorrect.toggle()
                                 }
-
+                                
                             } label: {
                                 ZStack {
                                     VStack {
-
-
+                                        
+                                        
                                         Text("📙")
                                             .font(.caption)
-
+                                        
                                         Text("Autocorrect?")
                                             .font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
@@ -300,7 +300,7 @@ struct SettingsView: View {
                                     if settingsViewModel.autoCorrect {
                                         Text("❌")
                                             .font(.caption)
-
+                                        
                                             .opacity(0.74)
                                     }
                                 }
@@ -311,48 +311,52 @@ struct SettingsView: View {
                                 .cornerRadius(8)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(macOS)
 
-                            Group {
-                                VStack {
+                            if UIDevice.current.userInterfaceIdiom == .phone {
+                                
+                                Group {
+                                    VStack {
 
+                                        Button  {
+                                            withAnimation {
+                                                logD("Haptic feedback: \(settingsViewModel.hapticsEnabled ? "off" : "on.")")
 
-                                    Button  {
-                                        withAnimation {
-                                            logD("Haptic feedback: \(settingsViewModel.hapticsEnabled ? "off" : "on.")")
-
-                                            settingsViewModel.hapticsEnabled.toggle()
-                                        }
-
-                                    } label: {
-                                        ZStack {
-                                            VStack {
-                                                Text("📳")
-                                                    .font(.caption)
-
-                                                Text("Haptic Feedback?")
-                                                    .font(.caption)
-                                                    .foregroundColor(settingsViewModel.appTextColor)
+                                                settingsViewModel.hapticsEnabled.toggle()
                                             }
-                                            if settingsViewModel.hapticsEnabled {
-                                                Text("❌")
-                                                    .font(.caption)
 
-                                                    .opacity(0.74)
+                                        } label: {
+                                            ZStack {
+                                                VStack {
+                                                    Text("📳")
+                                                        .font(.caption)
+
+                                                    Text("Haptic Feedback?")
+                                                        .font(.caption)
+                                                        .foregroundColor(settingsViewModel.appTextColor)
+                                                }
+                                                if settingsViewModel.hapticsEnabled {
+                                                    Text("❌")
+                                                        .font(.caption)
+
+                                                        .opacity(0.74)
+                                                }
                                             }
+                                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                            .lineLimit(1)
+                                            .background(settingsViewModel.buttonColor)
+                                            .fontWeight(.bold)
+                                            .cornerRadius(8)
                                         }
-                                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                        .lineLimit(1)
-                                        .background(settingsViewModel.buttonColor)
-                                        .fontWeight(.bold)
-                                        .cornerRadius(8)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                                        Text("feedback won't play when low battery (< 0.30)")
+                                            .font(.caption)
+                                            .foregroundColor(settingsViewModel.appTextColor)
                                     }
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-
-                                    Text("feedback won't play when low battery (< 0.30)")
-                                        .font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
                                 }
                             }
+#endif
                         }
 
                         if settingsViewModel.currentMode == .computer {
@@ -556,20 +560,20 @@ struct SettingsView: View {
                                         }
                                 }
 
-//                                VStack(spacing: 3) {
-//
-//                                    ColorPicker("Terminal Background Color", selection:
-//                                                    $settingsViewModel.terminalBackgroundColor)
-//                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-//                                    .foregroundColor(settingsViewModel.appTextColor)
-//                                }
-//                                VStack( spacing: 3) {
-//
-//                                    ColorPicker("Terminal Text Color", selection:
-//                                                    $settingsViewModel.terminalTextColor)
-//                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-//                                    .foregroundColor(settingsViewModel.appTextColor)
-//                                }
+                                //                                VStack(spacing: 3) {
+                                //
+                                //                                    ColorPicker("Terminal Background Color", selection:
+                                //                                                    $settingsViewModel.terminalBackgroundColor)
+                                //                                    .frame(width: geometry.size.width / 2, alignment: .leading)
+                                //                                    .foregroundColor(settingsViewModel.appTextColor)
+                                //                                }
+                                //                                VStack( spacing: 3) {
+                                //
+                                //                                    ColorPicker("Terminal Text Color", selection:
+                                //                                                    $settingsViewModel.terminalTextColor)
+                                //                                    .frame(width: geometry.size.width / 2, alignment: .leading)
+                                //                                    .foregroundColor(settingsViewModel.appTextColor)
+                                //                                }
                             }
                             Group {
                                 VStack( spacing: 3) {
@@ -740,29 +744,29 @@ struct SettingsView: View {
                     }
 
                     if settingsViewModel.showAudioSettings {
-//                        // ENABLE MIC BUTTON
-//                        Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
-//                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-//                            .foregroundColor(settingsViewModel.appTextColor)
-//
-//                        Button(action: {
-//                            withAnimation {
-//                                logD("Requesing mic permission...")
-//                                settingsViewModel.requestMicrophoneAccess { granted in
-//                                    settingsViewModel.hasAcceptedMicrophone = granted == true
-//                                }
-//                            }
-//                        }) {
-//                            resizableButtonImage(systemName:
-//                                                    "mic.badge.plus",
-//                                                 size: geometry.size)
-//                            .fontWeight(.bold)
-//                            .background(settingsViewModel.buttonColor)
-//                            .cornerRadius(8)
-//
-//                        }
-//                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-//                        .padding(8)
+                        //                        // ENABLE MIC BUTTON
+                        //                        Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
+                        //                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        //                            .foregroundColor(settingsViewModel.appTextColor)
+                        //
+                        //                        Button(action: {
+                        //                            withAnimation {
+                        //                                logD("Requesing mic permission...")
+                        //                                settingsViewModel.requestMicrophoneAccess { granted in
+                        //                                    settingsViewModel.hasAcceptedMicrophone = granted == true
+                        //                                }
+                        //                            }
+                        //                        }) {
+                        //                            resizableButtonImage(systemName:
+                        //                                                    "mic.badge.plus",
+                        //                                                 size: geometry.size)
+                        //                            .fontWeight(.bold)
+                        //                            .background(settingsViewModel.buttonColor)
+                        //                            .cornerRadius(8)
+                        //
+                        //                        }
+                        //                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        //                        .padding(8)
 
                         // IOS AUDIO SETTING ON/OFF
                         Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")

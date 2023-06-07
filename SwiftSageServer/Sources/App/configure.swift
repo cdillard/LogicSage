@@ -20,6 +20,11 @@ let logoAscii5 = """
 ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
 Vapor server online
 """
+
+
+let connectedClientsQueue = DispatchQueue(label: "connectedClients.queue")
+let clientsQueue = DispatchQueue(label: "clients.queue")
+
 // configures your application
 public func configure(_ app: Application) throws {
 
@@ -36,8 +41,9 @@ public func configure(_ app: Application) throws {
             print("Client connected")
         }
 
-        connectedClients.append(ws)
-
+        connectedClientsQueue.async {
+            connectedClients.append(ws)
+        }
         // BEGIN onText
         ws.onText { ws, text in
 
@@ -165,39 +171,41 @@ public func configure(_ app: Application) throws {
                         ||
                         (user == "chuck" && password == "swiftsage")  {
 
-                        // Authenticate the user
-                        username = user
-                        if clients[user] == nil {
-                            clients[user] = []
-                        }
-                        clients[user]?.append(ws)
-                        if debugging {
-                            print("Authentication of \(user):\(ws) succeeded")
-                        }
-
-                        let resps = clients["SERVER"] ?? []
-                        if debugging {
-                            print("auth resps = \(resps)")
-                        }
-                        resps.forEach { recipientSocket in
+                        clientsQueue.async {
+                            // Authenticate the user
+                            username = user
+                            if clients[user] == nil {
+                                clients[user] = []
+                            }
+                            clients[user]?.append(ws)
                             if debugging {
-                                print("Received message fpr recipientSocket = \(recipientSocket)")
+                                print("Authentication of \(user):\(ws) succeeded")
                             }
-                            // send server auth cmd
-                            let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
-                            do {
-                                let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
-                                let logString = String(data: logJSON, encoding: .utf8)
-                                ws.send(logString ?? "")
 
-                                recipientSocket.send(logString ?? "")
+                            let resps = clients["SERVER"] ?? []
+                            if debugging {
+                                print("auth resps = \(resps)")
+                            }
+                            resps.forEach { recipientSocket in
                                 if debugging {
-                                    print("Sent auth cmd from server to Swift binary.")
+                                    print("Received message fpr recipientSocket = \(recipientSocket)")
                                 }
+                                // send server auth cmd
+                                let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
+                                do {
+                                    let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
+                                    let logString = String(data: logJSON, encoding: .utf8)
+                                    ws.send(logString ?? "")
 
-                            }
-                            catch {
-                                print("error writing auth cmd")
+                                    recipientSocket.send(logString ?? "")
+                                    if debugging {
+                                        print("Sent auth cmd from server to Swift binary.")
+                                    }
+
+                                }
+                                catch {
+                                    print("error writing auth cmd")
+                                }
                             }
                         }
                     }
@@ -213,7 +221,6 @@ public func configure(_ app: Application) throws {
         // END onText
 
 // END HANDLE AUTH ********************************************************************************************************************************
-
 // START BINARY DATA HANDLING ********************************************************************************************************************************
         ws.onBinary { ws, data in
             if debugging {
@@ -240,12 +247,14 @@ public func configure(_ app: Application) throws {
         ws.onClose.whenComplete { result in
             if true {
                 if let user = username {
-                    clients[user]?.removeAll(where: { $0 === ws })
-                    if clients[user]?.isEmpty ?? false {
-                        clients.removeValue(forKey: user)
-                    }
-                    if debugging {
-                        print("Client disconnected: \(user)")
+                    clientsQueue.async {
+                        clients[user]?.removeAll(where: { $0 === ws })
+                        if clients[user]?.isEmpty ?? false {
+                            clients.removeValue(forKey: user)
+                        }
+                        if debugging {
+                            print("Client disconnected: \(user)")
+                        }
                     }
                 }
             }

@@ -20,15 +20,16 @@ extension SageMultiView {
                 isMoveGestureActivated = true
             }
             func doPostConstraint() {
-                playNot(type: .warning)
-                //isDragDisabled = true
+                let now = Date()
+                if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 { // throttle duration
+                    playNot(type: .warning)
+                    lastBumpFeedbackTime = Date()
+                }
                 bumping = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + dragDelay) {
-                    // isDragDisabled = false
                     bumping = false
                 }
             }
-            let fudge: CGFloat = 33.666
             let widthTrans = value?.translation.width ?? 0
             let heightTrans = value?.translation.height ?? 0
 
@@ -76,11 +77,11 @@ extension SageMultiView {
 
                 let trailing = globX + frame.size.width
 
-                let farBound = viewSize.size.width + initialViewFrame.origin.x  + geometrySafeAreaInsetLeading
+                let farBound = viewSize.size.width + initialViewFrame.origin.x
 
                 if trailing > farBound {
                 //    logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
-                    newX = farBound - frame.size.width - fudge
+                    newX = farBound - frame.size.width
                     doPostConstraint()
                 }
             }
@@ -90,11 +91,11 @@ extension SageMultiView {
 
                 let trailing = globX + frame.size.width - (resizeOffset.width / 2)
 
-                let farBound = viewSize.width + initialViewFrame.origin.x + geometrySafeAreaInsetLeading + (resizeOffset.width / 2)
+                let farBound = viewSize.width + initialViewFrame.origin.x  + (resizeOffset.width / 2)
 
                 if trailing > farBound {
                  //   logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
-                    newX = farBound - frame.size.width  - fudge
+                    newX = farBound - frame.size.width  // - fudge
                     doPostConstraint()
                 }
             }
@@ -102,26 +103,24 @@ extension SageMultiView {
             else if resizeOffset.width < 0 {
                 let globX = newX + initialViewFrame.origin.x
                 let trailing = globX  + frame.size.width - (abs(resizeOffset.width) / 2)
-                let farBound = viewSize.width + initialViewFrame.origin.x + geometrySafeAreaInsetLeading - (abs(resizeOffset.width))
+                let farBound = viewSize.width + initialViewFrame.origin.x  - (abs(resizeOffset.width))
 
                 if trailing > farBound {
              //       logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
-                    newX = farBound - frame.size.width + abs(resizeOffset.width) / 2 - fudge
+                    newX = farBound - frame.size.width + abs(resizeOffset.width) / 2
                     doPostConstraint()
                 }
             }
 // END: Three TRAILING edge cases....
 
 // START: Three TOP edge cases....
-            let topset = geometrySafeAreaTop + fudge
+            let topset = geometrySafeAreaTop + (UIDevice.current.userInterfaceIdiom == .pad ? 16.0 : 0.0)
             if resizeOffset.height == 0 {
                 let globY = newY + initialViewFrame.origin.y
-
                 if globY > topset {
                 }
                 else {
 //                    logD("constrain y becuz TOP = \(globY) < \(topset)!")
-
                     newY = topset
                     doPostConstraint()
                 }
@@ -129,23 +128,23 @@ extension SageMultiView {
             // if resizeOffset.height > 0 that means window has been increased in size vert.
             else if resizeOffset.height > 0 {
                 // Handle TOP
-                let globY = newY + initialViewFrame.origin.y - resizeOffset.height / 2
+                let globY = newY + initialViewFrame.origin.y - (resizeOffset.height / 2)
                 if globY > topset {
                 }
                 else {
                     //logD("constrain y becuz TOP = \(globY) < \(topset)!")
-                    newY = topset - initialViewFrame.origin.y + (resizeOffset.height ) / 2
+                    newY = topset + (abs(resizeOffset.height) / 2)
                     doPostConstraint()
                 }
             }
             // if resizeOffset.height < 0 that means window has been decreased in size vert.
             else if resizeOffset.height < 0 {
-                let globY = newY + initialViewFrame.origin.y + abs(resizeOffset.height) / 2
+                let globY = newY + initialViewFrame.origin.y + (abs(resizeOffset.height) / 2)
                 if globY > topset {
                 }
                 else {
                     //logD("constrain y becuz TOP = \(globY) < \(topset)!")
-                    newY = topset - initialViewFrame.origin.y - abs(resizeOffset.height ) / 2
+                    newY = topset - (abs(resizeOffset.height) / 2)
                     doPostConstraint()
                 }
             }
@@ -156,11 +155,11 @@ extension SageMultiView {
                 let globY = newY + initialViewFrame.origin.y //- resizeOffset.height
 
                 // Handle BOTTOM
-                let bottom = globY + frame.size.height - fudge
-                let farBound = viewSize.height + initialViewFrame.origin.y - fudge //+ (abs(resizeOffset.height) / 2)
+                let bottom = globY + frame.size.height
+                let farBound = viewSize.height + initialViewFrame.origin.y
                 if bottom > farBound {
                     //logD("constrain y becuz BOTTOM = \(globY) < \(topset)!")
-                    newY = farBound - frame.size.height - fudge
+                    newY = farBound - frame.size.height
                     doPostConstraint()
                 }
             }
@@ -174,7 +173,7 @@ extension SageMultiView {
 
                 if trailing > farBound {
                     //logD("constrain x becuz BOTOM = \(trailing) > \(farBound)!")
-                    newY = farBound - frame.size.height - fudge
+                    newY = farBound - frame.size.height
                     doPostConstraint()
                 }
             }
@@ -186,13 +185,13 @@ extension SageMultiView {
 
                 if trailing > farBound {
                     //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
-                    newY = farBound - frame.size.height - fudge
+                    newY = farBound - frame.size.height
                     doPostConstraint()
                 }
             }
 // END: Three BOTTOM edge cases....
 
-            position = CGSize(width:newX ,height: newY)
+            position = CGSize(width: max(0, newX) ,height: max(0, newY))
         }
     }
 

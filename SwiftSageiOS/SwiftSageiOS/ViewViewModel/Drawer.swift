@@ -37,7 +37,7 @@ struct DrawerContent: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: 33, height: 100 * settingsViewModel.buttonScale)
+            .frame(width: 120 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }
@@ -46,7 +46,7 @@ struct DrawerContent: View {
             HStack(alignment: .top, spacing: 1) {
                 VStack(alignment: .leading, spacing: 1) {
                     ScrollView {
-                        HStack(spacing: 0) {
+                        HStack(spacing: 7) {
                             resizableButtonImage(systemName:
                                                     "text.and.command.macwindow",
                                                  size: geometry.size)
@@ -55,14 +55,10 @@ struct DrawerContent: View {
                                 withAnimation {
                                     isDrawerOpen = false
 
-                                    // TODO : SHOw / h9de terminal / server chat.
-
-
                                     settingsViewModel.latestWindowManager = windowManager
 
                                     settingsViewModel.createAndOpenServerChat()
                                 }
-
                             }
                             resizableButtonImage(systemName:
                                                     "gearshape",
@@ -77,7 +73,6 @@ struct DrawerContent: View {
                                         }
                                     }
                                 }
-
                             }
 
                             resizableButtonImage(systemName:
@@ -98,7 +93,6 @@ struct DrawerContent: View {
                                         }
                                     }
                                 }
-
                             }
                             Spacer()
                         }
@@ -109,7 +103,6 @@ struct DrawerContent: View {
                                                  size: geometry.size)
                             .padding(2)
                             .onTapGesture {
-
                                 withAnimation {
                                     isDrawerOpen = false
                                 }
@@ -121,6 +114,8 @@ struct DrawerContent: View {
                                 .lineLimit(1)
                                 .font(.body)
                                 .fontWeight(.heavy)
+                                .minimumScaleFactor(0.5)
+
                                 .foregroundColor(settingsViewModel.buttonColor)
                                 .padding(3)
                                 .onTapGesture {
@@ -146,6 +141,8 @@ struct DrawerContent: View {
                             HStack(spacing: 0) {
                                 Text("💬 \(rowString(convo: convo))")
                                     .lineLimit(4)
+                                    .minimumScaleFactor(0.5)
+
                                     .padding(.leading, 2)
                                     .font(.body)
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -154,11 +151,8 @@ struct DrawerContent: View {
                                             isDrawerOpen = false
 
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
                                                 settingsViewModel.latestWindowManager = windowManager
-
                                                 playSelect()
-
                                                 settingsViewModel.openConversation(convo.id)
                                             }
                                         }
@@ -171,14 +165,12 @@ struct DrawerContent: View {
                                                             "x.circle.fill",
                                                          size: geometry.size)
                                     .lineLimit(1)
-
+                                    .padding(.trailing, 7)
                                     .onTapGesture {
                                         isDeleting = false
                                         isDeletingIndex = -1
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
-
-
 
                                     resizableButtonImage(systemName:
                                                             "checkmark.circle.fill",
@@ -186,15 +178,15 @@ struct DrawerContent: View {
                                     .lineLimit(1)
                                     .onTapGesture {
                                         withAnimation {
-                                            isDrawerOpen = false
-
                                             isDeleting = false
 
                                             isDeletingIndex = -1
                                             settingsViewModel.latestWindowManager = windowManager
 
-                                            settingsViewModel.deleteConversation(convo.id)
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 
+                                                settingsViewModel.deleteConversation(convo.id)
+                                            }
                                         }
                                     }
                                     .animation(.easeIn(duration: 0.25), value: isDeleting)
@@ -204,6 +196,7 @@ struct DrawerContent: View {
                                                             "rectangle.and.pencil.and.ellipsis",
                                                          size: geometry.size)
                                     .lineLimit(1)
+                                    .padding(.trailing, 7)
                                     .onTapGesture {
 
                                         presentRenamer = true
@@ -228,10 +221,6 @@ struct DrawerContent: View {
                     }
                     .minimumScaleFactor(0.9666)
                     .foregroundColor(settingsViewModel.appTextColor)
-
-#if !os(macOS)
-                    .frame(minWidth: isPortrait ? drawerWidth : drawerWidthLandscape, maxWidth: isPortrait ? drawerWidth : drawerWidthLandscape, minHeight: 0, maxHeight: .infinity)
-#endif
                     .alert("Rename convo", isPresented: $presentRenamer, actions: {
                         TextField("New name", text: $newName)
 
@@ -269,8 +258,6 @@ struct DrawerContent: View {
                 }
             }
             .zIndex(9)
-            //        .padding(.leading,3)
-            //        .padding(.top,3)
         }
     }
 }

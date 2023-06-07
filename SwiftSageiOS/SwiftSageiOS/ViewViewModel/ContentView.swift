@@ -53,7 +53,8 @@ struct ContentView: View {
                         .transition(.move(edge: .leading))
                         .background(settingsViewModel.buttonColor)
                         .padding(.leading, 0)
-                        .frame(minWidth: geometry.size.width - (geometry.size.width / 3), maxWidth: geometry.size.width - (geometry.size.width / 3), minHeight: 0, maxHeight: .infinity)
+                        .zIndex(999)
+                        .frame(minWidth: viewSize.width - (viewSize.width / 3), maxWidth: viewSize.width - (viewSize.width / 3), minHeight: 0, maxHeight: .infinity)
                 }
 #endif
                 ZStack {
@@ -90,7 +91,6 @@ struct ContentView: View {
                     // START WINDOW MANAGER ZONE *************************************************
                     ForEach(windowManager.windows) { window in
                         WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: SageMultiViewModel(settingsViewModel: settingsViewModel, windowInfo: window), parentViewSize: $viewSize)
-                            .padding(SettingsViewModel.shared.cornerHandleSize)
                             .edgesIgnoringSafeArea(.all)
                             .background(.clear)
                             .opacity(isDrawerOpen ? 0.0 : 1.0)
@@ -158,28 +158,7 @@ struct ContentView: View {
 //                            .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
 //                        }
                     }
-                    .padding(.leading,8)
-                    .padding(.bottom,8)
-#if !os(macOS)
-                    .onAppear {
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: geometry.size) { size in
-                        recalculateWindowSize(size: geometry.size)
-                        //                        logD("contentView viewSize update = \(viewSize)")
-                    }
-                    .onChange(of: horizontalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: verticalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
-#endif
+
  //                   .offset(y: showSettings ||  showAddView ? 0 :  -keyboardResponder.currentHeight)
 
                     .background(
@@ -220,12 +199,14 @@ struct ContentView: View {
                             Image(uiImage: image)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .ignoresSafeArea()
+                                .edgesIgnoringSafeArea(.all)
                                 .animation(.easeIn(duration: 0.28), value: image)
                         }
                         else {
                             settingsViewModel.backgroundColor
-                                .ignoresSafeArea()
+                                .animation(.easeIn(duration: 0.28), value: true)
+
+                                .edgesIgnoringSafeArea(.all)
                         }
                         // TODO: Make this way better.
                         if settingsViewModel.initalAnim {
@@ -235,11 +216,10 @@ struct ContentView: View {
                         }
 #else
                         settingsViewModel.backgroundColor
-                            .ignoresSafeArea()
+                            .edgesIgnoringSafeArea(.all)
 #endif
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
+                    .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -248,6 +228,26 @@ struct ContentView: View {
                         if isDrawerOpen {  withAnimation { isDrawerOpen = false } }
                     }
                 }
+#if !os(macOS)
+                .onAppear {
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onChange(of: geometry.size) { size in
+                    recalculateWindowSize(size: geometry.size)
+                    //                        logD("contentView viewSize update = \(viewSize)")
+                }
+                .onChange(of: horizontalSizeClass) { newSizeClass in
+                    print("Size class changed to \(String(describing: newSizeClass))")
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onChange(of: verticalSizeClass) { newSizeClass in
+                    print("Size class changed to \(String(describing: newSizeClass))")
+                    recalculateWindowSize(size: geometry.size)
+                }
+#endif
             }
         }
     }

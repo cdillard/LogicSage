@@ -50,7 +50,8 @@ struct SageMultiView: View {
     @Binding var bumping: Bool
     @Binding var isResizeGestureActive: Bool
 
-    @State private var lastDragTime = Date()
+    @State  var lastDragTime = Date()
+    @State  var lastBumpFeedbackTime = Date()
 
     let dragDelay = 0.333666
     let dragsPerSecond = 45.0
@@ -69,8 +70,8 @@ struct SageMultiView: View {
                                     let now = Date()
                                     if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) { // throttle duration
                                         self.lastDragTime = now
-                                        dragsOnChange(value: value, geometrySafeAreaInsetLeading: geometry.safeAreaInsets.leading, geometrySafeAreaTop: geometry.safeAreaInsets.top)
-
+                                        dragsOnChange(value: value, geometrySafeAreaInsetLeading: geometry.safeAreaInsets.leading,
+                                                      geometrySafeAreaTop: geometry.safeAreaInsets.top)
                                     }
                                 }
                                 .onEnded { value in
@@ -141,7 +142,6 @@ struct SageMultiView: View {
                         .environmentObject(viewModel)
 
                     case .chat:
-
                         ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
                             .onTapGesture {
                                 self.windowManager.bringWindowToFront(window: self.window)
@@ -166,7 +166,6 @@ struct SageMultiView: View {
                         NavigationView {
                             if let root = settingsViewModel.root {
                                 RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window, windowManager: windowManager)
-                                
                             }
                             else {
                                 Text("No root")
@@ -225,42 +224,38 @@ struct SageMultiView: View {
     }
     func recalculateWindowSize(size: CGSize) {
         if !isResizeGestureActive {
-            //                    resizeOffset = .zero
             if frame.size.width > size.width {
-                frame.size.width = size.width - size.width * 0.1 - 30
+                frame.size.width = size.width
             }
             if frame.size.height > size.height {
-                frame.size.height = size.height
+                frame.size.height = size.height - size.height * 0.025
             }
             var newPosX = position.width
             var newPosY = position.height
-            if resizeOffset.width == 0 {
-
-            }
-            else if resizeOffset.width < 0 {
-                newPosX = size.width * 0.025 + newPosX - abs(resizeOffset.width) / 2
-            }
-            else  {
-                // the view got bigger , move it to top left
-                newPosX = size.width * 0.025 + newPosX //+ resizeOffset.width / 2
-            }
+//            if resizeOffset.width == 0 {
+//
+//            }
+//            else if resizeOffset.width < 0 {
+//                newPosX =  newPosX - abs(resizeOffset.width) / 2
+//            }
+//            else  {
+//                // the view got bigger , move it to top left
+//                newPosX = newPosX //+ resizeOffset.width / 2
+//            }
             if resizeOffset.height == 0 {
 
             }
             // The view got smaller, move
             else if resizeOffset.height < 0 {
-                newPosY = newPosY - size.height * 0.075  //- abs(resizeOffset.height) / 2
+                newPosY = newPosY + 20 //- abs(resizeOffset.height) / 2
             }
             else {
-                newPosY = newPosY - size.height * 0.075 //+ resizeOffset.height / 2
+                newPosY = newPosY + 20 //+ resizeOffset.height / 2
             }
 
-            position = CGSize(width: max(size.width * 0.025, newPosX), height: max(size.width * 0.075, newPosY))
+            position = CGSize(width: max(0, newPosX), height: max(20, newPosY))
 
-
-  //          if !isMoveGestureActivated {
-                dragsOnChange(value: nil, geometrySafeAreaInsetLeading: 20, geometrySafeAreaTop: 40)
-//            }
+            dragsOnChange(value: nil, geometrySafeAreaInsetLeading: 0, geometrySafeAreaTop: UIDevice.current.userInterfaceIdiom == .phone ? 16.666 : 0.0)
         }
     }
     func getURL() -> URL {

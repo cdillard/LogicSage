@@ -76,11 +76,13 @@ struct WindowView: View {
 
     private func recalculateWindowSize(size: CGSize) {
         if !isResizeGestureActive {
-
+            
             viewSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
             // OG position
-           //  position = CGSize(width: size.width * 0.05, height: size.height * 0.1)
+            if position == .zero {
+                position = CGSize(width: size.width * 0.05, height: size.height * 0.1)
+            }
         }
     }
     private func windowContent() -> some View {
