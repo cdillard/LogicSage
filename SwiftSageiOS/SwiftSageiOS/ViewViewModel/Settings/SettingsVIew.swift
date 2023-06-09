@@ -91,12 +91,12 @@ struct SettingsView: View {
                         // MODE PICKER
                         Group {
                             HStack {
-                                VStack {
-                                    DevicePicker(settingsViewModel: settingsViewModel)
-                                    
-                                    Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                }
+                                //                                VStack {
+                                //                                    DevicePicker(settingsViewModel: settingsViewModel)
+                                //
+                                //                                    Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
+                                //                                        .foregroundColor(settingsViewModel.appTextColor)
+                                //                                }
 
                                 // PLugItIn BUTTON
                                 Button("🔌") {
@@ -137,7 +137,82 @@ struct SettingsView: View {
                                 }
                             }
                             if showAPISettings {
-                                if settingsViewModel.currentMode == .computer {
+
+
+
+                            }
+                        }
+                        if showAPISettings {
+                            
+                            Group {
+                                VStack {
+                                    Text("A.I. 🔑: ")
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.openAIKey
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+
+                                    .focused($field1IsFocused)
+
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .scrollDismissesKeyboard(.interactively)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                    Spacer()
+
+                                    Text("A.I. model: ")
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.openAIModel
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .focused($field2IsFocused)
+
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .scrollDismissesKeyboard(.interactively)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                    Spacer()
+
+                                        .padding(.leading, 8)
+                                        .padding(.trailing, 8)
+
+                                    Text("GHA PAT: ").font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                    
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.ghaPat
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .focused($field3IsFocused)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+
                                     HStack {
                                         Text("swiftsage username: ").font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
@@ -150,9 +225,9 @@ struct SettingsView: View {
 
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .autocorrectionDisabled(true)
-#if !os(macOS)
+    #if !os(macOS)
                                             .autocapitalization(.none)
-#endif
+    #endif
                                         Spacer()
 
                                     }
@@ -172,9 +247,9 @@ struct SettingsView: View {
                                             .font(.footnote)
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .autocorrectionDisabled(true)
-#if !os(macOS)
+    #if !os(macOS)
                                             .autocapitalization(.none)
-#endif
+    #endif
                                         Spacer()
 
                                     }
@@ -182,173 +257,31 @@ struct SettingsView: View {
                                     .padding(.trailing, 8)
 
                                     .frame(height: 22)
-
-                                }
-                                else if settingsViewModel.currentMode == .mobile {
-                                    HStack {
-                                        VStack {
-                                            Group {
-                                                HStack {
-                                                    Text("A.I. 🔑: ").font(.caption)
-                                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                                    TextField(
-                                                        "",
-                                                        text: $settingsViewModel.openAIKey
-                                                    )
-                                                    .border(.secondary)
-                                                    .submitLabel(.done)
-
-                                                    .focused($field1IsFocused)
-
-                                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                    .scrollDismissesKeyboard(.interactively)
-                                                    .font(.caption)
-                                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                    .autocapitalization(.none)
-#endif
-                                                    Spacer()
-
-                                                }
-                                                .frame(height: geometry.size.height / 13)
-
-                                                HStack {
-                                                    Text("A.I. model: ").font(.caption)
-                                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                                    TextField(
-                                                        "",
-                                                        text: $settingsViewModel.openAIModel
-                                                    )
-                                                    .border(.secondary)
-                                                    .submitLabel(.done)
-                                                    .focused($field2IsFocused)
-
-                                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                                    .scrollDismissesKeyboard(.interactively)
-                                                    .font(.caption)
-                                                    .foregroundColor(settingsViewModel.appTextColor)
-                                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                    .autocapitalization(.none)
-#endif
-                                                    Spacer()
-
-                                                }
-                                                .padding(.leading, 8)
-                                                .padding(.trailing, 8)
-                                                .frame(height: geometry.size.height / 13)
-                                            }
-
-                                        }
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    }
-                                }
-                            }
-                        }
-                        if showAPISettings {
-                            
-                            Group {
-                                HStack {
-                                    Text("GHA PAT: ").font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                    
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.ghaPat
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
-                                    .focused($field3IsFocused)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .font(.caption)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                    .autocapitalization(.none)
-#endif
                                 }
                                 .padding(.leading, 8)
                                 .padding(.trailing, 8)
-                                .frame(height: geometry.size.height / 17)
                             }
                         }
 
                         Group {
-                            Button  {
-                                withAnimation {
-                                    logD("AUTOCORRECTION: \(settingsViewModel.autoCorrect ? "off" : "on.")")
-                                    
-                                    settingsViewModel.autoCorrect.toggle()
-                                }
-                                
-                            } label: {
-                                ZStack {
-                                    VStack {
-                                        
-                                        
-                                        Text("📙")
-                                            .font(.caption)
-                                        
-                                        Text("Autocorrect?")
-                                            .font(.caption)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    if settingsViewModel.autoCorrect {
-                                        Text("❌")
-                                            .font(.caption)
-                                        
-                                            .opacity(0.74)
-                                    }
-                                }
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .background(settingsViewModel.buttonColor)
-                                .fontWeight(.bold)
-                                .cornerRadius(8)
+                            Toggle(isOn: $settingsViewModel.autoCorrect) {
+                                Text("Autocorrect📙:")
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
                             }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .frame( maxWidth: geometry.size.width / 3)
 #if !os(macOS)
-
                             if UIDevice.current.userInterfaceIdiom == .phone {
                                 
                                 Group {
                                     VStack {
 
-                                        Button  {
-                                            withAnimation {
-                                                logD("Haptic feedback: \(settingsViewModel.hapticsEnabled ? "off" : "on.")")
-
-                                                settingsViewModel.hapticsEnabled.toggle()
-                                            }
-
-                                        } label: {
-                                            ZStack {
-                                                VStack {
-                                                    Text("📳")
-                                                        .font(.caption)
-
-                                                    Text("Haptic Feedback?")
-                                                        .font(.caption)
-                                                        .foregroundColor(settingsViewModel.appTextColor)
-                                                }
-                                                if settingsViewModel.hapticsEnabled {
-                                                    Text("❌")
-                                                        .font(.caption)
-
-                                                        .opacity(0.74)
-                                                }
-                                            }
-                                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                            .lineLimit(1)
-                                            .background(settingsViewModel.buttonColor)
-                                            .fontWeight(.bold)
-                                            .cornerRadius(8)
+                                        Toggle(isOn: $settingsViewModel.hapticsEnabled) {
+                                            Text("Haptic Feedback📳:")
+                                                .font(.caption)
+                                                .foregroundColor(settingsViewModel.appTextColor)
                                         }
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        .frame( maxWidth: geometry.size.width / 3)
 
                                         Text("feedback won't play when low battery (< 0.30)")
                                             .font(.caption)
@@ -359,31 +292,29 @@ struct SettingsView: View {
 #endif
                         }
 
-                        if settingsViewModel.currentMode == .computer {
-                            Group {
+                        Group {
 
-                                HStack {
-                                    Button(action: {
-                                        withAnimation {
-                                            updateMode()
-                                        }
-                                    }) {
-                                        Text(".\(modes[currentModeIndex])")
-                                            .background(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .cornerRadius(8)
+                            HStack {
+                                Button(action: {
+                                    withAnimation {
+                                        updateMode()
                                     }
+                                }) {
+                                    Text(".\(modes[currentModeIndex])")
+                                        .background(settingsViewModel.buttonColor)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .cornerRadius(8)
                                 }
-                                Text("load mode")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .font(.caption)
-                                    .fontWeight(.semibold)
                             }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            Text("load mode")
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .font(.caption)
+                                .fontWeight(.semibold)
                         }
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                         Group {
-                            Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") size sliders").font(.body)
+                            Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") sizes").font(.body)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
 
@@ -397,39 +328,13 @@ struct SettingsView: View {
                         }
                         VStack(alignment: .leading, spacing: 0) {
                             if settingsViewModel.showSizeSliders {
-
                                 Group {
-                                    Text("Terminal Text Size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                    HStack {
-                                        Text("Small")                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Slider(value: $settingsViewModel.textSize, in: 2...64, step: 0.1)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    Text("\(settingsViewModel.textSize)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                        .lineLimit(nil)
-                                }
-                                Group {
-                                    Text("SrcEditor Text Size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
 
                                     HStack {
                                         Text("Small")
                                             .foregroundColor(settingsViewModel.appTextColor)
 
-                                        Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 2...64, step: 0.1)
+                                        Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 2...64, step: 0.5)
                                             .accentColor(settingsViewModel.buttonColor)
                                             .foregroundColor(settingsViewModel.appTextColor)
 
@@ -437,15 +342,18 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                     }
-                                    Text("\(settingsViewModel.fontSizeSrcEditor)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .lineLimit(nil)
+                                    HStack {
+                                        Text("Text")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                        Text("\(settingsViewModel.fontSizeSrcEditor)")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .lineLimit(nil)
+                                    }
                                 }
+                                .font(.caption)
+
                                 Group {
-                                    Text("Toolbar size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
 
                                     HStack {
                                         Text("Small")
@@ -457,16 +365,19 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                     }
-                                    Text("\(settingsViewModel.buttonScale)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
+                                    HStack {
+                                        Text("Buttons")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(settingsViewModel.appTextColor)
 
-                                        .lineLimit(nil)
+                                        Text("\(settingsViewModel.buttonScale)")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .lineLimit(nil)
+                                    }
                                 }
+                                .font(.caption)
+
                                 Group {
-                                    Text("CMD bar size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
 
                                     HStack {
                                         Text("Small")
@@ -480,17 +391,21 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                     }
-                                    Text("\(settingsViewModel.commandButtonFontSize)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
+                                    HStack {
+                                        Text("Stop button")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(settingsViewModel.appTextColor)
 
-                                        .lineLimit(nil)
+                                        Text("\(settingsViewModel.commandButtonFontSize)")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+
+                                            .lineLimit(nil)
+                                    }
                                 }
+                                .font(.caption)
+
 
                                 Group {
-                                    Text("corner handle size")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(settingsViewModel.appTextColor)
 
                                     HStack {
                                         Text("Small")
@@ -504,18 +419,26 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
 
                                     }
-                                    Text("\(settingsViewModel.cornerHandleSize)")
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .lineLimit(nil)
+                                    HStack {
+                                        Text("Window Header")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+
+                                        Text("\(settingsViewModel.cornerHandleSize)")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .lineLimit(nil)
+                                    }
                                 }
+                                .font(.caption)
+
                             }
+
 
                         }
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
                     Group {
-                        Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color settings").font(.body)
+                        Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color").font(.body)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
                     }
@@ -930,7 +853,6 @@ struct SettingsView: View {
                                 Image(systemName: "xmark.circle.fill")
                                     .fontWeight(.bold)
                                     .font(.body)
-
                                     .padding(.horizontal, 8)
                                     .padding(.vertical, 8)
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -978,7 +900,8 @@ struct SettingsView: View {
             }, message: {
                 Text("Please enter new name for gpt")
             })
-            .background(settingsViewModel.backgroundColor             .edgesIgnoringSafeArea(.all))
+            .background(settingsViewModel.backgroundColor
+                .edgesIgnoringSafeArea(.all))
 
             .onAppear {
 #if !os(macOS)
@@ -1012,56 +935,3 @@ struct SettingsView: View {
         }
     }
 }
-
-struct DevicePicker: View {
-    @State  var isExpanded = true
-    @ObservedObject var settingsViewModel: SettingsViewModel
-
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: isExpanded ? 10 : 30)
-                .fill(settingsViewModel.buttonColor)
-                .frame(width: isExpanded ? 250 : 60, height: 60)
-
-            HStack(spacing: 30) {
-                Image(systemName: "iphone")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .opacity(settingsViewModel.currentMode == .mobile ? 1 : 0.5)
-                    .onTapGesture {
-                        playSelect()
-
-                        withAnimation(.spring()) {
-                            settingsViewModel.currentMode = .mobile
-                            logD(settingsViewModel.logoAscii5())
-
-                            settingsViewModel.doDiscover()
-
-                        }
-                    }
-                Image(systemName: "desktopcomputer")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                    .opacity(settingsViewModel.currentMode == .computer ? 1 : 0.5)
-                    .onTapGesture {
-                        playSelect()
-
-                        withAnimation(.spring()) {
-                            settingsViewModel.currentMode = .computer
-                            logD(settingsViewModel.logoAscii5())
-
-                            settingsViewModel.doDiscover()
-                        }
-                    }
-            }
-            .padding(.horizontal, isExpanded ? 20 : 0)
-            .opacity(isExpanded ? 1 : 0)
-        }
-    }
-}
-

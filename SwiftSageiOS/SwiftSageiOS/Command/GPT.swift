@@ -33,37 +33,29 @@ class GPT {
     func sendPromptToGPT(conversationId: Conversation.ID,
                          prompt: String, currentRetry: Int, isFix: Bool = false,
                          manualPrompt: Bool = false, voiceOverride: String? = nil,
-                         disableSpinner: Bool = false, completion: @escaping (String, Bool, Bool) -> Void) {
+                         completion: @escaping (String, Bool, Bool) -> Void) {
 
         if currentRetry == 0 {
-            logD("👨: \(prompt)")
+            print("👨: \(prompt)")
         }
         else if isFix {
-            logD("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
+            print("💚: Try fix prompt: \(currentRetry) / \(retryLimit) \\n \(prompt)")
 
         }
         else if manualPrompt {
-            logD("👨: \(manualPrompt)")
+            print("👨: \(manualPrompt)")
 
         }
         // Look into a better way to handle prompts..... 3
         else {
-            logD("prompt=\(prompt)")
-            logD("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
+            print("prompt=\(prompt)")
+            print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
         }
 
-        if !disableSpinner {
-            startRandomSpinner()
-        }
-
-        logD("Prompting \(prompt.count)...\n🐑🐑🐑\n")
+        print("Prompting \(prompt.count)...\n🐑🐑🐑\n")
 
         Task {
-            defer {
-                if !disableSpinner {
-                    stopRandomSpinner()
-                }
-            }
+
             guard let conversationIndex = await SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
                 logD("Unable to find conversations id == \(conversationId) ... failing")
 
@@ -98,11 +90,6 @@ class GPT {
                 )
                 var completeMessage = ""
                 for try await partialChatResult in chatsStream {
-
-                    if !disableSpinner {
-                        stopRandomSpinner()
-                    }
-
                     for choice in partialChatResult.choices {
                         let existingMessages = await SettingsViewModel.shared.conversations[conversationIndex].messages
                         let message = Message(

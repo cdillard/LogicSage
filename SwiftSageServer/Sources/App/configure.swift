@@ -14,13 +14,8 @@ let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "�
 
 var clients: [String: [WebSocket]] = [:]
 let logoAscii5 = """
-┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
-┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
-┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
-╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
-Vapor server online
+LogicSage for Mac Vapor server starting...
 """
-
 
 let connectedClientsQueue = DispatchQueue(label: "connectedClients.queue")
 let clientsQueue = DispatchQueue(label: "clients.queue")
@@ -201,7 +196,6 @@ public func configure(_ app: Application) throws {
                                     if debugging {
                                         print("Sent auth cmd from server to Swift binary.")
                                     }
-
                                 }
                                 catch {
                                     print("error writing auth cmd")

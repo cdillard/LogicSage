@@ -44,7 +44,8 @@ struct RepositoryTreeView: View {
             }
         }
         .listRowBackground(settingsViewModel.backgroundColor)
-        .navigationBarTitle(directory.name)
+        .navigationBarTitle(directory.name, displayMode: .inline)
+
     }
     func readFileContents(url: URL) -> String? {
         do {

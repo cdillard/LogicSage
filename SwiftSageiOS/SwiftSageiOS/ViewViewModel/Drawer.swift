@@ -8,11 +8,6 @@
 import Foundation
 import SwiftUI
 
-#if !os(macOS)
-var drawerWidth: CGFloat = UIScreen.main.bounds.width / 2
-var drawerWidthLandscape: CGFloat = UIScreen.main.bounds.width / (UIDevice.current.userInterfaceIdiom == .pad ? 5.25 : 3.0)
-#endif
-
 struct DrawerContent: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @ObservedObject var windowManager: WindowManager
@@ -37,7 +32,7 @@ struct DrawerContent: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: 120 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .frame(width: max(30, size.width / 12), height: 32.666 )
             .tint(settingsViewModel.appTextColor)
             .background(settingsViewModel.buttonColor)
     }
@@ -46,11 +41,25 @@ struct DrawerContent: View {
             HStack(alignment: .top, spacing: 1) {
                 VStack(alignment: .leading, spacing: 1) {
                     ScrollView {
-                        HStack(spacing: 7) {
+                        HStack(spacing: 0) {
+                            resizableButtonImage(systemName:
+                                                    "xmark.circle.fill",
+                                                 size: geometry.size)
+                            .padding(.leading, 7)
+                            .onTapGesture {
+                                withAnimation {
+                                    isDrawerOpen = false
+                                }
+                            }
+                            Spacer()
+                        }
+
+                        HStack(spacing: 0) {
                             resizableButtonImage(systemName:
                                                     "text.and.command.macwindow",
                                                  size: geometry.size)
-                            .padding(2)
+                            .padding(.leading, 8)
+                            .padding(.trailing, 8)
                             .onTapGesture {
                                 withAnimation {
                                     isDrawerOpen = false
@@ -63,7 +72,8 @@ struct DrawerContent: View {
                             resizableButtonImage(systemName:
                                                     "gearshape",
                                                  size: geometry.size)
-                            .padding(2)
+                            .padding(.leading, 8)
+                            .padding(.trailing, 8)
                             .onTapGesture {
                                 withAnimation {
                                     isDrawerOpen = false
@@ -78,7 +88,8 @@ struct DrawerContent: View {
                             resizableButtonImage(systemName:
                                                     "plus.rectangle",
                                                  size: geometry.size)
-                            .padding(2)
+                            .padding(.leading, 8)
+                            .padding(.trailing, 8)
                             .onTapGesture {
                                 withAnimation {
                                     isDrawerOpen = false
@@ -88,36 +99,18 @@ struct DrawerContent: View {
 
                                     DispatchQueue.main.async {
                                         withAnimation {
-                                            
+
                                             showAddView = true
                                         }
                                     }
                                 }
                             }
                             Spacer()
-                        }
 
-                        HStack(spacing: 0) {
                             resizableButtonImage(systemName:
-                                                    "xmark.circle.fill",
+                                                    "text.bubble.fill",
                                                  size: geometry.size)
-                            .padding(2)
-                            .onTapGesture {
-                                withAnimation {
-                                    isDrawerOpen = false
-                                }
-
-                            }
-                            Spacer()
-                            Text("➕ New 💬")
-                                .padding(2)
-                                .lineLimit(1)
-                                .font(.body)
-                                .fontWeight(.heavy)
-                                .minimumScaleFactor(0.5)
-
-                                .foregroundColor(settingsViewModel.buttonColor)
-                                .padding(3)
+                                .padding(.trailing, 4)
                                 .onTapGesture {
 
                                     withAnimation {
@@ -132,7 +125,6 @@ struct DrawerContent: View {
                                         }
                                     }
                                 }
-                                .background(settingsViewModel.appTextColor)
                         }
                         ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
                             Divider()
@@ -141,8 +133,7 @@ struct DrawerContent: View {
                             HStack(spacing: 0) {
                                 Text("💬 \(rowString(convo: convo))")
                                     .lineLimit(4)
-                                    .minimumScaleFactor(0.5)
-
+                                    .minimumScaleFactor(0.69)
                                     .padding(.leading, 2)
                                     .font(.body)
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -253,7 +244,6 @@ struct DrawerContent: View {
                         else {
                             Text("Please enter new name")
                         }
-
                     })
                 }
             }

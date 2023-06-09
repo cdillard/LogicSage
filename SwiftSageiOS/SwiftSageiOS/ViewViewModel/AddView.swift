@@ -83,21 +83,11 @@ struct AddView: View {
                         HStack {
                             VStack {
                                 // start top row
-                                if settingsViewModel.currentMode == .computer {
                                     HStack {
                                         // PROJECT/DEBUGGER WINDOW
                                         Button(action: {
                                             withAnimation {
                                                 logD("Upload Workspace")
-
-                                                // TODO: Hide or show terminal chat?
-
-                                                //        showAddView.toggle()
-
-
-                                                logD("UPLOAD Workspace")
-
-                                                //     showAddView.toggle()
 
                                                 DispatchQueue.main.async {
 
@@ -161,7 +151,7 @@ struct AddView: View {
                                         }
 
                                     }
-                                }
+//                                }
                                 //.padding(.leading,8)
                                 // end top row
 

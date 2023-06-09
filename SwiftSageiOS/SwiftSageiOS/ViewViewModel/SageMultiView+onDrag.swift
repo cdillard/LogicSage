@@ -13,7 +13,8 @@ import WebKit
 import Combine
 
 extension SageMultiView {
-    func dragsOnChange(value: DragGesture.Value?, geometrySafeAreaInsetLeading: CGFloat, geometrySafeAreaTop: CGFloat) {
+    // WARNING: This code isn't great.
+    func dragsOnChange(value: DragGesture.Value?) {
         if !isDragDisabled {
             if !isMoveGestureActivated {
                 self.windowManager.bringWindowToFront(window: self.window)
@@ -37,35 +38,34 @@ extension SageMultiView {
             var newY = position.height + heightTrans
 // START: Handle Three LEADING edge cases....
             if resizeOffset.width == 0 {
-                let globX = newX + initialViewFrame.origin.x
-                if  globX > geometrySafeAreaInsetLeading {
+                let globX = newX
+                if  globX > 0 {
                 }
                 else {
-                   // logD("constrain x becuz LEADING = \(globX) < \(geometrySafeAreaInsetLeading)!")
-                    newX = geometrySafeAreaInsetLeading - initialViewFrame.origin.x
+                    //logD("constrain x becuz LEADING = \(globX) < \(0)!")
+                    newX = 0
                     doPostConstraint()
                 }
             }
             // if resizeOffset.width > 0 that means window has been icnreased in size horiz
             else if resizeOffset.width > 0 {
-                let globX = newX + initialViewFrame.origin.x - resizeOffset.width / 2
-                if  globX > geometrySafeAreaInsetLeading {
+                let globX = newX - resizeOffset.width / 2
+                if  globX > 0 {
                 }
                 else {
-                 //   logD("constrain x becuz LEADING = \(globX) < \(geometrySafeAreaInsetLeading)!")
-                    newX = geometrySafeAreaInsetLeading - initialViewFrame.origin.x +  resizeOffset.width / 2
+                    //logD("constrain x becuz LEADING = \(globX) < \(0)!")
+                    newX = 0 +  resizeOffset.width / 2
                     doPostConstraint()
                 }
             }
             // if resizeOffset.width < 0 that means window has been decreased in size horiz
             else if resizeOffset.width < 0 {
-                let globX = newX + initialViewFrame.origin.x + abs(resizeOffset.width / 2)
-
-                if  globX > geometrySafeAreaInsetLeading {
+                let globX = newX + abs(resizeOffset.width / 2)
+                if  globX > 0 - abs(resizeOffset.width / 2) {
                 }
                 else {
-               //     logD("constrain x becuz LEADING = \(globX) < \(geometrySafeAreaInsetLeading)!")
-                    newX = geometrySafeAreaInsetLeading - initialViewFrame.origin.x - abs(resizeOffset.width)  / 2
+                   // logD("constrain x becuz LEADING = \(globX) < \(0)!")
+                    newX = 0 - abs(resizeOffset.width) / 2
                     doPostConstraint()
                 }
             }
@@ -76,37 +76,35 @@ extension SageMultiView {
                 let globX = newX
 
                 let trailing = globX + frame.size.width
-
-                let farBound = viewSize.size.width + initialViewFrame.origin.x
-
+                let farBound = viewSize.size.width
                 if trailing > farBound {
-                //    logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
+                    //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
                     newX = farBound - frame.size.width
                     doPostConstraint()
                 }
             }
             // if resizeOffset.width > 0 that means window has been increased in size horiz.
             else if resizeOffset.width > 0 {
-                let globX = newX + initialViewFrame.origin.x
+                let globX = newX
 
                 let trailing = globX + frame.size.width - (resizeOffset.width / 2)
 
-                let farBound = viewSize.width + initialViewFrame.origin.x  + (resizeOffset.width / 2)
+                let farBound = viewSize.width  + (resizeOffset.width / 2)
 
                 if trailing > farBound {
-                 //   logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
-                    newX = farBound - frame.size.width  // - fudge
+                    //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
+                    newX = farBound - frame.size.width
                     doPostConstraint()
                 }
             }
             // if resizeOffset.width < 0 that means window has been decreased in size horiz.
             else if resizeOffset.width < 0 {
-                let globX = newX + initialViewFrame.origin.x
+                let globX = newX
                 let trailing = globX  + frame.size.width - (abs(resizeOffset.width) / 2)
-                let farBound = viewSize.width + initialViewFrame.origin.x  - (abs(resizeOffset.width))
+                let farBound = viewSize.width  - (abs(resizeOffset.width))
 
                 if trailing > farBound {
-             //       logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
+                    //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
                     newX = farBound - frame.size.width + abs(resizeOffset.width) / 2
                     doPostConstraint()
                 }
@@ -114,36 +112,39 @@ extension SageMultiView {
 // END: Three TRAILING edge cases....
 
 // START: Three TOP edge cases....
-            let topset = geometrySafeAreaTop + (UIDevice.current.userInterfaceIdiom == .pad ? 16.0 : 0.0)
             if resizeOffset.height == 0 {
-                let globY = newY + initialViewFrame.origin.y
+                let topset: CGFloat = 0
+
+                let globY = newY
                 if globY > topset {
                 }
                 else {
-//                    logD("constrain y becuz TOP = \(globY) < \(topset)!")
+                    //logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset
                     doPostConstraint()
                 }
             }
             // if resizeOffset.height > 0 that means window has been increased in size vert.
             else if resizeOffset.height > 0 {
-                // Handle TOP
-                let globY = newY + initialViewFrame.origin.y - (resizeOffset.height / 2)
+                let topset: CGFloat = -(abs(resizeOffset.height) / 2)
+                let globY = newY - (resizeOffset.height / 2)
                 if globY > topset {
                 }
                 else {
-                    //logD("constrain y becuz TOP = \(globY) < \(topset)!")
+                 //   logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset + (abs(resizeOffset.height) / 2)
                     doPostConstraint()
                 }
             }
             // if resizeOffset.height < 0 that means window has been decreased in size vert.
             else if resizeOffset.height < 0 {
-                let globY = newY + initialViewFrame.origin.y + (abs(resizeOffset.height) / 2)
+                let topset: CGFloat = 0
+
+                let globY = newY + (abs(resizeOffset.height) / 2)
                 if globY > topset {
                 }
                 else {
-                    //logD("constrain y becuz TOP = \(globY) < \(topset)!")
+                 //   logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset - (abs(resizeOffset.height) / 2)
                     doPostConstraint()
                 }
@@ -152,11 +153,11 @@ extension SageMultiView {
 
 // START: Three BOTTOM edge cases....
             if resizeOffset.height == 0 {
-                let globY = newY + initialViewFrame.origin.y //- resizeOffset.height
+                let globY = newY
 
                 // Handle BOTTOM
                 let bottom = globY + frame.size.height
-                let farBound = viewSize.height + initialViewFrame.origin.y
+                let farBound = viewSize.height
                 if bottom > farBound {
                     //logD("constrain y becuz BOTTOM = \(globY) < \(topset)!")
                     newY = farBound - frame.size.height
@@ -165,11 +166,11 @@ extension SageMultiView {
             }
             // if resizeOffset.height > 0 that means window has been increased in size vert.
             else if resizeOffset.height > 0 {
-                let globY = newY + initialViewFrame.origin.y
+                let globY = newY
 
                 let trailing = globY + frame.size.height - (resizeOffset.height / 2)
 
-                let farBound = viewSize.height + initialViewFrame.origin.y + (resizeOffset.height / 2)
+                let farBound = viewSize.height + (resizeOffset.height / 2)
 
                 if trailing > farBound {
                     //logD("constrain x becuz BOTOM = \(trailing) > \(farBound)!")
@@ -179,9 +180,9 @@ extension SageMultiView {
             }
             // if resizeOffset.height < 0 that means window has been decreased in size vert.
             else if resizeOffset.height < 0 {
-                let globY = newY + initialViewFrame.origin.y
+                let globY = newY
                 let trailing = globY  + frame.size.height
-                let farBound = viewSize.height + initialViewFrame.origin.y - (abs(resizeOffset.height) / 2)
+                let farBound = viewSize.height - (abs(resizeOffset.height) / 2)
 
                 if trailing > farBound {
                     //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
@@ -190,10 +191,32 @@ extension SageMultiView {
                 }
             }
 // END: Three BOTTOM edge cases....
+            var leadingXBound: CGFloat = 0
+            var topYBound: CGFloat = 0
 
-            position = CGSize(width: max(0, newX) ,height: max(0, newY))
+            if resizeOffset.width < 0 {
+                leadingXBound = -abs(resizeOffset.width / 2)
+            }
+            else if resizeOffset.width > 0 {
+                leadingXBound = resizeOffset.width / 2
+
+            }
+
+            if resizeOffset.height < 0 {
+                topYBound = -abs(resizeOffset.height / 2)
+            }
+            else if resizeOffset.height > 0 {
+                topYBound = -(resizeOffset.height / 2)
+            }
+            else {
+
+            }
+            let setX = max(leadingXBound, newX)
+            let setY = max(topYBound, newY)
+           // print("setting pos to \(setX) and \(setY)")
+
+            position = CGSize(width:  setX,height: setY)
         }
     }
-
 }
 #endif

@@ -25,7 +25,6 @@ class ScreamClient: WebSocketDelegate {
                          = "START_OF_WORKSPACE_DATA"
     let workspaceEndSentinel
                          = "END_OF_WORKSPACE_DATA"
-    
     var websocket: WebSocket!
     var pingTimer: Timer?
     public private(set) var isViable = false
@@ -88,12 +87,7 @@ class ScreamClient: WebSocketDelegate {
 
                     logDNoNewLine(message)
 
-                    if message.contains( "." ) || message.contains(","){
-                        playLightImpact()
-                    }
-                    else {
-                        playSoftImpact()
-                    }
+                    playMessagForString(message: message)
 
                     if message.hasPrefix("say:") {
                         let arr = message.split(separator: ": ", maxSplits: 1)
@@ -267,15 +261,15 @@ class ScreamClient: WebSocketDelegate {
     func sendCommand(command: String) {
         logD("Executing: \(command)")
 
-        if SettingsViewModel.shared.currentMode == .mobile {
-            logD("Handling \(command) mobile mode...")
-            if callLocalCommand(command) {
-                return
-            }
-        }
-        else {
+//        if SettingsViewModel.shared.currentMode == .mobile {
+//            logD("Handling \(command) mobile mode...")
+//            if callLocalCommand(command) {
+//                return
+//            }
+//        }
+//        else {
             // TODO: The idea, debate, g server, rand should be handled in the "Server chat"
-            logD("Handling \(command) in computer mode...")
+            logD("LogicSage handling \(command)...")
             if command == "st" || command == "stop" || command == "STOP" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ;  }
 
             if websocket != nil {
@@ -296,7 +290,7 @@ class ScreamClient: WebSocketDelegate {
 
                 disconnect()
             }
-        }
+      //  }
     }
     func sendPing() {
         guard let socket = websocket else { return }

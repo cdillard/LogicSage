@@ -35,14 +35,14 @@ let bundleID = "com.chrisdillard.SwiftSage"
 
 public class SettingsViewModel: ObservableObject {
     func logoAscii5() -> String {
-        """
-        ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
-        ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
-        ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
-        ╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
-        client: \(currentMode == .mobile ? "mobile" : "computer"): model: \(openAIModel).
-        """
+"""
+┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
+┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
+┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
+╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯model: \(openAIModel)
+"""
     }
+
     static let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
 
     public static let shared = SettingsViewModel()
@@ -89,7 +89,6 @@ public class SettingsViewModel: ObservableObject {
 //    @AppStorage("savedText") var multiLineText = ""
 
     @Published var hasAcceptedMicrophone = false
-    @AppStorage("device") var currentMode: Device = .mobile
 
     @Published var showAllColorSettings: Bool = false
 
@@ -266,34 +265,17 @@ public class SettingsViewModel: ObservableObject {
     // COMMAND BUTTON SIZE
     @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
-    @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
-        didSet {
-            if textSize != 0 {
-                UserDefaults.standard.set(textSize, forKey: "textSize")
-            }
-            else {
-                logD("failed to set terminal text size")
-            }
-
-        }
-    }
+//    @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
+//        didSet {
+//            if textSize != 0 {
+//                UserDefaults.standard.set(textSize, forKey: "textSize")
+//            }
+//            else {
+//                logD("failed to set terminal text size")
+//            }
+//        }
+//    }
 // END SAVED SIZES ZONE ********************************************************************************************
-
-    // BEGIN SAVED COLORS ZONE **************************************************************************************
-//    @Published var terminalBackgroundColor: Color {
-//        didSet {
-//#if !os(macOS)
-//            UserDefaults.standard.set(terminalBackgroundColor.rawValue , forKey: "terminalBackgroundColor")
-//#endif
-//        }
-//    }
-//    @Published var terminalTextColor: Color {
-//        didSet {
-//#if !os(macOS)
-//            UserDefaults.standard.set(terminalTextColor.rawValue , forKey: "terminalTextColor")
-//#endif
-//        }
-//    }
 
     @Published var appTextColor: Color {
         didSet {
@@ -596,13 +578,13 @@ public class SettingsViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.completedMessages += 1
             let newCompletionMsgs = self.completedMessages
-            logD("\(newCompletionMsgs) % 7 = will review")
+            print("\(newCompletionMsgs) % 7 = will review")
 
-            guard newCompletionMsgs % 7 == 0 else {
+            guard newCompletionMsgs % 11 == 0 else {
                 return logD("no review today")
             }
 
-            logD("SKStoreReviewController.requestReview")
+            print("SKStoreReviewController.requestReview")
             SKStoreReviewController.requestReview()
         }
     }
@@ -617,12 +599,12 @@ public class SettingsViewModel: ObservableObject {
 
         // BEGIN SIZE SETTING LOAD ZONE FROM DISK
 
-        if UserDefaults.standard.double(forKey: "textSize") != 0 {
-            self.textSize = CGFloat(UserDefaults.standard.double(forKey: "textSize"))
-        }
-        else {
-            self.textSize = defaultTerminalFontSize
-        }
+//        if UserDefaults.standard.double(forKey: "textSize") != 0 {
+//            self.textSize = CGFloat(UserDefaults.standard.double(forKey: "textSize"))
+//        }
+//        else {
+//            self.textSize = defaultTerminalFontSize
+//        }
 
         if UserDefaults.standard.double(forKey: "savedButtonSize") != 0 {
             self.buttonScale = UserDefaults.standard.double(forKey: "savedButtonSize")

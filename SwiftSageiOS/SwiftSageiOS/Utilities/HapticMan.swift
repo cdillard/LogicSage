@@ -49,18 +49,20 @@ func checkBattery(minBatLevl: Float = 0.3) -> Bool {
     UIDevice.current.isBatteryMonitoringEnabled = true
 
     guard UIDevice.current.batteryLevel > minBatLevl  || UIDevice.current.batteryLevel < 0  else {
-//        logD("no haptics when no battery :think: ;)")
         return false
     }
 
-//    if UIDevice.current.batteryLevel < 0 {
-//        logD("battery undeter")
-//    }
 #endif
     return true
 }
-
-
+func playMessagForString(message: String) {
+    if message.contains( "." ) || message.contains(","){
+        playLightImpact()
+    }
+    else {
+        playSoftImpact()
+    }
+}
 #if !os(macOS)
 
 func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {

@@ -65,12 +65,7 @@ Question to Answer:
         }
 
         if !isDone {
-            if content.contains( "." ) || content.contains(","){
-                playLightImpact()
-            }
-            else {
-                playSoftImpact()
-            }
+            playMessagForString(message: content)
         }
         else {
             playSoftImpact()
@@ -87,7 +82,6 @@ Question to Answer:
 
                 if content.hasPrefix("google:") {
                     let split  = content.split(separator: " ", maxSplits: 1)
-
 
                     if split.count > 1 {
 

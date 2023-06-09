@@ -26,6 +26,10 @@ enum ViewMode {
 }
 
 struct SageMultiView: View {
+
+    let dragDelay = 0.333666
+    let dragsPerSecond = 45.0
+
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
 
@@ -43,7 +47,6 @@ struct SageMultiView: View {
     @Binding var position: CGSize
     @State var isMoveGestureActivated = false
     @State var webViewURL: URL?
-    @State var initialViewFrame = CGRect.zero
     @State var isDragDisabled = false
     @Binding var viewSize: CGRect
     @Binding var resizeOffset: CGSize
@@ -53,8 +56,6 @@ struct SageMultiView: View {
     @State  var lastDragTime = Date()
     @State  var lastBumpFeedbackTime = Date()
 
-    let dragDelay = 0.333666
-    let dragsPerSecond = 45.0
     // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
         GeometryReader { geometry in
@@ -70,8 +71,7 @@ struct SageMultiView: View {
                                     let now = Date()
                                     if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) { // throttle duration
                                         self.lastDragTime = now
-                                        dragsOnChange(value: value, geometrySafeAreaInsetLeading: geometry.safeAreaInsets.leading,
-                                                      geometrySafeAreaTop: geometry.safeAreaInsets.top)
+                                        dragsOnChange(value: value)
                                     }
                                 }
                                 .onEnded { value in
@@ -84,10 +84,7 @@ struct SageMultiView: View {
 
                     // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
-
                     case .editor:
-                        let viewModel = SourceCodeTextEditorViewModel()
-
                         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
@@ -139,7 +136,6 @@ struct SageMultiView: View {
                         .onTapGesture {
                             self.windowManager.bringWindowToFront(window: self.window)
                         }
-                        .environmentObject(viewModel)
 
                     case .chat:
                         ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
@@ -149,12 +145,10 @@ struct SageMultiView: View {
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                     case .webView:
-                        let viewModel = WebViewViewModel()
                         WebView(url:getURL())
                             .onTapGesture {
                                 self.windowManager.bringWindowToFront(window: self.window)
                             }
-                            .environmentObject(viewModel)
                     case .simulator:
                         ZStack {
                             Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
@@ -191,7 +185,6 @@ struct SageMultiView: View {
 
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
-
                     }
                     Spacer()
                 }
@@ -199,25 +192,11 @@ struct SageMultiView: View {
                     recalculateWindowSize(size: newViewSize.size)
 
                 }
-                .onChange(of: geometry.size) { size in
+                .onChange(of: geometry.size) { size in 
                     recalculateWindowSize(size: geometry.size)
 //                    logD("SageMultiView viewSize update = \(geometry.size)")
-
                 }
-                .onAppear {
-                    position = CGSize(width: initialViewFrame.origin.x, height: initialViewFrame.origin.y)
-                }
-                .background(
-                    GeometryReader { viewGeometry in
-                        Color.clear.onAppear {
-                            let startFrame = viewGeometry.frame(in: .global)
-                            self.initialViewFrame = CGRectMake(startFrame.origin.x, startFrame.origin.y, frame.width, frame.height)
-//                            logD("initial view = \(initialViewFrame)")
-                        }
-                    }
-                )
-                // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
-
+// END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -228,34 +207,13 @@ struct SageMultiView: View {
                 frame.size.width = size.width
             }
             if frame.size.height > size.height {
-                frame.size.height = size.height - size.height * 0.025
-            }
-            var newPosX = position.width
-            var newPosY = position.height
-//            if resizeOffset.width == 0 {
-//
-//            }
-//            else if resizeOffset.width < 0 {
-//                newPosX =  newPosX - abs(resizeOffset.width) / 2
-//            }
-//            else  {
-//                // the view got bigger , move it to top left
-//                newPosX = newPosX //+ resizeOffset.width / 2
-//            }
-            if resizeOffset.height == 0 {
-
-            }
-            // The view got smaller, move
-            else if resizeOffset.height < 0 {
-                newPosY = newPosY + 20 //- abs(resizeOffset.height) / 2
-            }
-            else {
-                newPosY = newPosY + 20 //+ resizeOffset.height / 2
+                let hackedHeight = frame.size.height - size.height
+                // print("Hacked height == \(hackedHeight)")
+                position.height = max(40, position.height - hackedHeight)
+                frame.size.height = size.height
             }
 
-            position = CGSize(width: max(0, newPosX), height: max(20, newPosY))
-
-            dragsOnChange(value: nil, geometrySafeAreaInsetLeading: 0, geometrySafeAreaTop: UIDevice.current.userInterfaceIdiom == .phone ? 16.666 : 0.0)
+            dragsOnChange(value: nil)
         }
     }
     func getURL() -> URL {
@@ -270,16 +228,7 @@ struct SageMultiView: View {
         return webURL
     }
 }
-class SourceCodeTextEditorViewModel: ObservableObject {
-}
-class WebViewViewModel: ObservableObject {
-}
-class PinchGestureHandler: ObservableObject {
-    @Published var scale: CGFloat = 1.0
-    var contentSize: CGSize = .zero
-    var onContentSizeChange: ((CGSize) -> Void)?
-    var isPinching: Bool = false
-}
+
 struct WebView: UIViewRepresentable {
     let url: URL
     func makeCoordinator() -> Coordinator {

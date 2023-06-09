@@ -8,11 +8,13 @@
 import Foundation
 import Foundation
 import SwiftUI
+import UIKit
 
 struct HelpPopup: View {
     @Binding var isPresented: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     @State var veryGoodOpen: Bool = false
+    let email = "chrisbdillard@gmail.com"
 
     var body: some View {
         GeometryReader { geometry in
@@ -29,41 +31,53 @@ struct HelpPopup: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Group {
                             Group {
-                                Text("Welcome to your AI workspace. See your toolbar at the bottom left, see your command bar at the bottom right.")
-
-                                Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and Discussions and my contact info.")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .accentColor(settingsViewModel.buttonColor)
-
-                                Text("This app/project is an ALPHA. email me with issues/suggestions.")
-
-                                Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nTry making button/toolbar smaller than larger to get your desired size.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
-                                let verGoodMoji = veryGoodOpen ? "🔽" : "▶️"
-
-                                Text("Tap me! \(verGoodMoji) , I will expand/collapse a section...")
-                                    .onTapGesture {
-                                        playSelect()
-
-                                        withAnimation {
-                                            veryGoodOpen.toggle()
-                                        }
-                                    }
-                                if veryGoodOpen {
-                                    Text("Nice. You did good.")
-                                }
                                 Group {
-                                    Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
-
-                                    Text("OPTIONAL: Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
-
-                                    Text("Follow this order when running LogicSage in computer mode.")
-
-                                    Text("0. run SwiftSageServer and Swifty-GPT with ./run.sh in the Project root")
-                                    Text("1. Background/Foreground your LogicSage clients, you should see websocket connected. ")
-
-                                    Text("-COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                    Text("Welcome to your AI workspace. Access chats, terminal, settings and add menu from the hamburger menu at the top left.\nCheck out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and Discussions and my contact info.")
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .accentColor(settingsViewModel.buttonColor)
+                                    Text("This app/project is an ALPHA. Email me with issues/suggestions @")
+                                    Button(action: {
+                                        let pasteboard = UIPasteboard.general
+                                        pasteboard.string = email
+                                    }) {
+                                        Text(verbatim: "\(email) (Tap to Copy.)")
+                                            .foregroundColor(settingsViewModel.buttonColor)
+                                    }
+                                }
+
+                                Group {
+                                    
+                                    Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
+                                    let verGoodMoji = veryGoodOpen ? "🔽" : "▶️"
+                                    
+                                    Text("Tap me! \(verGoodMoji) , I will expand/collapse a section...")
+                                        .onTapGesture {
+                                            playSelect()
+                                            
+                                            withAnimation {
+                                                veryGoodOpen.toggle()
+                                            }
+                                        }
+                                    if veryGoodOpen {
+                                        Text("Nice. You did good.")
+                                    }
+                                }
+                                Group {
+                                    Group {
+                                        Text("Set up LogicSage for Mac:")
+
+                                        Text("OPTIONAL: Set up server to use computer commands. This allows you to use Xcode from your iOS device in the Term window.")
+
+                                        Text("Follow this order when running LogicSage for Mac.")
+                                    }
+                                    Group {
+                                        Text("0. run SwiftSageServer and Swifty-GPT with ./run.sh in the Project root")
+                                        Text("1. Background/Foreground your LogicSage clients, you should see websocket connected. ")
+
+                                        Text("-COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .accentColor(settingsViewModel.buttonColor)
+                                    }
                                 }
                             }
                         }

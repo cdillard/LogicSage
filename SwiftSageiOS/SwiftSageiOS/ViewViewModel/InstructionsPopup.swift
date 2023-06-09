@@ -24,6 +24,7 @@ import SwiftUI
 struct InstructionsPopup: View {
     @Binding var isPresented: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
+    let email = "chrisbdillard@gmail.com"
 
     var body: some View {
         GeometryReader { geometry in
@@ -43,16 +44,22 @@ struct InstructionsPopup: View {
                                 Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
                                 Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and Discussions and my contact info.")
                                     .accentColor(settingsViewModel.buttonColor)
-                                Text("This app/project is an ALPHA. email me with issues/suggestions.")
-
-                                Text("You will start in `mobile` mode. Check out Settings to set your key. Set up server to use computer mode. computer mode allows you to use Xcode from your iOS device.")
+                                Text("This app/project is an ALPHA. Email me with issues/suggestions @")
+                                Button(action: {
+                                    let pasteboard = UIPasteboard.general
+                                    pasteboard.string = email
+                                }) {
+                                    Text(verbatim: "\(email) (Tap to Copy.)")
+                                        .foregroundColor(settingsViewModel.buttonColor)
+                                }
+                                Text("Check out Settings to set your A.I. key. Set up LogicSage for Mac to use additional functions from the Terminal window. Terminal window with LogicSage for Mac allows you to use Xcode from your iOS device.")
                             }
 
                             Text("Check out the repo for info on setting up server.")
                             Text("To Run The server: Make sure you have at minimum taken these steps:")
-                            Text("0. Set your Computers API Key for A.I. in GPT-Info.plist and enabled feature flag swiftSageIOSEnabled before building and running the LogicSage ./run.sh")
+                            Text("0. Set your Computers API Key for A.I. in GPT-Info.plist before building and running the LogicSage for Mac via ./run.sh")
+                            Text("Without this step, the LogicSage server will not work.")
                         }
-                        Text("Without this step, the LogicSage server will not work.")
 
                         Text("-CREDITS: https://github.com/cdillard/LogicSage#credits")
                             .foregroundColor(settingsViewModel.appTextColor)

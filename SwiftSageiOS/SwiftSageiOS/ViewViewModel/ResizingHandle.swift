@@ -17,17 +17,17 @@ struct ResizableViewModifier: ViewModifier {
     @Binding var frame: CGRect
     var window: WindowInfo
     var handleSize: CGFloat = SettingsViewModel.shared.cornerHandleSize
-    @Binding var boundPosition: CGSize
     @ObservedObject var windowManager: WindowManager
-    @Binding var initialViewFrame: CGRect
     @Binding var resizeOffset: CGSize
     @Binding var isResizeGestureActive: Bool
+    @Binding var viewSize: CGRect
+    @Binding var position: CGSize
 
     func body(content: Content) -> some View {
         content
             .frame(width: frame.width, height: frame.height)
             .overlay(
-                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, boundPosition: $boundPosition, initialViewFrame: $initialViewFrame, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive)
+                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position)
             )
     }
 }
@@ -44,10 +44,10 @@ struct ResizingHandle: View {
     @State private var activeDragOffset: CGSize = .zero
     @ObservedObject var windowManager: WindowManager
     var window: WindowInfo
-    @Binding var boundPosition: CGSize
-    @Binding var initialViewFrame: CGRect
     @Binding var resizeOffset: CGSize
     @Binding var isResizeGestureActive: Bool
+    @Binding var viewSize: CGRect
+    @Binding var position: CGSize
 
 // Throttling not required on resizing gesture, for now.
 //    @State private var lastDragTime = Date()
@@ -117,13 +117,16 @@ struct ResizingHandle: View {
         let newOffsetX = (newWidth - frame.size.width) * lerpFactor
         let newOffsetY = (newHeight - frame.size.height) * lerpFactor
 
-        if frame.size.width + newOffsetX > initialViewFrame.width {
+        // Check global X postion
+      //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
+
+        if frame.size.width + newOffsetX > viewSize.width - 8 {
         }
         else {
             resizeOffset.width += newOffsetX
             frame.size.width += newOffsetX
         }
-        if frame.size.height + newOffsetY > initialViewFrame.height {
+        if frame.size.height + newOffsetY > viewSize.height - 40 {
         }
         else {
             resizeOffset.height += newOffsetY

@@ -57,7 +57,7 @@ struct TopBar: View {
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                 }
-              
+
                 Text(getName())
                     .font(.body)
                     .minimumScaleFactor(0.75)
@@ -66,39 +66,37 @@ struct TopBar: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 Spacer()
 
-                if windowInfo.windowType == .chat {
-
+                if windowInfo.windowType == .chat || windowInfo.windowType == .file {
                     if isEditing {
                         Button {
                             isEditing.toggle()
                         } label: {
                             Label( "Done", systemImage: "checkmark")
+                                .font(.body)
+                                .labelStyle(DemoStyle())
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
-
                         }
-                        
                     }
                     else {
-
                         Menu {
                             Button {
                                 isEditing.toggle()
 
                             } label: {
                                 Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
+                                    .font(.body)
+                                    .labelStyle(DemoStyle())
                                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-
                             }
 
                             let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
                             ShareLink(item: "\(SettingsViewModel.link.absoluteString)\n\(convoText)", message: Text("LogicSage convo"))
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
-
-
                         } label: {
                             Label("", systemImage: "ellipsis")
+                                .font(.body)
+                                .labelStyle(DemoStyle())
                         }
-
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
                 }
@@ -106,6 +104,14 @@ struct TopBar: View {
         }
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
+    }
+    struct DemoStyle: LabelStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            HStack(alignment: .center) {
+                configuration.icon
+                configuration.title
+            }
+        }
     }
     func getName() -> String {
         switch windowInfo.windowType {

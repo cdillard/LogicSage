@@ -25,15 +25,12 @@ let logoAscii6 = """
 ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
 """
 
-
 func setHasSeenLogo(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenLogo")
 }
 func hasSeenLogo() -> Bool {
     return UserDefaults.standard.bool(forKey: "hasSeenLogo")
 }
-
-
 
 let animFrameDuration: CGFloat = 0.01
 

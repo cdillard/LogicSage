@@ -15,10 +15,9 @@ var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
 struct WindowView: View {
     var window: WindowInfo
-    @State private var position: CGSize = CGSize.zero
+    @State private var position: CGSize = .zero
 
     @State var frame: CGRect
-    @StateObject private var pinchHandler = PinchGestureHandler()
     @ObservedObject var settingsViewModel: SettingsViewModel
     @ObservedObject var windowManager: WindowManager
     @ObservedObject var viewModel: SageMultiViewModel
@@ -40,35 +39,32 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $frame, window: window, boundPosition: $position, windowManager: windowManager, initialViewFrame: $viewSize, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive))
+                        .modifier(ResizableViewModifier(frame: $frame, window: window, windowManager: windowManager, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position))
                 }
                 .border(.red, width: bumping ? 2.666 : 0)
                 .cornerRadius(8)
                 .shadow(color:settingsViewModel.appTextColor, radius: 3)
                 .frame(width: window.frame.width, height: window.frame.height)
+                .edgesIgnoringSafeArea(.bottom)
+
             }
             .offset(position)
             .onAppear() {
-
-                DispatchQueue.main.async {
-                    recalculateWindowSize(size: geometry.size)
-                }
+                recalculateWindowSize(size: geometry.size)
             }
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                DispatchQueue.main.async {
-                    recalculateWindowSize(size: geometry.size)
-                }
+                recalculateWindowSize(size: geometry.size)
             }
             .onChange(of: geometry.size) { size in
                 recalculateWindowSize(size: geometry.size)
                 //                        logD("contentView viewSize update = \(viewSize)")
             }
             .onChange(of: horizontalSizeClass) { newSizeClass in
-                print("Size class changed to \(String(describing: newSizeClass))")
+               // print("Size class changed to \(String(describing: newSizeClass))")
                 recalculateWindowSize(size: geometry.size)
             }
             .onChange(of: verticalSizeClass) { newSizeClass in
-                print("Size class changed to \(String(describing: newSizeClass))")
+               // print("Size class changed to \(String(describing: newSizeClass))")
                 recalculateWindowSize(size: geometry.size)
             }
         }
@@ -78,11 +74,6 @@ struct WindowView: View {
         if !isResizeGestureActive {
             
             viewSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-
-            // OG position
-            if position == .zero {
-                position = CGSize(width: size.width * 0.05, height: size.height * 0.1)
-            }
         }
     }
     private func windowContent() -> some View {

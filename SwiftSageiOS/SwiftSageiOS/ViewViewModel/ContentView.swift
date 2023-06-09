@@ -49,12 +49,14 @@ struct ContentView: View {
             HStack(spacing: 0) {
 #if !os(macOS)
                 if isDrawerOpen {
+                    let drawerWidth = viewSize.width - (viewSize.width / (UIDevice.current.userInterfaceIdiom == .phone ? 3 : 3))
+
                     DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView)
                         .transition(.move(edge: .leading))
                         .background(settingsViewModel.buttonColor)
                         .padding(.leading, 0)
                         .zIndex(999)
-                        .frame(minWidth: viewSize.width - (viewSize.width / 3), maxWidth: viewSize.width - (viewSize.width / 3), minHeight: 0, maxHeight: .infinity)
+                        .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
                 }
 #endif
                 ZStack {
@@ -95,15 +97,20 @@ struct ContentView: View {
                             .background(.clear)
                             .opacity(isDrawerOpen ? 0.0 : 1.0)
                             .allowsHitTesting(!isDrawerOpen)
+                            .padding(.top, 20)
                     }
                     // END WINDOW MANAGER ZONE *************************************************
 #endif
-                    // START CPNVERSATION HAMBURGER ZONE *************************************************
+                    // START CONVERSATION HAMBURGER ZONE *************************************************
                     if !isDrawerOpen {
                         VStack {
                             HStack {
                                 Button(action: {
                                     withAnimation {
+                                        showAddView = false
+                                        showSettings = false
+                                        showHelp = false
+                                        showInstructions = false
                                         self.isDrawerOpen.toggle()
                                     }
                                 }) {
@@ -112,19 +119,21 @@ struct ContentView: View {
                                         .scaledToFit()
                                         .tint(settingsViewModel.appTextColor)
                                         .background(settingsViewModel.buttonColor)
-                                        .padding(3)
+                                        .padding(.leading,16)
+                                        .padding(.top,16)
+
 #if !os(macOS)
-                                        .frame(width: UIScreen.main.bounds.width / 15, height: 27.666 )
+                                        .frame(width: 40, height: 40 )
 #endif
                                         .animation(.easeIn(duration:0.25), value: isDrawerOpen)
+//                                        .edgesIgnoringSafeArea(.all)
+
                                 }
                                 Spacer()
                             }
-                            .padding(8)
                             Spacer()
                         }
-                        .zIndex(-9)
-                        .padding(8)
+                        .zIndex(998)
                     }
                     // END CPNVERSATION HAMBURGER ZONE *************************************************
 #if !os(macOS)
@@ -139,28 +148,16 @@ struct ContentView: View {
 
                         .padding(.horizontal)
                         .padding(.vertical)
-
                         .padding(.leading, 8)
                         .padding(.trailing, 8)
                         .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
-
                     }
 #endif
 
-                    
+              // TODO: Get rid of this
                     VStack {
                         Spacer()
-//                        if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
-//
-//                            HStack(alignment: .bottom, spacing: 0) {
-//                            }
-//                            .zIndex(-9)
-//                            .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
-//                        }
                     }
-
- //                   .offset(y: showSettings ||  showAddView ? 0 :  -keyboardResponder.currentHeight)
-
                     .background(
                         ZStack {
 #if !os(macOS)
@@ -173,7 +170,7 @@ struct ContentView: View {
                                 .opacity(showSettings ? 1.0 : 0.0)
 #endif
                         }
-                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
+                        .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
                     )
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 }
@@ -221,6 +218,12 @@ struct ContentView: View {
                     }
                     .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            isDrawerOpen = false
+                            hideKeyboard()
+                        }
+                    }
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .if(isDrawerOpen) { view in
@@ -254,25 +257,19 @@ struct ContentView: View {
     // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
     private func recalculateWindowSize(size: CGSize) {
-        if viewSize.size != size {
-
 #if !os(macOS)
-                DispatchQueue.main.async {
+        if viewSize.size != size {
+            defSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.5))
+            defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.52))
 
-                defSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.5))
-                defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.52))
+        // set parentViewSize
+            viewSize = CGRectMake(0, 0, size.width, size.height)
+            //logD("contentView viewSize update = \(viewSize)")
 
-            // set parentViewSize
-                viewSize = CGRectMake(0, 0, size.width, size.height)
-                logD("contentView viewSize update = \(viewSize)")
-
-                guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                self.isPortrait = scene.interfaceOrientation.isPortrait
-            }
-
-
-#endif
+            guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+            self.isPortrait = scene.interfaceOrientation.isPortrait
         }
+#endif
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
