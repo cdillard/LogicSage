@@ -31,7 +31,12 @@ func setHasSeenLogo(_ hasSeen: Bool) {
 func hasSeenLogo() -> Bool {
     return UserDefaults.standard.bool(forKey: "hasSeenLogo")
 }
-
+func hasSeenAnim() -> Bool {
+    return UserDefaults.standard.bool(forKey: "hasSeenAnim")
+}
+func setHasSeenAnim(_ hasSeen: Bool) {
+    UserDefaults.standard.set(hasSeen, forKey: "hasSeenAnim")
+}
 let animFrameDuration: CGFloat = 0.01
 
 
@@ -107,17 +112,22 @@ struct LoadingLogicView: View {
             }
 
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.98) {
-                    for index in 0..<chosenLogo.filter({ $0 != "\n" }).count {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * animFrameDuration) {
-                            showText[index] = true
+                if hasSeenAnim() {
 
-                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * animFrameDuration + delay) {
-                                if Int.random(in: 0...1) == 0 {
-                                    playLightImpact()
-                                }
-                                else {
-                                    playSoftImpact()
+                }
+                else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.98) {
+                        for index in 0..<chosenLogo.filter({ $0 != "\n" }).count {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * animFrameDuration) {
+                                showText[index] = true
+
+                                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * animFrameDuration + delay) {
+                                    if Int.random(in: 0...1) == 0 {
+                                        playLightImpact()
+                                    }
+                                    else {
+                                        playSoftImpact()
+                                    }
                                 }
                             }
                         }

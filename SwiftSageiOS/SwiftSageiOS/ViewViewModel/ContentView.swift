@@ -206,10 +206,15 @@ struct ContentView: View {
                                 .edgesIgnoringSafeArea(.all)
                         }
                         // TODO: Make this way better.
-                        if settingsViewModel.initalAnim {
+                        if  settingsViewModel.initalAnim {
+                            
                             LoadingLogicView()
                                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                                 .ignoresSafeArea()
+                                .onAppear {
+                                    setHasSeenAnim(true)
+
+                                }
                         }
 #else
                         settingsViewModel.backgroundColor
@@ -237,6 +242,7 @@ struct ContentView: View {
 #if !os(macOS)
                 .onAppear {
                     recalculateWindowSize(size: geometry.size)
+
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                     recalculateWindowSize(size: geometry.size)

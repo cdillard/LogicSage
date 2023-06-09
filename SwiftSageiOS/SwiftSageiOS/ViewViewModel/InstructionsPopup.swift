@@ -80,7 +80,9 @@ struct InstructionsPopup: View {
                         isPresented = false
                         setHasSeenInstructions(true)
 
-                        settingsViewModel.initalAnim = true
+                        if !hasSeenAnim() {
+                            settingsViewModel.initalAnim = true
+                        }
 
                     }) {
                         Text("Got it!")
