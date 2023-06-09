@@ -221,7 +221,10 @@ struct ContentView: View {
                     .onTapGesture {
                         withAnimation {
                             isDrawerOpen = false
+#if !os(macOS)
+
                             hideKeyboard()
+#endif
                         }
                     }
                 }

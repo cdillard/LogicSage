@@ -46,8 +46,10 @@ struct InstructionsPopup: View {
                                     .accentColor(settingsViewModel.buttonColor)
                                 Text("This app/project is an ALPHA. Email me with issues/suggestions @")
                                 Button(action: {
+#if !os(macOS)
                                     let pasteboard = UIPasteboard.general
                                     pasteboard.string = email
+#endif
                                 }) {
                                     Text(verbatim: "\(email) (Tap to Copy.)")
                                         .foregroundColor(settingsViewModel.buttonColor)
