@@ -43,8 +43,6 @@
 		B7191F3029F9F09A00078D8D /* SourceCodeTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */; };
 		B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62DE29FCAD3E004296E4 /* Screamer.swift */; };
 		B71C62E129FDE0D7004296E4 /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E029FDE0D7004296E4 /* Speak.swift */; };
-		B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62E429FEB794004296E4 /* SpeechRecog.swift */; };
-		B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C62E629FEB7BB004296E4 /* Speech.framework */; };
 		B71C62EC2A00312A004296E4 /* BGHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62EB2A00312A004296E4 /* BGHandler.swift */; };
 		B71C62EE2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */; };
 		B71C62F52A018B5B004296E4 /* GPTCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C62F42A018B5B004296E4 /* GPTCommand.swift */; };
@@ -210,7 +208,6 @@
 		B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextEditor.swift; sourceTree = "<group>"; };
 		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B71C62E029FDE0D7004296E4 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
-		B71C62E429FEB794004296E4 /* SpeechRecog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecog.swift; sourceTree = "<group>"; };
 		B71C62E629FEB7BB004296E4 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/Speech.framework; sourceTree = DEVELOPER_DIR; };
 		B71C62EB2A00312A004296E4 /* BGHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGHandler.swift; sourceTree = "<group>"; };
 		B71C62ED2A00333C004296E4 /* SwiftSageiOSAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSAppDelegate.swift; sourceTree = "<group>"; };
@@ -339,7 +336,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B71C62E829FEB7CF004296E4 /* Speech.framework in Frameworks */,
 				B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -778,7 +774,6 @@
 				B7C11F2A2A01C62500701721 /* PTTWrapper.swift */,
 				B71C62DE29FCAD3E004296E4 /* Screamer.swift */,
 				B71C62E029FDE0D7004296E4 /* Speak.swift */,
-				B71C62E429FEB794004296E4 /* SpeechRecog.swift */,
 				B729B14129F9B25600BA6752 /* UIColorExt.swift */,
 				B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */,
 				B78DA97D2A0707DB002343AB /* WindowManager.swift */,
@@ -1000,7 +995,6 @@
 				B7544E2D2A191BCE00961F4C /* ChatStreamResult.swift in Sources */,
 				B7544E2A2A191BCE00961F4C /* ModerationsQuery.swift in Sources */,
 				B7544E422A191BCE00961F4C /* OpenAIProtocol.swift in Sources */,
-				B71C62E529FEB794004296E4 /* SpeechRecog.swift in Sources */,
 				B7544E4A2A191BCE00961F4C /* MultipartFormDataBodyEncodable.swift in Sources */,
 				B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */,
 				B7544E492A191BCE00961F4C /* URLSessionProtocol.swift in Sources */,
@@ -1268,7 +1262,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1280,7 +1274,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSageDev;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -1302,7 +1296,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = LogicSageDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = chrozzprov;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = MacDevelopment;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1319,7 +1313,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1329,7 +1323,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSage;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";

@@ -160,8 +160,6 @@ public class SettingsViewModel: ObservableObject {
     @Published var installedVoices = [VoicePair]()
     @Published var selectedVoice: VoicePair?
     @Published var isRecording = false
-    @StateObject var speechRecognizer = SpeechRecognizer()
-    @Published var recognizedText: String = ""
 // END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
 // BEGIN SAVED SIZES ZONE **************************************************************************************
