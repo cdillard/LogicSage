@@ -31,21 +31,22 @@ let STRING_LIMIT = 150000
 // TODO BEFORE RELEASE: PROD BUNDLE ID
 // TODO USE BUILT IN BundleID var.
 let bundleID = "com.chrisdillard.SwiftSage"
+let appLink = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
 
-
-public class SettingsViewModel: ObservableObject {
-    func logoAscii5() -> String {
+func logoAscii5(model: String = SettingsViewModel.shared.openAIModel) -> String {
 """
 ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
 ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
 ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
-╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯model: \(openAIModel)
+╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯model: \(model)
 """
-    }
+}
 
-    static let link = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
+public class SettingsViewModel: ObservableObject {
 
     public static let shared = SettingsViewModel()
+
+    let keychainManager = KeychainManager()
 
     @State private var lastConsoleUpdate: Date?
     func logText(_ text: String, terminator: String = "\n") {
@@ -63,18 +64,14 @@ public class SettingsViewModel: ObservableObject {
     var latestWindowManager: WindowManager?
 
     var serviceDiscovery: ServiceDiscovery?
-    func doDiscover() {
-        serviceDiscovery?.startDiscovering()
-    }
-    @AppStorage("savedUserAvatar") var savedUserAvatar: String = "👨"
-    @AppStorage("savedBotAvatar") var savedBotAvatar: String = "🤖"
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
-    let keychainManager = KeychainManager()
 
     @Published var root: RepoFile?
 
     @AppStorage("hapticsEnabled") var hapticsEnabled: Bool = true
+    @AppStorage("savedUserAvatar") var savedUserAvatar: String = "👨"
+    @AppStorage("savedBotAvatar") var savedBotAvatar: String = "🤖"
 
     @Published var changes = [ChangeRow]()
 #if !os(macOS)
@@ -83,10 +80,6 @@ public class SettingsViewModel: ObservableObject {
 #endif
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
-
-    @Published var commandMode: EntryMode = .commandBar
-
-//    @AppStorage("savedText") var multiLineText = ""
 
     @Published var hasAcceptedMicrophone = false
 
@@ -107,58 +100,19 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
     @AppStorage("defaultURL") var defaultURL = "https://"
 
-
     @Published var initalAnim: Bool = false
-    
+
+    func doDiscover() {
+        serviceDiscovery?.startDiscovering()
+    }
+
 // END SAVED UI SETTINGS ZONE **************************************************************************************
 
-// BEGIN STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
+// BEGIN STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
 #if !os(macOS)
     @Published var receivedImageData: Data? = nil {
         didSet {
-            actualReceivedImage = UIImage(data: receivedImageData  ?? Data())
-
-            // received
-            if let  receivedWallpaperFileName, let receivedImageData {
-                let receivedWallpaperFileName = receivedWallpaperFileName.replacingOccurrences(of: " ", with: "%20")
-                logD("REC -- going to write -- \(receivedWallpaperFileName) c: \(receivedWallpaperFileSize ?? 0)")
-
-
-                do {
-                    try FileManager.default.createDirectory(at: getDocumentsDirectory().appendingPathComponent("LogicSageWallpapers"), withIntermediateDirectories: true, attributes: nil)
-                }
-                catch {
-                    logD("fail to create LogicSageWallpapers dir")
-                }
-
-                let fileURL = getDocumentsDirectory().appendingPathComponent("LogicSageWallpapers/\(receivedWallpaperFileName)")
-
-
-                do {
-                    try FileManager.default.removeItem(at: fileURL)
-                }
-                catch {
-                    logD("didnt rmv or exist old m")
-
-                }
-
-                do {
-                    try receivedImageData.write(to: fileURL)
-
-                    logD("Successfully wrote out wallpaper  \(fileURL)")
-
-                }
-                catch {
-                    logD("Failed to write out rec wallpaper")
-
-                }
-
-
-                self.receivedWallpaperFileName = nil
-                receivedWallpaperFileSize = nil
-                
-                refreshDocuments()
-            }
+            recieveImageData(recievedImageData: receivedImageData)
         }
     }
     @Published var actualReceivedImage: UIImage?
@@ -169,74 +123,25 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
 
-
             if oldValue == nil {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
-#if !os(macOS)
                     self.latestWindowManager?.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
-#endif
                 }
             }
         }
     }
     @Published var actualReceivedSimulatorFrame: UIImage?
 
-    @Published var receivedWorkspaceData: Data? = nil {
+    @Published var recievedWorkspaceData: Data? = nil {
         didSet {
-            if let receivedWorkspaceData {
-                logD("received workspace data of size = \(receivedWorkspaceData.count)")
-                let fileURL = getDocumentsDirectory().appendingPathComponent("workspace_archive.zip")
-
-                do {
-                    try FileManager.default.removeItem(at: fileURL)
-
-                }
-                catch {
-                    logD("fil enot exist or deketed")
-                }
-                do {
-                    try receivedWorkspaceData.write(to: fileURL)
-
-                    logD("wrote file \(fileURL) out successfully")
-                    let existingExtraction = getDocumentsDirectory().appendingPathComponent("Workspace")
-
-                    do {
-                        try FileManager.default.removeItem(at:  existingExtraction)
-                    }
-                    catch {
-                        logD("did not delete or didn't exist old REPO")
-                    }
-                    let myProgress = Progress()
-                    do {
-                        // Workspace is already included in this folder.
-                        try FileManager.default.unzipItem(at: fileURL, to: getDocumentsDirectory(), progress: myProgress)
-
-                        logD("unzipped to \(existingExtraction) successfully")
-
-                        do {
-                            try FileManager.default.removeItem(at:  fileURL)
-                        }
-                        catch {
-                            print("did not delete or didn't exist old REPO")
-                        }
-
-                        self.refreshDocuments()
-                    }
-                    catch {
-                        logD("failed to unzip workspace")
-
-                    }
-                }
-                catch {
-                    logD("failed to write out zip")
-                }
-
+            if let recievedWorkspaceData {
+                recieveWorkspaceData(receivedWorkspaceData: recievedWorkspaceData)
             }
         }
     }
 
 #endif
-// END STREAMING IMAGES OVER WEBSOCKET ZONE *****************************************************************
+// END STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
 
 // BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
     @Published var voiceOutputenabled = false
@@ -260,115 +165,90 @@ public class SettingsViewModel: ObservableObject {
 // END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
 // BEGIN SAVED SIZES ZONE **************************************************************************************
-    // TOOL BAR BUTOTN SIZE
     @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale
-    // COMMAND BUTTON SIZE
     @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
-//    @AppStorage("textSize") var textSize: Double = defaultTerminalFontSize {
-//        didSet {
-//            if textSize != 0 {
-//                UserDefaults.standard.set(textSize, forKey: "textSize")
-//            }
-//            else {
-//                logD("failed to set terminal text size")
-//            }
-//        }
-//    }
+    @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize
+
 // END SAVED SIZES ZONE ********************************************************************************************
 
     @Published var appTextColor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(appTextColor.rawValue, forKey: "appTextColor")
-#endif
+            setUserDefaultFor(appTextColor, "appTextColor")
         }
     }
     @Published var buttonColor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(buttonColor.rawValue , forKey: "buttonColor")
-#endif
+            setUserDefaultFor(buttonColor, "buttonColor")
         }
     }
     @Published var backgroundColor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(backgroundColor.rawValue, forKey: "backgroundColor")
-#endif
+            setUserDefaultFor(backgroundColor, "backgroundColor")
         }
     }
-
     // BEGIN SUB ZONE FOR SRC EDITOR COLORS ********************************************
-    @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize
+
     @Published var plainColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(plainColorSrcEditor.rawValue , forKey: "plainColorSrcEditor")
-#endif
+            setUserDefaultFor(plainColorSrcEditor, "plainColorSrcEditor")
         }
     }
     @Published var numberColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(numberColorSrcEditor.rawValue , forKey: "numberColorSrcEditor")
-#endif
+            setUserDefaultFor(numberColorSrcEditor, "numberColorSrcEditor")
         }
     }
     @Published var stringColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(stringColorSrcEditor.rawValue , forKey: "stringColorSrcEditor")
-#endif
+            setUserDefaultFor(stringColorSrcEditor, "stringColorSrcEditor")
         }
     }
     @Published var identifierColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(identifierColorSrcEditor.rawValue, forKey: "identifierColorSrcEditor")
-#endif
+            setUserDefaultFor(identifierColorSrcEditor, "identifierColorSrcEditor")
         }
     }
     @Published var keywordColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(keywordColorSrcEditor.rawValue , forKey: "keywordColorSrcEditor")
-#endif
+            setUserDefaultFor(keywordColorSrcEditor, "keywordColorSrcEditor")
         }
     }
     @Published var commentColorSrceEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(commentColorSrceEditor.rawValue , forKey: "commentColorSrceEditor")
-#endif
+            setUserDefaultFor(commentColorSrceEditor, "commentColorSrceEditor")
         }
     }
     @Published var editorPlaceholderColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(editorPlaceholderColorSrcEditor.rawValue , forKey: "editorPlaceholderColorSrcEditor")
-#endif
+            setUserDefaultFor(editorPlaceholderColorSrcEditor, "editorPlaceholderColorSrcEditor")
         }
     }
     @Published var backgroundColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(backgroundColorSrcEditor.rawValue, forKey: "backgroundColorSrcEditor")
-#endif
+            setUserDefaultFor(backgroundColorSrcEditor, "backgroundColorSrcEditor")
         }
     }
     @Published var lineNumbersColorSrcEditor: Color {
         didSet {
-#if !os(macOS)
-            UserDefaults.standard.set(lineNumbersColorSrcEditor.rawValue, forKey: "lineNumbersColorSrcEditor")
-#endif
+            setUserDefaultFor(lineNumbersColorSrcEditor, "lineNumbersColorSrcEditor")
         }
     }
-    // END SUB ZONE FOR SRC EDITOR COLORS********************************************
-    // END SAVED COLORS ZONE **************************************************************************************
 
-    // BEGIN CLIENT API KEYS ZONE ******************************************************************************
-    // TODO: React to user name and password change
+    func setUserDefaultFor(_ rawValue: Color, _ key: String) {
+#if !os(macOS)
+        UserDefaults.standard.set(rawValue.rawValue, forKey: key)
+#endif
+    }
+
+// END SUB ZONE FOR SRC EDITOR COLORS********************************************
+// END SAVED COLORS ZONE **************************************************************************************
+
+// BEGIN CLIENT API KEYS ZONE ******************************************************************************
+// TODO: React to user name and password change
+    let aiKeyKey = "openAIKeySec"
+    let ghaKeyKey = "ghaPat"
+
     @AppStorage("userName") var userName = "chris" {
         didSet {
         }
@@ -382,8 +262,6 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-    let aiKeyKey = "openAIKeySec"
-    let ghaKeyKey = "ghaPat"
 
     @AppStorage("openAIModel") var openAIModel = defaultGPTModel
 
@@ -417,6 +295,10 @@ public class SettingsViewModel: ObservableObject {
 // END CLIENT APIS ZONE **************************************************************************************
 
 // START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
+
+    let idProvider: () -> String
+    let dateProvider: () -> Date
+
     @Published var conversations: [Conversation] = [] {
         didSet {
             //logD("new convo state:\n\(conversations)")
@@ -425,140 +307,11 @@ public class SettingsViewModel: ObservableObject {
     @Published var conversationErrors: [Conversation.ID: Error] = [:] {
         didSet {
             if !conversationErrors.isEmpty {
-                //logD("new convo error state = \(conversationErrors)")
+                logD("new convo error state = \(conversationErrors)")
             }
         }
     }
     @AppStorage("completedMessages") var completedMessages = 0
-
-    func renameConvo(_ convoId: Conversation.ID, newName: String) {
-
-        logD("rename convo id = \(convoId) to \(newName)")
-        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
-            logD("Unable to find conversations id == \(convoId) ... failing")
-
-            return
-        }
-        SettingsViewModel.shared.conversations[conversationIndex].name = newName
-
-        saveConvosToDisk()
-    }
-    func saveConvosToDisk() {
-        saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
-
-    }
-    func appendMessageToConvoIndex(index: Int, message: Message) async {
-        conversations[index].messages.append(message)
-    }
-    func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) async {
-        conversations[index].messages[existingMessageIndex] = message
-    }
-    func nilOutConversationErrorsAt(convoId: Conversation.ID) async {
-        conversationErrors[convoId] = nil
-    }
-    func setConversationError(convoId: Conversation.ID, error: Error) async {
-        conversationErrors[convoId] = error
-    }
-    let idProvider: () -> String
-    let dateProvider: () -> Date
-
-    func sendChatText(_ convoID: Conversation.ID, chatText: String) {
-        gptCommand(conversationId: convoID, input: chatText)
-    }
-    func createConversation() -> Conversation.ID {
-        let conversation = Conversation(id: idProvider(), messages: [])
-        conversations.append(conversation)
-        logD("created new convo = \(conversation.id)")
-        return conversation.id
-    }
-    func deleteConversation(_ conversationId: Conversation.ID) {
-        conversations.removeAll(where: { $0.id == conversationId })
-
-        latestWindowManager?.removeWindowsWithConvoId(convoID: conversationId)
-        saveConvosToDisk()
-    }
-    func createAndOpenNewConvo() {
-        let convo = createConversation()
-
-        saveConvosToDisk()
-
-        openConversation(convo)
-    }
-    func openConversation(_ convoId: Conversation.ID) {
-        latestWindowManager?.removeWindowsWithConvoId(convoID: convoId)
-
-#if !os(macOS)
-        latestWindowManager?.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
-#endif
-    }
-    func createAndOpenServerChat() {
-
-        openConversation(Conversation.ID(-1))
-    }
-    func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
-
-       let encoder = JSONEncoder()
-       do {
-           let encodedData = try encoder.encode(object)
-
-           saveJSONData(encodedData, filename: "\(key).json")
-       }
-       catch {
-           logD("failed w error = \(error)")
-       }
-    }
-    func retrieveConversationContentFromDisk(forKey key: String) -> [Conversation]? {
-
-       if let savedData = loadJSONData(filename: "\(key).json") {
-           do {
-               let decoder = JSONDecoder()
-               return try decoder.decode([Conversation].self, from: savedData)
-           }
-           catch {
-               logD("failed w error = \(error)")
-           }
-       }
-       return nil
-    }
-    func loadJSONData(filename: String) -> Data? {
-        let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
-
-        do {
-            let data = try Data(contentsOf: fileURL)
-            return data
-        } catch {
-            logD("Failed to read JSON data: \(error.localizedDescription)")
-            return nil
-        }
-    }
-    func saveJSONData(_ data: Data, filename: String) {
-        let fileURL = getDocumentsDirectory().appendingPathComponent(filename)
-
-        do {
-            try data.write(to: fileURL)
-        } catch {
-            logD("Failed to write JSON data: \(error.localizedDescription)")
-        }
-    }
-
-    func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
-        var retString  = ""
-        if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
-            for msg in conversation.messages {
-                retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
-            }
-
-        }
-        return retString
-    }
-
-    func convoName(_ convoId: Conversation.ID) -> String {
-        if let conversation = conversations.first(where: { $0.id == convoId }) {
-            return conversation.name ?? String(convoId.prefix(4))
-        }
-
-        return "Term"
-    }
 
 // END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
@@ -573,14 +326,13 @@ public class SettingsViewModel: ObservableObject {
 // END DEBUGGER VIEWMODEL ZONE ***********************************************************************
 
 // START STOREKIT ZONE ***********************************************************************
-
     func requestReview() {
         DispatchQueue.main.async {
             self.completedMessages += 1
             let newCompletionMsgs = self.completedMessages
-            print("\(newCompletionMsgs) % 7 = will review")
+            print("\(newCompletionMsgs) % 13 = will review")
 
-            guard newCompletionMsgs % 11 == 0 else {
+            guard newCompletionMsgs % 13 == 0 else {
                 return logD("no review today")
             }
 
@@ -591,21 +343,12 @@ public class SettingsViewModel: ObservableObject {
 // END STOREKIT ZONE ***********************************************************************
 
     init() {
-
         self.idProvider = {
             UUID().uuidString
         }
         self.dateProvider = Date.init
 
-        // BEGIN SIZE SETTING LOAD ZONE FROM DISK
-
-//        if UserDefaults.standard.double(forKey: "textSize") != 0 {
-//            self.textSize = CGFloat(UserDefaults.standard.double(forKey: "textSize"))
-//        }
-//        else {
-//            self.textSize = defaultTerminalFontSize
-//        }
-
+// BEGIN SIZE SETTING LOAD ZONE FROM DISK *********************************
         if UserDefaults.standard.double(forKey: "savedButtonSize") != 0 {
             self.buttonScale = UserDefaults.standard.double(forKey: "savedButtonSize")
         }
@@ -621,8 +364,7 @@ public class SettingsViewModel: ObservableObject {
         
         // END SIZE SETTING LOAD ZONE FROM DISK
 
-        // BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
-
+// BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
             self.openAIKey = key
@@ -649,28 +391,10 @@ public class SettingsViewModel: ObservableObject {
             //         print("Error retrieving ghaPat == reset")
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
         }
-
-        // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
+// END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
 #if !os(macOS)
-
-        // BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
-//        if let colorKey = UserDefaults.standard.string(forKey: "terminalBackgroundColor") {
-//
-//            self.terminalBackgroundColor =  Color(rawValue:colorKey) ?? .black
-//        }
-//        else {
-//            self.terminalBackgroundColor = .black
-//        }
-//
-//        if let colorKey = UserDefaults.standard.string(forKey: "terminalTextColor") {
-//
-//            self.terminalTextColor =  Color(rawValue:colorKey) ?? .white
-//        }
-//        else {
-//            self.terminalTextColor = .white
-//        }
-
+// BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
         if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
             self.buttonColor = Color(rawValue:colorKey) ?? .accentColor
         }
@@ -692,15 +416,12 @@ public class SettingsViewModel: ObservableObject {
             self.appTextColor = .primary
         }
 #else
-//        self.terminalBackgroundColor = .black
-//        self.terminalTextColor = .white
         self.buttonColor = .green
         self.backgroundColor = .gray
         self.appTextColor = .primary
 #endif
 
-        // BEGIN SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
-
+// BEGIN SUB ZONE FOR LOADING TERM / CHAT / SRC COLORS FROM DISK ******************************
         if UserDefaults.standard.double(forKey: "fontSizeSrcEditor") != 0 {
             self.fontSizeSrcEditor = UserDefaults.standard.double(forKey: "fontSizeSrcEditor")
         }
@@ -708,7 +429,6 @@ public class SettingsViewModel: ObservableObject {
             self.fontSizeSrcEditor = defaultSourceEditorFontSize
         }
 #if !os(macOS)
-
         if let colorKey = UserDefaults.standard.string(forKey: "plainColorSrcEditor") {
             self.plainColorSrcEditor =  Color(rawValue:colorKey) ?? .white
         }
@@ -779,19 +499,14 @@ public class SettingsViewModel: ObservableObject {
         self.numberColorSrcEditor = .white
         self.stringColorSrcEditor = .green
         self.identifierColorSrcEditor = .gray
-
         self.keywordColorSrcEditor = .gray
         self.commentColorSrceEditor = .gray
-
         self.editorPlaceholderColorSrcEditor = .gray
         self.backgroundColorSrcEditor = .gray
-
         self.lineNumbersColorSrcEditor = .gray
 #endif
-        // END SUB ZONE FOR LOADING SRC EDITOR COLORS FROM DISK\
-
-
-        // END COLOR LOAD FROM DISK ZONE ******************************
+// END SUB ZONE FOR LOADING  TERM / CHAT / SRC EDITOR COLORS FROM DISK ******************************
+// END COLOR LOAD FROM DISK ZONE ******************************
 
         // BEGIN AUDIO SETTING LOAD ZONE FROM DISK
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
@@ -817,24 +532,17 @@ public class SettingsViewModel: ObservableObject {
         
         // END AUDIO SETTING LOAD ZONE FROM DISK
 
-
         // START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
-
         refreshDocuments()
-
         // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
-        DispatchQueue.main.async {
 
+        DispatchQueue.main.async {
             if let convos = self.retrieveConversationContentFromDisk(forKey: jsonFileName) {
                 self.conversations = convos
             }
         }
     }
 
-    enum Device: Int {
-        case mobile, computer
-    }
-    
     func currentGitRepoKey() -> String {
         "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
     }
@@ -856,12 +564,9 @@ public class SettingsViewModel: ObservableObject {
 #if !os(macOS)
         switch theme {
         case .deepSpace:
-//            terminalBackgroundColor = Color(hex: 0x4A646C, alpha: 1)
-//            terminalTextColor = Color(hex: 0xF5FFFA, alpha: 1)
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1)
             buttonColor = Color(hex: 0x76D7EA, alpha: 1)
             backgroundColor = Color(hex: 0x008CB4, alpha: 1)
-
             plainColorSrcEditor = Color(hex: 0xBBD2D1, alpha: 1)
             numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
             stringColorSrcEditor =  Color(hex: 0xC1D82F, alpha: 1)
@@ -873,13 +578,9 @@ public class SettingsViewModel: ObservableObject {
             lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
 
         case .hacker:
-
-//            terminalBackgroundColor = Color(hex: 0x000000, alpha: 1)
-//            terminalTextColor = Color(hex: 0x39FF14, alpha: 1)
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
             buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
             backgroundColor = Color(hex: 0x2C3539, alpha: 1)
-
             plainColorSrcEditor = Color(hex: 0xF5F5F5, alpha: 1)
             numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1)
             stringColorSrcEditor =  Color(hex: 0xCCFF00, alpha: 1) // FIND A NEW COLOR
@@ -893,16 +594,15 @@ public class SettingsViewModel: ObservableObject {
 #endif
     }
 }
+
+// END THEME ZONE
+
 enum AppTheme {
     case deepSpace
     case hacker
 }
-
-// END THEME ZONE
-
-
 // CEREPROC VOICE ZONE
-// Mac OS Cereproc voices for Sw-S: cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
+// Mac OS Cereproc voices for LogicSage for Mac cmd line voices - not streamed to device. SwiftSageiOS acts as remote for this if you have your headphones hooked up to your mac and
 // are using muliple iOS devices for screens, etc.
 let cereprocVoicesNames = [
     "Heather",

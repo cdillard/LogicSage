@@ -35,6 +35,7 @@ struct TopBar: View {
                             .minimumScaleFactor(0.75)
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .padding(.leading, 7)
 
                     // IF Debugger is running....
                     if settingsViewModel.isDebugging {
@@ -46,6 +47,8 @@ struct TopBar: View {
                                 .minimumScaleFactor(0.75)
                         }
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .padding(.leading, 7)
+
                     }
 
                     Button(action: {
@@ -56,6 +59,7 @@ struct TopBar: View {
                             .minimumScaleFactor(0.75)
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .padding(.leading, 7)
                 }
 
                 Text(getName())
@@ -90,8 +94,18 @@ struct TopBar: View {
                             }
 
                             let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-                            ShareLink(item: "\(SettingsViewModel.link.absoluteString)\n\(convoText)", message: Text("LogicSage convo"))
+                            ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
+
+// TODO RENAME FROM HERE IF IT WASNT SO COMPLICAGTED
+//                            Button {
+//
+//                            } label: {
+//                                Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+//                                    .font(.body)
+//                                    .labelStyle(DemoStyle())
+//                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+//                            }
                         } label: {
                             Label("", systemImage: "ellipsis")
                                 .font(.body)

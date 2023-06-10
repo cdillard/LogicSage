@@ -12,6 +12,7 @@ import SwiftUI
 class WindowManager: ObservableObject {
     @Published var windows: [WindowInfo] = []
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {
+#if !os(macOS)
 
         // TODO: OFFSET NEW WINDOWS
         
@@ -19,6 +20,7 @@ class WindowManager: ObservableObject {
         windows.append(newWindow)
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
+#endif
     }
     func removeWindow(window: WindowInfo) {
         if let index = windows.firstIndex(of: window) {

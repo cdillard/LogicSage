@@ -8,14 +8,11 @@
 import Foundation
 import SwiftUI
 #if !os(macOS)
-
 struct FileChange: Identifiable, Equatable {
-
     var id = UUID()
     var fileURL: URL
     var status: String
     var lineChanges: [ChangeRow]
-
     var newFileContents: String
 }
 let unstagedTitle =  "Unstaged Changes"

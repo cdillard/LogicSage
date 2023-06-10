@@ -89,8 +89,6 @@ extension SettingsViewModel {
             selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
 
             selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
-
-
         }
         else {
             selectedVoiceIndexSaved = 0
@@ -101,12 +99,18 @@ extension SettingsViewModel {
     #endif
 
     }
+    // Double check this duplicate filterin lol
     func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
         var ret = [AVSpeechSynthesisVoice]()
-        AVSpeechSynthesisVoice.speechVoices().forEach {
+        AVSpeechSynthesisVoice.speechVoices().forEach { voice in
+            if ret.contains(where: { otherVoice in
+                otherVoice.name == voice.name
+            }) {
 
-            ret.append($0)
-
+            }
+            else {
+                ret.append(voice)
+            }
         }
         return ret
     }

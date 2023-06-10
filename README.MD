@@ -17,6 +17,45 @@
 ## news
 ----------------
 
+06-10-2023
+
+LogicSage 1.2.1 (4) Could it be the one?
+
+Hello LogicSage Enthusiasts,
+
+LogicSage 1.2.1 brings many enhancements to the app experience.
+
+Please give a try at using my app called LogicSage. It’s a mobile AI workspace that allows you to use GPTs to help you write code that you incorporate in your Xcode or Swift playgrounds projects. Or you can use it a a GPT chatting app, your choice.
+What will you ask LogicSage today? LogicSage is the Mobile AI workspace for iPadOS (and iOS) :). Join me as we spark creativity.
+
+We are excited to announce the release of LogicSage 1.2.1, an upgrade that brings you a plethora of enhancements to your favourite mobile AI workspace. LogicSage, an open-source AI workspace, is now more user-friendly than ever.
+
+Whether you're a developer looking to sharpen your programming skills or a curious mind eager to delve into AI, LogicSage is your perfect companion. It lets you interact with GPTs, view and edit code, and even submit pull requests. You can also use it as a GPT chat app – the choice is yours!
+
+Here's a sneak peek at what you can do with LogicSage:
+
+    View and examine app source code or any git repositories, with fully color-customizable viewing file windows.
+    Chat with GPTs directly via views in the app or through a command-line interface complete with a toolbar and command bar.
+    Integrate with text-to-speech software in both the client and server.
+    Create apps automatically in Xcode with Term window and LogicSage for Mac.
+    Enjoy interaction without a Mac
+
+And the best part? All you need is an AI API Key, which can be entered in the Settings menu.
+
+So, what are you waiting for? Unlock the power of the future with LogicSage and change the way you interact with technology. Try it out today on iPadOS or iOS.
+
+We're constantly working on enhancing your LogicSage experience. Stay tuned for Google and Link cmd support coming soon!
+
+Your feedback is invaluable to us. If you have any suggestions, ideas, or queries, feel free to drop a mail at chrisbdillard@gmail.com.
+
+Happy coding!
+
+Regards,
+Chris Dillard,
+Creator, LogicSage
+
+----------------
+
 06-06-2023
 
 LogicSage 1.2.1-2 in development!!!!

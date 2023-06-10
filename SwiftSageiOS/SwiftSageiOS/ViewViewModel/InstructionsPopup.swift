@@ -51,7 +51,7 @@ struct InstructionsPopup: View {
                                     pasteboard.string = email
 #endif
                                 }) {
-                                    Text(verbatim: "\(email) (Tap to Copy.)")
+                                    Text(verbatim: "\(email) (Tap to Copy)")
                                         .foregroundColor(settingsViewModel.buttonColor)
                                 }
                                 Text("Check out Settings to set your A.I. key. Set up LogicSage for Mac to use additional functions from the Terminal window. Terminal window with LogicSage for Mac allows you to use Xcode from your iOS device.")
@@ -76,19 +76,16 @@ struct InstructionsPopup: View {
                     .padding(geometry.size.width * 0.01)
 
                     Button(action: {
-
                         isPresented = false
                         setHasSeenInstructions(true)
-
                         if !hasSeenAnim() {
                             settingsViewModel.initalAnim = true
                         }
-
                     }) {
                         Text("Got it!")
-                            .foregroundColor(.white)
+                            .foregroundColor(settingsViewModel.appTextColor)
                             .padding(geometry.size.width * 0.01)
-                            .background(Color.green)
+                            .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
                     }
                     .padding(geometry.size.width * 0.01)
@@ -99,14 +96,13 @@ struct InstructionsPopup: View {
                 .edgesIgnoringSafeArea(.all)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .edgesIgnoringSafeArea(.all)
+//            .edgesIgnoringSafeArea(.all)
             .background(settingsViewModel.backgroundColor)
             .onAppear {
 #if !os(macOS)
                 UIScrollView.appearance().bounces = false
 #endif
             }
-            
         }
     }
 }

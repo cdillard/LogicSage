@@ -40,21 +40,16 @@ struct SwiftSageiOSApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                HStack(spacing: 0) {
-                    ContentView(settingsViewModel: settingsViewModel)
-                }
+            ContentView(settingsViewModel: settingsViewModel)
                 .onAppear {
 #if !os(macOS)
                     SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
 #endif
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
                         serviceDiscovery?.startDiscovering()
                     }
                     DispatchQueue.main.async {
 #if !os(macOS)
-
                         isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
 #endif
                         settingsViewModel.printVoicesInMyDevice()
@@ -84,7 +79,7 @@ struct SwiftSageiOSApp: App {
                 }
 #endif
             }
-        }
+
     }
 }
 func setHasSeenInstructions(_ hasSeen: Bool) {
@@ -93,31 +88,15 @@ func setHasSeenInstructions(_ hasSeen: Bool) {
 func hasSeenInstructions() -> Bool {
     return UserDefaults.standard.bool(forKey: "hasSeenInstructions")
 }
-class AppState: ObservableObject {
-    @Published var isInBackground: Bool = false
-    private var cancellables: [AnyCancellable] = []
-
-    init() {
-#if !os(macOS)
-        //        let didEnterBackground = NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-        //            .map { _ in true }
-        //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-        //            .removeDuplicates()
-        //
-        //        let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-        //            .map { _ in false }
-        //            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
-        //            .removeDuplicates()
-        //
-        //        didEnterBackground
-        //            .merge(with: willEnterForeground)
-        //            .sink { [weak self] in
-        //                self?.isInBackground = $0
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + reconnectInterval) {
-        //                        serviceDiscovery?.startDiscovering()
-        //                }
-        //            }
-        //            .store(in: &cancellables)
-#endif
-    }
+func setHasSeenLogo(_ hasSeen: Bool) {
+    UserDefaults.standard.set(hasSeen, forKey: "hasSeenLogo")
+}
+func hasSeenLogo() -> Bool {
+    return UserDefaults.standard.bool(forKey: "hasSeenLogo")
+}
+func hasSeenAnim() -> Bool {
+    return UserDefaults.standard.bool(forKey: "hasSeenAnim")
+}
+func setHasSeenAnim(_ hasSeen: Bool) {
+    UserDefaults.standard.set(hasSeen, forKey: "hasSeenAnim")
 }

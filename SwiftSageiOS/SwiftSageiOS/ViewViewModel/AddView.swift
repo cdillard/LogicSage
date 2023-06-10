@@ -168,9 +168,7 @@ struct AddView: View {
 
 
                                             showAddView.toggle()
-#if !os(macOS)
                                             windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
-#endif
                                         }
                                     }) {
                                         VStack {
@@ -196,9 +194,7 @@ struct AddView: View {
                                             // TODO: Hide or show terminal chat?
 
                                             showAddView.toggle()
-#if !os(macOS)
                                             windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
-#endif
                                         }
                                     }) {
                                         VStack {
@@ -222,9 +218,7 @@ struct AddView: View {
                                             showAddView.toggle()
                                             // TODO: Hide or show terminal chat?
 
-#if !os(macOS)
                                             windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
                                         }
                                     }) {
                                         VStack {
@@ -283,9 +277,7 @@ struct AddView: View {
                                     // TODO: Hide or show terminal chat?
 
                                     showAddView.toggle()
-#if !os(macOS)
                                     windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
-#endif
                                 }
                             }) {
                                 VStack {
@@ -321,9 +313,7 @@ struct AddView: View {
                                                     logD("Open container containing repo tree")
 
                                                     showAddView.toggle()
-#if !os(macOS)
                                                     windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
                                                 }
                                             }
                                             Text("Files")
@@ -353,9 +343,7 @@ struct AddView: View {
                                         logD("Open container containing repo tree")
 
                                         showAddView.toggle()
-#if !os(macOS)
                                         windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-#endif
                                     }
                                 }
                                 Text("Windows")

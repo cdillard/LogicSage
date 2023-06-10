@@ -7,14 +7,17 @@
 
 import Foundation
 import SwiftUI
-#if !os(macOS)
 
-// Placeholder replaced by geometry reader.
 var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
+
+#if !os(macOS)
+
+// Placeholder replaced by geometry reader.
+
 struct WindowView: View {
-    var window: WindowInfo
+     var window: WindowInfo
     @State private var position: CGSize = .zero
 
     @State var frame: CGRect
@@ -33,6 +36,7 @@ struct WindowView: View {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    let url = URL(string:SettingsViewModel.shared.defaultURL)
 
     var body: some View {
         GeometryReader { geometry in
@@ -46,7 +50,6 @@ struct WindowView: View {
                 .shadow(color:settingsViewModel.appTextColor, radius: 3)
                 .frame(width: window.frame.width, height: window.frame.height)
                 .edgesIgnoringSafeArea(.bottom)
-
             }
             .offset(position)
             .onAppear() {
@@ -72,68 +75,37 @@ struct WindowView: View {
 
     private func recalculateWindowSize(size: CGSize) {
         if !isResizeGestureActive {
-            
             viewSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         }
     }
     private func windowContent() -> some View {
-        let url = URL(string:settingsViewModel.defaultURL)
+        return AnyView(
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: window.windowType), windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        )
+    }
+}
 
-        switch window.windowType {
-        case .webView:
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .webView, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .file:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .editor, windowManager: windowManager, window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .chat:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .chat, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .simulator:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .simulator, windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .repoTreeView:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .repoTreeView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .windowListView:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .windowListView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .changeView:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .changeView, windowManager: windowManager,  window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .workingChangesView:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .workingChangesView,  windowManager: windowManager, window: window,sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        case .project:
-
-            return AnyView(
-                SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: .project,  windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position,webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            )
-        }
+func windowTypeToViewMode(windowType: WindowInfo.WindowType) -> ViewMode {
+    switch windowType {
+    case .webView:
+        return .webView
+    case .file:
+        return .editor
+    case .chat:
+        return .chat
+    case .simulator:
+        return .simulator
+    case .repoTreeView:
+        return .repoTreeView
+    case .windowListView:
+        return .windowListView
+    case .changeView:
+        return .changeView
+    case .workingChangesView:
+        return .workingChangesView
+    case .project:
+        return .project
     }
 }
 #endif

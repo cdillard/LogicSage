@@ -18,7 +18,7 @@ struct ChatView: View {
 
     @Binding var conversations: [Conversation]
 
-    var window: WindowInfo?
+     var window: WindowInfo
     @Binding var isEditing: Bool
     @Binding var isLockToBottom: Bool
 
@@ -40,7 +40,7 @@ struct ChatView: View {
             VStack(spacing: 0) {
 
                 // TODO: OPTIMIZE THIS INEFFECIENT
-                let convoText =  window?.convoId == Conversation.ID(-1) ? settingsViewModel.consoleManagerText : settingsViewModel.convoText(conversations, window: window)
+                let convoText =  window.convoId == Conversation.ID(-1) ? settingsViewModel.consoleManagerText : settingsViewModel.convoText(conversations, window: window)
                 
                 // We reuse the SourceCodeEditor as GPT chat view :)
                 SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
@@ -94,7 +94,7 @@ struct ChatView: View {
                                 }
                             }
                         // Placeholder...
-                        Text("Type \(window?.convoId == Conversation.ID(-1) ? "Cmd" : "Msg")...")
+                        Text("Type \(window.convoId == Conversation.ID(-1) ? "Cmd" : "Msg")...")
                             .padding(.leading,4)
                             .fontWeight(.light)
                             .font(.system(size: settingsViewModel.fontSizeSrcEditor))
@@ -131,7 +131,7 @@ struct ChatView: View {
                         }
                     }
 
-                    if window?.convoId == Conversation.ID(-1) {
+                    if window.convoId == Conversation.ID(-1) {
                         // EXEC BUTTON
                         Spacer()
 
@@ -224,7 +224,6 @@ struct ChatView: View {
             VStack { }
 #endif
         }
-        
     }
     func resizableButtonImage(systemName: String, size: CGSize) -> some View {
         Image(systemName: systemName)
@@ -240,7 +239,7 @@ struct ChatView: View {
 
             return
         }
-        if let convoID = window?.convoId {
+        if let convoID = window.convoId {
             if convoID == Conversation.ID(-1) {
                 screamer.sendCommand(command: chatText)
             }

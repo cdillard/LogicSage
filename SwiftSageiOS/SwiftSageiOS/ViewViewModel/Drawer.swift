@@ -99,7 +99,6 @@ struct DrawerContent: View {
 
                                     DispatchQueue.main.async {
                                         withAnimation {
-
                                             showAddView = true
                                         }
                                     }

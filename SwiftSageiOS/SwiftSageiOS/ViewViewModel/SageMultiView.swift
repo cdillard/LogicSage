@@ -28,7 +28,7 @@ enum ViewMode {
 struct SageMultiView: View {
 
     let dragDelay = 0.333666
-    let dragsPerSecond = 45.0
+    let dragsPerSecond = 60.0
 
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel

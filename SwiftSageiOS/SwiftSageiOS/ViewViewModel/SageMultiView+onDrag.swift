@@ -17,7 +17,9 @@ extension SageMultiView {
     func dragsOnChange(value: DragGesture.Value?) {
         if !isDragDisabled {
             if !isMoveGestureActivated {
-                self.windowManager.bringWindowToFront(window: self.window)
+                DispatchQueue.main.async {
+                    self.windowManager.bringWindowToFront(window: self.window)
+                }
                 isMoveGestureActivated = true
             }
             func doPostConstraint() {
@@ -215,7 +217,7 @@ extension SageMultiView {
             let setY = max(topYBound, newY)
            // print("setting pos to \(setX) and \(setY)")
 
-            position = CGSize(width:  setX,height: setY)
+            position = CGSize(width:setX,height:setY)
         }
     }
 }

@@ -97,7 +97,6 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
 
         self._isMoveGestureActive = isMoveGestureActive
         self._isResizeGestureActive = isResizeGestureActive
-
     }
     
     public func makeCoordinator() -> Coordinator {
@@ -122,34 +121,33 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             _ = view.becomeFirstResponder()
         }
 
-        // TODO: Incorporate this performance fixing code.
-        //                // Only auto scroll when not gesturing
-        //                guard !isResizeGestureActive && !isMoveGestureActive else { return }
-
-
         let overrideText = custom.overrideText()
-        // TODO: Make sure -- Is it strictly needed?????
+        // Is it strictly needed?????
       //  DispatchQueue.main.async {
 
-        view.textView.isEditable = isEditing
+            view.textView.isEditable = isEditing
 
-        view.contentTextView.isEditable = isEditing
-
-
-        view.isEditing = isEditing
-        view.textView.isSelectable = isEditing
-        view.contentTextView.isSelectable = isEditing
-        if let overrideText = overrideText {
+            view.contentTextView.isEditable = isEditing
 
 
-            context.coordinator.wrappedView.text = overrideText
+            view.isEditing = isEditing
+            view.textView.isSelectable = isEditing
+            view.contentTextView.isSelectable = isEditing
+            if let overrideText = overrideText {
 
-            if isLocktoBottom {
-                let location = view.textView.text.count - 1
-                let bottom = NSMakeRange(location, 1)
-                view.textView.scrollRangeToVisible(bottom)
+
+                context.coordinator.wrappedView.text = overrideText
+//
+//                // Only auto scroll when not gesturing
+//                guard !isResizeGestureActive && !isMoveGestureActive else { return }
+
+                if isLocktoBottom {
+                    let location = view.textView.text.count - 1
+                    let bottom = NSMakeRange(location, 1)
+                    view.textView.scrollRangeToVisible(bottom)
+                }
             }
-        }
+       // }
     }
     #endif
     

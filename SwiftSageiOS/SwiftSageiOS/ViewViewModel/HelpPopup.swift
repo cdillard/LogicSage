@@ -41,17 +41,18 @@ struct HelpPopup: View {
                                         pasteboard.string = email
 #endif
                                     }) {
-                                        Text(verbatim: "\(email) (Tap to Copy.)")
+                                        Text(verbatim: "\(email) (Tap to Copy)")
                                             .foregroundColor(settingsViewModel.buttonColor)
                                     }
                                 }
 
                                 Group {
-                                    
-                                    Text("Tips:\nYou can dock terminals to side of screen to get them out of way.\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
+                                    Text("Tips:\nKeyboards can be swiped away or dismissed with Done button.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
                                     let verGoodMoji = veryGoodOpen ? "🔽" : "▶️"
                                     
                                     Text("Tap me! \(verGoodMoji) , I will expand/collapse a section...")
+                                        .font(.subheadline)
+
                                         .onTapGesture {
                                             playSelect()
                                             
@@ -67,15 +68,14 @@ struct HelpPopup: View {
                                     Group {
                                         Text("Set up LogicSage for Mac:")
 
-                                        Text("OPTIONAL: Set up server to use computer commands. This allows you to use Xcode from your iOS device in the Term window.")
+                                        Text("OPTIONAL: Set up LogicSage for Mac to use computer commands. This allows you to use Xcode from your iOS device in the Term window.")
 
                                         Text("Follow this order when running LogicSage for Mac.")
                                     }
                                     Group {
-                                        Text("0. run SwiftSageServer and Swifty-GPT with ./run.sh in the Project root")
+                                        Text("0. run LogicSage for Mac with ./run.sh in the Project root")
                                         Text("1. Background/Foreground your LogicSage clients, you should see websocket connected. ")
-
-                                        Text("-COMMANDS\nCheck the following link for the Swifty-GPT server command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift\nmobile command list:\n https://github.com/cdillard/LogicSage/blob/main/SwiftSageiOS/SwiftSageiOS/Command/CommandTable.swift")
+                                        Text("-In the Term window you can use the following command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift")
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .accentColor(settingsViewModel.buttonColor)
                                     }
@@ -110,10 +110,8 @@ struct HelpPopup: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
             .background(settingsViewModel.backgroundColor)
-
             .onAppear {
 #if !os(macOS)
-
                 UIScrollView.appearance().bounces = false
 #endif
             }

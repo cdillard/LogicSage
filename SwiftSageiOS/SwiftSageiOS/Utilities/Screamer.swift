@@ -13,6 +13,15 @@ var screamer = ScreamClient()
 
 let PING_INTERVAL: TimeInterval = 60.666
 
+let recipientJsonKey = "recipient"
+let messageJsonKey = "message"
+let usernameJsonKey = "username"
+let passwordJsonKey = "password"
+let commandJsonKey = "command"
+let serverUsernameValue = "SERVER"
+let filenameJsonKey = "filename"
+let filesizeJsonKey = "filesize"
+
 class ScreamClient: WebSocketDelegate {
 
     let reconnectInterval: TimeInterval = 2.666
@@ -42,9 +51,9 @@ class ScreamClient: WebSocketDelegate {
     func logOpenReport() {
 #if !os(macOS)
             let devType = UIDevice.current.userInterfaceIdiom == .phone ? "iOS" : "iPadOS"
-            logD("WebSocket connected \(devType) device.\n\(SettingsViewModel.shared.logoAscii5())")
+            logD("WebSocket connected \(devType) device.\n\(logoAscii5())")
 #else
-            logD("WebSocket connected Mac device.\n\(SettingsViewModel.shared.logoAscii5())")
+            logD("WebSocket connected Mac device.\n\(logoAscii5())")
 #endif
     }
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
@@ -53,7 +62,7 @@ class ScreamClient: WebSocketDelegate {
 
             logOpenReport()
 
-            let authData: [String: Any] = ["username": SettingsViewModel.shared.userName, "password": SettingsViewModel.shared.password]
+            let authData: [String: Any] = [usernameJsonKey: SettingsViewModel.shared.userName, passwordJsonKey: SettingsViewModel.shared.password]
             do {
             let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed]) 
                 let authString = String(data: authJSON, encoding: .utf8)
@@ -78,8 +87,8 @@ class ScreamClient: WebSocketDelegate {
 #if !os(macOS)
             do {
                 let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
-                guard let recipient = json?["recipient"] as? String,
-                      let message = json?["message"] as? String else {
+                guard let recipient = json?[recipientJsonKey] as? String,
+                      let message = json?[messageJsonKey] as? String else {
                     return logD("malformed text received on ws")
                 }
 
@@ -121,7 +130,7 @@ class ScreamClient: WebSocketDelegate {
                 isTransferringWorkspace = false
 
                 DispatchQueue.main.async {
-                    SettingsViewModel.shared.receivedWorkspaceData = self.receivedWorkspaceData
+                    SettingsViewModel.shared.recievedWorkspaceData = self.receivedWorkspaceData
                 }
             }
 // END HANDLE WORKSPACE STREAM ZONE ******************************************************
@@ -167,10 +176,10 @@ class ScreamClient: WebSocketDelegate {
             else if isTransferringWallpaper {
 
                 if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                    receivedWallpaperFileName = json["filename"] as? String
-                    receivedWallpaperFileSize = json["filesize"] as? Int
-                } else {
-
+                    receivedWallpaperFileName = json[filenameJsonKey] as? String
+                    receivedWallpaperFileSize = json[filesizeJsonKey] as? Int
+                }
+                else {
                     receivedData.append(data)
                 }
             }
@@ -259,38 +268,26 @@ class ScreamClient: WebSocketDelegate {
         }
     }
     func sendCommand(command: String) {
-        logD("Executing: \(command)")
+        logD("LogicSage handling \(command)...")
+        if command == "st" || command == "stop" || command == "STOP" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ;  }
 
-//        if SettingsViewModel.shared.currentMode == .mobile {
-//            logD("Handling \(command) mobile mode...")
-//            if callLocalCommand(command) {
-//                return
-//            }
-//        }
-//        else {
-            // TODO: The idea, debate, g server, rand should be handled in the "Server chat"
-            logD("LogicSage handling \(command)...")
-            if command == "st" || command == "stop" || command == "STOP" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ;  }
-
-            if websocket != nil {
-                let messageData: [String: Any] = ["recipient": "SERVER", "command": command]
-                do {
-                    let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
-                    let messageString = String(data: messageJSON, encoding: .utf8)
-                    websocket.write(string: messageString ?? "")
-                }
-                catch {
-                    logD("error = \(error)")
-                }
-
+        if websocket != nil {
+            let messageData: [String: Any] = [recipientJsonKey: serverUsernameValue, commandJsonKey: command]
+            do {
+                let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
+                let messageString = String(data: messageJSON, encoding: .utf8)
+                websocket.write(string: messageString ?? "")
             }
-            else {
-                logD("Websocket nil, not handling command")
-                logD("0. Set your Computers API Key for A.I. in GPT-Info.plist before building and running the LogicSage ./run.sh")
-
-                disconnect()
+            catch {
+                logD("error = \(error)")
             }
-      //  }
+        }
+        else {
+            logD("Websocket nil, not handling command")
+            logD("0. Set your Computers API Key for A.I. in GPT-Info.plist before building and running the LogicSage ./run.sh")
+
+            disconnect()
+        }
     }
     func sendPing() {
         guard let socket = websocket else { return }

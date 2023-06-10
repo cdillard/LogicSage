@@ -91,15 +91,8 @@ struct SettingsView: View {
                         // MODE PICKER
                         Group {
                             HStack {
-                                //                                VStack {
-                                //                                    DevicePicker(settingsViewModel: settingsViewModel)
-                                //
-                                //                                    Text("mode = \(settingsViewModel.currentMode == .mobile ? "mobile" : "computer")").font(.body)
-                                //                                        .foregroundColor(settingsViewModel.appTextColor)
-                                //                                }
-
                                 // PLugItIn BUTTON
-                                Button("🔌") {
+                                Button("🔌:Reconnect") {
                                     logD("force reconnect")
                                     logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
 
@@ -119,13 +112,16 @@ struct SettingsView: View {
                                 }
                                 .font(.body)
                                 .lineLimit(nil)
+                                .foregroundColor(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                             }
 
                         }
                         VStack {
                             Group {
-                                Text("\(showAPISettings ? "🔽" : "▶️") API settings").font(.body)
+                                Text("\(showAPISettings ? "🔽" : "▶️") API settings")
+
+                                    .font(.headline)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .padding(8)
                             }
@@ -135,11 +131,6 @@ struct SettingsView: View {
                                 withAnimation {
                                     showAPISettings.toggle()
                                 }
-                            }
-                            if showAPISettings {
-
-
-
                             }
                         }
                         if showAPISettings {
@@ -306,7 +297,7 @@ struct SettingsView: View {
                                         .cornerRadius(8)
                                 }
                             }
-                            Text("load mode")
+                            Text("Set Load mode")
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .font(.caption)
                                 .fontWeight(.semibold)
@@ -314,7 +305,8 @@ struct SettingsView: View {
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                         Group {
-                            Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") sizes").font(.body)
+                            Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") sizes")
+                                .font(.headline)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
 
@@ -392,7 +384,7 @@ struct SettingsView: View {
 
                                     }
                                     HStack {
-                                        Text("Stop button")
+                                        Text("Cmd buttons")
                                             .fontWeight(.semibold)
                                             .foregroundColor(settingsViewModel.appTextColor)
 
@@ -438,7 +430,8 @@ struct SettingsView: View {
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
                     Group {
-                        Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color").font(.body)
+                        Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color")
+                            .font(.headline)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
                     }
@@ -459,8 +452,10 @@ struct SettingsView: View {
                                     Text("Themes:").font(.body)
 
                                     Text("Deep Space Sparkle")
-                                    //                                        .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
-                                    //                                        .background( UIColor(red: 74, green: 100, blue: 108))
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+//                                         .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
+//                                          .background( UIColor(red: 74, green: 100, blue: 108))
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
@@ -471,8 +466,10 @@ struct SettingsView: View {
 
                                         }
                                     Text("Hackeresque")
-                                    //                                        .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
-                                    //                                        .background( UIColor.black)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+//                                         .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
+//                                         .background( UIColor.black)
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
@@ -525,7 +522,8 @@ struct SettingsView: View {
                         }
                         // SOURCE EDITOR COLORS SETTINGS ZONE
                         Group {
-                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") srceditor colors").font(.body)
+                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") srceditor colors")
+                                .font(.headline)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
 
@@ -652,7 +650,8 @@ struct SettingsView: View {
                     }
 
                     Group {
-                        Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings").font(.body)
+                        Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings")
+                            .font(.headline)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
 
@@ -665,91 +664,45 @@ struct SettingsView: View {
                             settingsViewModel.showAudioSettings.toggle()
                         }
                     }
-
+                    // TODO:Double check toggling ducing Audio and audio output this way works.
                     if settingsViewModel.showAudioSettings {
-                        //                        // ENABLE MIC BUTTON
-                        //                        Text("\(settingsViewModel.hasAcceptedMicrophone == true ? "Mic enabled" : "Enable mic")")
-                        //                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        //                            .foregroundColor(settingsViewModel.appTextColor)
-                        //
-                        //                        Button(action: {
-                        //                            withAnimation {
-                        //                                logD("Requesing mic permission...")
-                        //                                settingsViewModel.requestMicrophoneAccess { granted in
-                        //                                    settingsViewModel.hasAcceptedMicrophone = granted == true
-                        //                                }
-                        //                            }
-                        //                        }) {
-                        //                            resizableButtonImage(systemName:
-                        //                                                    "mic.badge.plus",
-                        //                                                 size: geometry.size)
-                        //                            .fontWeight(.bold)
-                        //                            .background(settingsViewModel.buttonColor)
-                        //                            .cornerRadius(8)
-                        //
-                        //                        }
-                        //                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        //                        .padding(8)
-
                         // IOS AUDIO SETTING ON/OFF
-                        Text("\(settingsViewModel.voiceOutputenabled ? "Disable" : "Enable") iOS audio output (this device)")
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        HStack {
-                            Button  {
-                                withAnimation {
-#if !os(macOS)
-                                    SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-                                    if settingsViewModel.voiceOutputenabled {
-                                        settingsViewModel.stopVoice()
-                                    }
-
-                                    settingsViewModel.configureAudioSession()
-                                    settingsViewModel.printVoicesInMyDevice()
-
-                                    settingsViewModel.voiceOutputenabled.toggle()
-                                    settingsViewModel.voiceOutputenabledUserDefault.toggle()
-#endif
-                                }
-
-                            } label: {
-                                resizableButtonImage(systemName:
-                                                        settingsViewModel.voiceOutputenabled ? "speaker.wave.2.bubble.left.fill" : "speaker.slash.circle.fill",
-                                                     size: geometry.size)
-                                .fontWeight(.bold)
-                                .cornerRadius(8)
+                        Toggle(isOn: $settingsViewModel.voiceOutputenabled) {
+                            VStack(spacing: 4) {
+                                Text("Audio Output")
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                             }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .padding(8)
-
-                            if settingsViewModel.voiceOutputenabled {
-                                Button  {
-                                    withAnimation {
-                                        logD("duck audio: \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-
-                                        settingsViewModel.duckingAudio.toggle()
-                                    }
-                                } label: {
-                                    ZStack {
-                                        VStack {
-                                            Text("Duck Audio?")
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .font(.body)
-                                            Text("🦆")
-                                        }
-                                        if settingsViewModel.duckingAudio {
-                                            Text("❌")
-                                                .opacity(0.74)
-                                        }
-                                    }
-                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                    .lineLimit(1)
-                                    .background(settingsViewModel.buttonColor)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(8)
+                        }
+                        .frame( maxWidth: geometry.size.width / 3)
+                        .onChange(of: settingsViewModel.voiceOutputenabled) { value in
+                            withAnimation {
+#if !os(macOS)
+                                SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
+                                if settingsViewModel.voiceOutputenabled {
+                                    settingsViewModel.stopVoice()
                                 }
-                                .padding(8)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                                settingsViewModel.configureAudioSession()
+                                settingsViewModel.printVoicesInMyDevice()
+
+                                settingsViewModel.voiceOutputenabled.toggle()
+                                settingsViewModel.voiceOutputenabledUserDefault.toggle()
+#endif
+                            }
+
+                        }
+                        HStack {
+                            if settingsViewModel.voiceOutputenabled {
+                                // IOS AUDIO SETTING ON/OFF
+                                Toggle(isOn: $settingsViewModel.duckingAudio) {
+                                    VStack(spacing: 4) {
+                                        Text("Duck Audio")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    }
+                                }
+                                .frame( maxWidth: geometry.size.width / 3)
                             }
                         }
                     }

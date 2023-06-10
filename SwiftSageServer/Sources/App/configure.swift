@@ -5,9 +5,9 @@ import var Darwin.stdout
 
 // SwiftSageServer
 
-// Run with `swift run` in the SwiftSageServer directory.
+// Run with `./run.sh` in the LogicSage directory.
 
-let debugging = true
+let debugging = false
 
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] +
 ["░", "▒", "▓", "█","░", "▒","▓", "█","░", "▒","░", "▒", "▓", "█","░"] + ["."]

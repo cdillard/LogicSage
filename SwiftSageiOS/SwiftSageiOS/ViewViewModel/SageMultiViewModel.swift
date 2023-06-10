@@ -10,30 +10,44 @@ import Foundation
 private var lastConsoleUpdate = Date()
 class SageMultiViewModel: ObservableObject {
     @ObservedObject var settingsViewModel: SettingsViewModel
-    
-    @Published var windowInfo: WindowInfo
+    @ObservedObject var windowManager: WindowManager
+
+    @Published var windowInfo: WindowInfo?
+    @Published var windowId: UUID
+
     @Published var sourceCode: String
     @Published var changes: [ChangeRow] = []
 
     var originalSourceCode: String
 
-    init(settingsViewModel: SettingsViewModel, windowInfo: WindowInfo) {
+    init(settingsViewModel: SettingsViewModel, windowId: UUID, windowManager: WindowManager) {
         self.settingsViewModel = settingsViewModel
-        self.windowInfo = windowInfo
-
-         if let convoId = windowInfo.convoId {
-            let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-            self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
-        }
-        else if windowInfo.convoId == Conversation.ID(-1) {
-            self.sourceCode = settingsViewModel.consoleManagerText
-
+        self.windowId = windowId
+        self.windowManager = windowManager
+        if let winInfo = windowManager.windows.first(where: { $0.id == windowId }) {
+            self.windowInfo = winInfo
+            
+            if let convoId = winInfo.convoId {
+                let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: winInfo)
+                self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
+            }
+            else if winInfo.convoId == Conversation.ID(-1) {
+                self.sourceCode = settingsViewModel.consoleManagerText
+                
+            }
+            else {
+                self.sourceCode = winInfo.fileContents
+            }
+            
+            self.originalSourceCode = winInfo.fileContents
         }
         else {
-            self.sourceCode = windowInfo.fileContents
+            self.sourceCode = ""
+            self.originalSourceCode = ""
+
         }
 
-        self.originalSourceCode = windowInfo.fileContents
+
     }
 
     func refreshChanges(newText: String) {

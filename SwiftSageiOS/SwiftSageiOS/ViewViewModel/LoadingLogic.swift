@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-
 let logoAscii8 = """
 🤖 👽 Unleash
 the spark ⚡️ Creativity
@@ -24,21 +23,7 @@ let logoAscii6 = """
 ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
 ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
 """
-
-func setHasSeenLogo(_ hasSeen: Bool) {
-    UserDefaults.standard.set(hasSeen, forKey: "hasSeenLogo")
-}
-func hasSeenLogo() -> Bool {
-    return UserDefaults.standard.bool(forKey: "hasSeenLogo")
-}
-func hasSeenAnim() -> Bool {
-    return UserDefaults.standard.bool(forKey: "hasSeenAnim")
-}
-func setHasSeenAnim(_ hasSeen: Bool) {
-    UserDefaults.standard.set(hasSeen, forKey: "hasSeenAnim")
-}
 let animFrameDuration: CGFloat = 0.01
-
 
 var chosenLogo = getRandomLogo()
 
@@ -113,7 +98,6 @@ struct LoadingLogicView: View {
 
             .onAppear {
                 if hasSeenAnim() {
-
                 }
                 else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.98) {

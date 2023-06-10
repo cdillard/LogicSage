@@ -150,6 +150,8 @@
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
 		B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */; };
 		B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */; };
+		B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */; };
+		B7DB97E12A32EABB00304B80 /* SettingsViewModel+Convo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -325,6 +327,8 @@
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
 		B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizingHandle.swift; sourceTree = "<group>"; };
 		B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ColorGen.swift"; sourceTree = "<group>"; };
+		B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Websocket.swift"; sourceTree = "<group>"; };
+		B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Convo.swift"; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -757,6 +761,8 @@
 				B78EAF5E2A116D76003095A2 /* Github */,
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
+				B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */,
+				B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */,
 				B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */,
 			);
 			path = Settings;
@@ -1039,6 +1045,7 @@
 				B7378BFD2A1B192600A1D44C /* HapticMan.swift in Sources */,
 				B7191F2929F9F09A00078D8D /* TextViewWrapperView.swift in Sources */,
 				B78DA96C2A0312F1002343AB /* HelpPopup.swift in Sources */,
+				B7DB97E12A32EABB00304B80 /* SettingsViewModel+Convo.swift in Sources */,
 				B7544E302A191BCE00961F4C /* AudioTranscriptionQuery.swift in Sources */,
 				B7191F2C29F9F09A00078D8D /* Paragraphs.swift in Sources */,
 				B737F40B29F837CE00E57577 /* SettingsVIew.swift in Sources */,
@@ -1072,6 +1079,7 @@
 				B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
+				B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */,
 				B7544E322A191BCE00961F4C /* ModelsResult.swift in Sources */,
 				B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */,
 				B7544E362A191BCE00961F4C /* CompletionsQuery.swift in Sources */,
@@ -1260,7 +1268,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1274,9 +1282,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSageDev;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "LogicSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1312,7 +1319,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftSageiOS/SwiftSageiOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftSageiOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1324,9 +1331,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSage;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "LogicSage uses your mic and speech recognition to capture commands";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
