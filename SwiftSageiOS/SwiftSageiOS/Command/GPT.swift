@@ -16,7 +16,7 @@ import Foundation
 class GPT {
     static let shared = GPT()
 
-    let openAI: OpenAI
+    var openAI: OpenAI
 
     init() {
         let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
@@ -27,6 +27,18 @@ class GPT {
         let session = URLSession(configuration: urlConfig)
 
         openAI = OpenAI(configuration: configuration, session: session)
+    }
+
+    func resetOpenAI() {
+        let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
+
+
+        let identifier = "\(bundleID)bger"
+        let urlConfig = URLSessionConfiguration.background(withIdentifier: identifier)
+        let session = URLSession(configuration: urlConfig)
+
+        openAI = OpenAI(configuration: configuration, session: session)
+
     }
 
     // Function to send a prompt to GPT via the OpenAI API
@@ -54,80 +66,84 @@ class GPT {
 
         print("Prompting \(prompt.count)...\n🐑🐑🐑\n")
 
-        Task {
+        //        Task {
 
-            guard let conversationIndex = await SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
-                logD("Unable to find conversations id == \(conversationId) ... failing")
+        guard let conversationIndex = SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
+            logD("Unable to find conversations id == \(conversationId) ... failing")
 
-                return
-            }
+            return
+        }
 
-            await SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
-                id: SettingsViewModel.shared.idProvider(),
-                role: .user,
-                content: manualPrompt ? config.manualPromptString : prompt,
-                createdAt: SettingsViewModel.shared.dateProvider()
-            ))
-            
-            guard let conversation = await SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
-                logD("Unable to find conversations id == \(conversationId) ... failing")
+        DispatchQueue.main.async {
+            Task {
+                SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
+                    id: SettingsViewModel.shared.idProvider(),
+                    role: .user,
+                    content: manualPrompt ? config.manualPromptString : prompt,
+                    createdAt: SettingsViewModel.shared.dateProvider()
+                ))
 
-                return
-            }
+                guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
+                    logD("Unable to find conversations id == \(conversationId) ... failing")
 
-            await SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
-            
-            do {
-                let model: Model = await Model(SettingsViewModel.shared.openAIModel)
-
-                let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
-                    query: ChatQuery(
-                        model: model,
-                        messages: conversation.messages.map { message in
-                            Chat(role: message.role, content: message.content)
-                        }
-                    )
-                )
-                var completeMessage = ""
-                for try await partialChatResult in chatsStream {
-                    for choice in partialChatResult.choices {
-                        let existingMessages = await SettingsViewModel.shared.conversations[conversationIndex].messages
-                        let message = Message(
-                            id: partialChatResult.id,
-                            role: choice.delta.role ?? .assistant,
-                            content: choice.delta.content ?? "",
-                            createdAt: Date(timeIntervalSince1970: TimeInterval(partialChatResult.created))
-                        )
-                        if let existingMessageIndex = existingMessages.firstIndex(where: { $0.id == partialChatResult.id }) {
-                            // Meld into previous message
-                            let previousMessage = existingMessages[existingMessageIndex]
-                            let combinedMessage = Message(
-                                id: message.id, // id stays the same for different deltas
-                                role: message.role,
-                                content: previousMessage.content + message.content,
-                                createdAt: message.createdAt
-                            )
-                            //                            logD("melding to existing msg")
-
-                            await SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
-
-                        } else {
-                            //                            logD("append to existing msg")
-
-                            await SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
-                        }
-
-                        // old hndlers
-                        completion(message.content, true, false)
-                        completeMessage += message.content
-                    }
+                    return
                 }
-                completion(completeMessage, true, true)
 
-            }
-            catch {
-                logD("failed wit error = \(error)")
-                await SettingsViewModel.shared.setConversationError(convoId: conversationId, error: error)
+                SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
+
+
+                do {
+                    let model: Model = Model(SettingsViewModel.shared.openAIModel)
+
+                    let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
+                        query: ChatQuery(
+                            model: model,
+                            messages: conversation.messages.map { message in
+                                Chat(role: message.role, content: message.content)
+                            }
+                        )
+                    )
+                    var completeMessage = ""
+                    for try await partialChatResult in chatsStream {
+                        for choice in partialChatResult.choices {
+                            let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
+                            let message = Message(
+                                id: partialChatResult.id,
+                                role: choice.delta.role ?? .assistant,
+                                content: choice.delta.content ?? "",
+                                createdAt: Date(timeIntervalSince1970: TimeInterval(partialChatResult.created))
+                            )
+                            if let existingMessageIndex = existingMessages.firstIndex(where: { $0.id == partialChatResult.id }) {
+                                // Meld into previous message
+                                let previousMessage = existingMessages[existingMessageIndex]
+                                let combinedMessage = Message(
+                                    id: message.id, // id stays the same for different deltas
+                                    role: message.role,
+                                    content: previousMessage.content + message.content,
+                                    createdAt: message.createdAt
+                                )
+                                //                            logD("melding to existing msg")
+
+                                SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+
+                            } else {
+                                //                            logD("append to existing msg")
+
+                                SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
+                            }
+
+                            // old hndlers
+                            completion(message.content, true, false)
+                            completeMessage += message.content
+                        }
+                    }
+                    completion(completeMessage, true, true)
+
+                }
+                catch {
+                    logD("failed wit error = \(error)")
+                    SettingsViewModel.shared.setConversationError(convoId: conversationId, error: error)
+                }
             }
         }
     }

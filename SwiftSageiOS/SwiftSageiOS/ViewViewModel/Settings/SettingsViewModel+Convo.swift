@@ -23,19 +23,18 @@ extension SettingsViewModel {
         saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
 
     }
-    func appendMessageToConvoIndex(index: Int, message: Message) async {
-        conversations[index].messages.append(message)
+    func appendMessageToConvoIndex(index: Int, message: Message) {
+            self.conversations[index].messages.append(message)
     }
-    func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) async {
-        conversations[index].messages[existingMessageIndex] = message
+    func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
+            self.conversations[index].messages[existingMessageIndex] = message
     }
-    func nilOutConversationErrorsAt(convoId: Conversation.ID) async {
-        conversationErrors[convoId] = nil
+    func nilOutConversationErrorsAt(convoId: Conversation.ID) {
+            self.conversationErrors[convoId] = nil
     }
-    func setConversationError(convoId: Conversation.ID, error: Error) async {
-        conversationErrors[convoId] = error
+    func setConversationError(convoId: Conversation.ID, error: Error) {
+            self.conversationErrors[convoId] = error
     }
-
 
     func sendChatText(_ convoID: Conversation.ID, chatText: String) {
         gptCommand(conversationId: convoID, input: chatText)
@@ -48,23 +47,17 @@ extension SettingsViewModel {
     }
     func deleteConversation(_ conversationId: Conversation.ID) {
         conversations.removeAll(where: { $0.id == conversationId })
-
         latestWindowManager?.removeWindowsWithConvoId(convoID: conversationId)
         saveConvosToDisk()
     }
     func createAndOpenNewConvo() {
         let convo = createConversation()
-
         saveConvosToDisk()
-
         openConversation(convo)
     }
     func openConversation(_ convoId: Conversation.ID) {
         latestWindowManager?.removeWindowsWithConvoId(convoID: convoId)
-
-#if !os(macOS)
         latestWindowManager?.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
-#endif
     }
     func createAndOpenServerChat() {
 

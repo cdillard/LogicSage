@@ -115,16 +115,16 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         
         return wrappedView
     }
-    
+        // TODO: Refactor the text updates into the coordinator to prepare for PureSwift integration into TextKit proper.
     public func updateUIView(_ view: SyntaxTextView, context: Context) {
         if shouldBecomeFirstResponder {
             _ = view.becomeFirstResponder()
         }
-
-        let overrideText = custom.overrideText()
         // Is it strictly needed?????
-      //  DispatchQueue.main.async {
+//        DispatchQueue.main.async {
 
+
+            let overrideText = custom.overrideText()
             view.textView.isEditable = isEditing
 
             view.contentTextView.isEditable = isEditing
@@ -147,7 +147,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
                     view.textView.scrollRangeToVisible(bottom)
                 }
             }
-       // }
+//         }
     }
     #endif
     

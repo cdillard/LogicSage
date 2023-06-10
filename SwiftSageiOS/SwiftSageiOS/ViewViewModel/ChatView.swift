@@ -93,6 +93,11 @@ struct ChatView: View {
                                     }
                                 }
                             }
+                            .onChange(of: isTextFieldFocused) { isFocused in
+                                if isFocused {
+                                    self.windowManager.bringWindowToFront(window: self.window)
+                                }
+                            }
                         // Placeholder...
                         Text("Type \(window.convoId == Conversation.ID(-1) ? "Cmd" : "Msg")...")
                             .padding(.leading,4)

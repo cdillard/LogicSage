@@ -267,7 +267,8 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             let trimmedKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
             if keychainManager.saveToKeychain(key:aiKeyKey, value: trimmedKey) {
-                // print("openAIKey saved successfully")
+                 print("openAIKey saved successfully")
+                GPT.shared.resetOpenAI()
             } else {
                 print("Error saving ai key")
             }
@@ -278,7 +279,7 @@ public class SettingsViewModel: ObservableObject {
             let trimmedKey = ghaPat.trimmingCharacters(in: .whitespacesAndNewlines)
 
             if keychainManager.saveToKeychain(key: ghaKeyKey, value: trimmedKey) {
-                //print("ghPat saved successfully")
+                print("ghPat saved successfully")
             } else {
                 print("Error saving gha pat")
             }
