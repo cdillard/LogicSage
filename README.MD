@@ -15,8 +15,21 @@
 - [Credits](#credits)
 
 ## news
-----------------
 
+----------------
+06-11-2023
+
+LogicSage 1.2.1 (7) Live in the App Store now. 
+
+View iPhone and iPad tutorial videos here.
+
+[iPhoneTutorial.mov](iPhoneTutorial.mov)
+
+
+[iPadTutorial.mov](iPadTutorial.mov)
+
+
+----------------
 06-10-2023
 
 LogicSage 1.2.1 (4) Could it be the one?
