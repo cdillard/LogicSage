@@ -11,16 +11,10 @@ import SwiftUI
 var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
-
 #if !os(macOS)
-
-// Placeholder replaced by geometry reader.
-
 struct WindowView: View {
      var window: WindowInfo
-    @State private var position: CGSize = .zero
 
-    @State var frame: CGRect
     @ObservedObject var settingsViewModel: SettingsViewModel
     @ObservedObject var windowManager: WindowManager
     @ObservedObject var viewModel: SageMultiViewModel
@@ -29,8 +23,7 @@ struct WindowView: View {
     @State private var isMoveGestureActivated = false
     @State private var isResizeGestureActive = false
 
-    @State var viewSize: CGRect = .zero
-    @State var resizeOffset: CGSize = .zero
+
     @State var bumping: Bool = false
     @Binding var parentViewSize: CGRect
 
@@ -43,15 +36,15 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $frame, window: window, windowManager: windowManager, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position))
+                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position))
                 }
                 .border(.red, width: bumping ? 2.666 : 0)
                 .cornerRadius(8)
                 .shadow(color:settingsViewModel.appTextColor, radius: 3)
-                .frame(width: window.frame.width, height: window.frame.height)
+                .frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
                 .edgesIgnoringSafeArea(.bottom)
             }
-            .offset(position)
+            .offset(viewModel.position)
             .onAppear() {
                 recalculateWindowSize(size: geometry.size)
             }
@@ -75,12 +68,12 @@ struct WindowView: View {
 
     private func recalculateWindowSize(size: CGSize) {
         if !isResizeGestureActive {
-            viewSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            viewModel.viewSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         }
     }
     private func windowContent() -> some View {
         return AnyView(
-            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: window.windowType), windowManager: windowManager,  window: window, sageMultiViewModel: viewModel, frame: $frame, position: $position, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
     }

@@ -213,7 +213,7 @@ struct SageMultiView: View {
                 frame.size.height = size.height
             }
 
-            dragsOnChange(value: nil)
+            dragsOnChange(value: nil, false)
         }
     }
     func getURL() -> URL {

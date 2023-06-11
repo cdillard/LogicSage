@@ -11,13 +11,15 @@ import SwiftUI
 
 class WindowManager: ObservableObject {
     @Published var windows: [WindowInfo] = []
+#if !os(macOS)
+    @Published var windowViewModels: [SageMultiViewModel] = []
+#endif
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {
 #if !os(macOS)
-
         // TODO: OFFSET NEW WINDOWS
-        
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url, convoId: convoId)
         windows.append(newWindow)
+        windowViewModels.append(SageMultiViewModel(settingsViewModel: SettingsViewModel.shared, windowId: newWindow.id, windowManager: self, windowInfo: newWindow, frame: frame))
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
 #endif
@@ -26,6 +28,11 @@ class WindowManager: ObservableObject {
         if let index = windows.firstIndex(of: window) {
             windows.remove(at: index)
         }
+#if !os(macOS)
+        if let index = windowViewModels.firstIndex(where: { $0.windowInfo.id == window.id } ) {
+            windowViewModels.remove(at: index)
+        }
+#endif
     }
     func updateWindow(window: WindowInfo, frame: CGRect, zIndex: Int? = nil) {
         if let index = windows.firstIndex(of: window) {
@@ -37,13 +44,24 @@ class WindowManager: ObservableObject {
         }
     }
     func bringWindowToFront(window: WindowInfo) {
+#if !os(macOS)
+        if let index = windowViewModels.firstIndex(where: { $0.windowInfo.id == window.id } ) {
+            let maxZIndex = windowViewModels.map({ $0.windowInfo.zIndex }).max() ?? 0
+            windowViewModels[index].windowInfo.zIndex = maxZIndex + 1
+            sortWindowsByZIndex()
+        }
+#endif
         guard let index = windows.firstIndex(of: window) else { return }
         let maxZIndex = windows.map({ $0.zIndex }).max() ?? 0
         windows[index].zIndex = maxZIndex + 1
-        sortWindowsByZIndex()
     }
     private func sortWindowsByZIndex() {
         windows.sort(by: { $0.zIndex < $1.zIndex })
+#if !os(macOS)
+        windowViewModels.sort { lhs, rhs in
+            lhs.windowInfo.zIndex < rhs.windowInfo.zIndex
+        }
+#endif
     }
     func topWindow() -> WindowInfo? {
         windows.first
@@ -52,6 +70,12 @@ class WindowManager: ObservableObject {
         for window in windows {
             if window.convoId == convoID {
                 removeWindow(window: window)
+
+#if !os(macOS)
+                if let index = windowViewModels.firstIndex(where: { $0.windowInfo.id == window.id } ) {
+                    windowViewModels.remove(at: index)
+                }
+#endif
             }
         }
     }

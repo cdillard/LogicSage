@@ -11,7 +11,6 @@ import Combine
 import AVKit
 
 #if os(macOS)
-
 import AppKit
 #endif
 
@@ -44,189 +43,184 @@ struct ContentView: View {
         GeometryReader { geometry in
             ZStack {
 #if !os(macOS)
-                    if isDrawerOpen {
-                        let drawerWidth = viewSize.width - (viewSize.width / (UIDevice.current.userInterfaceIdiom == .phone ? 3 : 3))
-                        DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView)
-                            .transition(.move(edge: .leading))
-                            .background(settingsViewModel.buttonColor)
-                            .padding(.leading, 0)
-                            .zIndex(999)
-                            .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
-                    }
+                if isDrawerOpen {
+                    let drawerWidth = viewSize.width - (viewSize.width / (UIDevice.current.userInterfaceIdiom == .phone ? 3 : 3))
+                    DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, isDrawerOpen: $isDrawerOpen, conversations: $settingsViewModel.conversations, isPortrait: $isPortrait, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView)
+                        .transition(.move(edge: .leading))
+                        .background(settingsViewModel.buttonColor)
+                        .padding(.leading, 0)
+                        .zIndex(999)
+                        .frame(minWidth: drawerWidth, maxWidth: drawerWidth, minHeight: 0, maxHeight: .infinity)
+                }
 #endif
-
-//                HStack(spacing: 0) {
-
-                    ZStack {
+                ZStack {
 #if !os(macOS)
-                        if !isDrawerOpen {
+                    if !isDrawerOpen {
+                        // START WINDOW MANAGER ZONE *************************************************
+                        ForEach(windowManager.windowViewModels  ) { windowViewModel in
 
-                            // START WINDOW MANAGER ZONE *************************************************
-                            ForEach(windowManager.windows) { window in
-                                WindowView(window: window, frame: window.convoId != nil ? defChatSize : defSize, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: SageMultiViewModel(settingsViewModel: settingsViewModel, windowId: window.id, windowManager: windowManager), parentViewSize: $viewSize)
-                                //                            .edgesIgnoringSafeArea(.all)
-                                    .background(.clear)
-                                    .opacity(isDrawerOpen ? 0.0 : 1.0)
-                                    .allowsHitTesting(!isDrawerOpen)
-                                    .padding(.top, 20)
-                            }
+                            WindowView(window: windowViewModel.windowInfo, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: windowViewModel, parentViewSize: $viewSize)
+                            //                            .edgesIgnoringSafeArea(.all)
+                                .background(.clear)
+                                .opacity(isDrawerOpen ? 0.0 : 1.0)
+                                .allowsHitTesting(!isDrawerOpen)
+                                .padding(.top, 20)
                         }
-                        // END WINDOW MANAGER ZONE *************************************************
+                    }
+                    // END WINDOW MANAGER ZONE *************************************************
 #endif
-                        // START CONVERSATION HAMBURGER ZONE *************************************************
-                        if !isDrawerOpen {
-                            VStack {
-                                HStack {
-                                    Button(action: {
-                                        withAnimation {
-                                            showAddView = false
-                                            showSettings = false
-                                            showHelp = false
-                                            showInstructions = false
-                                            self.isDrawerOpen.toggle()
-                                        }
-                                    }) {
-                                        Image(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .tint(settingsViewModel.appTextColor)
-                                            .padding(.leading,16)
-                                            .padding(.top,16)
-                                            .padding(.trailing,8)
-                                            .padding(.bottom,8)
-                                            .background(settingsViewModel.buttonColor.opacity(0.666))
-                                            .frame(width: 40, height: 40 )
-                                            .animation(.easeIn(duration:0.25), value: isDrawerOpen)
+                    // START CONVERSATION HAMBURGER ZONE *************************************************
+                    if !isDrawerOpen {
+                        VStack {
+                            HStack {
+                                Button(action: {
+                                    withAnimation {
+                                        showAddView = false
+                                        showSettings = false
+                                        showHelp = false
+                                        showInstructions = false
+                                        self.isDrawerOpen.toggle()
                                     }
-                                    Spacer()
+                                }) {
+                                    Image(systemName: isDrawerOpen ? "x.circle.fill" : "line.horizontal.3")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .tint(settingsViewModel.appTextColor)
+                                        .padding(.leading,16)
+                                        .padding(.top,16)
+                                        .padding(.trailing,8)
+                                        .padding(.bottom,8)
+                                        .background(settingsViewModel.buttonColor.opacity(0.666))
+                                        .frame(width: 40, height: 40 )
+                                        .animation(.easeIn(duration:0.25), value: isDrawerOpen)
                                 }
                                 Spacer()
                             }
-                            .zIndex(998)
-                        }
-                        // END CPNVERSATION HAMBURGER ZONE *************************************************
-#if !os(macOS)
-                        if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
-                            // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-                            VStack {
-                                Spacer()
-                                CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
-                            }
-                            .zIndex(-9)
-                            .padding(.horizontal)
-                            .padding(.vertical)
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
-                        }
-#endif
-
-                        // TODO: Get rid of this
-                        VStack {
                             Spacer()
                         }
-                        .background(
-                            ZStack {
-#if !os(macOS)
-                                AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
-                                    .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                                    .opacity(showAddView ? 1.0 : 0.0)
-                                SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel)
-                                    .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                                    .opacity(showSettings ? 1.0 : 0.0)
-#endif
-                            }
-                                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
-                        )
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .zIndex(998)
                     }
-                    .overlay(
-                        Group {
-                            if showInstructions {
-                                InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
-                            }
-                            else if showHelp {
-                                HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
-                            }
+                    // END CPNVERSATION HAMBURGER ZONE *************************************************
+#if !os(macOS)
+                    if !isDrawerOpen && keyboardResponder.currentHeight == 0 {
+                        // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+                        VStack {
+                            Spacer()
+                            CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
                         }
-                    )
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
-                    // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-
-                    // BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
-                    .background {
+                        .zIndex(-9)
+                        .padding(.horizontal)
+                        .padding(.vertical)
+                        .padding(.leading, 8)
+                        .padding(.trailing, 8)
+                        .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
+                    }
+#endif
+                    // TODO: Get rid of this
+                    VStack {
+                        Spacer()
+                    }
+                    .background(
                         ZStack {
 #if !os(macOS)
-                            if let image = settingsViewModel.actualReceivedImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .edgesIgnoringSafeArea(.all)
-                                    .animation(.easeIn(duration: 0.28), value: image)
-                            }
-                            else {
-                                settingsViewModel.backgroundColor
-                                    .animation(.easeIn(duration: 0.28), value: true)
-
-                                    .edgesIgnoringSafeArea(.all)
-                            }
-                            // TODO: Make this way better.
-                            if  settingsViewModel.initalAnim {
-                                LoadingLogicView()
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .ignoresSafeArea()
-                                    .onAppear {
-                                        setHasSeenAnim(true)
-                                    }
-                            }
-#else
-                            settingsViewModel.backgroundColor
-                                .edgesIgnoringSafeArea(.all)
+                            AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
+                                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
+                                .opacity(showAddView ? 1.0 : 0.0)
+                            SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel)
+                                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
+                                .opacity(showSettings ? 1.0 : 0.0)
 #endif
                         }
-                        .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation {
-                                isDrawerOpen = false
-#if !os(macOS)
-
-                                hideKeyboard()
-#endif
-                            }
-                        }
-                    }
+                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
+                    )
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                    .if(isDrawerOpen) { view in
-                        view.onTapGesture {
-                            if isDrawerOpen {  withAnimation { isDrawerOpen = false } }
+                }
+                .overlay(
+                    Group {
+                        if showInstructions {
+                            InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
+                        }
+                        else if showHelp {
+                            HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
                         }
                     }
+                )
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+// END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+
+// BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
+                .background {
+                    ZStack {
 #if !os(macOS)
-                    .onAppear {
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: geometry.size) { size in
-                        recalculateWindowSize(size: geometry.size)
-                        //                        logD("contentView viewSize update = \(viewSize)")
-                    }
-                    .onChange(of: horizontalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: verticalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
+                        if let image = settingsViewModel.actualReceivedImage {
+                            Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .edgesIgnoringSafeArea(.all)
+                                .animation(.easeIn(duration: 0.28), value: image)
+                        }
+                        else {
+                            settingsViewModel.backgroundColor
+                                .animation(.easeIn(duration: 0.28), value: true)
+
+                                .edgesIgnoringSafeArea(.all)
+                        }
+                        // TODO: Make this way better.
+                        if  settingsViewModel.initalAnim {
+                            LoadingLogicView()
+                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                .ignoresSafeArea()
+                                .onAppear {
+                                    setHasSeenAnim(true)
+                                }
+                        }
+#else
+                        settingsViewModel.backgroundColor
+                            .edgesIgnoringSafeArea(.all)
 #endif
+                    }
+                    .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            isDrawerOpen = false
+#if !os(macOS)
+
+                            hideKeyboard()
+#endif
+                        }
+                    }
                 }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                .if(isDrawerOpen) { view in
+                    view.onTapGesture {
+                        if isDrawerOpen {  withAnimation { isDrawerOpen = false } }
+                    }
+                }
+#if !os(macOS)
+                .onAppear {
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onChange(of: geometry.size) { size in
+                    recalculateWindowSize(size: geometry.size)
+                    //                        logD("contentView viewSize update = \(viewSize)")
+                }
+                .onChange(of: horizontalSizeClass) { newSizeClass in
+                    print("Size class changed to \(String(describing: newSizeClass))")
+                    recalculateWindowSize(size: geometry.size)
+                }
+                .onChange(of: verticalSizeClass) { newSizeClass in
+                    print("Size class changed to \(String(describing: newSizeClass))")
+                    recalculateWindowSize(size: geometry.size)
+                }
+#endif
+            }
         }
     }
-    // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
+// END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
 
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)

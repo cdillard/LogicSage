@@ -8,46 +8,43 @@
 import Foundation
 #if !os(macOS)
 private var lastConsoleUpdate = Date()
-class SageMultiViewModel: ObservableObject {
+class SageMultiViewModel: ObservableObject, Identifiable {
+    let id = UUID()
     @ObservedObject var settingsViewModel: SettingsViewModel
     @ObservedObject var windowManager: WindowManager
 
-    @Published var windowInfo: WindowInfo?
     @Published var windowId: UUID
 
     @Published var sourceCode: String
     @Published var changes: [ChangeRow] = []
 
     var originalSourceCode: String
+    @Published var windowInfo: WindowInfo
+    @Published var position: CGSize = .zero
+    @Published var viewSize: CGRect = .zero
+    @Published var resizeOffset: CGSize = .zero
+    @Published var frame: CGRect
 
-    init(settingsViewModel: SettingsViewModel, windowId: UUID, windowManager: WindowManager) {
+    init(settingsViewModel: SettingsViewModel, windowId: UUID, windowManager: WindowManager, windowInfo: WindowInfo, frame: CGRect) {
         self.settingsViewModel = settingsViewModel
         self.windowId = windowId
         self.windowManager = windowManager
-        if let winInfo = windowManager.windows.first(where: { $0.id == windowId }) {
-            self.windowInfo = winInfo
-            
-            if let convoId = winInfo.convoId {
-                let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: winInfo)
-                self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
-            }
-            else if winInfo.convoId == Conversation.ID(-1) {
-                self.sourceCode = settingsViewModel.consoleManagerText
-                
-            }
-            else {
-                self.sourceCode = winInfo.fileContents
-            }
-            
-            self.originalSourceCode = winInfo.fileContents
+        self.windowInfo = windowInfo
+
+        if let convoId = windowInfo.convoId {
+            let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
+            self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
+        }
+        else if windowInfo.convoId == Conversation.ID(-1) {
+            self.sourceCode = settingsViewModel.consoleManagerText
+
         }
         else {
-            self.sourceCode = ""
-            self.originalSourceCode = ""
-
+            self.sourceCode = windowInfo.fileContents
         }
 
-
+        self.originalSourceCode = windowInfo.fileContents
+        self.frame = frame
     }
 
     func refreshChanges(newText: String) {

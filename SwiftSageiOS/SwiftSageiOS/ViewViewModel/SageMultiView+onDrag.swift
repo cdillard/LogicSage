@@ -14,12 +14,14 @@ import Combine
 
 extension SageMultiView {
     // WARNING: This code isn't great.
-    func dragsOnChange(value: DragGesture.Value?) {
+    func dragsOnChange(value: DragGesture.Value?, _ interactive: Bool = true) {
         if !isDragDisabled {
             if !isMoveGestureActivated {
-//                DispatchQueue.main.async {
-//                    self.windowManager.bringWindowToFront(window: self.window)
-//                }
+                if interactive {
+                    DispatchQueue.main.async {
+                        self.windowManager.bringWindowToFront(window: self.window)
+                    }
+                }
                 isMoveGestureActivated = true
             }
             func doPostConstraint() {
