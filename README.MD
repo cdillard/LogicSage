@@ -28,6 +28,7 @@ View iPhone and iPad tutorial videos here.
 
 [iPadTutorial.mov](iPadTutorial.mov)
 
+Please download the files to your device for now to watch! Don't you worry, I revoked the sk- visible in the video.
 
 ----------------
 06-10-2023
