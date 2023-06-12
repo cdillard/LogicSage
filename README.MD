@@ -25,12 +25,12 @@ View iPhone and iPad tutorial videos here.
 
 LogicSage iPhone Tutorial
 
-https://youtu.be/ZjHdT27gcjQ
+https://youtu.be/PDQJrLhFVEU
 
 
 LogicSage iPad Tutorial:
 
-https://www.youtube.com/watch?v=ZjHdT27gcjQ
+https://youtu.be/ZjHdT27gcjQ
 
 
 ----------------
