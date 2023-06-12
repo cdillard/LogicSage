@@ -23,12 +23,15 @@ LogicSage 1.2.1 (7) Live in the App Store now.
 
 View iPhone and iPad tutorial videos here.
 
-[iPhoneTutorial.mov](iPhoneTutorial.mov)
+LogicSage iPhone Tutorial
+
+https://youtu.be/ZjHdT27gcjQ
 
 
-[iPadTutorial.mov](iPadTutorial.mov)
+LogicSage iPad Tutorial:
 
-Please download the files to your device for now to watch! Don't you worry, I revoked the sk- visible in the video.
+https://www.youtube.com/watch?v=ZjHdT27gcjQ
+
 
 ----------------
 06-10-2023
