@@ -56,7 +56,7 @@ struct ChatView: View {
                 isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
                 .disabled(isMoveGestureActive || isResizeGestureActive)
                 .onAppear {
-                    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+                    Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
                         DispatchQueue.global(qos: .background).async {
                             if let convoId = sageMultiViewModel.windowInfo.convoId {
                                 let convo = settingsViewModel.getConvo(convoId)

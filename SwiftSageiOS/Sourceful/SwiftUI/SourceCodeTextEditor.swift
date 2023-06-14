@@ -95,7 +95,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         wrappedView.theme = custom.theme()
         context.coordinator.wrappedView = wrappedView
         context.coordinator.wrappedView.text = text
-        
+        wrappedView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return wrappedView
     }
     public func updateUIView(_ view: SyntaxTextView, context: Context) {
@@ -168,10 +168,10 @@ extension SourceCodeTextEditor {
             if isLockToBottom {
                 let textView = wrappedView.textView
                 textView.scrollRangeToVisible(NSMakeRange(textView.text.count - 1, 1))
-                print("scrolling chatview to bottom")
+                //print("scrolling chatview to bottom")
             }
             else {
-                print("isLockToBottom false -- not scrolling")
+               // print("isLockToBottom false -- not scrolling")
             }
         }
     }

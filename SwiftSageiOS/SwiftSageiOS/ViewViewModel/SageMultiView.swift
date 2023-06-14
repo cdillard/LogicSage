@@ -56,6 +56,7 @@ struct SageMultiView: View {
     @State  var lastBumpFeedbackTime = Date()
     @State var isLockToBottomEditor = false
 
+
     // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
         GeometryReader { geometry in
@@ -113,10 +114,49 @@ struct SageMultiView: View {
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                     case .webView:
-                        WebView(url:getURL())
-                            .onTapGesture {
-                                self.windowManager.bringWindowToFront(window: self.window)
+                        let url = getURL()
+                        VStack(spacing:0) {
+                            HStack(alignment: VerticalAlignment.firstTextBaseline) {
+                                Button(action: {
+                                    logD("on Back tap")
+                                    goBackward()
+                                }) {
+                                    Image(systemName: "backward.circle.fill")
+                                        .font(.title)
+                                        .minimumScaleFactor(0.75)
+                                }
+                                .foregroundColor(settingsViewModel.buttonColor)
+
+                                Button(action: {
+                                    logD("on FWD tap")
+                                    goForward()
+                                }) {
+                                    Image(systemName: "forward.circle.fill")
+                                        .font(.title)
+                                        .minimumScaleFactor(0.75)
+                                }
+                                .foregroundColor(settingsViewModel.buttonColor)
+
+
+                                Button(action: {
+                                    logD("on REFRESH tap")
+                                    reload()
+                                }) {
+                                    Image(systemName: "arrow.triangle.2.circlepath.circle")
+                                        .font(.title)
+                                        .minimumScaleFactor(0.75)
+                                }
+                                .foregroundColor(settingsViewModel.buttonColor)
                             }
+                            .frame(maxWidth: .infinity)
+
+                            .background(settingsViewModel.backgroundColor)
+
+                            WebView(url: url, webViewStore: sageMultiViewModel.webViewStore, request: URLRequest(url: url))
+                                .onTapGesture {
+                                    self.windowManager.bringWindowToFront(window: self.window)
+                                }
+                        }
                     case .simulator:
                         ZStack {
                             Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
@@ -164,9 +204,16 @@ struct SageMultiView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-
     }
-    
+    private func goBackward() {
+        sageMultiViewModel.webViewStore.webView.goBack()
+    }
+    private func goForward() {
+        sageMultiViewModel.webViewStore.webView.goForward()
+    }
+    private func reload() {
+        sageMultiViewModel.webViewStore.webView.reload()
+    }
     func doSrcCode(newText: String) {
         let theNewtext = String(newText)
         sageMultiViewModel.refreshChanges(newText: theNewtext)
@@ -223,36 +270,74 @@ struct SageMultiView: View {
         return webURL
     }
 }
+import WebKit
+
+class WebViewStore: ObservableObject {
+    @Published var webView: WKWebView = WKWebView()
+}
+//struct WebView: UIViewRepresentable {
+//    let url: URL
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator(self)
+//    }
+//    var webViewInstance: WKWebView {
+//        let webView = WKWebView()
+//        let request = URLRequest(url: self.url)
+//        webView.load(request)
+//        return webView
+//    }
+//    func makeUIView(context: Context) -> WKWebView {
+//        return webViewInstance
+//    }
+//    func updateUIView(_ uiView: WKWebView, context: Context) {
+//
+//    }
+//    class Coordinator: NSObject, WKNavigationDelegate, UIScrollViewDelegate {
+//        var parent: WebView
+//
+//        init(_ parent: WebView) {
+//            self.parent = parent
+//        }
+//
+//        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+//            return scrollView.subviews.first
+//        }
+//    }
+//}
 
 struct WebView: UIViewRepresentable {
     let url: URL
+
+    @ObservedObject var webViewStore: WebViewStore
+
+    let request: URLRequest
+
+    func makeUIView(context: Context) -> WKWebView {
+        webViewStore.webView.navigationDelegate = context.coordinator
+        return webViewStore.webView
+    }
+
+    func updateUIView(_ webView: WKWebView, context: Context) {
+        if webView.url == nil {
+            webView.load(request)
+        }
+    }
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    var webViewInstance: WKWebView {
-        let webView = WKWebView()
-        let request = URLRequest(url: self.url)
-        webView.load(request)
-        return webView
-    }
-    func makeUIView(context: Context) -> WKWebView {
-        return webViewInstance
-    }
-    func updateUIView(_ uiView: WKWebView, context: Context) {
 
-    }
-    class Coordinator: NSObject, WKNavigationDelegate, UIScrollViewDelegate {
+    class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
 
         init(_ parent: WebView) {
             self.parent = parent
         }
 
-        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-            return scrollView.subviews.first
-        }
+        // Add WKNavigationDelegate methods here if needed
     }
 }
+
 struct HandleView: View {
     var body: some View {
         Circle()

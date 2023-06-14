@@ -25,6 +25,10 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var resizeOffset: CGSize = .zero
     @Published var frame: CGRect
     @Published var conversation: Conversation?
+
+    @State var webViewStore = WebViewStore()
+    @State private var navigationInProgress = false
+
     static func convoText(_ settingsViewModel: SettingsViewModel, _ conversation: Conversation?, windowInfo: WindowInfo) -> String {
         if windowInfo.convoId == Conversation.ID(-1) {
             return settingsViewModel.consoleManagerText

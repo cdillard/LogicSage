@@ -145,6 +145,7 @@
 		B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
+		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
 		B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */; };
 		B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */; };
@@ -321,6 +322,7 @@
 		B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITests.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
+		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
 		B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizingHandle.swift; sourceTree = "<group>"; };
 		B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ColorGen.swift"; sourceTree = "<group>"; };
@@ -757,6 +759,7 @@
 				B78EAF5E2A116D76003095A2 /* Github */,
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
+				B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */,
 				B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */,
 				B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */,
 				B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */,
@@ -1046,6 +1049,7 @@
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B7544E372A191BCE00961F4C /* EmbeddingsResult.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */,
 				B78DA9672A02AF3A002343AB /* Loading.swift in Sources */,
 				B7544E452A191BCE00961F4C /* MultipartFormDataRequest.swift in Sources */,
 				B78EAF6A2A13B68D003095A2 /* TopBar.swift in Sources */,

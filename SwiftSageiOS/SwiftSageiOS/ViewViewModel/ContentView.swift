@@ -18,11 +18,7 @@ struct ContentView: View {
     @State private var isDrawerOpen = false
     @State private var showAddView = false
     @State private var showSettings = false
-    @State private var  code: String = ""
-    @FocusState private var isTextFieldFocused: Bool
-    @State private var currentScale: CGFloat = 1.0
-    @State private var lastScaleValue: CGFloat = 1.0
-    @State private var buttonScale: CGFloat = 1.0
+
     @ObservedObject var settingsViewModel: SettingsViewModel = SettingsViewModel()
     @StateObject var windowManager = WindowManager()
 

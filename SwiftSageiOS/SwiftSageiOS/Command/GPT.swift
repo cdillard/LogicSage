@@ -20,8 +20,6 @@ class GPT {
 
     init() {
         let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
-
-
         let identifier = "\(bundleID)bger"
         let urlConfig = URLSessionConfiguration.background(withIdentifier: identifier)
         let session = URLSession(configuration: urlConfig)
@@ -31,8 +29,6 @@ class GPT {
 
     func resetOpenAI() {
         let configuration = OpenAI.Configuration(token: SettingsViewModel.shared.openAIKey, timeoutInterval: 120.0)
-
-
         let identifier = "\(bundleID)bger"
         let urlConfig = URLSessionConfiguration.background(withIdentifier: identifier)
         let session = URLSession(configuration: urlConfig)
@@ -45,7 +41,6 @@ class GPT {
                          prompt: String, currentRetry: Int, isFix: Bool = false,
                          manualPrompt: Bool = false, voiceOverride: String? = nil,
                          completion: @escaping (String, Bool, Bool) -> Void) {
-
         if currentRetry == 0 {
             print("👨: \(prompt)")
         }
@@ -70,81 +65,78 @@ class GPT {
             return
         }
 
-//        DispatchQueue.main.async {
-            Task {
-                SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
-                    id: SettingsViewModel.shared.idProvider(),
-                    role: .user,
-                    content: manualPrompt ? config.manualPromptString : prompt,
-                    createdAt: SettingsViewModel.shared.dateProvider()
-                ))
+        Task {
+            SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
+                id: SettingsViewModel.shared.idProvider(),
+                role: .user,
+                content: manualPrompt ? config.manualPromptString : prompt,
+                createdAt: SettingsViewModel.shared.dateProvider()
+            ))
 
-                guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
-                    logD("Unable to find conversations id == \(conversationId) ... failing")
+            guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
+                logD("Unable to find conversations id == \(conversationId) ... failing")
 
-                    return
-                }
-
-                SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
-
-
-                do {
-                    let model: Model = Model(SettingsViewModel.shared.openAIModel)
-
-                    let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
-                        query: ChatQuery(
-                            model: model,
-                            messages: conversation.messages.map { message in
-                                Chat(role: message.role, content: message.content)
-                            }
-                        )
-                    )
-                    var completeMessage = ""
-                    for try await partialChatResult in chatsStream {
-                        for choice in partialChatResult.choices {
-                            let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
-                            let message = Message(
-                                id: partialChatResult.id,
-                                role: choice.delta.role ?? .assistant,
-                                content: choice.delta.content ?? "",
-                                createdAt: Date(timeIntervalSince1970: TimeInterval(partialChatResult.created))
-                            )
-                            if let existingMessageIndex = existingMessages.firstIndex(where: { $0.id == partialChatResult.id }) {
-                                // Meld into previous message
-                                let previousMessage = existingMessages[existingMessageIndex]
-                                let combinedMessage = Message(
-                                    id: message.id, // id stays the same for different deltas
-                                    role: message.role,
-                                    content: previousMessage.content + message.content,
-                                    createdAt: message.createdAt
-                                )
-                                //logD("melding to existing msg")
-
-                                SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
-
-                            } else {
-                                //logD("append to existing msg")
-
-                                SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
-                            }
-
-                            // old hndlers
-                            completion(message.content, true, false)
-                            completeMessage += message.content
-                        }
-                    }
-
-                    logD("completed message w/ length = \(completeMessage.count)")
-
-                    completion(completeMessage, true, true)
-
-                }
-                catch {
-                    logD("failed wit error = \(error)")
-                    SettingsViewModel.shared.setConversationError(convoId: conversationId, error: error)
-                }
+                return
             }
-//        }
+
+            SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
+
+            do {
+                let model: Model = Model(SettingsViewModel.shared.openAIModel)
+
+                let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
+                    query: ChatQuery(
+                        model: model,
+                        messages: conversation.messages.map { message in
+                            Chat(role: message.role, content: message.content)
+                        }
+                    )
+                )
+                var completeMessage = ""
+                for try await partialChatResult in chatsStream {
+                    for choice in partialChatResult.choices {
+                        let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
+                        let message = Message(
+                            id: partialChatResult.id,
+                            role: choice.delta.role ?? .assistant,
+                            content: choice.delta.content ?? "",
+                            createdAt: Date(timeIntervalSince1970: TimeInterval(partialChatResult.created))
+                        )
+                        if let existingMessageIndex = existingMessages.firstIndex(where: { $0.id == partialChatResult.id }) {
+                            // Meld into previous message
+                            let previousMessage = existingMessages[existingMessageIndex]
+                            let combinedMessage = Message(
+                                id: message.id, // id stays the same for different deltas
+                                role: message.role,
+                                content: previousMessage.content + message.content,
+                                createdAt: message.createdAt
+                            )
+                            //logD("melding to existing msg")
+
+                            SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+
+                        } else {
+                            //logD("append to existing msg")
+
+                            SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
+                        }
+
+                        // old hndlers
+                        completion(message.content, true, false)
+                        completeMessage += message.content
+                    }
+                }
+
+                logD("completed message w/ length = \(completeMessage.count)")
+
+                completion(completeMessage, true, true)
+
+            }
+            catch {
+                logD("failed wit error = \(error)")
+                SettingsViewModel.shared.setConversationError(convoId: conversationId, error: error)
+            }
+        }
     }
 }
 
