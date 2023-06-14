@@ -3,7 +3,7 @@
 
 ## for Mac OS command line, iOS, and iPadOS - Open Source in Swift
 
-[LogicSage: The Mobile AI Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+[LogicSage: The Mobile GPT Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
 ## Table of Contents
 - [News](#news)
@@ -15,6 +15,25 @@
 - [Credits](#credits)
 
 ## news
+
+----------------
+06-14-2023
+
+LogicSage 1.2.2 (1) Coming to App Store soon!
+[LogicSage: The Mobile GPT Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+Whats New:
+
+Fixed all main thread lag issues. Enjoy smooth typing and app interaction no matter how large your chats or history become. Fixed Webview resetting issues.
+Webview enhancements: back, forward, refresh, with ease.
+
+have you ever wanted to use your existing chat sites like ChatGPT  in parellel to your LogicSage windows? Well now you can by going to https://chat.openai.com in the + Menu and selecting WebView.
+
+You can have your chats with GPT right along side your beautiful Swift code with syntax highlighting, git integration, and Xcode integration continuing to get better.
+
+View iPad tutorial video:
+LogicSage iPad Tutorial:
+https://youtu.be/ZjHdT27gcjQ
 
 ----------------
 06-11-2023
