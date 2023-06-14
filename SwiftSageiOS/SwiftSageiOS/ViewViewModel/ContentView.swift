@@ -116,25 +116,23 @@ struct ContentView: View {
                         .animation(.easeIn(duration:0.25), value: !isDrawerOpen && keyboardResponder.currentHeight == 0)
                     }
 #endif
-                    // TODO: Get rid of this
-                    VStack {
-                        Spacer()
-                    }
-                    .background(
-                        ZStack {
+
+                    ZStack {
 #if !os(macOS)
-                            AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
-                                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                                .opacity(showAddView ? 1.0 : 0.0)
-                            SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel)
-                                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                                .opacity(showSettings ? 1.0 : 0.0)
+                        AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
+                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
+                            .opacity(showAddView ? 1.0 : 0.0)
+                            .zIndex(997)
+
+                        SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel)
+                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
+                            .opacity(showSettings ? 1.0 : 0.0)
+                            .zIndex(997)
 #endif
-                        }
-                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
-                    )
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    }
+                    .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
                 }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 .overlay(
                     Group {
                         if showInstructions {
@@ -144,6 +142,7 @@ struct ContentView: View {
                             HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
                         }
                     }
+                    .zIndex(998)
                 )
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
@@ -185,7 +184,6 @@ struct ContentView: View {
                         withAnimation {
                             isDrawerOpen = false
 #if !os(macOS)
-
                             hideKeyboard()
 #endif
                         }
@@ -206,7 +204,7 @@ struct ContentView: View {
                 }
                 .onChange(of: geometry.size) { size in
                     recalculateWindowSize(size: geometry.size)
-                    //                        logD("contentView viewSize update = \(viewSize)")
+                    //logD("contentView viewSize update = \(viewSize)")
                 }
                 .onChange(of: horizontalSizeClass) { newSizeClass in
                     print("Size class changed to \(String(describing: newSizeClass))")

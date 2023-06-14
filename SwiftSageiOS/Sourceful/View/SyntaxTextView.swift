@@ -111,10 +111,6 @@ open class SyntaxTextView: UIView {
     public override init(frame: CGRect) {
         textView = SyntaxTextView.createInnerTextView()
 
-
-
-
-
         super.init(frame: frame)
 
         var ViewForDoneButtonOnKeyboard = UIToolbar()
@@ -122,9 +118,7 @@ open class SyntaxTextView: UIView {
         var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
         ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
         textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-
         textView.keyboardDismissMode = .interactive
-
 
         setup()
     }
@@ -140,7 +134,6 @@ open class SyntaxTextView: UIView {
         var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
         ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
         textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-
         textView.keyboardDismissMode = .interactive
 
         setup()

@@ -24,12 +24,6 @@ let defaultYourGithubUsername = "cdillard"
 
 let jsonFileName = "conversations"
 
-
-// TODO MAKE SURE ITS OKAY TO UP THIS SO MUCH
-let STRING_LIMIT = 150000
-
-// TODO BEFORE RELEASE: PROD BUNDLE ID
-// TODO USE BUILT IN BundleID var.
 let bundleID = "com.chrisdillard.SwiftSage"
 let appLink = URL(string: "https://apps.apple.com/us/app/logicsage/id6448485441")!
 
@@ -48,18 +42,13 @@ public class SettingsViewModel: ObservableObject {
 
     let keychainManager = KeychainManager()
 
-    @State private var lastConsoleUpdate: Date?
+// BEGIN TERMINAL ZONE **************************************************************************************
     func logText(_ text: String, terminator: String = "\n") {
-        let now = Date()
-        if lastConsoleUpdate == nil ||  now.timeIntervalSince(self.lastConsoleUpdate ?? Date()) >= 4.666 {
-            self.lastConsoleUpdate = now
-            DispatchQueue.main.async {
-                self.consoleManagerText.append(text)
-                self.consoleManagerText.append(terminator)
-            }
-        }
+        consoleManagerText.append(text)
+        consoleManagerText.append(terminator)
     }
-    @Published var consoleManagerText: String = ""
+    var consoleManagerText: String = ""
+// END TERMINAL ZONE **************************************************************************************
 
     var latestWindowManager: WindowManager?
 
@@ -297,13 +286,13 @@ public class SettingsViewModel: ObservableObject {
 
     let idProvider: () -> String
     let dateProvider: () -> Date
-
-    @Published var conversations: [Conversation] = [] {
+// WAS @Published
+    var conversations: [Conversation] = [] {
         didSet {
             //logD("new convo state:\n\(conversations)")
         }
     }
-    @Published var conversationErrors: [Conversation.ID: Error] = [:] {
+    var conversationErrors: [Conversation.ID: Error] = [:] {
         didSet {
             if !conversationErrors.isEmpty {
                 logD("new convo error state = \(conversationErrors)")
@@ -328,10 +317,11 @@ public class SettingsViewModel: ObservableObject {
     func requestReview() {
         DispatchQueue.main.async {
             self.completedMessages += 1
+            let reviewLimit = 33
             let newCompletionMsgs = self.completedMessages
-            print("\(newCompletionMsgs) % 13 = will review")
+            print("\(newCompletionMsgs) % \(reviewLimit) = will review")
 
-            guard newCompletionMsgs % 13 == 0 else {
+            guard newCompletionMsgs % reviewLimit == 0 else {
                 return logD("no review today")
             }
 
@@ -342,9 +332,7 @@ public class SettingsViewModel: ObservableObject {
 // END STOREKIT ZONE ***********************************************************************
 
     init() {
-        self.idProvider = {
-            UUID().uuidString
-        }
+        self.idProvider = { UUID().uuidString }
         self.dateProvider = Date.init
 
 // BEGIN SIZE SETTING LOAD ZONE FROM DISK *********************************

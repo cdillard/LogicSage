@@ -19,7 +19,10 @@ class WindowManager: ObservableObject {
         // TODO: OFFSET NEW WINDOWS
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url, convoId: convoId)
         windows.append(newWindow)
-        windowViewModels.append(SageMultiViewModel(settingsViewModel: SettingsViewModel.shared, windowId: newWindow.id, windowManager: self, windowInfo: newWindow, frame: frame))
+
+        let sageViewModel = SageMultiViewModel(settingsViewModel: SettingsViewModel.shared, windowId: newWindow.id, windowManager: self, windowInfo: newWindow, frame: frame, conversation: SettingsViewModel.shared.getConvo(convoId ?? Conversation.ID(-1)))
+        windowViewModels.append(sageViewModel)
+
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
 #endif
@@ -51,6 +54,7 @@ class WindowManager: ObservableObject {
             sortWindowsByZIndex()
         }
 #endif
+        print("zIndex of window \(window.id) brought to front")
         guard let index = windows.firstIndex(of: window) else { return }
         let maxZIndex = windows.map({ $0.zIndex }).max() ?? 0
         windows[index].zIndex = maxZIndex + 1

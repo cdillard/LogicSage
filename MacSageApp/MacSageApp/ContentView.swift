@@ -6,16 +6,28 @@
 //
 
 import SwiftUI
-
+let logoAscii6 = """
+╭╮╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮
+┃┃╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃
+┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
+┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
+┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
+╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯
+╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
+╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
+"""
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
+            Text(logoAscii6)
+                .font(.system(size: 20, design: .monospaced))
+                .minimumScaleFactor(0.05)
                 .foregroundColor(.accentColor)
-            Text("SwiftSage")
         }
-        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+        .ignoresSafeArea()
+        .background(Color.black)
     }
 }
 

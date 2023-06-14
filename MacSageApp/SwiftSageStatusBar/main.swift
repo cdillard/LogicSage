@@ -27,14 +27,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         statusItem?.button?.title = "."
         let menu = NSMenu()
-        menu.addItem(withTitle: "LogicSage", action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: "LogicSage for Mac", action: nil, keyEquivalent: "")
 
-//        let switchMenuItem = NSMenuItem(title: "Keep LogicSage Alive?", action: #selector(toggleSwitch(_:)), keyEquivalent: "")
-//        switchMenuItem.state = .off
-//        menu.addItem(switchMenuItem)
         menu.addItem(withTitle: "Swifty-GPT Running (restart)", action: #selector(swiftyGptRunning), keyEquivalent: "")
         menu.addItem(withTitle: "SwiftSageServer Running (restart)", action: #selector(serverRunning), keyEquivalent: "")
-
 
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "")
         statusItem?.menu = menu

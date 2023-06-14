@@ -12,9 +12,8 @@ struct MacSageAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                   // executeStatusBar()
-                }
+                .ignoresSafeArea()
+                .background(Color.black)
         }
     }
 }

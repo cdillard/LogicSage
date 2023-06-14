@@ -11,16 +11,12 @@ import Combine
 
 struct ChatView: View {
 #if !os(macOS)
-
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
 #endif
     @ObservedObject var settingsViewModel: SettingsViewModel
 
-    @Binding var conversations: [Conversation]
-
-     var window: WindowInfo
     @Binding var isEditing: Bool
-    @Binding var isLockToBottom: Bool
+    @State var isLockToBottom: Bool = true
 
     @ObservedObject var windowManager: WindowManager
 
@@ -38,16 +34,10 @@ struct ChatView: View {
         GeometryReader { geometry in
 #if !os(macOS)
             VStack(spacing: 0) {
-
-                // TODO: OPTIMIZE THIS INEFFECIENT
-                let convoText =  window.convoId == Conversation.ID(-1) ? settingsViewModel.consoleManagerText : settingsViewModel.convoText(conversations, window: window)
-                
-                // We reuse the SourceCodeEditor as GPT chat view :)
                 SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
-                                        SourceCodeTextEditor.Customization(didChangeText:
-                                                                            { srcCodeTextEditor in
+                SourceCodeTextEditor.Customization(didChangeText:
+                { srcCodeTextEditor in
                     // do nothing
-                    
                 }, insertionPointColor: {
                     Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
                 }, lexerForSource: { lexer in
@@ -56,8 +46,27 @@ struct ChatView: View {
                     // do nothing
                 }, theme: {
                     ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
-                    // The Magic
-                }, overrideText:  { convoText } ), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
+                },
+                overrideText:  {
+//                    print("ex overrideText.update() of ChatView")
+                    if isMoveGestureActive { return "moving" }
+                    if isResizeGestureActive { return "resizing" }
+                    return sageMultiViewModel.getConvoText()
+                } ),
+                isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
+                .disabled(isMoveGestureActive || isResizeGestureActive)
+                .onAppear {
+                    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+                        DispatchQueue.global(qos: .background).async {
+                            if let convoId = sageMultiViewModel.windowInfo.convoId {
+                                let convo = settingsViewModel.getConvo(convoId)
+                                DispatchQueue.main.async {
+                                    sageMultiViewModel.conversation = convo
+                                }
+                            }
+                        }
+                    }
+                }
 
                 HStack(spacing: 0) {
                     ZStack(alignment: .leading) {
@@ -77,9 +86,7 @@ struct ChatView: View {
                             .background(settingsViewModel.backgroundColorSrcEditor)
                             .frame(height: max( 40, textEditorHeight))
                             .autocorrectionDisabled(!settingsViewModel.autoCorrect)
-#if !os(macOS)
                             .autocapitalization(.none)
-#endif
                             .focused($isTextFieldFocused)
                             .scrollDismissesKeyboard(.interactively)
                             .toolbar {
@@ -95,11 +102,11 @@ struct ChatView: View {
                             }
                             .onChange(of: isTextFieldFocused) { isFocused in
                                 if isFocused {
-                                    self.windowManager.bringWindowToFront(window: self.window)
+                                    self.windowManager.bringWindowToFront(window: sageMultiViewModel.windowInfo)
                                 }
                             }
                         // Placeholder...
-                        Text("Type \(window.convoId == Conversation.ID(-1) ? "Cmd" : "Msg")...")
+                        Text("Type \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "Cmd" : "Msg")...")
                             .padding(.leading,4)
                             .fontWeight(.light)
                             .font(.system(size: settingsViewModel.fontSizeSrcEditor))
@@ -123,24 +130,23 @@ struct ChatView: View {
                             .background(settingsViewModel.buttonColor)
                         }
                     }
-                    if !convoText.isEmpty {
-                        // EXEC BUTTON
-                        Button(action: {
-                            setLockToBottom()
-                        }) {
-                            Text("\(!isLockToBottom ? "🔽": "🔒")")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                        }
+
+                    // EXEC BUTTON
+                    Button(action: {
+                        setLockToBottom()
+                    }) {
+                        Text("\(!isLockToBottom ? "🔽": "🔒")")
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(Color.white)
+                            .background(settingsViewModel.buttonColor)
                     }
 
-                    if window.convoId == Conversation.ID(-1) {
+                    if sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) {
                         // EXEC BUTTON
                         Spacer()
 
-                        // GOOGLE button
+                        // Random Wallpaper BUTTON
                         Button(action: {
 
                             logD("CHOOSE RANDOM WALLPAPER")
@@ -157,6 +163,7 @@ struct ChatView: View {
                                 .background(settingsViewModel.buttonColor)
                         }
 
+                        // Simulator BUTTON
                         Button(action: {
                             logD("RUN SIMULATOR")
 
@@ -199,7 +206,7 @@ struct ChatView: View {
                                 .background(settingsViewModel.buttonColor)
                         }
 
-
+                        // Trash BUTTON
                         Button(action: {
                             chatText = ""
                             screamer.sendCommand(command: "g end")
@@ -244,7 +251,7 @@ struct ChatView: View {
 
             return
         }
-        if let convoID = window.convoId {
+        if let convoID = sageMultiViewModel.windowInfo.convoId {
             if convoID == Conversation.ID(-1) {
                 screamer.sendCommand(command: chatText)
             }
@@ -260,6 +267,9 @@ struct ChatView: View {
     }
     func setLockToBottom() {
         isLockToBottom.toggle()
+
+        print("setting isLockToBottom to \(isLockToBottom)")
+
     }
     struct ViewHeightKey: PreferenceKey {
         static var defaultValue: CGFloat { 0 }

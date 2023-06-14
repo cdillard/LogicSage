@@ -7,22 +7,14 @@
 import Foundation
 
 #if canImport(SwiftUI)
-
 import SwiftUI
-
 #if os(macOS)
-
 public typealias _ViewRepresentable = NSViewRepresentable
-
 #endif
-
 #if os(iOS)
-
 public typealias _ViewRepresentable = UIViewRepresentable
-
 #endif
 #if !os(macOS)
-
 
 public struct SourceCodeTextEditor: _ViewRepresentable {
     
@@ -63,11 +55,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     @Binding var text: String
     @Binding private var isEditing: Bool
     @Binding private var isLocktoBottom: Bool
-
-
     private var shouldBecomeFirstResponder: Bool
     private var custom: Customization
-
     @Binding private var isMoveGestureActive: Bool
     @Binding private var isResizeGestureActive: Bool
     
@@ -75,8 +64,6 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         text: Binding<String>,
         isEditing: Binding<Bool>,
         isLockToBottom: Binding<Bool>,
-
-
         customization: Customization = Customization(
             didChangeText: {_ in },
             insertionPointColor: { Colorv.white },
@@ -94,64 +81,44 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         self._isLocktoBottom = isLockToBottom
         self.custom = customization
         self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
-
         self._isMoveGestureActive = isMoveGestureActive
         self._isResizeGestureActive = isResizeGestureActive
     }
-    
     public func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        Coordinator(self,text: $text, isLockToBottom: $isLocktoBottom)
     }
     
-    #if os(iOS)
+#if os(iOS)
     public func makeUIView(context: Context) -> SyntaxTextView {
         let wrappedView = SyntaxTextView()
         wrappedView.delegate = context.coordinator
         wrappedView.theme = custom.theme()
-//        wrappedView.contentTextView.insertionPointColor = custom.insertionPointColor()
-        
         context.coordinator.wrappedView = wrappedView
         context.coordinator.wrappedView.text = text
         
         return wrappedView
     }
-        // TODO: Refactor the text updates into the coordinator to prepare for PureSwift integration into TextKit proper.
     public func updateUIView(_ view: SyntaxTextView, context: Context) {
         if shouldBecomeFirstResponder {
             _ = view.becomeFirstResponder()
         }
-        // Is it strictly needed?????
-//        DispatchQueue.main.async {
 
-
-            let overrideText = custom.overrideText()
-            view.textView.isEditable = isEditing
-
-            view.contentTextView.isEditable = isEditing
-
-
-            view.isEditing = isEditing
-            view.textView.isSelectable = isEditing
-            view.contentTextView.isSelectable = isEditing
-            if let overrideText = overrideText {
-
-
+        let overrideText = custom.overrideText()
+        view.textView.isEditable = isEditing
+        view.contentTextView.isEditable = isEditing
+        view.isEditing = isEditing
+        view.textView.isSelectable = isEditing
+        view.contentTextView.isSelectable = isEditing
+        if let overrideText = overrideText {
+            if overrideText != context.coordinator.wrappedView.text && isLocktoBottom {
                 context.coordinator.wrappedView.text = overrideText
-//
-//                // Only auto scroll when not gesturing
-//                guard !isResizeGestureActive && !isMoveGestureActive else { return }
-
-                if isLocktoBottom {
-                    let location = view.textView.text.count - 1
-                    let bottom = NSMakeRange(location, 1)
-                    view.textView.scrollRangeToVisible(bottom)
-                }
+                context.coordinator.textDidChange()
             }
-//         }
+        }
     }
-    #endif
+#endif
     
-    #if os(macOS)
+#if os(macOS)
     public func makeNSView(context: Context) -> SyntaxTextView {
         let wrappedView = SyntaxTextView()
         wrappedView.delegate = context.coordinator
@@ -167,19 +134,19 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     public func updateNSView(_ view: SyntaxTextView, context: Context) {
         view.text = text
     }
-    #endif
-    
-
+#endif
 }
-
 extension SourceCodeTextEditor {
-    
     public class Coordinator: SyntaxTextViewDelegate {
         let parent: SourceCodeTextEditor
         var wrappedView: SyntaxTextView!
-        
-        init(_ parent: SourceCodeTextEditor) {
+        @Binding var boundText: String
+        @Binding var isLockToBottom: Bool
+
+        init(_ parent: SourceCodeTextEditor, text: Binding<String>, isLockToBottom: Binding<Bool>) {
             self.parent = parent
+            _boundText = text
+            _isLockToBottom = isLockToBottom
         }
         
         public func lexerForSource(_ source: String) -> Lexer {
@@ -188,16 +155,24 @@ extension SourceCodeTextEditor {
         
         public func didChangeText(_ syntaxTextView: SyntaxTextView) {
             let myNewText = syntaxTextView.text
-//            DispatchQueue.main.async {
-//            }
             self.parent.text = myNewText
-
             // allow the client to decide on thread
             parent.custom.didChangeText(parent)
         }
         
         public func textViewDidBeginEditing(_ syntaxTextView: SyntaxTextView) {
             parent.custom.textViewDidBeginEditing(parent)
+        }
+
+        @objc func textDidChange() {
+            if isLockToBottom {
+                let textView = wrappedView.textView
+                textView.scrollRangeToVisible(NSMakeRange(textView.text.count - 1, 1))
+                print("scrolling chatview to bottom")
+            }
+            else {
+                print("isLockToBottom false -- not scrolling")
+            }
         }
     }
 }

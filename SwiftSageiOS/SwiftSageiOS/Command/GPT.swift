@@ -38,7 +38,6 @@ class GPT {
         let session = URLSession(configuration: urlConfig)
 
         openAI = OpenAI(configuration: configuration, session: session)
-
     }
 
     // Function to send a prompt to GPT via the OpenAI API
@@ -58,7 +57,6 @@ class GPT {
             print("👨: \(manualPrompt)")
 
         }
-        // Look into a better way to handle prompts..... 3
         else {
             print("prompt=\(prompt)")
             print("👨: Retry same prompt: \(currentRetry) / \(retryLimit)")
@@ -66,15 +64,13 @@ class GPT {
 
         print("Prompting \(prompt.count)...\n🐑🐑🐑\n")
 
-        //        Task {
-
         guard let conversationIndex = SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
             logD("Unable to find conversations id == \(conversationId) ... failing")
 
             return
         }
 
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             Task {
                 SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
                     id: SettingsViewModel.shared.idProvider(),
@@ -122,12 +118,12 @@ class GPT {
                                     content: previousMessage.content + message.content,
                                     createdAt: message.createdAt
                                 )
-                                //                            logD("melding to existing msg")
+                                //logD("melding to existing msg")
 
                                 SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
 
                             } else {
-                                //                            logD("append to existing msg")
+                                //logD("append to existing msg")
 
                                 SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
                             }
@@ -137,6 +133,9 @@ class GPT {
                             completeMessage += message.content
                         }
                     }
+
+                    logD("completed message w/ length = \(completeMessage.count)")
+
                     completion(completeMessage, true, true)
 
                 }
@@ -145,7 +144,7 @@ class GPT {
                     SettingsViewModel.shared.setConversationError(convoId: conversationId, error: error)
                 }
             }
-        }
+//        }
     }
 }
 

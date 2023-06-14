@@ -22,8 +22,7 @@ struct WindowView: View {
 
     @State private var isMoveGestureActivated = false
     @State private var isResizeGestureActive = false
-
-
+    
     @State var bumping: Bool = false
     @Binding var parentViewSize: CGRect
 
@@ -53,14 +52,11 @@ struct WindowView: View {
             }
             .onChange(of: geometry.size) { size in
                 recalculateWindowSize(size: geometry.size)
-                //                        logD("contentView viewSize update = \(viewSize)")
             }
             .onChange(of: horizontalSizeClass) { newSizeClass in
-               // print("Size class changed to \(String(describing: newSizeClass))")
                 recalculateWindowSize(size: geometry.size)
             }
             .onChange(of: verticalSizeClass) { newSizeClass in
-               // print("Size class changed to \(String(describing: newSizeClass))")
                 recalculateWindowSize(size: geometry.size)
             }
         }
@@ -73,7 +69,7 @@ struct WindowView: View {
     }
     private func windowContent() -> some View {
         return AnyView(
-            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
     }

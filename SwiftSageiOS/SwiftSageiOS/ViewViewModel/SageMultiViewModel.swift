@@ -24,27 +24,32 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var viewSize: CGRect = .zero
     @Published var resizeOffset: CGSize = .zero
     @Published var frame: CGRect
+    @Published var conversation: Conversation?
+    static func convoText(_ settingsViewModel: SettingsViewModel, _ conversation: Conversation?, windowInfo: WindowInfo) -> String {
+        if windowInfo.convoId == Conversation.ID(-1) {
+            return settingsViewModel.consoleManagerText
+        }
+        else if let conversation {
+            return settingsViewModel.convoText(conversation)
+        }
+        else {
+            return windowInfo.fileContents
 
-    init(settingsViewModel: SettingsViewModel, windowId: UUID, windowManager: WindowManager, windowInfo: WindowInfo, frame: CGRect) {
+        }
+    }
+
+    init(settingsViewModel: SettingsViewModel, windowId: UUID, windowManager: WindowManager, windowInfo: WindowInfo, frame: CGRect, conversation: Conversation?) {
         self.settingsViewModel = settingsViewModel
         self.windowId = windowId
         self.windowManager = windowManager
         self.windowInfo = windowInfo
 
-        if let convoId = windowInfo.convoId {
-            let existingConvo = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-            self.sourceCode = existingConvo.isEmpty ? convoId : existingConvo
-        }
-        else if windowInfo.convoId == Conversation.ID(-1) {
-            self.sourceCode = settingsViewModel.consoleManagerText
-
-        }
-        else {
-            self.sourceCode = windowInfo.fileContents
-        }
+        self.sourceCode =  SageMultiViewModel.convoText(settingsViewModel, conversation, windowInfo: windowInfo)
 
         self.originalSourceCode = windowInfo.fileContents
         self.frame = frame
+
+        self.conversation = conversation
     }
 
     func refreshChanges(newText: String) {
@@ -54,6 +59,10 @@ class SageMultiViewModel: ObservableObject, Identifiable {
                 self.changes = calcChange
            }
         }
+    }
+
+    func getConvoText() -> String {
+        SageMultiViewModel.convoText(settingsViewModel, conversation, windowInfo: windowInfo)
     }
 }
 #endif

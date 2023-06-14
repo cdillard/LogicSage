@@ -42,10 +42,9 @@ struct SageMultiView: View {
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
 
     @State var isEditing = false
-    @State var isLockToBottom = true
     @Binding var frame: CGRect
     @Binding var position: CGSize
-    @State var isMoveGestureActivated = false
+    @Binding var isMoveGestureActivated: Bool
     @State var webViewURL: URL?
     @State var isDragDisabled = false
     @Binding var viewSize: CGRect
@@ -55,6 +54,7 @@ struct SageMultiView: View {
 
     @State  var lastDragTime = Date()
     @State  var lastBumpFeedbackTime = Date()
+    @State var isLockToBottomEditor = false
 
     // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
@@ -85,43 +85,11 @@ struct SageMultiView: View {
                     // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
                     case .editor:
-                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
+                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottomEditor, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
                             DispatchQueue.global(qos: .default).async {
-
-                                let theNewtext = String(srcCodeTextEditor.text)
-                                sageMultiViewModel.refreshChanges(newText: theNewtext)
-
-
-                                if let fileURL = window.file?.url {
-                                    // add or replace this files change entry from this arr
-
-                                    var found = false
-
-                                    for (index,fileChange) in settingsViewModel.unstagedFileChanges.enumerated() {
-                                        if fileURL == fileChange.fileURL {
-                                            DispatchQueue.main.async {
-                                                settingsViewModel.changes = sageMultiViewModel.changes
-
-                                                settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: srcCodeTextEditor.text)])
-                                            }
-                                            found = true
-                                            break
-                                        }
-                                    }
-                                    if !found {
-                                        DispatchQueue.main.async {
-                                            settingsViewModel.changes = sageMultiViewModel.changes
-
-                                            settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: srcCodeTextEditor.text)]
-                                        }
-                                    }
-
-                                }
-                                else {
-                                    logD("no file url, no file changes")
-                                }
+                                doSrcCode(newText: srcCodeTextEditor.text)
                             }
 
                         }, insertionPointColor: {
@@ -138,7 +106,7 @@ struct SageMultiView: View {
                         }
 
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, conversations: $settingsViewModel.conversations, window: window, isEditing: $isEditing, isLockToBottom: $isLockToBottom, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
                             .onTapGesture {
                                 self.windowManager.bringWindowToFront(window: self.window)
                             }
@@ -175,14 +143,12 @@ struct SageMultiView: View {
                     case .changeView:
                         NavigationView {
                             ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
 
                     case .workingChangesView:
                         NavigationView {
                             WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-
                         }
                         .navigationViewStyle(StackNavigationViewStyle())
                     }
@@ -190,15 +156,44 @@ struct SageMultiView: View {
                 }
                 .onChange(of: viewSize) { newViewSize in
                     recalculateWindowSize(size: newViewSize.size)
-
                 }
                 .onChange(of: geometry.size) { size in 
                     recalculateWindowSize(size: geometry.size)
-//                    logD("SageMultiView viewSize update = \(geometry.size)")
                 }
 // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+
+    }
+    
+    func doSrcCode(newText: String) {
+        let theNewtext = String(newText)
+        sageMultiViewModel.refreshChanges(newText: theNewtext)
+
+        guard let fileURL = window.file?.url else {
+            logD("no file url, no file changes")
+            return
+        }
+        var found = false
+
+        for (index,fileChange) in settingsViewModel.unstagedFileChanges.enumerated() {
+            if fileURL == fileChange.fileURL {
+                DispatchQueue.main.async {
+                    settingsViewModel.changes = sageMultiViewModel.changes
+
+                    settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)])
+                }
+                found = true
+                break
+            }
+        }
+        if !found {
+            DispatchQueue.main.async {
+                settingsViewModel.changes = sageMultiViewModel.changes
+
+                settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)]
+            }
         }
     }
     func recalculateWindowSize(size: CGSize) {

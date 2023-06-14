@@ -18,11 +18,9 @@ extension SageMultiView {
         if !isDragDisabled {
             if !isMoveGestureActivated {
                 if interactive {
-                    DispatchQueue.main.async {
-                        self.windowManager.bringWindowToFront(window: self.window)
-                    }
+                    self.windowManager.bringWindowToFront(window: self.window)
+                    isMoveGestureActivated = true
                 }
-                isMoveGestureActivated = true
             }
             func doPostConstraint() {
                 let now = Date()

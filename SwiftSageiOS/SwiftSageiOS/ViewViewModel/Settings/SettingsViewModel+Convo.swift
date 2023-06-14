@@ -24,16 +24,16 @@ extension SettingsViewModel {
 
     }
     func appendMessageToConvoIndex(index: Int, message: Message) {
-            self.conversations[index].messages.append(message)
+        self.conversations[index].messages.append(message)
     }
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
-            self.conversations[index].messages[existingMessageIndex] = message
+        self.conversations[index].messages[existingMessageIndex] = message
     }
     func nilOutConversationErrorsAt(convoId: Conversation.ID) {
-            self.conversationErrors[convoId] = nil
+        self.conversationErrors[convoId] = nil
     }
     func setConversationError(convoId: Conversation.ID, error: Error) {
-            self.conversationErrors[convoId] = error
+        self.conversationErrors[convoId] = error
     }
 
     func sendChatText(_ convoID: Conversation.ID, chatText: String) {
@@ -108,22 +108,34 @@ extension SettingsViewModel {
             logD("Failed to write JSON data: \(error.localizedDescription)")
         }
     }
+    func getConvo(_ convoId: Conversation.ID) -> Conversation? {
+        if let conversation = conversations.first(where: { $0.id == convoId }) {
+            return conversation
 
+        }
+        return nil
+    }
     func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
         var retString  = ""
         if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
             for msg in conversation.messages {
                 retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
             }
+            if conversation.id == Conversation.ID(-1) {
+                retString = consoleManagerText
+            }
 
         }
         return retString
     }
 
-    func convoText(_ newConversation: Conversation, window: WindowInfo?) -> String {
+    func convoText(_ newConversation: Conversation) -> String {
         var retString  = ""
         for msg in newConversation.messages {
             retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
+        }
+        if newConversation.id == Conversation.ID(-1) {
+            retString = consoleManagerText
         }
         return retString
     }
