@@ -246,6 +246,8 @@ struct ChatView: View {
             .background(settingsViewModel.buttonColor)
     }
     func doChat() {
+#if !os(macOS)
+
         if chatText.isEmpty {
             logD("nothing to exec.")
 
@@ -264,6 +266,7 @@ struct ChatView: View {
         else {
             logD("failed to chat")
         }
+#endif
     }
     func setLockToBottom() {
         isLockToBottom.toggle()
