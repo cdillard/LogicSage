@@ -1,9 +1,9 @@
 
-# LogicSage: The mobile AI workspace 
+# LogicSage: The GPT app for iPadOS and iOS 
 
 ## for Mac OS command line, iOS, and iPadOS - Open Source in Swift
 
-[LogicSage: The Mobile GPT Workspace](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+[LogicSage: The GPT app for iPadOS and iOS ](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
 ## Table of Contents
 - [News](#news)
@@ -15,6 +15,24 @@
 - [Credits](#credits)
 
 ## news
+
+----------------
+06-15-2023
+
+LogicSage 1.2.2 in Review. Coming to the AppStore near you so soon!
+[LogicSage: The GPT app for iPadOS and iOS ](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+If you are would like to see some footage of how I use LogicSage please check out the following Youtube videos.
+
+Rap Therapy with LogicSage: https://youtu.be/QWfwah_b-4s
+
+- I demonstrate Rap Therapy through GPT chat
+- I demonstrate Debate command: Open Term window `debate Android vs iOS` or whatever you’d like.
+
+
+Use LogicSage with Swift Playgrounds: https://youtu.be/nS1AldmV8v8
+- I demonstrate using LogicSage to create Swift Playgrounds 3D Scenes. In this case a 3D scene with 4 crystals is turned into a crystal monster shape. 
+- I Demonstrate using LogicSage chat conversations to generate new songs as easily as "Another one".
 
 ----------------
 06-14-2023
