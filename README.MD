@@ -18,7 +18,7 @@
 --------------------
 06-18-2023
 
-[LogicSage Discord](https://discordapp.com/api/guilds/1119407704553832500/widget.png?style=banner2)
+<img src="https://discordapp.com/api/guilds/1119407704553832500/widget.png?style=banner3" alt="LogicSage Discord Banner 3"/>
 
 https://discord.gg/KvjxupEB9
 
