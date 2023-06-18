@@ -20,6 +20,8 @@
 
 [LogicSage Discord](https://discordapp.com/api/guilds/1119407704553832500/widget.png?style=banner2)
 
+https://discord.gg/KvjxupEB9
+
 Join LogicSage discord for help setting up, ideas, and to track development of the LogicSage app. I'll share roadmap, etc.
 
 
