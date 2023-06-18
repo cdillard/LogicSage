@@ -18,9 +18,10 @@
 --------------------
 06-18-2023
 
+[LogicSage Discord](https://discordapp.com/api/guilds/1119407704553832500/widget.png?style=banner2)
+
 Join LogicSage discord for help setting up, ideas, and to track development of the LogicSage app. I'll share roadmap, etc.
 
-<iframe src="https://discord.com/widget?id=1119407704553832500&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 
 LogicSage (1.2.2): The GPT app for iPadOS (and iOS) on the AppStore for free now!
 
