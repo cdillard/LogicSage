@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-@testable import LogicSageDev
+@testable import LogicSage
 
 class SettingsViewModelTests: XCTestCase {
     var sut: SettingsViewModel!

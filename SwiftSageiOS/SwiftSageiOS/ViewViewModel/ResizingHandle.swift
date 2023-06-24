@@ -214,6 +214,8 @@ struct ResizingHandle: View {
         //        print("resizeOffset = \(resizeOffset)")
     }
 }
+#if !os(macOS)
+
 struct BezierShape: Shape {
     var bezierPath: UIBezierPath
 
@@ -221,3 +223,4 @@ struct BezierShape: Shape {
         return Path(bezierPath.cgPath)
     }
 }
+#endif

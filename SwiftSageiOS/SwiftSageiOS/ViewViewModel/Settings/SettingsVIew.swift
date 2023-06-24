@@ -35,7 +35,7 @@ struct SettingsView: View {
 #if !os(macOS)
 
                 if presentUserAvatarRenamer {
-                    LogicSageDev.alert(subject: "self")
+                    LogicSage.alert(subject: "self")
                 }
                 #endif
             }
@@ -50,7 +50,7 @@ struct SettingsView: View {
 #if !os(macOS)
 
                 if presentGptAvatarRenamer {
-                    LogicSageDev.alert(subject: "GPT")
+                    LogicSage.alert(subject: "GPT")
                 }
                 #endif
             }

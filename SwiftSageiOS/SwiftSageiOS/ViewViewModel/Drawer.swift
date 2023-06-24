@@ -25,7 +25,7 @@ struct DrawerContent: View {
             else {
 #if !os(macOS)
                 if presentRenamer {
-                    LogicSageDev.alert(subject: "convo", convoId: renamingConvo?.id)
+                    LogicSage.alert(subject: "convo", convoId: renamingConvo?.id)
                 }
 #endif
             }

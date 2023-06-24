@@ -124,7 +124,7 @@ struct TopBar: View {
                                     }
                                     else if windowInfo.windowType == .chat {
 #if !os(macOS)
-                                        LogicSageDev.alert(subject: "convo", convoId: windowInfo.convoId)
+                                        LogicSage.alert(subject: "convo", convoId: windowInfo.convoId)
 #endif
                                     }
                                 } label: {

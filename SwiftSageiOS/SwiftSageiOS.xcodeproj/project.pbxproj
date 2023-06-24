@@ -1331,6 +1331,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
+				PRODUCT_MODULE_NAME = LogicSage;
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = chrozzprov;
@@ -1384,6 +1385,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
+				PRODUCT_MODULE_NAME = LogicSage;
 				PRODUCT_NAME = LogicSage;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
