@@ -5,6 +5,7 @@
 //  Created by Chris Dillard on 4/26/23.
 //
 #if !os(macOS)
+#if !os(xrOS)
 
 import Foundation
 import SwiftUI
@@ -29,6 +30,10 @@ struct SageMultiView: View {
 
     let dragDelay = 0.333666
     let dragsPerSecond = 60.0
+    let lineWidth: CGFloat = 3
+    let curveSize: CGFloat = 17.666
+    let cornerRadius: CGFloat = 26.666
+    let handleOpacity: CGFloat = 0.333
 
     @Binding var showAddView: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -51,11 +56,12 @@ struct SageMultiView: View {
     @Binding var resizeOffset: CGSize
     @Binding var bumping: Bool
     @Binding var isResizeGestureActive: Bool
+    @Binding var keyboardHeight: CGFloat
 
     @State  var lastDragTime = Date()
     @State  var lastBumpFeedbackTime = Date()
     @State var isLockToBottomEditor = false
-
+    @State var currentURL = URL(string: "https:/www.google.com/")!
 
     // START HANDLE WINDOW MOVEMENT GESTURE *********************************************************
     var body: some View {
@@ -69,6 +75,12 @@ struct SageMultiView: View {
                         view.gesture(
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
+                                    // Disable move gesture while keyboard is shown, its dangerous, I like it.
+                                    if keyboardHeight != 0 {
+                                        hideKeyboard()
+                                        return
+                                    }
+
                                     let now = Date()
                                     if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) { // throttle duration
                                         self.lastDragTime = now
@@ -78,9 +90,9 @@ struct SageMultiView: View {
                                 .onEnded { value in
                                     isMoveGestureActivated = false
                                 }
-                        ).onTapGesture {
+                        )                                    .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
-                        }
+                        })
                     }
 
                     // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
@@ -101,16 +113,19 @@ struct SageMultiView: View {
                             //                            print("srcEditor textViewDidBeginEditing")
                         }, theme: {
                             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-                        }, overrideText: { nil }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
-                        .onTapGesture {
+                        }, overrideText: { nil }, codeDidCopy: { }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
+                        .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
-                        }
+                        })
 
                     case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
-                            .onTapGesture {
-                                self.windowManager.bringWindowToFront(window: self.window)
-                            }
+                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)
+                            .simultaneousGesture(TapGesture().onEnded { value in
+                                        self.windowManager.bringWindowToFront(window: self.window)
+                                  })
+
+
+
                     case .project:
                         ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                     case .webView:
@@ -124,6 +139,9 @@ struct SageMultiView: View {
                                     Image(systemName: "backward.circle.fill")
                                         .font(.title)
                                         .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                 }
                                 .foregroundColor(settingsViewModel.buttonColor)
 
@@ -134,6 +152,9 @@ struct SageMultiView: View {
                                     Image(systemName: "forward.circle.fill")
                                         .font(.title)
                                         .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                 }
                                 .foregroundColor(settingsViewModel.buttonColor)
 
@@ -145,6 +166,9 @@ struct SageMultiView: View {
                                     Image(systemName: "arrow.triangle.2.circlepath.circle")
                                         .font(.title)
                                         .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                 }
                                 .foregroundColor(settingsViewModel.buttonColor)
                             }
@@ -152,10 +176,10 @@ struct SageMultiView: View {
 
                             .background(settingsViewModel.backgroundColor)
 
-                            WebView(url: url, webViewStore: sageMultiViewModel.webViewStore, request: URLRequest(url: url))
-                                .onTapGesture {
+                            WebView(url: url, currentURL: $currentURL, webViewStore: sageMultiViewModel.webViewStore, request:URLRequest(url: url) )
+                                .simultaneousGesture(TapGesture().onEnded {
                                     self.windowManager.bringWindowToFront(window: self.window)
-                                }
+                                })
                         }
                     case .simulator:
                         ZStack {
@@ -164,6 +188,9 @@ struct SageMultiView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .ignoresSafeArea()
                         }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        })
                     case .repoTreeView:
                         NavigationView {
                             if let root = settingsViewModel.root {
@@ -203,7 +230,50 @@ struct SageMultiView: View {
 // END SOURCE CODE WINDOW SETUP HANDLING *********************************************************
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+// BEGIN CURVED EDGE ARC ZONE *********************************************************
+
+            // TOP LEFT
+            ZStack {
+                ZStack {
+                    CurvedEdgeArc(cornerRadius: cornerRadius, curveSize: curveSize, position: .bottomLeft)
+                        .stroke(Color.primary, lineWidth: lineWidth)
+                        .offset(x: -22.5, y: -22.5)
+                        .opacity(handleOpacity)
+                        .allowsHitTesting(false)
+                    CustomPointerRepresentableView(mode: .topLeft)
+
+                }
+                .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
+            }
+            // TOP RIGHT
+            ZStack {
+                ZStack {
+                    CurvedEdgeArc(cornerRadius: cornerRadius, curveSize: curveSize, position: .bottomRight)
+                        .stroke(Color.primary, lineWidth: lineWidth)
+                        .offset(x: 22.5, y: -24.25)
+                        .opacity(handleOpacity)
+                        .allowsHitTesting(false)
+                }
+                .offset(x: geometry.size.width - settingsViewModel.cornerHandleSize)
+                .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
+            }
+            // BOTTOM RIGHT
+            ZStack {
+                ZStack {
+                    CurvedEdgeArc(cornerRadius: cornerRadius, curveSize: curveSize, position: .topRight)
+                        .stroke(settingsViewModel.appTextColor, lineWidth: lineWidth)
+                        .offset(x: 22.5, y: 17.75)
+                        .opacity(handleOpacity)
+                        .allowsHitTesting(false)
+                }
+                .offset(x: geometry.size.width - settingsViewModel.cornerHandleSize, y: geometry.size.height - settingsViewModel.cornerHandleSize)
+                .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
+            }
+ // END CURVED EDGE ARC ZONE *********************************************************
+
         }
+        
     }
     private func goBackward() {
         sageMultiViewModel.webViewStore.webView.goBack()
@@ -249,13 +319,16 @@ struct SageMultiView: View {
                 frame.size.width = size.width
             }
             if frame.size.height > size.height {
-                let hackedHeight = frame.size.height - size.height
-                // print("Hacked height == \(hackedHeight)")
-                position.height = max(40, position.height - hackedHeight)
-                frame.size.height = size.height
+                if keyboardHeight == 0 {
+                    let hackedHeight = frame.size.height - size.height
+                     print("Hacked height == \(hackedHeight)")
+                    position.height = max(60, position.height - hackedHeight)
+                    frame.size.height = size.height
+                }
             }
 
-            dragsOnChange(value: nil, false)
+            // TODO: Decide when this shoudl be done. right now we'll potetially los window?
+           // dragsOnChange(value: nil, false)
         }
     }
     func getURL() -> URL {
@@ -274,45 +347,25 @@ import WebKit
 
 class WebViewStore: ObservableObject {
     @Published var webView: WKWebView = WKWebView()
+
+
+//    lazy var config = WKWebViewConfiguration()
+//    config.userContentController = contentController
+//    config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+//    webView = WKWebView(frame: .zero, configuration: config)
 }
-//struct WebView: UIViewRepresentable {
-//    let url: URL
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//    var webViewInstance: WKWebView {
-//        let webView = WKWebView()
-//        let request = URLRequest(url: self.url)
-//        webView.load(request)
-//        return webView
-//    }
-//    func makeUIView(context: Context) -> WKWebView {
-//        return webViewInstance
-//    }
-//    func updateUIView(_ uiView: WKWebView, context: Context) {
-//
-//    }
-//    class Coordinator: NSObject, WKNavigationDelegate, UIScrollViewDelegate {
-//        var parent: WebView
-//
-//        init(_ parent: WebView) {
-//            self.parent = parent
-//        }
-//
-//        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//            return scrollView.subviews.first
-//        }
-//    }
-//}
 
 struct WebView: UIViewRepresentable {
     let url: URL
+    @Binding var currentURL: URL
 
     @ObservedObject var webViewStore: WebViewStore
 
     let request: URLRequest
 
     func makeUIView(context: Context) -> WKWebView {
+
+       // webViewStore.webView.uiDelegate = self
         webViewStore.webView.navigationDelegate = context.coordinator
         return webViewStore.webView
     }
@@ -329,12 +382,128 @@ struct WebView: UIViewRepresentable {
 
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
-
         init(_ parent: WebView) {
             self.parent = parent
         }
 
-        // Add WKNavigationDelegate methods here if needed
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if let url = navigationAction.request.url {
+                parent.currentURL = url // Intercept URL
+     //           logD("Deciding policy for: \(url)")
+
+
+//                webView.getCookies(for: "openai.com") { data in
+//                      logD("cookies=========================================")
+//                    for cookie in data {
+//                        logD("\(cookie.key)")
+//
+//                    }
+//                    SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+//
+//                }
+//
+//                let headers = navigationAction.request.allHTTPHeaderFields
+//                logD("Headers: \(headers ?? [:])")
+
+                
+            }
+            decisionHandler(.allow)
+        }
+
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+       //     logD("Did start provisional navigation")
+        }
+
+        func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        //    logD("Did receive server redirect for provisional navigation")
+        }
+
+        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        //    logD("Did fail provisional navigation with error: \(error)")
+        }
+
+        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        //    logD("Did commit navigation")
+        }
+
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        //    logD("Did finish navigation")
+                // Evaluate JavaScript to get page content
+            if SettingsViewModel.shared.chatGPTAuth {
+                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
+                                           completionHandler: { (html: Any?, error: Error?) in
+                    if let error = error {
+                        logD("Failed to get page HTML: \(error)")
+                    } else if let htmlString = html as? String {
+                        //logD("Page HTML: \(htmlString)")
+                        
+                        
+                        //                        webView.getCookies(for: "openai.com") { data in
+                        //                              logD("cookies=========================================")
+                        //                            for cookie in data {
+                        //                                logD("\(cookie.key)")
+                        //
+                        //                            }
+                        //                            SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+                        //                        }
+                        
+                        // First, we need to extract JSON string from the HTML.
+                        if let startRange = htmlString.range(of: "{"),
+                           let endRange = htmlString.range(of: "}", options: .backwards) {
+                            var jsonString = String(htmlString[startRange.lowerBound...(endRange.upperBound)])
+                            if jsonString.last == "<" {
+                                jsonString.removeLast()
+                            }
+                            // Convert the JSON string to data
+                            if let jsonData = jsonString.data(using: .utf8) {
+                                struct AccessToken: Decodable {
+                                    let accessToken: String
+                                }
+                                
+                                // Parse the data as JSON
+                                let decoder = JSONDecoder()
+                                do {
+                                    let result = try decoder.decode(AccessToken.self, from: jsonData)
+                                    //logD("Access token: Aquired from chatGPT.") // Here's your access token.
+                                    SettingsViewModel.shared.accessToken = result.accessToken
+                                } catch {
+                                    logD("Failed to parse JSON: \(error)")
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+            }
+
+        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+          //  logD("Did fail navigation with error: \(error)")
+        }
+
+        func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+           // logD("Deciding policy for navigation response")
+            decisionHandler(.allow)
+        }
+
+        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+           // logD("Web content process did terminate")
+        }
+
+        func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+           // logD("Did receive authentication challenge")
+
+
+//            webView.getCookies(for: "openai.com") { data in
+//                  logD("cookies=========================================")
+//                for cookie in data {
+//                    logD("\(cookie.key)")
+//
+//                }
+//                SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+//
+//            }
+            completionHandler(.performDefaultHandling, nil)
+        }
     }
 }
 
@@ -368,4 +537,26 @@ extension Notification {
         return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
     }
 }
+
+extension WKWebView {
+
+    private var httpCookieStore: WKHTTPCookieStore  { return WKWebsiteDataStore.default().httpCookieStore }
+
+    func getCookies(for domain: String? = nil, completion: @escaping ([String : Any])->())  {
+        var cookieDict = [String : AnyObject]()
+        httpCookieStore.getAllCookies { cookies in
+            for cookie in cookies {
+                if let domain = domain {
+                    if cookie.domain.contains(domain) {
+                        cookieDict[cookie.name] = cookie.properties as AnyObject?
+                    }
+                } else {
+                    cookieDict[cookie.name] = cookie.properties as AnyObject?
+                }
+            }
+            completion(cookieDict)
+        }
+    }
+}
+#endif
 #endif

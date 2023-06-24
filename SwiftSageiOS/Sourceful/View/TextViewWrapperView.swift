@@ -60,7 +60,6 @@ import Foundation
 				let gutterRect = CGRect(x: 0, y: rect.minY, width: textView.gutterWidth, height: rect.height)
 				let path = BezierPath(rect: gutterRect)
 				path.fill()
-				
 			} else {
 			
 				let contentHeight = textView.enclosingScrollView!.documentView!.bounds.height
@@ -81,7 +80,11 @@ import Foundation
 				}
 			
 				paragraphs = offsetParagraphs(paragraphs, for: textView, yOffset: yOffset)
-			
+
+
+
+
+
 				let components = textView.text.components(separatedBy: .newlines)
 			
 				let count = components.count

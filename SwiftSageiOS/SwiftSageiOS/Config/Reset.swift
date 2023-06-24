@@ -22,6 +22,13 @@ let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
 
+
+// I've tried to include the reverse engineered GPT SSE API as an option for thsose without API Keys. WIP.
+// WARNING: "OpenAI is using services from Arkose Labs to detect and prevent actions accessing ChatGPT's GPT-4 and GPT-4 Browsing models through Apps other than the official clients. Although ChatALL has successfully bypassed its protection, OpenAI can still easily identify you, increasing your risk of being banned. \n\nAre you sure to take this risk? (The risk of using GPT-4 Mobile V2 will be much lower)",
+// If USE_CHATGPT == true and accessToken is set via logging into https://chat.openai.com and going to  https://chat.openai.com/api/auth/session
+// WARNING: Using this method may/will flag your chatGPT account. It's hard to say. For PLUS members I'd say we are good.
+let USE_CHATGPT = false
+
 var config = Config(
     projectName: "MyApp",
     globalErrors: [String](),

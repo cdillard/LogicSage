@@ -85,39 +85,71 @@ class ScreamClient: WebSocketDelegate {
             }
         case .text(let text):
 #if !os(macOS)
-            do {
-                let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
-                guard let recipient = json?[recipientJsonKey] as? String,
-                      let message = json?[messageJsonKey] as? String else {
-                    return logD("malformed text received on ws")
-                }
+                do {
+                    let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
+                    guard let recipient = json?[recipientJsonKey] as? String,
+                          let message = json?[messageJsonKey] as? String else {
+                        return logD("malformed text received on ws")
+                    }
 
-                if recipient == SettingsViewModel.shared.userName {
+                    if recipient == SettingsViewModel.shared.userName {
 
-                    logDNoNewLine(message)
+                        logDNoNewLine(message)
 
-                    playMessagForString(message: message)
+                        playMessagForString(message: message)
 
-                    if message.hasPrefix("say:") {
-                        let arr = message.split(separator: ": ", maxSplits: 1)
-                        if arr.count > 1 {
-                            logD("speaking...")
-                            let speech = String(arr[1])
-                            SettingsViewModel.shared.speak(speech)
-                        }
-                        else {
-                            logD("failed")
+                        if message.hasPrefix("say:") {
+                            var arr = [Substring]()
+                            let saySep = ": "
+                            if #available(iOS 16.0, *) {
+                                arr = message.split(separator: saySep, maxSplits: 1)
+
+                                if arr.count > 1 {
+                                    logD("speaking...")
+                                    let speech = String(arr[1])
+                                    SettingsViewModel.shared.speak(speech)
+                                }
+                                else {
+                                    logD("failed")
+                                }
+                            } else {
+                                // Fallback on earlier versions
+
+                                let parts = message.components(separatedBy: saySep)
+                                var speech = ""
+                                if parts.count > 2 {
+                                    let firstPart = parts[0]
+                                    let remainingParts = parts.dropFirst().joined(separator: saySep)
+                                    let finalParts = [firstPart, remainingParts]
+                                    // Use finalParts
+                                    speech = String(finalParts[1])
+                                } else {
+                                    // Use parts directly
+                                    speech = String(parts[1])
+
+                                }
+                                if !speech.isEmpty {
+                                    logD("speaking...")
+                                    SettingsViewModel.shared.speak(speech)
+                                }
+                                else {
+                                    logD("failed")
+                                }
+                                
+                            }
+
+
                         }
                     }
+                    else {
+                        //  logD("diff recipient on ws: \(recipient)?")
+                    }
                 }
-                else {
-                  //  logD("diff recipient on ws: \(recipient)?")
+                catch {
+                    logD("cmd err = \(error)")
                 }
-            }
-            catch {
-                logD("cmd err = \(error)")
-            }
 #endif
+
             // TODO: HANDLE AUTH json structured data
         case .binary(let data):
 #if !os(macOS)

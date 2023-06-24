@@ -31,11 +31,11 @@ struct InstructionsPopup: View {
             ScrollView {
                 VStack {
                     Text("Welcome to LogicSage!")
-                        .background(.green)
                         .opacity(0.7)
-                        .font(.body)
+                        .font(.title2)
                         .lineLimit(nil)
-                        .bold()
+                        .foregroundColor(settingsViewModel.appTextColor)
+
                         .padding(geometry.size.width * 0.01)
 
                     VStack(alignment: .leading, spacing: 8) {

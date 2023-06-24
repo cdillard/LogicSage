@@ -22,6 +22,9 @@ struct TopBar: View {
                     Image(systemName: "xmark.circle.fill")
                         .font(.body)
                         .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                 .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
@@ -33,6 +36,9 @@ struct TopBar: View {
                         Image(systemName: "sidebar.left")
                             .font(.caption)
                             .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .padding(.leading, 7)
@@ -45,6 +51,9 @@ struct TopBar: View {
                             Image(systemName: "stop.fill")
                                 .font(.caption)
                                 .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                         }
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                         .padding(.leading, 7)
@@ -57,6 +66,9 @@ struct TopBar: View {
                         Image(systemName: "play.fill")
                             .font(.caption)
                             .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .padding(.leading, 7)
@@ -80,6 +92,8 @@ struct TopBar: View {
                                 .labelStyle(DemoStyle())
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                         }
+                        .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
+
                     }
                     else {
                         Menu {
@@ -92,25 +106,42 @@ struct TopBar: View {
                                     .labelStyle(DemoStyle())
                                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                             }
+//                            .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
 
                             let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-                            ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
-                                .foregroundColor(SettingsViewModel.shared.buttonColor)
-
+                            if #available(iOS 16.0, *) {
+                                
+                                ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
+                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                            }
 // TODO RENAME FROM HERE IF IT WASNT SO COMPLICAGTED
-//                            Button {
-//
-//                            } label: {
-//                                Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
-//                                    .font(.body)
-//                                    .labelStyle(DemoStyle())
-//                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-//                            }
+                            if windowInfo.convoId == Conversation.ID(-1) {
+                                
+                            }
+                            else {
+                                Button {
+                                    // either renaming file or chat
+                                    if windowInfo.windowType == .file {
+
+                                    }
+                                    else if windowInfo.windowType == .chat {
+                                        LogicSageDev.alert(subject: "convo", convoId: windowInfo.convoId)
+
+                                    }
+                                } label: {
+                                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                                        .font(.body)
+                                        .labelStyle(DemoStyle())
+                                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                                }
+                            }
+
                         } label: {
                             Label("", systemImage: "ellipsis")
                                 .font(.body)
                                 .labelStyle(DemoStyle())
                         }
+                        .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
                 }

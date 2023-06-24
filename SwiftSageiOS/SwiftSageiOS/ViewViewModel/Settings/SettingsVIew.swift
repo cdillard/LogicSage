@@ -20,28 +20,48 @@ struct SettingsView: View {
     let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
     @State private var currentModeIndex: Int = 0
 
-    @FocusState private var field1IsFocused: Bool
-    @FocusState private var field2IsFocused: Bool
-    @FocusState private var field3IsFocused: Bool
-    @FocusState private var field4IsFocused: Bool
-    @FocusState private var field5IsFocused: Bool
-    @FocusState private var field6IsFocused: Bool
-    @FocusState private var field7IsFocused: Bool
     @State private var scrollViewID = UUID()
-
     @State private var showAPISettings = false
-
 
     @State var presentRenamer: Bool = false
     @State private var newName: String = ""
     @State var renamingConvo: Conversation? = nil
 
 
-    @State var presentUserAvatarRenamer: Bool = false
-    @State var presentGptAvatarRenamer: Bool = false
+    @State var presentUserAvatarRenamer: Bool = false {
+        didSet {
+            if #available(iOS 16.0, *) {
+                
+            }
+            else {
+#if !os(macOS)
+
+                if presentUserAvatarRenamer {
+                    LogicSageDev.alert(subject: "self")
+                }
+                #endif
+            }
+        }
+    }
+    @State var presentGptAvatarRenamer: Bool = false {
+        didSet {
+            if #available(iOS 16.0, *) {
+                
+            }
+            else {
+#if !os(macOS)
+
+                if presentGptAvatarRenamer {
+                    LogicSageDev.alert(subject: "GPT")
+                }
+                #endif
+            }
+        }
+    }
 
     @State private var newUsersName: String = ""
     @State private var newGPTName: String = ""
+    @Binding var tabSelection: Int
 
     var body: some View {
         GeometryReader { geometry in
@@ -53,19 +73,12 @@ struct SettingsView: View {
                                 HStack {
                                     Button(action: {
                                         withAnimation {
-                                            field1IsFocused = false
-                                            field2IsFocused = false
-                                            field3IsFocused = false
-                                            field4IsFocused = false
-                                            field5IsFocused = false
-                                            field6IsFocused = false
-                                            field7IsFocused = false
                                             scrollViewID = UUID()
-                                            showSettings.toggle()
+                                            tabSelection = 1
                                         }
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                            .fontWeight(.bold)
+                                        //.fontWeight(.bold)
                                             .font(.body)
                                             .padding(.horizontal, 8)
                                             .padding(.vertical, 8)
@@ -88,6 +101,59 @@ struct SettingsView: View {
                             .padding(.trailing,8)
                         }
 
+                        VStack {
+                            HStack {
+                                Group {
+                                    VStack {
+                                        Button(action: {
+                                            withAnimation {
+                                                showSettings.toggle()
+                                                showHelp.toggle()
+                                                tabSelection = 1
+
+                                                logD("HELP tapped")
+
+
+                                            }
+                                        }) {
+                                            resizableButtonImage(systemName:
+                                                                    "questionmark",
+                                                                 size: geometry.size)
+                                            .background(settingsViewModel.buttonColor)
+                                            .cornerRadius(8)
+                                        }
+                                        // Button for (help)
+                                        Text("help")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                    }
+                                    VStack {
+                                        Button(action: {
+                                            withAnimation {
+                                                showSettings.toggle()
+                                                showInstructions.toggle()
+                                                tabSelection = 1
+
+                                                logD("info tapped")
+
+                                            }
+                                        }) {
+                                            resizableButtonImage(systemName:
+                                                                    "info",
+                                                                 size: geometry.size)
+                                            .background(settingsViewModel.buttonColor)
+                                            .cornerRadius(8)
+                                        }
+                                        // BUTTON FOR (i) info
+                                        Text("info")
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                    }
+                                }
+                            }
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+
+                            Spacer()
+                        }
+
                         // MODE PICKER
                         Group {
                             HStack {
@@ -107,7 +173,6 @@ struct SettingsView: View {
                                     }
                                     else {
                                         logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-
                                     }
                                 }
                                 .font(.body)
@@ -134,53 +199,100 @@ struct SettingsView: View {
                             }
                         }
                         if showAPISettings {
-                            
+
                             Group {
                                 VStack {
                                     Text("A.I. 🔑: ")
                                         .font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
+                                    if #available(iOS 16.0, *) {
 
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.openAIKey
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.openAIKey
+                                        )
+                                        .border(.secondary)
+                                        .submitLabel(.done)
 
-                                    .focused($field1IsFocused)
+                                        //     .focused($field1IsFocused)
 
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .scrollDismissesKeyboard(.interactively)
-                                    .font(.caption)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                    .autocapitalization(.none)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                        .scrollDismissesKeyboard(.interactively)
 #endif
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
+                                    else {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.openAIKey
+                                        )
+                                        //.border(.secondary)
+                                        // .submitLabel(.done)
+
+                                        //     .focused($field1IsFocused)
+
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        //.scrollDismissesKeyboard(.interactively)
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
                                     Spacer()
 
                                     Text("A.I. model: ")
                                         .font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
+                                    if #available(iOS 16.0, *) {
 
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.openAIModel
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
-                                    .focused($field2IsFocused)
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.openAIModel
+                                        )
+                                        .border(.secondary)
+                                        .submitLabel(.done)
+                                        // .focused($field2IsFocused)
 
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .scrollDismissesKeyboard(.interactively)
-                                    .font(.caption)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                    .autocapitalization(.none)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+
+                                        .scrollDismissesKeyboard(.interactively)
 #endif
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
+                                    else {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.openAIModel
+                                        )
+                                        //                                        .border(.secondary)
+                                        //                                        .submitLabel(.done)
+                                        // .focused($field2IsFocused)
+
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        //            .scrollDismissesKeyboard(.interactively)
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
                                     Spacer()
 
                                         .padding(.leading, 8)
@@ -188,37 +300,73 @@ struct SettingsView: View {
 
                                     Text("GHA PAT: ").font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
-                                    
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.ghaPat
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
-                                    .focused($field3IsFocused)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .font(.caption)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .autocorrectionDisabled(true)
+                                    if #available(iOS 16.0, *) {
+
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.ghaPat
+                                        )
+                                        .border(.secondary)
+                                        .submitLabel(.done)
+                                        //   .focused($field3IsFocused)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
 #if !os(macOS)
-                                    .autocapitalization(.none)
+                                        .autocapitalization(.none)
 #endif
+                                    }
+                                    else {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.ghaPat
+                                        )
+                                        //  .border(.secondary)
+                                        //   .submitLabel(.done)
+                                        //   .focused($field3IsFocused)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
 
                                     HStack {
                                         Text("swiftsage username: ").font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
+                                        if #available(iOS 16.0, *) {
 
-                                        TextField("", text: $settingsViewModel.userName)
-                                            .submitLabel(.done)
-                                            .scrollDismissesKeyboard(.interactively)
-                                            .font(.footnote)
-                                            .border(.secondary)
+                                            TextField("", text: $settingsViewModel.userName)
+                                                .submitLabel(.done)
+#if !os(xrOS)
 
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .autocorrectionDisabled(true)
-    #if !os(macOS)
-                                            .autocapitalization(.none)
-    #endif
+                                                .scrollDismissesKeyboard(.interactively)
+#endif
+                                                .font(.footnote)
+                                                .border(.secondary)
+
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                .autocapitalization(.none)
+#endif
+                                        }
+                                        else {
+                                            TextField("", text: $settingsViewModel.userName)
+                                            //                                                .submitLabel(.done)
+                                            //                                                .scrollDismissesKeyboard(.interactively)
+                                                .font(.footnote)
+                                            //                                                .border(.secondary)
+
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                .autocapitalization(.none)
+#endif
+                                        }
                                         Spacer()
 
                                     }
@@ -229,18 +377,31 @@ struct SettingsView: View {
                                     HStack {
                                         Text("swiftsage password: ").font(.caption)
                                             .foregroundColor(settingsViewModel.appTextColor)
+                                        if #available(iOS 16.0, *) {
 
-                                        TextField("", text: $settingsViewModel.password)
-                                            .submitLabel(.done)
-                                            .scrollDismissesKeyboard(.interactively)
-                                            .border(.secondary)
+                                            TextField("", text: $settingsViewModel.password)
+                                                .submitLabel(.done)
+#if !os(xrOS)
+                                                .scrollDismissesKeyboard(.interactively)
+#endif
+                                                .border(.secondary)
 
-                                            .font(.footnote)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .autocorrectionDisabled(true)
-    #if !os(macOS)
-                                            .autocapitalization(.none)
-    #endif
+                                                .font(.footnote)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                .autocapitalization(.none)
+#endif
+                                        }
+                                        else {
+                                            TextField("", text: $settingsViewModel.password)
+                                                .font(.footnote)
+                                                .foregroundColor(settingsViewModel.appTextColor)
+                                                .autocorrectionDisabled(true)
+#if !os(macOS)
+                                                .autocapitalization(.none)
+#endif
+                                        }
                                         Spacer()
 
                                     }
@@ -261,9 +422,18 @@ struct SettingsView: View {
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
                             .frame( maxWidth: geometry.size.width / 3)
+
+                            if USE_CHATGPT {
+                                Toggle(isOn: $settingsViewModel.chatGPTAuth) {
+                                    Text("ChatGPT Auth:")
+                                        .font(.caption)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                }
+                                .frame( maxWidth: geometry.size.width / 3)
+                            }
 #if !os(macOS)
                             if UIDevice.current.userInterfaceIdiom == .phone {
-                                
+
                                 Group {
                                     VStack {
 
@@ -453,47 +623,21 @@ struct SettingsView: View {
 
                                     Text("Deep Space Sparkle")
                                         .foregroundColor(settingsViewModel.appTextColor)
-
-//                                         .foregroundColor(UIColor(red: 245, green: 255, blue: 250))
-//                                          .background( UIColor(red: 74, green: 100, blue: 108))
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
                                             logD("Tapped Deep Space Sparkle theme")
-
                                             settingsViewModel.applyTheme(theme: .deepSpace)
-
-
                                         }
                                     Text("Hackeresque")
                                         .foregroundColor(settingsViewModel.appTextColor)
-
-//                                         .foregroundColor(UIColor(red: 57, green: 255, blue: 20))
-//                                         .background( UIColor.black)
                                         .font(.body)
                                         .padding()
                                         .onTapGesture {
                                             logD("Tapped Hackeresque theme")
-
                                             settingsViewModel.applyTheme(theme: .hacker)
-
                                         }
                                 }
-
-                                //                                VStack(spacing: 3) {
-                                //
-                                //                                    ColorPicker("Terminal Background Color", selection:
-                                //                                                    $settingsViewModel.terminalBackgroundColor)
-                                //                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                //                                    .foregroundColor(settingsViewModel.appTextColor)
-                                //                                }
-                                //                                VStack( spacing: 3) {
-                                //
-                                //                                    ColorPicker("Terminal Text Color", selection:
-                                //                                                    $settingsViewModel.terminalTextColor)
-                                //                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                //                                    .foregroundColor(settingsViewModel.appTextColor)
-                                //                                }
                             }
                             Group {
                                 VStack( spacing: 3) {
@@ -522,7 +666,7 @@ struct SettingsView: View {
                         }
                         // SOURCE EDITOR COLORS SETTINGS ZONE
                         Group {
-                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") srceditor colors")
+                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") chat colors")
                                 .font(.headline)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
@@ -710,7 +854,7 @@ struct SettingsView: View {
                     VStack {
                         if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputenabled {
                             VStack {
-                                
+
                                 Text("Pick iOS voice")
                                     .foregroundColor(settingsViewModel.appTextColor)
 
@@ -740,119 +884,77 @@ struct SettingsView: View {
                                 .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
                             }
                         }
-
-                        VStack {
-                            HStack {
-                                Group {
-                                    VStack {
-                                        Button(action: {
-                                            withAnimation {
-                                                showSettings.toggle()
-                                                showHelp.toggle()
-
-                                                logD("HELP tapped")
-
-
-                                            }
-                                        }) {
-                                            resizableButtonImage(systemName:
-                                                                    "questionmark.circle.fill",
-                                                                 size: geometry.size)
-                                            .fontWeight(.bold)
-                                            .background(settingsViewModel.buttonColor)
-                                            .cornerRadius(8)
-                                        }
-                                        // Button for (help)
-                                        Text("help")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack {
-                                        Button(action: {
-                                            withAnimation {
-                                                showSettings.toggle()
-                                                showInstructions.toggle()
-
-                                                logD("info tapped")
-
-                                            }
-                                        }) {
-                                            resizableButtonImage(systemName:
-                                                                    "info.bubble.fill",
-                                                                 size: geometry.size)
-                                            .fontWeight(.bold)
-                                            .background(settingsViewModel.buttonColor)
-                                            .cornerRadius(8)
-                                        }
-                                        // BUTTON FOR (i) info
-                                        Text("info")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
-                            }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            Button(action: {
-                                withAnimation {
-                                    field1IsFocused = false
-                                    field2IsFocused = false
-                                    field3IsFocused = false
-                                    field4IsFocused = false
-                                    field5IsFocused = false
-                                    field6IsFocused = false
-                                    field7IsFocused = false
-                                    scrollViewID = UUID()
-                                    showSettings.toggle()
-                                }
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .fontWeight(.bold)
-                                    .font(.body)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 8)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .background(settingsViewModel.buttonColor)
-                                    .cornerRadius(8)
-                            }
-                            .padding(.bottom)
-                            Spacer()
-                        }
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    Button(action: {
+                        withAnimation {
+                            scrollViewID = UUID()
+                            showSettings.toggle()
+                            tabSelection = 1
+                        }
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.body)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 8)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(8)
+                    }
+                    .padding(.bottom)
 
+                    .modify { view in
+
+                        if #available(iOS 16.0, *) {
+
+                            view.alert("Rename self", isPresented: $presentUserAvatarRenamer, actions: {
+                                TextField("New name", text: $newUsersName)
+
+                                Button("Rename", action: {
+                                    settingsViewModel.savedUserAvatar = newUsersName
+
+                                })
+                                Button("Cancel", role: .cancel, action: {
+                                    presentGptAvatarRenamer = false
+                                })
+                            }, message: {
+                                Text("Please enter new name for yourself")
+                            })
+                        }
+                        else {
+                        }
+                    }
+                    .modify { view in
+
+                        if #available(iOS 16.0, *) {
+                            view.alert("Rename gpt", isPresented: $presentGptAvatarRenamer, actions: {
+                                TextField("New name", text: $newGPTName)
+
+                                Button("Rename", action: {
+                                    settingsViewModel.savedBotAvatar = newGPTName
+
+                                })
+                                Button("Cancel", role: .cancel, action: {
+                                    presentGptAvatarRenamer = false
+                                })
+                            }, message: {
+                                Text("Please enter new name for gpt")
+                            })
+                        }
+                        else {
+                        }
+
+                    }
                     Spacer()
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding(geometry.size.width * 0.01)
                 .padding(.bottom, 30)
+
 #if !os(macOS)
                 .background(settingsViewModel.backgroundColor)
 #endif
             }
-            .alert("Rename self", isPresented: $presentUserAvatarRenamer, actions: {
-                TextField("New name", text: $newUsersName)
-
-                Button("Rename", action: {
-                    settingsViewModel.savedUserAvatar = newUsersName
-
-                })
-                Button("Cancel", role: .cancel, action: {
-                    presentGptAvatarRenamer = false
-                })
-            }, message: {
-                Text("Please enter new name for yourself")
-            })
-            .alert("Rename gpt", isPresented: $presentGptAvatarRenamer, actions: {
-                TextField("New name", text: $newGPTName)
-
-                Button("Rename", action: {
-                    settingsViewModel.savedBotAvatar = newGPTName
-
-                })
-                Button("Cancel", role: .cancel, action: {
-                    presentGptAvatarRenamer = false
-                })
-            }, message: {
-                Text("Please enter new name for gpt")
-            })
             .background(settingsViewModel.backgroundColor
                 .edgesIgnoringSafeArea(.all))
 
@@ -862,20 +964,32 @@ struct SettingsView: View {
 #endif
             }
             .id(self.scrollViewID)
-            .scrollIndicators(.visible)
         }
     }
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-        Image(systemName: systemName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-            .tint(settingsViewModel.buttonColor)
+        if #available(iOS 16.0, *) {
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+                .tint(settingsViewModel.buttonColor)
 #if !os(macOS)
 
-            .background(settingsViewModel.backgroundColor)
+                .background(settingsViewModel.backgroundColor)
 #endif
+
+        } else {
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+#if !os(macOS)
+
+                .background(settingsViewModel.backgroundColor)
+#endif
+
+        }
 
     }
     private func updateMode() {
@@ -888,3 +1002,82 @@ struct SettingsView: View {
         }
     }
 }
+
+
+public extension View {
+    @ViewBuilder
+    func modify<Content: View>(@ViewBuilder _ transform: (Self) -> Content?) -> some View {
+        if let view = transform(self), !(view is EmptyView) {
+            view
+        } else {
+            self
+        }
+    }
+
+}
+#if !os(macOS)
+
+func alert(subject: String, convoId: Conversation.ID? = nil) {
+    let alert = UIAlertController(title: "Rename \(subject)?", message: nil, preferredStyle: .alert)
+    alert.addTextField() { textField in
+        textField.placeholder = "New name"
+    }
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
+    alert.addAction(UIAlertAction(title: "Rename", style: .default) { text in
+        if subject == "self" {
+            SettingsViewModel.shared.savedUserAvatar = alert.textFields?.first?.text ?? ""
+        }
+        else if subject == "GPT" {
+            SettingsViewModel.shared.savedBotAvatar = alert.textFields?.first?.text ?? ""
+        }
+        else if subject == "convo" {
+            if let convoID = convoId {
+                SettingsViewModel.shared.renameConvo(convoID, newName: alert.textFields?.first?.text ?? "")
+
+            }
+            else {
+                logD("no rn")
+            }
+
+        }
+    })
+    showAlert(alert: alert)
+}
+
+func showAlert(alert: UIAlertController) {
+    if let controller = topMostViewController() {
+        controller.present(alert, animated: true)
+    }
+}
+
+private func keyWindow() -> UIWindow? {
+    return UIApplication.shared.connectedScenes
+    .filter {$0.activationState == .foregroundActive}
+    .compactMap {$0 as? UIWindowScene}
+    .first?.windows.filter {$0.isKeyWindow}.first
+}
+
+private func topMostViewController() -> UIViewController? {
+    guard let rootController = keyWindow()?.rootViewController else {
+        return nil
+    }
+    return topMostViewController(for: rootController)
+}
+
+private func topMostViewController(for controller: UIViewController) -> UIViewController {
+    if let presentedController = controller.presentedViewController {
+        return topMostViewController(for: presentedController)
+    } else if let navigationController = controller as? UINavigationController {
+        guard let topController = navigationController.topViewController else {
+            return navigationController
+        }
+        return topMostViewController(for: topController)
+    } else if let tabController = controller as? UITabBarController {
+        guard let topController = tabController.selectedViewController else {
+            return tabController
+        }
+        return topMostViewController(for: topController)
+    }
+    return controller
+}
+#endif

@@ -24,7 +24,6 @@
 		B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EFE29F9F09A00078D8D /* SwiftLexer.swift */; };
 		B7191F1E29F9F09A00078D8D /* JavaLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191EFF29F9F09A00078D8D /* JavaLexer.swift */; };
 		B7191F1F29F9F09A00078D8D /* JavaScriptLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F0029F9F09A00078D8D /* JavaScriptLexer.swift */; };
-		B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F0129F9F09A00078D8D /* ASTVisualizer.swift */; };
 		B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F0329F9F09A00078D8D /* Lexer.swift */; };
 		B7191F2229F9F09A00078D8D /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F0429F9F09A00078D8D /* Paragraph.swift */; };
 		B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7191F0529F9F09A00078D8D /* SyntaxColorTheme.swift */; };
@@ -120,6 +119,12 @@
 		B7544E4D2A191BCE00961F4C /* URLSessionDataTaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */; };
 		B75B329329FA11870049EB55 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329229FA11870049EB55 /* AddView.swift */; };
 		B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */; };
+		B77750492A3FFA3500E836D3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750462A3FFA3500E836D3 /* Event.swift */; };
+		B777504A2A3FFA3500E836D3 /* EventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750472A3FFA3500E836D3 /* EventSource.swift */; };
+		B777504B2A3FFA3500E836D3 /* EventStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750482A3FFA3500E836D3 /* EventStreamParser.swift */; };
+		B777506C2A41E96E00E836D3 /* Marionette in Frameworks */ = {isa = PBXBuildFile; productRef = B777506B2A41E96E00E836D3 /* Marionette */; };
+		B777506E2A42AD6E00E836D3 /* CurvedEdgeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */; };
+		B77750702A4346ED00E836D3 /* CustomPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506F2A4346ED00E836D3 /* CustomPointerView.swift */; };
 		B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */; };
 		B78DA95F2A02AF01002343AB /* InstructionsPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */; };
 		B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */; };
@@ -143,6 +148,8 @@
 		B78EAF812A13B7D4003095A2 /* SwiftSageiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF802A13B7D4003095A2 /* SwiftSageiOSTests.swift */; };
 		B78EAF882A13B820003095A2 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF872A13B820003095A2 /* SettingsViewModelTests.swift */; };
 		B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */; };
+		B7A8A49A2A4517A000E897C5 /* ViewController+PointerInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8A4992A4517A000E897C5 /* ViewController+PointerInteraction.swift */; };
+		B7A8A49C2A4517F700E897C5 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8A49B2A4517F700E897C5 /* ShapeView.swift */; };
 		B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
@@ -190,7 +197,6 @@
 		B7191EFE29F9F09A00078D8D /* SwiftLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftLexer.swift; sourceTree = "<group>"; };
 		B7191EFF29F9F09A00078D8D /* JavaLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaLexer.swift; sourceTree = "<group>"; };
 		B7191F0029F9F09A00078D8D /* JavaScriptLexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptLexer.swift; sourceTree = "<group>"; };
-		B7191F0129F9F09A00078D8D /* ASTVisualizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASTVisualizer.swift; sourceTree = "<group>"; };
 		B7191F0329F9F09A00078D8D /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		B7191F0429F9F09A00078D8D /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		B7191F0529F9F09A00078D8D /* SyntaxColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxColorTheme.swift; sourceTree = "<group>"; };
@@ -295,6 +301,11 @@
 		B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskProtocol.swift; sourceTree = "<group>"; };
 		B75B329229FA11870049EB55 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+ForkGithub.swift"; sourceTree = "<group>"; };
+		B77750462A3FFA3500E836D3 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B77750472A3FFA3500E836D3 /* EventSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSource.swift; sourceTree = "<group>"; };
+		B77750482A3FFA3500E836D3 /* EventStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStreamParser.swift; sourceTree = "<group>"; };
+		B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedEdgeArc.swift; sourceTree = "<group>"; };
+		B777506F2A4346ED00E836D3 /* CustomPointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointerView.swift; sourceTree = "<group>"; };
 		B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+MacOS.swift"; sourceTree = "<group>"; };
 		B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPopup.swift; sourceTree = "<group>"; };
 		B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
@@ -320,6 +331,8 @@
 		B78EAF872A13B820003095A2 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		B78EAF8D2A13B955003095A2 /* SwiftSageiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftSageiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITests.swift; sourceTree = "<group>"; };
+		B7A8A4992A4517A000E897C5 /* ViewController+PointerInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+PointerInteraction.swift"; sourceTree = "<group>"; };
+		B7A8A49B2A4517F700E897C5 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageMultiViewModel.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
@@ -338,6 +351,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B777506C2A41E96E00E836D3 /* Marionette in Frameworks */,
 				B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,7 +380,6 @@
 				B7191EF529F9F09A00078D8D /* SourceCodeRegexLexer.swift */,
 				B7191EF629F9F09A00078D8D /* Util */,
 				B7191EFB29F9F09A00078D8D /* Languages */,
-				B7191F0129F9F09A00078D8D /* ASTVisualizer.swift */,
 				B7191F0229F9F09A00078D8D /* Model */,
 				B7191F0829F9F09A00078D8D /* View */,
 				B7191F1029F9F09A00078D8D /* SourceCodeTheme.swift */,
@@ -422,6 +435,8 @@
 				B7191F0D29F9F09A00078D8D /* LineNumberLayoutManager.swift */,
 				B7191F0E29F9F09A00078D8D /* SyntaxTextViewLayoutManager.swift */,
 				B7191F0F29F9F09A00078D8D /* Paragraphs.swift */,
+				B7A8A49B2A4517F700E897C5 /* ShapeView.swift */,
+				B7A8A4992A4517A000E897C5 /* ViewController+PointerInteraction.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -478,6 +493,7 @@
 				B78EAF5D2A108516003095A2 /* Lists */,
 				B70A00F92A20E0C900ADEF5A /* ProjectView.swift */,
 				B78EAF672A13B68D003095A2 /* SageMultiView.swift */,
+				B777506F2A4346ED00E836D3 /* CustomPointerView.swift */,
 				B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */,
 				B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */,
 				B7AED3702A0AC0420013E8D9 /* SageMultiViewModel.swift */,
@@ -486,6 +502,7 @@
 				B78DA97F2A070EC9002343AB /* WindowView.swift */,
 				B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */,
 				B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */,
+				B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */,
 			);
 			path = ViewViewModel;
 			sourceTree = "<group>";
@@ -741,6 +758,16 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
+		B77750452A3FFA3500E836D3 /* EventSource */ = {
+			isa = PBXGroup;
+			children = (
+				B77750462A3FFA3500E836D3 /* Event.swift */,
+				B77750472A3FFA3500E836D3 /* EventSource.swift */,
+				B77750482A3FFA3500E836D3 /* EventStreamParser.swift */,
+			);
+			path = EventSource;
+			sourceTree = SOURCE_ROOT;
+		};
 		B78DA9602A02AF3A002343AB /* Loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -827,6 +854,7 @@
 		B78EAF982A13B964003095A2 /* Third party */ = {
 			isa = PBXGroup;
 			children = (
+				B77750452A3FFA3500E836D3 /* EventSource */,
 				B7544DFC2A191BCE00961F4C /* OpenAI */,
 				B74A2CA329F7F6990051DB52 /* Starscream */,
 				B7191EF429F9F09A00078D8D /* Sourceful */,
@@ -853,6 +881,7 @@
 			name = SwiftSageiOS;
 			packageProductDependencies = (
 				B70D330A2A10282A00D7290E /* ZIPFoundation */,
+				B777506B2A41E96E00E836D3 /* Marionette */,
 			);
 			productName = SwiftSageiOS;
 			productReference = B746DFCA29F5E789002804EB /* LogicSageDev.app */;
@@ -928,6 +957,7 @@
 			mainGroup = B746DFC129F5E789002804EB;
 			packageReferences = (
 				B70D33092A10282A00D7290E /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */,
 			);
 			productRefGroup = B746DFCB29F5E789002804EB /* Products */;
 			projectDirPath = "";
@@ -998,10 +1028,12 @@
 				B7544E2D2A191BCE00961F4C /* ChatStreamResult.swift in Sources */,
 				B7544E2A2A191BCE00961F4C /* ModerationsQuery.swift in Sources */,
 				B7544E422A191BCE00961F4C /* OpenAIProtocol.swift in Sources */,
+				B7A8A49C2A4517F700E897C5 /* ShapeView.swift in Sources */,
 				B7544E4A2A191BCE00961F4C /* MultipartFormDataBodyEncodable.swift in Sources */,
 				B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */,
 				B7544E492A191BCE00961F4C /* URLSessionProtocol.swift in Sources */,
 				B7544E3B2A191BCE00961F4C /* ImagesQuery.swift in Sources */,
+				B777504A2A3FFA3500E836D3 /* EventSource.swift in Sources */,
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
 				B7191F1A29F9F09A00078D8D /* NSMutableAttributedString+Tokens.swift in Sources */,
 				B7191F1D29F9F09A00078D8D /* SwiftLexer.swift in Sources */,
@@ -1011,15 +1043,16 @@
 				B74A2CC329F7F6990051DB52 /* FoundationTransport.swift in Sources */,
 				B74A2CCD29F7F6990051DB52 /* StringHTTPHandler.swift in Sources */,
 				B7191F2B29F9F09A00078D8D /* SyntaxTextViewLayoutManager.swift in Sources */,
+				B777506E2A42AD6E00E836D3 /* CurvedEdgeArc.swift in Sources */,
 				B74A2CC829F7F6990051DB52 /* Server.swift in Sources */,
 				B7544E482A191BCE00961F4C /* MultipartFormDataEntry.swift in Sources */,
 				B7544E3D2A191BCE00961F4C /* EmbeddingsQuery.swift in Sources */,
 				B74A2CC729F7F6990051DB52 /* Data+Extensions.swift in Sources */,
+				B777504B2A3FFA3500E836D3 /* EventStreamParser.swift in Sources */,
 				B75B329329FA11870049EB55 /* AddView.swift in Sources */,
 				B7544E4B2A191BCE00961F4C /* URLRequestBuildable.swift in Sources */,
 				B78DA9802A070EC9002343AB /* WindowView.swift in Sources */,
 				B7544E3E2A191BCE00961F4C /* AudioTranslationQuery.swift in Sources */,
-				B7191F2029F9F09A00078D8D /* ASTVisualizer.swift in Sources */,
 				B71EB87C2A21C29500D87C6F /* LoadingLogic.swift in Sources */,
 				B78DA9862A07FEC1002343AB /* CommitDownloader.swift in Sources */,
 				B74A2CD229F7F6990051DB52 /* WebSocket.swift in Sources */,
@@ -1034,6 +1067,7 @@
 				B7544E382A191BCE00961F4C /* AudioTranslationResult.swift in Sources */,
 				B7544E3F2A191BCE00961F4C /* ModerationsResult.swift in Sources */,
 				B71C62FC2A0190AA004296E4 /* Googler.swift in Sources */,
+				B7A8A49A2A4517A000E897C5 /* ViewController+PointerInteraction.swift in Sources */,
 				B7544E412A191BCE00961F4C /* APIError.swift in Sources */,
 				B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */,
 				B71C63002A01924B004296E4 /* CommandTable.swift in Sources */,
@@ -1049,6 +1083,7 @@
 				B7191F2A29F9F09A00078D8D /* LineNumberLayoutManager.swift in Sources */,
 				B7544E372A191BCE00961F4C /* EmbeddingsResult.swift in Sources */,
 				B746DFD029F5E789002804EB /* ContentView.swift in Sources */,
+				B77750702A4346ED00E836D3 /* CustomPointerView.swift in Sources */,
 				B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */,
 				B78DA9672A02AF3A002343AB /* Loading.swift in Sources */,
 				B7544E452A191BCE00961F4C /* MultipartFormDataRequest.swift in Sources */,
@@ -1057,6 +1092,7 @@
 				B74A2CCC29F7F6990051DB52 /* FrameCollector.swift in Sources */,
 				B78DA98A2A080037002343AB /* WindowList.swift in Sources */,
 				B7544E462A191BCE00961F4C /* MultipartFormDataBodyBuilder.swift in Sources */,
+				B77750492A3FFA3500E836D3 /* Event.swift in Sources */,
 				B7544E4C2A191BCE00961F4C /* JSONRequest.swift in Sources */,
 				B74A2CC529F7F6990051DB52 /* Security.swift in Sources */,
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
@@ -1279,6 +1315,7 @@
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSageDev;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -1292,21 +1329,24 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_NAME = LogicSageDev;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = chrozzprov;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = MacDevelopment;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -1328,6 +1368,7 @@
 				INFOPLIST_FILE = SwiftSageiOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LogicSage;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "To communicate with your computer.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "To receive and send messages to LogicSage for Mac. See github repo for LogicSage for more info. If declined now, reconnect in Settings menu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
@@ -1341,18 +1382,21 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
 				PRODUCT_NAME = LogicSage;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -1364,7 +1408,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1384,7 +1428,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 72WEN2C47N;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisswiftygpt.SwiftSageiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1486,6 +1530,14 @@
 				minimumVersion = 0.9.16;
 			};
 		};
+		B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LinusU/Marionette";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1493,6 +1545,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B70D33092A10282A00D7290E /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		B777506B2A41E96E00E836D3 /* Marionette */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */;
+			productName = Marionette;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

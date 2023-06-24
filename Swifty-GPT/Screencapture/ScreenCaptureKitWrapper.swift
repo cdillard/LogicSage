@@ -12,7 +12,7 @@ import Cocoa
 import Quartz
 import Combine
 
-let maxScreenRecordingDuration: TimeInterval = 600.0
+let maxScreenRecordingDuration: TimeInterval = 60.0
 let frameInterval: Double = 1.0 // this means one frame per second
 
 @MainActor
@@ -26,34 +26,52 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             multiPrinter("No screen capture permission `mirror` failed!")
             return
         }
+
         do {
-            let recordURL = pathToRecordingAssets(name: "recording-\(applicationName).mov")
 
-            do {
-                try FileManager.default.removeItem(atPath: recordURL)
+            var displayCount: UInt32 = 0
+            var onlineDisplays = [CGDirectDisplayID](repeating: 0, count: 16) // assuming a maximum of 16 screens
+
+            if CGGetActiveDisplayList(UInt32(onlineDisplays.count), &onlineDisplays, &displayCount) != .success {
+                print("Could not get active display list")
+                return
             }
-            catch {
-                multiPrinter("did not exist or delete old \(recordURL)")
-            }
-            let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: CGMainDisplayID(), isSimulator: false, appName:applicationName, windowName: windowName, cropRect: nil)
-
-            multiPrinter("Starting mirror recording of \(applicationName)")
-
-            try await screenRecorder.start()
-
-            // We should stop and delete recording periodically and determine if the avasset writing is really needed to get the sample buffers
-            DispatchQueue.global().asyncAfter(deadline: .now() + maxScreenRecordingDuration) {
+            //
+            for i in 0..<Int(displayCount) {
                 Task {
-                    do {
-                        try await screenRecorder.stop()
-                        multiPrinter("stopped sim capture. Please run `mirror` again to restart")
+                    let displayID = onlineDisplays[i]
 
+                    let recordURL = pathToRecordingAssets(name: "recording-\(applicationName)-\(displayID).mov")
+
+                    do {
+                        try FileManager.default.removeItem(atPath: recordURL)
                     }
                     catch {
-                        multiPrinter("err mirror screen recording = \(error)")
+                        multiPrinter("did not exist or delete old \(recordURL)")
+                    }
+
+                    let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: displayID, isSimulator: false, appName:applicationName, windowName: windowName, cropRect: nil)
+
+                    multiPrinter("Starting mirror recording of \(applicationName)")
+
+                    try await screenRecorder.start()
+
+                    // We should stop and delete recording periodically and determine if the avasset writing is really needed to get the sample buffers
+                    DispatchQueue.global().asyncAfter(deadline: .now() + maxScreenRecordingDuration) {
+                        Task {
+                            do {
+                                try await screenRecorder.stop()
+                                multiPrinter("stopped sim capture. Please run `mirror` again to restart")
+
+                            }
+                            catch {
+                                multiPrinter("err mirror screen recording = \(error)")
+                            }
+                        }
                     }
                 }
             }
+
         }
         catch {
             multiPrinter(error)
@@ -68,32 +86,58 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             return
         }
         do {
-            let recordURL = pathToRecordingAssets(name: "recording-sim.mov")
-            do {
-                try FileManager.default.removeItem(atPath: recordURL)
+
+
+            var displayCount: UInt32 = 0
+            var onlineDisplays = [CGDirectDisplayID](repeating: 0, count: 16) // assuming a maximum of 16 screens
+
+            if CGGetActiveDisplayList(UInt32(onlineDisplays.count), &onlineDisplays, &displayCount) != .success {
+                print("Could not get active display list")
+                return
             }
-            catch {
-                multiPrinter("did not exist or delete old recording.mov")
-            }
-            let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: CGMainDisplayID(), cropRect: nil)
-
-            multiPrinter("Starting screen recording of main display")
-
-            try await screenRecorder.start()
-
-            // We should stop and delete recording periodically and determine if the avasset writing is really needed to get the sample buffers
-            DispatchQueue.global().asyncAfter(deadline: .now() + maxScreenRecordingDuration) {
+            //
+            for i in 0..<Int(displayCount) {
                 Task {
+                    //                    DispatchQueue.main.async {
                     do {
-                        try await screenRecorder.stop()
-                        multiPrinter("stopped sim capture. Please run `simulator` again to restart")
+                        let displayID = onlineDisplays[i]
+                        let recordURL = pathToRecordingAssets(name: "recording-sim-\(displayID).mov")
+                        do {
+                            try FileManager.default.removeItem(atPath: recordURL)
+                        }
+                        catch {
+                            multiPrinter("did not exist or delete old recording.mov")
+                        }
 
+                        let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: displayID, cropRect: nil)
+                        // ...
+
+                        multiPrinter("Starting screen recording of \(displayID) display")
+
+                        try await screenRecorder.start()
+
+                        // We should stop and delete recording periodically and determine if the avasset writing is really needed to get the sample buffers
+                        DispatchQueue.global().asyncAfter(deadline: .now() + maxScreenRecordingDuration) {
+                            Task {
+                                do {
+                                    try await screenRecorder.stop()
+                                    multiPrinter("stopped sim capture. Please run `simulator` again to restart")
+
+                                }
+                                catch {
+                                    multiPrinter("err screen recording = \(error)")
+                                }
+                            }
+                        }
                     }
                     catch {
-                        multiPrinter("err screen recording = \(error)")
+                        multiPrinter("")
                     }
+                    //                    }
                 }
             }
+
+
         }
         catch {
             multiPrinter(error)
@@ -110,7 +154,7 @@ struct ScreenRecorder2 {
     private let videoInput: AVAssetWriterInput
     private let streamOutput: StreamOutput
     private var stream: SCStream
-
+    private var foundTarget = false
 
     init(url: URL, displayID: CGDirectDisplayID, isSimulator: Bool = true, appName: String? = nil, windowName: String? = nil, cropRect: CGRect?) async throws {
 
@@ -125,7 +169,7 @@ struct ScreenRecorder2 {
         }
         for window in sharableContent.windows {
             if isSimulator && window.displayName.contains("Simulator:") {
-                multiPrinter("found wind = \(window.displayName) : \(window.frame) size: \(window.frame.size)\n")
+                multiPrinter("found sim wind = \(window.displayName) : \(window.frame) size: \(window.frame.size)\n")
             }
 
             if let appName = appName, let windowName = windowName, !isSimulator {
@@ -192,10 +236,15 @@ struct ScreenRecorder2 {
         let configuration = SCStreamConfiguration()
         // 6 was OG, testing 4.
         configuration.queueDepth = 4
+        multiPrinter("Start = SCSTREAM\n")
 
         // Create SCStream and add local StreamOutput object to receive samples
         stream = SCStream(filter: filter, configuration: configuration, delegate: nil)
         try stream.addStreamOutput(streamOutput, type: .screen, sampleHandlerQueue: videoSampleBufferQueue)
+
+        foundTarget = true
+        multiPrinter("END Start = SCSTREAM\n")
+
     }
 
     func start() async throws {
@@ -238,7 +287,6 @@ struct ScreenRecorder2 {
         var sessionStarted = false
         var firstSampleTime: CMTime = .zero
         var lastSampleBuffer: CMSampleBuffer?
-        var once = false
 
         var videoWidth: Int = 0
         var videoHeight: Int = 0

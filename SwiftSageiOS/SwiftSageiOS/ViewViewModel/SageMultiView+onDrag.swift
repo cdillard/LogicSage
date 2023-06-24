@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 #if !os(macOS)
+#if !os(xrOS)
+
 import UIKit
 import WebKit
 import Combine
@@ -25,7 +27,10 @@ extension SageMultiView {
             func doPostConstraint() {
                 let now = Date()
                 if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 { // throttle duration
+#if !os(xrOS)
+
                     playNot(type: .warning)
+                    #endif
                     lastBumpFeedbackTime = Date()
                 }
                 bumping = true
@@ -214,11 +219,13 @@ extension SageMultiView {
 
             }
             let setX = max(leadingXBound, newX)
-            let setY = max(topYBound, newY)
+            //let setY = max(topYBound, newY)
            // print("setting pos to \(setX) and \(setY)")
 
-            position = CGSize(width:setX,height:setY)
+            // NO MORE RESTRICT SETTING POS HEIGHT?
+            position = CGSize(width:setX,height:position.height + heightTrans)
         }
     }
 }
+#endif
 #endif

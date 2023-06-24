@@ -22,12 +22,22 @@ struct ResizableViewModifier: ViewModifier {
     @Binding var isResizeGestureActive: Bool
     @Binding var viewSize: CGRect
     @Binding var position: CGSize
+    @Binding var keyboardHeight: CGFloat
 
     func body(content: Content) -> some View {
         content
             .frame(width: frame.width, height: frame.height)
             .overlay(
-                ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position)
+                ZStack {
+                    ResizingHandle(positionLocation: .topTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position, keyboardHeight: $keyboardHeight)
+                       // .disabled(keyboardHeight != 0)
+
+                    ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight)
+                       // .disabled(keyboardHeight != 0)
+
+                    ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight)
+                       // .disabled(keyboardHeight != 0)
+                }
             )
     }
 }
@@ -35,6 +45,9 @@ struct ResizableViewModifier: ViewModifier {
 struct ResizingHandle: View {
     enum Position {
         case topLeading
+        case topTrailing
+        case bottomTrailing
+
     }
 
     var positionLocation: Position
@@ -48,90 +61,143 @@ struct ResizingHandle: View {
     @Binding var isResizeGestureActive: Bool
     @Binding var viewSize: CGRect
     @Binding var position: CGSize
-
-// Throttling not required on resizing gesture, for now.
-//    @State private var lastDragTime = Date()
+    @Binding var keyboardHeight: CGFloat
 
     var body: some View {
         GeometryReader { reader in
-            Circle()
-                .fill(SettingsViewModel.shared.buttonColor)
-                .frame(width: handleSize, height: handleSize)
-                .position(positionPoint(for: positionLocation))
-                .opacity(0.666)
-            // TODO: Add resizing contraints so users don't resize to a place they can't return from.
-                .gesture(
-                    DragGesture(minimumDistance: 3)
-                        .updating($dragOffset) { value, state, _ in
-                            state = value.translation
-                        }
-                        .onChanged { value in
-//                            let now = Date()
-//                            if now.timeIntervalSince(self.lastDragTime) >= (1.0 / 30.0) { // throttle duration
-//                                self.lastDragTime = now
-                                activeDragOffset = value.translation
-                                
-                                if !isResizeGestureActive {
-                                    isResizeGestureActive = true
-                                    self.windowManager.bringWindowToFront(window: self.window)
-                                }
-                           // }
-                        }
-                        .onEnded { value in
-                            updateFrame(with: value.translation, reader.size.width, reader.size.height, reader.safeAreaInsets)
-                            activeDragOffset = .zero
-                            isResizeGestureActive = false
-                        }
-                )
-                .onChange(of: activeDragOffset) { newValue in
-                    withAnimation(.interactiveSpring()) {
-                        updateFrame(with: newValue, reader.size.width, reader.size.height, reader.safeAreaInsets)
-                    }
+            let point = positionPoint(for: positionLocation)
+            ZStack {
+                Circle()
+                    .fill(SettingsViewModel.shared.buttonColor)
+                    .frame(width: handleSize, height: handleSize)
+                    .offset(CGSize(width: point.x, height: point.y))
+                    .opacity(0.06)
+#if !os(macOS)
+                    .hoverEffect(.lift)
+#endif
+
+#if !os(macOS)
+
+                if positionLocation == .topTrailing {
+                    CustomPointerRepresentableView(mode: .topRight)
+                        .frame(width: handleSize, height: handleSize)
+                        .offset(x: reader.size.width - handleSize)
                 }
-                .animation(.interactiveSpring(), value: activeDragOffset)
-                .offset(CGSize(width: handleSize / 2, height: handleSize / 2))
+                else if positionLocation == .bottomTrailing {
+                    CustomPointerRepresentableView(mode: .topLeft)
+                        .frame(width: handleSize, height: handleSize)
+                        .offset(x: reader.size.width - handleSize, y: reader.size.height - handleSize)
+                }
+#endif
+
+                
+            }
+            .gesture(
+                DragGesture(minimumDistance: 3)
+                    .updating($dragOffset) { value, state, _ in
+                        state = value.translation
+                    }
+                    .onChanged { value in
+                        // Disable move gesture while keyboard is shown, its dangerous, I like it.
+                        if keyboardHeight != 0 {
+#if !os(macOS)
+
+                            hideKeyboard()
+                            #endif
+                            return
+                        }
+
+                        activeDragOffset = value.translation
+
+                        if !isResizeGestureActive {
+                            isResizeGestureActive = true
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        }
+                    }
+                    .onEnded { value in
+                        updateFrame(with: value.translation, reader.size.width, reader.size.height, reader.safeAreaInsets)
+                        activeDragOffset = .zero
+                        isResizeGestureActive = false
+                    }
+            )
+            .onChange(of: activeDragOffset) { newValue in
+                withAnimation(.interactiveSpring()) {
+                    updateFrame(with: newValue, reader.size.width, reader.size.height, reader.safeAreaInsets)
+                }
+            }
+
+            .animation(.interactiveSpring(), value: activeDragOffset)
         }
     }
     private func positionPoint(for position: Position) -> CGPoint {
         switch position {
         case .topLeading:
-            return CGPoint(x: frame.minX, y: frame.minY)
+            return CGPoint(x: frame.minX, y: 0)
+        case .topTrailing:
+            return CGPoint(x: frame.width - handleSize, y: 0)
+        case .bottomTrailing:
+            return CGPoint(x: frame.width - handleSize, y: frame.height - handleSize)
+
         }
     }
 
     private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat, _  safeAreaInsets: EdgeInsets) {
         let newWidth: CGFloat
         let newHeight: CGFloat
-        let minSize: CGFloat = 7.0
+        let minSize: CGFloat = 121.666
+
+
+        // Smoothly interpolate towards the new size
+        let newOffsetX: CGFloat
+        let newOffsetY: CGFloat
+
         switch positionLocation {
         case .topLeading:
+            let lerpFactor: CGFloat = 0.09
+
             // Compute new width and height based on the direction of the drag gesture
             newWidth = translation.width < 0 ? max(minSize, frame.width + abs(translation.width)) : max(minSize, frame.width - translation.width)
             newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
-        }
-        // TODO: MORE CONSTRAINTS
-        // Keep windows from going to close top top
 
-        // Smoothly interpolate towards the new size
-        let lerpFactor: CGFloat = 0.25
-        let newOffsetX = (newWidth - frame.size.width) * lerpFactor
-        let newOffsetY = (newHeight - frame.size.height) * lerpFactor
+            newOffsetX = (newWidth - frame.size.width) * lerpFactor
+            newOffsetY = (newHeight - frame.size.height) * lerpFactor
+
+        case .topTrailing:
+            let lerpFactor: CGFloat = 0.0222
+
+            newWidth = max(minSize, frame.width + translation.width)
+            newHeight = max(minSize, frame.height - translation.height)
+
+            newOffsetX = (newWidth - frame.size.width) * lerpFactor
+            newOffsetY = (newHeight - frame.size.height) * lerpFactor
+
+        case .bottomTrailing:
+            // Fix calc
+            let lerpFactor: CGFloat = 0.0122
+
+            newWidth = max(minSize, frame.width + translation.width)
+            newHeight = max(minSize, frame.height + translation.height)
+
+            newOffsetX = (newWidth - frame.size.width) * lerpFactor
+            newOffsetY = (newHeight - frame.size.height) * lerpFactor
+
+        }
 
         // Check global X postion
-      //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
+        //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
 
-        if frame.size.width + newOffsetX > viewSize.width - 8 {
+        if frame.size.width + newOffsetX > viewSize.width - 4.5 {
         }
         else {
             resizeOffset.width += newOffsetX
             frame.size.width += newOffsetX
         }
-        if frame.size.height + newOffsetY > viewSize.height - 40 {
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.15 {
         }
         else {
             resizeOffset.height += newOffsetY
             frame.size.height += newOffsetY
         }
-//        print("resizeOffset = \(resizeOffset)")
+        //        print("resizeOffset = \(resizeOffset)")
     }
 }

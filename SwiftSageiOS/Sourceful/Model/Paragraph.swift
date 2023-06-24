@@ -15,6 +15,7 @@ import CoreGraphics
 	import UIKit
 #endif
 #if !os(macOS)
+#if !os(xrOS)
 
 struct Paragraph {
 	
@@ -46,4 +47,5 @@ struct Paragraph {
 	
 }
 
+#endif
 #endif

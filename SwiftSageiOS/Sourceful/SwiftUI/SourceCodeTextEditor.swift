@@ -15,6 +15,7 @@ public typealias _ViewRepresentable = NSViewRepresentable
 public typealias _ViewRepresentable = UIViewRepresentable
 #endif
 #if !os(macOS)
+#if !os(xrOS)
 
 public struct SourceCodeTextEditor: _ViewRepresentable {
     
@@ -25,6 +26,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         var textViewDidBeginEditing: (SourceCodeTextEditor) -> Void
         var theme: () -> SourceCodeTheme
         var overrideText: () -> String?
+        var codeDidCopy: () -> Void
 
         /// Creates a **Customization** to pass into the *init()* of a **SourceCodeTextEditor**.
         ///
@@ -40,7 +42,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             lexerForSource: @escaping (String) -> Lexer,
             textViewDidBeginEditing: @escaping (SourceCodeTextEditor) -> Void,
             theme: @escaping () -> SourceCodeTheme,
-            overrideText: @escaping () -> String?
+            overrideText: @escaping () -> String?,
+            codeDidCopy: @escaping () -> Void
 
         ) {
             self.didChangeText = didChangeText
@@ -49,6 +52,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             self.textViewDidBeginEditing = textViewDidBeginEditing
             self.theme = theme
             self.overrideText = overrideText
+            self.codeDidCopy = codeDidCopy
         }
     }
     
@@ -70,7 +74,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             lexerForSource: { _ in SwiftLexer() },
             textViewDidBeginEditing: { _ in },
             theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) },
-            overrideText: { nil }
+            overrideText: { nil },
+            codeDidCopy: { }
         ),
         shouldBecomeFirstResponder: Bool = false,
         isMoveGestureActive: Binding<Bool>,
@@ -164,6 +169,10 @@ extension SourceCodeTextEditor {
             parent.custom.textViewDidBeginEditing(parent)
         }
 
+        public func codeDidCopy() {
+            parent.custom.codeDidCopy()
+        }
+
         @objc func textDidChange() {
             if isLockToBottom {
                 let textView = wrappedView.textView
@@ -176,5 +185,6 @@ extension SourceCodeTextEditor {
         }
     }
 }
+#endif
 #endif
 #endif

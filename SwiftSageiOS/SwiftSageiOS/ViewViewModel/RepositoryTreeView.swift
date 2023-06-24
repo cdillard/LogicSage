@@ -8,6 +8,7 @@
 import SwiftUI
 
 #if !os(macOS)
+#if !os(xrOS)
 
 struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -115,4 +116,5 @@ struct RepositoryTreeView: View {
         //users.remove(atOffsets: offsets)
     }
 }
+#endif
 #endif

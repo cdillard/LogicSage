@@ -12,7 +12,10 @@ var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
 #if !os(macOS)
+#if !os(xrOS)
+
 struct WindowView: View {
+
      var window: WindowInfo
 
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -25,6 +28,7 @@ struct WindowView: View {
     
     @State var bumping: Bool = false
     @Binding var parentViewSize: CGRect
+    @Binding var keyboardHeight: CGFloat
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -35,11 +39,17 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position))
+                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight))
                 }
                 .border(.red, width: bumping ? 2.666 : 0)
-                .cornerRadius(8)
-                .shadow(color:settingsViewModel.appTextColor, radius: 3)
+
+//                .modify { view in
+//                    if bumping {
+//                        view.border(.red, width: 2.666 )
+//                    }
+//                }
+                .cornerRadius(16)
+                .shadow(color:settingsViewModel.appTextColor, radius: 1)
                 .frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
                 .edgesIgnoringSafeArea(.bottom)
             }
@@ -69,7 +79,7 @@ struct WindowView: View {
     }
     private func windowContent() -> some View {
         return AnyView(
-            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive)
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
     }
@@ -98,6 +108,8 @@ func windowTypeToViewMode(windowType: WindowInfo.WindowType) -> ViewMode {
     }
 }
 #endif
+#endif
+
 extension View {
     /// Applies the given transform if the given condition evaluates to `true`.
     /// - Parameters:

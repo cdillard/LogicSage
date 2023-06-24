@@ -15,6 +15,7 @@ import AppKit
 import UIKit
 #endif
 #if !os(macOS)
+#if !os(xrOS)
 
 public protocol SyntaxTextViewDelegate: AnyObject {
 
@@ -25,6 +26,9 @@ public protocol SyntaxTextViewDelegate: AnyObject {
     func textViewDidBeginEditing(_ syntaxTextView: SyntaxTextView)
 
     func lexerForSource(_ source: String) -> Lexer
+
+    func codeDidCopy()
+
 
 }
 
@@ -113,28 +117,30 @@ open class SyntaxTextView: UIView {
 
         super.init(frame: frame)
 
-        var ViewForDoneButtonOnKeyboard = UIToolbar()
-        ViewForDoneButtonOnKeyboard.sizeToFit()
-        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
-        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
-        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-        textView.keyboardDismissMode = .interactive
+//        var ViewForDoneButtonOnKeyboard = UIToolbar()
+//        ViewForDoneButtonOnKeyboard.sizeToFit()
+//        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
+//        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
+//        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
+//        textView.keyboardDismissMode = .interactive
 
         setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         textView = SyntaxTextView.createInnerTextView()
-        textView.keyboardDismissMode = .interactive
+#if !os(xrOS)
 
+        textView.keyboardDismissMode = .interactive
+#endif
         super.init(coder: aDecoder)
 
-        var ViewForDoneButtonOnKeyboard = UIToolbar()
-        ViewForDoneButtonOnKeyboard.sizeToFit()
-        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
-        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
-        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-        textView.keyboardDismissMode = .interactive
+//        var ViewForDoneButtonOnKeyboard = UIToolbar()
+//        ViewForDoneButtonOnKeyboard.sizeToFit()
+//        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
+//        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
+//        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
+//        textView.keyboardDismissMode = .interactive
 
         setup()
     }
@@ -563,4 +569,5 @@ open class SyntaxTextView: UIView {
     }
 
 }
+#endif
 #endif

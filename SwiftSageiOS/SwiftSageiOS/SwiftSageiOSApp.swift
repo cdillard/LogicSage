@@ -29,10 +29,13 @@ var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct SwiftSageiOSApp: App {
+
     @StateObject private var settingsViewModel = SettingsViewModel.shared
 #if !os(macOS)
+#if !os(xrOS)
 
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
+#endif
 #endif
 
     init() {
@@ -40,45 +43,53 @@ struct SwiftSageiOSApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView(settingsViewModel: settingsViewModel)
-                .onAppear {
-#if !os(macOS)
-                    SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-#endif
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
-                        serviceDiscovery?.startDiscovering()
-                    }
-                    DispatchQueue.main.async {
-#if !os(macOS)
-                        isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
-#endif
-                        settingsViewModel.printVoicesInMyDevice()
-                        settingsViewModel.configureAudioSession()
-                    }
-                }
-#if !os(macOS)
-                .onAppear {
-                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                    self.isPortrait = scene.interfaceOrientation.isPortrait
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                    self.isPortrait = scene.interfaceOrientation.isPortrait
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-                    logD("didFinishLaunchingNotification")
-                    SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                    logD("applicationWillEnterForeground")
 
-                    screamer.discoReconnect()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                    logD("didEnterBackgroundNotification")
-                }
+                ContentView(settingsViewModel: settingsViewModel)
+                    .onAppear {
+#if !os(macOS)
+                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
 #endif
-            }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
+                            serviceDiscovery?.startDiscovering()
+                        }
+                        DispatchQueue.main.async {
+#if !os(macOS)
+#if !os(xrOS)
+
+                            isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
+#endif
+#endif
+                            settingsViewModel.printVoicesInMyDevice()
+                            settingsViewModel.configureAudioSession()
+                        }
+                    }
+#if !os(macOS)
+#if !os(xrOS)
+                    .onAppear {
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                        self.isPortrait = scene.interfaceOrientation.isPortrait
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+                        logD("didFinishLaunchingNotification")
+                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        logD("applicationWillEnterForeground")
+
+                        screamer.discoReconnect()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                        logD("didEnterBackgroundNotification")
+                    }
+#endif
+#endif
+
+        }
 
     }
 }

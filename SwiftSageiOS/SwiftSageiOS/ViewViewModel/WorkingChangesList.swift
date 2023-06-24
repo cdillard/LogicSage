@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 #if !os(macOS)
+#if !os(xrOS)
+
 struct FileChange: Identifiable, Equatable {
     var id = UUID()
     var fileURL: URL
@@ -63,7 +65,6 @@ struct WorkingChangesView: View {
                             resizableButtonImage(systemName:
                                                     "square.and.pencil",
                                                  size: geometry.size)
-                            .fontWeight(.bold)
                             .cornerRadius(8)
                         }
 
@@ -71,29 +72,43 @@ struct WorkingChangesView: View {
                     .disabled(settingsViewModel.stagedFileChanges.isEmpty)
                     .padding(.trailing, 16)
                 }
-                .confirmationDialog("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?", isPresented: $isPresentingAlert) {
-                      Button("Yes") {
-                          settingsViewModel.actualCreateDraftPR { success in
-                              logD("success when creating pr = \(success)")
+                .modify { view in
+                    if #available(iOS 15.0, *) {
 
-                          }
-                      }
+                        view.confirmationDialog("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?", isPresented: $isPresentingAlert) {
+                            Button("Yes") {
+                                settingsViewModel.actualCreateDraftPR { success in
+                                    logD("success when creating pr = \(success)")
 
-                      Button("Cancel", role: .cancel) { }
-                  } message: {
-                      Text("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?")
-                  }
+                                }
+                            }
+
+                            Button("Cancel", role: .cancel) { }
+                        } message: {
+                            Text("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?")
+                        }
+                    }
+                }
 
             }
         }
     }
     func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-        Image(systemName: systemName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-            .tint(settingsViewModel.appTextColor)
-            .background(settingsViewModel.buttonColor)
+        if #available(iOS 16.0, *) {
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+                .tint(settingsViewModel.appTextColor)
+                .background(settingsViewModel.buttonColor)
+        } else {
+            // Fallback on earlier versions
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+                .background(settingsViewModel.buttonColor)
+        }
     }
 }
 
@@ -151,4 +166,5 @@ struct ListSectionView: View {
         }
     }
 }
+#endif
 #endif

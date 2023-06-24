@@ -15,6 +15,7 @@ import Foundation
 #endif
 
 #if !os(macOS)
+#if !os(xrOS)
 
 extension TextViewUIKit {
 	
@@ -184,4 +185,5 @@ func drawLineNumbers(_ paragraphs: [Paragraph], in rect: CGRect, for textView: I
 
 }
 
+#endif
 #endif

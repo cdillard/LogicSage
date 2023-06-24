@@ -27,6 +27,8 @@ public typealias BezierPath        = NSBezierPath
 public typealias ScrollViewv    = NSScrollView
 public typealias Screenv            = NSScreen
 
+#elseif os(xrOS)
+
 #else
 
 import UIKit

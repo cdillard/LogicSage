@@ -7,6 +7,8 @@
 
 import Foundation
 #if !os(macOS)
+#if !os(xrOS)
+
 private var lastConsoleUpdate = Date()
 class SageMultiViewModel: ObservableObject, Identifiable {
     let id = UUID()
@@ -69,6 +71,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
         SageMultiViewModel.convoText(settingsViewModel, conversation, windowInfo: windowInfo)
     }
 }
+#endif
 #endif
 
 import SwiftUI

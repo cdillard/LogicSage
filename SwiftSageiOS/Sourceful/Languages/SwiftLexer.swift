@@ -39,7 +39,7 @@ public class SwiftLexer: SourceCodeRegexLexer {
 		
 		// Line comment
 		generators.append(regexGenerator("//(.*)", tokenType: .comment))
-		
+
 		// Block comment
 		generators.append(regexGenerator("(/\\*)(.*)(\\*/)", options: [.dotMatchesLineSeparators], tokenType: .comment))
 

@@ -23,6 +23,8 @@ extension SettingsViewModel {
 
     func actualCreateDraftPR(newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
+#if !os(xrOS)
+
         var hasSentPRCreation = false
         logD("actually creating draft pr")
         isLoading = true
@@ -112,6 +114,8 @@ extension SettingsViewModel {
             }
         }
 #endif
+#endif
+
     }
     func getDefaultHeadSha(defaultBranch: String, completion: @escaping (String) -> Void) {
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/branches/\(defaultBranch)")!

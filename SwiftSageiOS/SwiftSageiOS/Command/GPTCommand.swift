@@ -11,7 +11,17 @@ func gptCommand(input: String) {
     let convo = SettingsViewModel.shared.createConversation()
     gptCommand(conversationId: convo, input: input, useGoogle: true, useLink: true, qPrompt: true)
 }
-
+var eventSource: EventSource?
+func convertToDictionary(text: String) -> [String: Any]? {
+    if let data = text.data(using: .utf8) {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    return nil
+}
 func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool = false, useLink: Bool = false, qPrompt: Bool = false) {
     config.conversational = false
     config.manualPromptString = ""
@@ -57,41 +67,64 @@ Question to Answer:
 
     playMediunImpact()
 
-    GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
-        if !success {
-            SettingsViewModel.shared.speak("A.P.I. error, try again.")
-            return
+    //        if "accessToken" not in self.session:
+    //            yield (
+    //                "Your ChatGPT session is not usable.\n"
+    //                "* Run this program with the `install` parameter and log in to ChatGPT.\n"
+    //                "* If you think you are already logged in, try running the `session` command."
+    //            )
+    //            return
+
+    if USE_CHATGPT && SettingsViewModel.shared.chatGPTAuth {
+        if SettingsViewModel.shared.accessToken.isEmpty {
+            logD("Attempting to send GPT msg without accessToken -- please")
+
         }
+    }
 
-        if !isDone {
-            playMessagForString(message: content)
-        }
-        else {
-            playSoftImpact()
+    if !SettingsViewModel.shared.accessToken.isEmpty && USE_CHATGPT && SettingsViewModel.shared.chatGPTAuth {
+        logD("Attempting to load via chatGPT accessToken")
 
-            SettingsViewModel.shared.speak(content)
+        doChatGPT(conversationId: conversationId)
+    }
+    else {
+        GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0) { content, success, isDone in
 
-            refreshPrompt(appDesc: config.appDesc)
+            if !success {
+                SettingsViewModel.shared.speak("A.P.I. error, try again.")
+                return
+            }
 
-            SettingsViewModel.shared.saveConvosToDisk()
+            if !isDone {
+                playMessagForString(message: content)
+            }
+            else {
+                playSoftImpact()
 
-            SettingsViewModel.shared.requestReview()
-            
-            if config.conversational {
+                SettingsViewModel.shared.speak(content)
 
-                if content.hasPrefix("google:") {
-                    let split  = content.split(separator: " ", maxSplits: 1)
+                refreshPrompt(appDesc: config.appDesc)
 
-                    if split.count > 1 {
+                SettingsViewModel.shared.saveConvosToDisk()
 
-                        logD("googling...")
+                SettingsViewModel.shared.requestReview()
 
-                        googleCommand(input: String(split[1]))
+                if config.conversational {
 
-                        if config.conversational {
-                            // multiPrinter("Exited conversational mode.")
-                            config.conversational = false
+                    if content.hasPrefix("google:") {
+                        let split  = content.split(separator: " ", maxSplits: 1)
+
+                        if split.count > 1 {
+
+                            logD("googling...")
+
+                            googleCommand(input: String(split[1]))
+
+                            if config.conversational {
+                                // multiPrinter("Exited conversational mode.")
+                                config.conversational = false
+                            }
                         }
                     }
                 }
@@ -236,3 +269,218 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
     }
 }
 
+func doChatGPT(conversationId: Conversation.ID) {
+    let serverURL = URL(string:  "https://chat.openai.com/backend-api/conversation")!
+
+    var headas =  ["Authorization": "Bearer \(SettingsViewModel.shared.accessToken)",
+                  "Content-Type":  "application/json"]
+
+    eventSource = EventSource(url: serverURL, headers: headas)
+
+    guard let conversationIndex = SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
+        logD("Unable to find conversations id == \(conversationId) ... failing")
+
+        return
+    }
+
+    Task {
+        let myNewPrompt = config.manualPromptString.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
+            id: SettingsViewModel.shared.idProvider(),
+            role: .user,
+            content:  myNewPrompt,
+            createdAt: SettingsViewModel.shared.dateProvider()
+        ))
+
+        var newChatId = conversationId.lowercased() //UUID().uuidString.lowercased()
+        var newParentId = UUID().uuidString.lowercased()
+
+        logD("Prompting \(myNewPrompt.count)...\n🐑🐑🐑\n")
+
+        let reqString = """
+        {
+            "action": "next",
+            "messages": [
+                {
+                    "id": "\(newChatId)",
+                    "author": { "role": "user" },
+
+                    "content": {
+                        "content_type": "text",
+                        "parts": ["\(myNewPrompt)"]
+                    }
+                }
+            ],
+            "model": "gpt-4-mobile",
+            "parent_message_id": "\(newParentId)",
+            "history_and_training_disabled": false
+        }
+        """
+        // Experimenting with adding this to get around 403's and cloudflare anti-bot mechanisms (i'm not a bot)
+        //        "arkose_token": "\(getArkoseToken() ?? "fail")",
+
+        // we'll need to add this with our existing generated chatID to cont a convo.
+        //     "conversation_id": "\(newChatId)",
+
+        logD("Using reqString = \(reqString)")
+
+        eventSource?.onOpen {
+            logD("eventSource CONNECTED")
+        }
+
+        eventSource?.onComplete { statusCode, reconnect, error in
+
+            if let error {
+                logD("statusCode = \(statusCode): eventSource disco w/ error = \(error)")
+            }
+            else {
+                logD("statusCode = \(statusCode): eventSource DISCONNECTED")
+            }
+            guard reconnect ?? false else { return }
+
+            let retryTime = eventSource?.retryTime ?? 3000
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(retryTime)) {
+                logD("eventSource RECONNECT")
+
+                eventSource?.connect()
+            }
+        }
+
+        eventSource?.onMessage { id, event, data in
+            //logD("event - \(event ?? "") | \(data ?? "")")
+
+
+            if data == "[DONE]" {
+                logD("CHATGPT RESPONSE DONE = \(event)")
+
+            }
+            // TODO: Is this needed?
+            // else if regex.test(event.data))
+            else {
+                switch event {
+                case "message":
+                    guard let dict = convertToDictionary(text: data ?? "") else {
+                        logD("message Error")
+
+                        return
+                    }
+
+                    logD("\(dict)")
+
+                    //                    this.setChatContext({
+                    //                      conversationId: data.conversation_id,
+                    //                      parentMessageId: data.message.id,
+                    //                    });
+
+                    let contentTypeKey = "content_type"
+                    guard let msgDict = dict["message"] as? [String: [String: [String: String]]],
+                          let contentDict = msgDict["content"] as? [String: String],
+                        let contentType = contentDict[contentTypeKey] else { return logD("massive fail") }
+
+                    if  contentType == "code" ||
+                            contentType == "system_error"
+                    {
+                        let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
+                        let theContent = contentDict["text"] ?? ""
+                        let messageId = (dict["message"] as? [String: String])?["id"] ?? ""
+
+                        let message = Message(
+                            id: messageId,
+                            role:  .assistant, //choice.delta.role ??
+                            content: theContent,
+                            createdAt: Date()
+                        )
+
+                        if let existingMessageIndex = existingMessages.firstIndex(where: { $0.id == messageId }) {
+                            // Meld into previous message
+                            let previousMessage = existingMessages[existingMessageIndex]
+                            let combinedMessage = Message(
+                                id: message.id, // id stays the same for different deltas
+                                role: message.role,
+                                content: previousMessage.content + message.content,
+                                createdAt: message.createdAt
+                            )
+                            //logD("melding to existing msg")
+
+                            SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+
+                        } else {
+                            //logD("append to existing msg")
+
+                            SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: message)
+                        }
+
+
+
+
+                        //                        // Preprocessing info
+                        //                                      onUpdateResponse(callbackParam, {
+                        //                                        content:
+                        //                                          "```python\n" +
+                        //                                          preInfo.join("\n") +
+                        //                                          (preInfo.length > 0 ? "\n" : "") +
+                        //                                          content.text +
+                        //                                          "\n```",
+                        //                                        done: false,
+                        //                                      });
+                        //                                      if (data.message.status === "finished_successfully")
+                        //                                        preInfo.push(content.text);
+
+                    }
+                    else if contentType == "text" {
+
+                        let text = (msgDict["content"] as? [String: [String]])?["parts"]?.first ?? ""
+
+                        logD("completed message w/ \(text)")
+
+                        // The final response
+                        //                         let text = content.parts[0];
+                        //
+                        //                         if (preInfo.length > 0)
+                        //                           text = "```python\n" + preInfo.join("\n") + "\n```\n" + text;
+                        //
+                        //                         const citations = data.message.metadata?.citations;
+                        //                         if (citations) {
+                        //                           citations.forEach((element) => {
+                        //                             text += `\n> 1. [${element.metadata.title}](${element.metadata.url})`;
+                        //                           });
+                        //                         }
+                        //
+                        //                         onUpdateResponse(callbackParam, {
+                        //                           content: text,
+                        //                           done: false,
+                        //                         });
+
+
+
+                    }
+
+                default:
+                    logD("unhandled onmessage = \(event)")
+                }
+            }
+        }
+
+        SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
+
+
+
+        eventSource?.connect(reqString: reqString)
+    }
+}
+
+func getArkoseToken() -> String? {
+    var arkoseToken: String? = nil
+        var part1 = ""
+        for _ in 0..<16 {
+            let rand = Int.random(in: 0..<16)
+            part1 += String(rand, radix: 16)
+        }
+        while part1.count < 15 {
+            part1 = "0" + part1
+        }
+        let part2 = String(format: "%.10f", Double.random(in: 0..<10))
+        arkoseToken = "\(part1)\("\(part2)")|r=us-west-2|meta=3|meta_width=300|metabgclr=transparent|metaiconclr=%23555555|guitextcolor=%23000000|pk=35536E1E-65B4-4D96-9D97-6ADB7EFF8147|at=40|sup=1|rid=44|ag=101|cdn_url=https%3A%2F%2Ftcr9i.chat.openai.com%2Fcdn%2Ffc|lurl=https%3A%2F%2Faudio-us-west-2.arkoselabs.com|surl=https%3A%2F%2Ftcr9i.chat.openai.com|smurl=https%3A%2F%2Ftcr9i.chat.openai.com%2Fcdn%2Ffc%2Fassets%2Fstyle-manager"
+    return arkoseToken
+}

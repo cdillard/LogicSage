@@ -14,6 +14,7 @@ import Foundation
 	import UIKit
 #endif
 #if !os(macOS)
+#if !os(xrOS)
 
 extension SyntaxTextView: InnerTextViewDelegate {
 	
@@ -22,7 +23,13 @@ extension SyntaxTextView: InnerTextViewDelegate {
 		selectionDidChange()
 		
 	}
-	
+
+    func didCopyCode() {
+
+        codeDidCopy()
+
+    }
+
 }
 
 extension SyntaxTextView {
@@ -45,7 +52,11 @@ extension SyntaxTextView {
 		
 		self.delegate?.didChangeSelectedRange(self, selectedRange: range)
 	}
-	
+
+    func codeDidCopy() {
+        self.delegate?.codeDidCopy()
+    }
+
 	func selectionDidChange() {
 		
 		guard let delegate = delegate else {
@@ -225,11 +236,9 @@ extension SyntaxTextView {
 					return delegate.lexerForSource(source)
 				})
 			}
-			
 		}
 	
 		open func textViewDidChangeSelection(_ textView: UITextView) {
-			
 			contentDidChangeSelection()
 		}
 		
@@ -310,56 +319,54 @@ extension SyntaxTextView {
 					return false
 				}
 
-				if isEditorPlaceholderSelected(selectedRange: selectedRange, tokenRange: range) {
-					
-					if insertingText == "\t" {
-						
-						let placeholderTokens = cachedTokens.filter({
-							$0.token.isEditorPlaceholder
-						})
-						
-						guard placeholderTokens.count > 1 else {
-							return false
-						}
-						
-						let nextPlaceholderToken = placeholderTokens.first(where: {
-							
-							let nsRange = $0.nsRange
-							
-							return nsRange.lowerBound > range.lowerBound
-							
-						})
-						
-						if let tokenToSelect = nextPlaceholderToken ?? placeholderTokens.first {
-							
-							updateSelectedRange(NSRange(location: tokenToSelect.nsRange.lowerBound + 1, length: 0))
-							
-							return false
-							
-						}
-						
-						return false
-					}
-					
-					if selectedRange.location <= range.location || selectedRange.upperBound >= range.upperBound {
-						// Editor placeholder is part of larger selected text,
-						// so allow system inserting.
-						return true
-					}
-					
-//					(textView.undoManager?.prepare(withInvocationTarget: self) as? TextView).replace
-					
-					textStorage.replaceCharacters(in: range, with: insertingText)
-					
-					didUpdateText()
-					
-					updateSelectedRange(NSRange(location: range.lowerBound + insertingText.count, length: 0))
-
-					return false
-				}
-				
+                if isEditorPlaceholderSelected(selectedRange: selectedRange, tokenRange: range) {
+                    
+                    if insertingText == "\t" {
+                        
+                        let placeholderTokens = cachedTokens.filter({
+                            $0.token.isEditorPlaceholder
+                        })
+                        
+                        guard placeholderTokens.count > 1 else {
+                            return false
+                        }
+                        
+                        let nextPlaceholderToken = placeholderTokens.first(where: {
+                            
+                            let nsRange = $0.nsRange
+                            
+                            return nsRange.lowerBound > range.lowerBound
+                            
+                        })
+                        
+                        if let tokenToSelect = nextPlaceholderToken ?? placeholderTokens.first {
+                            
+                            updateSelectedRange(NSRange(location: tokenToSelect.nsRange.lowerBound + 1, length: 0))
+                            
+                            return false
+                            
+                        }
+                        
+                        return false
+                    }
+                    
+                    if selectedRange.location <= range.location || selectedRange.upperBound >= range.upperBound {
+                        // Editor placeholder is part of larger selected text,
+                        // so allow system inserting.
+                        return true
+                    }
+                    
+                    //					(textView.undoManager?.prepare(withInvocationTarget: self) as? TextView).replace
+                    
+                    textStorage.replaceCharacters(in: range, with: insertingText)
+                    
+                    didUpdateText()
+                    
+                    updateSelectedRange(NSRange(location: range.lowerBound + insertingText.count, length: 0))
+                    
+                    return false
+                }
 			}
-			
 		}
 		
 		if origInsertingText == "\n" {
@@ -387,8 +394,7 @@ extension SyntaxTextView {
 		selectionDidChange()
 		
 		ignoreSelectionChange = false
-		
 	}
-	
 }
+#endif
 #endif

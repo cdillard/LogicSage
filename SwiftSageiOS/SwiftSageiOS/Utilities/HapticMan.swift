@@ -13,6 +13,7 @@ import UIKit
 //light impatct
 
 #if !os(macOS)
+#if !os(xrOS)
 
 func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1.0) {
     let hasBat = checkBattery()
@@ -23,28 +24,38 @@ func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1
     generator.impactOccurred(intensity: int)
 }
 #endif
+#endif
 
 func playLightImpact() {
 #if !os(macOS)
+#if !os(xrOS)
 
     playType(impType: .light)
-    #endif
+#endif
+#endif
 }
 func playSoftImpact() {
 #if !os(macOS)
+#if !os(xrOS)
 
     playType(impType: .soft)
+#endif
+
     #endif
 }
 func playMediunImpact() {
 #if !os(macOS)
+#if !os(xrOS)
 
     playType(impType: .medium)
 #endif
+#endif
+
 }
 func checkBattery(minBatLevl: Float = 0.3) -> Bool {
 
 #if !os(macOS)
+#if !os(xrOS)
 
     UIDevice.current.isBatteryMonitoringEnabled = true
 
@@ -53,6 +64,8 @@ func checkBattery(minBatLevl: Float = 0.3) -> Bool {
     }
 
 #endif
+#endif
+
     return true
 }
 func playMessagForString(message: String) {
@@ -64,6 +77,7 @@ func playMessagForString(message: String) {
     }
 }
 #if !os(macOS)
+#if !os(xrOS)
 
 func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
 
@@ -75,10 +89,12 @@ func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
     notiGen.notificationOccurred(type)
 }
 #endif
+#endif
 
 
 func playSelect() {
 #if !os(macOS)
+#if !os(xrOS)
 
     let hasBat = checkBattery()
     guard hasBat else { return }
@@ -87,5 +103,6 @@ func playSelect() {
     
     let selectGen = UISelectionFeedbackGenerator()
     selectGen.selectionChanged()
+#endif
 #endif
 }

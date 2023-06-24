@@ -40,9 +40,13 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var changes = [ChangeRow]()
 #if !os(macOS)
+#if !os(xrOS)
+
     @Published var unstagedFileChanges = [FileChange]()
     @Published var stagedFileChanges = [FileChange]()
 #endif
+#endif
+
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
@@ -72,6 +76,9 @@ public class SettingsViewModel: ObservableObject {
         serviceDiscovery?.startDiscovering()
     }
 
+
+    @AppStorage("chatGPTAuth") var chatGPTAuth: Bool = false
+
 // END SAVED UI SETTINGS ZONE **************************************************************************************
 
 // BEGIN STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
@@ -89,8 +96,9 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
 
-            if oldValue == nil {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
+                    if self.latestWindowManager?.windows.contains(where: {$0.windowType == .simulator }) != true {
+
                     self.latestWindowManager?.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
                 }
             }
@@ -257,6 +265,25 @@ public class SettingsViewModel: ObservableObject {
     // It's not okay to only allow lowercase. The forking API is case-sensitive with repos so we must be vigilant and use the same case when working with Github. OK?
     @AppStorage("gitRepo") var gitRepo = "\(defaultRepo)"
     @AppStorage("gitBranch") var gitBranch = "\(defaultBranch)"
+
+    let aiAccessTokenKey = "openAIAccessTokenKeySec"
+    @Published var accessToken = "" {
+        didSet {
+            if keychainManager.saveToKeychain(key: aiAccessTokenKey, value: accessToken) {
+                print("aiAccessTokenKey saved successfully")
+            } else {
+                print("Error saving accessToken pat")
+            }
+
+        }
+
+    }
+
+    @Published var cookies: [String : String] = [:] {
+        didSet {
+            logD("did set shared cookies")
+        }
+    }
 // END CLIENT APIS ZONE **************************************************************************************
 
 // START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
@@ -303,7 +330,10 @@ public class SettingsViewModel: ObservableObject {
             }
 
             print("SKStoreReviewController.requestReview")
+#if !os(xrOS)
+
             SKStoreReviewController.requestReview()
+            #endif
         }
     }
 // END STOREKIT ZONE ***********************************************************************
@@ -337,6 +367,7 @@ public class SettingsViewModel: ObservableObject {
             //            print("Error retrieving openAIKey")
             //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
+
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
@@ -354,6 +385,15 @@ public class SettingsViewModel: ObservableObject {
         } else {
             //         print("Error retrieving ghaPat == reset")
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
+        }
+
+        if let key = keychainManager.retrieveFromKeychain(key: aiAccessTokenKey) {
+
+            self.accessToken = key
+            //  print("Retrieved value: aiKey")
+        } else {
+            //            print("Error retrieving openAIKey")
+            //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
 // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
@@ -505,6 +545,7 @@ public class SettingsViewModel: ObservableObject {
                 self.conversations = convos
             }
         }
+        
     }
 
     func currentGitRepoKey() -> String {

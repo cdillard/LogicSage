@@ -16,27 +16,32 @@ struct AddView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @ObservedObject var windowManager: WindowManager
 
-
-    // TODO: Reuse this to handle open / not open and restore repo / filw and window list
     @AppStorage("repoListOpen") var repoListOpen: Bool = false
     @AppStorage("fileListOpen") var fileListOpen: Bool = false
     @AppStorage("windowListOpen") var windowListOpen: Bool = false
 
-    @FocusState private var field4IsFocused: Bool
-
-    @FocusState private var field5IsFocused: Bool
-    @FocusState private var field6IsFocused: Bool
-    @FocusState private var field7IsFocused: Bool
-    @FocusState private var field8IsFocused: Bool
     @Binding var isInputViewShown: Bool
+    @Binding var tabSelection: Int
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-        Image(systemName: systemName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-            .tint(settingsViewModel.appTextColor)
-            .background(settingsViewModel.buttonColor)
+        if #available(iOS 16.0, *) {
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+                .tint(settingsViewModel.appTextColor)
+                .foregroundColor(settingsViewModel.appTextColor)
+                .background(settingsViewModel.buttonColor)
+        } else {
+            // Fallback on earlier versions
+            return Image(systemName: systemName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+                .foregroundColor(settingsViewModel.appTextColor)
+
+                .background(settingsViewModel.buttonColor)
+        }
     }
 
     var body: some View {
@@ -47,23 +52,19 @@ struct AddView: View {
                         // SHOW ADD VIEW BUTTON
                         Button(action: {
                             withAnimation {
-                                showAddView.toggle()
-
-                                field4IsFocused = false
-                                field5IsFocused = false
-                                field6IsFocused = false
-                                field7IsFocused = false
-                                field8IsFocused = false
+                                tabSelection = 1
                             }
                         }) {
                             Image(systemName: "xmark.circle.fill")
-                                .fontWeight(.bold)
                                 .font(.body)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 8)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                         }
 
                         Text("open menu:")
@@ -92,7 +93,7 @@ struct AddView: View {
                                                 DispatchQueue.main.async {
 
                                                     // Execute your action here
-                                                    screamer.sendCommand(command: "upload")
+                                                    screamer.sendCommand(command: "arrow.up.circle")
 
                                                    isInputViewShown = false
 
@@ -101,9 +102,8 @@ struct AddView: View {
                                         }) {
                                             VStack {
                                                 resizableButtonImage(systemName:
-                                                                        "arrow.up.circle.fill",
+                                                                        "arrow.up.circle",
                                                                      size: geometry.size)
-                                                .fontWeight(.bold)
                                                 .cornerRadius(8)
 
                                                 Text("Upload")
@@ -121,6 +121,7 @@ struct AddView: View {
 
 
                                                 showAddView.toggle()
+                                                tabSelection = 1
 
 
                                                 logD("DO WORKSPACE DOWNLOAD!")
@@ -139,9 +140,8 @@ struct AddView: View {
 
 
                                                 resizableButtonImage(systemName:
-                                                                        "arrow.down.circle.fill",
+                                                                        "arrow.down.circle",
                                                                      size: geometry.size)
-                                                .fontWeight(.bold)
                                                 .cornerRadius(8)
 
                                                 Text("Download")
@@ -151,8 +151,6 @@ struct AddView: View {
                                         }
 
                                     }
-//                                }
-                                //.padding(.leading,8)
                                 // end top row
 
                                 // BOTTOM ROW
@@ -168,6 +166,8 @@ struct AddView: View {
 
 
                                             showAddView.toggle()
+                                            tabSelection = 1
+
                                             windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
                                         }
                                     }) {
@@ -175,10 +175,8 @@ struct AddView: View {
 
 
                                             resizableButtonImage(systemName:
-                                                                    "iphone.badge.play",
+                                                                    "target",
                                                                  size: geometry.size)
-                                            .fontWeight(.bold)
-                                            .cornerRadius(8)
 
                                             Text("Project")
                                                 .font(.caption)
@@ -191,9 +189,9 @@ struct AddView: View {
                                     Button(action: {
                                         withAnimation {
                                             logD("open new File")
-                                            // TODO: Hide or show terminal chat?
-
                                             showAddView.toggle()
+                                            tabSelection = 1
+
                                             windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
                                         }
                                     }) {
@@ -201,9 +199,8 @@ struct AddView: View {
 
 
                                             resizableButtonImage(systemName:
-                                                                    "doc.fill.badge.plus",
+                                                                    "doc.badge.plus",
                                                                  size: geometry.size)
-                                            .fontWeight(.bold)
                                             .cornerRadius(8)
 
                                             Text("File")
@@ -216,17 +213,14 @@ struct AddView: View {
 
                                             logD("open Webview")
                                             showAddView.toggle()
-                                            // TODO: Hide or show terminal chat?
-
+                                            tabSelection = 1
                                             windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
                                         }
                                     }) {
                                         VStack {
-
                                             resizableButtonImage(systemName:
-                                                                    "rectangle.center.inset.filled.badge.plus",
+                                                                    "network",
                                                                  size: geometry.size)
-                                            .fontWeight(.bold)
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
 
@@ -236,30 +230,44 @@ struct AddView: View {
 
                                         }
                                     }
-
                                 }
 
                                 HStack {
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.defaultURL
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
-
-                                    .focused($field7IsFocused)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .scrollDismissesKeyboard(.interactively)
-                                    .font(.caption)
-                                    .padding(.leading,8)
-
-                                    .padding(.trailing,8)
-
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .autocorrectionDisabled(true)
-#if !os(macOS)
-                                    .autocapitalization(.none)
+                                    if #available(iOS 16.0, *) {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.defaultURL
+                                        )
+                                        .border(.secondary)
+                                        .submitLabel(.done)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                        .scrollDismissesKeyboard(.interactively)
 #endif
+                                        .font(.caption)
+                                        .padding(.leading,8)
+                                        .padding(.trailing,8)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
+                                    else {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.defaultURL
+                                        )
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                        .font(.caption)
+                                        .padding(.leading,8)
+                                        .padding(.trailing,8)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .autocorrectionDisabled(true)
+#if !os(macOS)
+                                        .autocapitalization(.none)
+#endif
+                                    }
                                 }
                                 .frame(height: geometry.size.height / 17)
                                 Spacer()
@@ -276,23 +284,19 @@ struct AddView: View {
                                     logD("open Working Changes View")
                                     // TODO: Hide or show terminal chat?
 
-                                    showAddView.toggle()
+                                    tabSelection = 1
                                     windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
                                 }
                             }) {
                                 VStack {
 
-
                                     resizableButtonImage(systemName:
-                                                            "lasso.and.sparkles",
+                                                            "lasso",
                                                          size: geometry.size)
-                                    .fontWeight(.bold)
                                     .cornerRadius(8)
-
                                     Text("Changes")
                                         .font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
-                                        //.padding(.bottom)
                                 }
                             }
 
@@ -302,7 +306,7 @@ struct AddView: View {
 
                                         VStack {
                                             resizableButtonImage(systemName:
-                                                                    "macwindow.on.rectangle",
+                                                                    "folder.fill.badge.plus",
                                                                  size: geometry.size)
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .background(settingsViewModel.buttonColor)
@@ -312,17 +316,14 @@ struct AddView: View {
 
                                                     logD("Open container containing repo tree")
 
-                                                    showAddView.toggle()
+                                                    tabSelection = 1
                                                     windowManager.addWindow(windowType: .repoTreeView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
                                                 }
                                             }
                                             Text("Files")
                                                 .font(.caption)
                                                 .lineLimit(nil)
-                                                //.fontWeight(.bold)
-                                              //  .padding()
                                                 .foregroundColor(settingsViewModel.appTextColor)
-
                                         }
                                     }
                                 }
@@ -332,9 +333,8 @@ struct AddView: View {
 
 
                                 resizableButtonImage(systemName:
-                                                        "macwindow.on.rectangle",
+                                                        "macwindow",
                                                      size: geometry.size)
-                                .fontWeight(.bold)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .background(settingsViewModel.buttonColor)
                                 .cornerRadius(8)
@@ -342,7 +342,7 @@ struct AddView: View {
                                     withAnimation {
                                         logD("Open container containing repo tree")
 
-                                        showAddView.toggle()
+                                        tabSelection = 1
                                         windowManager.addWindow(windowType: .windowListView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
                                     }
                                 }
@@ -352,7 +352,6 @@ struct AddView: View {
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
                         }
-//                        .padding(.leading,8)
                     }
 
                     // GIT SETTINGS
@@ -362,7 +361,6 @@ struct AddView: View {
                     Text("\(repoListMoji) git settings")
                         .font(.title3)
                         .lineLimit(nil)
-                        .fontWeight(.bold)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 8)
                         .foregroundColor(settingsViewModel.appTextColor)
@@ -394,7 +392,6 @@ struct AddView: View {
                                                     resizableButtonImage(systemName:
                                                                             "tuningfork",
                                                                          size: geometry.size)
-                                                    .fontWeight(.bold)
                                                     .background(settingsViewModel.buttonColor)
                                                     .cornerRadius(8)
                                                 }
@@ -422,7 +419,6 @@ struct AddView: View {
                                                         resizableButtonImage(systemName:
                                                                                 "arrow.down.doc",
                                                                              size: geometry.size)
-                                                        .fontWeight(.bold)
                                                         .background(settingsViewModel.buttonColor)
                                                         .cornerRadius(8)
                                                     }
@@ -493,128 +489,211 @@ struct AddView: View {
                             HStack {
 
                                 Text("your github username:")
-                                    .font(.body)
+                                    .font(.caption)
                                     .lineLimit(nil)
-                                    .fontWeight(.bold)
                                     .padding()
                                     .foregroundColor(settingsViewModel.appTextColor)
+                                if #available(iOS 16.0, *) {
 
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.yourGitUser
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-                                .focused($field8IsFocused)
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .scrollDismissesKeyboard(.interactively)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                .autocapitalization(.none)
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.yourGitUser
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
 #endif
+
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
+                                else {
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.yourGitUser
+                                    )
+                                    {
+#if !os(macOS)
+                                        hideKeyboard()
+#endif
+                                    }
+
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
                             }
                             Text("Remote repo settings:")
                                 .font(.body)
                                 .lineLimit(nil)
-                                .fontWeight(.bold)
                                 .padding()
                                 .foregroundColor(settingsViewModel.appTextColor)
                             HStack {
                                 Text("user: ").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.gitUser
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-                                .focused($field4IsFocused)
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .scrollDismissesKeyboard(.interactively)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                .autocapitalization(.none)
+                                if #available(iOS 16.0, *) {
+
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitUser
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
 #endif
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
+                                else {
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitUser
+                                    )
+                                    {
+#if !os(macOS)
+                                        hideKeyboard()
+#endif
+                                    }
+
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
                             }
                             .frame(height: geometry.size.height / 17)
 
                             HStack {
                                 Text("repo:").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
+                                if #available(iOS 16.0, *) {
 
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.gitRepo
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-                                .focused($field5IsFocused)
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .scrollDismissesKeyboard(.interactively)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
-#if !os(macOS)
-
-                                .autocapitalization(.none)
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitRepo
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
 #endif
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
+                                else {
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitRepo
+                                    ) {
+#if !os(macOS)
+                                    hideKeyboard()
+#endif
+
+                                    }
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
                             }
                             .frame(height: geometry.size.height / 17)
                             HStack {
                                 Text("branch:").font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
-                                TextField(
-                                    "",
-                                    text: $settingsViewModel.gitBranch
-                                )
-                                .border(.secondary)
-                                .submitLabel(.done)
-                                .focused($field6IsFocused)
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .scrollDismissesKeyboard(.interactively)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .autocorrectionDisabled(true)
-#if !os(macOS)
 
-                                .autocapitalization(.none)
+                                if #available(iOS 16.0, *) {
+
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitBranch
+                                    )
+                                    {
+#if !os(macOS)
+                                        hideKeyboard()
 #endif
+                                    }
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
+#endif
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
+                                else {
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.gitBranch
+                                    )
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 8)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .autocorrectionDisabled(true)
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                }
                             }
                             .frame(height: geometry.size.height / 17)
                         }
                         .padding(.leading,8)
                         .padding(.trailing,8)
                     }
-
-
-
-
                     Button(action: {
                         withAnimation {
-                            showAddView.toggle()
-
-                            field4IsFocused = false
-                            field5IsFocused = false
-                            field6IsFocused = false
-                            field7IsFocused = false
-                            field8IsFocused = false
+                            tabSelection = 1
                         }
                     }) {
                         Image(systemName: "xmark.circle.fill")
-                            .fontWeight(.bold)
                             .font(.body)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 8)

@@ -8,6 +8,8 @@
 import Foundation
 import Foundation
 import SwiftUI
+#if !os(xrOS)
+#if !os(macOS)
 
 struct HelpPopup: View {
     @Binding var isPresented: Bool
@@ -20,11 +22,11 @@ struct HelpPopup: View {
             ScrollView {
                 VStack {
                     Text("HELP:")
-                        .background(.green)
                         .opacity(0.7)
-                        .font(.body)
+                        .font(.title2)
                         .lineLimit(nil)
-                        .bold()
+                        .foregroundColor(settingsViewModel.appTextColor)
+
                         .padding(geometry.size.width * 0.01)
 
                     VStack(alignment: .leading, spacing: 2) {
@@ -37,9 +39,13 @@ struct HelpPopup: View {
                                     Text("This app/project is an ALPHA. Email me with issues/suggestions @")
                                     Button(action: {
 #if !os(macOS)
+#if !os(xrOS)
+
                                         let pasteboard = UIPasteboard.general
                                         pasteboard.string = email
 #endif
+#endif
+
                                     }) {
                                         Text(verbatim: "\(email) (Tap to Copy)")
                                             .foregroundColor(settingsViewModel.buttonColor)
@@ -103,7 +109,7 @@ struct HelpPopup: View {
                     .padding(geometry.size.width * 0.01)
                 }
                 .padding(.top, 30)
-                .padding(.bottom, 30)
+                .padding(.bottom, 60)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             }
@@ -119,3 +125,5 @@ struct HelpPopup: View {
         }
     }
 }
+#endif
+#endif
