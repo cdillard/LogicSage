@@ -75,19 +75,20 @@ struct SageMultiView: View {
                         view.gesture(
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
-                                    // Disable move gesture while keyboard is shown, its dangerous, I like it.
                                     if keyboardHeight != 0 {
                                         hideKeyboard()
                                         return
                                     }
+                                   // print("MOVE gesture update new Pos = \(position)")
 
                                     let now = Date()
-                                    if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) { // throttle duration
+                                    if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
                                         self.lastDragTime = now
                                         dragsOnChange(value: value)
                                     }
                                 }
                                 .onEnded { value in
+                                   // print("MOVE gesture ended new Pos = \(position)")
                                     isMoveGestureActivated = false
                                 }
                         )                                    .simultaneousGesture(TapGesture().onEnded {

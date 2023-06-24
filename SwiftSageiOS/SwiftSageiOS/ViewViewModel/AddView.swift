@@ -68,11 +68,11 @@ struct AddView: View {
                         }
 
                         Text("open menu:")
-                            .font(.headline)
+                            .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
 
                         Text("scroll down 📜⬇️4 more")
-                            .font(.caption)
+                            .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
 
                     }
@@ -110,6 +110,9 @@ struct AddView: View {
                                                     .font(.caption)
                                                     .foregroundColor(settingsViewModel.appTextColor)
                                             }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                         }
 
                                         // NEW FILE WINDOW
@@ -148,6 +151,9 @@ struct AddView: View {
                                                     .font(.caption)
                                                     .foregroundColor(settingsViewModel.appTextColor)
                                             }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                         }
 
                                     }
@@ -182,6 +188,9 @@ struct AddView: View {
                                                 .font(.caption)
                                                 .foregroundColor(settingsViewModel.appTextColor)
                                         }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                     }
 
 
@@ -207,6 +216,9 @@ struct AddView: View {
                                                 .font(.caption)
                                                 .foregroundColor(settingsViewModel.appTextColor)
                                         }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                     }
                                     Button(action: {
                                         withAnimation {
@@ -229,6 +241,9 @@ struct AddView: View {
                                                 .foregroundColor(settingsViewModel.appTextColor)
 
                                         }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                     }
                                 }
 
@@ -244,7 +259,7 @@ struct AddView: View {
 #if !os(xrOS)
                                         .scrollDismissesKeyboard(.interactively)
 #endif
-                                        .font(.caption)
+                                        .font(.title3)
                                         .padding(.leading,8)
                                         .padding(.trailing,8)
                                         .foregroundColor(settingsViewModel.appTextColor)
@@ -259,7 +274,7 @@ struct AddView: View {
                                             text: $settingsViewModel.defaultURL
                                         )
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.caption)
+                                        .font(.title3)
                                         .padding(.leading,8)
                                         .padding(.trailing,8)
                                         .foregroundColor(settingsViewModel.appTextColor)
@@ -298,6 +313,9 @@ struct AddView: View {
                                         .font(.caption)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                 }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                             }
 
                             Group {
@@ -325,6 +343,9 @@ struct AddView: View {
                                                 .lineLimit(nil)
                                                 .foregroundColor(settingsViewModel.appTextColor)
                                         }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                     }
                                 }
                             }
@@ -351,6 +372,9 @@ struct AddView: View {
                                     .lineLimit(nil)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                         }
                     }
 
@@ -371,6 +395,9 @@ struct AddView: View {
                                 settingsViewModel.repoSettingsShown.toggle()
                             }
                         }
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
 
                     if settingsViewModel.repoSettingsShown {
                         VStack {
@@ -395,6 +422,9 @@ struct AddView: View {
                                                     .background(settingsViewModel.buttonColor)
                                                     .cornerRadius(8)
                                                 }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                             }
                                             .frame( maxWidth: .infinity, maxHeight: .infinity)
                                             .padding(.bottom)
@@ -422,6 +452,9 @@ struct AddView: View {
                                                         .background(settingsViewModel.buttonColor)
                                                         .cornerRadius(8)
                                                     }
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                                                 }
                                                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                                                 .padding(.bottom)
@@ -489,7 +522,7 @@ struct AddView: View {
                             HStack {
 
                                 Text("your github username:")
-                                    .font(.caption)
+                                    .font(.body)
                                     .lineLimit(nil)
                                     .padding()
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -538,12 +571,13 @@ struct AddView: View {
                                 }
                             }
                             Text("Remote repo settings:")
-                                .font(.body)
+                                .font(.title3)
                                 .lineLimit(nil)
                                 .padding()
                                 .foregroundColor(settingsViewModel.appTextColor)
                             HStack {
-                                Text("user: ").font(.caption)
+                                Text("user: ")
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
                                 if #available(iOS 16.0, *) {
@@ -560,7 +594,7 @@ struct AddView: View {
 #if !os(xrOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -581,7 +615,7 @@ struct AddView: View {
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
                                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -592,7 +626,8 @@ struct AddView: View {
                             .frame(height: geometry.size.height / 17)
 
                             HStack {
-                                Text("repo:").font(.caption)
+                                Text("repo:")
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                 if #available(iOS 16.0, *) {
 
@@ -608,7 +643,7 @@ struct AddView: View {
 #if !os(xrOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -628,7 +663,7 @@ struct AddView: View {
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
                                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -638,7 +673,8 @@ struct AddView: View {
                             }
                             .frame(height: geometry.size.height / 17)
                             HStack {
-                                Text("branch:").font(.caption)
+                                Text("branch:")
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
                                 if #available(iOS 16.0, *) {
@@ -660,7 +696,7 @@ struct AddView: View {
 #if !os(xrOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -675,7 +711,7 @@ struct AddView: View {
                                     .padding(.leading, 8)
                                     .padding(.trailing, 8)
                                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -700,6 +736,9 @@ struct AddView: View {
                             .foregroundColor(settingsViewModel.appTextColor)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
                     }
                 }
                 .padding(.bottom, geometry.size.height / 8)

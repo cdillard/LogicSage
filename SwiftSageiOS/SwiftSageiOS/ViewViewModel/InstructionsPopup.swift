@@ -25,6 +25,7 @@ struct InstructionsPopup: View {
     @Binding var isPresented: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
     let email = "chrisbdillard@gmail.com"
+    @State private var showCheckmark: Bool = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -37,6 +38,9 @@ struct InstructionsPopup: View {
                         .foregroundColor(settingsViewModel.appTextColor)
 
                         .padding(geometry.size.width * 0.01)
+                    Text("scroll down 📜⬇️4 more")
+                        .font(.title2)
+                        .foregroundColor(settingsViewModel.appTextColor)
 
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
@@ -49,12 +53,14 @@ struct InstructionsPopup: View {
 #if !os(macOS)
                                     let pasteboard = UIPasteboard.general
                                     pasteboard.string = email
+                                    onCopy()
+
 #endif
                                 }) {
                                     Text(verbatim: "\(email) (Tap to Copy)")
                                         .foregroundColor(settingsViewModel.buttonColor)
                                 }
-                                Text("Check out Settings to set your A.I. key. Set up LogicSage for Mac to use additional functions from the Terminal window. Terminal window with LogicSage for Mac allows you to use Xcode from your iOS device.")
+                                Text("Check out Settings to set your A.I. key. Set up LogicSage for Mac to use additional functions from the Term window. Term window with LogicSage for Mac allows you to use Xcode from your iOS device.")
                             }
 
                             Text("Check out the repo for info on setting up server.")
@@ -95,6 +101,8 @@ struct InstructionsPopup: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             }
+            .overlay(CheckmarkView(isVisible: $showCheckmark))
+
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 //            .edgesIgnoringSafeArea(.all)
             .background(settingsViewModel.backgroundColor)
@@ -102,6 +110,19 @@ struct InstructionsPopup: View {
 #if !os(macOS)
                 UIScrollView.appearance().bounces = false
 #endif
+            }
+
+        }
+        
+    }
+    private func onCopy() {
+        withAnimation(Animation.easeInOut(duration: 0.666)) {
+            showCheckmark = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
+            withAnimation(Animation.easeInOut(duration: 0.6666)) {
+                showCheckmark = false
             }
         }
     }

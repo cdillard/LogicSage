@@ -122,7 +122,6 @@
 		B77750492A3FFA3500E836D3 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750462A3FFA3500E836D3 /* Event.swift */; };
 		B777504A2A3FFA3500E836D3 /* EventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750472A3FFA3500E836D3 /* EventSource.swift */; };
 		B777504B2A3FFA3500E836D3 /* EventStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750482A3FFA3500E836D3 /* EventStreamParser.swift */; };
-		B777506C2A41E96E00E836D3 /* Marionette in Frameworks */ = {isa = PBXBuildFile; productRef = B777506B2A41E96E00E836D3 /* Marionette */; };
 		B777506E2A42AD6E00E836D3 /* CurvedEdgeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */; };
 		B77750702A4346ED00E836D3 /* CustomPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506F2A4346ED00E836D3 /* CustomPointerView.swift */; };
 		B78A2CF92A23B8830052C62A /* ContentView+MacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78A2CF82A23B8830052C62A /* ContentView+MacOS.swift */; };
@@ -351,7 +350,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B777506C2A41E96E00E836D3 /* Marionette in Frameworks */,
 				B70D330B2A10282A00D7290E /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -881,7 +879,6 @@
 			name = SwiftSageiOS;
 			packageProductDependencies = (
 				B70D330A2A10282A00D7290E /* ZIPFoundation */,
-				B777506B2A41E96E00E836D3 /* Marionette */,
 			);
 			productName = SwiftSageiOS;
 			productReference = B746DFCA29F5E789002804EB /* LogicSageDev.app */;
@@ -957,7 +954,6 @@
 			mainGroup = B746DFC129F5E789002804EB;
 			packageReferences = (
 				B70D33092A10282A00D7290E /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */,
 			);
 			productRefGroup = B746DFCB29F5E789002804EB /* Products */;
 			projectDirPath = "";
@@ -1530,14 +1526,6 @@
 				minimumVersion = 0.9.16;
 			};
 		};
-		B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/LinusU/Marionette";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1545,11 +1533,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B70D33092A10282A00D7290E /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
-		};
-		B777506B2A41E96E00E836D3 /* Marionette */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B777506A2A41E96E00E836D3 /* XCRemoteSwiftPackageReference "Marionette" */;
-			productName = Marionette;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

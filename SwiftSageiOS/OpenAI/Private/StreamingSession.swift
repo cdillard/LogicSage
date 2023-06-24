@@ -69,7 +69,7 @@ final class StreamingSession<ResultType: Codable>: NSObject, Identifiable, URLSe
                 onReceiveContent?(self, object)
             } catch {
                 onProcessingError?(self, error)
-                print("error = \(jsonContent)")
+                logD("error = \(jsonContent)")
             }
         }
     }

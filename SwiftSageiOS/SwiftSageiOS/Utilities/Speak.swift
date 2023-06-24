@@ -16,7 +16,7 @@ struct VoicePair: Hashable {
 }
 extension SettingsViewModel {
     func speak(_ text: String) {
-        if !SettingsViewModel.shared.voiceOutputenabled {
+        if !SettingsViewModel.shared.voiceOutputEnabled {
             //print("DONT say: \(text)")
             //consoleManager.print("say: \(text)")
             return
@@ -26,19 +26,11 @@ extension SettingsViewModel {
     #if !targetEnvironment(simulator)
         if let customVoice = SettingsViewModel.shared.selectedVoice?.voiceIdentifier {
             speechUtterance.voice = AVSpeechSynthesisVoice(identifier: customVoice)
-
         }
         else {
             speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
         }
-
-        // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
     #endif
-        // Optional: Set properties like voice, pitch, rate, or volume if desired
-        // speechUtterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        // speechUtterance.pitchMultiplier = 1.0
-        // speechUtterance.rate = 0.5
-        // speechUtterance.volume = 0.8
 
         speechSynthesizer.speak(speechUtterance)
     }
@@ -47,7 +39,7 @@ extension SettingsViewModel {
     }
     func configureAudioSession() {
     #if !os(macOS)
-        if voiceOutputenabled {
+        if voiceOutputEnabled {
             let audioSession = AVAudioSession.sharedInstance()
             do {
                 let defOpt: AVAudioSession.CategoryOptions
@@ -84,22 +76,20 @@ extension SettingsViewModel {
             return $0.voiceName < $1.voiceName
         }
 
-        // get voice index
-        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
-            selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
+        for voice in self.installedVoices {
+            if voice.voiceName == voiceOutputSavedName {
+                selectedVoice = voice
+                return
+            }
 
-            selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
-        }
-        else {
-            selectedVoiceIndexSaved = 0
 
         }
-
-        selectedVoice = installedVoices[SettingsViewModel.shared.selectedVoiceIndexSaved]
+        if selectedVoice == nil {
+            selectedVoice = installedVoices.first
+        }
     #endif
 
     }
-    // Double check this duplicate filterin lol
     func  installedVoiesArr() -> [AVSpeechSynthesisVoice]  {
         var ret = [AVSpeechSynthesisVoice]()
         AVSpeechSynthesisVoice.speechVoices().forEach { voice in

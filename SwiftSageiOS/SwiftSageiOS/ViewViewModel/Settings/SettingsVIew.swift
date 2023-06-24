@@ -17,8 +17,6 @@ struct SettingsView: View {
     @Binding var showInstructions: Bool
 
     @ObservedObject var settingsViewModel: SettingsViewModel
-    let modes: [String] = ["dots", "waves", "bar", "matrix", "none"]
-    @State private var currentModeIndex: Int = 0
 
     @State private var scrollViewID = UUID()
     @State private var showAPISettings = false
@@ -85,15 +83,18 @@ struct SettingsView: View {
                                             .foregroundColor(settingsViewModel.appTextColor)
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
+#if !os(macOS)
+                                        .hoverEffect(.lift)
+#endif
                                     }
                                 }
 
                                 Text("Settings:")
-                                    .font(.headline)
+                                    .font(.title2)
                                     .foregroundColor(settingsViewModel.appTextColor)
 
                                 Text("scroll down 📜⬇️4 more")
-                                    .font(.caption)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
                             .padding(.top, 30)
@@ -121,6 +122,9 @@ struct SettingsView: View {
                                                                  size: geometry.size)
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
+#if !os(macOS)
+                                        .hoverEffect(.lift)
+#endif
                                         }
                                         // Button for (help)
                                         Text("help")
@@ -142,6 +146,9 @@ struct SettingsView: View {
                                                                  size: geometry.size)
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
+#if !os(macOS)
+                                        .hoverEffect(.lift)
+#endif
                                         }
                                         // BUTTON FOR (i) info
                                         Text("info")
@@ -154,41 +161,17 @@ struct SettingsView: View {
                             Spacer()
                         }
 
-                        // MODE PICKER
-                        Group {
-                            HStack {
-                                // PLugItIn BUTTON
-                                Button("🔌:Reconnect") {
-                                    logD("force reconnect")
-                                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
 
-                                    serviceDiscovery?.startDiscovering()
-
-                                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
-#if !os(macOS)
-                                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                                            UIApplication.shared.open(url)
-                                        }
-#endif
-                                    }
-                                    else {
-                                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-                                    }
-                                }
-                                .font(.body)
-                                .lineLimit(nil)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .background(settingsViewModel.buttonColor)
-                            }
-
-                        }
                         VStack {
                             Group {
                                 Text("\(showAPISettings ? "🔽" : "▶️") API settings")
 
-                                    .font(.headline)
+                                    .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .padding(8)
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
                             }
                             .onTapGesture {
                                 playSelect()
@@ -203,7 +186,7 @@ struct SettingsView: View {
                             Group {
                                 VStack {
                                     Text("A.I. 🔑: ")
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                     if #available(iOS 16.0, *) {
 
@@ -220,7 +203,7 @@ struct SettingsView: View {
 #if !os(xrOS)
                                         .scrollDismissesKeyboard(.interactively)
 #endif
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
 
                                         .autocorrectionDisabled(true)
@@ -240,7 +223,7 @@ struct SettingsView: View {
 
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                                         //.scrollDismissesKeyboard(.interactively)
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
 
                                         .autocorrectionDisabled(true)
@@ -251,7 +234,7 @@ struct SettingsView: View {
                                     Spacer()
 
                                     Text("A.I. model: ")
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                     if #available(iOS 16.0, *) {
 
@@ -268,7 +251,7 @@ struct SettingsView: View {
 
                                         .scrollDismissesKeyboard(.interactively)
 #endif
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -280,13 +263,9 @@ struct SettingsView: View {
                                             "",
                                             text: $settingsViewModel.openAIModel
                                         )
-                                        //                                        .border(.secondary)
-                                        //                                        .submitLabel(.done)
-                                        // .focused($field2IsFocused)
 
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        //            .scrollDismissesKeyboard(.interactively)
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -298,7 +277,8 @@ struct SettingsView: View {
                                         .padding(.leading, 8)
                                         .padding(.trailing, 8)
 
-                                    Text("GHA PAT: ").font(.caption)
+                                    Text("GHA PAT: ")
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                     if #available(iOS 16.0, *) {
 
@@ -310,7 +290,7 @@ struct SettingsView: View {
                                         .submitLabel(.done)
                                         //   .focused($field3IsFocused)
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -322,11 +302,8 @@ struct SettingsView: View {
                                             "",
                                             text: $settingsViewModel.ghaPat
                                         )
-                                        //  .border(.secondary)
-                                        //   .submitLabel(.done)
-                                        //   .focused($field3IsFocused)
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.caption)
+                                        .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
@@ -334,81 +311,81 @@ struct SettingsView: View {
 #endif
                                     }
 
-                                    HStack {
-                                        Text("swiftsage username: ").font(.caption)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                        if #available(iOS 16.0, *) {
-
-                                            TextField("", text: $settingsViewModel.userName)
-                                                .submitLabel(.done)
-#if !os(xrOS)
-
-                                                .scrollDismissesKeyboard(.interactively)
-#endif
-                                                .font(.footnote)
-                                                .border(.secondary)
-
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                .autocapitalization(.none)
-#endif
-                                        }
-                                        else {
-                                            TextField("", text: $settingsViewModel.userName)
-                                            //                                                .submitLabel(.done)
-                                            //                                                .scrollDismissesKeyboard(.interactively)
-                                                .font(.footnote)
-                                            //                                                .border(.secondary)
-
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                .autocapitalization(.none)
-#endif
-                                        }
-                                        Spacer()
-
-                                    }
-                                    .padding(.leading, 8)
-                                    .padding(.trailing, 8)
-                                    .frame(height: 22)
-
-                                    HStack {
-                                        Text("swiftsage password: ").font(.caption)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                        if #available(iOS 16.0, *) {
-
-                                            TextField("", text: $settingsViewModel.password)
-                                                .submitLabel(.done)
-#if !os(xrOS)
-                                                .scrollDismissesKeyboard(.interactively)
-#endif
-                                                .border(.secondary)
-
-                                                .font(.footnote)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                .autocapitalization(.none)
-#endif
-                                        }
-                                        else {
-                                            TextField("", text: $settingsViewModel.password)
-                                                .font(.footnote)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                                .autocorrectionDisabled(true)
-#if !os(macOS)
-                                                .autocapitalization(.none)
-#endif
-                                        }
-                                        Spacer()
-
-                                    }
-                                    .padding(.leading, 8)
-                                    .padding(.trailing, 8)
-
-                                    .frame(height: 22)
+//                                    HStack {
+//                                        Text("swiftsage username: ").font(.caption)
+//                                            .foregroundColor(settingsViewModel.appTextColor)
+//                                        if #available(iOS 16.0, *) {
+//
+//                                            TextField("", text: $settingsViewModel.userName)
+//                                                .submitLabel(.done)
+//#if !os(xrOS)
+//
+//                                                .scrollDismissesKeyboard(.interactively)
+//#endif
+//                                                .font(.footnote)
+//                                                .border(.secondary)
+//
+//                                                .foregroundColor(settingsViewModel.appTextColor)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//                                                .autocapitalization(.none)
+//#endif
+//                                        }
+//                                        else {
+//                                            TextField("", text: $settingsViewModel.userName)
+//                                            //                                                .submitLabel(.done)
+//                                            //                                                .scrollDismissesKeyboard(.interactively)
+//                                                .font(.footnote)
+//                                            //                                                .border(.secondary)
+//
+//                                                .foregroundColor(settingsViewModel.appTextColor)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//                                                .autocapitalization(.none)
+//#endif
+//                                        }
+//                                        Spacer()
+//
+//                                    }
+//                                    .padding(.leading, 8)
+//                                    .padding(.trailing, 8)
+//                                    .frame(height: 22)
+//
+//                                    HStack {
+//                                        Text("swiftsage password: ").font(.caption)
+//                                            .foregroundColor(settingsViewModel.appTextColor)
+//                                        if #available(iOS 16.0, *) {
+//
+//                                            TextField("", text: $settingsViewModel.password)
+//                                                .submitLabel(.done)
+//#if !os(xrOS)
+//                                                .scrollDismissesKeyboard(.interactively)
+//#endif
+//                                                .border(.secondary)
+//
+//                                                .font(.footnote)
+//                                                .foregroundColor(settingsViewModel.appTextColor)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//                                                .autocapitalization(.none)
+//#endif
+//                                        }
+//                                        else {
+//                                            TextField("", text: $settingsViewModel.password)
+//                                                .font(.footnote)
+//                                                .foregroundColor(settingsViewModel.appTextColor)
+//                                                .autocorrectionDisabled(true)
+//#if !os(macOS)
+//                                                .autocapitalization(.none)
+//#endif
+//                                        }
+//                                        Spacer()
+//
+//                                    }
+//                                    .padding(.leading, 8)
+//                                    .padding(.trailing, 8)
+//
+//                                    .frame(height: 22)
                                 }
                                 .padding(.leading, 8)
                                 .padding(.trailing, 8)
@@ -453,32 +430,66 @@ struct SettingsView: View {
 #endif
                         }
 
-                        Group {
+                        // The end of the load moad.
+//                        Group {
+//
+//                            HStack {
+//                                Button(action: {
+//                                    withAnimation {
+//                                        updateMode()
+//                                    }
+//                                }) {
+//                                    Text(".\(modes[currentModeIndex])")
+//                                        .background(settingsViewModel.buttonColor)
+//                                        .foregroundColor(settingsViewModel.appTextColor)
+//                                        .cornerRadius(8)
+//                                }
+//                            }
+//                            Text("Set Load mode")
+//                                .foregroundColor(settingsViewModel.appTextColor)
+//                                .font(.caption)
+//                                .fontWeight(.semibold)
+//                        }
+//                        .frame( maxWidth: .infinity, maxHeight: .infinity)
 
+                        // MODE PICKER
+                        Group {
                             HStack {
-                                Button(action: {
-                                    withAnimation {
-                                        updateMode()
+                                // PLugItIn BUTTON
+                                Button("🔌:Reconnect") {
+                                    logD("force reconnect")
+                                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
+
+                                    serviceDiscovery?.startDiscovering()
+
+                                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
+#if !os(macOS)
+                                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                                            UIApplication.shared.open(url)
+                                        }
+#endif
                                     }
-                                }) {
-                                    Text(".\(modes[currentModeIndex])")
-                                        .background(settingsViewModel.buttonColor)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .cornerRadius(8)
+                                    else {
+                                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
+                                    }
                                 }
-                            }
-                            Text("Set Load mode")
+                                .font(.body)
+                                .lineLimit(nil)
                                 .foregroundColor(settingsViewModel.appTextColor)
-                                .font(.caption)
-                                .fontWeight(.semibold)
+                                .background(settingsViewModel.buttonColor)
+                            }
+
                         }
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+
 
                         Group {
                             Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") sizes")
-                                .font(.headline)
+                                .font(.title3)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
 
                         }
                         .onTapGesture {
@@ -601,9 +612,12 @@ struct SettingsView: View {
                     }
                     Group {
                         Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color")
-                            .font(.headline)
+                            .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
                     }
                     .onTapGesture {
                         playSelect()
@@ -666,10 +680,13 @@ struct SettingsView: View {
                         }
                         // SOURCE EDITOR COLORS SETTINGS ZONE
                         Group {
-                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") chat colors")
-                                .font(.headline)
+                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") more colors")
+                                .font(.title3)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
 
                         }
                         .onTapGesture {
@@ -795,9 +812,12 @@ struct SettingsView: View {
 
                     Group {
                         Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings")
-                            .font(.headline)
+                            .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
+#if !os(macOS)
+                                        .hoverEffect(.automatic)
+#endif
 
                     }
                     .onTapGesture {
@@ -811,7 +831,7 @@ struct SettingsView: View {
                     // TODO:Double check toggling ducing Audio and audio output this way works.
                     if settingsViewModel.showAudioSettings {
                         // IOS AUDIO SETTING ON/OFF
-                        Toggle(isOn: $settingsViewModel.voiceOutputenabled) {
+                        Toggle(isOn: $settingsViewModel.voiceOutputEnabled) {
                             VStack(spacing: 4) {
                                 Text("Audio Output")
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -819,25 +839,24 @@ struct SettingsView: View {
                             }
                         }
                         .frame( maxWidth: geometry.size.width / 3)
-                        .onChange(of: settingsViewModel.voiceOutputenabled) { value in
+                        .onChange(of: settingsViewModel.voiceOutputEnabled) { value in
                             withAnimation {
 #if !os(macOS)
-                                SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputenabled ? "off" : "on.")")
-                                if settingsViewModel.voiceOutputenabled {
+                                SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputEnabled ? "off" : "on.")")
+                                if settingsViewModel.voiceOutputEnabled {
                                     settingsViewModel.stopVoice()
                                 }
 
                                 settingsViewModel.configureAudioSession()
                                 settingsViewModel.printVoicesInMyDevice()
 
-                                settingsViewModel.voiceOutputenabled.toggle()
-                                settingsViewModel.voiceOutputenabledUserDefault.toggle()
+                                settingsViewModel.voiceOutputEnabled.toggle()
 #endif
                             }
 
                         }
                         HStack {
-                            if settingsViewModel.voiceOutputenabled {
+                            if settingsViewModel.voiceOutputEnabled {
                                 // IOS AUDIO SETTING ON/OFF
                                 Toggle(isOn: $settingsViewModel.duckingAudio) {
                                     VStack(spacing: 4) {
@@ -852,7 +871,7 @@ struct SettingsView: View {
                     }
 
                     VStack {
-                        if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputenabled {
+                        if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputEnabled {
                             VStack {
 
                                 Text("Pick iOS voice")
@@ -866,7 +885,7 @@ struct SettingsView: View {
                                                 .foregroundColor(settingsViewModel.appTextColor)
 
                                             Spacer()
-                                            if settingsViewModel.selectedVoiceIndexSaved == index {
+                                            if settingsViewModel.selectedVoice?.voiceName == item.voiceName {
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(settingsViewModel.buttonColor)
                                                     .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
@@ -875,9 +894,8 @@ struct SettingsView: View {
                                         .listRowBackground(settingsViewModel.backgroundColor)
                                         .contentShape(Rectangle())
                                         .onTapGesture {
-                                            settingsViewModel.selectedVoiceIndexSaved = index
+                                            settingsViewModel.voiceOutputSavedName = item.voiceName
                                         }
-                                        .frame(height: 30)
                                     }
                                 }
                                 .listRowBackground(settingsViewModel.backgroundColor)
@@ -992,15 +1010,15 @@ struct SettingsView: View {
         }
 
     }
-    private func updateMode() {
-        currentModeIndex = (currentModeIndex + 1) % modes.count
-
-        DispatchQueue.main.async {
-
-            // Execute your action here
-            screamer.sendCommand(command: "setLoadMode \(modes[currentModeIndex])")
-        }
-    }
+//    private func updateMode() {
+//        currentModeIndex = (currentModeIndex + 1) % modes.count
+//
+//        DispatchQueue.main.async {
+//
+//            // Execute your action here
+//            screamer.sendCommand(command: "setLoadMode \(modes[currentModeIndex])")
+//        }
+//    }
 }
 
 

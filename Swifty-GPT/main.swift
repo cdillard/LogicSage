@@ -259,6 +259,11 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
+func logD(_ text: String) {
+//    SettingsViewModel.shared.logText(text)
+    print(text)
+}
+
 // Running in Terminal and iTerm2 is still elusive.. I wonder what the the issue is?
 main()
 

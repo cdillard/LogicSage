@@ -64,14 +64,12 @@ struct ChatView: View {
                         },
                                                                                    overrideText:  {
                             //                    print("ex overrideText.update() of ChatView")
-                            //                    if isMoveGestureActive { return "moving" }
                             //                    if isResizeGestureActive { return "resizing" }
                             return sageMultiViewModel.getConvoText()
                         }, codeDidCopy: {
                             onCopy()
                         } ),
                                              isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
-                        //                    .disabled(isMoveGestureActive || isResizeGestureActive)
                         .onAppear {
                             Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
                                 DispatchQueue.global(qos: .background).async {
@@ -124,7 +122,6 @@ struct ChatView: View {
                                         .autocorrectionDisabled(!settingsViewModel.autoCorrect)
                                         .autocapitalization(.none)
                                         .cornerRadius(16)
-                                    
                                         .onAppear {
                                             activeFieldFrame = innerReader.frame(in: .global)
                                         }
@@ -499,11 +496,11 @@ struct CheckmarkView: View {
             HStack(spacing: 10) {
                 Image(systemName: "checkmark")
                 Text("Copied!")
-                    .font(.title3)
+
             }
-            .font(.callout)
+            .font(.system(size: 20, design: .monospaced))
             .background(SettingsViewModel.shared.buttonColor)
-            .cornerRadius(10)
+            .cornerRadius(8)
             .foregroundColor(SettingsViewModel.shared.appTextColor)
             .padding()
             .transition(.opacity)

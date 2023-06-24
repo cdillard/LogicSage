@@ -1,42 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "jsbridge",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/LinusU/JSBridge",
-      "state" : {
-        "revision" : "cb5846a525a31c79f7040fd9df024438883d8924",
-        "version" : "1.0.0-alpha.16"
-      }
-    },
-    {
-      "identity" : "marionette",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/LinusU/Marionette",
-      "state" : {
-        "branch" : "master",
-        "revision" : "3c0699e869fdbe13a5d03042884c17d418293a12"
-      }
-    },
-    {
-      "identity" : "promisekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mxcl/PromiseKit",
-      "state" : {
-        "revision" : "8a98e31a47854d3180882c8068cc4d9381bf382d",
-        "version" : "6.22.1"
-      }
-    },
-    {
-      "identity" : "signals",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/artman/Signals",
-      "state" : {
-        "revision" : "e792eb51a64f85d043d17f09f6323b803b9f73b8",
-        "version" : "6.1.0"
-      }
-    },
-    {
       "identity" : "zipfoundation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/weichsel/ZIPFoundation.git",

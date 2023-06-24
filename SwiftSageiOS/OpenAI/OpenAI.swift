@@ -151,6 +151,7 @@ extension OpenAI {
                 onResult(.success(object))
             }
             session.onProcessingError = {_, error in
+                logD("OpenAI API error = \(error.localizedDescription)")
                 onResult(.failure(error))
             }
             session.onComplete = { [weak self] object, error in

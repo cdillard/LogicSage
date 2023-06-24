@@ -105,7 +105,7 @@ class InnerTextView: TextViewUIKit {
 
         // Calculate the position for the button
         // For example, position the button at the top-right corner of the bounding rectangle
-        let buttonSize = CGSize(width: 160, height: 44)
+        let buttonSize = CGSize(width: 158.6666, height: 39.666)
         let buttonOrigin = CGPoint(x: boundingRect.maxX - buttonSize.width, y: boundingRect.minY)
 
         return CGRect(origin: buttonOrigin, size: buttonSize)
@@ -167,7 +167,9 @@ class InnerTextView: TextViewUIKit {
                 }
                 button.backgroundColor = UIColor(SettingsViewModel.shared.buttonColor)
                 button.titleLabel?.textColor = UIColor(SettingsViewModel.shared.plainColorSrcEditor)
-                button.titleLabel?.font = .systemFont(ofSize: 12)
+                button.titleLabel?.font = .systemFont(ofSize: SettingsViewModel.shared.fontSizeSrcEditor)
+                button.titleLabel?.adjustsFontSizeToFitWidth = true
+                button.titleLabel?.numberOfLines = 1
                 button.setTitle( "Longpress to Copy code", for: .normal)
                 button.tag = index
                 button.addTarget(self, action: #selector(copyCode), for: .touchDown)

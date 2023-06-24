@@ -118,15 +118,14 @@ public class SettingsViewModel: ObservableObject {
 // END STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
 
 // BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
-    @Published var voiceOutputenabled = false
-    @AppStorage("voiceOutputEnabled") var voiceOutputenabledUserDefault = false
-    @AppStorage("selectedVoiceIndex") var selectedVoiceIndexSaved: Int = 0 {
+    @AppStorage("savedVoiceName") var voiceOutputSavedName: String = "" {
         didSet {
-            if !installedVoices.isEmpty && selectedVoiceIndexSaved < installedVoices.count {
-                selectedVoice = installedVoices[selectedVoiceIndexSaved]
+            if !installedVoices.isEmpty {
+                selectedVoice = installedVoices.first(where: { $0.voiceName == voiceOutputSavedName })
             }
         }
     }
+    @AppStorage("voiceOutputEnabled") var voiceOutputEnabled = false
     @AppStorage("duckingAudio") var duckingAudio = false
 
     // TODO: Add more server controls for server voice
@@ -326,14 +325,13 @@ public class SettingsViewModel: ObservableObject {
             print("\(newCompletionMsgs) % \(reviewLimit) = will review")
 
             guard newCompletionMsgs % reviewLimit == 0 else {
-                return logD("no review today")
+                return print("no review today")
             }
 
             print("SKStoreReviewController.requestReview")
 #if !os(xrOS)
-
             SKStoreReviewController.requestReview()
-            #endif
+#endif
         }
     }
 // END STOREKIT ZONE ***********************************************************************
@@ -367,7 +365,6 @@ public class SettingsViewModel: ObservableObject {
             //            print("Error retrieving openAIKey")
             //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
-
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
@@ -512,40 +509,28 @@ public class SettingsViewModel: ObservableObject {
 // END SUB ZONE FOR LOADING  TERM / CHAT / SRC EDITOR COLORS FROM DISK ******************************
 // END COLOR LOAD FROM DISK ZONE ******************************
 
-        // BEGIN AUDIO SETTING LOAD ZONE FROM DISK
+// BEGIN AUDIO SETTING LOAD ZONE FROM DISK
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
-        voiceOutputenabled = voiceOutputenabledUserDefault
-
-        if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
-            self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
-        }
-        else {
-            self.selectedVoiceIndexSaved = 0
-        }
+        self.voiceOutputEnabled = UserDefaults.standard.bool(forKey: "voiceOutputEnabled")
+        self.voiceOutputSavedName = UserDefaults.standard.string(forKey: "savedVoiceName") ?? ""
         configureAudioSession()
         DispatchQueue.main.async {
-            if UserDefaults.standard.integer(forKey: "selectedVoiceIndex") != 0 {
-                self.selectedVoiceIndexSaved = UserDefaults.standard.integer(forKey: "selectedVoiceIndex")
-
-            }
-            else {
-                self.selectedVoiceIndexSaved = 0
-            }
             self.configureAudioSession()
         }
-        
-        // END AUDIO SETTING LOAD ZONE FROM DISK
+// END AUDIO SETTING LOAD ZONE FROM DISK
 
-        // START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
+// START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
         refreshDocuments()
-        // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
+// END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
 
+// START LOADING SAVED CONVO ZONE FROM DISK
         DispatchQueue.main.async {
             if let convos = self.retrieveConversationContentFromDisk(forKey: jsonFileName) {
                 self.conversations = convos
             }
         }
-        
+// END LOADING SAVED CONVO ZONE FROM DISK
+
     }
 
     func currentGitRepoKey() -> String {

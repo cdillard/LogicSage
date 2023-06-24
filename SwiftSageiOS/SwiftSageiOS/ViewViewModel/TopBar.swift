@@ -106,7 +106,6 @@ struct TopBar: View {
                                     .labelStyle(DemoStyle())
                                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                             }
-//                            .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
 
                             let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
                             if #available(iOS 16.0, *) {
@@ -114,7 +113,6 @@ struct TopBar: View {
                                 ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
                                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                             }
-// TODO RENAME FROM HERE IF IT WASNT SO COMPLICAGTED
                             if windowInfo.convoId == Conversation.ID(-1) {
                                 
                             }
@@ -122,11 +120,12 @@ struct TopBar: View {
                                 Button {
                                     // either renaming file or chat
                                     if windowInfo.windowType == .file {
-
+                                        
                                     }
                                     else if windowInfo.windowType == .chat {
+#if !os(macOS)
                                         LogicSageDev.alert(subject: "convo", convoId: windowInfo.convoId)
-
+#endif
                                     }
                                 } label: {
                                     Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")

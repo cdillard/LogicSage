@@ -24,13 +24,12 @@ extension SageMultiView {
                     isMoveGestureActivated = true
                 }
             }
-            func doPostConstraint() {
+            func doPostConstraint(vertical: Bool = false) {
                 let now = Date()
-                if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 { // throttle duration
+                if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 {
 #if !os(xrOS)
-
                     playNot(type: .warning)
-                    #endif
+#endif
                     lastBumpFeedbackTime = Date()
                 }
                 bumping = true
@@ -128,7 +127,7 @@ extension SageMultiView {
                 else {
                     //logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
             // if resizeOffset.height > 0 that means window has been increased in size vert.
@@ -140,7 +139,7 @@ extension SageMultiView {
                 else {
                  //   logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset + (abs(resizeOffset.height) / 2)
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
             // if resizeOffset.height < 0 that means window has been decreased in size vert.
@@ -153,7 +152,7 @@ extension SageMultiView {
                 else {
                  //   logD("constrain y becuz TOP = \(globY) < \(topset)!")
                     newY = topset - (abs(resizeOffset.height) / 2)
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
 // END: Three TOP edge cases....
@@ -168,7 +167,7 @@ extension SageMultiView {
                 if bottom > farBound {
                     //logD("constrain y becuz BOTTOM = \(globY) < \(topset)!")
                     newY = farBound - frame.size.height
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
             // if resizeOffset.height > 0 that means window has been increased in size vert.
@@ -182,7 +181,7 @@ extension SageMultiView {
                 if trailing > farBound {
                     //logD("constrain x becuz BOTOM = \(trailing) > \(farBound)!")
                     newY = farBound - frame.size.height
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
             // if resizeOffset.height < 0 that means window has been decreased in size vert.
@@ -194,7 +193,7 @@ extension SageMultiView {
                 if trailing > farBound {
                     //logD("constrain x becuz TRAILING = \(trailing) > \(farBound)!")
                     newY = farBound - frame.size.height
-                    doPostConstraint()
+                    doPostConstraint(vertical: true)
                 }
             }
 // END: Three BOTTOM edge cases....

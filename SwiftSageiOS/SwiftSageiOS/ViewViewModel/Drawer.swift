@@ -21,15 +21,13 @@ struct DrawerContent: View {
     @State var presentRenamer: Bool = false {
         didSet {
             if #available(iOS 16.0, *) {
-
             }
             else {
 #if !os(macOS)
-
                 if presentRenamer {
                     LogicSageDev.alert(subject: "convo", convoId: renamingConvo?.id)
                 }
-                #endif
+#endif
             }
         }
     }
@@ -72,9 +70,9 @@ struct DrawerContent: View {
                                 withAnimation {
                                     tabSelection = 1
 
-                            //        settingsViewModel.latestWindowManager = windowManager
-//
-//                                    settingsViewModel.createAndOpenServerChat()
+                                    //        settingsViewModel.latestWindowManager = windowManager
+                                    //
+                                    //                                    settingsViewModel.createAndOpenServerChat()
                                 }
                             }) {
                                 resizableButtonImage(systemName:
@@ -151,7 +149,7 @@ struct DrawerContent: View {
                                                         "plus.rectangle",
                                                      size: geometry.size)
 #if !os(macOS)
-                            .hoverEffect(.lift)
+                                .hoverEffect(.lift)
 #endif
                                 .padding(.leading, 8)
                                 .padding(.trailing, 8)
@@ -218,7 +216,7 @@ struct DrawerContent: View {
                                 .frame(maxWidth: .infinity)
 
 #if !os(macOS)
-                                    .hoverEffect(.lift)
+                                .hoverEffect(.lift)
 #endif
 
                                 Spacer()
