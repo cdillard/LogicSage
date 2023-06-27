@@ -51,8 +51,9 @@ class WindowManager: ObservableObject {
             windowViewModels[index].windowInfo.zIndex = maxZIndex + 1
             sortWindowsByZIndex()
         }
-
-        print("zIndex of window \(window.id) brought to front")
+        if gestureDebugLogs {
+            print("zIndex of window \(window.id) brought to front")
+        }
         guard let index = windows.firstIndex(of: window) else { return }
         let maxZIndex = windows.map({ $0.zIndex }).max() ?? 0
         windows[index].zIndex = maxZIndex + 1

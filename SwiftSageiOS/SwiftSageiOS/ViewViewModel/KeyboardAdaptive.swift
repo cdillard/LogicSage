@@ -23,18 +23,23 @@ struct KeyboardAdaptive: ViewModifier {
 
                 .onReceive(Publishers.keyboardHeight) { keyboardHeight in
 
-                    print("keyboardAdaptive")
-                    print("frame = \(frame)")
-                    print("position = \(position)")
-                    print("resizeOffset = \(resizeOffset)")
+                    if gestureDebugLogs {
+                        
+                        print("keyboardAdaptive")
+                        print("frame = \(frame)")
+                        print("position = \(position)")
+                        print("resizeOffset = \(resizeOffset)")
+                    }
 
                     let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
 
                     let focusedTextInputBottom = UIResponder.currentFirstResponder?.globalFrame?.maxY ?? 0
                     self.bottomPadding = min(self.keyboardHeight,
                                              self.keyboardHeight == 0 ? 0 : max(0, focusedTextInputBottom - keyboardTop - geometry.safeAreaInsets.bottom - 78))
-
-                    print("bottomPadding = \(bottomPadding)")
+                    if gestureDebugLogs {
+                        
+                        print("bottomPadding = \(bottomPadding)")
+                    }
 
             }
 #endif

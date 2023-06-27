@@ -26,6 +26,8 @@ enum ViewMode {
     case workingChangesView
 }
 
+let gestureDebugLogs = false
+
 struct SageMultiView: View {
 
     let dragDelay = 0.333666
@@ -87,11 +89,15 @@ struct SageMultiView: View {
 
                                         return
                                     }
-                                    if isMoveGestureActivated == false {
-                                        print("MOVE gesture START = \(position)")
-                                    }
-                                    else {
-                                        print("MOVE gesture update = \(position)")
+                                    if gestureDebugLogs {
+                                        
+                                        if isMoveGestureActivated == false {
+                                            
+                                            print("MOVE gesture START = \(position)")
+                                        }
+                                        else {
+                                            print("MOVE gesture update = \(position)")
+                                        }
                                     }
                                     let now = Date()
                                     if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
@@ -100,7 +106,10 @@ struct SageMultiView: View {
                                     }
                                 }
                                 .onEnded { value in
-                                    print("MOVE gesture ended new Pos = \(position)")
+                                    if gestureDebugLogs {
+                                        
+                                        print("MOVE gesture ended new Pos = \(position)")
+                                    }
                                     isMoveGestureActivated = false
                                 }
                         )

@@ -114,26 +114,30 @@ struct ResizingHandle: View {
                         }
 
                         if activeDragOffset == .zero {
-                            print("STARTED RESIZE GESTURE")
-                            print("start pos = \(position)")
+                            if gestureDebugLogs {
+                                print("STARTED RESIZE GESTURE")
+                                print("start pos = \(position)")
+                            }
                         }
                         activeDragOffset = value.translation
                         activeDragLocation = value.location
 
                         dragCursorPoint = CGPointMake(value.location.x  + position.width, value.location.y + position.height)
-//                        dragCursorPoint = CGPointMake(position.width + value.translation.width,  position.height + value.translation.height)
 
-                        print("resize offset = \(resizeOffset)")
+                        if gestureDebugLogs {
 
+                            print("resize offset = \(resizeOffset)")
+                        }
                         if !isResizeGestureActive {
                             isResizeGestureActive = true
                             self.windowManager.bringWindowToFront(window: self.window)
                         }
                     }
                     .onEnded { value in
-
-                        print("ENDED RESIZE GESTURE")
-
+                        if gestureDebugLogs {
+                            
+                            print("ENDED RESIZE GESTURE")
+                        }
                         updateFrame(with: value.translation, reader.size.width, reader.size.height, reader.safeAreaInsets)
                         activeDragOffset = .zero
                         activeDragLocation = .zero
