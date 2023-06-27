@@ -15,6 +15,19 @@
 - [Credits](#credits)
 
 ## news
+--------------------
+06-18-2023
+
+<img src="https://discordapp.com/api/guilds/1119407704553832500/widget.png?style=banner3" alt="LogicSage Discord Banner 3"/>
+
+https://discord.gg/KvjxupEB9
+
+Join LogicSage discord for help setting up, ideas, and to track development of the LogicSage app. I'll share roadmap, etc.
+
+
+LogicSage (1.2.2): The GPT app for iPadOS (and iOS) on the AppStore for free now!
+
+https://apps.apple.com/us/app/logicsage/id6448485441
 
 --------------------
 06-15-2023
@@ -22,12 +35,6 @@
 LogicSage (1.2.2): The GPT app for iPadOS and iOS - on the AppStore for free now!
 https://apps.apple.com/us/app/logicsage/id6448485441
 Use LogicSage with Swift Playgrounds: https://youtu.be/nS1AldmV8v8
-* I demonstrate using LogicSage to create Swift Playgrounds 3D Scenes.  Create a Crystal Monster
-
-https://twitter.com/LogicSage111517/status/1669379490122989568?s=20
-
-<a href="https://www.producthunt.com/posts/logicsage-the-mobile-gpt-workspace?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-logicsage&#0045;the&#0045;mobile&#0045;gpt&#0045;workspace" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=399229&theme=dark" alt="LogicSage&#0058;&#0032;The&#0032;Mobile&#0032;GPT&#0032;Workspace - Open&#0045;source&#0047;free&#0032;SwiftUI&#0032;iPadOS&#0032;app&#0032;GPT&#0032;Chat&#0032;&#0038;&#0032;Swift&#0032;coding | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-
 
 ----------------
 06-15-2023
@@ -36,12 +43,6 @@ LogicSage 1.2.2 in Review. Coming to the AppStore near you so soon!
 [LogicSage: The GPT app for iPadOS and iOS ](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
 If you are would like to see some footage of how I use LogicSage please check out the following Youtube videos.
-
-Rap Therapy with LogicSage: https://youtu.be/QWfwah_b-4s
-
-- I demonstrate Rap Therapy through GPT chat
-- I demonstrate Debate command: Open Term window `debate Android vs iOS` or whatever you’d like.
-
 
 Use LogicSage with Swift Playgrounds: https://youtu.be/nS1AldmV8v8
 - I demonstrate using LogicSage to create Swift Playgrounds 3D Scenes. In this case a 3D scene with 4 crystals is turned into a crystal monster shape. 
