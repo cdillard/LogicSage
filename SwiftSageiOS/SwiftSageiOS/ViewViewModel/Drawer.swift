@@ -13,7 +13,6 @@ struct DrawerContent: View {
     @ObservedObject var windowManager: WindowManager
 
     @Binding var conversations: [Conversation]
-    @Binding var isPortrait: Bool
     @Binding var viewSize: CGRect
     @Binding var showSettings: Bool
     @Binding var showAddView: Bool
@@ -66,13 +65,19 @@ struct DrawerContent: View {
                     ScrollView {
                         HStack(spacing: 0) {
 
+#if !os(macOS)
+                            if UIDevice.current.userInterfaceIdiom != .phone {
+                                
+                                if #available(iOS 16.0, *) {
+                                    
+                                    NewViewerButton()
+                                }
+                            }
+#endif
+
                             Button( action : {
                                 withAnimation {
                                     tabSelection = 1
-
-                                    //        settingsViewModel.latestWindowManager = windowManager
-                                    //
-                                    //                                    settingsViewModel.createAndOpenServerChat()
                                 }
                             }) {
                                 resizableButtonImage(systemName:
@@ -96,9 +101,15 @@ struct DrawerContent: View {
                                     settingsViewModel.createAndOpenServerChat()
                                 }
                             }) {
-                                resizableButtonImage(systemName:
-                                                        "text.and.command.macwindow",
-                                                     size: geometry.size)
+                                VStack(spacing:0) {
+                                    resizableButtonImage(systemName:
+                                                            "text.and.command.macwindow",
+                                                         size: geometry.size)
+                                    Text("Term")
+                                        .font(.body)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                }
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif
@@ -119,9 +130,17 @@ struct DrawerContent: View {
                                     }
                                 }
                             }) {
+                                VStack(spacing:0) {
+
                                 resizableButtonImage(systemName:
                                                         "gearshape",
                                                      size: geometry.size)
+                                    Text("Settings")
+                                        .font(.body)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                }
+
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif
@@ -145,9 +164,16 @@ struct DrawerContent: View {
                                     }
                                 }
                             }) {
-                                resizableButtonImage(systemName:
-                                                        "plus.rectangle",
-                                                     size: geometry.size)
+                                VStack(spacing:0) {
+                                    
+                                    resizableButtonImage(systemName:
+                                                            "plus.rectangle",
+                                                         size: geometry.size)
+                                    Text("Add")
+                                        .font(.body)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                }
+
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif
@@ -171,9 +197,14 @@ struct DrawerContent: View {
                                     }
                                 }
                             }) {
-                                resizableButtonImage(systemName:
-                                                        "text.bubble.fill",
-                                                     size: geometry.size)
+                                VStack(spacing:0) {
+                                    resizableButtonImage(systemName:
+                                                            "text.bubble.fill",
+                                                         size: geometry.size)
+                                    Text("New Chat")
+                                        .font(.body)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                }
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif

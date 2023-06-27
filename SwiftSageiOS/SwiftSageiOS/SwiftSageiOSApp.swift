@@ -31,9 +31,9 @@ var serviceDiscovery: ServiceDiscovery?
 struct SwiftSageiOSApp: App {
 
     @StateObject private var settingsViewModel = SettingsViewModel.shared
+
 #if !os(macOS)
 #if !os(xrOS)
-
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
 #endif
 #endif
@@ -42,57 +42,55 @@ struct SwiftSageiOSApp: App {
         serviceDiscovery = ServiceDiscovery()
     }
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "LogicSage-main") {
+            ContentView(settingsViewModel: settingsViewModel)
+                .onAppear {
 
-                ContentView(settingsViewModel: settingsViewModel)
-                    .onAppear {
-#if !os(macOS)
-                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-#endif
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
-                            serviceDiscovery?.startDiscovering()
-                        }
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
+                        serviceDiscovery?.startDiscovering()
+                    }
+                    DispatchQueue.main.async {
 #if !os(macOS)
 #if !os(xrOS)
-
-                            isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
+                        isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
 #endif
 #endif
-                            settingsViewModel.printVoicesInMyDevice()
-                            settingsViewModel.configureAudioSession()
-                        }
+                        settingsViewModel.printVoicesInMyDevice()
+                        settingsViewModel.configureAudioSession()
                     }
+                }
 #if !os(macOS)
 #if !os(xrOS)
-                    .onAppear {
-                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                .onAppear {
+                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
 
-                        self.isPortrait = scene.interfaceOrientation.isPortrait
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-                        self.isPortrait = scene.interfaceOrientation.isPortrait
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-                        logD("didFinishLaunchingNotification")
-                        SwiftSageiOSAppDelegate.applicationDidFinishLaunching()
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                        logD("applicationWillEnterForeground")
+                    self.isPortrait = scene.interfaceOrientation.isPortrait
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                    guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+                    self.isPortrait = scene.interfaceOrientation.isPortrait
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
+                    logD("didFinishLaunchingNotification")
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                    logD("applicationWillEnterForeground")
 
-                        screamer.discoReconnect()
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                        logD("didEnterBackgroundNotification")
-                    }
+                    screamer.discoReconnect()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                    logD("didEnterBackgroundNotification")
+                }
 #endif
 #endif
 
         }
-
+#if os(xrOS)
+        //        .windowStyle(.plain)
+#endif
     }
 }
+
 func setHasSeenInstructions(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenInstructions")
 }
@@ -111,3 +109,4 @@ func hasSeenAnim() -> Bool {
 func setHasSeenAnim(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenAnim")
 }
+

@@ -7,8 +7,6 @@
 
 import Foundation
 import SwiftUI
-#if !os(macOS)
-#if !os(xrOS)
 
 struct FileChange: Identifiable, Equatable {
     var id = UUID()
@@ -31,9 +29,11 @@ struct WorkingChangesView: View {
                 HStack {
                     NavigationView {
                         VStack {
+
                             ListSectionView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, title: unstagedTitle, changes: $settingsViewModel.unstagedFileChanges)
                             Divider()
                             ListSectionView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, title: stagedTitle, changes: $settingsViewModel.stagedFileChanges)
+
                         }
                     }
 #if !os(macOS)
@@ -141,6 +141,8 @@ struct ListSectionView: View {
                             .foregroundColor(settingsViewModel.appTextColor)
                             .onTapGesture {
                                 // swap from palce to place if tapped
+#if !os(macOS)
+
                                 if title == unstagedTitle {
                                     settingsViewModel.unstagedFileChanges.removeAll {
                                         $0 == change
@@ -153,6 +155,7 @@ struct ListSectionView: View {
                                     }
                                     settingsViewModel.unstagedFileChanges.append(change)
                                 }
+                                #endif
                             }
 
                         Spacer()
@@ -166,5 +169,3 @@ struct ListSectionView: View {
         }
     }
 }
-#endif
-#endif

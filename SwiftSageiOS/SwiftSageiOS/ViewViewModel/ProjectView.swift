@@ -10,13 +10,8 @@ import SwiftUI
 import Combine
 
 struct ProjectView: View {
-#if !os(macOS)
-#if !os(xrOS)
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
-#endif
-#endif
-
     @ObservedObject var settingsViewModel: SettingsViewModel
     var window: WindowInfo?
 

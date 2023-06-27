@@ -25,34 +25,34 @@ struct SettingsView: View {
     @State private var newName: String = ""
     @State var renamingConvo: Conversation? = nil
 
+    @State var apiSettingsTitleLabelString: String = "▶️ API settings"
+    @State var sizesSettingsTitleLabelString: String = "▶️ Size settings"
+    @State var colorSettingsTitleLabelString: String = "▶️ Color settings"
+    @State var audioSettingsTitleLabelString: String = "▶️ Audio settings"
 
     @State var presentUserAvatarRenamer: Bool = false {
         didSet {
             if #available(iOS 16.0, *) {
-                
             }
             else {
 #if !os(macOS)
-
                 if presentUserAvatarRenamer {
                     LogicSage.alert(subject: "self")
                 }
-                #endif
+#endif
             }
         }
     }
     @State var presentGptAvatarRenamer: Bool = false {
         didSet {
             if #available(iOS 16.0, *) {
-                
             }
             else {
 #if !os(macOS)
-
                 if presentGptAvatarRenamer {
                     LogicSage.alert(subject: "GPT")
                 }
-                #endif
+#endif
             }
         }
     }
@@ -84,7 +84,7 @@ struct SettingsView: View {
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
 #if !os(macOS)
-                                        .hoverEffect(.lift)
+                                            .hoverEffect(.lift)
 #endif
                                     }
                                 }
@@ -110,11 +110,9 @@ struct SettingsView: View {
                                             withAnimation {
                                                 showSettings.toggle()
                                                 showHelp.toggle()
-                                                tabSelection = 1
+//                                                tabSelection = 1
 
                                                 logD("HELP tapped")
-
-
                                             }
                                         }) {
                                             resizableButtonImage(systemName:
@@ -123,7 +121,7 @@ struct SettingsView: View {
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
 #if !os(macOS)
-                                        .hoverEffect(.lift)
+                                            .hoverEffect(.lift)
 #endif
                                         }
                                         // Button for (help)
@@ -135,10 +133,9 @@ struct SettingsView: View {
                                             withAnimation {
                                                 showSettings.toggle()
                                                 showInstructions.toggle()
-                                                tabSelection = 1
+//                                                tabSelection = 1
 
                                                 logD("info tapped")
-
                                             }
                                         }) {
                                             resizableButtonImage(systemName:
@@ -147,7 +144,7 @@ struct SettingsView: View {
                                             .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
 #if !os(macOS)
-                                        .hoverEffect(.lift)
+                                            .hoverEffect(.lift)
 #endif
                                         }
                                         // BUTTON FOR (i) info
@@ -164,20 +161,21 @@ struct SettingsView: View {
 
                         VStack {
                             Group {
-                                Text("\(showAPISettings ? "🔽" : "▶️") API settings")
+                                Text(apiSettingsTitleLabelString)
 
                                     .font(.title3)
                                     .foregroundColor(settingsViewModel.appTextColor)
                                     .padding(8)
 #if !os(macOS)
-                                        .hoverEffect(.automatic)
+                                    .hoverEffect(.automatic)
 #endif
                             }
                             .onTapGesture {
                                 playSelect()
-
                                 withAnimation {
                                     showAPISettings.toggle()
+                                    apiSettingsTitleLabelString = "\(showAPISettings ? "🔽" : "▶️") API settings"
+
                                 }
                             }
                         }
@@ -196,16 +194,12 @@ struct SettingsView: View {
                                         )
                                         .border(.secondary)
                                         .submitLabel(.done)
-
-                                        //     .focused($field1IsFocused)
-
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
                                         .scrollDismissesKeyboard(.interactively)
 #endif
                                         .font(.title3)
                                         .foregroundColor(settingsViewModel.appTextColor)
-
                                         .autocorrectionDisabled(true)
 #if !os(macOS)
                                         .autocapitalization(.none)
@@ -310,82 +304,6 @@ struct SettingsView: View {
                                         .autocapitalization(.none)
 #endif
                                     }
-
-//                                    HStack {
-//                                        Text("swiftsage username: ").font(.caption)
-//                                            .foregroundColor(settingsViewModel.appTextColor)
-//                                        if #available(iOS 16.0, *) {
-//
-//                                            TextField("", text: $settingsViewModel.userName)
-//                                                .submitLabel(.done)
-//#if !os(xrOS)
-//
-//                                                .scrollDismissesKeyboard(.interactively)
-//#endif
-//                                                .font(.footnote)
-//                                                .border(.secondary)
-//
-//                                                .foregroundColor(settingsViewModel.appTextColor)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//                                                .autocapitalization(.none)
-//#endif
-//                                        }
-//                                        else {
-//                                            TextField("", text: $settingsViewModel.userName)
-//                                            //                                                .submitLabel(.done)
-//                                            //                                                .scrollDismissesKeyboard(.interactively)
-//                                                .font(.footnote)
-//                                            //                                                .border(.secondary)
-//
-//                                                .foregroundColor(settingsViewModel.appTextColor)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//                                                .autocapitalization(.none)
-//#endif
-//                                        }
-//                                        Spacer()
-//
-//                                    }
-//                                    .padding(.leading, 8)
-//                                    .padding(.trailing, 8)
-//                                    .frame(height: 22)
-//
-//                                    HStack {
-//                                        Text("swiftsage password: ").font(.caption)
-//                                            .foregroundColor(settingsViewModel.appTextColor)
-//                                        if #available(iOS 16.0, *) {
-//
-//                                            TextField("", text: $settingsViewModel.password)
-//                                                .submitLabel(.done)
-//#if !os(xrOS)
-//                                                .scrollDismissesKeyboard(.interactively)
-//#endif
-//                                                .border(.secondary)
-//
-//                                                .font(.footnote)
-//                                                .foregroundColor(settingsViewModel.appTextColor)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//                                                .autocapitalization(.none)
-//#endif
-//                                        }
-//                                        else {
-//                                            TextField("", text: $settingsViewModel.password)
-//                                                .font(.footnote)
-//                                                .foregroundColor(settingsViewModel.appTextColor)
-//                                                .autocorrectionDisabled(true)
-//#if !os(macOS)
-//                                                .autocapitalization(.none)
-//#endif
-//                                        }
-//                                        Spacer()
-//
-//                                    }
-//                                    .padding(.leading, 8)
-//                                    .padding(.trailing, 8)
-//
-//                                    .frame(height: 22)
                                 }
                                 .padding(.leading, 8)
                                 .padding(.trailing, 8)
@@ -429,30 +347,6 @@ struct SettingsView: View {
                             }
 #endif
                         }
-
-                        // The end of the load moad.
-//                        Group {
-//
-//                            HStack {
-//                                Button(action: {
-//                                    withAnimation {
-//                                        updateMode()
-//                                    }
-//                                }) {
-//                                    Text(".\(modes[currentModeIndex])")
-//                                        .background(settingsViewModel.buttonColor)
-//                                        .foregroundColor(settingsViewModel.appTextColor)
-//                                        .cornerRadius(8)
-//                                }
-//                            }
-//                            Text("Set Load mode")
-//                                .foregroundColor(settingsViewModel.appTextColor)
-//                                .font(.caption)
-//                                .fontWeight(.semibold)
-//                        }
-//                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-
-                        // MODE PICKER
                         Group {
                             HStack {
                                 // PLugItIn BUTTON
@@ -483,20 +377,22 @@ struct SettingsView: View {
 
 
                         Group {
-                            Text("\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") sizes")
+                            Text(sizesSettingsTitleLabelString)
                                 .font(.title3)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
 #if !os(macOS)
-                                        .hoverEffect(.automatic)
+                                .hoverEffect(.automatic)
 #endif
 
                         }
                         .onTapGesture {
                             withAnimation {
                                 playSelect()
-
+                                
                                 settingsViewModel.showSizeSliders.toggle()
+
+                                sizesSettingsTitleLabelString = "\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") Size settings"
                             }
                         }
                         VStack(alignment: .leading, spacing: 0) {
@@ -611,12 +507,12 @@ struct SettingsView: View {
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
                     Group {
-                        Text("\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") color")
+                        Text(colorSettingsTitleLabelString)
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
 #if !os(macOS)
-                                        .hoverEffect(.automatic)
+                            .hoverEffect(.automatic)
 #endif
                     }
                     .onTapGesture {
@@ -625,6 +521,8 @@ struct SettingsView: View {
                         withAnimation {
 
                             settingsViewModel.showAllColorSettings.toggle()
+
+                            colorSettingsTitleLabelString =  "\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") Color settings"
                         }
                     }
                     if settingsViewModel.showAllColorSettings {
@@ -680,14 +578,13 @@ struct SettingsView: View {
                         }
                         // SOURCE EDITOR COLORS SETTINGS ZONE
                         Group {
-                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") more colors")
+                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") More Color settings")
                                 .font(.title3)
                                 .foregroundColor(settingsViewModel.appTextColor)
                                 .padding(4)
 #if !os(macOS)
-                                        .hoverEffect(.automatic)
+                                .hoverEffect(.automatic)
 #endif
-
                         }
                         .onTapGesture {
                             playSelect()
@@ -811,12 +708,12 @@ struct SettingsView: View {
                     }
 
                     Group {
-                        Text("\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") audio settings")
+                        Text(audioSettingsTitleLabelString)
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .padding(8)
 #if !os(macOS)
-                                        .hoverEffect(.automatic)
+                            .hoverEffect(.automatic)
 #endif
 
                     }
@@ -826,6 +723,8 @@ struct SettingsView: View {
                         withAnimation {
 
                             settingsViewModel.showAudioSettings.toggle()
+
+                            audioSettingsTitleLabelString = "\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") Audio settings"
                         }
                     }
                     // TODO:Double check toggling ducing Audio and audio output this way works.
@@ -968,7 +867,6 @@ struct SettingsView: View {
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
                 .padding(geometry.size.width * 0.01)
                 .padding(.bottom, 30)
-
 #if !os(macOS)
                 .background(settingsViewModel.backgroundColor)
 #endif
@@ -993,7 +891,6 @@ struct SettingsView: View {
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.buttonColor)
 #if !os(macOS)
-
                 .background(settingsViewModel.backgroundColor)
 #endif
 
@@ -1003,22 +900,10 @@ struct SettingsView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
 #if !os(macOS)
-
                 .background(settingsViewModel.backgroundColor)
 #endif
-
         }
-
     }
-//    private func updateMode() {
-//        currentModeIndex = (currentModeIndex + 1) % modes.count
-//
-//        DispatchQueue.main.async {
-//
-//            // Execute your action here
-//            screamer.sendCommand(command: "setLoadMode \(modes[currentModeIndex])")
-//        }
-//    }
 }
 
 
@@ -1070,9 +955,9 @@ func showAlert(alert: UIAlertController) {
 
 private func keyWindow() -> UIWindow? {
     return UIApplication.shared.connectedScenes
-    .filter {$0.activationState == .foregroundActive}
-    .compactMap {$0 as? UIWindowScene}
-    .first?.windows.filter {$0.isKeyWindow}.first
+        .filter {$0.activationState == .foregroundActive}
+        .compactMap {$0 as? UIWindowScene}
+        .first?.windows.filter {$0.isKeyWindow}.first
 }
 
 private func topMostViewController() -> UIViewController? {

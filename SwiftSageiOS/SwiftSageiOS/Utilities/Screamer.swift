@@ -84,7 +84,6 @@ class ScreamClient: WebSocketDelegate {
                 self.connect()
             }
         case .text(let text):
-#if !os(macOS)
                 do {
                     let json = try JSONSerialization.jsonObject(with: Data(text.utf8), options: .fragmentsAllowed) as? [String: String]
                     guard let recipient = json?[recipientJsonKey] as? String,
@@ -148,11 +147,9 @@ class ScreamClient: WebSocketDelegate {
                 catch {
                     logD("cmd err = \(error)")
                 }
-#endif
 
             // TODO: HANDLE AUTH json structured data
         case .binary(let data):
-#if !os(macOS)
 // BEGIN HANDLE WORKSPACE STREAM ZONE ******************************************************
             if data == workspaceStartSentinel.data(using: .utf8)! {
                 isTransferringWorkspace = true
@@ -161,9 +158,12 @@ class ScreamClient: WebSocketDelegate {
             else if data == workspaceEndSentinel.data(using: .utf8)! {
                 isTransferringWorkspace = false
 
+#if !os(macOS)
+
                 DispatchQueue.main.async {
                     SettingsViewModel.shared.recievedWorkspaceData = self.receivedWorkspaceData
                 }
+                #endif
             }
 // END HANDLE WORKSPACE STREAM ZONE ******************************************************
 
@@ -174,10 +174,13 @@ class ScreamClient: WebSocketDelegate {
             }
             else if data == simEndSentinel.data(using: .utf8)! {
                 isTransferringSim = false
+#if !os(macOS)
 
                 DispatchQueue.main.async {
                     SettingsViewModel.shared.receivedSimulatorFrameData = self.receivedSimData
                 }
+#endif
+
             }
 // END HANDLE SIM STREAM ZONE ******************************************************
 
@@ -189,6 +192,8 @@ class ScreamClient: WebSocketDelegate {
             else if data == imgEndSentinel.data(using: .utf8)! {
                 isTransferringWallpaper = false
 
+#if !os(macOS)
+
                 DispatchQueue.main.async {
                     SettingsViewModel.shared.receivedWallpaperFileName = self.receivedWallpaperFileName
                     SettingsViewModel.shared.receivedWallpaperFileSize = self.receivedWallpaperFileSize
@@ -198,6 +203,7 @@ class ScreamClient: WebSocketDelegate {
                     self.receivedWallpaperFileName = nil
                     self.receivedWallpaperFileSize = nil
                 }
+                #endif
             }
 // END HANDLE WALLPAPER STREAM ZONE ******************************************************
 
@@ -220,7 +226,6 @@ class ScreamClient: WebSocketDelegate {
             }
 // END DATA APPENDAGE ZONE ******************************************************
 
-#endif
         case .ping:
             break
         case .pong:

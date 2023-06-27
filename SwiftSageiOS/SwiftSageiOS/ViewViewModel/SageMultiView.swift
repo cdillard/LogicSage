@@ -4,12 +4,12 @@
 //
 //  Created by Chris Dillard on 4/26/23.
 //
-#if !os(macOS)
-#if !os(xrOS)
 
 import Foundation
 import SwiftUI
+#if !os(macOS)
 import UIKit
+#endif
 import WebKit
 import Combine
 
@@ -55,6 +55,8 @@ struct SageMultiView: View {
     @Binding var viewSize: CGRect
     @Binding var resizeOffset: CGSize
     @Binding var bumping: Bool
+    @Binding var bumpingVertically: Bool
+
     @Binding var isResizeGestureActive: Bool
     @Binding var keyboardHeight: CGFloat
 
@@ -76,11 +78,21 @@ struct SageMultiView: View {
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
                                     if keyboardHeight != 0 {
+                                        #if !os(macOS)
                                         hideKeyboard()
+                                        #endif
+                                        let now = Date()
+
+                                        self.lastDragTime = now
+
                                         return
                                     }
-                                   // print("MOVE gesture update new Pos = \(position)")
-
+                                    if isMoveGestureActivated == false {
+                                        print("MOVE gesture START = \(position)")
+                                    }
+                                    else {
+                                        print("MOVE gesture update = \(position)")
+                                    }
                                     let now = Date()
                                     if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
                                         self.lastDragTime = now
@@ -88,10 +100,11 @@ struct SageMultiView: View {
                                     }
                                 }
                                 .onEnded { value in
-                                   // print("MOVE gesture ended new Pos = \(position)")
+                                    print("MOVE gesture ended new Pos = \(position)")
                                     isMoveGestureActivated = false
                                 }
-                        )                                    .simultaneousGesture(TapGesture().onEnded {
+                        )
+                        .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
                         })
                     }
@@ -99,6 +112,8 @@ struct SageMultiView: View {
                     // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
                     case .editor:
+#if !os(macOS)
+
                         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottomEditor, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                                     { srcCodeTextEditor in
@@ -118,13 +133,13 @@ struct SageMultiView: View {
                         .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
                         })
-
+#endif
                     case .chat:
+
                         ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)
                             .simultaneousGesture(TapGesture().onEnded { value in
                                         self.windowManager.bringWindowToFront(window: self.window)
                                   })
-
 
 
                     case .project:
@@ -176,18 +191,24 @@ struct SageMultiView: View {
                             .frame(maxWidth: .infinity)
 
                             .background(settingsViewModel.backgroundColor)
+#if !os(macOS)
 
                             WebView(url: url, currentURL: $currentURL, webViewStore: sageMultiViewModel.webViewStore, request:URLRequest(url: url) )
                                 .simultaneousGesture(TapGesture().onEnded {
                                     self.windowManager.bringWindowToFront(window: self.window)
                                 })
+#endif
+
                         }
                     case .simulator:
                         ZStack {
+#if !os(macOS)
+
                             Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .ignoresSafeArea()
+#endif
                         }
                         .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
@@ -201,24 +222,38 @@ struct SageMultiView: View {
                                 Text("No root")
                             }
                         }
+#if !os(macOS)
+
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
 
                     case .windowListView:
                         NavigationView {
                             WindowList(windowManager: windowManager, showAddView: $showAddView)
                         }
+#if !os(macOS)
+
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
+
                     case .changeView:
                         NavigationView {
                             ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                         }
+#if !os(macOS)
+
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
 
                     case .workingChangesView:
                         NavigationView {
                             WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
                         }
+#if !os(macOS)
+
                         .navigationViewStyle(StackNavigationViewStyle())
+#endif
+
                     }
                     Spacer()
                 }
@@ -242,7 +277,9 @@ struct SageMultiView: View {
                         .offset(x: -22.5, y: -22.5)
                         .opacity(handleOpacity)
                         .allowsHitTesting(false)
+                    #if !os(macOS)
                     CustomPointerRepresentableView(mode: .topLeft)
+                    #endif
 
                 }
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
@@ -328,8 +365,8 @@ struct SageMultiView: View {
                 }
             }
 
-            // TODO: Decide when this shoudl be done. right now we'll potetially los window?
-           // dragsOnChange(value: nil, false)
+            // TODO: Decide when this shoudl be done. right now we'll potetially lose window?
+            // dragsOnChange(value: nil, false)
         }
     }
     func getURL() -> URL {
@@ -344,7 +381,6 @@ struct SageMultiView: View {
         return webURL
     }
 }
-import WebKit
 
 class WebViewStore: ObservableObject {
     @Published var webView: WKWebView = WKWebView()
@@ -355,6 +391,7 @@ class WebViewStore: ObservableObject {
 //    config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
 //    webView = WKWebView(frame: .zero, configuration: config)
 }
+#if !os(macOS)
 
 struct WebView: UIViewRepresentable {
     let url: URL
@@ -507,16 +544,6 @@ struct WebView: UIViewRepresentable {
         }
     }
 }
-
-struct HandleView: View {
-    var body: some View {
-        Circle()
-            .frame(width: SettingsViewModel.shared.cornerHandleSize, height: SettingsViewModel.shared.cornerHandleSize)
-            .foregroundColor(Color.white.opacity(0.666))
-    }
-}
-// END HANDLE WINDOW MOVEMENT GESTURE *************************************************
-
 class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
     var keyboardShow: AnyCancellable?
@@ -533,11 +560,7 @@ class KeyboardResponder: ObservableObject {
     }
 }
 
-extension Notification {
-    var keyboardHeight: CGFloat {
-        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
-    }
-}
+#endif
 
 extension WKWebView {
 
@@ -559,5 +582,3 @@ extension WKWebView {
         }
     }
 }
-#endif
-#endif

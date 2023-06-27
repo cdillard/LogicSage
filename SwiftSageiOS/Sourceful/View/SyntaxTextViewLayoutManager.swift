@@ -79,7 +79,6 @@ class SyntaxTextViewLayoutManager: NSLayoutManager {
         for (rect, state) in placeholders {
 
             // UIBezierPath with rounded
-#if !os(xrOS)
 
             let color: Colorv
 
@@ -101,7 +100,6 @@ class SyntaxTextViewLayoutManager: NSLayoutManager {
 
             let path = BezierPath(roundedRect: rect, cornerRadius: radius)
 
-#endif
 
             path.fill()
 #endif

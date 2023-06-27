@@ -32,6 +32,23 @@
 	</array>
 	<key>UIAppSupportsHDR</key>
 	<true/>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UIApplicationSupportsTabbedSceneCollection</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneDelegateClassName</key>
+					<string>LogicSage.LogicSageSceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

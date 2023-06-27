@@ -265,6 +265,8 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 - [MacPaw's excellent OpenAI](https://github.com/MacPaw/OpenAI)
 - [swift-png](https://github.com/kelvin13/swift-png)
 - [nonstrict-hq ScreenCaptureKit-Recording-example](https://github.com/nonstrict-hq/ScreenCaptureKit-Recording-example/)
+- [KeyboardAvoidanceSwiftUI](https://github.com/V8tr/KeyboardAvoidanceSwiftUI)
+
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

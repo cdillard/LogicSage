@@ -8,8 +8,6 @@
 import Foundation
 import Foundation
 import SwiftUI
-#if !os(xrOS)
-#if !os(macOS)
 
 struct HelpPopup: View {
     @Binding var isPresented: Bool
@@ -43,13 +41,12 @@ struct HelpPopup: View {
                                     Text("This app/project is an ALPHA. Email me with issues/suggestions @")
                                     Button(action: {
 #if !os(macOS)
-#if !os(xrOS)
 
                                         let pasteboard = UIPasteboard.general
                                         pasteboard.string = email
                                         onCopy()
 #endif
-#endif
+
 
                                     }) {
                                         Text(verbatim: "\(email) (Tap to Copy)")
@@ -76,20 +73,18 @@ struct HelpPopup: View {
                                     }
                                 }
                                 Group {
-                                    Group {
-                                        Text("Set up LogicSage for Mac:")
+                                    Text("Set up LogicSage for Mac:")
 
-                                        Text("OPTIONAL: Set up LogicSage for Mac to use computer commands. This allows you to use Xcode from your iOS device in the Term window.")
+                                    Text("OPTIONAL: Set up LogicSage for Mac to use computer commands. This allows you to use Xcode from your iOS device in the Term window.")
 
-                                        Text("Follow this order when running LogicSage for Mac.")
-                                    }
-                                    Group {
-                                        Text("0. run LogicSage for Mac with ./run.sh in the Project root")
-                                        Text("1. Background/Foreground (or force quit, restart app (or fresh instal)) your LogicSage clients, you should see websocket connected. ")
-                                        Text("-In the Term window you can use the following command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                    }
+                                    Text("Follow this order when running LogicSage for Mac.")
+                                }
+                                Group {
+                                    Text("0. run LogicSage for Mac with ./run.sh in the Project root")
+                                    Text("1. Background/Foreground (or force quit, restart app (or fresh instal)) your LogicSage clients, you should see websocket connected. ")
+                                    Text("-In the Term window you can use the following command list:\n https://github.com/cdillard/LogicSage/blob/main/Swifty-GPT/Command/CommandTable.swift")
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                        .accentColor(settingsViewModel.buttonColor)
                                 }
                             }
                         }
@@ -124,9 +119,9 @@ struct HelpPopup: View {
             .edgesIgnoringSafeArea(.all)
             .background(settingsViewModel.backgroundColor)
             .onAppear {
-#if !os(macOS)
+                #if !os(macOS)
                 UIScrollView.appearance().bounces = false
-#endif
+                #endif
             }
 
         }
@@ -143,5 +138,3 @@ struct HelpPopup: View {
         }
     }
 }
-#endif
-#endif

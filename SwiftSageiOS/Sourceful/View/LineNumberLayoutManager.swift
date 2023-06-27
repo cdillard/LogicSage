@@ -137,7 +137,7 @@ class LineNumberLayoutManager: NSLayoutManager {
 		let rect = BezierPath(rect: CGRect(x: 0, y: 0, width: 200, height: 500))
 		Colorv.red.withAlphaComponent(0.5).setFill()
 		rect.fill()
-        #endif
+#endif
 	}
 
 }

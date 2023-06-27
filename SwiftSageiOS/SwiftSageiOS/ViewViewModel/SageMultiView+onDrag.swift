@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 #if !os(macOS)
-#if !os(xrOS)
 
 import UIKit
+#endif
 import WebKit
 import Combine
 
@@ -28,13 +28,26 @@ extension SageMultiView {
                 let now = Date()
                 if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 {
 #if !os(xrOS)
+#if !os(macOS)
+
                     playNot(type: .warning)
+#endif
 #endif
                     lastBumpFeedbackTime = Date()
                 }
-                bumping = true
+                if vertical {
+                    bumpingVertically = true
+                }
+                else {
+                    bumping = true
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + dragDelay) {
-                    bumping = false
+                    if vertical {
+                        bumpingVertically = false
+                    }
+                    else {
+                        bumping = false
+                    }
                 }
             }
             let widthTrans = value?.translation.width ?? 0
@@ -198,7 +211,7 @@ extension SageMultiView {
             }
 // END: Three BOTTOM edge cases....
             var leadingXBound: CGFloat = 0
-            var topYBound: CGFloat = 0
+            var topYBound: CGFloat = 10
 
             if resizeOffset.width < 0 {
                 leadingXBound = -abs(resizeOffset.width / 2)
@@ -218,13 +231,10 @@ extension SageMultiView {
 
             }
             let setX = max(leadingXBound, newX)
-            //let setY = max(topYBound, newY)
+            let setY = max(topYBound, position.height + heightTrans)
            // print("setting pos to \(setX) and \(setY)")
 
-            // NO MORE RESTRICT SETTING POS HEIGHT?
-            position = CGSize(width:setX,height:position.height + heightTrans)
+            position = CGSize(width:setX,height:setY)
         }
     }
 }
-#endif
-#endif

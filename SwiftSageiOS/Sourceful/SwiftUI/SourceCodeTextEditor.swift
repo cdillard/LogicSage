@@ -11,12 +11,10 @@ import SwiftUI
 #if os(macOS)
 public typealias _ViewRepresentable = NSViewRepresentable
 #endif
-#if os(iOS)
+#if os(iOS) || os(xrOS)
 public typealias _ViewRepresentable = UIViewRepresentable
 #endif
 #if !os(macOS)
-#if !os(xrOS)
-
 public struct SourceCodeTextEditor: _ViewRepresentable {
     
     public struct Customization {
@@ -93,7 +91,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         Coordinator(self,text: $text, isLockToBottom: $isLocktoBottom)
     }
     
-#if os(iOS)
+#if !os(macOS)
     public func makeUIView(context: Context) -> SyntaxTextView {
         let wrappedView = SyntaxTextView()
         wrappedView.delegate = context.coordinator
@@ -185,6 +183,5 @@ extension SourceCodeTextEditor {
         }
     }
 }
-#endif
 #endif
 #endif

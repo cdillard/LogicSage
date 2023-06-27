@@ -8,8 +8,6 @@
 import Foundation
 import SwiftUI
 
-#if !os(macOS)
-#if !os(xrOS)
 
 struct ChangeList: View {
     @Binding var showAddView: Bool
@@ -49,5 +47,3 @@ struct ChangeList: View {
 //        }
     }
 }
-#endif
-#endif

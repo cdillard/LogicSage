@@ -136,10 +136,15 @@ struct TopBar: View {
                             }
 
                         } label: {
-                            Label("", systemImage: "ellipsis")
-                                .font(.body)
-                                .labelStyle(DemoStyle())
+                            ZStack {
+                                Label("", systemImage: "ellipsis")
+                                    .font(.body)
+                                    .labelStyle(DemoStyle())
+                                    
+                            }
+
                         }
+                        
                         .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }

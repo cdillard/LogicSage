@@ -244,11 +244,9 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
         }
 
         if !isDone {
-
             multiPrinter(response, terminator: "")
         }
         else {
-
             if success {
                 completion(response)
             } else {

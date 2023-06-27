@@ -15,7 +15,6 @@ import AppKit
 import UIKit
 #endif
 #if !os(macOS)
-#if !os(xrOS)
 
 public protocol SyntaxTextViewDelegate: AnyObject {
 
@@ -73,13 +72,13 @@ open class SyntaxTextView: UIView {
 
     var ignoreSelectionChange = false
 
-    #if os(macOS)
+#if os(macOS)
 
     let wrapperView = TextViewWrapperView()
 
-    #endif
+#endif
 
-    #if os(iOS)
+#if os(iOS) || os(xrOS)
 
     public var contentInset: UIEdgeInsets = .zero {
         didSet {
@@ -94,7 +93,7 @@ open class SyntaxTextView: UIView {
         }
     }
 
-    #else
+#else
 
     public var tintColor: NSColor! {
         set {
@@ -105,28 +104,21 @@ open class SyntaxTextView: UIView {
         }
     }
 
-    #endif
-    @objc func doneBtnFromKeyboardClicked (sender: Any) {
-         print("Done Button Clicked.")
-        //Hide Keyboard by endEditing or Anything you want.
-        self.textView.endEditing(true)
-    }
+#endif
+    //    @objc func doneBtnFromKeyboardClicked (sender: Any) {
+    //         print("Done Button Clicked.")
+    //        //Hide Keyboard by endEditing or Anything you want.
+    //        self.textView.endEditing(true)
+    //    }
 
     public override init(frame: CGRect) {
         textView = SyntaxTextView.createInnerTextView()
 
         super.init(frame: frame)
 
-//        var ViewForDoneButtonOnKeyboard = UIToolbar()
-//        ViewForDoneButtonOnKeyboard.sizeToFit()
-//        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
-//        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
-//        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-//        textView.keyboardDismissMode = .interactive
-
         setup()
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         textView = SyntaxTextView.createInnerTextView()
 #if !os(xrOS)
@@ -135,12 +127,6 @@ open class SyntaxTextView: UIView {
 #endif
         super.init(coder: aDecoder)
 
-//        var ViewForDoneButtonOnKeyboard = UIToolbar()
-//        ViewForDoneButtonOnKeyboard.sizeToFit()
-//        var btnDoneOnKeyboard = UIBarButtonItem(title: "Done", style: .bordered, target: self, action: #selector(self.doneBtnFromKeyboardClicked))
-//        ViewForDoneButtonOnKeyboard.items = [btnDoneOnKeyboard]
-//        textView.inputAccessoryView = ViewForDoneButtonOnKeyboard
-//        textView.keyboardDismissMode = .interactive
 
         setup()
     }
@@ -148,44 +134,40 @@ open class SyntaxTextView: UIView {
     private static func createInnerTextView() -> InnerTextView {
         let textStorage = NSTextStorage()
         let layoutManager = SyntaxTextViewLayoutManager()
-        #if os(macOS)
+#if os(macOS)
         let containerSize = CGSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
-        #endif
+#endif
 
-        #if os(iOS)
+#if os(iOS) || os(xrOS)
         let containerSize = CGSize(width: 0, height: 0)
-        #endif
+#endif
 
         let textContainer = NSTextContainer(size: containerSize)
-        
+
         textContainer.widthTracksTextView = true
 
-        #if os(iOS)
+#if os(iOS) || os(xrOS)
         textContainer.heightTracksTextView = true
-        #endif
+#endif
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-        
+
         return InnerTextView(frame: .zero, textContainer: textContainer)
     }
 
-    #if os(macOS)
-
+#if os(macOS)
     public let scrollView = NSScrollView()
-
-    #endif
+#endif
 
     private func setup() {
 
         textView.gutterWidth = 20
 
-        #if os(iOS)
-
+#if os(iOS) || os(xrOS)
         textView.translatesAutoresizingMaskIntoConstraints = false
+#endif
 
-        #endif
-
-        #if os(macOS)
+#if os(macOS)
 
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -197,9 +179,7 @@ open class SyntaxTextView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(scrollView)
-
         addSubview(wrapperView)
-
 
         scrollView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -235,11 +215,11 @@ open class SyntaxTextView: UIView {
         textView.textContainer?.containerSize = NSSize(width: self.bounds.width, height: .greatestFiniteMagnitude)
         textView.textContainer?.widthTracksTextView = true
 
-        			textView.layerContentsRedrawPolicy = .beforeViewResize
+        textView.layerContentsRedrawPolicy = .beforeViewResize
 
         wrapperView.textView = textView
 
-        #else
+#else
 
         self.addSubview(textView)
         textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -258,14 +238,14 @@ open class SyntaxTextView: UIView {
 
         }
 
-        #endif
+#endif
 
         textView.innerDelegate = self
         textView.delegate = self
 
         textView.text = ""
 
-        #if os(iOS)
+#if os(iOS) || os(xrOS)
 
         textView.autocapitalizationType = .none
         textView.keyboardType = .default
@@ -279,11 +259,11 @@ open class SyntaxTextView: UIView {
 
         self.clipsToBounds = true
 
-        #endif
+#endif
 
     }
 
-    #if os(macOS)
+#if os(macOS)
 
     open override func viewDidMoveToSuperview() {
         super.viewDidMoveToSuperview()
@@ -296,11 +276,11 @@ open class SyntaxTextView: UIView {
 
     }
 
-    #endif
+#endif
 
     // MARK: -
 
-    #if os(iOS)
+#if os(iOS) || os(xrOS)
 
     open override func becomeFirstResponder() -> Bool {
         return textView.becomeFirstResponder()
@@ -309,30 +289,30 @@ open class SyntaxTextView: UIView {
         return textView.isFirstResponder
     }
 
-    #endif
+#endif
 
     @IBInspectable
     public var text: String {
         get {
-            #if os(macOS)
+#if os(macOS)
             return textView.string
-            #else
+#else
             return textView.text ?? ""
-            #endif
+#endif
         }
         set {
-            #if os(macOS)
+#if os(macOS)
             textView.layer?.isOpaque = true
             textView.string = newValue
             refreshColors()
-            #else
+#else
             // If the user sets this property as soon as they create the view, we get a strange UIKit bug where the text often misses a final line in some Dynamic Type configurations. The text isn't actually missing: if you background the app then foreground it the text reappears just fine, so there's some sort of drawing sync problem. A simple fix for this is to give UIKit a tiny bit of time to create all its data before we trigger the update, so we push the updating work to the runloop.
             DispatchQueue.main.async {
                 self.textView.text = newValue
                 self.textView.setNeedsDisplay()
                 self.refreshColors()
             }
-            #endif
+#endif
 
         }
     }
@@ -341,15 +321,15 @@ open class SyntaxTextView: UIView {
 
     public func insertText(_ text: String) {
         if shouldChangeText(insertingText: text) {
-            #if os(macOS)
+#if os(macOS)
             contentTextView.insertText(text, replacementRange: contentTextView.selectedRange())
-            #else
+#else
             contentTextView.insertText(text)
-            #endif
+#endif
         }
     }
 
-    #if os(iOS)
+#if os(iOS) || os(xrOS)
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.textView.setNeedsDisplay()
@@ -362,7 +342,7 @@ open class SyntaxTextView: UIView {
         self.textView.setNeedsDisplay()
     }
 
-    #endif
+#endif
 
     public var theme: SyntaxColorTheme? {
         didSet {
@@ -371,9 +351,9 @@ open class SyntaxTextView: UIView {
             }
 
             cachedThemeInfo = nil
-            #if os(iOS)
+#if os(iOS) || os(xrOS)
             backgroundColor = theme.backgroundColor
-            #endif
+#endif
             textView.backgroundColor = theme.backgroundColor
             textView.theme = theme
             textView.font = theme.font
@@ -416,11 +396,11 @@ open class SyntaxTextView: UIView {
 
         let textStorage: NSTextStorage
 
-        #if os(macOS)
+#if os(macOS)
         textStorage = textView.textStorage!
-        #else
+#else
         textStorage = textView.textStorage
-        #endif
+#endif
 
         //		self.backgroundColor = theme.backgroundColor
 
@@ -517,9 +497,7 @@ open class SyntaxTextView: UIView {
         attributes[.paragraphStyle] = paragraphStyle
 
         for (attr, value) in theme.globalAttributes() {
-
             attributes[attr] = value
-
         }
 
         textStorage.setAttributes(attributes, range: wholeRange)
@@ -561,13 +539,9 @@ open class SyntaxTextView: UIView {
                 textStorage.addAttributes(attr, range: range)
                 continue
             }
-
             textStorage.addAttributes(theme.attributes(for: token), range: range)
         }
-
         textStorage.endEditing()
     }
-
 }
-#endif
 #endif

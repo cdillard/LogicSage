@@ -8,7 +8,6 @@
 
 import Foundation
 #if !os(macOS)
-#if !os(xrOS)
 
 public struct DefaultSourceCodeTheme: SourceCodeTheme {
     var settingsViewModel: SettingsViewModel
@@ -59,5 +58,4 @@ public struct DefaultSourceCodeTheme: SourceCodeTheme {
 	}
 	
 }
-#endif
 #endif

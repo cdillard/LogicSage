@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-#if !os(macOS)
-#if !os(xrOS)
 
 struct RepositoryTreeView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
@@ -45,8 +43,10 @@ struct RepositoryTreeView: View {
             }
         }
         .listRowBackground(settingsViewModel.backgroundColor)
-        .navigationBarTitle(directory.name, displayMode: .inline)
+#if !os(macOS)
 
+        .navigationBarTitle(directory.name, displayMode: .inline)
+        #endif
     }
     func readFileContents(url: URL) -> String? {
         do {
@@ -78,8 +78,10 @@ struct RepositoryTreeView: View {
             // Handle double duty of setting this wallpape
             do {
                 let fileData = try Data(contentsOf: file.url)
+#if !os(macOS)
 
                 settingsViewModel.receivedImageData = fileData
+                #endif
             }
             catch {
                 logD("fail to set wallpaper from disk w e \(error)")
@@ -116,5 +118,3 @@ struct RepositoryTreeView: View {
         //users.remove(atOffsets: offsets)
     }
 }
-#endif
-#endif

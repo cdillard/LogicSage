@@ -11,8 +11,6 @@ import SwiftUI
 var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
-#if !os(macOS)
-#if !os(xrOS)
 
 struct WindowView: View {
 
@@ -27,11 +25,17 @@ struct WindowView: View {
     @State private var isResizeGestureActive = false
     
     @State var bumping: Bool = false
+    @State var bumpingVertically: Bool = false
+
     @Binding var parentViewSize: CGRect
     @Binding var keyboardHeight: CGFloat
+    @Binding var dragCursorPoint: CGPoint
 
+#if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+#endif
+
     let url = URL(string:SettingsViewModel.shared.defaultURL)
 
     var body: some View {
@@ -39,15 +43,10 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight))
+                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint))
                 }
                 .border(.red, width: bumping ? 2.666 : 0)
-
-//                .modify { view in
-//                    if bumping {
-//                        view.border(.red, width: 2.666 )
-//                    }
-//                }
+                .border(.blue, width: bumpingVertically ? 2.666 : 0)
                 .cornerRadius(16)
                 .shadow(color:settingsViewModel.appTextColor, radius: 1)
                 .frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
@@ -57,6 +56,8 @@ struct WindowView: View {
             .onAppear() {
                 recalculateWindowSize(size: geometry.size)
             }
+#if !os(xrOS)
+#if !os(macOS)
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 recalculateWindowSize(size: geometry.size)
             }
@@ -69,6 +70,9 @@ struct WindowView: View {
             .onChange(of: verticalSizeClass) { newSizeClass in
                 recalculateWindowSize(size: geometry.size)
             }
+#endif
+#endif
+
         }
     }
 
@@ -79,7 +83,7 @@ struct WindowView: View {
     }
     private func windowContent() -> some View {
         return AnyView(
-            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight)
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping,bumpingVertically: $bumpingVertically, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
     }
@@ -107,20 +111,4 @@ func windowTypeToViewMode(windowType: WindowInfo.WindowType) -> ViewMode {
         return .project
     }
 }
-#endif
-#endif
 
-extension View {
-    /// Applies the given transform if the given condition evaluates to `true`.
-    /// - Parameters:
-    ///   - condition: The condition to evaluate.
-    ///   - transform: The transform to apply to the source `View`.
-    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
-    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
-    }
-}

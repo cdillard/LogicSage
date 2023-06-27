@@ -27,9 +27,8 @@ public typealias BezierPath        = NSBezierPath
 public typealias ScrollViewv    = NSScrollView
 public typealias Screenv            = NSScreen
 
-#elseif os(xrOS)
+#elseif os(ios)
 
-#else
 
 import UIKit
 
@@ -47,5 +46,23 @@ public typealias Imagev            = UIImage
 public typealias BezierPath        = UIBezierPath
 public typealias ScrollViewv    = UIScrollView
 public typealias Screen            = UIScreen
+#else
+import UIKit
+
+public typealias Viewv            = UIView
+public typealias ViewController = UIViewController
+public typealias Window            = UIWindow
+public typealias Control        = UIControl
+public typealias TextViewUIKit        = UITextView
+public typealias TextFieldUIKit        = UITextField
+public typealias Buttonv            = UIButton
+public typealias Fontv            = UIFont
+public typealias Colorv            = UIColor
+public typealias StackView        = UIStackView
+public typealias Imagev            = UIImage
+public typealias BezierPath        = UIBezierPath
+public typealias ScrollViewv    = UIScrollView
+//public typealias Screen            = UIScreen
+
 #endif
 

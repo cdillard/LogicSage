@@ -39,7 +39,6 @@ struct AddView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .foregroundColor(settingsViewModel.appTextColor)
-
                 .background(settingsViewModel.buttonColor)
         }
     }

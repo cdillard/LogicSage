@@ -7,7 +7,6 @@
 //
 
 #if !os(macOS)
-#if !os(xrOS)
 
 import Foundation
 
@@ -40,5 +39,4 @@ extension SourceCodeTheme {
 	}
 	
 }
-#endif
 #endif

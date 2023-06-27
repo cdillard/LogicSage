@@ -6,8 +6,6 @@
 //
 
 import Foundation
-#if !os(macOS)
-#if !os(xrOS)
 
 private var lastConsoleUpdate = Date()
 class SageMultiViewModel: ObservableObject, Identifiable {
@@ -29,7 +27,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var conversation: Conversation?
 
     @State var webViewStore = WebViewStore()
-    @State private var navigationInProgress = false
+    @State var navigationInProgress = false
 
     static func convoText(_ settingsViewModel: SettingsViewModel, _ conversation: Conversation?, windowInfo: WindowInfo) -> String {
         if windowInfo.convoId == Conversation.ID(-1) {
@@ -71,8 +69,6 @@ class SageMultiViewModel: ObservableObject, Identifiable {
         SageMultiViewModel.convoText(settingsViewModel, conversation, windowInfo: windowInfo)
     }
 }
-#endif
-#endif
 
 import SwiftUI
 

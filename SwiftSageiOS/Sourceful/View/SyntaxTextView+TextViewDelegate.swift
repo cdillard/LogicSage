@@ -14,7 +14,6 @@ import Foundation
 	import UIKit
 #endif
 #if !os(macOS)
-#if !os(xrOS)
 
 extension SyntaxTextView: InnerTextViewDelegate {
 	
@@ -65,10 +64,11 @@ extension SyntaxTextView {
 		
 		if let cachedTokens = cachedTokens {
 			
-			#if os(iOS)
+#if os(iOS) || os(xrOS)
 				if !textView.isCursorFloating {
 					updateEditorPlaceholders(cachedTokens: cachedTokens)
 				}
+           
 			#else
 				updateEditorPlaceholders(cachedTokens: cachedTokens)
 			#endif
@@ -197,10 +197,8 @@ extension SyntaxTextView {
 		
 	}
 	
-#endif
+#else
 
-#if os(iOS)
-	
 	extension SyntaxTextView: UITextViewDelegate {
 		
 		open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -396,5 +394,4 @@ extension SyntaxTextView {
 		ignoreSelectionChange = false
 	}
 }
-#endif
 #endif

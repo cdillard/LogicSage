@@ -22,7 +22,6 @@ protocol InnerTextViewDelegate: AnyObject {
 }
 
 #if !os(macOS)
-#if !os(xrOS)
 
 class InnerTextView: TextViewUIKit {
 
@@ -51,7 +50,7 @@ class InnerTextView: TextViewUIKit {
 
     }
 
-#if os(iOS)
+#if os(iOS) || os(xrOS)
     var isCursorFloating = false
 
     override func beginFloatingCursor(at point: CGPoint) {
@@ -174,7 +173,10 @@ class InnerTextView: TextViewUIKit {
                 button.tag = index
                 button.addTarget(self, action: #selector(copyCode), for: .touchDown)
                 button.layer.opacity = 0.666
+#if !os(xrOS)
+
                 button.addInteraction(UIPointerInteraction(delegate: self))
+#endif
                 // Add the button to the text view
                 addSubview(button)
                 savedButtons.append(button)
@@ -235,7 +237,7 @@ class InnerTextView: TextViewUIKit {
         }
     }
 
-#if os(iOS)
+#if os(iOS) || os(xrOS)
     override func caretRect(for position: UITextPosition) -> CGRect {
 
         var superRect = super.caretRect(for: position)
@@ -254,5 +256,4 @@ class InnerTextView: TextViewUIKit {
     }
 #endif
 }
-#endif
 #endif

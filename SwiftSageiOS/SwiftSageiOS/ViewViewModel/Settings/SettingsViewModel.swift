@@ -39,13 +39,8 @@ public class SettingsViewModel: ObservableObject {
     @AppStorage("savedBotAvatar") var savedBotAvatar: String = "🤖"
 
     @Published var changes = [ChangeRow]()
-#if !os(macOS)
-#if !os(xrOS)
-
     @Published var unstagedFileChanges = [FileChange]()
     @Published var stagedFileChanges = [FileChange]()
-#endif
-#endif
 
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
@@ -82,12 +77,13 @@ public class SettingsViewModel: ObservableObject {
 // END SAVED UI SETTINGS ZONE **************************************************************************************
 
 // BEGIN STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
-#if !os(macOS)
     @Published var receivedImageData: Data? = nil {
         didSet {
             recieveImageData(recievedImageData: receivedImageData)
         }
     }
+#if !os(macOS)
+
     @Published var actualReceivedImage: UIImage?
     @Published var receivedWallpaperFileName: String?
     @Published var receivedWallpaperFileSize: Int?
@@ -239,6 +235,12 @@ public class SettingsViewModel: ObservableObject {
     @Published var openAIKey = "" {
         didSet {
             let trimmedKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
+#if os(xrOS)
+#if targetEnvironment(simulator)
+            UserDefaults.standard.set(trimmedKey, forKey: "openAIKey")
+            GPT.shared.resetOpenAI()
+#endif
+#endif
             if keychainManager.saveToKeychain(key:aiKeyKey, value: trimmedKey) {
                  print("openAIKey saved successfully")
                 GPT.shared.resetOpenAI()
@@ -250,14 +252,17 @@ public class SettingsViewModel: ObservableObject {
     @Published var ghaPat = ""  {
         didSet {
             let trimmedKey = ghaPat.trimmingCharacters(in: .whitespacesAndNewlines)
-
+#if os(xrOS)
+#if targetEnvironment(simulator)
+            UserDefaults.standard.set(trimmedKey, forKey: "ghaPat")
+#endif
+#endif
             if keychainManager.saveToKeychain(key: ghaKeyKey, value: trimmedKey) {
                 print("ghPat saved successfully")
             } else {
                 print("Error saving gha pat")
             }
         }
-
     }
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
@@ -273,9 +278,7 @@ public class SettingsViewModel: ObservableObject {
             } else {
                 print("Error saving accessToken pat")
             }
-
         }
-
     }
 
     @Published var cookies: [String : String] = [:] {
@@ -323,11 +326,9 @@ public class SettingsViewModel: ObservableObject {
             let reviewLimit = 33
             let newCompletionMsgs = self.completedMessages
             print("\(newCompletionMsgs) % \(reviewLimit) = will review")
-
             guard newCompletionMsgs % reviewLimit == 0 else {
                 return print("no review today")
             }
-
             print("SKStoreReviewController.requestReview")
 #if !os(xrOS)
             SKStoreReviewController.requestReview()
@@ -365,6 +366,14 @@ public class SettingsViewModel: ObservableObject {
             //            print("Error retrieving openAIKey")
             //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
+#if os(xrOS)
+#if targetEnvironment(simulator)
+        if let key = UserDefaults.standard.string(forKey: "openAIKey") {
+            self.openAIKey = key
+        }
+#endif
+#endif
+
         if let key = keychainManager.retrieveFromKeychain(key: ghaKeyKey) {
 
             self.ghaPat = key
@@ -373,6 +382,15 @@ public class SettingsViewModel: ObservableObject {
             //         print("Error retrieving ghaPat == reset")
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
         }
+
+#if os(xrOS)
+#if targetEnvironment(simulator)
+        if let key = UserDefaults.standard.string(forKey: "ghaPat") {
+            self.ghaPat = key
+        }
+#endif
+#endif
+
         if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
 
             self.password = key

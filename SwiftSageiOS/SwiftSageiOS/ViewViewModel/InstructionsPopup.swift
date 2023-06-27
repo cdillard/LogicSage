@@ -102,9 +102,7 @@ struct InstructionsPopup: View {
                 .edgesIgnoringSafeArea(.all)
             }
             .overlay(CheckmarkView(isVisible: $showCheckmark))
-
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            .edgesIgnoringSafeArea(.all)
             .background(settingsViewModel.backgroundColor)
             .onAppear {
 #if !os(macOS)

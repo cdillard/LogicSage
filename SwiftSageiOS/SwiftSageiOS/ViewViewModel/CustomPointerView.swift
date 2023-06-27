@@ -42,7 +42,6 @@ enum PointerBezMode {
         case .topRight: return Beziers.createTopRight()
         case .vertical: return Beziers.createTopLeft()
         case .horizontal: return Beziers.createTopLeft()
-
         }
     }
 }
@@ -63,7 +62,6 @@ struct CustomPointerRepresentableView: UIViewRepresentable {
         // Update the view.
     }
 }
-
 
 struct Beziers {
     static func createTopLeft() -> UIBezierPath {
@@ -96,35 +94,12 @@ struct Beziers {
         trianglePath1.append(trianglePath2)
         return trianglePath1
     }
-
-
     static func createTopRight() -> UIBezierPath {
-
         let topLeftShape = createTopLeft()
-//        let triangleSize: CGFloat = 15
-//
-//        // Create the first triangle (rotated 180 degrees)
-//        let trianglePath1 = UIBezierPath()
-//        trianglePath1.move(to: CGPoint(x: triangleSize, y: triangleSize))
-//        trianglePath1.addLine(to: CGPoint(x: 0, y: 0))
-//        trianglePath1.addLine(to: CGPoint(x: triangleSize, y: 0))
-//        trianglePath1.close()
-//
-//
-//        // Create the second triangle
-//        let trianglePath2 = UIBezierPath()
-//        trianglePath2.move(to: CGPoint(x: triangleSize, y: triangleSize))
-//        trianglePath2.addLine(to: CGPoint(x: 0, y: 0))
-//        trianglePath2.addLine(to: CGPoint(x: triangleSize, y: 0))
-//        trianglePath2.close()
+
         let rotate2 = CGAffineTransform(rotationAngle: .pi / 2)
         topLeftShape.apply(rotate2)
-//
-//        let translate2 = CGAffineTransform(translationX: 4, y: 35)
-//        trianglePath2.apply(translate2)
-//
-//        // Append the second triangle path to the first to create the final path
-//        trianglePath1.append(trianglePath2)
+
         return topLeftShape
     }
 }
