@@ -31,6 +31,8 @@ What's New:
 - visionOS supported added.
 - Bugs squashed. Keyboard handling improved.
 
+![visionOS](SimulatorScreenshot-AppleVisionPro.png)
+
 --------------------
 06-18-2023
 
