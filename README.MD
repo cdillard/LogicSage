@@ -32,6 +32,7 @@ What's New:
 - Bugs squashed. Keyboard handling improved.
 
 ![visionOS](SimulatorScreenshot-AppleVisionPro.png)
+![visionOS2](SimulatorScreenshot-AppleVisionPro-2.png)
 
 --------------------
 06-18-2023
