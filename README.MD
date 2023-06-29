@@ -1,7 +1,7 @@
 
-# LogicSage: The GPT app for Apple platforms. (visionOS, iPadOS and iOS) 
+# LogicSage: The GPT app for Apple platforms. (iPadOS and iOS) 
 
-[LogicSage: The GPT app Apple platforms. (visionOS, iPadOS, and iOS)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+[LogicSage: The GPT app Apple platforms. (iPadOS, and iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
 ## Table of Contents
 - [News](#news)
@@ -18,7 +18,7 @@
 
 EZ as LogicSage 1.2.3
 
-LogicSage (1.2.3): The GPT app for Apple platforms. (visionOS, iPadOS and iOS) On the AppStore for free now!
+LogicSage (1.2.3): The GPT app for Apple platforms. (iPadOS, and iOS and more platforms soon) On the AppStore for free now!
 
 https://apps.apple.com/us/app/logicsage/id6448485441
 
@@ -28,11 +28,7 @@ What's New:
 - Redesigned UI for easier use including a Tab bar for Chats, Windows, Settings, and Add Menu.
 - iPadOS pointer interaction brings full immersion to your chats! For the multi-taskers!
 - iOS 14+ support added.
-- visionOS supported added.
 - Bugs squashed. Keyboard handling improved.
-
-![visionOS](SimulatorScreenshot-AppleVisionPro.png)
-![visionOS2](SimulatorScreenshot-AppleVisionPro-2.png)
 
 --------------------
 06-18-2023
@@ -107,7 +103,6 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 - [AudioKit](https://github.com/AudioKit/AudioKit)
 - [SwiftSoup](https://github.com/scinfu/SwiftSoup)
 - [SourceKitten](https://github.com/jpsim/SourceKitten)
-- [LocalConsole](https://github.com/duraidabdul/LocalConsole)
 - [Starscream](https://github.com/daltoniam/Starscream)
 - [Vapor](https://github.com/vapor/vapor)
 - [SourceEditor](https://github.com/louisdh/source-editor)
