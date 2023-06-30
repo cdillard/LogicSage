@@ -259,7 +259,6 @@ struct ChatView: View {
     func doChat() {
         if chatText.isEmpty {
             logD("nothing to exec.")
-
             return
         }
 #if !os(macOS)

@@ -59,7 +59,7 @@ struct SwiftSageiOSApp: App {
 #if !os(xrOS)
                 .onAppear {
                     guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
-
+                    
                     self.isPortrait = scene.interfaceOrientation.isPortrait
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
@@ -71,7 +71,7 @@ struct SwiftSageiOSApp: App {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                     logD("applicationWillEnterForeground")
-
+                    
                     screamer.discoReconnect()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
@@ -104,4 +104,3 @@ func hasSeenAnim() -> Bool {
 func setHasSeenAnim(_ hasSeen: Bool) {
     UserDefaults.standard.set(hasSeen, forKey: "hasSeenAnim")
 }
-
