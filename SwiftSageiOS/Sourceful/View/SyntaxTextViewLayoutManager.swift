@@ -31,11 +31,9 @@ class SyntaxTextViewLayoutManager: NSLayoutManager {
     override func drawGlyphs(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
 
 #if os(macOS)
-
         guard let context = NSGraphicsContext.current else {
             return
         }
-
 #else
 
         guard let context = UIGraphicsGetCurrentContext() else {

@@ -10,14 +10,14 @@ import SwiftUI
 
 #if !os(macOS)
 class LogicSageSceneDelegate: NSObject, UIWindowSceneDelegate {
-  func sceneWillEnterForeground(_ scene: UIScene) {
-    logD("sceneWillEnterForeground")
-  }
-  func sceneDidBecomeActive(_ scene: UIScene) {
-      logD("sceneDidBecomeActive")
-  }
-  func sceneWillResignActive(_ scene: UIScene) {
-      logD("sceneWillResignActive")
-  }
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        logD("sceneWillEnterForeground")
+    }
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        logD("sceneDidBecomeActive")
+    }
+    func sceneWillResignActive(_ scene: UIScene) {
+        logD("sceneWillResignActive")
+    }
 }
 #endif

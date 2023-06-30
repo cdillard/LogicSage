@@ -29,15 +29,12 @@ var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct SwiftSageiOSApp: App {
-
     @StateObject private var settingsViewModel = SettingsViewModel.shared
-
 #if !os(macOS)
 #if !os(xrOS)
     @State private var isPortrait = UIApplication.shared.statusBarOrientation == .portrait || UIApplication.shared.statusBarOrientation == .portraitUpsideDown
 #endif
 #endif
-
     init() {
         serviceDiscovery = ServiceDiscovery()
     }
@@ -45,7 +42,6 @@ struct SwiftSageiOSApp: App {
         WindowGroup(id: "LogicSage-main") {
             ContentView(settingsViewModel: settingsViewModel)
                 .onAppear {
-
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
                         serviceDiscovery?.startDiscovering()
                     }
@@ -83,7 +79,6 @@ struct SwiftSageiOSApp: App {
                 }
 #endif
 #endif
-
         }
 #if os(xrOS)
         //        .windowStyle(.plain)

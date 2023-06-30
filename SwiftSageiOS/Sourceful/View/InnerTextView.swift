@@ -18,11 +18,80 @@ import UIKit
 protocol InnerTextViewDelegate: AnyObject {
     func didUpdateCursorFloatingState()
     func didCopyCode()
-
 }
 
-#if !os(macOS)
+#if os(macOS)
+class InnerTextView: TextViewv {
+    weak var innerDelegate: InnerTextViewDelegate?
 
+    var theme: SyntaxColorTheme?
+
+    func hideGutter() {
+        gutterWidth = theme?.gutterStyle.minimumWidth ?? 0.0
+    }
+
+    func updateGutterWidth(for numberOfCharacters: Int) {
+        let leftInset: CGFloat = 4.0
+        let rightInset: CGFloat = 4.0
+
+        let charWidth: CGFloat = 10.0
+
+        gutterWidth = max(theme?.gutterStyle.minimumWidth ?? 0.0, CGFloat(numberOfCharacters) * charWidth + leftInset + rightInset)
+    }
+
+    override public func draw(_ rect: CGRect) {
+        guard let theme = theme else {
+            super.draw(rect)
+            hideGutter()
+            return
+        }
+
+        let textView = self
+
+        if theme.lineNumbersStyle == nil  {
+
+            hideGutter()
+
+            let gutterRect = CGRect(x: 0, y: rect.minY, width: textView.gutterWidth, height: rect.height)
+            let path = BezierPath(rect: gutterRect)
+            path.fill()
+
+        } else {
+
+        }
+        super.draw(rect)
+    }
+    var gutterWidth: CGFloat {
+        set {
+
+        }
+        get {
+            return 0
+        }
+    }
+
+#if os(iOS) || os(xrOS)
+    override func caretRect(for position: UITextPosition) -> CGRect {
+
+        var superRect = super.caretRect(for: position)
+
+        guard let theme = theme else {
+            return superRect
+        }
+
+        let font = theme.font
+
+        // "descender" is expressed as a negative value,
+        // so to add its height you must subtract its value
+        superRect.size.height = font.pointSize - font.descender
+
+        return superRect
+    }
+#endif
+}
+
+// HANDLE NON MAC OS PLATFORMS
+#else
 class InnerTextView: TextViewUIKit {
 
     weak var innerDelegate: InnerTextViewDelegate?

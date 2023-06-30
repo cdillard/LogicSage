@@ -14,9 +14,22 @@ public typealias _ViewRepresentable = NSViewRepresentable
 #if os(iOS) || os(xrOS)
 public typealias _ViewRepresentable = UIViewRepresentable
 #endif
-#if !os(macOS)
 public struct SourceCodeTextEditor: _ViewRepresentable {
-    
+
+#if os(macOS)
+    public func makeNSView(context: Context) -> SyntaxTextView {
+        let wrappedView = SyntaxTextView()
+        wrappedView.delegate = context.coordinator
+        wrappedView.theme = custom.theme()
+        context.coordinator.wrappedView = wrappedView
+        context.coordinator.wrappedView.text = text
+        return wrappedView
+    }
+    public func updateNSView(_ view: SyntaxTextView, context: Context) {
+        view.text = text
+    }
+#endif
+
     public struct Customization {
         var didChangeText: (SourceCodeTextEditor) -> Void
         var insertionPointColor: () -> Colorv
@@ -120,24 +133,6 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         }
     }
 #endif
-    
-#if os(macOS)
-    public func makeNSView(context: Context) -> SyntaxTextView {
-        let wrappedView = SyntaxTextView()
-        wrappedView.delegate = context.coordinator
-        wrappedView.theme = custom.theme()
-        wrappedView.contentTextView.insertionPointColor = custom.insertionPointColor()
-        
-        context.coordinator.wrappedView = wrappedView
-        context.coordinator.wrappedView.text = text
-        
-        return wrappedView
-    }
-    
-    public func updateNSView(_ view: SyntaxTextView, context: Context) {
-        view.text = text
-    }
-#endif
 }
 extension SourceCodeTextEditor {
     public class Coordinator: SyntaxTextViewDelegate {
@@ -157,10 +152,13 @@ extension SourceCodeTextEditor {
         }
         
         public func didChangeText(_ syntaxTextView: SyntaxTextView) {
+#if !os(macOS)
+
             let myNewText = syntaxTextView.text
             self.parent.text = myNewText
             // allow the client to decide on thread
             parent.custom.didChangeText(parent)
+#endif
         }
         
         public func textViewDidBeginEditing(_ syntaxTextView: SyntaxTextView) {
@@ -174,7 +172,9 @@ extension SourceCodeTextEditor {
         @objc func textDidChange() {
             if isLockToBottom {
                 let textView = wrappedView.textView
+#if !os(macOS)
                 textView.scrollRangeToVisible(NSMakeRange(textView.text.count - 1, 1))
+#endif
                 //print("scrolling chatview to bottom")
             }
             else {
@@ -183,5 +183,4 @@ extension SourceCodeTextEditor {
         }
     }
 }
-#endif
 #endif

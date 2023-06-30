@@ -21,7 +21,7 @@ extension Color {
     func uiColor() -> UIColor {
         let components = self.cgColor?.components.map { $0 }
         let colorSpace = self.cgColor?.colorSpace?.model
-
+        
         if let components = components, let colorSpace = colorSpace {
             switch colorSpace {
             case .monochrome:

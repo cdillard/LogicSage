@@ -109,9 +109,7 @@ struct InstructionsPopup: View {
                 UIScrollView.appearance().bounces = false
 #endif
             }
-
         }
-        
     }
     private func onCopy() {
         withAnimation(Animation.easeInOut(duration: 0.666)) {

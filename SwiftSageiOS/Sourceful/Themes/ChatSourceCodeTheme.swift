@@ -7,7 +7,6 @@
 //
 
 import Foundation
-#if !os(macOS)
 
 public struct ChatSourceCodeTheme: SourceCodeTheme {
     var settingsViewModel: SettingsViewModel
@@ -59,4 +58,3 @@ public struct ChatSourceCodeTheme: SourceCodeTheme {
 	}
 	
 }
-#endif

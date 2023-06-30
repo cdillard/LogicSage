@@ -23,7 +23,7 @@ struct TopBar: View {
                         .font(.body)
                         .minimumScaleFactor(0.75)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                        .hoverEffect(.lift)
 #endif
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
@@ -37,7 +37,7 @@ struct TopBar: View {
                             .font(.caption)
                             .minimumScaleFactor(0.75)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                            .hoverEffect(.lift)
 #endif
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
@@ -57,9 +57,7 @@ struct TopBar: View {
                         }
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                         .padding(.leading, 7)
-
                     }
-
                     Button(action: {
                         logD("on PLAY tap")
                     }) {
@@ -67,13 +65,12 @@ struct TopBar: View {
                             .font(.caption)
                             .minimumScaleFactor(0.75)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                            .hoverEffect(.lift)
 #endif
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .padding(.leading, 7)
                 }
-
                 Text(getName())
                     .font(.body)
                     .minimumScaleFactor(0.75)
@@ -93,58 +90,9 @@ struct TopBar: View {
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                         }
                         .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
-
                     }
                     else {
-                        Menu {
-                            Button {
-                                isEditing.toggle()
-
-                            } label: {
-                                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
-                                    .font(.body)
-                                    .labelStyle(DemoStyle())
-                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                            }
-
-                            let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-                            if #available(iOS 16.0, *) {
-                                
-                                ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
-                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                            }
-                            if windowInfo.convoId == Conversation.ID(-1) {
-                                
-                            }
-                            else {
-                                Button {
-                                    // either renaming file or chat
-                                    if windowInfo.windowType == .file {
-                                        
-                                    }
-                                    else if windowInfo.windowType == .chat {
-#if !os(macOS)
-                                        LogicSage.alert(subject: "convo", convoId: windowInfo.convoId)
-#endif
-                                    }
-                                } label: {
-                                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
-                                        .font(.body)
-                                        .labelStyle(DemoStyle())
-                                        .foregroundColor(SettingsViewModel.shared.buttonColor)
-                                }
-                            }
-
-                        } label: {
-                            ZStack {
-                                Label("", systemImage: "ellipsis")
-                                    .font(.body)
-                                    .labelStyle(DemoStyle())
-                                    
-                            }
-
-                        }
-                        
+                        menu()
                         .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
@@ -154,6 +102,58 @@ struct TopBar: View {
         .background(SettingsViewModel.shared.backgroundColor)
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
     }
+
+    func menu() -> some View {
+        Menu {
+            Button {
+                isEditing.toggle()
+
+            } label: {
+                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
+                    .font(.body)
+                    .labelStyle(DemoStyle())
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+            }
+
+            let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
+            if #available(iOS 16.0, *) {
+
+                ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+            }
+            if windowInfo.convoId == Conversation.ID(-1) {
+
+            }
+            else {
+                Button {
+                    // either renaming file or chat
+                    if windowInfo.windowType == .file {
+
+                    }
+                    else if windowInfo.windowType == .chat {
+#if !os(macOS)
+                        LogicSage.alert(subject: "convo", convoId: windowInfo.convoId)
+#endif
+                    }
+                } label: {
+                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                        .font(.body)
+                        .labelStyle(DemoStyle())
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                }
+            }
+
+        } label: {
+            ZStack {
+                Label("", systemImage: "ellipsis")
+                    .font(.body)
+                    .labelStyle(DemoStyle())
+
+            }
+
+        }
+    }
+
     struct DemoStyle: LabelStyle {
         func makeBody(configuration: Configuration) -> some View {
             HStack(alignment: .center) {

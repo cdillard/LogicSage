@@ -89,7 +89,6 @@ struct Beziers {
 
         let translate2 = CGAffineTransform(translationX: triangleTranslation, y: triangleSpacing)
         trianglePath2.apply(translate2)
-
         // Append the second triangle path to the first to create the final path
         trianglePath1.append(trianglePath2)
         return trianglePath1

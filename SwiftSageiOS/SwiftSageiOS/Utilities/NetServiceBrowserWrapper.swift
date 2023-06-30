@@ -13,7 +13,7 @@ import Foundation
 class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate {
     private var netServiceBrowser: NetServiceBrowser
     private var discoveredServices: [NetService] = []
-
+    
     override init() {
         netServiceBrowser = NetServiceBrowser()
         super.init()
@@ -39,30 +39,30 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
         }
     }
     // MARK: - NetServiceDelegate
-
+    
     func netServiceDidResolveAddress(_ sender: NetService) {
         guard let addressData = sender.addresses?.first(where: { $0.count == MemoryLayout<sockaddr_in>.size }) else { return }
         var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-
+        
         addressData.withUnsafeBytes { (pointer: UnsafeRawBufferPointer) -> Void in
             let sockaddrPtr = pointer.bindMemory(to: sockaddr.self).baseAddress!
             if getnameinfo(sockaddrPtr, socklen_t(addressData.count), &hostname, socklen_t(hostname.count), nil, 0, NI_NUMERICHOST) == 0 {
                 let ipAddress = String(cString: hostname)
-//                logD("Resolved service (\(sender.name)) IP address: \(ipAddress), port: \(sender.port)")
-
+                //                logD("Resolved service (\(sender.name)) IP address: \(ipAddress), port: \(sender.port)")
+                
                 // Use ipAddress and sender.port to connect to the WebSocket server
                 screamer.connectWebSocket(ipAddress: ipAddress, port: String(sender.port))
                 SettingsViewModel.shared.ipAddress = ipAddress
                 SettingsViewModel.shared.port = String(sender.port)
                 logD("Resolved service \(sender.name) successfully.")
-
+                
             }
             else {
                 logD("failed getnameinfo -- no server connection possible")
             }
         }
     }
-
+    
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
         logD("Failed to resolve service (\(sender.name)) with error: \(errorDict)")
         for service in discoveredServices {

@@ -9,6 +9,7 @@ import Foundation
 let defaultTerminalFontSize: Double = 13.666
 let defaultCommandButtonSize: Double = 28
 let defaultToolbarButtonScale: Double = 0.27
+
 let defaultHandleSize: Double = 37
 let defaultSourceEditorFontSize: Double = 12.666
 

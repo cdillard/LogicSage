@@ -6,8 +6,6 @@
 //  Copyright © 2018 Silver Fox. All rights reserved.
 //
 
-#if !os(macOS)
-
 import Foundation
 
 public protocol SourceCodeTheme: SyntaxColorTheme {
@@ -21,8 +19,10 @@ extension SourceCodeTheme {
 	public func globalAttributes() -> [NSAttributedString.Key: Any] {
 		
 		var attributes = [NSAttributedString.Key: Any]()
-		
+
+        #if !os(macOS)
 		attributes[.font] = font
+        #endif
         attributes[.foregroundColor] = color(for: .plain)
 		
 		return attributes
@@ -39,4 +39,3 @@ extension SourceCodeTheme {
 	}
 	
 }
-#endif

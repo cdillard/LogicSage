@@ -121,7 +121,7 @@ struct SageMultiView: View {
                     // START SOURCE CODE WINDOW SETUP HANDLING *******************************************************
                     switch viewMode {
                     case .editor:
-#if !os(macOS)
+//#if !os(macOS)
 
                         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottomEditor, customization:
                                                 SourceCodeTextEditor.Customization(didChangeText:
@@ -131,7 +131,12 @@ struct SageMultiView: View {
                             }
 
                         }, insertionPointColor: {
+#if !os(macOS)
+
                             Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
+                            #else
+                            Colorv(.darkGreen)
+                            #endif
                         }, lexerForSource: { lexer in
                             SwiftLexer()
                         }, textViewDidBeginEditing: { srcEditor in
@@ -142,7 +147,7 @@ struct SageMultiView: View {
                         .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
                         })
-#endif
+//#endif
                     case .chat:
 
                         ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)

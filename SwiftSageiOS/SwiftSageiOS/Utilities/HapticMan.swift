@@ -19,7 +19,7 @@ func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1
     let hasBat = checkBattery()
     guard hasBat else { return }
     guard SettingsViewModel.shared.hapticsEnabled else { return }
-
+    
     let generator = UIImpactFeedbackGenerator(style: impType)
     generator.impactOccurred(intensity: int)
 }
@@ -29,7 +29,7 @@ func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1
 func playLightImpact() {
 #if !os(macOS)
 #if !os(xrOS)
-
+    
     playType(impType: .light)
 #endif
 #endif
@@ -37,35 +37,35 @@ func playLightImpact() {
 func playSoftImpact() {
 #if !os(macOS)
 #if !os(xrOS)
-
+    
     playType(impType: .soft)
 #endif
-
-    #endif
+    
+#endif
 }
 func playMediunImpact() {
 #if !os(macOS)
 #if !os(xrOS)
-
+    
     playType(impType: .medium)
 #endif
 #endif
-
+    
 }
 func checkBattery(minBatLevl: Float = 0.3) -> Bool {
-
+    
 #if !os(macOS)
 #if !os(xrOS)
-
+    
     UIDevice.current.isBatteryMonitoringEnabled = true
-
+    
     guard UIDevice.current.batteryLevel > minBatLevl  || UIDevice.current.batteryLevel < 0  else {
         return false
     }
-
+    
 #endif
 #endif
-
+    
     return true
 }
 func playMessagForString(message: String) {
@@ -80,11 +80,11 @@ func playMessagForString(message: String) {
 #if !os(xrOS)
 
 func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
-
+    
     let hasBat = checkBattery()
     guard hasBat else { return }
     guard SettingsViewModel.shared.hapticsEnabled else { return }
-
+    
     let notiGen = UINotificationFeedbackGenerator()
     notiGen.notificationOccurred(type)
 }
@@ -95,11 +95,11 @@ func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
 func playSelect() {
 #if !os(macOS)
 #if !os(xrOS)
-
+    
     let hasBat = checkBattery()
     guard hasBat else { return }
     guard SettingsViewModel.shared.hapticsEnabled else { return }
-
+    
     
     let selectGen = UISelectionFeedbackGenerator()
     selectGen.selectionChanged()

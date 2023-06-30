@@ -19,7 +19,6 @@ struct SettingsView: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
 
     @State private var scrollViewID = UUID()
-    @State private var showAPISettings = false
 
     @State var presentRenamer: Bool = false
     @State private var newName: String = ""
@@ -28,7 +27,13 @@ struct SettingsView: View {
     @State var apiSettingsTitleLabelString: String = "▶️ API settings"
     @State var sizesSettingsTitleLabelString: String = "▶️ Size settings"
     @State var colorSettingsTitleLabelString: String = "▶️ Color settings"
+    @State var moreColorSettingsTitleLabelString: String = "▶️ More color settings"
     @State var audioSettingsTitleLabelString: String = "▶️ Audio settings"
+
+    @State private var apiSettingsExpanded = false
+    @State private var sizeSettingsExpanded = false
+    @State private var colorSettingsExpanded = false
+    @State private var moreColorSettingsExpanded = false
 
     @State var presentUserAvatarRenamer: Bool = false {
         didSet {
@@ -76,7 +81,6 @@ struct SettingsView: View {
                                         }
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                        //.fontWeight(.bold)
                                             .font(.body)
                                             .padding(.horizontal, 8)
                                             .padding(.vertical, 8)
@@ -104,608 +108,33 @@ struct SettingsView: View {
 
                         VStack {
                             HStack {
-                                Group {
-                                    VStack {
-                                        Button(action: {
-                                            withAnimation {
-                                                showSettings.toggle()
-                                                showHelp.toggle()
-//                                                tabSelection = 1
-
-                                                logD("HELP tapped")
-                                            }
-                                        }) {
-                                            resizableButtonImage(systemName:
-                                                                    "questionmark",
-                                                                 size: geometry.size)
-                                            .background(settingsViewModel.buttonColor)
-                                            .cornerRadius(8)
-#if !os(macOS)
-                                            .hoverEffect(.lift)
-#endif
-                                        }
-                                        // Button for (help)
-                                        Text("help")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack {
-                                        Button(action: {
-                                            withAnimation {
-                                                showSettings.toggle()
-                                                showInstructions.toggle()
-//                                                tabSelection = 1
-
-                                                logD("info tapped")
-                                            }
-                                        }) {
-                                            resizableButtonImage(systemName:
-                                                                    "info",
-                                                                 size: geometry.size)
-                                            .background(settingsViewModel.buttonColor)
-                                            .cornerRadius(8)
-#if !os(macOS)
-                                            .hoverEffect(.lift)
-#endif
-                                        }
-                                        // BUTTON FOR (i) info
-                                        Text("info")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
+                                infoAndHelpButtons(size: geometry.size)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
 
                             Spacer()
                         }
 
+                        apiDisc()
 
-                        VStack {
-                            Group {
-                                Text(apiSettingsTitleLabelString)
+                        miscButtons(size: geometry.size)
 
-                                    .font(.title3)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .padding(8)
-#if !os(macOS)
-                                    .hoverEffect(.automatic)
-#endif
-                            }
-                            .onTapGesture {
-                                playSelect()
-                                withAnimation {
-                                    showAPISettings.toggle()
-                                    apiSettingsTitleLabelString = "\(showAPISettings ? "🔽" : "▶️") API settings"
+                        plugButton()
 
-                                }
-                            }
-                        }
-                        if showAPISettings {
-
-                            Group {
-                                VStack {
-                                    Text("A.I. 🔑: ")
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                    if #available(iOS 16.0, *) {
-
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.openAIKey
-                                        )
-                                        .border(.secondary)
-                                        .submitLabel(.done)
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
-                                        .scrollDismissesKeyboard(.interactively)
-#endif
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                    else {
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.openAIKey
-                                        )
-                                        //.border(.secondary)
-                                        // .submitLabel(.done)
-
-                                        //     .focused($field1IsFocused)
-
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        //.scrollDismissesKeyboard(.interactively)
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                    Spacer()
-
-                                    Text("A.I. model: ")
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                    if #available(iOS 16.0, *) {
-
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.openAIModel
-                                        )
-                                        .border(.secondary)
-                                        .submitLabel(.done)
-                                        // .focused($field2IsFocused)
-
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
-
-                                        .scrollDismissesKeyboard(.interactively)
-#endif
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                    else {
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.openAIModel
-                                        )
-
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                    Spacer()
-
-                                        .padding(.leading, 8)
-                                        .padding(.trailing, 8)
-
-                                    Text("GHA PAT: ")
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                    if #available(iOS 16.0, *) {
-
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.ghaPat
-                                        )
-                                        .border(.secondary)
-                                        .submitLabel(.done)
-                                        //   .focused($field3IsFocused)
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                    else {
-                                        TextField(
-                                            "",
-                                            text: $settingsViewModel.ghaPat
-                                        )
-                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                                        .autocapitalization(.none)
-#endif
-                                    }
-                                }
-                                .padding(.leading, 8)
-                                .padding(.trailing, 8)
-                            }
-                        }
-
-                        Group {
-                            Toggle(isOn: $settingsViewModel.autoCorrect) {
-                                Text("Autocorrect📙:")
-                                    .font(.caption)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                            }
-                            .frame( maxWidth: geometry.size.width / 3)
-
-                            if USE_CHATGPT {
-                                Toggle(isOn: $settingsViewModel.chatGPTAuth) {
-                                    Text("ChatGPT Auth:")
-                                        .font(.caption)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                }
-                                .frame( maxWidth: geometry.size.width / 3)
-                            }
-#if !os(macOS)
-                            if UIDevice.current.userInterfaceIdiom == .phone {
-
-                                Group {
-                                    VStack {
-
-                                        Toggle(isOn: $settingsViewModel.hapticsEnabled) {
-                                            Text("Haptic Feedback📳:")
-                                                .font(.caption)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-                                        }
-                                        .frame( maxWidth: geometry.size.width / 3)
-
-                                        Text("feedback won't play when low battery (< 0.30)")
-                                            .font(.caption)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
-                            }
-#endif
-                        }
-                        Group {
-                            HStack {
-                                // PLugItIn BUTTON
-                                Button("🔌:Reconnect") {
-                                    logD("force reconnect")
-                                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-
-                                    serviceDiscovery?.startDiscovering()
-
-                                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
-#if !os(macOS)
-                                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                                            UIApplication.shared.open(url)
-                                        }
-#endif
-                                    }
-                                    else {
-                                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-                                    }
-                                }
-                                .font(.body)
-                                .lineLimit(nil)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .background(settingsViewModel.buttonColor)
-                            }
-
-                        }
-
-
-                        Group {
-                            Text(sizesSettingsTitleLabelString)
-                                .font(.title3)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .padding(4)
-#if !os(macOS)
-                                .hoverEffect(.automatic)
-#endif
-
-                        }
-                        .onTapGesture {
-                            withAnimation {
-                                playSelect()
-                                
-                                settingsViewModel.showSizeSliders.toggle()
-
-                                sizesSettingsTitleLabelString = "\(settingsViewModel.showSizeSliders ? "🔽" : "▶️") Size settings"
-                            }
-                        }
                         VStack(alignment: .leading, spacing: 0) {
-                            if settingsViewModel.showSizeSliders {
-                                Group {
-
-                                    HStack {
-                                        Text("Small")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 2...64, step: 0.5)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    HStack {
-                                        Text("Text")
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                        Text("\(settingsViewModel.fontSizeSrcEditor)")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .lineLimit(nil)
-                                    }
-                                }
-                                .font(.caption)
-
-                                Group {
-
-                                    HStack {
-                                        Text("Small")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                        Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.45, step: 0.01)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    HStack {
-                                        Text("Buttons")
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("\(settingsViewModel.buttonScale)")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .lineLimit(nil)
-                                    }
-                                }
-                                .font(.caption)
-
-                                Group {
-
-                                    HStack {
-                                        Text("Small")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Slider(value: $settingsViewModel.commandButtonFontSize, in:  10...64, step: 0.01)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    HStack {
-                                        Text("Cmd buttons")
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("\(settingsViewModel.commandButtonFontSize)")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                            .lineLimit(nil)
-                                    }
-                                }
-                                .font(.caption)
-
-
-                                Group {
-
-                                    HStack {
-                                        Text("Small")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Slider(value: $settingsViewModel.cornerHandleSize, in:  18...48, step: 1)
-                                            .accentColor(settingsViewModel.buttonColor)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("Large")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    HStack {
-                                        Text("Window Header")
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                        Text("\(settingsViewModel.cornerHandleSize)")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .lineLimit(nil)
-                                    }
-                                }
-                                .font(.caption)
-
-                            }
-
-
+                            sizeSlidersDisc()
                         }
+                        .accentColor(settingsViewModel.buttonColor)
+                        .foregroundColor(settingsViewModel.appTextColor)
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    Group {
-                        Text(colorSettingsTitleLabelString)
-                            .font(.title3)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .padding(8)
-#if !os(macOS)
-                            .hoverEffect(.automatic)
-#endif
-                    }
-                    .onTapGesture {
-                        playSelect()
+                    colorDisc(size: geometry.size)
+                        .padding(.leading, 8)
+                        .padding(.trailing, 8)
+                        .accentColor(settingsViewModel.buttonColor)
+                        .foregroundColor(settingsViewModel.appTextColor)
 
-                        withAnimation {
-
-                            settingsViewModel.showAllColorSettings.toggle()
-
-                            colorSettingsTitleLabelString =  "\(settingsViewModel.showAllColorSettings ? "🔽" : "▶️") Color settings"
-                        }
-                    }
-                    if settingsViewModel.showAllColorSettings {
-                        // TERMINAL COLORS SETTINGS ZONE
-                        Group {
-                            Group {
-
-                                HStack {
-                                    Text("Themes:").font(.body)
-
-                                    Text("Deep Space Sparkle")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .font(.body)
-                                        .padding()
-                                        .onTapGesture {
-                                            logD("Tapped Deep Space Sparkle theme")
-                                            settingsViewModel.applyTheme(theme: .deepSpace)
-                                        }
-                                    Text("Hackeresque")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .font(.body)
-                                        .padding()
-                                        .onTapGesture {
-                                            logD("Tapped Hackeresque theme")
-                                            settingsViewModel.applyTheme(theme: .hacker)
-                                        }
-                                }
-                            }
-                            Group {
-                                VStack( spacing: 3) {
-
-                                    ColorPicker("App Text Color", selection:
-                                                    $settingsViewModel.appTextColor)
-                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                }
-                                VStack( spacing: 3) {
-
-                                    ColorPicker("App Button Color", selection:
-                                                    $settingsViewModel.buttonColor)
-                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                }
-
-                                VStack( spacing: 3) {
-
-                                    ColorPicker("App Background Color", selection:
-                                                    $settingsViewModel.backgroundColor)
-                                    .frame(width: geometry.size.width / 2, alignment: .leading)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                }
-                            }
-                        }
-                        // SOURCE EDITOR COLORS SETTINGS ZONE
-                        Group {
-                            Text("\(settingsViewModel.showSourceEditorColorSettings ? "🔽" : "▶️") More Color settings")
-                                .font(.title3)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                                .padding(4)
-#if !os(macOS)
-                                .hoverEffect(.automatic)
-#endif
-                        }
-                        .onTapGesture {
-                            playSelect()
-
-                            withAnimation {
-
-                                settingsViewModel.showSourceEditorColorSettings.toggle()
-                            }
-                        }
-                        if settingsViewModel.showSourceEditorColorSettings {
-                            Group {
-                                Group {
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Plain text", selection: $settingsViewModel.plainColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Number", selection: $settingsViewModel.numberColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor String", selection: $settingsViewModel.stringColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
-                                Group {
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Identifier", selection: $settingsViewModel.identifierColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Keyword", selection: $settingsViewModel.keywordColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Comment", selection: $settingsViewModel.commentColorSrceEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
-                                Group {
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Placeholder", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Background", selection: $settingsViewModel.backgroundColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                    VStack(spacing: 3) {
-
-                                        ColorPicker("SrcEditor Line number", selection: $settingsViewModel.lineNumbersColorSrcEditor)
-                                            .frame(width: geometry.size.width / 2, alignment: .leading)
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    HStack {
-                        Group {
-                            Button(action: {
-                                withAnimation {
-                                    logD("change your name")
-                                    presentUserAvatarRenamer = true
-                                }
-                            }) {
-                                VStack {
-                                    Text("Avatar")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .font(.body)
-
-                                    Text("\(settingsViewModel.savedUserAvatar)")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .background(settingsViewModel.buttonColor)
-                                        .cornerRadius(8)
-                                }
-                            }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .padding(.bottom)
-
-                            Button(action: {
-                                withAnimation {
-                                    logD("change gpt name")
-                                    presentGptAvatarRenamer = true
-
-                                }
-                            }) {
-                                VStack {
-                                    Text("Gpt")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .font(.body)
-
-                                    Text("\(settingsViewModel.savedBotAvatar)")
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .background(settingsViewModel.buttonColor)
-                                        .cornerRadius(8)
-                                }
-
-                            }
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .padding(.bottom)
-                        }
-                    }
+                    nameChangeStack()
 
                     Group {
                         Text(audioSettingsTitleLabelString)
@@ -715,13 +144,11 @@ struct SettingsView: View {
 #if !os(macOS)
                             .hoverEffect(.automatic)
 #endif
-
                     }
                     .onTapGesture {
                         playSelect()
 
                         withAnimation {
-
                             settingsViewModel.showAudioSettings.toggle()
 
                             audioSettingsTitleLabelString = "\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") Audio settings"
@@ -882,8 +309,495 @@ struct SettingsView: View {
             .id(self.scrollViewID)
         }
     }
+    func nameChangeStack() -> some View {
+        HStack {
+            Group {
+                Button(action: {
+                    withAnimation {
+                        logD("change your name")
+                        presentUserAvatarRenamer = true
+                    }
+                }) {
+                    VStack {
+                        Text("Avatar")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .font(.body)
 
+                        Text("\(settingsViewModel.savedUserAvatar)")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(8)
+                    }
+                }
+                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.bottom)
+
+                Button(action: {
+                    withAnimation {
+                        logD("change gpt name")
+                        presentGptAvatarRenamer = true
+                    }
+                }) {
+                    VStack {
+                        Text("Gpt")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .font(.body)
+
+                        Text("\(settingsViewModel.savedBotAvatar)")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .background(settingsViewModel.buttonColor)
+                            .cornerRadius(8)
+                    }
+                }
+                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.bottom)
+            }
+        }
+    }
+    func infoAndHelpButtons(size: CGSize) -> some View {
+        Group {
+            VStack {
+                Button(action: {
+                    withAnimation {
+                        showSettings.toggle()
+                        showHelp.toggle()
+                        logD("HELP tapped")
+                    }
+                }) {
+                    resizableButtonImage(systemName:
+                                            "questionmark",
+                                         size: size)
+                    .background(settingsViewModel.buttonColor)
+                    .cornerRadius(8)
+#if !os(macOS)
+                    .hoverEffect(.lift)
+#endif
+                }
+                Text("help")
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+            VStack {
+                Button(action: {
+                    withAnimation {
+                        showSettings.toggle()
+                        showInstructions.toggle()
+                        logD("info tapped")
+                    }
+                }) {
+                    resizableButtonImage(systemName:
+                                            "info",
+                                         size: size)
+                    .background(settingsViewModel.buttonColor)
+                    .cornerRadius(8)
+#if !os(macOS)
+                    .hoverEffect(.lift)
+#endif
+                }
+                // BUTTON FOR (i) info
+                Text("info")
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+        }
+    }
+    func apiDisc() -> some View {
+        // START OF API SETTINGS DISCLOSURE GROUP
+        DisclosureGroup( isExpanded: $apiSettingsExpanded) {
+            Group {
+                VStack {
+                    Text("A.I. 🔑: ")
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    if #available(iOS 16.0, *) {
+
+                        TextField(
+                            "",
+                            text: $settingsViewModel.openAIKey
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                        .scrollDismissesKeyboard(.interactively)
+#endif
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                    else {
+                        TextField(
+                            "",
+                            text: $settingsViewModel.openAIKey
+                        )
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                    Spacer()
+
+                    Text("A.I. model: ")
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    if #available(iOS 16.0, *) {
+
+                        TextField(
+                            "",
+                            text: $settingsViewModel.openAIModel
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                        .scrollDismissesKeyboard(.interactively)
+#endif
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                    else {
+                        TextField(
+                            "",
+                            text: $settingsViewModel.openAIModel
+                        )
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                    Spacer()
+                        .padding(.leading, 8)
+                        .padding(.trailing, 8)
+
+                    Text("GHA PAT: ")
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    if #available(iOS 16.0, *) {
+                        TextField(
+                            "",
+                            text: $settingsViewModel.ghaPat
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                    else {
+                        TextField(
+                            "",
+                            text: $settingsViewModel.ghaPat
+                        )
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+                    }
+                }
+                .padding(.leading, 8)
+                .padding(.trailing, 8)
+            }
+        } label: {
+            Text(apiSettingsTitleLabelString)
+                .onTapGesture {
+                    withAnimation {
+                        apiSettingsExpanded.toggle()
+                    }
+                }
+        }
+        .onChange(of: apiSettingsExpanded) { isExpanded in
+            apiSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") API settings"
+
+            playSelect()
+        }
+        .padding(.leading, 8)
+        .padding(.trailing, 8)
+        .accentColor(settingsViewModel.buttonColor)
+        .foregroundColor(settingsViewModel.appTextColor)
+
+        // END OF API SETTINGS DISCLOSURE GROUP
+    }
+
+    func sizeSlidersDisc() -> some View {
+        // START SIZE SLIDERS DISCLOSURE GROUP
+        DisclosureGroup(isExpanded: $sizeSettingsExpanded)  {
+            HStack {
+                Text("Small")
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 2...64, step: 0.5)
+                    .accentColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Text("Large")
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+            }
+            HStack {
+                Text("Text")
+                    .fontWeight(.semibold)
+                    .foregroundColor(settingsViewModel.appTextColor)
+                Text("\(settingsViewModel.fontSizeSrcEditor)")
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .lineLimit(nil)
+            }
+#if !os(xrOS)
+            HStack {
+                Text("Small")
+                    .foregroundColor(settingsViewModel.appTextColor)
+                Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.45, step: 0.1)
+                    .accentColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
+                Text("Large")
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+            HStack {
+                Text("Buttons")
+                    .fontWeight(.semibold)
+                    .foregroundColor(settingsViewModel.appTextColor)
+                Text("\(settingsViewModel.buttonScale)")
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .lineLimit(nil)
+            }
+#endif
+            HStack {
+                Text("Small")
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Slider(value: $settingsViewModel.commandButtonFontSize, in:  10...64, step: 1)
+                    .accentColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
+                Text("Large")
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+            HStack {
+                Text("Cmd buttons")
+                    .fontWeight(.semibold)
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Text("\(settingsViewModel.commandButtonFontSize)")
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .lineLimit(nil)
+            }
+
+            HStack {
+                Text("Small")
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Slider(value: $settingsViewModel.cornerHandleSize, in:  18...48, step: 1)
+                    .accentColor(settingsViewModel.buttonColor)
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Text("Large")
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+            HStack {
+                Text("Window Header")
+                    .fontWeight(.semibold)
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                Text("\(settingsViewModel.cornerHandleSize)")
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .lineLimit(nil)
+            }
+        }
+    label: { Text(sizesSettingsTitleLabelString)
+            .onTapGesture {
+                withAnimation {
+                    sizeSettingsExpanded.toggle()
+                }
+            }
+    }
+    .onChange(of: sizeSettingsExpanded) { isExpanded in
+        sizesSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") Size settings"
+        playSelect()
+
+    }
+    .padding(.leading, 8)
+    .padding(.trailing, 8)
+    }
+
+    func colorDisc(size: CGSize) -> some View {
+        // START OF COLOR SETTINGS DISCLOSURE GROUP
+
+        DisclosureGroup(isExpanded: $colorSettingsExpanded) {
+            // TERMINAL COLORS SETTINGS ZONE
+            Group {
+                Group {
+
+                    HStack {
+                        Text("Themes:").font(.body)
+
+                        Text("Deep Space Sparkle")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .font(.body)
+                            .padding()
+                            .onTapGesture {
+                                logD("Tapped Deep Space Sparkle theme")
+                                settingsViewModel.applyTheme(theme: .deepSpace)
+                            }
+                        Text("Hackeresque")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .font(.body)
+                            .padding()
+                            .onTapGesture {
+                                logD("Tapped Hackeresque theme")
+                                settingsViewModel.applyTheme(theme: .hacker)
+                            }
+                    }
+                }
+                Group {
+                    VStack( spacing: 3) {
+
+                        ColorPicker("App Text Color", selection:
+                                        $settingsViewModel.appTextColor)
+                        .frame(width: size.width / 2, alignment: .leading)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack( spacing: 3) {
+
+                        ColorPicker("App Button Color", selection:
+                                        $settingsViewModel.buttonColor)
+                        .frame(width: size.width / 2, alignment: .leading)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    }
+
+                    VStack( spacing: 3) {
+
+                        ColorPicker("App Background Color", selection:
+                                        $settingsViewModel.backgroundColor)
+                        .frame(width: size.width / 2, alignment: .leading)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                }
+            }
+            moreColorDisc(size: size)
+        }
+    label: { Text(colorSettingsTitleLabelString)
+        .onTapGesture {
+            withAnimation {
+                colorSettingsExpanded.toggle()
+            }
+        }}
+            .onChange(of: colorSettingsExpanded) { isExpanded in
+                colorSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") Color settings"
+                playSelect()
+
+            }
+    }
+    func moreColorDisc(size: CGSize) -> some View {
+        DisclosureGroup(isExpanded: $moreColorSettingsExpanded) {
+            Group {
+                Group {
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Plain text", selection: $settingsViewModel.plainColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Number", selection: $settingsViewModel.numberColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor String", selection: $settingsViewModel.stringColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                }
+                Group {
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Identifier", selection: $settingsViewModel.identifierColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Keyword", selection: $settingsViewModel.keywordColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Comment", selection: $settingsViewModel.commentColorSrceEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                }
+                Group {
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Placeholder", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Background", selection: $settingsViewModel.backgroundColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                    VStack(spacing: 3) {
+                        ColorPicker("SrcEditor Line number", selection: $settingsViewModel.lineNumbersColorSrcEditor)
+                            .frame(width: size.width / 2, alignment: .leading)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                }
+            }
+        }
+    label: { Text(moreColorSettingsTitleLabelString)
+            .onTapGesture {
+                withAnimation {
+                    moreColorSettingsExpanded.toggle()
+                }
+            }
+    }
+    .onChange(of: moreColorSettingsExpanded) { isExpanded in
+        moreColorSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") More color settings"
+        playSelect()
+
+    }
+    .padding(.leading, 8)
+    .padding(.trailing, 8)
+    .accentColor(settingsViewModel.buttonColor)
+    .foregroundColor(settingsViewModel.appTextColor)
+    }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+#if os(macOS)
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+#else
         if #available(iOS 16.0, *) {
             return Image(systemName: systemName)
                 .resizable()
@@ -901,6 +815,79 @@ struct SettingsView: View {
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
 #if !os(macOS)
                 .background(settingsViewModel.backgroundColor)
+#endif
+        }
+#endif
+    }
+
+    func plugButton() -> some View {
+        Group {
+            HStack {
+                // PLugItIn BUTTON
+                Button("🔌:Reconnect") {
+                    logD("force reconnect")
+                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
+
+                    serviceDiscovery?.startDiscovering()
+
+                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
+#if !os(macOS)
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+#endif
+                    }
+                    else {
+                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
+                    }
+                }
+                .font(.body)
+                .lineLimit(nil)
+                .foregroundColor(settingsViewModel.appTextColor)
+                .background(settingsViewModel.buttonColor)
+            }
+
+        }
+    }
+
+    func miscButtons(size: CGSize) -> some View {
+        Group {
+#if !os(macOS)
+            Toggle(isOn: $settingsViewModel.autoCorrect) {
+                Text("Autocorrect📙:")
+                    .font(.caption)
+                    .foregroundColor(settingsViewModel.appTextColor)
+            }
+            .frame( maxWidth: size.width / 3)
+#endif
+
+            if USE_CHATGPT {
+                Toggle(isOn: $settingsViewModel.chatGPTAuth) {
+                    Text("ChatGPT Auth:")
+                        .font(.caption)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                }
+                .frame( maxWidth: size.width / 3)
+            }
+#if !os(macOS)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+
+                Group {
+                    VStack {
+
+                        Toggle(isOn: $settingsViewModel.hapticsEnabled) {
+                            Text("Haptic Feedback📳:")
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+                        .frame( maxWidth: size.width / 3)
+
+                        Text("feedback won't play when low battery (< 0.30)")
+                            .font(.caption)
+                            .foregroundColor(settingsViewModel.appTextColor)
+                    }
+                }
+            }
 #endif
         }
     }

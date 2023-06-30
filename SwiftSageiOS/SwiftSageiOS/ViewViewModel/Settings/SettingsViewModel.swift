@@ -10,8 +10,6 @@ import SwiftUI
 import Combine
 import StoreKit
 
-
-
 public class SettingsViewModel: ObservableObject {
 
     public static let shared = SettingsViewModel()
@@ -45,14 +43,6 @@ public class SettingsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     var cancellable: AnyCancellable?
 
-    @Published var hasAcceptedMicrophone = false
-
-    @Published var showAllColorSettings: Bool = false
-
-    @Published var showSourceEditorColorSettings: Bool = false
-    @Published var showSizeSliders: Bool = false
-    @Published var repoSettingsShown: Bool = false
-
     @Published var downloadProgress: Double = 0.0
     @Published var unzipProgress: Double = 0.0
     @Published var forkProgress: Double = 0.0
@@ -71,7 +61,6 @@ public class SettingsViewModel: ObservableObject {
         serviceDiscovery?.startDiscovering()
     }
 
-
     @AppStorage("chatGPTAuth") var chatGPTAuth: Bool = false
 
 // END SAVED UI SETTINGS ZONE **************************************************************************************
@@ -83,7 +72,6 @@ public class SettingsViewModel: ObservableObject {
         }
     }
 #if !os(macOS)
-
     @Published var actualReceivedImage: UIImage?
     @Published var receivedWallpaperFileName: String?
     @Published var receivedWallpaperFileSize: Int?
@@ -109,7 +97,6 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
-
 #endif
 // END STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
 
@@ -238,15 +225,15 @@ public class SettingsViewModel: ObservableObject {
 #if os(xrOS)
 #if targetEnvironment(simulator)
             UserDefaults.standard.set(trimmedKey, forKey: "openAIKey")
-            GPT.shared.resetOpenAI()
 #endif
 #endif
             if keychainManager.saveToKeychain(key:aiKeyKey, value: trimmedKey) {
                  print("openAIKey saved successfully")
-                GPT.shared.resetOpenAI()
             } else {
                 print("Error saving ai key")
             }
+
+            GPT.shared.resetOpenAI()
         }
     }
     @Published var ghaPat = ""  {
@@ -348,6 +335,7 @@ public class SettingsViewModel: ObservableObject {
         else {
             self.buttonScale = defaultToolbarButtonScale
         }
+        
         if UserDefaults.standard.double(forKey: "commandButtonFontSize") != 0 {
             self.commandButtonFontSize = CGFloat(UserDefaults.standard.double(forKey: "commandButtonFontSize"))
         }
@@ -569,7 +557,38 @@ public class SettingsViewModel: ObservableObject {
     // START THEME ZONE
 
     func applyTheme(theme: AppTheme) {
-#if !os(macOS)
+#if os(macOS)
+//        switch theme {
+//        case .deepSpace:
+//            appTextColor = Colorv(hex: 0xF5FFFA, alpha: 1)
+//            buttonColor = Color(hex: 0x76D7EA, alpha: 1)
+//            backgroundColor = Color(hex: 0x008CB4, alpha: 1)
+//            plainColorSrcEditor = Color(hex: 0xBBD2D1, alpha: 1)
+//            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//            stringColorSrcEditor =  Color(hex: 0xC1D82F, alpha: 1)
+//            identifierColorSrcEditor = Color(hex: 0x188BC2, alpha: 1)
+//            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//            commentColorSrceEditor =  Color(hex: 0xE2062C, alpha: 1)
+//            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//            backgroundColorSrcEditor = Color(hex: 0x232C33, alpha: 1)
+//            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//
+//        case .hacker:
+//            appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
+//            buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
+//            backgroundColor = Color(hex: 0x2C3539, alpha: 1)
+//            plainColorSrcEditor = Color(hex: 0xF5F5F5, alpha: 1)
+//            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1)
+//            stringColorSrcEditor =  Color(hex: 0xCCFF00, alpha: 1) // FIND A NEW COLOR
+//            identifierColorSrcEditor = Color(hex: 0x006B3C, alpha: 1)
+//            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//            commentColorSrceEditor =  Color(hex: 0x808080, alpha: 1)
+//            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//            backgroundColorSrcEditor = Color(hex: 0x1A2421, alpha: 1)
+//            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+//        }
+
+        #else
         switch theme {
         case .deepSpace:
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1)

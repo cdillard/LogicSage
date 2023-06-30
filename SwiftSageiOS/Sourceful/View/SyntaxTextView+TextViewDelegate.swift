@@ -13,7 +13,7 @@ import Foundation
 #else
 	import UIKit
 #endif
-#if !os(macOS)
+//#if !os(macOS)
 
 extension SyntaxTextView: InnerTextViewDelegate {
 	
@@ -178,7 +178,7 @@ extension SyntaxTextView {
         
         func refreshColors() {
             self.invalidateCachedTokens()
-            self.textView.invalidateCachedParagraphs()
+           // self.textView.invalidateCachedParagraphs()
             
             if let delegate = delegate {
                 colorTextView(lexerForSource: { (source) -> Lexer in
@@ -394,4 +394,4 @@ extension SyntaxTextView {
 		ignoreSelectionChange = false
 	}
 }
-#endif
+//#endif

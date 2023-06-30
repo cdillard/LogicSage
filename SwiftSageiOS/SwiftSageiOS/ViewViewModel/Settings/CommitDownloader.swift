@@ -23,7 +23,7 @@ struct CommitAuthor: Codable {
     let date: String
 }
 
-// TODO: IMPLEMENT COMMIT FETCHING AN DSIPLAY 
+// TODO: IMPLEMENT COMMIT FETCHING AN DSIPLAY
 class GitHubAPI {
     private let baseURL = "https://api.github.com"
     private let personalAccessToken = "your_personal_access_token"
@@ -62,33 +62,33 @@ class GitHubAPI {
     //can replace sha=all with sha=branch_name in the URL, where branch_name is the name of the branch you want to fetch commits from.
     /*
      func fetchLatestCommits(owner: String, repo: String, completion: @escaping (Result<[Commit], Error>) -> Void) {
-         let latestCommitsURL = URL(string: "\(baseURL)/repos/\(owner)/\(repo)/commits?sha=all")!
+     let latestCommitsURL = URL(string: "\(baseURL)/repos/\(owner)/\(repo)/commits?sha=all")!
 
-         var request = URLRequest(url: latestCommitsURL)
-         request.httpMethod = "GET"
-         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-         request.setValue("Bearer \(personalAccessToken)", forHTTPHeaderField: "Authorization")
+     var request = URLRequest(url: latestCommitsURL)
+     request.httpMethod = "GET"
+     request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+     request.setValue("Bearer \(personalAccessToken)", forHTTPHeaderField: "Authorization")
 
-         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-             if let error = error {
-                 completion(.failure(error))
-                 return
-             }
+     let task = URLSession.shared.dataTask(with: request) { data, response, error in
+     if let error = error {
+     completion(.failure(error))
+     return
+     }
 
-             guard let data = data else {
-                 completion(.failure(NSError(domain: "GitHubAPI", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
-                 return
-             }
+     guard let data = data else {
+     completion(.failure(NSError(domain: "GitHubAPI", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+     return
+     }
 
-             do {
-                 let commits = try JSONDecoder().decode([Commit].self, from: data)
-                 completion(.success(commits))
-             } catch {
-                 completion(.failure(error))
-             }
-         }
+     do {
+     let commits = try JSONDecoder().decode([Commit].self, from: data)
+     completion(.success(commits))
+     } catch {
+     completion(.failure(error))
+     }
+     }
 
-         task.resume()
+     task.resume()
      }
 
      */

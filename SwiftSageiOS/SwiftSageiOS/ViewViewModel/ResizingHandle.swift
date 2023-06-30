@@ -78,7 +78,6 @@ struct ResizingHandle: View {
                 }
 
 #if !os(macOS)
-
                 if positionLocation == .topTrailing {
                     CustomPointerRepresentableView(mode: .topRight)
                         .frame(width: handleSize, height: handleSize)
@@ -90,15 +89,6 @@ struct ResizingHandle: View {
                         .offset(x: reader.size.width - handleSize, y: reader.size.height - handleSize - 10)
                 }
 #endif
-//                if activeDragLocation != .zero {
-//#if !os(macOS)
-//                    let bezPath: UIBezierPath = positionLocation != .topTrailing ? Beziers.createTopLeft() : Beziers.createTopRight()
-//                    BezierShape(bezierPath: bezPath)
-//                        .stroke(Color.white.opacity(0.5), lineWidth: 4)
-//                        .offset(x: activeDragLocation.x - 7.5, y: activeDragLocation.y - 15.5)
-//                        .allowsTightening(false)
-//#endif
-//                }
             }
             .gesture(
                 DragGesture(minimumDistance: 3)
@@ -135,7 +125,7 @@ struct ResizingHandle: View {
                     }
                     .onEnded { value in
                         if gestureDebugLogs {
-                            
+
                             print("ENDED RESIZE GESTURE")
                         }
                         updateFrame(with: value.translation, reader.size.width, reader.size.height, reader.safeAreaInsets)
@@ -225,7 +215,6 @@ struct ResizingHandle: View {
     }
 }
 #if !os(macOS)
-
 struct BezierShape: Shape {
     var bezierPath: UIBezierPath
 

@@ -1,17 +1,9 @@
 //
 //  ShapeView.swift
 //  SwiftSageiOS
-//
-//  Created by Chris Dillard on 6/22/23.
-//
 
 import Foundation
-/*
-See LICENSE folder for this sample’s licensing information.
 
-Abstract:
-UIView subclasses of varying shapes for views displayed in the view controller.
-*/
 #if !os(macOS)
 
 import UIKit

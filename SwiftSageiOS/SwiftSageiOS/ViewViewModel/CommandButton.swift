@@ -60,8 +60,6 @@ struct CommandButtonView: View {
 #endif
                     }
                 }
-
-
                 .padding()
             }
         }

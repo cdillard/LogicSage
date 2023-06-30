@@ -10,11 +10,11 @@ import SwiftUI
 import Combine
 
 struct ProjectView: View {
-
+    
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @ObservedObject var settingsViewModel: SettingsViewModel
     var window: WindowInfo?
-
+    
     var body: some View {
         HStack(spacing: 2) {
             HStack {
@@ -34,14 +34,14 @@ struct ProjectView: View {
             }
             
             Spacer()
-
+            
             // This view shouls say....
             // INITIAL STATE:
             // Build succeeded | Today at 8:04 AM
             // AFter running a target debug
             // Finished running
             Text("\(settingsViewModel.debuggingStatus)")
-
+            
             if settingsViewModel.errorCount > 0 {
                 Image(systemName: "xmark.circle.fill")
                 Text("\(settingsViewModel.errorCount)")

@@ -41,26 +41,22 @@ struct HelpPopup: View {
                                     Text("This app/project is an ALPHA. Email me with issues/suggestions @")
                                     Button(action: {
 #if !os(macOS)
-
                                         let pasteboard = UIPasteboard.general
                                         pasteboard.string = email
                                         onCopy()
 #endif
-
 
                                     }) {
                                         Text(verbatim: "\(email) (Tap to Copy)")
                                             .foregroundColor(settingsViewModel.buttonColor)
                                     }
                                 }
-
                                 Group {
-                                    Text("Tips:\nKeyboards can be swiped away by swiping down from 'Type msg...'.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
+                                    Text("Tips:\nKeyboards can be swiped away by swiping down from 'Send a message'.\nTurn off `Button Shapes` in System Display settings.\nOn iPad, use the floating keyboard for max screen real estate and reduction of keyboard annoyance.")
                                     let verGoodMoji = veryGoodOpen ? "🔽" : "▶️"
                                     
                                     Text("Tap me! \(verGoodMoji) , I will expand/collapse a section...")
                                         .font(.title3)
-
                                         .onTapGesture {
                                             playSelect()
                                             
@@ -93,7 +89,6 @@ struct HelpPopup: View {
                     .background(settingsViewModel.backgroundColor)
                     .padding(.leading, 15)
                     .padding(.trailing, 15)
-
                     .padding(geometry.size.width * 0.02)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -123,7 +118,6 @@ struct HelpPopup: View {
                 UIScrollView.appearance().bounces = false
                 #endif
             }
-
         }
     }
     private func onCopy() {

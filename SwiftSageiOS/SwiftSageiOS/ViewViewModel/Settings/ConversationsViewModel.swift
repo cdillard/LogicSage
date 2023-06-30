@@ -21,12 +21,12 @@ struct Conversation {
         self.id = id
         self.messages = messages
     }
-
+    
     typealias ID = String
-
+    
     let id: String
     var messages: [Message]
-
+    
     //Everything fromt his point for must be OPtional so we retain compat with early LogicSage versions.
     var name: String?
 }

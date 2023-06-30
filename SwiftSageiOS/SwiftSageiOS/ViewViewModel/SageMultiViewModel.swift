@@ -38,7 +38,6 @@ class SageMultiViewModel: ObservableObject, Identifiable {
         }
         else {
             return windowInfo.fileContents
-
         }
     }
 

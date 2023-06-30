@@ -11,9 +11,7 @@ import SwiftUI
 #if !os(macOS)
 import UIKit
 
-
 extension Color: RawRepresentable {
-
     public init?(rawValue: String) {
 
         guard let data = Data(base64Encoded: rawValue) else{
@@ -27,7 +25,6 @@ extension Color: RawRepresentable {
         }catch{
             self = .black
         }
-
     }
 
     public var rawValue: String {

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CheckmarkView: View {
     @Binding var isVisible: Bool
-
+    
     var body: some View {
         if isVisible {
             HStack(spacing: 10) {

@@ -5,8 +5,9 @@
 
 import SwiftUI
 import Combine
+#if !os(macOS)
 
-/// Note that the `KeyboardAdaptive` modifier wraps your view in a `GeometryReader`, 
+/// Note that the `KeyboardAdaptive` modifier wraps your view in a `GeometryReader`,
 /// which attempts to fill all the available space, potentially increasing content view size.
 struct KeyboardAdaptive: ViewModifier {
     @State private var bottomPadding: CGFloat = 0
@@ -19,7 +20,6 @@ struct KeyboardAdaptive: ViewModifier {
         GeometryReader { geometry in
             content
                 .padding(.bottom, keyboardHeight == 0 ? 0 : self.bottomPadding)
-#if !os(macOS)
 
                 .onReceive(Publishers.keyboardHeight) { keyboardHeight in
 
@@ -42,7 +42,6 @@ struct KeyboardAdaptive: ViewModifier {
                     }
 
             }
-#endif
             .animation(.easeOut(duration: 0.16))
         }
     }
@@ -53,3 +52,4 @@ extension View {
         ModifiedContent(content: self, modifier: KeyboardAdaptive(keyboardHeight: keyboardHeight, frame: frame, position: position, resizeOffset: resizeOffset))
     }
 }
+#endif

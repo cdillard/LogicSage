@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AnimatedArrow: View {
     @State private var animate = false
-
+    
     var body: some View {
         GeometryReader { geometry in
             Path { path in

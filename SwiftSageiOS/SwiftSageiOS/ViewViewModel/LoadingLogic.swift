@@ -95,7 +95,6 @@ struct LoadingLogicView: View {
                                endRadius: 666)
                 .edgesIgnoringSafeArea(.all)
             }
-
             .onAppear {
                 if hasSeenAnim() {
                 }

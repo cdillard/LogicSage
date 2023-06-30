@@ -12,7 +12,6 @@ extension SettingsViewModel {
 
     func recieveImageData(recievedImageData: Data?) {
 #if !os(macOS)
-
         actualReceivedImage = UIImage(data: recievedImageData  ?? Data())
         if let  receivedWallpaperFileName, let receivedImageData {
             let receivedWallpaperFileName = receivedWallpaperFileName.replacingOccurrences(of: " ", with: "%20")

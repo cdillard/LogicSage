@@ -8,7 +8,7 @@
 import Foundation
 
 extension SettingsViewModel {
-
+    
     func resetLoaders() {
         DispatchQueue.main.async {
             self.downloadProgress = 0.0
@@ -18,17 +18,17 @@ extension SettingsViewModel {
             self.unzipProgress = 0.0
             unzipObservation = nil
         }
-
+        
     }
-
+    
     func actualCreateDraftPR(newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
 #if !os(xrOS)
-
+        
         var hasSentPRCreation = false
         logD("actually creating draft pr")
         isLoading = true
-
+        
         getDefaultHeadSha(defaultBranch: gitBranch) { sha in
             self.createDrafBranch(newBranchName: newBranchName, commitSha: sha) { success in
                 if success {
@@ -39,17 +39,17 @@ extension SettingsViewModel {
                         let trailingPathComps = pathString.components(separatedBy: "\(self.gitUser)/\(self.gitRepo)-\(self.gitBranch)/")
                         if trailingPathComps.count > 1 {
                             let trailingPath = trailingPathComps[1]
-
+                            
                             self.getShaOfFileFromPath(path: trailingPath) { sha in
                                 logD("got sha of changed file")
                                 self.updateFileWithNewContent(branch: newBranchName, sha: sha, path: trailingPath, fileContent: file.newFileContents) { success in
                                     if success {
                                         logD("Update file success")
-
+                                        
                                         if !hasSentPRCreation {
                                             hasSentPRCreation = true
                                             self.createPR(titleOfPR: titleOfPR, branchName: newBranchName) { success in
-
+                                                
                                                 defer {
                                                     DispatchQueue.main.async {
                                                         
@@ -57,12 +57,12 @@ extension SettingsViewModel {
                                                         
                                                         self.resetLoaders()
                                                     }
-
+                                                    
                                                 }
-
+                                                
                                                 if success {
                                                     logD("Successful PR creation")
-
+                                                    
                                                 }
                                                 else {
                                                     logD("fail to create draft PR")
@@ -73,12 +73,12 @@ extension SettingsViewModel {
                                     else {
                                         defer {
                                             DispatchQueue.main.async {
-
+                                                
                                                 self.isLoading = false
-
+                                                
                                                 self.resetLoaders()
                                             }
-
+                                            
                                         }
                                         logD("Update file FAIL")
                                     }
@@ -88,12 +88,12 @@ extension SettingsViewModel {
                         else {
                             defer {
                                 DispatchQueue.main.async {
-
+                                    
                                     self.isLoading = false
-
+                                    
                                     self.resetLoaders()
                                 }
-
+                                
                             }
                             logD("failed to extract trailing path")
                         }
@@ -102,12 +102,12 @@ extension SettingsViewModel {
                 else {
                     defer {
                         DispatchQueue.main.async {
-
+                            
                             self.isLoading = false
-
+                            
                             self.resetLoaders()
                         }
-
+                        
                     }
                     logD("fail to create draf branch")
                 }
@@ -115,7 +115,7 @@ extension SettingsViewModel {
         }
 #endif
 #endif
-
+        
     }
     func getDefaultHeadSha(defaultBranch: String, completion: @escaping (String) -> Void) {
         let url = URL(string: "https://api.github.com/repos/\(gitUser)/\(gitRepo)/branches/\(defaultBranch)")!
@@ -123,7 +123,7 @@ extension SettingsViewModel {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("token \(SettingsViewModel.shared.ghaPat)", forHTTPHeaderField: "Authorization")
-
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 logD("Error: \(error)")
@@ -132,7 +132,7 @@ extension SettingsViewModel {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                        let commit = json["commit"] as? [String: Any] {
                         logD(commit["sha"] as? String ?? "")
-
+                        
                         completion(commit["sha"] as? String ?? "")
                     }
                 } catch {
@@ -160,7 +160,7 @@ extension SettingsViewModel {
             } else if let data = data {
                 let str = String(data: data, encoding: .utf8)
                 logD("Received data:\n\(str ?? "")")
-
+                
                 logD("Continuing on to create PR")
                 completion(true)
             }

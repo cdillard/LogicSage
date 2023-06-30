@@ -40,13 +40,11 @@ struct ContentView: View {
     @ObservedObject var keyboardResponder = KeyboardResponder()
 #endif
 
-
 #endif
     @State var keyboardHeight: CGFloat = 0
     @State var dragCursorPoint: CGPoint = .zero
 
 #if !os(macOS)
-
     let appearance: UITabBarAppearance = UITabBarAppearance()
     init(settingsViewModel: SettingsViewModel) {
         self.settingsViewModel = settingsViewModel
@@ -60,157 +58,69 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             TabView(selection: $tabSelection) {
-                // Start of ZStack 0
-                ZStack {
-                    DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, conversations: $settingsViewModel.conversations, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView, tabSelection: $tabSelection)
-                        .transition(.move(edge: .leading))
-                        .background(settingsViewModel.buttonColor)
-                        .padding(.leading, 0)
-                        .zIndex(999)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                tabZero(size: geometry.size)
+                tabOne(size: geometry.size)
+                tabTwo(size: geometry.size)
+                tabThree(size: geometry.size)
+            }
+            .padding(1)
+        }
+    }
+    func tabZero(size: CGSize) -> some View {
+        ZStack {
+            DrawerContent(settingsViewModel: settingsViewModel, windowManager: windowManager, conversations: $settingsViewModel.conversations, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView, tabSelection: $tabSelection)
+                .transition(.move(edge: .leading))
+                .background(settingsViewModel.buttonColor)
+                .padding(.leading, 0)
+                .zIndex(999)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+        }
+        .tabItem {
+            Label("Chats", systemImage: "text.bubble.fill")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(0)
+    }
+    func tabOne(size: CGSize) -> some View {
+        ZStack {
+            ZStack {
+                // START WINDOW MANAGER ZONE *************************************************
+                ForEach(windowManager.windowViewModels  ) { windowViewModel in
+
+                    WindowView(window: windowViewModel.windowInfo, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: windowViewModel, parentViewSize: $viewSize, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
+                        .padding(.top, 20)
+                        .padding(.bottom, 0)
+
                 }
-                .tabItem {
-                    Label("Chats", systemImage: "text.bubble.fill")
-                        .accentColor(settingsViewModel.buttonColor)
-                }
-                .tag(0)
-                // End of ZStack 0
-
-                // Start of ZStack 1
+                // END WINDOW MANAGER ZONE *************************************************
                 ZStack {
-                    ZStack {
-                        // START WINDOW MANAGER ZONE *************************************************
-                        ForEach(windowManager.windowViewModels  ) { windowViewModel in
-
-                            WindowView(window: windowViewModel.windowInfo, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: windowViewModel, parentViewSize: $viewSize, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
-                                .padding(.top, 20)
-                                .padding(.bottom, 0)
-
-                        }
-                        // END WINDOW MANAGER ZONE *************************************************
-                        ZStack {
 #if os(macOS)
-                            settingsViewModel.backgroundColor
-                                .edgesIgnoringSafeArea(.all)
-
-#else
-                            settingsViewModel.backgroundColor
-                                .edgesIgnoringSafeArea(.all)
-                            if let image = settingsViewModel.actualReceivedImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .edgesIgnoringSafeArea(.all)
-                                    .animation(.easeIn(duration: 0.28), value: image)
-                            }
-                            else {
-                                settingsViewModel.backgroundColor
-                                    .animation(.easeIn(duration: 0.28), value: true)
-
-                                    .edgesIgnoringSafeArea(.all)
-                            }
-                            if  settingsViewModel.initalAnim {
-                                LoadingLogicView()
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    .ignoresSafeArea()
-                                    .onAppear {
-                                        setHasSeenAnim(true)
-                                    }
-                            }
-#endif
-                        }
-                        .overlay(
-                            Group {
-                                if showInstructions {
-                                    InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
-                                }
-                                else if showHelp {
-                                    HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
-                                }
-                            }
-                                .zIndex(998)
-                        )
-                        .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
+                    settingsViewModel.backgroundColor
                         .edgesIgnoringSafeArea(.all)
-                        .simultaneousGesture(TapGesture().onEnded {
-                            withAnimation {
-#if !os(macOS)
-                                hideKeyboard()
-#endif
+#else
+                    settingsViewModel.backgroundColor
+                        .edgesIgnoringSafeArea(.all)
+                    if let image = settingsViewModel.actualReceivedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .edgesIgnoringSafeArea(.all)
+                            .animation(.easeIn(duration: 0.28), value: image)
+                    }
+                    else {
+                        settingsViewModel.backgroundColor
+                            .animation(.easeIn(duration: 0.28), value: true)
+                            .edgesIgnoringSafeArea(.all)
+                    }
+                    if  settingsViewModel.initalAnim {
+                        LoadingLogicView()
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .ignoresSafeArea()
+                            .onAppear {
+                                setHasSeenAnim(true)
                             }
-                        })
-                        .zIndex(-999)
-                        if keyboardHeight == 0 {
-                            // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-                            VStack {
-                                Spacer()
-                                CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
-                            }
-                            .zIndex(-9)
-                            .padding(.horizontal)
-                            .padding(.vertical)
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
-                            .animation(.easeIn(duration:0.25), value:keyboardHeight == 0)
-                        }
-#if !os(macOS)
-
-                        // Handle dragging point for resize gesture.
-                        if dragCursorPoint != .zero {
-                            BezierShape(bezierPath: Beziers.createTopLeft())
-                                .fill(Color.white.opacity(0.5))
-                                .offset(x: dragCursorPoint.x, y: dragCursorPoint.y)
-                                .allowsTightening(false)
-                        }
-#endif
-
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
-                    // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
-
-                    // BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
-
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-#if !os(macOS)
-                    .onAppear {
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: geometry.size) { size in
-                        recalculateWindowSize(size: geometry.size)
-                    }
-#if !os(xrOS)
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: horizontalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: verticalSizeClass) { newSizeClass in
-                        print("Size class changed to \(String(describing: newSizeClass))")
-                        recalculateWindowSize(size: geometry.size)
-                    }
-                    .onChange(of: keyboardResponder.currentHeight) { newKeyHeight in
-                        keyboardHeight = newKeyHeight > 0 ? newKeyHeight : 0
                     }
 #endif
-#endif
-                }
-                .tabItem {
-                    Label("Windows", systemImage: "macwindow.on.rectangle")
-                        .accentColor(settingsViewModel.buttonColor)
-                }
-                .tag(1)
-// END OF ZSTACK 1
-
-// Start of ZStack 2
-                ZStack {
-                    VStack {
-                        SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel, tabSelection: $tabSelection)
-                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                            .zIndex(997)
-                    }
                 }
                 .overlay(
                     Group {
@@ -223,37 +133,120 @@ struct ContentView: View {
                     }
                         .zIndex(998)
                 )
-                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape")
-                        .accentColor(settingsViewModel.buttonColor)
-                }
-                .tag(2)
-// End of ZStack 2
-
-// Start of ZStack 3
-                ZStack {
-                    VStack {
-                        AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, tabSelection: $tabSelection)
-                            .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width, minHeight: 0, maxHeight: .infinity)
-                            .zIndex(997)
+                .frame(minWidth: viewSize.size.width, maxWidth: viewSize.size.width, minHeight: viewSize.size.height, maxHeight: .infinity)
+                .edgesIgnoringSafeArea(.all)
+                .simultaneousGesture(TapGesture().onEnded {
+                    withAnimation {
+#if !os(macOS)
+                        hideKeyboard()
+#endif
                     }
+                })
+                .zIndex(-999)
+                if keyboardHeight == 0 {
+                    // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+                    VStack {
+                        Spacer()
+                        CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
+                    }
+                    .zIndex(-9)
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    .padding(.leading, 8)
+                    .padding(.trailing, 8)
+                    .animation(.easeIn(duration:0.25), value:keyboardHeight == 0)
                 }
-                .frame(minWidth: geometry.size.width, maxWidth: geometry.size.width , minHeight: 0, maxHeight: .infinity)
-                .tabItem {
-                    Label("Add", systemImage: "plus.rectangle")
-                        .accentColor(settingsViewModel.buttonColor)
+#if !os(macOS)
+
+                // Handle dragging point for resize gesture.
+                if dragCursorPoint != .zero {
+                    BezierShape(bezierPath: Beziers.createTopLeft())
+                        .fill(Color.white.opacity(0.5))
+                        .offset(x: dragCursorPoint.x, y: dragCursorPoint.y)
+                        .allowsTightening(false)
                 }
-                .tag(3)
-// End of ZStack 3
+#endif
 
             }
-            .padding(1)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+
+            // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
+
+            // BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
+
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+#if !os(macOS)
+            .onAppear {
+                recalculateWindowSize(size: size)
+            }
+            .onChange(of: size) { size in
+                recalculateWindowSize(size: size)
+            }
+#if !os(xrOS)
+            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+                recalculateWindowSize(size: size)
+            }
+            .onChange(of: horizontalSizeClass) { newSizeClass in
+                print("Size class changed to \(String(describing: newSizeClass))")
+                recalculateWindowSize(size: size)
+            }
+            .onChange(of: verticalSizeClass) { newSizeClass in
+                print("Size class changed to \(String(describing: newSizeClass))")
+                recalculateWindowSize(size: size)
+            }
+            .onChange(of: keyboardResponder.currentHeight) { newKeyHeight in
+                keyboardHeight = newKeyHeight > 0 ? newKeyHeight : 0
+            }
+#endif
+#endif
         }
+        .tabItem {
+            Label("Windows", systemImage: "macwindow.on.rectangle")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(1)
     }
-
-    // END CONTENTVIEW BACKGROUND ZONE ***************************************************************************
-
+    func tabTwo(size: CGSize) -> some View {
+        ZStack {
+            VStack {
+                SettingsView(showSettings: $showSettings, showHelp: $showHelp, showInstructions: $showInstructions, settingsViewModel: settingsViewModel, tabSelection: $tabSelection)
+                    .frame(minWidth: size.width, maxWidth: size.width, minHeight: 0, maxHeight: .infinity)
+                    .zIndex(997)
+            }
+        }
+        .overlay(
+            Group {
+                if showInstructions {
+                    InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
+                }
+                else if showHelp {
+                    HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
+                }
+            }
+                .zIndex(998)
+        )
+        .frame(minWidth: size.width, maxWidth: size.width , minHeight: 0, maxHeight: .infinity)
+        .tabItem {
+            Label("Settings", systemImage: "gearshape")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(2)
+    }
+    func tabThree(size: CGSize) -> some View {
+        ZStack {
+            VStack {
+                AddView(showAddView: $showAddView, settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, tabSelection: $tabSelection)
+                    .frame(minWidth: size.width, maxWidth: size.width, minHeight: 0, maxHeight: .infinity)
+                    .zIndex(997)
+            }
+        }
+        .frame(minWidth: size.width, maxWidth: size.width , minHeight: 0, maxHeight: .infinity)
+        .tabItem {
+            Label("Add", systemImage: "plus.rectangle")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(3)
+    }
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)
         if viewSize.size != size {
@@ -268,30 +261,14 @@ struct ContentView: View {
             }
             // set parentViewSize
             viewSize = CGRectMake(0, 0, size.width, size.height)
-            logD("contentView viewSize update = \(viewSize)")
-
-            guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
+            if gestureDebugLogs {
+                logD("contentView viewSize update = \(viewSize)")
+            }
 #if !os(xrOS)
+            guard let scene = UIApplication.shared.windows.first?.windowScene else { return }
             self.isPortrait = scene.interfaceOrientation.isPortrait
 #endif
         }
 #endif
-    }
-    private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-        if #available(iOS 16.0, *) {
-            return  Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-                .tint(settingsViewModel.appTextColor)
-                .background(settingsViewModel.buttonColor)
-        } else {
-            return Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-                .background(settingsViewModel.buttonColor)
-
-        }
     }
 }

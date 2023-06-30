@@ -27,10 +27,10 @@ struct RepoFile: Identifiable, Equatable {
 }
 func getFiles(in directory: URL) -> [RepoFile] {
     let fileManager = FileManager.default
-
+    
     do {
         let fileURLs = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-
+        
         return fileURLs.map { url -> RepoFile in
             var isDirectory: ObjCBool = false
             fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
@@ -50,17 +50,17 @@ var downloadobservation: NSKeyValueObservation?
 extension SettingsViewModel {
     func syncGithubRepo(_ syncCompletion: @escaping (Bool) -> Void ) {
         isLoading = true
-
+        
         let urlString = "http://github.com/\(gitUser)/\(gitRepo)/archive/\(gitBranch).zip"
         let outputFileName = "\(gitBranch).zip"
-
+        
         guard let url = URL(string: urlString) else {
             logD("Invalid URL.")
             return
         }
-
+        
         let destinationUrl = getDocumentsDirectory().appendingPathComponent(outputFileName)
-
+        
         do {
             try FileManager.default.removeItem(at:  destinationUrl)
         }
@@ -68,34 +68,34 @@ extension SettingsViewModel {
             logD("did not delete or didn't exist old zip")
         }
         let task = URLSession.shared.downloadTask(with: url) { (location, response, error) in
-
+            
             defer {
                 DispatchQueue.main.async {
                     
                     self.isLoading = false
                 }
             }
-
-
+            
+            
             DispatchQueue.main.async {
                 self.downloadProgress = 0.0
             }
             defer {
                 self.refreshDocuments()
             }
-
+            
             if let location = location {
                 do {
                     try FileManager.default.moveItem(at: location, to: destinationUrl)
                     logD("File downloaded to: \(destinationUrl)")
-
+                    
                     // Unzipping
-
+                    
                     let fileURL = getDocumentsDirectory().appendingPathComponent(self.gitUser)
-
-
+                    
+                    
                     let existingExtraction = fileURL.appendingPathComponent(self.gitRepo + "-" + self.gitBranch)
-
+                    
                     // TODO: Double check this for multiple repos in same user/org....
                     do {
                         try FileManager.default.removeItem(at:  existingExtraction)
@@ -103,7 +103,7 @@ extension SettingsViewModel {
                     catch {
                         logD("did not delete or didn't exist old REPO")
                     }
-
+                    
                     try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true, attributes: nil)
                     let myProgress = Progress()
                     unzipObservation = myProgress.observe(\.fractionCompleted) { progress, _ in
@@ -112,7 +112,7 @@ extension SettingsViewModel {
                         }
                     }
                     try FileManager.default.unzipItem(at: destinationUrl, to: fileURL, progress: myProgress)
-
+                    
                     DispatchQueue.main.async {
                         
                         self.unzipProgress = 0.0
@@ -126,19 +126,19 @@ extension SettingsViewModel {
                         logD("did not delete or didn't exist zip")
                     }
                     syncCompletion(true)
-
+                    
                 } catch {
                     logD("Error: \(error)")
-
+                    
                     do {
                         try FileManager.default.removeItem(at:  destinationUrl)
                         logD("rm .zip sucess")
                     }
                     catch {
                         logD("rm .zip fail")
-
+                        
                     }
-
+                    
                     syncCompletion(false)
                 }
             }
@@ -172,7 +172,7 @@ extension SettingsViewModel {
         }
         else {
             logD("catastrophic error dling github repo. faling...")
-                throw URLError(.badURL)
+            throw URLError(.badURL)
         }
     }
     func fetchFileContent(accessToken: String, filePath: String, completion: @escaping (Result<String, Error>) -> Void) {

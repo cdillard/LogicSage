@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 extension SettingsViewModel {
     func renameConvo(_ convoId: Conversation.ID, newName: String) {
-        logD("rename convo id = \(convoId) to \(newName)")
+        print("rename convo id = \(convoId) to \(newName)")
         guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
             logD("Unable to find conversations id == \(convoId) ... failing")
 
@@ -42,7 +42,7 @@ extension SettingsViewModel {
     func createConversation() -> Conversation.ID {
         let conversation = Conversation(id: idProvider(), messages: [])
         conversations.append(conversation)
-        logD("created new convo = \(conversation.id)")
+        print("created new convo = \(conversation.id)")
         return conversation.id
     }
     func deleteConversation(_ conversationId: Conversation.ID) {
@@ -72,7 +72,7 @@ extension SettingsViewModel {
             saveJSONData(encodedData, filename: "\(key).json")
         }
         catch {
-            logD("failed w error = \(error)")
+            print("failed w error = \(error)")
         }
     }
     func retrieveConversationContentFromDisk(forKey key: String) -> [Conversation]? {
@@ -83,7 +83,7 @@ extension SettingsViewModel {
                 return try decoder.decode([Conversation].self, from: savedData)
             }
             catch {
-                logD("failed w error = \(error)")
+                print("failed w error = \(error)")
             }
         }
         return nil
@@ -95,7 +95,7 @@ extension SettingsViewModel {
             let data = try Data(contentsOf: fileURL)
             return data
         } catch {
-            logD("Failed to read JSON data: \(error.localizedDescription)")
+            print("Failed to read JSON data: \(error.localizedDescription)")
             return nil
         }
     }
@@ -105,7 +105,7 @@ extension SettingsViewModel {
         do {
             try data.write(to: fileURL)
         } catch {
-            logD("Failed to write JSON data: \(error.localizedDescription)")
+            print("Failed to write JSON data: \(error.localizedDescription)")
         }
     }
     func getConvo(_ convoId: Conversation.ID) -> Conversation? {

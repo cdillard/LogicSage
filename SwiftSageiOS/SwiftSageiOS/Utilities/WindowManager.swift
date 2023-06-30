@@ -34,7 +34,6 @@ class WindowManager: ObservableObject {
         if let index = windowViewModels.firstIndex(where: { $0.windowInfo.id == window.id } ) {
             windowViewModels.remove(at: index)
         }
-
     }
     func updateWindow(window: WindowInfo, frame: CGRect, zIndex: Int? = nil) {
         if let index = windows.firstIndex(of: window) {
@@ -59,18 +58,15 @@ class WindowManager: ObservableObject {
         windows[index].zIndex = maxZIndex + 1
 
         setTopWindow()
-
-
     }
     private func sortWindowsByZIndex() {
         windows.sort(by: { $0.zIndex < $1.zIndex })
         windowViewModels.sort { lhs, rhs in
             lhs.windowInfo.zIndex < rhs.windowInfo.zIndex
         }
-
     }
     func setTopWindow() { //-> WindowInfo? {
-    topWindow = windows.first
+        topWindow = windows.first
     }
     func removeWindowsWithConvoId(convoID: Conversation.ID) {
         for window in windows {

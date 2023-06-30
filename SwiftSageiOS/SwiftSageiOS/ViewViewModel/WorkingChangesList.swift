@@ -93,7 +93,13 @@ struct WorkingChangesView: View {
             }
         }
     }
-    func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+    private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+#if os(macOS)
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+#else
         if #available(iOS 16.0, *) {
             return Image(systemName: systemName)
                 .resizable()
@@ -102,13 +108,13 @@ struct WorkingChangesView: View {
                 .tint(settingsViewModel.appTextColor)
                 .background(settingsViewModel.buttonColor)
         } else {
-            // Fallback on earlier versions
             return Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .background(settingsViewModel.buttonColor)
         }
+#endif
     }
 }
 

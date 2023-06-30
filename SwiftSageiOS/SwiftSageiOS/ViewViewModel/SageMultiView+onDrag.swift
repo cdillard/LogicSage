@@ -29,7 +29,6 @@ extension SageMultiView {
                 if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 {
 #if !os(xrOS)
 #if !os(macOS)
-
                     playNot(type: .warning)
 #endif
 #endif
@@ -218,7 +217,6 @@ extension SageMultiView {
             }
             else if resizeOffset.width > 0 {
                 leadingXBound = resizeOffset.width / 2
-
             }
 
             if resizeOffset.height < 0 {
@@ -234,7 +232,13 @@ extension SageMultiView {
             let setY = max(topYBound, position.height + heightTrans)
            // print("setting pos to \(setX) and \(setY)")
 
+#if os(macOS)
+            let newX2 = position.width + widthTrans
+            let newY2 = position.height + heightTrans
+            position = CGSize(width:newX2,height:newY2)
+#else
             position = CGSize(width:setX,height:setY)
+#endif
         }
     }
 }
