@@ -209,10 +209,13 @@ public class SettingsViewModel: ObservableObject {
     }
     @Published var password = "swiftsage" {
         didSet {
-            if keychainManager.saveToKeychain(key: "swsPassword", value: password) {
-                print("Key saved successfully")
-            } else {
-                print("Error saving key")
+            DispatchQueue.global(qos: .default).async {
+                
+                if self.keychainManager.saveToKeychain(key: "swsPassword", value: self.password) {
+                    print("Key saved successfully")
+                } else {
+                    print("Error saving key")
+                }
             }
         }
     }
@@ -227,13 +230,17 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: "openAIKey")
 #endif
 #endif
-            if keychainManager.saveToKeychain(key:aiKeyKey, value: trimmedKey) {
-                 print("openAIKey saved successfully")
-            } else {
-                print("Error saving ai key")
+            DispatchQueue.global(qos: .default).async {
+                
+                if self.keychainManager.saveToKeychain(key:self.aiKeyKey, value: trimmedKey) {
+                    print("openAIKey saved successfully")
+                } else {
+                    print("Error saving ai key")
+                }
+                DispatchQueue.main.async {
+                    GPT.shared.resetOpenAI()
+                }
             }
-
-            GPT.shared.resetOpenAI()
         }
     }
     @Published var ghaPat = ""  {
@@ -244,10 +251,13 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: "ghaPat")
 #endif
 #endif
-            if keychainManager.saveToKeychain(key: ghaKeyKey, value: trimmedKey) {
-                print("ghPat saved successfully")
-            } else {
-                print("Error saving gha pat")
+            DispatchQueue.global(qos: .default).async {
+                
+                if self.keychainManager.saveToKeychain(key: self.ghaKeyKey, value: trimmedKey) {
+                    print("ghPat saved successfully")
+                } else {
+                    print("Error saving gha pat")
+                }
             }
         }
     }
@@ -260,10 +270,14 @@ public class SettingsViewModel: ObservableObject {
     let aiAccessTokenKey = "openAIAccessTokenKeySec"
     @Published var accessToken = "" {
         didSet {
-            if keychainManager.saveToKeychain(key: aiAccessTokenKey, value: accessToken) {
-                print("aiAccessTokenKey saved successfully")
-            } else {
-                print("Error saving accessToken pat")
+
+            DispatchQueue.global(qos: .default).async {
+                
+                if self.keychainManager.saveToKeychain(key: self.aiAccessTokenKey, value: self.accessToken) {
+                    print("aiAccessTokenKey saved successfully")
+                } else {
+                    print("Error saving accessToken pat")
+                }
             }
         }
     }
