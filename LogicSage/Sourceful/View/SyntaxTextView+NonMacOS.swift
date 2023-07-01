@@ -1,6 +1,6 @@
 //
 //  SyntaxTextView+NonMacOS.swift
-//  SwiftSageiOS
+//  LogicSage
 //
 //  Created by Chris Dillard on 6/29/23.
 //

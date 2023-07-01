@@ -1,6 +1,6 @@
 //
 //  ShapeView.swift
-//  SwiftSageiOS
+//  LogicSage
 
 import Foundation
 

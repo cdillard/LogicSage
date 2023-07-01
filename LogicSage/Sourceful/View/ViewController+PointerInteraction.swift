@@ -1,6 +1,6 @@
 //
 //  ViewController+PointerInteraction.swift
-//  SwiftSageiOS
+//  LogicSage
 //
 //  Created by Chris Dillard on 6/22/23.
 //

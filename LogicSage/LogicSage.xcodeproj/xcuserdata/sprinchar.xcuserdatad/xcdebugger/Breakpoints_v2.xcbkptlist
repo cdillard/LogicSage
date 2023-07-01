@@ -4632,7 +4632,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9AC545AB-BFD9-4B9E-8EBA-98A6F2EBAAA7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftSageiOS/Utilities/Speak.swift"
@@ -4710,7 +4710,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "12902848-5729-4EFF-A371-5B156F0E5E87"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftSageiOS/Utilities/Speak.swift"
@@ -4803,7 +4803,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "342700A0-A62B-4289-ADC9-52F0471C2A1B"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftSageiOS/Utilities/Speak.swift"
@@ -4902,8 +4902,8 @@
             filePath = "SwiftSageiOS/Utilities/Speak.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "installedVoiesArr()"
             landmarkType = "7">
          </BreakpointContent>
