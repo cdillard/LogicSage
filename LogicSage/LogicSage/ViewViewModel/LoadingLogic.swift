@@ -23,7 +23,7 @@ let logoAscii6 = """
 ╱╱╱╱╱╱╱╭━╯┃╱╱╱╱╱╱╱╱╱╱╭━╯┃
 ╱╱╱╱╱╱╱╰━━╯╱╱╱╱╱╱╱╱╱╱╰━━╯
 """
-let animFrameDuration: CGFloat = 0.01
+let animFrameDuration: CGFloat = 0.0025
 
 var chosenLogo = getRandomLogo()
 

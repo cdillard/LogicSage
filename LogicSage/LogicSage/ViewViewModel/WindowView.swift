@@ -11,7 +11,6 @@ import SwiftUI
 var defSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 var defChatSize = CGRect(x: 0, y: 0, width: 300, height: 300)
 
-
 struct WindowView: View {
 
      var window: WindowInfo
@@ -61,7 +60,6 @@ struct WindowView: View {
 #if !os(xrOS)
 #if !os(macOS)
 #if !os(tvOS)
-
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 recalculateWindowSize(size: geometry.size)
             }
@@ -77,8 +75,6 @@ struct WindowView: View {
 #endif
 #endif
 #endif
-
-
         }
     }
 

@@ -136,100 +136,8 @@ struct SettingsView: View {
 
                     nameChangeStack()
 
-                    Group {
-                        Text(audioSettingsTitleLabelString)
-                            .font(.title3)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .padding(8)
-#if !os(macOS)
-                            .hoverEffect(.automatic)
-#endif
-                    }
-                    .onTapGesture {
-                        playSelect()
+                    audioSettingsArea(size: geometry.size)
 
-                        withAnimation {
-                            settingsViewModel.showAudioSettings.toggle()
-
-                            audioSettingsTitleLabelString = "\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") Audio settings"
-                        }
-                    }
-                    // TODO:Double check toggling ducing Audio and audio output this way works.
-                    if settingsViewModel.showAudioSettings {
-                        // IOS AUDIO SETTING ON/OFF
-                        Toggle(isOn: $settingsViewModel.voiceOutputEnabled) {
-                            VStack(spacing: 4) {
-                                Text("Audio Output")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            }
-                        }
-                        .frame( maxWidth: geometry.size.width / 3)
-                        .onChange(of: settingsViewModel.voiceOutputEnabled) { value in
-                            withAnimation {
-#if !os(macOS)
-                                SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputEnabled ? "off" : "on.")")
-                                if settingsViewModel.voiceOutputEnabled {
-                                    settingsViewModel.stopVoice()
-                                }
-
-                                settingsViewModel.configureAudioSession()
-                                settingsViewModel.printVoicesInMyDevice()
-
-                                settingsViewModel.voiceOutputEnabled.toggle()
-#endif
-                            }
-
-                        }
-                        HStack {
-                            if settingsViewModel.voiceOutputEnabled {
-                                // IOS AUDIO SETTING ON/OFF
-                                Toggle(isOn: $settingsViewModel.duckingAudio) {
-                                    VStack(spacing: 4) {
-                                        Text("Duck Audio")
-                                            .foregroundColor(settingsViewModel.appTextColor)
-                                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                    }
-                                }
-                                .frame( maxWidth: geometry.size.width / 3)
-                            }
-                        }
-                    }
-
-                    VStack {
-                        if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputEnabled {
-                            VStack {
-
-                                Text("Pick iOS voice")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                List {
-                                    ForEach(0..<settingsViewModel.installedVoices.count, id: \.self) { index in
-                                        let item = settingsViewModel.installedVoices[index]
-                                        HStack {
-                                            Text(item.voiceName)
-                                                .foregroundColor(settingsViewModel.appTextColor)
-
-                                            Spacer()
-                                            if settingsViewModel.selectedVoice?.voiceName == item.voiceName {
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(settingsViewModel.buttonColor)
-                                                    .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
-                                            }
-                                        }
-                                        .listRowBackground(settingsViewModel.backgroundColor)
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            settingsViewModel.voiceOutputSavedName = item.voiceName
-                                        }
-                                    }
-                                }
-                                .listRowBackground(settingsViewModel.backgroundColor)
-                                .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
-                            }
-                        }
-                    }
-                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                     Button(action: {
                         withAnimation {
                             scrollViewID = UUID()
@@ -309,6 +217,132 @@ struct SettingsView: View {
             .id(self.scrollViewID)
         }
     }
+
+    func modelOptions() -> some View {
+        Group {
+            ForEach(aiModelOptions, id: \.self) { line in
+                Button(action: {
+                    logD("CHOOSE model from settings: \(line)")
+                    settingsViewModel.openAIModel = line
+                }) {
+                    Text(line)
+                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        .lineLimit(1)
+                        .foregroundColor(Color.white)
+                        .background(settingsViewModel.buttonColor)
+                }
+            }
+        }
+    }
+
+    struct DemoStyle: LabelStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            HStack(alignment: .center) {
+                configuration.icon
+                configuration.title
+            }
+        }
+    }
+
+    func audioSettingsArea(size: CGSize) -> some View {
+        Group {
+            Group {
+                Text(audioSettingsTitleLabelString)
+                    .font(.title3)
+                    .foregroundColor(settingsViewModel.appTextColor)
+                    .padding(8)
+#if !os(macOS)
+                    .hoverEffect(.automatic)
+#endif
+            }
+            .onTapGesture {
+                playSelect()
+
+                withAnimation {
+                    settingsViewModel.showAudioSettings.toggle()
+
+                    audioSettingsTitleLabelString = "\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") Audio settings"
+                }
+            }
+            // TODO:Double check toggling ducing Audio and audio output this way works.
+            if settingsViewModel.showAudioSettings {
+                // IOS AUDIO SETTING ON/OFF
+                Toggle(isOn: $settingsViewModel.voiceOutputEnabled) {
+                    VStack(spacing: 4) {
+                        Text("Audio Output")
+                            .foregroundColor(settingsViewModel.appTextColor)
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
+                .frame( maxWidth: size.width / 3)
+                .onChange(of: settingsViewModel.voiceOutputEnabled) { value in
+                    withAnimation {
+#if !os(macOS)
+                        SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputEnabled ? "off" : "on.")")
+                        if settingsViewModel.voiceOutputEnabled {
+                            settingsViewModel.stopVoice()
+                        }
+
+                        settingsViewModel.configureAudioSession()
+                        settingsViewModel.printVoicesInMyDevice()
+
+                        settingsViewModel.voiceOutputEnabled.toggle()
+#endif
+                    }
+
+                }
+                HStack {
+                    if settingsViewModel.voiceOutputEnabled {
+                        // IOS AUDIO SETTING ON/OFF
+                        Toggle(isOn: $settingsViewModel.duckingAudio) {
+                            VStack(spacing: 4) {
+                                Text("Duck Audio")
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            }
+                        }
+                        .frame( maxWidth: size.width / 3)
+                    }
+                }
+            }
+
+            VStack {
+                if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputEnabled {
+                    VStack {
+
+                        Text("Pick iOS voice")
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                        List {
+                            ForEach(0..<settingsViewModel.installedVoices.count, id: \.self) { index in
+                                let item = settingsViewModel.installedVoices[index]
+                                HStack {
+                                    Text(item.voiceName)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+
+                                    Spacer()
+                                    if settingsViewModel.selectedVoice?.voiceName == item.voiceName {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(settingsViewModel.buttonColor)
+                                            .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
+                                    }
+                                }
+                                .listRowBackground(settingsViewModel.backgroundColor)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    settingsViewModel.voiceOutputSavedName = item.voiceName
+                                }
+                            }
+                        }
+                        .listRowBackground(settingsViewModel.backgroundColor)
+                        .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
+                    }
+                }
+            }
+            .frame( maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
     func nameChangeStack() -> some View {
         HStack {
             Group {
@@ -449,46 +483,80 @@ struct SettingsView: View {
 #endif
                     }
                     Spacer()
-
+                    
                     Text("A.I. model: ")
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
-                    if #available(iOS 16.0, *) {
 
-                        TextField(
-                            "",
-                            text: $settingsViewModel.openAIModel
-                        )
-                        .border(.secondary)
-                        .submitLabel(.done)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    HStack {
+                        if #available(iOS 16.0, *) {
+                            
+                            TextField(
+                                "",
+                                text: $settingsViewModel.openAIModel
+                            )
+                            .border(.secondary)
+                            .submitLabel(.done)
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
-                        .scrollDismissesKeyboard(.interactively)
+                            .scrollDismissesKeyboard(.interactively)
 #endif
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
+                            
+                            .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                            .autocapitalization(.none)
+#endif
+                        }
+                        else {
+                            TextField(
+                                "",
+                                text: $settingsViewModel.openAIModel
+                            )
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                            .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                            .autocapitalization(.none)
+#endif
+                        }
 
-                        .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
+
+                        Menu {
+                            modelOptions()
+                        }
+                    label: {
+                        ZStack {
+                            if #available(iOS 16.0, *) {
+
+                                Label("", systemImage: "arrow.down")
+                                    .font(.title3)
+                                    .minimumScaleFactor(0.5)
+                                    .labelStyle(DemoStyle())
+                                    .background(Color.clear)
+                                    .tint(settingsViewModel.appTextColor)
+
+                            } else {
+                                Label("", systemImage: "arrow.down")
+                                    .font(.title3)
+                                    .minimumScaleFactor(0.5)
+                                    .labelStyle(DemoStyle())
+                                    .background(Color.clear)
+                            }
+
+                        }
+                        .padding(4)
+
                     }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.openAIModel
-                        )
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-                        .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
+
+
+
                     }
                     Spacer()
                         .padding(.leading, 8)

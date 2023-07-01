@@ -24,6 +24,7 @@ extension SettingsViewModel {
 
     }
     func appendMessageToConvoIndex(index: Int, message: Message) {
+        self.conversations[index].model = openAIModel
         self.conversations[index].messages.append(message)
     }
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
@@ -116,7 +117,7 @@ extension SettingsViewModel {
         return nil
     }
     func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
-        var retString  = ""
+        var retString  = "model: \(newConversations.first?.model ?? "")"
         if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
             for msg in conversation.messages {
                 retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
@@ -130,7 +131,7 @@ extension SettingsViewModel {
     }
 
     func convoText(_ newConversation: Conversation) -> String {
-        var retString  = ""
+        var retString  = "model: \(newConversation.model ?? "")"
         for msg in newConversation.messages {
             retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }

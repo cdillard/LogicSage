@@ -199,7 +199,6 @@ struct ChatView: View {
             // END Chat message entry
 
             // BEGIN Chat bottom ... menu
-            if chatText.count > 0 {
                 // EXEC BUTTON
                 Button(action: {
                     doChat()
@@ -208,12 +207,12 @@ struct ChatView: View {
                                             "paperplane.fill",
                                          size: size)
                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//dddd//                    .background(settingsViewModel.buttonColor)
+                    .background(Color.clear)
 #if !os(macOS)
                     .hoverEffect(.automatic)
 #endif
                 }
-            }
+                .disabled(chatText.isEmpty)
 
             // EXEC BUTTON
             Button(action: {
@@ -225,18 +224,24 @@ struct ChatView: View {
                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                     .lineLimit(1)
 //                    .foregroundColor(Color.white)
-//                    .background(settingsViewModel.buttonColor)
+                    .background(Color.clear)
 //#if !os(macOS)
 //                    .hoverEffect(.automatic)
 //#endif
             }
 
-            if sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) {
 
                 Spacer()
-                ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager)
 
+            if #available(iOS 16.0, *) {
+                
+                ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo)
+                    .tint(settingsViewModel.appTextColor)
             }
+                else {
+                    ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo)
+
+                }
             // END Chat bottom ... menu
         }
     }
@@ -256,13 +261,13 @@ struct ChatView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.appTextColor)
-                .background(settingsViewModel.buttonColor)
+               // .background(settingsViewModel.buttonColor)
         } else {
             return Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-                .background(settingsViewModel.buttonColor)
+               // .background(settingsViewModel.buttonColor)
         }
 #endif
     }

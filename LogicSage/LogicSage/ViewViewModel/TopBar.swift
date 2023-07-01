@@ -151,8 +151,10 @@ struct TopBar: View {
                     .font(.title3)
                     .minimumScaleFactor(0.5)
                     .labelStyle(DemoStyle())
+                    .background(Color.clear)
 
             }
+                                .padding(4)
 
         }
     }

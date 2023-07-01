@@ -57,5 +57,9 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>

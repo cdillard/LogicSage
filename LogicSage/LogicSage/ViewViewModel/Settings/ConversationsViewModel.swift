@@ -29,6 +29,9 @@ struct Conversation {
     
     //Everything fromt his point for must be OPtional so we retain compat with early LogicSage versions.
     var name: String?
+    var model: String?
+    var systemPrompt: String?
+
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

@@ -38,7 +38,7 @@ class GPT {
 
     // Function to send a prompt to GPT via the OpenAI API
     func sendPromptToGPT(conversationId: Conversation.ID,
-                         prompt: String, currentRetry: Int, isFix: Bool = false,
+                         prompt: String, currentRetry: Int, isFix: Bool = false, role: Chat.Role = .user,
                          manualPrompt: Bool = false, voiceOverride: String? = nil,
                          completion: @escaping (String, Bool, Bool) -> Void) {
         if currentRetry == 0 {
@@ -66,9 +66,10 @@ class GPT {
         }
 
         Task {
+
             SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
                 id: SettingsViewModel.shared.idProvider(),
-                role: .user,
+                role: role,
                 content: manualPrompt ? config.manualPromptString : prompt,
                 createdAt: SettingsViewModel.shared.dateProvider()
             ))
@@ -82,7 +83,9 @@ class GPT {
             SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
 
             do {
-                let model: Model = Model(SettingsViewModel.shared.openAIModel)
+                let existingModel = conversation.model ?? ""
+
+                let model: Model = Model(existingModel.isEmpty ? SettingsViewModel.shared.openAIModel : existingModel)
 
                 let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
                     query: ChatQuery(
