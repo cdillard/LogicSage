@@ -88,7 +88,6 @@ struct ChatView: View {
                     .frame(height: textEditorHeight + 30)
                     .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
-
             }
             .frame( maxWidth: .infinity, maxHeight: .infinity)
             .overlay(CheckmarkView(isVisible: $showCheckmark))

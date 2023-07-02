@@ -359,6 +359,7 @@
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
+		B7F3DDD52A512EDD00219886 /* LogicSage.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LogicSage.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,6 +522,7 @@
 		B746DFC129F5E789002804EB = {
 			isa = PBXGroup;
 			children = (
+				B7F3DDD52A512EDD00219886 /* LogicSage.xctestplan */,
 				B746DFCC29F5E789002804EB /* LogicSage */,
 				B78EAF982A13B964003095A2 /* Third party */,
 				B78EAF7F2A13B7D4003095A2 /* LogicSageTests */,

@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "18816ED2-A89E-43C7-8595-0936DE94CD94",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:LogicSage.xcodeproj",
+      "identifier" : "B746DFC929F5E789002804EB",
+      "name" : "LogicSage"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LogicSage.xcodeproj",
+        "identifier" : "B78EAF7D2A13B7D4003095A2",
+        "name" : "LogicSageTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LogicSage.xcodeproj",
+        "identifier" : "B78EAF8C2A13B955003095A2",
+        "name" : "LogicSageUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

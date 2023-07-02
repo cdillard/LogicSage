@@ -159,14 +159,14 @@ struct ResizingHandle: View {
         case .topTrailing:
             return CGPoint(x: frame.minX + frame.width - handleSize, y: 0)
         case .bottomTrailing:
-            return CGPoint(x: frame.width - handleSize, y: frame.height - handleSize - 10)
+            return CGPoint(x: frame.width - handleSize, y: frame.height - handleSize - 30)
         }
     }
 
     private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat, _  safeAreaInsets: EdgeInsets) {
         let newWidth: CGFloat
         let newHeight: CGFloat
-        let minSize: CGFloat = 121.666
+        let minSize: CGFloat = 199.666
 
 
         // Smoothly interpolate towards the new size
@@ -211,7 +211,7 @@ struct ResizingHandle: View {
             resizeOffset.width += newOffsetX
             frame.size.width += newOffsetX
         }
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.0666 {
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.08 {
         }
         else {
             resizeOffset.height += newOffsetY

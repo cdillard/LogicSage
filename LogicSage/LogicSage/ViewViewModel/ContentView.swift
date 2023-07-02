@@ -37,6 +37,7 @@ struct ContentView: View {
 #endif
     @State var keyboardHeight: CGFloat = 0
     @State var dragCursorPoint: CGPoint = .zero
+//    @State var showDocumentPicker: Bool = false
 
 #if !os(macOS)
     let appearance: UITabBarAppearance = UITabBarAppearance()
@@ -103,6 +104,28 @@ struct ContentView: View {
                             .animation(.easeIn(duration: 0.28), value: true)
                             .edgesIgnoringSafeArea(.all)
                     }
+
+//#if targetEnvironment(macCatalyst)
+//                    if #available(iOS 15.0, *) {
+//                        
+//                        Button("Start LogicSage Server.") {
+//                            logD("should start server")
+//                            showDocumentPicker = true
+//                        }
+//                        .buttonStyle(.bordered)
+//                        .zIndex(1000)
+//
+//                    }
+//                    else {
+//                        Button("Start LogicSage Server.") {
+//                            logD("should start server")
+//                            showDocumentPicker = true
+//
+//                        }
+//                        .zIndex(1000)
+//                    }
+//
+//#endif
                     if  settingsViewModel.initalAnim {
                         LoadingLogicView()
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -182,7 +205,6 @@ struct ContentView: View {
             }
 #if !os(xrOS)
 #if !os(tvOS)
-
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 recalculateWindowSize(size: size)
             }
@@ -207,6 +229,24 @@ struct ContentView: View {
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(1)
+//        // MAC CATALYST HANDLING//
+//        .fileImporter(isPresented: $showDocumentPicker,
+//                      allowedContentTypes: [.folder],
+//                              allowsMultipleSelection: false)
+//                { result in
+//                    // processing results Result<[URL], Error>
+//                    switch result {
+//                    case .success(let url):
+//                        print("selected folder = \(url)")
+//                        handleCatalystRunScript(urls: url)
+//                    case .failure(let failed):
+//                        print("failed to select folder = \(failed)")
+//
+//                    }
+//                }
+//        // END MAC CATALYST HANDLING//
+
+
     }
     func tabTwo(size: CGSize) -> some View {
         ZStack {
@@ -269,4 +309,12 @@ struct ContentView: View {
         }
 #endif
     }
+
+
+
+//    // Use built in Terminal for the websocket server
+//    func handleCatalystRunScript(urls: [URL]) {
+//
+//    }
 }
+

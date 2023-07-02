@@ -138,7 +138,7 @@ class GPT {
                     }
                 }
 
-                logD("completed message w/ length = \(completeMessage.count)")
+                //logD("completed message w/ length = \(completeMessage.count)")
 
                 completion(completeMessage, true, true)
 

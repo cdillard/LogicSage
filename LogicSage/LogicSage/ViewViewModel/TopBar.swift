@@ -16,39 +16,58 @@ struct TopBar: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     var body: some View {
         ZStack {
-            HStack(spacing: 0) {
-                Spacer()
-                Button(action: onClose) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.body)
-                        .minimumScaleFactor(0.75)
-#if !os(macOS)
-                        .hoverEffect(.lift)
+            VStack {
+#if !os(xrOS)
+                Capsule()
+                    .fill(.white.opacity(0.666))
+                    .frame(width: 200, height: 15)
 #endif
-                }
-                .foregroundColor(SettingsViewModel.shared.buttonColor)
-                .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
-
-                if windowInfo.windowType == .project {
-                    Button(action: {
-                        logD("on side bar tap")
-                    }) {
-                        Image(systemName: "sidebar.left")
-                            .font(.caption)
+                HStack(spacing: 0) {
+                    Spacer()
+                    Button(action: onClose) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.body)
                             .minimumScaleFactor(0.75)
 #if !os(macOS)
                             .hoverEffect(.lift)
 #endif
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .padding(.leading, 7)
-
-                    // IF Debugger is running....
-                    if settingsViewModel.isDebugging {
+                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
+                    
+                    if windowInfo.windowType == .project {
                         Button(action: {
-                            logD("on STOP tap")
+                            logD("on side bar tap")
                         }) {
-                            Image(systemName: "stop.fill")
+                            Image(systemName: "sidebar.left")
+                                .font(.caption)
+                                .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                .hoverEffect(.lift)
+#endif
+                        }
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .padding(.leading, 7)
+                        
+                        // IF Debugger is running....
+                        if settingsViewModel.isDebugging {
+                            Button(action: {
+                                logD("on STOP tap")
+                            }) {
+                                Image(systemName: "stop.fill")
+                                    .font(.caption)
+                                    .minimumScaleFactor(0.75)
+#if !os(macOS)
+                                    .hoverEffect(.lift)
+#endif
+                            }
+                            .foregroundColor(SettingsViewModel.shared.buttonColor)
+                            .padding(.leading, 7)
+                        }
+                        Button(action: {
+                            logD("on PLAY tap")
+                        }) {
+                            Image(systemName: "play.fill")
                                 .font(.caption)
                                 .minimumScaleFactor(0.75)
 #if !os(macOS)
@@ -58,43 +77,31 @@ struct TopBar: View {
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                         .padding(.leading, 7)
                     }
-                    Button(action: {
-                        logD("on PLAY tap")
-                    }) {
-                        Image(systemName: "play.fill")
-                            .font(.caption)
-                            .minimumScaleFactor(0.75)
-#if !os(macOS)
-                            .hoverEffect(.lift)
-#endif
-                    }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .padding(.leading, 7)
-                }
-                Text(getName())
-                    .font(.body)
-                    .minimumScaleFactor(0.75)
-                    .lineLimit(1)
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                Spacer()
-
-                if windowInfo.windowType == .chat || windowInfo.windowType == .file {
-                    if isEditing {
-                        Button {
-                            isEditing.toggle()
-                        } label: {
-                            Label( "Done", systemImage: "checkmark")
-                                .font(.body)
-                                .labelStyle(DemoStyle())
+                    Text(getName())
+                        .font(.body)
+                        .minimumScaleFactor(0.75)
+                        .lineLimit(1)
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Spacer()
+                    
+                    if windowInfo.windowType == .chat || windowInfo.windowType == .file {
+                        if isEditing {
+                            Button {
+                                isEditing.toggle()
+                            } label: {
+                                Label( "Done", systemImage: "checkmark")
+                                    .font(.body)
+                                    .labelStyle(DemoStyle())
+                                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                            }
+                            .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
+                        }
+                        else {
+                            menu()
+                                .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                         }
-                        .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
-                    }
-                    else {
-                        menu()
-                        .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
-                        .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
                 }
             }

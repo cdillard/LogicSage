@@ -30,7 +30,7 @@ enum ViewMode {
 }
 
 // TURN OFF BEFORE RELEASE
-let gestureDebugLogs = true
+let gestureDebugLogs = false
 
 struct SageMultiView: View {
 
@@ -77,83 +77,136 @@ struct SageMultiView: View {
                 VStack(spacing: 0) {
                     
                     topArea()
-
-                    switch viewMode {
-                    case .editor:
-                        editorArea()
-                    case .chat:
-                        ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)
-                            .simultaneousGesture(TapGesture().onEnded { value in
-                                        self.windowManager.bringWindowToFront(window: self.window)
-                                  })
-                    case .project:
-                        ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                    case .webView:
-                        webViewArea()
-                    case .simulator:
-                        ZStack {
+                    VStack {
+                        
+                        switch viewMode {
+                        case .editor:
+                            editorArea()
+                        case .chat:
+                            ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)
+                                .simultaneousGesture(TapGesture().onEnded { value in
+                                    self.windowManager.bringWindowToFront(window: self.window)
+                                })
+                        case .project:
+                            ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                        case .webView:
+                            webViewArea()
+                        case .simulator:
+                            ZStack {
 #if !os(macOS)
-                            Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .ignoresSafeArea()
+                                Image(uiImage: settingsViewModel.actualReceivedSimulatorFrame ?? UIImage())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .ignoresSafeArea()
 #endif
-                        }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            self.windowManager.bringWindowToFront(window: self.window)
-                        })
-                    case .repoTreeView:
-                        NavigationView {
-                            if let root = settingsViewModel.root {
-                                RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window, windowManager: windowManager)
                             }
-                            else {
-                                Text("No root")
+                            .simultaneousGesture(TapGesture().onEnded {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            })
+                        case .repoTreeView:
+                            NavigationView {
+                                if let root = settingsViewModel.root {
+                                    RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: root, window: window, windowManager: windowManager)
+                                }
+                                else {
+                                    Text("No root")
+                                }
                             }
-                        }
 #if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
-
-                    case .windowListView:
-                        NavigationView {
-                            WindowList(windowManager: windowManager, showAddView: $showAddView)
-                        }
+                            
+                        case .windowListView:
+                            NavigationView {
+                                WindowList(windowManager: windowManager, showAddView: $showAddView)
+                            }
 #if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
-
-                    case .changeView:
-                        NavigationView {
-                            ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                        }
+                            
+                        case .changeView:
+                            NavigationView {
+                                ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                            }
 #if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
-
-                    case .workingChangesView:
-                        NavigationView {
-                            WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
-                        }
+                            
+                        case .workingChangesView:
+                            NavigationView {
+                                WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                            }
 #if !os(macOS)
-                        .navigationViewStyle(StackNavigationViewStyle())
+                            .navigationViewStyle(StackNavigationViewStyle())
 #endif
-
+                            
+                        }
+                        Spacer()
                     }
-                    Spacer()
-                }
 #if !os(tvOS)
-                .onChange(of: viewSize) { newViewSize in
-                    recalculateWindowSize(size: newViewSize.size)
-                }
-                .onChange(of: geometry.size) { size in 
-                    recalculateWindowSize(size: geometry.size)
-                }
+                    .onChange(of: viewSize) { newViewSize in
+                        recalculateWindowSize(size: newViewSize.size)
+                    }
+                    .onChange(of: geometry.size) { size in 
+                        recalculateWindowSize(size: geometry.size)
+                    }
 #endif
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    ZStack {
+                        Capsule()
+                            .fill(.white.opacity(0.666))
+                            .frame(width: 200, height: 15)
+                    }.padding(2)
+#if !os(macOS)
+                .hoverEffect(.automatic)
+#endif
+                        .if(!isDragDisabled) { view in
 
+                            view.gesture(
+                                DragGesture(minimumDistance: 3)
+                                    .onChanged { value in
+                                        if keyboardHeight != 0 {
+    #if !os(macOS)
+                                            hideKeyboard()
+    #endif
+                                        }
+                                        if gestureDebugLogs {
+
+                                            if isMoveGestureActivated == false {
+
+                                                print("MOVE gesture START = \(position)")
+                                            }
+                                            else {
+                                                print("MOVE gesture update = \(position)")
+                                            }
+                                        }
+                                        let now = Date()
+                                        if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
+                                            self.lastDragTime = now
+
+                                            dragsOnChange(value: value)
+                                        }
+                                    }
+                                    .onEnded { value in
+                                        if gestureDebugLogs {
+
+                                            print("MOVE gesture ended new Pos = \(position)")
+                                        }
+                                        isMoveGestureActivated = false
+                                    }
+                            )
+                            .simultaneousGesture(TapGesture().onEnded {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            })
+
+                        }
+
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+
+            }
             curvedEdgeArcZone(size: geometry.size)
+
         }
     }
     func editorArea() -> some View {
@@ -266,12 +319,9 @@ struct SageMultiView: View {
                         .allowsHitTesting(false)
 #if !os(macOS)
 #if !os(tvOS)
-
                     CustomPointerRepresentableView(mode: .topLeft)
 #endif
 #endif
-
-
                 }
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
@@ -296,7 +346,7 @@ struct SageMultiView: View {
                         .opacity(handleOpacity)
                         .allowsHitTesting(false)
                 }
-                .offset(x: size.width - settingsViewModel.cornerHandleSize, y: size.height - settingsViewModel.cornerHandleSize)
+                .offset(x: size.width - settingsViewModel.cornerHandleSize, y: size.height - settingsViewModel.cornerHandleSize - 20)
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
         }
@@ -317,11 +367,11 @@ struct SageMultiView: View {
                             #if !os(macOS)
                             hideKeyboard()
                             #endif
-                            let now = Date()
-
-                            self.lastDragTime = now
-
-                            return
+//                            let now = Date()
+//
+//                            self.lastDragTime = now
+//
+////                            return
                         }
                         if gestureDebugLogs {
 

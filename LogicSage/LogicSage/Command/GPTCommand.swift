@@ -432,7 +432,7 @@ func doChatGPT(conversationId: Conversation.ID) {
 
                         let text = (msgDict["content"] as? [String: [String]])?["parts"]?.first ?? ""
 
-                        logD("completed message w/ \(text)")
+                        //logD("completed message w/ \(text)")
 
                         // The final response
                         //                         let text = content.parts[0];
