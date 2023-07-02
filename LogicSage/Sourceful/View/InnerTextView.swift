@@ -189,11 +189,9 @@ class InnerTextView: TextViewUIKit {
         if index < codeBlocks.count {
             let codeBlock = codeBlocks[index]
 #if !os(macOS)
-#if !os(xrOS)
             // Copy the code to the clipboard
             UIPasteboard.general.string = codeBlock.text
             innerDelegate?.didCopyCode()
-#endif
 #endif
         }
         else {

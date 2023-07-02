@@ -142,7 +142,7 @@ extension SettingsViewModel {
     }
 
     func convoText(_ newConversation: Conversation) -> String {
-        var retString  = "model: \(newConversation.model ?? "")\nsystem: \(newConversation.systemPrompt ?? "")\n"
+        var retString  = "model: \(newConversation.model ?? "")\nsystem 🌱: \(newConversation.systemPrompt ?? "")\n"
         for msg in newConversation.messages {
             retString += "\(avatarTextForRole(role: msg.role)):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }

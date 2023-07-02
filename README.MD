@@ -113,7 +113,7 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 - [swift-png](https://github.com/kelvin13/swift-png)
 - [nonstrict-hq ScreenCaptureKit-Recording-example](https://github.com/nonstrict-hq/ScreenCaptureKit-Recording-example/)
 - [KeyboardAvoidanceSwiftUI](https://github.com/V8tr/KeyboardAvoidanceSwiftUI)
-
+- [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

@@ -184,7 +184,7 @@ struct ResizingHandle: View {
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
 
         case .topTrailing:
-            let lerpFactor: CGFloat = 0.02222
+            let lerpFactor: CGFloat = 0.03222
 
             newWidth = translation.width < 0 ? max(minSize, frame.width - abs(translation.width)) : max(minSize, frame.width + translation.width)
             newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
@@ -193,7 +193,7 @@ struct ResizingHandle: View {
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
 
         case .bottomTrailing:
-            let lerpFactor: CGFloat = 0.0122
+            let lerpFactor: CGFloat = 0.0222
 
             newWidth = max(minSize, frame.width + translation.width)
             newHeight = max(minSize, frame.height + translation.height)

@@ -17,13 +17,17 @@ struct TopBar: View {
     var body: some View {
         ZStack {
             VStack {
+                ZStack {
+                    Capsule()
+                        .fill(.white.opacity(0.666))
 #if !os(xrOS)
-                Capsule()
-                    .fill(.white.opacity(0.666))
-                    .frame(width: 200, height: 15)
-#if !os(macOS)
-                    .hoverEffect(.automatic)
+                        .frame(width: 200, height: 15)
+#else
+                        .frame(width: 200, height: 12)
 #endif
+                }
+#if !os(macOS)
+                .hoverEffect(.automatic)
 #endif
                 HStack(spacing: 0) {
                     Spacer()
@@ -110,7 +114,11 @@ struct TopBar: View {
             }
         }
         .background(SettingsViewModel.shared.backgroundColor)
+        #if !os(xrOS)
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
+        #else
+        .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize + 35)
+        #endif
     }
 
     func menu() -> some View {

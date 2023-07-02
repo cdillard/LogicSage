@@ -57,10 +57,12 @@ struct ChatBotomMenu: View {
                         }
                         Button(action: {
                             logD("selected SELECT system prompt")
+                            editingSystemPrompt = false
+
                             isSystemPromptSelectionPresented = true
 
                         }) {
-                            Text( editingSystemPrompt ? "Stop editing system message" :
+                            Text(
                                     "Choose from built-in system 🌱:")
                             .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                             .lineLimit(1)
@@ -100,36 +102,6 @@ struct ChatBotomMenu: View {
                     .padding(4)
                     
                 }
-//            }
-//            if showModelMenu {
-//                Menu {
-//                    modelOptions()
-//                }
-//            label: {
-//                ZStack {
-//                    if #available(iOS 16.0, *) {
-//                        
-//                        Label("", systemImage: "ellipsis")
-//                            .font(.title3)
-//                            .minimumScaleFactor(0.5)
-//                            .labelStyle(DemoStyle())
-//                            .background(Color.clear)
-//                            .tint(settingsViewModel.appTextColor)
-//                        
-//                    } else {
-//                        Label("", systemImage: "ellipsis")
-//                            .font(.title3)
-//                            .minimumScaleFactor(0.5)
-//                            .labelStyle(DemoStyle())
-//                            .background(Color.clear)
-//                    }
-//                    
-//                }
-//                .padding(4)
-//                
-//            }
-//            }
-//        }
         .sheet(isPresented: $isModalPresented) {
             ModalView(items: aiModelOptions)
         }
@@ -245,7 +217,7 @@ struct ModalView: View {
             .navigationBarItems(trailing: Button("Dismiss") {
                 presentationMode.wrappedValue.dismiss()
             })
-            .navigationTitle("Choose from available models")
+            .navigationTitle("Choose model:")
         }
     }
 }
@@ -269,7 +241,7 @@ struct ModalViewSystemPrompt: View {
             .navigationBarItems(trailing: Button("Dismiss") {
                 presentationMode.wrappedValue.dismiss()
             })
-            .navigationTitle("Choose from Available system msgs")
+            .navigationTitle("Choose system msg:")
         }
     }
 }
