@@ -56,6 +56,7 @@ struct LoadingLogicView: View {
     init() {
         let characterCount = chosenLogo.filter { $0 != "\n" }.count
         _showText = State(initialValue: Array(repeating: false, count: characterCount))
+        
         _positions = State(initialValue: (0..<characterCount).map { _ in LoadingLogicView.randomPosition() })
     }
 
@@ -97,6 +98,8 @@ struct LoadingLogicView: View {
             }
             .onAppear {
                 if hasSeenAnim() {
+                    print("already seen anim")
+
                 }
                 else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.98) {

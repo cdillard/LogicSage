@@ -17,9 +17,10 @@ struct Message {
 extension Message: Equatable, Codable, Hashable, Identifiable {}
 
 struct Conversation {
-    init(id: String, messages: [Message] = []) {
+    init(id: String, messages: [Message] = [], model: String? = nil) {
         self.id = id
         self.messages = messages
+        self.model = model
     }
     
     typealias ID = String

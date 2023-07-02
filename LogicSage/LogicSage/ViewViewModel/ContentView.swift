@@ -111,6 +111,13 @@ struct ContentView: View {
                                 setHasSeenAnim(true)
                             }
                     }
+                    else {
+                        Text(logoAscii6)
+#if !os(macOS)
+                            .font(Font(UIFont(name: "Menlo", size: 23)!))
+#endif
+                            .foregroundColor(randomColor)
+                    }
 #endif
                 }
                 .overlay(

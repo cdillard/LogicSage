@@ -43,7 +43,6 @@ struct ChatView: View {
             VStack(spacing: 0) {
                 ZStack {
 #if !os(tvOS)
-
                     SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
                                             SourceCodeTextEditor.Customization(didChangeText:
                                                                                 { srcCodeTextEditor in
@@ -65,7 +64,6 @@ struct ChatView: View {
                     }, codeDidCopy: {
                         onCopy()
                     } ), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
-
                     .onAppear {
                         Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
                             DispatchQueue.global(qos: .background).async {
@@ -84,11 +82,11 @@ struct ChatView: View {
 #if !os(tvOS)
 
                 messgeEntry(size: geometry.size)
-                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.trailing, settingsViewModel.cornerHandleSize)
-                .padding(.bottom, 0)
-                .frame(height: textEditorHeight + 30)
-                .background(settingsViewModel.backgroundColorSrcEditor)
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.trailing, settingsViewModel.cornerHandleSize)
+                    .padding(.bottom, 0)
+                    .frame(height: textEditorHeight + 30)
+                    .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
 
             }
@@ -193,57 +191,43 @@ struct ChatView: View {
 #endif
                     }
             }
-
-//#if !os(macOS)
-//            .hoverEffect(.automatic)
-//#endif
-            // END Chat message entry
-
             // BEGIN Chat bottom ... menu
-                // EXEC BUTTON
-                Button(action: {
-                    doChat()
-                }) {
-                    resizableButtonImage(systemName:
-                                            "paperplane.fill",
-                                         size: size)
-                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                    .background(Color.clear)
-#if !os(macOS)
-                    .hoverEffect(.automatic)
-#endif
-                }
-                .disabled(chatText.isEmpty)
-
             // EXEC BUTTON
             Button(action: {
-                setLockToBottom()
+                doChat()
             }) {
                 resizableButtonImage(systemName:
-                                        !isLockToBottom ? "arrow.down" : "lock",
+                                        "paperplane.fill",
                                      size: size)
-                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                    .lineLimit(1)
-//                    .foregroundColor(Color.white)
-                    .background(Color.clear)
-//#if !os(macOS)
-//                    .hoverEffect(.automatic)
-//#endif
+                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                .background(Color.clear)
+#if !os(macOS)
+                .hoverEffect(.automatic)
+#endif
             }
+            .disabled(chatText.isEmpty)
+
+            //            if notAtBottom {
+            //                Button(action: {
+            //                    setLockToBottom()
+            //                }) {
+            //                    resizableButtonImage(systemName:"arrow.down",
+            //                                         size: size)
+            //                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+            //                    .lineLimit(1)
+            //                    //                    .foregroundColor(Color.white)
+            //                    .background(Color.clear)
+            //                    //#if !os(macOS)
+            //                    //                    .hoverEffect(.automatic)
+            //                    //#endif
+            //                }
+            //            }
+
+            Spacer()
 
 
-                Spacer()
+            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
 
-            if #available(iOS 16.0, *) {
-                
-                ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
-                    .tint(settingsViewModel.appTextColor)
-            }
-                else {
-                    ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
-
-                }
-            // END Chat bottom ... menu
         }
     }
 #endif
@@ -262,13 +246,11 @@ struct ChatView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.appTextColor)
-               // .background(settingsViewModel.buttonColor)
         } else {
             return Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-               // .background(settingsViewModel.buttonColor)
         }
 #endif
     }
@@ -286,7 +268,7 @@ struct ChatView: View {
             if let convoId = sageMultiViewModel.windowInfo.convoId {
 
                 settingsViewModel.setConvoSystemMessage(convoId, newMessage: chatText)
-                
+
             }
             editingSystemPrompt = false
             chatText = ""

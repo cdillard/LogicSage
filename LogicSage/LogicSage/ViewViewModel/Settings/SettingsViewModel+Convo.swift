@@ -21,7 +21,6 @@ extension SettingsViewModel {
     }
     func saveConvosToDisk() {
         saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
-
     }
     func setSystemPromptIfNeeded(index: Int, systemMessage: String) {
         let msgCount = self.conversations[index].messages.count
@@ -33,7 +32,6 @@ extension SettingsViewModel {
                 createdAt: SettingsViewModel.shared.dateProvider()
             ), at: 0)
         }
-
     }
 
     func appendMessageToConvoIndex(index: Int, message: Message) {
@@ -54,7 +52,7 @@ extension SettingsViewModel {
         gptCommand(conversationId: convoID, input: chatText)
     }
     func createConversation() -> Conversation.ID {
-        let conversation = Conversation(id: idProvider(), messages: [])
+        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel)
         conversations.append(conversation)
         print("created new convo = \(conversation.id)")
         return conversation.id
@@ -146,7 +144,7 @@ extension SettingsViewModel {
     func convoText(_ newConversation: Conversation) -> String {
         var retString  = "model: \(newConversation.model ?? "")\nsystem: \(newConversation.systemPrompt ?? "")\n"
         for msg in newConversation.messages {
-            retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
+            retString += "\(avatarTextForRole(role: msg.role)):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }
         if newConversation.id == Conversation.ID(-1) {
             retString = consoleManagerText
@@ -172,5 +170,21 @@ extension SettingsViewModel {
         SettingsViewModel.shared.conversations[conversationIndex].systemPrompt = newMessage
 
         saveConvosToDisk()
+    }
+
+    func avatarTextForRole(role: Chat.Role) -> String {
+        switch role {
+        case .system:
+            return "system 🌱:"
+        case .assistant:
+            return savedBotAvatar
+
+        case .function:
+            return "GPT FUNCTION"
+
+        case .user:
+            return savedUserAvatar
+
+        }
     }
 }

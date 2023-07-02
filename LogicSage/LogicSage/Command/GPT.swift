@@ -72,19 +72,20 @@ class GPT {
                 content: manualPrompt ? config.manualPromptString : prompt,
                 createdAt: SettingsViewModel.shared.dateProvider()
             ))
-
             guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
                 logD("Unable to find conversations id == \(conversationId) ... failing")
 
                 return
             }
 
+            
             SettingsViewModel.shared.setSystemPromptIfNeeded(index: conversationIndex, systemMessage: conversation.systemPrompt ?? "")
 
+            guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
+                logD("Unable to find conversations id == \(conversationId) ... failing")
 
-
-
-
+                return
+            }
 
             SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
 
@@ -105,6 +106,7 @@ class GPT {
                 for try await partialChatResult in chatsStream {
                     for choice in partialChatResult.choices {
                         let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
+                        
                         let message = Message(
                             id: partialChatResult.id,
                             role: choice.delta.role ?? .assistant,
