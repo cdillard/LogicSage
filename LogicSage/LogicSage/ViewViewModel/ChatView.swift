@@ -36,6 +36,9 @@ struct ChatView: View {
     @State private var lastDragLocation: CGFloat = 0
     @State private var isDraggedDown: Bool = false
     @State private var showCheckmark: Bool = false
+
+    @State private var choseBuiltInPrompt: String = ""
+
     var body: some View {
         GeometryReader { geometry in
             let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
@@ -225,7 +228,17 @@ struct ChatView: View {
             Spacer()
 
 
-            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
+            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt)
+                .onChange(of: choseBuiltInPrompt) { value in
+
+                    logD("EDIT SYSTEM PROMPT TO \(choseBuiltInPrompt)")
+                    if let convoId = sageMultiViewModel.windowInfo.convoId {
+
+                        settingsViewModel.setConvoSystemMessage(convoId, newMessage: choseBuiltInPrompt)
+
+                    }
+                    editingSystemPrompt = false
+                }
 
         }
     }

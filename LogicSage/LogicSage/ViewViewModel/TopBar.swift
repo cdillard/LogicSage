@@ -21,6 +21,9 @@ struct TopBar: View {
                 Capsule()
                     .fill(.white.opacity(0.666))
                     .frame(width: 200, height: 15)
+#if !os(macOS)
+                    .hoverEffect(.automatic)
+#endif
 #endif
                 HStack(spacing: 0) {
                     Spacer()
@@ -34,7 +37,7 @@ struct TopBar: View {
                     }
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
-                    
+
                     if windowInfo.windowType == .project {
                         Button(action: {
                             logD("on side bar tap")
@@ -48,7 +51,7 @@ struct TopBar: View {
                         }
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                         .padding(.leading, 7)
-                        
+
                         // IF Debugger is running....
                         if settingsViewModel.isDebugging {
                             Button(action: {
@@ -84,7 +87,7 @@ struct TopBar: View {
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     Spacer()
-                    
+
                     if windowInfo.windowType == .chat || windowInfo.windowType == .file {
                         if isEditing {
                             Button {
@@ -128,7 +131,7 @@ struct TopBar: View {
 
                 ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
-                #endif
+#endif
             }
             if windowInfo.convoId == Conversation.ID(-1) {
 
@@ -161,7 +164,7 @@ struct TopBar: View {
                     .background(Color.clear)
 
             }
-                                .padding(4)
+            .padding(4)
 
         }
     }

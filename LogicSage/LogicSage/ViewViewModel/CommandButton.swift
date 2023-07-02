@@ -36,7 +36,7 @@ struct CommandButtonView: View {
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                                .hoverEffect(.automatic)
 #endif
                     }
 
@@ -56,7 +56,7 @@ struct CommandButtonView: View {
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                                .hoverEffect(.automatic)
 #endif
                     }
                 }

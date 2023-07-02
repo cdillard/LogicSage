@@ -75,10 +75,10 @@ struct SageMultiView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack(spacing: 0) {
-                    
+
                     topArea()
                     VStack {
-                        
+
                         switch viewMode {
                         case .editor:
                             editorArea()
@@ -115,7 +115,7 @@ struct SageMultiView: View {
 #if !os(macOS)
                             .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                            
+
                         case .windowListView:
                             NavigationView {
                                 WindowList(windowManager: windowManager, showAddView: $showAddView)
@@ -123,7 +123,7 @@ struct SageMultiView: View {
 #if !os(macOS)
                             .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                            
+
                         case .changeView:
                             NavigationView {
                                 ChangeList(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
@@ -131,7 +131,7 @@ struct SageMultiView: View {
 #if !os(macOS)
                             .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                            
+
                         case .workingChangesView:
                             NavigationView {
                                 WorkingChangesView(showAddView: $showAddView, sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
@@ -139,7 +139,7 @@ struct SageMultiView: View {
 #if !os(macOS)
                             .navigationViewStyle(StackNavigationViewStyle())
 #endif
-                            
+
                         }
                         Spacer()
                     }
@@ -147,7 +147,7 @@ struct SageMultiView: View {
                     .onChange(of: viewSize) { newViewSize in
                         recalculateWindowSize(size: newViewSize.size)
                     }
-                    .onChange(of: geometry.size) { size in 
+                    .onChange(of: geometry.size) { size in
                         recalculateWindowSize(size: geometry.size)
                     }
 #endif
@@ -155,50 +155,53 @@ struct SageMultiView: View {
                         Capsule()
                             .fill(.white.opacity(0.666))
                             .frame(width: 200, height: 15)
-                    }.padding(2)
+                    }
 #if !os(macOS)
-                .hoverEffect(.automatic)
+                    .hoverEffect(.automatic)
 #endif
-                        .if(!isDragDisabled) { view in
+                    .offset(y: -10)
 
-                            view.gesture(
-                                DragGesture(minimumDistance: 3)
-                                    .onChanged { value in
-                                        if keyboardHeight != 0 {
-    #if !os(macOS)
-                                            hideKeyboard()
-    #endif
+
+                    .if(!isDragDisabled) { view in
+
+                        view.gesture(
+                            DragGesture(minimumDistance: 3)
+                                .onChanged { value in
+                                    if keyboardHeight != 0 {
+#if !os(macOS)
+                                        hideKeyboard()
+#endif
+                                    }
+                                    if gestureDebugLogs {
+
+                                        if isMoveGestureActivated == false {
+
+                                            print("MOVE gesture START = \(position)")
                                         }
-                                        if gestureDebugLogs {
-
-                                            if isMoveGestureActivated == false {
-
-                                                print("MOVE gesture START = \(position)")
-                                            }
-                                            else {
-                                                print("MOVE gesture update = \(position)")
-                                            }
-                                        }
-                                        let now = Date()
-                                        if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
-                                            self.lastDragTime = now
-
-                                            dragsOnChange(value: value)
+                                        else {
+                                            print("MOVE gesture update = \(position)")
                                         }
                                     }
-                                    .onEnded { value in
-                                        if gestureDebugLogs {
+                                    let now = Date()
+                                    if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
+                                        self.lastDragTime = now
 
-                                            print("MOVE gesture ended new Pos = \(position)")
-                                        }
-                                        isMoveGestureActivated = false
+                                        dragsOnChange(value: value)
                                     }
-                            )
-                            .simultaneousGesture(TapGesture().onEnded {
-                                self.windowManager.bringWindowToFront(window: self.window)
-                            })
+                                }
+                                .onEnded { value in
+                                    if gestureDebugLogs {
 
-                        }
+                                        print("MOVE gesture ended new Pos = \(position)")
+                                    }
+                                    isMoveGestureActivated = false
+                                }
+                        )
+                        .simultaneousGesture(TapGesture().onEnded {
+                            self.windowManager.bringWindowToFront(window: self.window)
+                        })
+
+                    }
 
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -235,9 +238,9 @@ struct SageMultiView: View {
         .simultaneousGesture(TapGesture().onEnded {
             self.windowManager.bringWindowToFront(window: self.window)
         })
-        #else
+#else
         VStack { }
-        #endif
+#endif
     }
     func webViewArea() -> some View {
         VStack(spacing:0) {
@@ -247,13 +250,13 @@ struct SageMultiView: View {
 #if !os(tvOS)
 
                     goBackward()
-                    #endif
+#endif
                 }) {
                     Image(systemName: "backward.circle.fill")
                         .font(.title)
                         .minimumScaleFactor(0.75)
 #if !os(macOS)
-                .hoverEffect(.lift)
+                        .hoverEffect(.lift)
 #endif
                 }
                 .foregroundColor(settingsViewModel.buttonColor)
@@ -263,13 +266,13 @@ struct SageMultiView: View {
 #if !os(tvOS)
 
                     goForward()
-                    #endif
+#endif
                 }) {
                     Image(systemName: "forward.circle.fill")
                         .font(.title)
                         .minimumScaleFactor(0.75)
 #if !os(macOS)
-                .hoverEffect(.lift)
+                        .hoverEffect(.lift)
 #endif
                 }
                 .foregroundColor(settingsViewModel.buttonColor)
@@ -280,13 +283,13 @@ struct SageMultiView: View {
 #if !os(tvOS)
 
                     reload()
-                    #endif
+#endif
                 }) {
                     Image(systemName: "arrow.triangle.2.circlepath.circle")
                         .font(.title)
                         .minimumScaleFactor(0.75)
 #if !os(macOS)
-                .hoverEffect(.lift)
+                        .hoverEffect(.lift)
 #endif
                 }
                 .foregroundColor(settingsViewModel.buttonColor)
@@ -364,14 +367,9 @@ struct SageMultiView: View {
                 DragGesture(minimumDistance: 3)
                     .onChanged { value in
                         if keyboardHeight != 0 {
-                            #if !os(macOS)
+#if !os(macOS)
                             hideKeyboard()
-                            #endif
-//                            let now = Date()
-//
-//                            self.lastDragTime = now
-//
-////                            return
+#endif
                         }
                         if gestureDebugLogs {
 
@@ -403,12 +401,12 @@ struct SageMultiView: View {
             })
 
         }
-        #else
+#else
         VStack {}
 #endif
 
     }
-    #if !os(tvOS)
+#if !os(tvOS)
     private func goBackward() {
         sageMultiViewModel.webViewStore.webView.goBack()
     }
@@ -455,7 +453,7 @@ struct SageMultiView: View {
             if frame.size.height > size.height {
                 if keyboardHeight == 0 {
                     let hackedHeight = frame.size.height - size.height
-                     print("Hacked height == \(hackedHeight)")
+                    print("Hacked height == \(hackedHeight)")
                     position.height = max(60, position.height - hackedHeight)
                     frame.size.height = size.height
                 }
@@ -473,7 +471,7 @@ struct SageMultiView: View {
         else {
             webURL = URL(string: "http://www.google.com")!
         }
-        
+
         return webURL
     }
 #endif
@@ -485,10 +483,10 @@ class WebViewStore: ObservableObject {
     @Published var webView: WKWebView = WKWebView()
 
 
-//    lazy var config = WKWebViewConfiguration()
-//    config.userContentController = contentController
-//    config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-//    webView = WKWebView(frame: .zero, configuration: config)
+    //    lazy var config = WKWebViewConfiguration()
+    //    config.userContentController = contentController
+    //    config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+    //    webView = WKWebView(frame: .zero, configuration: config)
 }
 #if !os(macOS)
 #if !os(tvOS)
@@ -503,7 +501,7 @@ struct WebView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
 
-       // webViewStore.webView.uiDelegate = self
+        // webViewStore.webView.uiDelegate = self
         webViewStore.webView.navigationDelegate = context.coordinator
         return webViewStore.webView
     }
@@ -527,121 +525,121 @@ struct WebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             if let url = navigationAction.request.url {
                 parent.currentURL = url // Intercept URL
-     //           logD("Deciding policy for: \(url)")
+                //           logD("Deciding policy for: \(url)")
 
 
-//                webView.getCookies(for: "openai.com") { data in
-//                      logD("cookies=========================================")
-//                    for cookie in data {
-//                        logD("\(cookie.key)")
+                //                webView.getCookies(for: "openai.com") { data in
+                //                      logD("cookies=========================================")
+                //                    for cookie in data {
+                //                        logD("\(cookie.key)")
+                //
+                //                    }
+                //                    SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+                //
+                //                }
+                //
+                //                let headers = navigationAction.request.allHTTPHeaderFields
+                //                logD("Headers: \(headers ?? [:])")
+
+
+            }
+            decisionHandler(.allow)
+        }
 //
+//        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+//            //     logD("Did start provisional navigation")
+//        }
+//
+//        func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+//            //    logD("Did receive server redirect for provisional navigation")
+//        }
+//
+//        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+//            //    logD("Did fail provisional navigation with error: \(error)")
+//        }
+//
+//        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+//            //    logD("Did commit navigation")
+//        }
+//
+//        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//            //    logD("Did finish navigation")
+//            // Evaluate JavaScript to get page content
+//            if SettingsViewModel.shared.chatGPTAuth {
+//                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
+//                                           completionHandler: { (html: Any?, error: Error?) in
+//                    if let error = error {
+//                        logD("Failed to get page HTML: \(error)")
+//                    } else if let htmlString = html as? String {
+//                        //logD("Page HTML: \(htmlString)")
+//
+//
+//                        //                        webView.getCookies(for: "openai.com") { data in
+//                        //                              logD("cookies=========================================")
+//                        //                            for cookie in data {
+//                        //                                logD("\(cookie.key)")
+//                        //
+//                        //                            }
+//                        //                            SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+//                        //                        }
+//
+//                        // First, we need to extract JSON string from the HTML.
+//                        if let startRange = htmlString.range(of: "{"),
+//                           let endRange = htmlString.range(of: "}", options: .backwards) {
+//                            var jsonString = String(htmlString[startRange.lowerBound...(endRange.upperBound)])
+//                            if jsonString.last == "<" {
+//                                jsonString.removeLast()
+//                            }
+//                            // Convert the JSON string to data
+//                            if let jsonData = jsonString.data(using: .utf8) {
+//                                struct AccessToken: Decodable {
+//                                    let accessToken: String
+//                                }
+//
+//                                // Parse the data as JSON
+//                                let decoder = JSONDecoder()
+//                                do {
+//                                    let result = try decoder.decode(AccessToken.self, from: jsonData)
+//                                    //logD("Access token: Aquired from chatGPT.") // Here's your access token.
+//                                    SettingsViewModel.shared.accessToken = result.accessToken
+//                                } catch {
+//                                    logD("Failed to parse JSON: \(error)")
+//                                }
+//                            }
+//                        }
 //                    }
-//                    SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-//
-//                }
-//
-//                let headers = navigationAction.request.allHTTPHeaderFields
-//                logD("Headers: \(headers ?? [:])")
-
-                
-            }
-            decisionHandler(.allow)
-        }
-
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-       //     logD("Did start provisional navigation")
-        }
-
-        func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        //    logD("Did receive server redirect for provisional navigation")
-        }
-
-        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        //    logD("Did fail provisional navigation with error: \(error)")
-        }
-
-        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        //    logD("Did commit navigation")
-        }
-
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        //    logD("Did finish navigation")
-                // Evaluate JavaScript to get page content
-            if SettingsViewModel.shared.chatGPTAuth {
-                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
-                                           completionHandler: { (html: Any?, error: Error?) in
-                    if let error = error {
-                        logD("Failed to get page HTML: \(error)")
-                    } else if let htmlString = html as? String {
-                        //logD("Page HTML: \(htmlString)")
-                        
-                        
-                        //                        webView.getCookies(for: "openai.com") { data in
-                        //                              logD("cookies=========================================")
-                        //                            for cookie in data {
-                        //                                logD("\(cookie.key)")
-                        //
-                        //                            }
-                        //                            SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-                        //                        }
-                        
-                        // First, we need to extract JSON string from the HTML.
-                        if let startRange = htmlString.range(of: "{"),
-                           let endRange = htmlString.range(of: "}", options: .backwards) {
-                            var jsonString = String(htmlString[startRange.lowerBound...(endRange.upperBound)])
-                            if jsonString.last == "<" {
-                                jsonString.removeLast()
-                            }
-                            // Convert the JSON string to data
-                            if let jsonData = jsonString.data(using: .utf8) {
-                                struct AccessToken: Decodable {
-                                    let accessToken: String
-                                }
-                                
-                                // Parse the data as JSON
-                                let decoder = JSONDecoder()
-                                do {
-                                    let result = try decoder.decode(AccessToken.self, from: jsonData)
-                                    //logD("Access token: Aquired from chatGPT.") // Here's your access token.
-                                    SettingsViewModel.shared.accessToken = result.accessToken
-                                } catch {
-                                    logD("Failed to parse JSON: \(error)")
-                                }
-                            }
-                        }
-                    }
-                })
-            }
-            }
-
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-          //  logD("Did fail navigation with error: \(error)")
-        }
-
-        func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-           // logD("Deciding policy for navigation response")
-            decisionHandler(.allow)
-        }
-
-        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-           // logD("Web content process did terminate")
-        }
-
-        func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-           // logD("Did receive authentication challenge")
-
-
-//            webView.getCookies(for: "openai.com") { data in
-//                  logD("cookies=========================================")
-//                for cookie in data {
-//                    logD("\(cookie.key)")
-//
-//                }
-//                SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-//
+//                })
 //            }
-            completionHandler(.performDefaultHandling, nil)
-        }
+//        }
+//
+//        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+//            //  logD("Did fail navigation with error: \(error)")
+//        }
+//
+//        func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+//            // logD("Deciding policy for navigation response")
+//            decisionHandler(.allow)
+//        }
+//
+//        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+//            // logD("Web content process did terminate")
+//        }
+//
+//        func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//            // logD("Did receive authentication challenge")
+//
+//
+//            //            webView.getCookies(for: "openai.com") { data in
+//            //                  logD("cookies=========================================")
+//            //                for cookie in data {
+//            //                    logD("\(cookie.key)")
+//            //
+//            //                }
+//            //                SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
+//            //
+//            //            }
+//            completionHandler(.performDefaultHandling, nil)
+//        }
     }
 }
 class KeyboardResponder: ObservableObject {
@@ -666,24 +664,24 @@ class KeyboardResponder: ObservableObject {
 
 #if !os(tvOS)
 
-extension WKWebView {
-
-    private var httpCookieStore: WKHTTPCookieStore  { return WKWebsiteDataStore.default().httpCookieStore }
-
-    func getCookies(for domain: String? = nil, completion: @escaping ([String : Any])->())  {
-        var cookieDict = [String : AnyObject]()
-        httpCookieStore.getAllCookies { cookies in
-            for cookie in cookies {
-                if let domain = domain {
-                    if cookie.domain.contains(domain) {
-                        cookieDict[cookie.name] = cookie.properties as AnyObject?
-                    }
-                } else {
-                    cookieDict[cookie.name] = cookie.properties as AnyObject?
-                }
-            }
-            completion(cookieDict)
-        }
-    }
-}
+//extension WKWebView {
+//
+//    private var httpCookieStore: WKHTTPCookieStore  { return WKWebsiteDataStore.default().httpCookieStore }
+//
+//    func getCookies(for domain: String? = nil, completion: @escaping ([String : Any])->())  {
+//        var cookieDict = [String : AnyObject]()
+//        httpCookieStore.getAllCookies { cookies in
+//            for cookie in cookies {
+//                if let domain = domain {
+//                    if cookie.domain.contains(domain) {
+//                        cookieDict[cookie.name] = cookie.properties as AnyObject?
+//                    }
+//                } else {
+//                    cookieDict[cookie.name] = cookie.properties as AnyObject?
+//                }
+//            }
+//            completion(cookieDict)
+//        }
+//    }
+//}
 #endif

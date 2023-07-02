@@ -124,6 +124,8 @@
 		B777504B2A3FFA3500E836D3 /* EventStreamParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77750482A3FFA3500E836D3 /* EventStreamParser.swift */; };
 		B777506E2A42AD6E00E836D3 /* CurvedEdgeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */; };
 		B77750702A4346ED00E836D3 /* CustomPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506F2A4346ED00E836D3 /* CustomPointerView.swift */; };
+		B779DE992A51F75200A90331 /* SettingsViewModel+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B779DE982A51F75200A90331 /* SettingsViewModel+Model.swift */; };
+		B779DE9B2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B779DE9A2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift */; };
 		B78DA95F2A02AF01002343AB /* InstructionsPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */; };
 		B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */; };
 		B78DA9662A02AF3A002343AB /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9622A02AF3A002343AB /* SpinnerThread.swift */; };
@@ -313,6 +315,8 @@
 		B77750482A3FFA3500E836D3 /* EventStreamParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventStreamParser.swift; sourceTree = "<group>"; };
 		B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedEdgeArc.swift; sourceTree = "<group>"; };
 		B777506F2A4346ED00E836D3 /* CustomPointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointerView.swift; sourceTree = "<group>"; };
+		B779DE982A51F75200A90331 /* SettingsViewModel+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Model.swift"; sourceTree = "<group>"; };
+		B779DE9A2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+SystemPrompt.swift"; sourceTree = "<group>"; };
 		B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPopup.swift; sourceTree = "<group>"; };
 		B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
 		B78DA9622A02AF3A002343AB /* SpinnerThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
@@ -802,6 +806,8 @@
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B737F40C29F8395B00E57577 /* SettingsViewModel.swift */,
 				B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */,
+				B779DE982A51F75200A90331 /* SettingsViewModel+Model.swift */,
+				B779DE9A2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift */,
 				B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */,
 				B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */,
 			);
@@ -1048,6 +1054,7 @@
 				B78EAF602A117482003095A2 /* ChangeList.swift in Sources */,
 				B7544E432A191BCE00961F4C /* OpenAIProtocol+Async.swift in Sources */,
 				B71C62EC2A00312A004296E4 /* BGHandler.swift in Sources */,
+				B779DE992A51F75200A90331 /* SettingsViewModel+Model.swift in Sources */,
 				B71C62F52A018B5B004296E4 /* GPTCommand.swift in Sources */,
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,
 				B71C62F82A018C6D004296E4 /* Reset.swift in Sources */,
@@ -1065,6 +1072,7 @@
 				B70A00F32A1EB48200ADEF5A /* IDProvider.swift in Sources */,
 				B74A2CD129F7F6990051DB52 /* WSCompression.swift in Sources */,
 				B7544E2D2A191BCE00961F4C /* ChatStreamResult.swift in Sources */,
+				B779DE9B2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift in Sources */,
 				B7544E2A2A191BCE00961F4C /* ModerationsQuery.swift in Sources */,
 				B7544E422A191BCE00961F4C /* OpenAIProtocol.swift in Sources */,
 				B7A8A49C2A4517F700E897C5 /* ShapeView.swift in Sources */,
