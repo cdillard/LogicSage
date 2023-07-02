@@ -66,7 +66,6 @@ class GPT {
         }
 
         Task {
-
             SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
                 id: SettingsViewModel.shared.idProvider(),
                 role: role,
@@ -79,6 +78,13 @@ class GPT {
 
                 return
             }
+
+            SettingsViewModel.shared.setSystemPromptIfNeeded(index: conversationIndex, systemMessage: conversation.systemPrompt ?? "")
+
+
+
+
+
 
             SettingsViewModel.shared.nilOutConversationErrorsAt(convoId: conversationId)
 

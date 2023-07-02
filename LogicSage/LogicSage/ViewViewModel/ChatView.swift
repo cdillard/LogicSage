@@ -20,6 +20,7 @@ struct ChatView: View {
 
     @State var chatText = ""
     @State var textEditorHeight : CGFloat = 40
+    @State var editingSystemPrompt: Bool = false
 
     @Environment(\.dateProviderValue) var dateProvider
     @Environment(\.idProviderValue) var idProvider
@@ -152,7 +153,7 @@ struct ChatView: View {
                             .cornerRadius(16)
                     }
 
-                    Text("Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
+                    Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
                         .opacity(chatText.isEmpty ? 1.0 : 0.0 )
                         .padding(.leading,4)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
@@ -235,11 +236,11 @@ struct ChatView: View {
 
             if #available(iOS 16.0, *) {
                 
-                ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo)
+                ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
                     .tint(settingsViewModel.appTextColor)
             }
                 else {
-                    ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo)
+                    ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt)
 
                 }
             // END Chat bottom ... menu
@@ -279,17 +280,30 @@ struct ChatView: View {
 #if !os(macOS)
         hideKeyboard()
 #endif
-        if let convoID = sageMultiViewModel.windowInfo.convoId {
-            if convoID == Conversation.ID(-1) {
-                screamer.sendCommand(command: chatText)
+
+        if editingSystemPrompt {
+            logD("EDIT SYSTEM PROMPT TO ")
+            if let convoId = sageMultiViewModel.windowInfo.convoId {
+
+                settingsViewModel.setConvoSystemMessage(convoId, newMessage: chatText)
+                
             }
-            else {
-                settingsViewModel.sendChatText(convoID, chatText: chatText)
-            }
+            editingSystemPrompt = false
             chatText = ""
         }
         else {
-            logD("failed to chat")
+            if let convoID = sageMultiViewModel.windowInfo.convoId {
+                if convoID == Conversation.ID(-1) {
+                    screamer.sendCommand(command: chatText)
+                }
+                else {
+                    settingsViewModel.sendChatText(convoID, chatText: chatText)
+                }
+                chatText = ""
+            }
+            else {
+                logD("failed to chat")
+            }
         }
     }
     func setLockToBottom() {

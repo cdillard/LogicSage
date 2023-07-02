@@ -23,6 +23,19 @@ extension SettingsViewModel {
         saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
 
     }
+    func setSystemPromptIfNeeded(index: Int, systemMessage: String) {
+        let msgCount = self.conversations[index].messages.count
+        if msgCount == 1 {
+            self.conversations[index].messages.insert(Message(
+                id: SettingsViewModel.shared.idProvider(),
+                role: .system,
+                content: systemMessage,
+                createdAt: SettingsViewModel.shared.dateProvider()
+            ), at: 0)
+        }
+
+    }
+
     func appendMessageToConvoIndex(index: Int, message: Message) {
         self.conversations[index].model = openAIModel
         self.conversations[index].messages.append(message)
@@ -117,7 +130,7 @@ extension SettingsViewModel {
         return nil
     }
     func convoText(_ newConversations: [Conversation], window: WindowInfo?) -> String {
-        var retString  = "model: \(newConversations.first?.model ?? "")"
+        var retString  = "model: \(newConversations.first?.model ?? "")\nsystem: \(newConversations.first?.systemPrompt ?? "")\n"
         if let conversation = newConversations.first(where: { $0.id == window?.convoId }) {
             for msg in conversation.messages {
                 retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
@@ -131,7 +144,7 @@ extension SettingsViewModel {
     }
 
     func convoText(_ newConversation: Conversation) -> String {
-        var retString  = "model: \(newConversation.model ?? "")"
+        var retString  = "model: \(newConversation.model ?? "")\nsystem: \(newConversation.systemPrompt ?? "")\n"
         for msg in newConversation.messages {
             retString += "\(msg.role == .user ? savedUserAvatar : savedBotAvatar):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }
@@ -147,5 +160,17 @@ extension SettingsViewModel {
         }
 
         return "Term"
+    }
+
+    func setConvoSystemMessage(_ convoId: Conversation.ID, newMessage: String) {
+        print("set system messge of  convo id = \(convoId) to \(newMessage)")
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        SettingsViewModel.shared.conversations[conversationIndex].systemPrompt = newMessage
+
+        saveConvosToDisk()
     }
 }
