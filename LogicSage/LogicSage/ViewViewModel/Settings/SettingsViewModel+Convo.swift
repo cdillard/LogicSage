@@ -175,7 +175,7 @@ extension SettingsViewModel {
     func avatarTextForRole(role: Chat.Role) -> String {
         switch role {
         case .system:
-            return "system 🌱:"
+            return "system 🌱"
         case .assistant:
             return savedBotAvatar
 
@@ -185,6 +185,26 @@ extension SettingsViewModel {
         case .user:
             return savedUserAvatar
 
+        }
+    }
+
+    func genTitle(_ convoId: Conversation.ID, force: Bool = false, completion: @escaping (Bool) -> Void) {
+        GPT.shared.genTitle(conversationId: convoId, force: force) { content, success, isDone in
+            if !success {
+                logD("A.P.I. error gen Title, try again.")
+                completion(false)
+
+                return
+            }
+
+            if !isDone {
+            }
+            else {
+                logD("gen title =  \(content)")
+
+                self.renameConvo(convoId, newName: content)
+                completion(true)
+            }
         }
     }
 }

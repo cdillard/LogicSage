@@ -159,7 +159,8 @@ struct SageMultiView: View {
 #if !os(macOS)
                     .hoverEffect(.automatic)
 #endif
-                    .offset(y: -10)
+                    .offset(y: -10 - (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
+#if !os(tvOS)
 
 
                     .if(!isDragDisabled) { view in
@@ -202,6 +203,7 @@ struct SageMultiView: View {
                         })
 
                     }
+                    #endif
 
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -211,6 +213,7 @@ struct SageMultiView: View {
             curvedEdgeArcZone(size: geometry.size)
 
         }
+
     }
     func editorArea() -> some View {
 #if !os(tvOS)
@@ -231,10 +234,10 @@ struct SageMultiView: View {
         }, lexerForSource: { lexer in
             SwiftLexer()
         }, textViewDidBeginEditing: { srcEditor in
-            //                            print("srcEditor textViewDidBeginEditing")
+//                                        print("srcEditor textViewDidBeginEditing")
         }, theme: {
             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-        }, overrideText: { nil }, codeDidCopy: { }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
+        }, overrideText: { nil }, codeDidCopy: { }, windowType: { .file }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
         .simultaneousGesture(TapGesture().onEnded {
             self.windowManager.bringWindowToFront(window: self.window)
         })
@@ -299,7 +302,6 @@ struct SageMultiView: View {
             .background(settingsViewModel.backgroundColor)
 #if !os(macOS)
 #if !os(tvOS)
-
             WebView(url: getURL(), currentURL: $currentURL, webViewStore: sageMultiViewModel.webViewStore, request:URLRequest(url: getURL()) )
                 .simultaneousGesture(TapGesture().onEnded {
                     self.windowManager.bringWindowToFront(window: self.window)
@@ -349,7 +351,8 @@ struct SageMultiView: View {
                         .opacity(handleOpacity)
                         .allowsHitTesting(false)
                 }
-                .offset(x: size.width - settingsViewModel.cornerHandleSize, y: size.height - settingsViewModel.cornerHandleSize - 20)
+                .offset(x: size.width - settingsViewModel.cornerHandleSize,
+                        y: size.height - settingsViewModel.cornerHandleSize - 20 -  (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
         }
@@ -359,11 +362,11 @@ struct SageMultiView: View {
 
         TopBar(isEditing: $isEditing, onClose: {
             windowManager.removeWindow(window: window)
-        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel)
+        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight)
 
         .if(!isDragDisabled) { view in
 
-            view.gesture(
+            view.simultaneousGesture(
                 DragGesture(minimumDistance: 3)
                     .onChanged { value in
                         if keyboardHeight != 0 {
@@ -481,12 +484,6 @@ struct SageMultiView: View {
 
 class WebViewStore: ObservableObject {
     @Published var webView: WKWebView = WKWebView()
-
-
-    //    lazy var config = WKWebViewConfiguration()
-    //    config.userContentController = contentController
-    //    config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-    //    webView = WKWebView(frame: .zero, configuration: config)
 }
 #if !os(macOS)
 #if !os(tvOS)
@@ -500,8 +497,6 @@ struct WebView: UIViewRepresentable {
     let request: URLRequest
 
     func makeUIView(context: Context) -> WKWebView {
-
-        // webViewStore.webView.uiDelegate = self
         webViewStore.webView.navigationDelegate = context.coordinator
         return webViewStore.webView
     }
@@ -642,21 +637,7 @@ struct WebView: UIViewRepresentable {
 //        }
     }
 }
-class KeyboardResponder: ObservableObject {
-    @Published var currentHeight: CGFloat = 0
-    var keyboardShow: AnyCancellable?
-    var keyboardHide: AnyCancellable?
 
-    init() {
-        keyboardShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-            .map { $0.keyboardHeight }
-            .assign(to: \.currentHeight, on: self)
-
-        keyboardHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
-            .assign(to: \.currentHeight, on: self)
-    }
-}
 
 #endif
 #endif

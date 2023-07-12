@@ -81,8 +81,8 @@ class WindowManager: ObservableObject {
     }
 }
 
-struct WindowInfo: Identifiable, Equatable {
-    let id = UUID()
+public struct WindowInfo: Identifiable, Equatable {
+    public let id = UUID()
     var frame: CGRect
     var zIndex: Int
     var windowType: WindowType
@@ -91,7 +91,7 @@ struct WindowInfo: Identifiable, Equatable {
     var url: String?
     var convoId: Conversation.ID?
 
-    enum WindowType {
+    public enum WindowType {
         case webView
         case file
         case simulator

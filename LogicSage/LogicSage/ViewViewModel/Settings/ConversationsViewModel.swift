@@ -32,7 +32,6 @@ struct Conversation {
     var name: String?
     var model: String?
     var systemPrompt: String?
-
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

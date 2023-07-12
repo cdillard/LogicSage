@@ -26,7 +26,7 @@ struct InstructionsPopup: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     let email = "chrisbdillard@gmail.com"
     @State private var showCheckmark: Bool = false
-
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -36,55 +36,86 @@ struct InstructionsPopup: View {
                         .font(.title2)
                         .lineLimit(nil)
                         .foregroundColor(settingsViewModel.appTextColor)
-
+                    
                         .padding(geometry.size.width * 0.01)
                     Text("scroll down 📜⬇️4 more")
                         .font(.title2)
                         .foregroundColor(settingsViewModel.appTextColor)
-
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
                             Group {
-                                Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
-                                Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and Discussions and my contact info.")
-                                    .accentColor(settingsViewModel.buttonColor)
-                                Text("This app/project is an ALPHA. Email me with issues/suggestions @")
-                                Button(action: {
+                                Text("Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys).")
+                                    .minimumScaleFactor(0.466)
+                                
+                                Text("Please enter your API Key (via copy and paste) and it will be stored securely offline in your devices keychain. (Check the source code if you want)")
+                                    .minimumScaleFactor(0.466)
+                                
+                                VStack(spacing:2) {
+                                    Text("A.I. 🔑: ")
+                                        .font(.title3)
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                    TextField(
+                                        "",
+                                        text: $settingsViewModel.openAIKey
+                                    )
+                                    .border(.secondary)
+                                    .submitLabel(.done)
+                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
+#endif
+                                    .font(.title3)
+                                    .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-#if !os(tvOS)
-
-                                    let pasteboard = UIPasteboard.general
-                                    pasteboard.string = email
-                                    onCopy()
-
+                                    .autocorrectionDisabled(!true)
 #endif
+#if !os(macOS)
+                                    .autocapitalization(.none)
 #endif
-
-                                }) {
-                                    Text(verbatim: "\(email) (Tap to Copy)")
-                                        .foregroundColor(settingsViewModel.buttonColor)
                                 }
-                                Text("Check out Settings to set your A.I. key. Set up LogicSage for Mac to use additional functions from the Term window. Term window with LogicSage for Mac allows you to use Xcode from your iOS device.")
+                                Divider()
+                                Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and to post Github issues.")
+                                    .accentColor(settingsViewModel.buttonColor)
+                                
                             }
-
-                            Text("Check out the repo for info on setting up server.")
-                            Text("To Run The server: Make sure you have at minimum taken these steps:")
-                            Text("0. Set your Computers API Key for A.I. in GPT-Info.plist before building and running the LogicSage for Mac via ./run.sh")
-                            Text("Without this step, the LogicSage server will not work.")
+                            
+                            Text("Download repository from github and execute ./run.sh from project root to start LogicSage for Mac Server.")
                         }
-
+                        Divider()
+                        
                         Text("-CREDITS: https://github.com/cdillard/LogicSage#credits")
                             .foregroundColor(settingsViewModel.appTextColor)
                             .accentColor(settingsViewModel.buttonColor)
-
+                        
                         Text("Thank you!!! to the open source maintainers who created the MIT and Apache 2.0 Licensed source included in this project.")
+                        Divider()
+                        
+                        Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
+                        Divider()
+                        
+                        Text("This app/project is an experiment. Email me with your issues, suggestions, or just to chat @")
+                        Button(action: {
+#if !os(macOS)
+#if !os(tvOS)
+                            let pasteboard = UIPasteboard.general
+                            pasteboard.string = email
+                            onCopy()
+#endif
+#endif
+                            
+                        }) {
+                            Text(verbatim: "\(email) (Tap to Copy)")
+                                .foregroundColor(settingsViewModel.buttonColor)
+                        }
+                        
                     }
                     .padding(.leading, 15)
                     .padding(.trailing, 15)
                     .foregroundColor(settingsViewModel.appTextColor)
                     .background(settingsViewModel.backgroundColor)
                     .padding(geometry.size.width * 0.01)
-
+                    
                     Button(action: {
                         isPresented = false
                         setHasSeenInstructions(true)
@@ -97,15 +128,20 @@ struct InstructionsPopup: View {
                             .padding(geometry.size.width * 0.01)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
+                            .minimumScaleFactor(0.466)
+                        
                     }
                     .padding(geometry.size.width * 0.01)
+                    .padding(.bottom, 20)
+                    
+                    .padding(.vertical, 20)
                 }
                 .padding(.top, 30)
                 .padding(.bottom, 30)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             }
-            .overlay(CheckmarkView(isVisible: $showCheckmark))
+            .overlay(CheckmarkView(text: "Copied", isVisible: $showCheckmark))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(settingsViewModel.backgroundColor)
             .onAppear {
@@ -114,12 +150,16 @@ struct InstructionsPopup: View {
 #endif
             }
         }
+#if os(xrOS)
+        .padding()
+        .glassBackgroundEffect()
+#endif
     }
     private func onCopy() {
         withAnimation(Animation.easeInOut(duration: 0.666)) {
             showCheckmark = true
         }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
             withAnimation(Animation.easeInOut(duration: 0.6666)) {
                 showCheckmark = false

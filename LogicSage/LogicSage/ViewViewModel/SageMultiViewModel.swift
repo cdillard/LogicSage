@@ -28,7 +28,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var conversation: Conversation?
 
     #if !os(tvOS)
-    @State var webViewStore = WebViewStore()
+    @State var webViewStore: WebViewStore = WebViewStore()
     #endif
     @State var navigationInProgress = false
 
@@ -56,6 +56,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
         self.frame = frame
 
         self.conversation = conversation
+
     }
 
     func refreshChanges(newText: String) {

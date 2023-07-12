@@ -16,11 +16,11 @@ struct NewViewerButton: View {
 #endif
 
     var body: some View {
-        Button("New App Window") {
+        Button("Add Window") {
 #if !os(tvOS)
-
             openWindow(id: "LogicSage-main")
-            #endif
+#endif
         }
     }
 }
+

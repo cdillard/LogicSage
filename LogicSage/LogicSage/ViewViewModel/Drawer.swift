@@ -15,31 +15,31 @@ struct DrawerContent: View {
     @Binding var viewSize: CGRect
     @Binding var showSettings: Bool
     @Binding var showAddView: Bool
+    
+    @State var presentRenamer: Bool = false
 
-    @State var presentRenamer: Bool = false {
-        didSet {
-            if #available(iOS 16.0, *) {
-            }
-            else {
-                if presentRenamer {
-#if !os(macOS)
-                    LogicSage.alert(subject: "convo", convoId: renamingConvo?.id)
-#endif
-                }
-            }
-        }
-    }
     @State private var newName: String = ""
     @State var renamingConvo: Conversation? = nil
     @State var isDeleting: Bool = false
     @State var isDeletingIndex: Int = -1
     @Binding var tabSelection: Int
 
-    func rowString(convo: Conversation) -> String {
-        convo.name ?? String(convo.id.prefix(4))
+    @State private var showRenamed: Bool = false
+
+    private func onRename() {
+        withAnimation(Animation.easeInOut(duration: 0.666)) {
+            showRenamed = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
+            withAnimation(Animation.easeInOut(duration: 0.6666)) {
+                showRenamed = false
+            }
+        }
     }
+
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS)
+#if os(macOS) || os(tvOS) || os(xrOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
@@ -59,59 +59,71 @@ struct DrawerContent: View {
                 .frame(width: max(30, size.width / 12), height: 32.666 )
                 .background(settingsViewModel.buttonColor)
         }
-        #endif
+#endif
     }
     var body: some View {
         GeometryReader { geometry in
             HStack(alignment: .top, spacing: 1) {
                 VStack(alignment: .leading, spacing: 1) {
-                    ScrollView {
-                        topButtons(size: geometry.size)
+                    topButtons(size: geometry.size)
                         .padding(.top)
                         .padding(.trailing)
                         .padding(.leading)
+
+                    ScrollView {
                         ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
                             Divider().foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
                             HStack(spacing: 0) {
-                                ZStack {
-                                    Text("💬 \(rowString(convo: convo))")
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(4)
-                                        .minimumScaleFactor(0.69)
-                                        .padding(.leading, 2)
-                                        .font(.body)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                }
-                                .onTapGesture {
+                                Button( action : {
                                     withAnimation {
                                         tabSelection = 1
-
+                                        
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                             settingsViewModel.latestWindowManager = windowManager
                                             playSelect()
                                             settingsViewModel.openConversation(convo.id)
                                         }
                                     }
+                                }) {
+                                    ZStack {
+                                        Text("\(convo.name ?? String(convo.id.prefix(4))) 💬")
+                                            .multilineTextAlignment(.trailing)
+                                            .lineLimit(4)
+                                            .minimumScaleFactor(0.69)
+                                            .padding(.leading, 2)
+                                            .padding(.trailing, 20)
+                                        
+                                            .font(.body)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
+                                        
+                                    }
+                                    
+                                    
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
                                 }
-                                .frame(maxWidth: .infinity)
 #if !os(macOS)
-                                .hoverEffect(.lift)
+                                .hoverEffect(.automatic)
 #endif
-
-                                Spacer()
 
                                 if isDeleting && isDeletingIndex > -1 && isDeletingIndex == index {
                                     Button( action : {
                                         withAnimation {
                                             isDeleting = false
-
+                                            
                                             isDeletingIndex = -1
                                             settingsViewModel.latestWindowManager = windowManager
-
+                                            
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
+                                                
                                                 settingsViewModel.deleteConversation(convo.id)
+
+                                                isDeleting = true
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+                                                    isDeleting = false
+                                                    isDeletingIndex = -1
+                                                }
                                             }
                                         }
                                     }) {
@@ -126,7 +138,7 @@ struct DrawerContent: View {
                                         .animation(.easeIn(duration: 0.25), value: isDeleting)
                                     }
                                     .buttonStyle(MyButtonStyle())
-
+                                    
                                     Button( action : {
                                         isDeleting = false
                                         isDeletingIndex = -1
@@ -144,14 +156,33 @@ struct DrawerContent: View {
                                     .buttonStyle(MyButtonStyle())
                                 }
                                 else {
+                                    
+                                    // Generate name for convo
                                     Button( action : {
-                                        renamingConvo = convo
+                                        logD("Doing chat title generation...")
 
-                                        presentRenamer = true
+                                        settingsViewModel.genTitle(convo.id, force: true) { success in
+                                            // successfull renamed with AI
+                                            if success {
+                                                logD("successfully genn title")
+                                                isDeleting = true
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                    onRename()
+
+                                                    isDeleting = false
+                                                    isDeletingIndex = -1
+                                                }
+
+                                            }
+                                            else {
+                                                logD("fail gen title")
+                                            }
+                                        }
+
 
                                     }) {
                                         resizableButtonImage(systemName:
-                                                                "rectangle.and.pencil.and.ellipsis",
+                                                                "pencil.and.outline",
                                                              size: geometry.size)
 #if !os(macOS)
                                         .hoverEffect(.lift)
@@ -161,7 +192,28 @@ struct DrawerContent: View {
                                         .animation(.easeIn(duration: 0.25), value: isDeleting)
                                     }
                                     .buttonStyle(MyButtonStyle())
-
+                                    
+                                    
+                                    
+                                    Button( action : {
+                                        renamingConvo = convo
+                                        
+                                        presentRenamer = true
+                                        
+                                    }) {
+                                        resizableButtonImage(systemName:
+                                                                "rectangle.and.pencil.and.ellipsis",
+                                                             size: geometry.size)
+#if !os(macOS)
+                                        .hoverEffect(.lift)
+#endif
+                                        .lineLimit(1)
+                                        .padding(.leading, 7)
+                                        .padding(.trailing, 7)
+                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                    }
+                                    .buttonStyle(MyButtonStyle())
+                                    
                                     Button( action : {
                                         isDeleting = true
                                         isDeletingIndex = index
@@ -184,105 +236,74 @@ struct DrawerContent: View {
                     .minimumScaleFactor(0.9666)
                     .foregroundColor(settingsViewModel.appTextColor)
                     .modify { view in
-#if os(macOS)
-                        if #available(macOS 12.0, *) {
-
-                            view.alert("Rename convo", isPresented: $presentRenamer, actions: {
-                                TextField("New name", text: $newName)
-
-                                Button("Rename", action: {
-                                    settingsViewModel.latestWindowManager = windowManager
-
-                                    presentRenamer = false
-                                    if let convoID = renamingConvo?.id {
-                                        settingsViewModel.renameConvo(convoID, newName: newName)
-                                        renamingConvo = nil
-
-                                    }
-                                    else {
-                                        logD("no rn")
-                                    }
-
+                        view.alert("Rename convo", isPresented: $presentRenamer, actions: {
+                            TextField("New name", text: $newName)
+                            
+                            Button("Rename", action: {
+                                settingsViewModel.latestWindowManager = windowManager
+                                
+                                presentRenamer = false
+                                if let convoID = renamingConvo?.id {
+                                    settingsViewModel.renameConvo(convoID, newName: newName)
                                     renamingConvo = nil
-                                    newName = ""
-
-                                })
-                                Button("Cancel", role: .cancel, action: {
-                                    renamingConvo = nil
-                                    presentRenamer = false
-                                    newName = ""
-                                })
-                            }, message: {
-                                if let renamingConvo {
-                                    Text("Please enter new name for convo \(rowString(convo:renamingConvo))")
+                                    
                                 }
                                 else {
-                                    Text("Please enter new name")
+                                    logD("no rn")
                                 }
+                                
+                                renamingConvo = nil
+                                newName = ""
+                                
                             })
-                        }
-                        #else
-                        if #available(iOS 15.0, *) {
-
-                            view.alert("Rename convo", isPresented: $presentRenamer, actions: {
-                                TextField("New name", text: $newName)
-
-                                Button("Rename", action: {
-                                    settingsViewModel.latestWindowManager = windowManager
-
-                                    presentRenamer = false
-                                    if let convoID = renamingConvo?.id {
-                                        settingsViewModel.renameConvo(convoID, newName: newName)
-                                        renamingConvo = nil
-
-                                    }
-                                    else {
-                                        logD("no rn")
-                                    }
-
-                                    renamingConvo = nil
-                                    newName = ""
-
-                                })
-                                Button("Cancel", role: .cancel, action: {
-                                    renamingConvo = nil
-                                    presentRenamer = false
-                                    newName = ""
-                                })
-                            }, message: {
-                                if let renamingConvo {
-                                    Text("Please enter new name for convo \(rowString(convo:renamingConvo))")
-                                }
-                                else {
-                                    Text("Please enter new name")
-                                }
+                            Button("Cancel", role: .cancel, action: {
+                                renamingConvo = nil
+                                presentRenamer = false
+                                newName = ""
                             })
-                        }
-                        #endif
+                        }, message: {
+                            if let renamingConvo {
+                                Text("Please enter new name for convo")
+                            }
+                            else {
+                                Text("Please enter new name")
+                            }
+                        })
                     }
                 }
             }
             .zIndex(9)
         }
-    }
+#if !os(xrOS)
 
+        .overlay(CheckmarkView(text: "Renamed", isVisible: $showRenamed))
+#endif
+
+    }
+    
     func topButtons(size: CGSize) -> some View {
         HStack(spacing: 0) {
 #if os(macOS)
             NewViewerButton()
-                .font(.body)
-                .lineLimit(1)
-                .minimumScaleFactor(0.666)
+
                 .foregroundColor(settingsViewModel.appTextColor)
 #else
-
+            
             if UIDevice.current.userInterfaceIdiom != .phone {
                 if #available(iOS 16.0, *) {
                     NewViewerButton()
+                        .buttonStyle(MyButtonStyle())
+
                         .font(.body)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.666)
+                        .lineLimit(0)
+                        .minimumScaleFactor(0.1)
+//                        .padding()
+                        .border(.secondary)
+
                         .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                .hoverEffect(.automatic)
+#endif
                 }
             }
 #endif
@@ -300,15 +321,15 @@ struct DrawerContent: View {
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
             }
-
+            
             .buttonStyle(MyButtonStyle())
-
+            
             Button( action : {
                 withAnimation {
                     tabSelection = 1
-
+                    
                     settingsViewModel.latestWindowManager = windowManager
-
+                    
                     settingsViewModel.createAndOpenServerChat()
                 }
             }) {
@@ -319,7 +340,7 @@ struct DrawerContent: View {
                     Text("Term")
                         .font(.body)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.666)
+                        .minimumScaleFactor(0.01)
                         .foregroundColor(settingsViewModel.appTextColor)
                 }
 #if !os(macOS)
@@ -329,7 +350,7 @@ struct DrawerContent: View {
                 .padding(.trailing, 8)
             }
             .buttonStyle(MyButtonStyle())
-
+            
             Button( action : {
                 withAnimation {
                     tabSelection = 2
@@ -341,14 +362,14 @@ struct DrawerContent: View {
                 }
             }) {
                 VStack(spacing:0) {
-
+                    
                     resizableButtonImage(systemName:
                                             "gearshape",
                                          size: size)
                     Text("Settings")
                         .font(.body)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.666)
+                        .minimumScaleFactor(0.01)
                         .foregroundColor(settingsViewModel.appTextColor)
                 }
 #if !os(macOS)
@@ -358,14 +379,14 @@ struct DrawerContent: View {
                 .padding(.trailing, 8)
             }
             .buttonStyle(MyButtonStyle())
-
+            
             Button( action : {
                 withAnimation {
                     tabSelection = 3
                     if showSettings {
                         showSettings = false
                     }
-
+                    
                     DispatchQueue.main.async {
                         withAnimation {
                             showAddView = true
@@ -380,10 +401,10 @@ struct DrawerContent: View {
                     Text("Add")
                         .font(.body)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.666)
+                        .minimumScaleFactor(0.01)
                         .foregroundColor(settingsViewModel.appTextColor)
                 }
-
+                
 #if !os(macOS)
                 .hoverEffect(.lift)
 #endif
@@ -391,7 +412,7 @@ struct DrawerContent: View {
                 .padding(.trailing, 8)
             }
             .buttonStyle(MyButtonStyle())
-
+            
             Spacer()
             Button( action : {
                 withAnimation {
@@ -409,7 +430,7 @@ struct DrawerContent: View {
                                          size: size)
                     Text("New Chat")
                         .font(.body)
-                        .minimumScaleFactor(0.666)
+                        .minimumScaleFactor(0.01)
                         .lineLimit(1)
                         .foregroundColor(settingsViewModel.appTextColor)
                 }

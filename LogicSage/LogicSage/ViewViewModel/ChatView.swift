@@ -38,68 +38,74 @@ struct ChatView: View {
     @State private var showCheckmark: Bool = false
 
     @State private var choseBuiltInPrompt: String = ""
+    @FocusState var inFocus
 
     var body: some View {
         GeometryReader { geometry in
-            let keyboardTop = geometry.frame(in: .global).height - keyboardHeight
+            ScrollViewReader { sp in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        let usableKeyboardHeight = sageMultiViewModel.frame.height > keyboardHeight ? (inFocus ? keyboardHeight : 0) : 0
 
-            VStack(spacing: 0) {
-                ZStack {
 #if !os(tvOS)
-                    SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
-                                            SourceCodeTextEditor.Customization(didChangeText:
-                                                                                { srcCodeTextEditor in
-                        // do nothing
-                    }, insertionPointColor: {
+                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
+                                                SourceCodeTextEditor.Customization(didChangeText:
+                                                                                    { srcCodeTextEditor in
+                            // do nothing
+                        }, insertionPointColor: {
 #if !os(macOS)
-                        Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
+                            Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
 #else
-                        Colorv(.darkGreen)
+                            Colorv(.darkGreen)
 #endif
-                    }, lexerForSource: { lexer in
-                        SwiftLexer()
-                    }, textViewDidBeginEditing: { srcEditor in
-                        // do nothing
-                    }, theme: {
-                        ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
-                    }, overrideText:  {
-                        return sageMultiViewModel.getConvoText()
-                    }, codeDidCopy: {
-                        onCopy()
-                    } ), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
-                    .onAppear {
-                        Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
-                            DispatchQueue.global(qos: .background).async {
-                                if let convoId = sageMultiViewModel.windowInfo.convoId {
-                                    let convo = settingsViewModel.getConvo(convoId)
-                                    DispatchQueue.main.async {
-                                        sageMultiViewModel.conversation = convo
+                        }, lexerForSource: { lexer in
+                            SwiftLexer()
+                        }, textViewDidBeginEditing: { srcEditor in
+                            // do nothing
+                        }, theme: {
+                            ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
+                        }, overrideText:  {
+                            return sageMultiViewModel.getConvoText()
+                        }, codeDidCopy: {
+                            onCopy()
+                        }, windowType: {.chat }), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
+                        .onAppear {
+                            // TODO: Fix to use proper published.
+                            Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
+                                DispatchQueue.global(qos: .background).async {
+                                    if let convoId = sageMultiViewModel.windowInfo.convoId {
+                                        let convo = settingsViewModel.getConvo(convoId)
+                                        DispatchQueue.main.async {
+                                            sageMultiViewModel.conversation = convo
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-#endif
-                }
-                .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(tvOS)
+                        .frame(height: geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight)
 
-                messgeEntry(size: geometry.size)
-                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.trailing, settingsViewModel.cornerHandleSize)
-                    .padding(.bottom, 0)
-                    .frame(height: textEditorHeight + 30)
-                    .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
+#if !os(tvOS)
+                        
+                        messgeEntry(size: geometry.size)
+                            .padding(.trailing, settingsViewModel.cornerHandleSize)
+                                            .padding(.bottom, 0)
+                            .frame(height: textEditorHeight + 30)
+                            .background(settingsViewModel.backgroundColorSrcEditor)
+#endif
+                    }
+                    .overlay(CheckmarkView(text: "Copied", isVisible: $showCheckmark))
+                    .cornerRadius(16)
+
+                }
+                .onChange(of: inFocus) { id in
+                     withAnimation {
+                         sp.scrollTo(id)
+                     }
+                 }
+                .frame(height: geometry.size.height + 40)
+
             }
-            .frame( maxWidth: .infinity, maxHeight: .infinity)
-            .overlay(CheckmarkView(isVisible: $showCheckmark))
-            .cornerRadius(16)
-#if !os(xrOS)
-#if !os(macOS)
-            .keyboardAdaptive(keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset, keyboardTop: keyboardTop, safeAreaInsetBottom: geometry.safeAreaInsets.bottom)
-#endif
-#endif
         }
     }
 #if !os(tvOS)
@@ -117,7 +123,6 @@ struct ChatView: View {
                             Color.clear.preference(key: ViewHeightKey.self,
                                                    value: $0.frame(in: .local).size.height)
                         })
-                    if #available(iOS 16.0, *) {
                         TextEditor(text: $chatText)
                             .lineLimit(nil)
                             .font(.system(size: settingsViewModel.fontSizeSrcEditor))
@@ -135,23 +140,7 @@ struct ChatView: View {
 #if !os(xrOS)
                             .scrollDismissesKeyboard(.interactively)
 #endif
-
-                    }
-                    else {
-                        TextEditor(text: $chatText)
-                            .lineLimit(nil)
-                            .font(.system(size: settingsViewModel.fontSizeSrcEditor))
-                            .foregroundColor(settingsViewModel.plainColorSrcEditor)
-                            .background(settingsViewModel.backgroundColorSrcEditor)
-                            .frame(height: max( 40, textEditorHeight))
-#if !os(macOS)
-                            .autocorrectionDisabled(!settingsViewModel.autoCorrect)
-#endif
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
-                            .cornerRadius(16)
-                    }
+                            .focused($inFocus)
 
                     Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
                         .opacity(chatText.isEmpty ? 1.0 : 0.0 )
@@ -160,7 +149,7 @@ struct ChatView: View {
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
                         .allowsHitTesting(false)
 
-                    if keyboardHeight != 0 {
+                    if keyboardHeight != 0 && inFocus {
                         AnimatedArrow()
                             .zIndex(994)
                             .simultaneousGesture(TapGesture().onEnded {

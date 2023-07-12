@@ -9,11 +9,20 @@ import Foundation
 import SwiftUI
 import Combine
 import StoreKit
+import AVFoundation
 
 public class SettingsViewModel: ObservableObject {
 
     public static let shared = SettingsViewModel()
 
+    //preload webkit
+#if !os(tvOS)
+    var _preLoadWebViewStore: WebViewStore = WebViewStore()
+#endif
+    
+    let speechSynthesizer = AVSpeechSynthesizer()
+    let speakerDelegate = SpeakerDelegate()
+    
     let keychainManager = KeychainManager()
 
 // BEGIN TERMINAL ZONE **************************************************************************************
@@ -52,7 +61,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var showAudioSettings: Bool = false
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
-    @AppStorage("defaultURL") var defaultURL = "https://"
+    @AppStorage("defaultURL") var defaultURL = "https://chat.openai.com"
     @AppStorage("chatUpdateInterval") var chatUpdateInterval: Double = 0.5
 
     @Published var initalAnim: Bool = false
@@ -261,6 +270,14 @@ public class SettingsViewModel: ObservableObject {
             }
         }
     }
+    @AppStorage("openAIHost") var openAIHost = "api.openai.com" {
+        didSet {
+            DispatchQueue.main.async {
+                GPT.shared.resetOpenAI()
+            }
+        }
+    }
+
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
     @AppStorage("gitUser") var gitUser = "\(defaultOwner)"
     // It's not okay to only allow lowercase. The forking API is case-sensitive with repos so we must be vigilant and use the same case when working with Github. OK?

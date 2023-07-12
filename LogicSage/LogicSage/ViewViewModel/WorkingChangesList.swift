@@ -73,7 +73,6 @@ struct WorkingChangesView: View {
                     .padding(.trailing, 16)
                 }
                 .modify { view in
-                    if #available(iOS 15.0, *) {
 
                         view.confirmationDialog("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?", isPresented: $isPresentingAlert) {
                             Button("Yes") {
@@ -88,13 +87,12 @@ struct WorkingChangesView: View {
                             Text("Are you sure you want to create a PR on \(settingsViewModel.gitRepo)?")
                         }
                     }
-                }
 
             }
         }
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS)
+#if os(macOS) || os(tvOS) || os(xrOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()

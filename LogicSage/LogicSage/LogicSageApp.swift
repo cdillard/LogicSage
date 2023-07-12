@@ -29,14 +29,23 @@ var serviceDiscovery: ServiceDiscovery?
 
 @main
 struct LogicSageApp: App {
+
+    @StateObject var appModel = AppModel()
+
     @StateObject private var settingsViewModel = SettingsViewModel.shared
+
+#if os(xrOS)
+
+    @State var immersionState: ImmersionStyle = .mixed
+    #endif
 
     init() {
         serviceDiscovery = ServiceDiscovery()
     }
     var body: some Scene {
-        WindowGroup(id: "LogicSage-main") {
+        WindowGroup("LogicSage", id: "LogicSage-main") {
             ContentView(settingsViewModel: settingsViewModel)
+                .environmentObject(appModel)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
 
@@ -68,7 +77,34 @@ struct LogicSageApp: App {
         }
 
 #if os(xrOS)
-        //        .windowStyle(.plain)
+                .windowStyle(.plain)
+#endif
+#if os(xrOS)
+
+        ImmersiveSpace(id: "ImmersiveSpace") {
+            ImmersiveView(immersionMode: .immersive)
+                .environmentObject(appModel)
+
+        }
+        .immersionStyle(selection: $immersionState, in: .mixed)
+
+        WindowGroup(id: "ImmersiveSpaceVolume") {
+            ImmersiveView(immersionMode: .volumetric)
+                .environmentObject(appModel)
+
+        }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 2, height: 2.6, depth: 2.6, in: .meters)
+
+
+        WindowGroup(id: "LogoVolume") {
+            ImmersiveLogoView()
+                .environmentObject(appModel)
+
+        }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 1.6, height: 1.6, depth: 1.6, in: .meters)
+
 #endif
     }
 }

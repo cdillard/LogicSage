@@ -25,6 +25,13 @@ struct ContentView: View {
     @State var showHelp: Bool = false
     @State var viewSize: CGRect = .zero
 
+    @EnvironmentObject var appModel: AppModel
+
+#if os(xrOS)
+
+    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+#endif
+
 #if !os(macOS)
 #if !os(xrOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -37,15 +44,12 @@ struct ContentView: View {
 #endif
     @State var keyboardHeight: CGFloat = 0
     @State var dragCursorPoint: CGPoint = .zero
-//    @State var showDocumentPicker: Bool = false
 
 #if !os(macOS)
     let appearance: UITabBarAppearance = UITabBarAppearance()
     init(settingsViewModel: SettingsViewModel) {
         self.settingsViewModel = settingsViewModel
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 #endif
     var body: some View {
@@ -55,8 +59,12 @@ struct ContentView: View {
                 tabOne(size: geometry.size)
                 tabTwo(size: geometry.size)
                 tabThree(size: geometry.size)
+                tabFour(size: geometry.size)
             }
             .padding(1)
+#if os(xrOS)
+            .glassBackgroundEffect()
+#endif
         }
     }
     func tabZero(size: CGSize) -> some View {
@@ -105,27 +113,6 @@ struct ContentView: View {
                             .edgesIgnoringSafeArea(.all)
                     }
 
-//#if targetEnvironment(macCatalyst)
-//                    if #available(iOS 15.0, *) {
-//                        
-//                        Button("Start LogicSage Server.") {
-//                            logD("should start server")
-//                            showDocumentPicker = true
-//                        }
-//                        .buttonStyle(.bordered)
-//                        .zIndex(1000)
-//
-//                    }
-//                    else {
-//                        Button("Start LogicSage Server.") {
-//                            logD("should start server")
-//                            showDocumentPicker = true
-//
-//                        }
-//                        .zIndex(1000)
-//                    }
-//
-//#endif
                     if  settingsViewModel.initalAnim {
                         LoadingLogicView()
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -136,8 +123,9 @@ struct ContentView: View {
                     }
                     else {
                         Text(logoAscii6)
+                            .minimumScaleFactor(0.6)
 #if !os(macOS)
-                            .font(Font(UIFont(name: "Menlo", size: 23)!))
+                            .font(Font(UIFont(name: "Menlo", size: 18)!))
 #endif
                             .foregroundColor(randomColor)
                     }
@@ -147,9 +135,6 @@ struct ContentView: View {
                     Group {
                         if showInstructions {
                             InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
-                        }
-                        else if showHelp {
-                            HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
                         }
                     }
                         .zIndex(998)
@@ -164,7 +149,7 @@ struct ContentView: View {
                     }
                 })
                 .zIndex(-999)
-                if keyboardHeight == 0 {
+                if keyboardHeight == 0 && !showInstructions {
                     // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
                     VStack {
                         Spacer()
@@ -190,12 +175,9 @@ struct ContentView: View {
 #endif
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-
             // END TOOL BAR / COMMAND BAR ZONE ***************************************************************************
 
             // BEGIN CONTENTVIEW BACKGROUND ZONE ***************************************************************************
-
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 #if !os(macOS)
             .onAppear {
                 recalculateWindowSize(size: size)
@@ -205,20 +187,24 @@ struct ContentView: View {
             }
 #if !os(xrOS)
 #if !os(tvOS)
-            .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                recalculateWindowSize(size: size)
-            }
-            .onChange(of: horizontalSizeClass) { newSizeClass in
-                print("Size class changed to \(String(describing: newSizeClass))")
-                recalculateWindowSize(size: size)
-            }
-            .onChange(of: verticalSizeClass) { newSizeClass in
-                print("Size class changed to \(String(describing: newSizeClass))")
-                recalculateWindowSize(size: size)
-            }
-
             .onChange(of: keyboardResponder.currentHeight) { newKeyHeight in
-                keyboardHeight = newKeyHeight > 0 ? newKeyHeight : 0
+                keyboardHeight = newKeyHeight > 0 ? newKeyHeight - 33 : 0
+
+                if keyboardHeight > 0 {
+                    // move all windows to y:10
+                    for smvm in windowManager.windowViewModels {
+                        var topYBound: CGFloat = 10
+
+                        if smvm.resizeOffset.height < 0 {
+                            topYBound = 10 - abs(smvm.resizeOffset.height / 2)
+                        }
+                        else if smvm.resizeOffset.height > 0 {
+                            topYBound = 10 + (smvm.resizeOffset.height / 2)
+                        }
+
+                        smvm.position = CGSizeMake(smvm.position.width, topYBound)
+                    }
+                }
             }
 #endif
 #endif
@@ -229,24 +215,6 @@ struct ContentView: View {
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(1)
-//        // MAC CATALYST HANDLING//
-//        .fileImporter(isPresented: $showDocumentPicker,
-//                      allowedContentTypes: [.folder],
-//                              allowsMultipleSelection: false)
-//                { result in
-//                    // processing results Result<[URL], Error>
-//                    switch result {
-//                    case .success(let url):
-//                        print("selected folder = \(url)")
-//                        handleCatalystRunScript(urls: url)
-//                    case .failure(let failed):
-//                        print("failed to select folder = \(failed)")
-//
-//                    }
-//                }
-//        // END MAC CATALYST HANDLING//
-
-
     }
     func tabTwo(size: CGSize) -> some View {
         ZStack {
@@ -260,9 +228,6 @@ struct ContentView: View {
             Group {
                 if showInstructions {
                     InstructionsPopup(isPresented: $showInstructions ,settingsViewModel: settingsViewModel )
-                }
-                else if showHelp {
-                    HelpPopup(isPresented: $showHelp ,settingsViewModel: settingsViewModel )
                 }
             }
                 .zIndex(998)
@@ -289,6 +254,22 @@ struct ContentView: View {
         }
         .tag(3)
     }
+
+    func tabFour(size: CGSize) -> some View {
+        ZStack {
+            VStack {
+                AudioView( settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, tabSelection: $tabSelection)
+                    .frame(minWidth: size.width, maxWidth: size.width, minHeight: 0, maxHeight: .infinity)
+                    .zIndex(997)
+            }
+        }
+        .frame(minWidth: size.width, maxWidth: size.width , minHeight: 0, maxHeight: .infinity)
+        .tabItem {
+            Label("Audio", systemImage: "headphones")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(4)
+    }
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)
         if viewSize.size != size {
@@ -309,12 +290,5 @@ struct ContentView: View {
         }
 #endif
     }
-
-
-
-//    // Use built in Terminal for the websocket server
-//    func handleCatalystRunScript(urls: [URL]) {
-//
-//    }
 }
 

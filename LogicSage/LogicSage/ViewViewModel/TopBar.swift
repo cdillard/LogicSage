@@ -14,6 +14,15 @@ struct TopBar: View {
     @State var windowInfo: WindowInfo
     @State var webViewURL: URL?
     @ObservedObject var settingsViewModel: SettingsViewModel
+    @Binding var keyboardHeight: CGFloat
+
+    @State var presentRenamer: Bool = false
+    @State var presentDeleter: Bool = false
+    @State var presentURLChanger: Bool = false
+
+    @State private var newName: String = ""
+    @State private var newURL: String = "https://"
+
     var body: some View {
         ZStack {
             VStack {
@@ -34,7 +43,7 @@ struct TopBar: View {
                     Button(action: onClose) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.body)
-                            .minimumScaleFactor(0.75)
+                            .minimumScaleFactor(0.01)
 #if !os(macOS)
                             .hoverEffect(.lift)
 #endif
@@ -48,7 +57,7 @@ struct TopBar: View {
                         }) {
                             Image(systemName: "sidebar.left")
                                 .font(.caption)
-                                .minimumScaleFactor(0.75)
+                                .minimumScaleFactor(0.01)
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif
@@ -63,7 +72,7 @@ struct TopBar: View {
                             }) {
                                 Image(systemName: "stop.fill")
                                     .font(.caption)
-                                    .minimumScaleFactor(0.75)
+                                    .minimumScaleFactor(0.01)
 #if !os(macOS)
                                     .hoverEffect(.lift)
 #endif
@@ -76,7 +85,7 @@ struct TopBar: View {
                         }) {
                             Image(systemName: "play.fill")
                                 .font(.caption)
-                                .minimumScaleFactor(0.75)
+                                .minimumScaleFactor(0.01)
 #if !os(macOS)
                                 .hoverEffect(.lift)
 #endif
@@ -92,10 +101,12 @@ struct TopBar: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     Spacer()
 
-                    if windowInfo.windowType == .chat || windowInfo.windowType == .file {
-                        if isEditing {
+                    if windowInfo.windowType == .chat || windowInfo.windowType == .file || windowInfo.windowType == .webView {
+                        if windowInfo.windowType == .file && keyboardHeight != 0 {
                             Button {
-                                isEditing.toggle()
+#if !os(macOS)
+                                hideKeyboard()
+#endif
                             } label: {
                                 Label( "Done", systemImage: "checkmark")
                                     .font(.body)
@@ -113,53 +124,158 @@ struct TopBar: View {
                 }
             }
         }
-        .background(SettingsViewModel.shared.backgroundColor)
         #if !os(xrOS)
+        .background(SettingsViewModel.shared.backgroundColor)
+
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
         #else
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize + 35)
         #endif
+        .modify { view in
+
+                view.alert("Rename convo", isPresented: $presentRenamer, actions: {
+                    TextField("New name", text: $newName)
+
+                    Button("Rename", action: {
+                        presentRenamer = false
+                        if let convoID = windowInfo.convoId {
+                            settingsViewModel.renameConvo(convoID, newName: newName)
+                        }
+                        else {
+                            logD("no rn")
+                        }
+
+                        newName = ""
+
+                    })
+                    Button("Cancel", role: .cancel, action: {
+                        presentRenamer = false
+                        newName = ""
+                    })
+                }, message: {
+                        Text("Please enter new name for convo")
+
+                })
+        }
+
+        .modify { view in
+
+
+                view.alert("Delete convo?", isPresented: $presentDeleter, actions: {
+                    Button("Delete",role:.destructive,  action: {
+
+                        presentDeleter = false
+                        if let convoID = windowInfo.convoId {
+                            settingsViewModel.deleteConversation(convoID)
+
+                        }
+                        else {
+                            logD("no rn")
+                        }
+
+
+                    })
+                    Button("Cancel", role: .cancel, action: {
+                        presentDeleter = false
+                    })
+                }, message: {
+                        Text("Would you like to delete the convo?")
+                })
+            }
+
+        .modify { view in
+
+
+                view.alert("Change URL?", isPresented: $presentURLChanger, actions: {
+
+                    TextField("New URL", text: $newURL)
+                        .autocorrectionDisabled()
+
+                    Button("Go",role:.destructive,  action: {
+
+                        presentURLChanger = false
+//                        if let convoID = windowInfo.convoId {
+//                            settingsViewModel.deleteConversation(convoID)
+//
+//                        }
+//                        else {
+//                            logD("no rn")
+//                        }
+
+
+                    })
+                    Button("Cancel", role: .cancel, action: {
+                        presentURLChanger = false
+                    })
+                }, message: {
+                        Text("Would you like to change the URL?")
+                })
+            }
     }
 
     func menu() -> some View {
         Menu {
-            Button {
-                isEditing.toggle()
-
-            } label: {
-                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
-                    .font(.body)
-                    .labelStyle(DemoStyle())
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-            }
-
-            let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
-            if #available(iOS 16.0, *) {
-#if !os(tvOS)
-
-                ShareLink(item: "Check out LogicSage: the mobile AI workspace on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-#endif
-            }
-            if windowInfo.convoId == Conversation.ID(-1) {
-
-            }
-            else {
+            if windowInfo.windowType == .webView {
                 Button {
-                    // either renaming file or chat
-                    if windowInfo.windowType == .file {
 
-                    }
-                    else if windowInfo.windowType == .chat {
-#if !os(macOS)
-                        LogicSage.alert(subject: "convo", convoId: windowInfo.convoId)
-#endif
-                    }
+
+                        presentURLChanger = true
                 } label: {
-                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                    Label("Change URL", systemImage: "rectangle.and.pencil.and.ellipsis")
                         .font(.body)
                         .labelStyle(DemoStyle())
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
+                }
+            }
+            else {
+                //            Button {
+                //                isEditing.toggle()
+                //
+                //            } label: {
+                //                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
+                //                    .font(.body)
+                //                    .labelStyle(DemoStyle())
+                //                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                //            }
+                
+                let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
+#if !os(tvOS)
+                ShareLink(item: "Check out LogicSage: AI Code & Chat on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+#endif
+                if windowInfo.convoId == Conversation.ID(-1) {
+                    
+                }
+                else {
+                    Button {
+                        // either renaming file or chat
+                        if windowInfo.windowType == .file {
+                            
+                        }
+                        else if windowInfo.windowType == .chat {
+                            presentRenamer = true
+                        }
+                    } label: {
+                        Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                            .font(.body)
+                            .labelStyle(DemoStyle())
+                            .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    }
+                    
+                    Button {
+                        // either renaming file or chat
+                        if windowInfo.windowType == .file {
+                            
+                        }
+                        else if windowInfo.windowType == .chat {
+                            presentDeleter = true
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash.circle.fill")
+                            .font(.body)
+                            .labelStyle(DemoStyle())
+                            .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    }
                 }
             }
 
@@ -173,7 +289,6 @@ struct TopBar: View {
 
             }
             .padding(4)
-
         }
     }
 

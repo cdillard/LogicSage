@@ -12,58 +12,47 @@ import UIKit
 #endif
 
 struct SettingsView: View {
+
+    let fontSizeSrcEditorRange: ClosedRange<Double> = 2...64
+    let fontSizeSrceditorSteps: Double = 0.5
+
+    let buttonScaleRange: ClosedRange<Double> = 0.2...0.45
+    let buttonScaleSteps: Double = 0.05
+
+    let commandButtonRange: ClosedRange<Double> = 10...64
+    let commandButtonSteps: Double = 1
+
+    let cornerHandleRange: ClosedRange<Double> = 18...48
+    let cornerHandleSteps: Double = 1
+    
     @Binding var showSettings: Bool
     @Binding var showHelp: Bool
     @Binding var showInstructions: Bool
 
     @ObservedObject var settingsViewModel: SettingsViewModel
 
-    @State private var scrollViewID = UUID()
+    @State var scrollViewID = UUID()
 
     @State var presentRenamer: Bool = false
-    @State private var newName: String = ""
+    @State var newName: String = ""
     @State var renamingConvo: Conversation? = nil
 
     @State var apiSettingsTitleLabelString: String = "▶️ API settings"
     @State var sizesSettingsTitleLabelString: String = "▶️ Size settings"
     @State var colorSettingsTitleLabelString: String = "▶️ Color settings"
-    @State var moreColorSettingsTitleLabelString: String = "▶️ More color settings"
+    @State var moreColorSettingsTitleLabelString: String = "▶️ Code/Chat color settings"
     @State var audioSettingsTitleLabelString: String = "▶️ Audio settings"
 
-    @State private var apiSettingsExpanded = false
-    @State private var sizeSettingsExpanded = false
-    @State private var colorSettingsExpanded = false
-    @State private var moreColorSettingsExpanded = false
+    @State var apiSettingsExpanded = false
+    @State var sizeSettingsExpanded = false
+    @State var colorSettingsExpanded = false
+    @State var moreColorSettingsExpanded = false
 
-    @State var presentUserAvatarRenamer: Bool = false {
-        didSet {
-            if #available(iOS 16.0, *) {
-            }
-            else {
-#if !os(macOS)
-                if presentUserAvatarRenamer {
-                    LogicSage.alert(subject: "self")
-                }
-#endif
-            }
-        }
-    }
-    @State var presentGptAvatarRenamer: Bool = false {
-        didSet {
-            if #available(iOS 16.0, *) {
-            }
-            else {
-#if !os(macOS)
-                if presentGptAvatarRenamer {
-                    LogicSage.alert(subject: "GPT")
-                }
-#endif
-            }
-        }
-    }
+    @State var presentUserAvatarRenamer: Bool = false
+    @State var presentGptAvatarRenamer: Bool = false
 
-    @State private var newUsersName: String = ""
-    @State private var newGPTName: String = ""
+    @State var newUsersName: String = ""
+    @State var newGPTName: String = ""
     @Binding var tabSelection: Int
 
     var body: some View {
@@ -94,11 +83,7 @@ struct SettingsView: View {
                                 }
 
                                 Text("Settings:")
-                                    .font(.title2)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-
-                                Text("scroll down 📜⬇️4 more")
-                                    .font(.title3)
+                                    .font(.title)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
                             .padding(.top, 30)
@@ -116,6 +101,7 @@ struct SettingsView: View {
                         }
 
                         apiDisc()
+                            .font(.title3)
 
                         miscButtons(size: geometry.size)
 
@@ -123,20 +109,20 @@ struct SettingsView: View {
 
                         VStack(alignment: .leading, spacing: 0) {
                             sizeSlidersDisc()
+                                .font(.title3)
                         }
                         .accentColor(settingsViewModel.buttonColor)
                         .foregroundColor(settingsViewModel.appTextColor)
                         .frame( maxWidth: .infinity, maxHeight: .infinity)
                     }
                     colorDisc(size: geometry.size)
+                        .font(.title3)
                         .padding(.leading, 8)
                         .padding(.trailing, 8)
                         .accentColor(settingsViewModel.buttonColor)
                         .foregroundColor(settingsViewModel.appTextColor)
 
                     nameChangeStack()
-
-                    audioSettingsArea(size: geometry.size)
 
                     Button(action: {
                         withAnimation {
@@ -235,6 +221,24 @@ struct SettingsView: View {
         }
     }
 
+    func hostOptions() -> some View {
+        Group {
+            let hosts = ["api.openai.com"] // , "localhost:4891"]
+            ForEach(hosts, id: \.self) { line in
+                Button(action: {
+                    logD("CHOOSE HOST from settings: \(line)")
+                    settingsViewModel.openAIHost = line
+                }) {
+                    Text(line)
+                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        .lineLimit(1)
+                        .foregroundColor(Color.white)
+                        .background(settingsViewModel.buttonColor)
+                }
+            }
+        }
+    }
+
     struct DemoStyle: LabelStyle {
         func makeBody(configuration: Configuration) -> some View {
             HStack(alignment: .center) {
@@ -244,104 +248,6 @@ struct SettingsView: View {
         }
     }
 
-    func audioSettingsArea(size: CGSize) -> some View {
-        Group {
-            Group {
-                Text(audioSettingsTitleLabelString)
-                    .font(.title3)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .padding(8)
-#if !os(macOS)
-                    .hoverEffect(.automatic)
-#endif
-            }
-            .onTapGesture {
-                playSelect()
-
-                withAnimation {
-                    settingsViewModel.showAudioSettings.toggle()
-
-                    audioSettingsTitleLabelString = "\(settingsViewModel.showAudioSettings ? "🔽" : "▶️") Audio settings"
-                }
-            }
-            // TODO:Double check toggling ducing Audio and audio output this way works.
-            if settingsViewModel.showAudioSettings {
-                // IOS AUDIO SETTING ON/OFF
-                Toggle(isOn: $settingsViewModel.voiceOutputEnabled) {
-                    VStack(spacing: 4) {
-                        Text("Audio Output")
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                }
-                .frame( maxWidth: size.width / 3)
-                .onChange(of: settingsViewModel.voiceOutputEnabled) { value in
-                    withAnimation {
-#if !os(macOS)
-                        SettingsViewModel.shared.logText("toggling audio \(settingsViewModel.voiceOutputEnabled ? "off" : "on.")")
-                        if settingsViewModel.voiceOutputEnabled {
-                            settingsViewModel.stopVoice()
-                        }
-
-                        settingsViewModel.configureAudioSession()
-                        settingsViewModel.printVoicesInMyDevice()
-
-                        settingsViewModel.voiceOutputEnabled.toggle()
-#endif
-                    }
-
-                }
-                HStack {
-                    if settingsViewModel.voiceOutputEnabled {
-                        // IOS AUDIO SETTING ON/OFF
-                        Toggle(isOn: $settingsViewModel.duckingAudio) {
-                            VStack(spacing: 4) {
-                                Text("Duck Audio")
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            }
-                        }
-                        .frame( maxWidth: size.width / 3)
-                    }
-                }
-            }
-
-            VStack {
-                if settingsViewModel.showAudioSettings && settingsViewModel.voiceOutputEnabled {
-                    VStack {
-
-                        Text("Pick iOS voice")
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                        List {
-                            ForEach(0..<settingsViewModel.installedVoices.count, id: \.self) { index in
-                                let item = settingsViewModel.installedVoices[index]
-                                HStack {
-                                    Text(item.voiceName)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-
-                                    Spacer()
-                                    if settingsViewModel.selectedVoice?.voiceName == item.voiceName {
-                                        Image(systemName: "checkmark")
-                                            .foregroundColor(settingsViewModel.buttonColor)
-                                            .alignmentGuide(HorizontalAlignment.center, computeValue: { d in d[HorizontalAlignment.center] })
-                                    }
-                                }
-                                .listRowBackground(settingsViewModel.backgroundColor)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    settingsViewModel.voiceOutputSavedName = item.voiceName
-                                }
-                            }
-                        }
-                        .listRowBackground(settingsViewModel.backgroundColor)
-                        .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
-                    }
-                }
-            }
-            .frame( maxWidth: .infinity, maxHeight: .infinity)
-        }
-    }
 
     func nameChangeStack() -> some View {
         HStack {
@@ -394,26 +300,6 @@ struct SettingsView: View {
                 Button(action: {
                     withAnimation {
                         showSettings.toggle()
-                        showHelp.toggle()
-                        logD("HELP tapped")
-                    }
-                }) {
-                    resizableButtonImage(systemName:
-                                            "questionmark",
-                                         size: size)
-                    .background(settingsViewModel.buttonColor)
-                    .cornerRadius(8)
-#if !os(macOS)
-                    .hoverEffect(.lift)
-#endif
-                }
-                Text("help")
-                    .foregroundColor(settingsViewModel.appTextColor)
-            }
-            VStack {
-                Button(action: {
-                    withAnimation {
-                        showSettings.toggle()
                         showInstructions.toggle()
                         logD("info tapped")
                     }
@@ -436,7 +322,7 @@ struct SettingsView: View {
     func apiDisc() -> some View {
 #if os(tvOS)
         VStack { }
-        #else
+#else
 
         // START OF API SETTINGS DISCLOSURE GROUP
         DisclosureGroup( isExpanded: $apiSettingsExpanded) {
@@ -445,9 +331,7 @@ struct SettingsView: View {
                     Text("A.I. 🔑: ")
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
-                    if #available(iOS 16.0, *) {
-
-                        TextField(
+                    TextField(
                             "",
                             text: $settingsViewModel.openAIKey
                         )
@@ -465,32 +349,15 @@ struct SettingsView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-                    }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.openAIKey
-                        )
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
 
-#if !os(macOS)
-                        .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
+
                     Spacer()
-                    
+
                     Text("A.I. model: ")
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
 
                     HStack {
-                        if #available(iOS 16.0, *) {
-                            
                             TextField(
                                 "",
                                 text: $settingsViewModel.openAIModel
@@ -504,28 +371,13 @@ struct SettingsView: View {
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                            
+
                             .autocorrectionDisabled(!true)
 #endif
 #if !os(macOS)
                             .autocapitalization(.none)
 #endif
-                        }
-                        else {
-                            TextField(
-                                "",
-                                text: $settingsViewModel.openAIModel
-                            )
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .font(.title3)
-                            .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-                            .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
-                        }
+
 
 
                         Menu {
@@ -552,51 +404,80 @@ struct SettingsView: View {
 
                         }
                         .padding(4)
-
                     }
-
-
-
                     }
-                    Spacer()
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
+                    Group {
+                        Spacer()
+                            .padding(.leading, 8)
+                            .padding(.trailing, 8)
 
-                    Text("GHA PAT: ")
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                    if #available(iOS 16.0, *) {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.ghaPat
-                        )
-                        .border(.secondary)
-                        .submitLabel(.done)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
+                        Text("Github PAT: ")
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            TextField(
+                                "",
+                                text: $settingsViewModel.ghaPat
+                            )
+                            .border(.secondary)
+                            .submitLabel(.done)
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                        .autocorrectionDisabled(!true)
+                            .autocorrectionDisabled(!true)
 #endif
 #if !os(macOS)
-                        .autocapitalization(.none)
+                            .autocapitalization(.none)
 #endif
                     }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.ghaPat
-                        )
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-                        .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
+//                    Group {
+//                        Spacer()
+//                            .padding(.leading, 8)
+//                            .padding(.trailing, 8)
+//
+//                        Text("AI Host:")
+//                            .font(.title3)
+//                            .foregroundColor(settingsViewModel.appTextColor)
+//
+//                        HStack {
+//                                TextField(
+//                                    "",
+//                                    text: $settingsViewModel.openAIHost
+//                                )
+//                                .border(.secondary)
+//                                .submitLabel(.done)
+//                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+//                                .font(.title3)
+//                                .foregroundColor(settingsViewModel.appTextColor)
+//#if !os(macOS)
+//                                .autocorrectionDisabled(!true)
+//#endif
+//#if !os(macOS)
+//                                .autocapitalization(.none)
+//#endif
+//
+//                            Menu {
+//                                hostOptions()
+//                            }
+//                        label: {
+//                            ZStack {
+//
+//                                    Label("", systemImage: "arrow.down")
+//                                        .font(.title3)
+//                                        .minimumScaleFactor(0.5)
+//                                        .labelStyle(DemoStyle())
+//                                        .background(Color.clear)
+//                                        .tint(settingsViewModel.appTextColor)
+//
+//
+//
+//                            }
+//                            .padding(4)
+//                        }
+//                        }
+//                    }
+
                 }
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
@@ -620,264 +501,14 @@ struct SettingsView: View {
         .foregroundColor(settingsViewModel.appTextColor)
 
         // END OF API SETTINGS DISCLOSURE GROUP
-        #endif
-    }
-
-    func sizeSlidersDisc() -> some View {
-#if os(tvOS)
-        VStack { }
-        #else
-        // START SIZE SLIDERS DISCLOSURE GROUP
-        DisclosureGroup(isExpanded: $sizeSettingsExpanded)  {
-            HStack {
-                Text("Small")
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Slider(value: $settingsViewModel.fontSizeSrcEditor, in: 2...64, step: 0.5)
-                    .accentColor(settingsViewModel.buttonColor)
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Text("Large")
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-            }
-            HStack {
-                Text("Text")
-                    .fontWeight(.semibold)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                Text("\(settingsViewModel.fontSizeSrcEditor)")
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .lineLimit(nil)
-            }
-#if !os(xrOS)
-            HStack {
-                Text("Small")
-                    .foregroundColor(settingsViewModel.appTextColor)
-                Slider(value: $settingsViewModel.buttonScale, in:  0.1...0.45, step: 0.1)
-                    .accentColor(settingsViewModel.buttonColor)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                Text("Large")
-                    .foregroundColor(settingsViewModel.appTextColor)
-            }
-            HStack {
-                Text("Buttons")
-                    .fontWeight(.semibold)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                Text("\(settingsViewModel.buttonScale)")
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .lineLimit(nil)
-            }
 #endif
-            HStack {
-                Text("Small")
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Slider(value: $settingsViewModel.commandButtonFontSize, in:  10...64, step: 1)
-                    .accentColor(settingsViewModel.buttonColor)
-                    .foregroundColor(settingsViewModel.appTextColor)
-                Text("Large")
-                    .foregroundColor(settingsViewModel.appTextColor)
-            }
-            HStack {
-                Text("Cmd buttons")
-                    .fontWeight(.semibold)
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Text("\(settingsViewModel.commandButtonFontSize)")
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .lineLimit(nil)
-            }
-
-            HStack {
-                Text("Small")
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Slider(value: $settingsViewModel.cornerHandleSize, in:  18...48, step: 1)
-                    .accentColor(settingsViewModel.buttonColor)
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Text("Large")
-                    .foregroundColor(settingsViewModel.appTextColor)
-            }
-            HStack {
-                Text("Window Header")
-                    .fontWeight(.semibold)
-                    .foregroundColor(settingsViewModel.appTextColor)
-
-                Text("\(settingsViewModel.cornerHandleSize)")
-                    .foregroundColor(settingsViewModel.appTextColor)
-                    .lineLimit(nil)
-            }
-        }
-    label: { Text(sizesSettingsTitleLabelString)
-            .onTapGesture {
-                withAnimation {
-                    sizeSettingsExpanded.toggle()
-                }
-            }
-    }
-    .onChange(of: sizeSettingsExpanded) { isExpanded in
-        sizesSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") Size settings"
-        playSelect()
-
-    }
-    .padding(.leading, 8)
-    .padding(.trailing, 8)
-        #endif
     }
 
-    func colorDisc(size: CGSize) -> some View {
-#if os(tvOS)
-        VStack { }
-        #else
-        // START OF COLOR SETTINGS DISCLOSURE GROUP
 
-        DisclosureGroup(isExpanded: $colorSettingsExpanded) {
-            // TERMINAL COLORS SETTINGS ZONE
-            Group {
-                Group {
 
-                    HStack {
-                        Text("Themes:").font(.body)
 
-                        Text("Deep Space Sparkle")
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .font(.body)
-                            .padding()
-                            .onTapGesture {
-                                logD("Tapped Deep Space Sparkle theme")
-                                settingsViewModel.applyTheme(theme: .deepSpace)
-                            }
-                        Text("Hackeresque")
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .font(.body)
-                            .padding()
-                            .onTapGesture {
-                                logD("Tapped Hackeresque theme")
-                                settingsViewModel.applyTheme(theme: .hacker)
-                            }
-                    }
-                }
-                Group {
-                    VStack( spacing: 3) {
-
-                        ColorPicker("App Text Color", selection:
-                                        $settingsViewModel.appTextColor)
-                        .frame(width: size.width / 2, alignment: .leading)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack( spacing: 3) {
-
-                        ColorPicker("App Button Color", selection:
-                                        $settingsViewModel.buttonColor)
-                        .frame(width: size.width / 2, alignment: .leading)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                    }
-
-                    VStack( spacing: 3) {
-
-                        ColorPicker("App Background Color", selection:
-                                        $settingsViewModel.backgroundColor)
-                        .frame(width: size.width / 2, alignment: .leading)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                }
-            }
-            moreColorDisc(size: size)
-        }
-    label: { Text(colorSettingsTitleLabelString)
-        .onTapGesture {
-            withAnimation {
-                colorSettingsExpanded.toggle()
-            }
-        }}
-            .onChange(of: colorSettingsExpanded) { isExpanded in
-                colorSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") Color settings"
-                playSelect()
-
-            }
-        #endif
-    }
-    func moreColorDisc(size: CGSize) -> some View {
-#if os(tvOS)
-        VStack { }
-        #else
-        DisclosureGroup(isExpanded: $moreColorSettingsExpanded) {
-            Group {
-                Group {
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Plain text", selection: $settingsViewModel.plainColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Number", selection: $settingsViewModel.numberColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor String", selection: $settingsViewModel.stringColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                }
-                Group {
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Identifier", selection: $settingsViewModel.identifierColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Keyword", selection: $settingsViewModel.keywordColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Comment", selection: $settingsViewModel.commentColorSrceEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                }
-                Group {
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Placeholder", selection: $settingsViewModel.editorPlaceholderColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Background", selection: $settingsViewModel.backgroundColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                    VStack(spacing: 3) {
-                        ColorPicker("SrcEditor Line number", selection: $settingsViewModel.lineNumbersColorSrcEditor)
-                            .frame(width: size.width / 2, alignment: .leading)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                    }
-                }
-            }
-        }
-    label: { Text(moreColorSettingsTitleLabelString)
-            .onTapGesture {
-                withAnimation {
-                    moreColorSettingsExpanded.toggle()
-                }
-            }
-    }
-    .onChange(of: moreColorSettingsExpanded) { isExpanded in
-        moreColorSettingsTitleLabelString  = "\(isExpanded ? "🔽" : "▶️") More color settings"
-        playSelect()
-
-    }
-    .padding(.leading, 8)
-    .padding(.trailing, 8)
-    .accentColor(settingsViewModel.buttonColor)
-    .foregroundColor(settingsViewModel.appTextColor)
-        #endif
-    }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS)
+#if os(macOS) || os(tvOS) || os(xrOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
@@ -990,69 +621,3 @@ public extension View {
     }
 
 }
-#if !os(macOS)
-
-func alert(subject: String, convoId: Conversation.ID? = nil) {
-    let alert = UIAlertController(title: "Rename \(subject)?", message: nil, preferredStyle: .alert)
-    alert.addTextField() { textField in
-        textField.placeholder = "New name"
-    }
-    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
-    alert.addAction(UIAlertAction(title: "Rename", style: .default) { text in
-        if subject == "self" {
-            SettingsViewModel.shared.savedUserAvatar = alert.textFields?.first?.text ?? ""
-        }
-        else if subject == "GPT" {
-            SettingsViewModel.shared.savedBotAvatar = alert.textFields?.first?.text ?? ""
-        }
-        else if subject == "convo" {
-            if let convoID = convoId {
-                SettingsViewModel.shared.renameConvo(convoID, newName: alert.textFields?.first?.text ?? "")
-
-            }
-            else {
-                logD("no rn")
-            }
-
-        }
-    })
-    showAlert(alert: alert)
-}
-
-func showAlert(alert: UIAlertController) {
-    if let controller = topMostViewController() {
-        controller.present(alert, animated: true)
-    }
-}
-
-private func keyWindow() -> UIWindow? {
-    return UIApplication.shared.connectedScenes
-        .filter {$0.activationState == .foregroundActive}
-        .compactMap {$0 as? UIWindowScene}
-        .first?.windows.filter {$0.isKeyWindow}.first
-}
-
-private func topMostViewController() -> UIViewController? {
-    guard let rootController = keyWindow()?.rootViewController else {
-        return nil
-    }
-    return topMostViewController(for: rootController)
-}
-
-private func topMostViewController(for controller: UIViewController) -> UIViewController {
-    if let presentedController = controller.presentedViewController {
-        return topMostViewController(for: presentedController)
-    } else if let navigationController = controller as? UINavigationController {
-        guard let topController = navigationController.topViewController else {
-            return navigationController
-        }
-        return topMostViewController(for: topController)
-    } else if let tabController = controller as? UITabBarController {
-        guard let topController = tabController.selectedViewController else {
-            return tabController
-        }
-        return topMostViewController(for: topController)
-    }
-    return controller
-}
-#endif

@@ -108,10 +108,22 @@ Question to Answer:
 
                 SettingsViewModel.shared.saveConvosToDisk()
 
+
+
+
                 SettingsViewModel.shared.requestReview()
 
-                if config.conversational {
+                SettingsViewModel.shared.genTitle(conversationId) { success in
+                    if success {
+                        logD("successfully genn title")
 
+                    }
+                    else {
+                        logD("fail gen title")
+                    }
+                }
+
+                if config.conversational {
                     if content.hasPrefix("google:") {
                         let split  = content.split(separator: " ", maxSplits: 1)
 

@@ -40,6 +40,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         var theme: () -> SourceCodeTheme
         var overrideText: () -> String?
         var codeDidCopy: () -> Void
+        var windowType: () -> WindowInfo.WindowType
 
         /// Creates a **Customization** to pass into the *init()* of a **SourceCodeTextEditor**.
         ///
@@ -56,7 +57,9 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             textViewDidBeginEditing: @escaping (SourceCodeTextEditor) -> Void,
             theme: @escaping () -> SourceCodeTheme,
             overrideText: @escaping () -> String?,
-            codeDidCopy: @escaping () -> Void
+            codeDidCopy: @escaping () -> Void,
+            windowType: @escaping () -> WindowInfo.WindowType
+
 
         ) {
             self.didChangeText = didChangeText
@@ -66,9 +69,12 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             self.theme = theme
             self.overrideText = overrideText
             self.codeDidCopy = codeDidCopy
+            self.windowType = windowType
+
         }
     }
-    
+    @EnvironmentObject var appModel: AppModel
+
     @Binding var text: String
     @Binding private var isEditing: Bool
     @Binding private var isLocktoBottom: Bool
@@ -76,7 +82,9 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     private var custom: Customization
     @Binding private var isMoveGestureActive: Bool
     @Binding private var isResizeGestureActive: Bool
-    
+
+    @State  var lastScreenshot = Date()
+
     public init(
         text: Binding<String>,
         isEditing: Binding<Bool>,
@@ -88,7 +96,8 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
             textViewDidBeginEditing: { _ in },
             theme: { DefaultSourceCodeTheme(settingsViewModel: SettingsViewModel.shared) },
             overrideText: { nil },
-            codeDidCopy: { }
+            codeDidCopy: { },
+            windowType: { .file }
         ),
         shouldBecomeFirstResponder: Bool = false,
         isMoveGestureActive: Binding<Bool>,
@@ -122,17 +131,41 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         }
 
         let overrideText = custom.overrideText()
-        view.textView.isEditable = isEditing
-        view.contentTextView.isEditable = isEditing
-        view.isEditing = isEditing
-        view.textView.isSelectable = isEditing
-        view.contentTextView.isSelectable = isEditing
+        let type = custom.windowType()
+
+        view.textView.isEditable = type == .file
+        view.contentTextView.isEditable = type == .file
+        view.isEditing = type == .file
+        view.textView.isSelectable = type == .file || type == .chat
+        view.contentTextView.isSelectable = type == .file || type == .chat
+
         if let overrideText = overrideText {
             if overrideText != context.coordinator.wrappedView.text && isLocktoBottom {
                 context.coordinator.wrappedView.text = overrideText
                 context.coordinator.textDidChange()
             }
         }
+#if os(xrOS)
+        // TODO: DOUBLE CHECK WHEN TO UPDATE THIS
+        if appModel.isShowingImmersiveScene || appModel.isShowingImmersiveWindow{
+            DispatchQueue.global(qos: .default).async {
+                let now = Date()
+                
+                if now.timeIntervalSince(self.lastScreenshot) >= texUpdateInteral {
+                    self.lastScreenshot = now
+                    
+                    DispatchQueue.main.async {
+                        let image = view.screenshot()
+                        let image3 = addBorders(image: image)
+                        
+                        if let data = image3?.pngData() {
+                            lastTextureImageData = data
+                        }
+                    }
+                }
+            }
+        }
+#endif
     }
 #endif
 }

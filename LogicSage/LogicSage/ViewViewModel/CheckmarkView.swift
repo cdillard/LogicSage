@@ -9,13 +9,14 @@ import Foundation
 import SwiftUI
 
 struct CheckmarkView: View {
+    var text: String
     @Binding var isVisible: Bool
     
     var body: some View {
         if isVisible {
             HStack(spacing: 10) {
                 Image(systemName: "checkmark")
-                Text("Copied!")
+                Text("\(text)!")
             }
             .font(.system(size: 20, design: .monospaced))
             .background(SettingsViewModel.shared.buttonColor)

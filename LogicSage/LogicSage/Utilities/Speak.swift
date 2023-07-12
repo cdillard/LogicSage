@@ -6,33 +6,48 @@
 //
 
 import Foundation
-import AVFoundation
 
-let speechSynthesizer = AVSpeechSynthesizer()
+import AVFoundation
 
 struct VoicePair: Hashable {
     let voiceName: String
     let voiceIdentifier : String
+    let voiceLanguage : String?
+
 }
 extension SettingsViewModel {
     func speak(_ text: String) {
-        if !SettingsViewModel.shared.voiceOutputEnabled {
+        if !voiceOutputEnabled {
             //print("DONT say: \(text)")
             //consoleManager.print("say: \(text)")
             return
         }
-        let speechUtterance = AVSpeechUtterance(string: text)
+        speechSynthesizer.delegate = speakerDelegate
         
+        let speechUtterance = AVSpeechUtterance(string: text)
+
+        // TODO DOUBLE CHECK THESE FLAGS
+        speechUtterance.prefersAssistiveTechnologySettings = false
+
+        speechUtterance.accessibilityTraits = .startsMediaSession
+
+        // END DOUBLE CHECK
+
+        // MAC CATALYST TTS IS FUCKED, USE THIS INSTEAD.
+#if targetEnvironment(macCatalyst)
+            let custVoice = AVSpeechSynthesisVoice(language: "en-AU")
+            speechUtterance.voice = custVoice
+#else
 #if !targetEnvironment(simulator)
         if let customVoice = SettingsViewModel.shared.selectedVoice?.voiceIdentifier {
-            speechUtterance.voice = AVSpeechSynthesisVoice(identifier: customVoice)
+            let custVoice = AVSpeechSynthesisVoice(identifier: customVoice)
+            speechUtterance.voice = custVoice
         }
         else {
-            speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
+            let custVoice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.premium.en-US.Ava")
+            
+            speechUtterance.voice = custVoice
         }
-
-        #if os(xrOS)
-        speechUtterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.voice.compact.en-AU.Karen")
 #endif
 #endif
 
@@ -67,7 +82,7 @@ extension SettingsViewModel {
     func printVoicesInMyDevice() {
         var installedVoices = [VoicePair]()
         for voice in installedVoiesArr() {
-            installedVoices += [ VoicePair(voiceName: voice.name, voiceIdentifier: voice.identifier)]
+            installedVoices += [ VoicePair(voiceName: voice.name, voiceIdentifier: voice.identifier, voiceLanguage: voice.language)]
         }
         
         installedVoices.sort { $0.voiceName < $1.voiceName }
@@ -78,7 +93,11 @@ extension SettingsViewModel {
             }
             return $0.voiceName < $1.voiceName
         }
-        
+//        print("INSTALLED VOICES")
+//        for voice in installedVoices {
+//            print(voice)
+//        }
+
         for voice in self.installedVoices {
             if voice.voiceName == voiceOutputSavedName {
                 selectedVoice = voice
@@ -102,5 +121,25 @@ extension SettingsViewModel {
             }
         }
         return ret
+    }
+}
+class SpeakerDelegate: NSObject, AVSpeechSynthesizerDelegate {
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        print("synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance")
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        print("speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance")
+    }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+        print("speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance")
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance) {
+        print("speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance")
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        print("speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance")
     }
 }

@@ -39,7 +39,7 @@ struct AddView: View {
 
                                 bottomRow(size: geometry.size)
 
-                                urlEntry()
+                                urlEntry(size:geometry.size)
                                     .frame(height: geometry.size.height / 17)
                                 Spacer()
                             }
@@ -49,6 +49,7 @@ struct AddView: View {
                     }
 
                     gitSettingsDisc(size: geometry.size)
+                        .font(.title3)
 
                     Button(action: {
                         withAnimation {
@@ -60,7 +61,6 @@ struct AddView: View {
                             .padding(.horizontal, 8)
                             .padding(.vertical, 8)
                             .foregroundColor(settingsViewModel.appTextColor)
-                            .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
 #if !os(macOS)
                             .hoverEffect(.lift)
@@ -91,20 +91,19 @@ struct AddView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                     .foregroundColor(settingsViewModel.appTextColor)
-                    .background(settingsViewModel.buttonColor)
                     .cornerRadius(8)
 #if !os(macOS)
                     .hoverEffect(.lift)
 #endif
             }
             
-            Text("open menu:")
-                .font(.title3)
+            Text("Add:")
+                .font(.title)
                 .foregroundColor(settingsViewModel.appTextColor)
             
-            Text("scroll down 📜⬇️4 more")
-                .font(.title3)
-                .foregroundColor(settingsViewModel.appTextColor)
+//            Text("scroll down 📜⬇️4 more")
+//                .font(.title3)
+//                .foregroundColor(settingsViewModel.appTextColor)
         }
     }
     func miscButtons(size: CGSize) -> some View {
@@ -146,7 +145,6 @@ struct AddView: View {
                                             "folder.fill.badge.plus",
                                          size: size)
                     .foregroundColor(settingsViewModel.appTextColor)
-                    .background(settingsViewModel.buttonColor)
                     .cornerRadius(8)
 
                     Text("Files")
@@ -175,7 +173,6 @@ struct AddView: View {
                                             "macwindow",
                                          size: size)
                     .foregroundColor(settingsViewModel.appTextColor)
-                    .background(settingsViewModel.buttonColor)
                     .cornerRadius(8)
 
                     Text("Windows")
@@ -189,103 +186,52 @@ struct AddView: View {
             }
         }
     }
-    func urlEntry() -> some View {
-        HStack {
-            #if !os(tvOS)
-            if #available(iOS 16.0, *) {
-                TextField(
-                    "",
-                    text: $settingsViewModel.defaultURL
-                )
-                .border(.secondary)
-                .submitLabel(.done)
-                .frame( maxWidth: .infinity, maxHeight: .infinity)
+    func urlEntry(size: CGSize) -> some View {
+            HStack {
+#if !os(tvOS)
+                if #available(iOS 16.0, *) {
+                    TextField(
+                        "",
+                        text: $settingsViewModel.defaultURL
+                    )
+                    .border(.secondary)
+                    .submitLabel(.done)
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
-                .scrollDismissesKeyboard(.interactively)
+                    .scrollDismissesKeyboard(.interactively)
 #endif
-                .font(.title3)
-                .padding(.leading,8)
-                .padding(.trailing,8)
-                .foregroundColor(settingsViewModel.appTextColor)
+                    .font(.title3)
+                    .padding(.leading,8)
+                    .padding(.trailing,8)
+                    .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                .autocorrectionDisabled(true)
+                    .autocorrectionDisabled(true)
 #endif
-
+                    
 #if !os(macOS)
-                .autocapitalization(.none)
+                    .autocapitalization(.none)
 #endif
-            }
-            else {
-                TextField(
-                    "",
-                    text: $settingsViewModel.defaultURL
-                )
-                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                .font(.title3)
-                .padding(.leading,8)
-                .padding(.trailing,8)
-                .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-
-                .autocorrectionDisabled(true)
-#endif
-#if !os(macOS)
-                .autocapitalization(.none)
-#endif
-            }
-            #endif
-        }
-    }
-    func bottomRow(size: CGSize) -> some View {
-        // BOTTOM ROW
-        HStack {
-            // PROJECT/DEBUGGER WINDOW
-            Button(action: {
-                withAnimation {
-                    logD("open new project window")
-
-                    showAddView.toggle()
-                    tabSelection = 1
-
-                    windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
                 }
-            }) {
-                VStack {
-                    resizableButtonImage(systemName:
-                                            "target",
-                                         size: size)
-                    Text("Project")
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                }
+                else {
+                    TextField(
+                        "",
+                        text: $settingsViewModel.defaultURL
+                    )
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    .font(.title3)
+                    .padding(.leading,8)
+                    .padding(.trailing,8)
+                    .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                .hoverEffect(.lift)
+                    
+                    .autocorrectionDisabled(true)
 #endif
-            }
-            // NEW FILE WINDOW
-            Button(action: {
-                withAnimation {
-                    logD("open new File")
-                    showAddView.toggle()
-                    tabSelection = 1
-
-                    windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
-                }
-            }) {
-                VStack {
-                    resizableButtonImage(systemName:
-                                            "doc.badge.plus",
-                                         size: size)
-                    .cornerRadius(8)
-
-                    Text("File")
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                }
 #if !os(macOS)
-                .hoverEffect(.lift)
+                    .autocapitalization(.none)
 #endif
-            }
+                }
+#endif
+
 #if !os(tvOS)
 
             Button(action: {
@@ -300,7 +246,6 @@ struct AddView: View {
                     resizableButtonImage(systemName:
                                             "network",
                                          size: size)
-                    .background(settingsViewModel.buttonColor)
                     .cornerRadius(8)
 
                     Text("Webview" )
@@ -312,6 +257,62 @@ struct AddView: View {
 #endif
             }
 #endif
+
+            }
+            .padding(.horizontal, 30)
+
+    }
+    func bottomRow(size: CGSize) -> some View {
+        // BOTTOM ROW
+        HStack {
+//            // PROJECT/DEBUGGER WINDOW
+//            Button(action: {
+//                withAnimation {
+//                    logD("open new project window")
+//
+//                    showAddView.toggle()
+//                    tabSelection = 1
+//
+//                    windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
+//                }
+//            }) {
+//                VStack {
+//                    resizableButtonImage(systemName:
+//                                            "target",
+//                                         size: size)
+//                    Text("Project")
+//                        .font(.caption)
+//                        .foregroundColor(settingsViewModel.appTextColor)
+//                }
+//#if !os(macOS)
+//                .hoverEffect(.lift)
+//#endif
+//            }
+//            // NEW FILE WINDOW
+//            Button(action: {
+//                withAnimation {
+//                    logD("open new File")
+//                    showAddView.toggle()
+//                    tabSelection = 1
+//
+//                    windowManager.addWindow(windowType: .file, frame: defSize, zIndex: 0)
+//                }
+//            }) {
+//                VStack {
+//                    resizableButtonImage(systemName:
+//                                            "doc.badge.plus",
+//                                         size: size)
+//                    .cornerRadius(8)
+//
+//                    Text("File")
+//                        .font(.caption)
+//                        .foregroundColor(settingsViewModel.appTextColor)
+//                }
+//#if !os(macOS)
+//                .hoverEffect(.lift)
+//#endif
+//            }
+
 
         }
 
@@ -390,33 +391,32 @@ struct AddView: View {
                     if !settingsViewModel.isLoading {
 
                         HStack(spacing: 4) {
-                            VStack {
-                                Button(action: {
-                                    logD("FORKING repo...")
-                                    settingsViewModel.forkGithubRepo { success in
-                                        logD("fork repo success = \(success)")
-                                    }
-                                }) {
-                                    VStack {
-                                        resizableButtonImage(systemName:
-                                                                "tuningfork",
-                                                             size: size)
-                                        .background(settingsViewModel.buttonColor)
-                                        .cornerRadius(8)
-                                    }
-#if !os(macOS)
-                                    .hoverEffect(.lift)
-#endif
-                                }
-                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-                                .padding(.bottom)
-
-                                Text("\(settingsViewModel.yourGitUser):\(settingsViewModel.gitRepo):\(settingsViewModel.gitBranch)")
-                                    .font(.caption)
-                                    .scaledToFill()
-                                    .minimumScaleFactor(0.01)
-                                    .foregroundColor(settingsViewModel.appTextColor)
-                            }
+//                            VStack {
+//                                Button(action: {
+//                                    logD("FORKING repo...")
+//                                    settingsViewModel.forkGithubRepo { success in
+//                                        logD("fork repo success = \(success)")
+//                                    }
+//                                }) {
+//                                    VStack {
+//                                        resizableButtonImage(systemName:
+//                                                                "tuningfork",
+//                                                             size: size)
+//                                        .cornerRadius(8)
+//                                    }
+//#if !os(macOS)
+//                                    .hoverEffect(.lift)
+//#endif
+//                                }
+//                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+//                                .padding(.bottom)
+//
+//                                Text("\(settingsViewModel.yourGitUser):\(settingsViewModel.gitRepo):\(settingsViewModel.gitBranch)")
+//                                    .font(.caption)
+//                                    .scaledToFill()
+//                                    .minimumScaleFactor(0.01)
+//                                    .foregroundColor(settingsViewModel.appTextColor)
+//                            }
 
                             VStack {
                                 HStack(spacing: 4) {
@@ -430,7 +430,6 @@ struct AddView: View {
                                             resizableButtonImage(systemName:
                                                                     "arrow.down.doc",
                                                                  size: size)
-                                            .background(settingsViewModel.buttonColor)
                                             .cornerRadius(8)
                                         }
 #if !os(macOS)
@@ -500,64 +499,39 @@ struct AddView: View {
                 }
                 .frame(height: size.height / 17)
 
-                HStack {
-
-                    Text("your github username:")
-                        .font(.body)
-                        .lineLimit(nil)
-                        .padding()
-                        .foregroundColor(settingsViewModel.appTextColor)
-                    if #available(iOS 16.0, *) {
-
-                        TextField(
-                            "",
-                            text: $settingsViewModel.yourGitUser
-                        )
-                        .border(.secondary)
-                        .submitLabel(.done)
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
-                        .scrollDismissesKeyboard(.interactively)
-#endif
-
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-
-                        .autocorrectionDisabled(true)
-#endif
-
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.yourGitUser
-                        )
-                        {
-#if !os(macOS)
-                            hideKeyboard()
-#endif
-                        }
-
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-                        .autocorrectionDisabled(true)
-#endif
-
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
-                }
+//                HStack {
+//
+//                    Text("your github username:")
+//                        .font(.body)
+//                        .lineLimit(nil)
+//                        .padding()
+//                        .foregroundColor(settingsViewModel.appTextColor)
+//
+//                        TextField(
+//                            "",
+//                            text: $settingsViewModel.yourGitUser
+//                        )
+//                        .border(.secondary)
+//                        .submitLabel(.done)
+//                        .padding(.leading, 8)
+//                        .padding(.trailing, 8)
+//                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+//#if !os(xrOS)
+//                        .scrollDismissesKeyboard(.interactively)
+//#endif
+//
+//                        .font(.caption)
+//                        .foregroundColor(settingsViewModel.appTextColor)
+//#if !os(macOS)
+//
+//                        .autocorrectionDisabled(true)
+//#endif
+//
+//#if !os(macOS)
+//                        .autocapitalization(.none)
+//#endif
+//
+//                }
                 Text("Remote repo settings:")
                     .font(.title3)
                     .lineLimit(nil)
@@ -568,7 +542,6 @@ struct AddView: View {
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
 
-                    if #available(iOS 16.0, *) {
 
                         TextField(
                             "",
@@ -591,28 +564,6 @@ struct AddView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-                    }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.gitUser
-                        )
-                        {
-#if !os(macOS)
-                            hideKeyboard()
-#endif
-                        }
-
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                        .autocorrectionDisabled(true)
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
                 }
                 .frame(height: size.height / 17)
 
@@ -620,7 +571,6 @@ struct AddView: View {
                     Text("repo:")
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
-                    if #available(iOS 16.0, *) {
 
                         TextField(
                             "",
@@ -644,30 +594,7 @@ struct AddView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-                    }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.gitRepo
-                        ) {
-#if !os(macOS)
-                            hideKeyboard()
-#endif
 
-                        }
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-
-                        .autocorrectionDisabled(true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
                 }
                 .frame(height: size.height / 17)
                 HStack {
@@ -675,7 +602,6 @@ struct AddView: View {
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
 
-                    if #available(iOS 16.0, *) {
 
                         TextField(
                             "",
@@ -703,28 +629,12 @@ struct AddView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-                    }
-                    else {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.gitBranch
-                        )
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
 
-                        .autocorrectionDisabled(true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                    }
                 }
                 .frame(height: size.height / 17)
             }
+            .padding(.top,16)
+
             .padding(.leading,8)
             .padding(.trailing,8)
         }
@@ -740,6 +650,8 @@ struct AddView: View {
             }
             .padding(.leading, 8)
             .padding(.trailing, 8)
+            .padding(.horizontal, 30)
+
             .accentColor(settingsViewModel.buttonColor)
             .foregroundColor(settingsViewModel.appTextColor)
         // END GIT SETTINGS DISCLOSURE GROUP
@@ -762,14 +674,21 @@ struct AddView: View {
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.appTextColor)
                 .foregroundColor(settingsViewModel.appTextColor)
+            #if !os(xrOS)
                 .background(settingsViewModel.buttonColor)
+#endif
+
         } else {
             return Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .foregroundColor(settingsViewModel.appTextColor)
+#if !os(xrOS)
+
                 .background(settingsViewModel.buttonColor)
+#endif
+
         }
 #endif
     }

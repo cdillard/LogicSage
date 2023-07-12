@@ -32,8 +32,13 @@ struct ResizableViewModifier: ViewModifier {
                     ResizingHandle(positionLocation: .topTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
+                        .offset(y: -keyboardHeight)
                 }
+                
             )
+#if os(xrOS)
+        .glassBackgroundEffect()
+        #endif
     }
 }
 
@@ -184,7 +189,7 @@ struct ResizingHandle: View {
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
 
         case .topTrailing:
-            let lerpFactor: CGFloat = 0.03222
+            let lerpFactor: CGFloat = 0.02222
 
             newWidth = translation.width < 0 ? max(minSize, frame.width - abs(translation.width)) : max(minSize, frame.width + translation.width)
             newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
@@ -205,17 +210,40 @@ struct ResizingHandle: View {
         // Check global X postion
         //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
 
-        if frame.size.width + newOffsetX > viewSize.width - 4.5 {
+        if frame.size.width + newOffsetX > viewSize.width - 3.5 {
         }
         else {
             resizeOffset.width += newOffsetX
             frame.size.width += newOffsetX
+
+            switch positionLocation {
+            case .topLeading:
+                break
+            case .topTrailing:
+                position.width += newOffsetX / 2
+
+            case .bottomTrailing:
+                position.width += newOffsetX / 2
+
+            }
         }
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.08 {
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.045666 {
         }
         else {
             resizeOffset.height += newOffsetY
             frame.size.height += newOffsetY
+
+            switch positionLocation {
+            case .topLeading:
+                break
+            case .topTrailing:
+                position.height += newOffsetY / 2
+
+            case .bottomTrailing:
+                position.height += newOffsetY / 2
+
+            }
+
         }
         //        print("resizeOffset = \(resizeOffset)")
     }

@@ -100,7 +100,6 @@ class ScreamClient: WebSocketDelegate {
                     if message.hasPrefix("say:") {
                         var arr = [Substring]()
                         let saySep = ": "
-                        if #available(iOS 16.0, *) {
                             arr = message.split(separator: saySep, maxSplits: 1)
                             
                             if arr.count > 1 {
@@ -111,33 +110,6 @@ class ScreamClient: WebSocketDelegate {
                             else {
                                 logD("failed")
                             }
-                        } else {
-                            // Fallback on earlier versions
-                            
-                            let parts = message.components(separatedBy: saySep)
-                            var speech = ""
-                            if parts.count > 2 {
-                                let firstPart = parts[0]
-                                let remainingParts = parts.dropFirst().joined(separator: saySep)
-                                let finalParts = [firstPart, remainingParts]
-                                // Use finalParts
-                                speech = String(finalParts[1])
-                            } else {
-                                // Use parts directly
-                                speech = String(parts[1])
-                                
-                            }
-                            if !speech.isEmpty {
-                                logD("speaking...")
-                                SettingsViewModel.shared.speak(speech)
-                            }
-                            else {
-                                logD("failed")
-                            }
-                            
-                        }
-                        
-                        
                     }
                 }
                 else {
