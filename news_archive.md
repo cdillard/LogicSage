@@ -1,5 +1,34 @@
 new archvie -- becuase if its not today, its old news :P
 
+
+## news
+--------------------
+06-27-2023
+
+EZ as LogicSage 1.2.3
+
+LogicSage (1.2.3): The GPT app for Apple platforms. (iPadOS, and iOS and more platforms soon) On the AppStore for free now!
+
+https://apps.apple.com/us/app/logicsage/id6448485441
+
+What's New:
+
+- Copy Code from GPT responses with the new Copy Code button! (Longpress to copy code!)
+- Redesigned UI for easier use including a Tab bar for Chats, Windows, Settings, and Add Menu.
+- iPadOS pointer interaction brings full immersion to your chats! For the multi-taskers!
+- iOS 14+ support added.
+- Bugs squashed. Keyboard handling improved.
+
+--------------------
+06-18-2023
+
+https://discord.gg/KvjxupEB9
+Join LogicSage discord for help setting up, ideas, and to track development of the LogicSage app. I'll share roadmap, etc.
+
+LogicSage (1.2.2): The GPT app for iPadOS (and iOS) on the AppStore for free now!
+
+https://apps.apple.com/us/app/logicsage/id6448485441
+
 ---
 
 05-17-2023

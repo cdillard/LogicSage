@@ -3,23 +3,24 @@
 
 [LogicSage: The GPT app for Apple platforms. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-![LogicSage for Mac](LogicSageForMacOS.png)
+# LogicSage 1.2.4 (latest release)
+### What's New:
+Automatically name convo after receiving AI response for better organization.
+Easier window movement with handlebar.
+Built in system prompts set the right stage for the conversation.
+Improved Chat Interface. Perfected Keyboard Handling
 
 ## Table of Contents
-- [Contact](#contact)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
+- [Contact](#contact)
 - [Credits](#credits)
 
-## Contact
-Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
-
-- With a little help from my GPT🤖. Thank you, OpenAI!
----
-
 ## Getting Started
+
+0. Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys). 
+	- To use the LogicSage app with AI, You must copy and paste your AI key into the textfield on the info screen that shows on first install. The Settings screen also contains a field you can enter your AI key into.
 1. Clone the repository: `git clone https://github.com/cdillard/LogicSage.git`
 2. Navigate to the project directory: `cd LogicSage`
 3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
@@ -34,7 +35,7 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 
 3. Run `./run.sh` from within LogicSage folder root to run the Swift Sage Server and Swifty-GPT server binary.
 
-	- Now you might be able to use `./run_fast.sh` for subsequent runs of th Swifty-GPT server. YAY.
+	- Now you might be able to use `./run_fast.sh` for subsequent runs of th Swifty-GPT server.
 
 3. Enjoy!
 
@@ -66,6 +67,14 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 #### Installing XcodeGen and Xcodeproj
 1. Install XcodeGen: `brew install xcodegen`
 2. Install Xcodeproj: `gem install xcodeproj`
+
+![LogicSage for Mac](LogicSageForMacOS.png)
+
+## Contact
+Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
+
+- With a little help from my GPT🤖. Thank you, OpenAI!
+---
 
 ---
 ## Credits
