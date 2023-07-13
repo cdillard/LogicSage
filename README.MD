@@ -1,44 +1,17 @@
 
-# LogicSage: The GPT app for Apple platforms. (iPadOS and iOS) 
+# LogicSage: The GPT app for Apple platforms. (iPadOS, MacOS, and iOS) 
 
-[LogicSage: The GPT app Apple platforms. (iPadOS, and iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+[LogicSage: The GPT app for Apple platforms. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+
+![LogicSage for Mac](LogicSageForMacOS.png)
 
 ## Table of Contents
-- [News](#news)
 - [Contact](#contact)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
 - [Credits](#credits)
-
-## news
---------------------
-06-27-2023
-
-EZ as LogicSage 1.2.3
-
-LogicSage (1.2.3): The GPT app for Apple platforms. (iPadOS, and iOS and more platforms soon) On the AppStore for free now!
-
-https://apps.apple.com/us/app/logicsage/id6448485441
-
-What's New:
-
-- Copy Code from GPT responses with the new Copy Code button! (Longpress to copy code!)
-- Redesigned UI for easier use including a Tab bar for Chats, Windows, Settings, and Add Menu.
-- iPadOS pointer interaction brings full immersion to your chats! For the multi-taskers!
-- iOS 14+ support added.
-- Bugs squashed. Keyboard handling improved.
-
---------------------
-06-18-2023
-
-https://discord.gg/KvjxupEB9
-Join LogicSage discord for help setting up, ideas, and to track development of the LogicSage app. I'll share roadmap, etc.
-
-LogicSage (1.2.2): The GPT app for iPadOS (and iOS) on the AppStore for free now!
-
-https://apps.apple.com/us/app/logicsage/id6448485441
 
 ## Contact
 Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
@@ -61,7 +34,7 @@ Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ undersc
 
 3. Run `./run.sh` from within LogicSage folder root to run the Swift Sage Server and Swifty-GPT server binary.
 
-	- Now you might be able to use `./run_fash.sh` for subsequent runs of th Swifty-GPT server. YAY.
+	- Now you might be able to use `./run_fast.sh` for subsequent runs of th Swifty-GPT server. YAY.
 
 3. Enjoy!
 
