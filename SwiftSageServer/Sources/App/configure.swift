@@ -7,6 +7,11 @@ import var Darwin.stdout
 
 // Run with `./run.sh` in the LogicSage directory.
 
+let userName = "chris"
+let userPassword =  "swiftsage"
+let serverUsername = "SERVER"
+let serverPassword = "supers3cre3t"
+
 let debugging = false
 
 let specs  = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "▇", "▆", "▅", "▄", "▃", "▂", "▁"] +
@@ -158,14 +163,9 @@ public func configure(_ app: Application) throws {
                     }
                     // Validate username and password
                     if let user = json?["username"],  let password = json?["password"],
-                       (user == "chris" && password == "swiftsage")
+                       (user == userName && password == userPassword)
                         ||
-                        (user == "SERVER" && password == "supers3cre3t")
-                        ||
-                        (user == "hackerman" && password == "swiftsage")
-                        ||
-                        (user == "chuck" && password == "swiftsage")  {
-
+                        (user == serverUsername && password == serverPassword) {
                         clientsQueue.async {
                             // Authenticate the user
                             username = user

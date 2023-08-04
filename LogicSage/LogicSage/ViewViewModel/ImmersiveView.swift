@@ -47,12 +47,13 @@ struct ImmersiveView: View {
                 if immersionMode == .immersive {
                      modelEntity.position = SIMD3(0,1.65,0.5)
                 }
-                else if immersionMode == .volumetric {
-                    modelEntity.position = SIMD3(0,-0.30666,0.0)
-
-                }
                 // In volumerictric window mode
 ///                modelEntity.position = SIMD3(0,0,0)
+                else if immersionMode == .volumetric {
+                    modelEntity.position = SIMD3(0,-0.30666,0.2)
+
+                }
+
 
                 // DO OR DO NOT RORATE DEPENDING ON VOLUMETRIC
                 let rotationRadians = Float(-90.0) * .pi / 180 // 45 degrees converted to radians.

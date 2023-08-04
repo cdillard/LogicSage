@@ -17,29 +17,28 @@
 - [Contact](#contact)
 - [Credits](#credits)
 
-## Getting Started
+## Getting Started with LogicSage iOS, iPadOS, and xrOS
 
-0. Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys). 
+0. Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
 	- To use the LogicSage app with AI, You must copy and paste your AI key into the textfield on the info screen that shows on first install. The Settings screen also contains a field you can enter your AI key into.
     - Please enter your API Key (via copy and paste) and it will be stored securely offline in your devices keychain. (Check the source code to verify this fact if you want).
 
+
+
+## Configuration of LogicSage for Mac
+
+0. Go to the root of your MacOS user directory (~)
+	- `cd ~`
 1. Clone the repository: `git clone https://github.com/cdillard/LogicSage.git`
-2. Navigate to the project directory: `cd LogicSage`
-3. Follow the [Installation](#installation) and [Configuration](#configuration) steps below.
-
-
-## Configuration
-1. Open `Swifty-GPT.xcworkspace`.
-2. Change to your Development Code Signing info.
-2. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+	- You should now have the repository checked out in `~/LogicSage/`
+2. Open `~/LogicSage/` in Finder.
+3. Open `Swifty-GPT.xcworkspace` by double clicking it.
+4. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
 
 	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
-3. Run `./run.sh` from within LogicSage folder root to run the Swift Sage Server and Swifty-GPT server binary.
+5. Run LogicSage.app
 
-	- Now you might be able to use `./run_fast.sh` for subsequent runs of th Swifty-GPT server.
-
-3. Enjoy!
 
 Optional steps:
 
@@ -72,11 +71,20 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 
 ![LogicSage for Mac](LogicSageForMacOS.png)
 
+
+---
+## Disclaimer
+I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
+
+## Token Usage Warning
+Please be aware that this tool could generate many requests to the OpenAI API. This can use up a lot of tokens. Consider this aspect before using the tool extensively. OpenAI and the creators of this tool accept no responsibility for any damages or losses that may occur.
+
+---
+
 ## Contact
-Created by: Chris Dillard (c_h_r_i_s_b_d_i_l_l_a_r_d_@_g_m_a_i_l.com) w/ underscores removed.
+Created by: Chris Dillard (chrisbdillard@gmail.com)
 
 - With a little help from my GPT🤖. Thank you, OpenAI!
----
 
 ---
 ## Credits
@@ -103,8 +111,3 @@ Thanks to Mike Bruin for keeping the Plist safe.
 
 ---
 Unlocking the Power of the Future: Exploring the Intersection of Mobile and Artificial General Intelligence Programming. In this project, an expert in the field of mobile technology works on ways in which these two fields are converging and changing the way we interact with technology.
----
-
-DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
-
-Please view the old README for some more fun. [README_OLD.md](README_OLD.md).

@@ -38,7 +38,7 @@ extension SettingsViewModel {
             let custVoice = AVSpeechSynthesisVoice(language: "en-AU")
             speechUtterance.voice = custVoice
 #else
-#if !targetEnvironment(simulator)
+#if !targetEnvironment(simulator) || os(xrOS)
         if let customVoice = SettingsViewModel.shared.selectedVoice?.voiceIdentifier {
             let custVoice = AVSpeechSynthesisVoice(identifier: customVoice)
             speechUtterance.voice = custVoice

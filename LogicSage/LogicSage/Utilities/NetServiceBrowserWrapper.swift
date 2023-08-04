@@ -65,8 +65,8 @@ class ServiceDiscovery: NSObject, NetServiceBrowserDelegate, NetServiceDelegate 
     
     func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
         logD("Failed to resolve service (\(sender.name)) with error: \(errorDict)")
-        for service in discoveredServices {
-            service.resolve(withTimeout: 5.0)
-        }
+//        for service in discoveredServices {
+//            service.resolve(withTimeout: 5.0)
+//        }
     }
 }

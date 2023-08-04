@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Start Vapor server
-rm -rf ./SwiftSageServer/.build
+# TODO: Change to use passed or ENV VAR
+cd  ~/LogicSage/
 
 lsof -i :8080 -sTCP:LISTEN | awk 'NR > 1 {print $2}' | xargs kill -15
+
 killall SwiftSageStatusBar
+killall Swifty-GPT
 
 ### USE THIS FOR Terminal.app
 cwd=$(pwd)
@@ -19,29 +21,20 @@ osascript -  "$bar"  <<EOF
     end run
 EOF
 
-## USE THIS FOR iTerm2.app
-# cwd=$(pwd)
-# bar="${cwd}/SwiftSageServer"
-# osascript -  "$bar"  <<EOF
-#     on run argv
-#         tell application "iTerm2"
-#             set newWindow to (create window with default profile)
-#             tell current session of newWindow
-#                 write text "cd " & quoted form of item 1 of argv & " ; swift run"
-#             end tell
-#         end tell
-#     end run
-# EOF
+# ## LAUNCH SWIFT SERVER COMMAND LINE BINARY
 
-# Vapor starts too fast :*()
 sleep 20
 
-rm -rf dd
+# rm -rf dd
 
-## LAUNCH SWIFT SERVER COMMAND LINE BINARY
+cwd=$(pwd)
 
-killall Swifty-GPT
+osascript -  "$cwd"  <<EOF
+    on run argv
+        tell application "Terminal"
 
-xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug clean build
+            do script( "cd " & quoted form of item 1 of argv & " ; xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug clean build ; dd/Build/Products/Debug/Swifty-GPT")
 
-./dd/Build/Products/Debug/Swifty-GPT
+        end tell
+    end run
+EOF

@@ -11,7 +11,7 @@ import Starscream
 let localPeerConsole = LocalPeerConsole()
 
 class LocalPeerConsole: NSObject {
-    let webSocketClient = WebSocketClient()
+    let webSocketClient = ServerWebSocketClient()
 
     let chunkSize = 16384 // This is the maximum frame size for a WebSocket message
     let imgStartSentinel = "START_OF_IMG_DATA"

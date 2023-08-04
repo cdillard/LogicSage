@@ -35,12 +35,23 @@ struct LogicSageApp: App {
     @StateObject private var settingsViewModel = SettingsViewModel.shared
 
 #if os(xrOS)
-
     @State var immersionState: ImmersionStyle = .mixed
-    #endif
+#endif
 
     init() {
         serviceDiscovery = ServiceDiscovery()
+        
+//#if targetEnvironment(macCatalyst)
+//        // start up websocket server
+//        Task {
+//            do {
+//                try await ServerEntrypoint.main()
+//            }
+//            catch {
+//                print("LogicSage server error = \(error)")
+//            }
+//        }
+//#endif
     }
     var body: some Scene {
         WindowGroup("LogicSage", id: "LogicSage-main") {
@@ -55,6 +66,14 @@ struct LogicSageApp: App {
                         settingsViewModel.printVoicesInMyDevice()
                         settingsViewModel.configureAudioSession()
                     }
+//#if targetEnvironment(macCatalyst)
+//                    Task {
+//                        
+//                        Backend.doBackend(path: "~/LogicSage/")
+//                        
+//                        appModel.isServerActive = true
+//                    }
+//#endif
                 }
 #if !os(macOS)
 #if !os(xrOS)
@@ -104,7 +123,17 @@ struct LogicSageApp: App {
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 1.6, height: 1.6, depth: 1.6, in: .meters)
+#endif
+    }
+}
 
+class Backend {
+    static func doBackend(path: String) {
+#if targetEnvironment(macCatalyst)
+        // The LogicSage for Mac app handles starting the server and MacOS Binary.
+        Task {
+                PluginLoader.loadPlugin(path: path)
+        }
 #endif
     }
 }

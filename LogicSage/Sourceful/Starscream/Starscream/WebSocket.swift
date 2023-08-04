@@ -91,7 +91,7 @@ public protocol WebSocketDelegate: AnyObject {
     func didReceive(event: WebSocketEvent, client: WebSocketClient)
 }
 
-open class WebSocket: WebSocketClient, EngineDelegate {
+open class LocalWebSocket: WebSocketClient, EngineDelegate {
     private let engine: Engine
     public weak var delegate: WebSocketDelegate?
     public var onEvent: ((WebSocketEvent) -> Void)?

@@ -29,8 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let menu = NSMenu()
         menu.addItem(withTitle: "LogicSage for Mac", action: nil, keyEquivalent: "")
 
-        menu.addItem(withTitle: "Swifty-GPT Running (restart)", action: #selector(swiftyGptRunning), keyEquivalent: "")
-        menu.addItem(withTitle: "SwiftSageServer Running (restart)", action: #selector(serverRunning), keyEquivalent: "")
+//        menu.addItem(withTitle: "Swifty-GPT Running (restart)", action: #selector(swiftyGptRunning), keyEquivalent: "")
+//        menu.addItem(withTitle: "SwiftSageServer Running (restart)", action: #selector(serverRunning), keyEquivalent: "")
 
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "")
         statusItem?.menu = menu

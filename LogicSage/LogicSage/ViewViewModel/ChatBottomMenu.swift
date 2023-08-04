@@ -23,8 +23,6 @@ struct ChatBotomMenu: View {
 
 
     var body: some View {
-//        ZStack {
-//            if !showModelMenu {
                 Menu {
                     if windowInfo.convoId == Conversation.ID(-1) {
                         serverChatOptions()
@@ -69,39 +67,24 @@ struct ChatBotomMenu: View {
                             .foregroundColor(Color.white)
                             .background(settingsViewModel.buttonColor)
                         }
-//                        Button(action: {
-//                            logD("selected Enable/Disable/Change Voice")
-//                        }) {
-//                            Text("Enable/Disable/Change Voice")
-//                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//                                .lineLimit(1)
-//                                .foregroundColor(Color.white)
-//                                .background(settingsViewModel.buttonColor)
-//                        }
                         
                     }
                 } label: {
                     ZStack {
-                        if #available(iOS 16.0, *) {
-                            Label("", systemImage: "ellipsis")
+                            Label("...", systemImage: "ellipsis")
                                 .font(.title3)
                                 .minimumScaleFactor(0.5)
                                 .labelStyle(DemoStyle())
                                 .background(Color.clear)
                                 .tint(settingsViewModel.appTextColor)
-                            
-                        } else {
-                            Label("", systemImage: "ellipsis")
-                                .font(.title3)
-                                .minimumScaleFactor(0.5)
-                                .labelStyle(DemoStyle())
-                                .background(Color.clear)
-                        }
+
                         
                     }
                     .padding(4)
                     
                 }
+                .frame(width: 30)
+
         .sheet(isPresented: $isModalPresented) {
             ModalView(items: aiModelOptions)
         }
@@ -128,38 +111,38 @@ struct ChatBotomMenu: View {
                     .background(settingsViewModel.buttonColor)
             }
             
-            // Simulator BUTTON
-            Button(action: {
-                logD("RUN SIMULATOR")
-                
-                settingsViewModel.latestWindowManager = windowManager
-                
-                DispatchQueue.main.async {
-                    
-                    // Execute your action here
-                    screamer.sendCommand(command: "simulator")
-                }
-            }) {
-                ZStack {
-                    Text("📲 simulator")
-                }
-                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                .lineLimit(1)
-                .foregroundColor(Color.white)
-                .background(settingsViewModel.buttonColor)
-            }
-            
-            // Debate BUTTON
-            Button(action: {
-                chatText = "debate "
-            }) {
-                Text( "⚖️ debate")
-                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                    .lineLimit(1)
-                    .foregroundColor(Color.white)
-                    .background(settingsViewModel.buttonColor)
-            }
-            
+//            // Simulator BUTTON
+//            Button(action: {
+//                logD("RUN SIMULATOR")
+//                
+//                settingsViewModel.latestWindowManager = windowManager
+//                
+//                DispatchQueue.main.async {
+//                    
+//                    // Execute your action here
+//                    screamer.sendCommand(command: "simulator")
+//                }
+//            }) {
+//                ZStack {
+//                    Text("📲 simulator")
+//                }
+//                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                .lineLimit(1)
+//                .foregroundColor(Color.white)
+//                .background(settingsViewModel.buttonColor)
+//            }
+//            
+//            // Debate BUTTON
+//            Button(action: {
+//                chatText = "debate "
+//            }) {
+//                Text( "⚖️ debate")
+//                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+//                    .lineLimit(1)
+//                    .foregroundColor(Color.white)
+//                    .background(settingsViewModel.buttonColor)
+//            }
+//            
             // i BUTTON
             Button(action: {
                 chatText = "i "

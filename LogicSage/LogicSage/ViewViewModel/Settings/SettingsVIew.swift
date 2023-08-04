@@ -24,7 +24,7 @@ struct SettingsView: View {
 
     let cornerHandleRange: ClosedRange<Double> = 18...48
     let cornerHandleSteps: Double = 1
-    
+
     @Binding var showSettings: Bool
     @Binding var showHelp: Bool
     @Binding var showInstructions: Bool
@@ -332,22 +332,22 @@ struct SettingsView: View {
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
                     TextField(
-                            "",
-                            text: $settingsViewModel.openAIKey
-                        )
-                        .border(.secondary)
-                        .submitLabel(.done)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        "",
+                        text: $settingsViewModel.openAIKey
+                    )
+                    .border(.secondary)
+                    .submitLabel(.done)
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
-                        .scrollDismissesKeyboard(.interactively)
+                    .scrollDismissesKeyboard(.interactively)
 #endif
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
+                    .font(.title3)
+                    .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                        .autocorrectionDisabled(!true)
+                    .autocorrectionDisabled(!true)
 #endif
 #if !os(macOS)
-                        .autocapitalization(.none)
+                    .autocapitalization(.none)
 #endif
 
 
@@ -358,53 +358,43 @@ struct SettingsView: View {
                         .foregroundColor(settingsViewModel.appTextColor)
 
                     HStack {
-                            TextField(
-                                "",
-                                text: $settingsViewModel.openAIModel
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        TextField(
+                            "",
+                            text: $settingsViewModel.openAIModel
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
-                            .scrollDismissesKeyboard(.interactively)
+                        .scrollDismissesKeyboard(.interactively)
 #endif
-                            .font(.title3)
-                            .foregroundColor(settingsViewModel.appTextColor)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
 
-                            .autocorrectionDisabled(!true)
+                        .autocorrectionDisabled(!true)
 #endif
 #if !os(macOS)
-                            .autocapitalization(.none)
+                        .autocapitalization(.none)
 #endif
-
-
-
                         Menu {
                             modelOptions()
                         }
                     label: {
                         ZStack {
-                            if #available(iOS 16.0, *) {
 
-                                Label("", systemImage: "arrow.down")
-                                    .font(.title3)
-                                    .minimumScaleFactor(0.5)
-                                    .labelStyle(DemoStyle())
-                                    .background(Color.clear)
-                                    .tint(settingsViewModel.appTextColor)
-
-                            } else {
-                                Label("", systemImage: "arrow.down")
-                                    .font(.title3)
-                                    .minimumScaleFactor(0.5)
-                                    .labelStyle(DemoStyle())
-                                    .background(Color.clear)
-                            }
+                            Label("...", systemImage: "arrow.down")
+                                .font(.title3)
+                                .minimumScaleFactor(0.5)
+                                .labelStyle(DemoStyle())
+                                .background(Color.clear)
+                                .tint(settingsViewModel.appTextColor)
 
                         }
                         .padding(4)
                     }
+                    .frame(width: 30)
+
                     }
                     Group {
                         Spacer()
@@ -415,68 +405,68 @@ struct SettingsView: View {
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
 
-                            TextField(
-                                "",
-                                text: $settingsViewModel.ghaPat
-                            )
-                            .border(.secondary)
-                            .submitLabel(.done)
-                            .frame( maxWidth: .infinity, maxHeight: .infinity)
-                            .font(.title3)
-                            .foregroundColor(settingsViewModel.appTextColor)
+                        TextField(
+                            "",
+                            text: $settingsViewModel.ghaPat
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                            .autocorrectionDisabled(!true)
+                        .autocorrectionDisabled(!true)
 #endif
 #if !os(macOS)
-                            .autocapitalization(.none)
+                        .autocapitalization(.none)
 #endif
                     }
-//                    Group {
-//                        Spacer()
-//                            .padding(.leading, 8)
-//                            .padding(.trailing, 8)
-//
-//                        Text("AI Host:")
-//                            .font(.title3)
-//                            .foregroundColor(settingsViewModel.appTextColor)
-//
-//                        HStack {
-//                                TextField(
-//                                    "",
-//                                    text: $settingsViewModel.openAIHost
-//                                )
-//                                .border(.secondary)
-//                                .submitLabel(.done)
-//                                .frame( maxWidth: .infinity, maxHeight: .infinity)
-//                                .font(.title3)
-//                                .foregroundColor(settingsViewModel.appTextColor)
-//#if !os(macOS)
-//                                .autocorrectionDisabled(!true)
-//#endif
-//#if !os(macOS)
-//                                .autocapitalization(.none)
-//#endif
-//
-//                            Menu {
-//                                hostOptions()
-//                            }
-//                        label: {
-//                            ZStack {
-//
-//                                    Label("", systemImage: "arrow.down")
-//                                        .font(.title3)
-//                                        .minimumScaleFactor(0.5)
-//                                        .labelStyle(DemoStyle())
-//                                        .background(Color.clear)
-//                                        .tint(settingsViewModel.appTextColor)
-//
-//
-//
-//                            }
-//                            .padding(4)
-//                        }
-//                        }
-//                    }
+                    //                    Group {
+                    //                        Spacer()
+                    //                            .padding(.leading, 8)
+                    //                            .padding(.trailing, 8)
+                    //
+                    //                        Text("AI Host:")
+                    //                            .font(.title3)
+                    //                            .foregroundColor(settingsViewModel.appTextColor)
+                    //
+                    //                        HStack {
+                    //                                TextField(
+                    //                                    "",
+                    //                                    text: $settingsViewModel.openAIHost
+                    //                                )
+                    //                                .border(.secondary)
+                    //                                .submitLabel(.done)
+                    //                                .frame( maxWidth: .infinity, maxHeight: .infinity)
+                    //                                .font(.title3)
+                    //                                .foregroundColor(settingsViewModel.appTextColor)
+                    //#if !os(macOS)
+                    //                                .autocorrectionDisabled(!true)
+                    //#endif
+                    //#if !os(macOS)
+                    //                                .autocapitalization(.none)
+                    //#endif
+                    //
+                    //                            Menu {
+                    //                                hostOptions()
+                    //                            }
+                    //                        label: {
+                    //                            ZStack {
+                    //
+                    //                                    Label("", systemImage: "arrow.down")
+                    //                                        .font(.title3)
+                    //                                        .minimumScaleFactor(0.5)
+                    //                                        .labelStyle(DemoStyle())
+                    //                                        .background(Color.clear)
+                    //                                        .tint(settingsViewModel.appTextColor)
+                    //
+                    //
+                    //
+                    //                            }
+                    //                            .padding(4)
+                    //                        }
+                    //                        }
+                    //                    }
 
                 }
                 .padding(.leading, 8)

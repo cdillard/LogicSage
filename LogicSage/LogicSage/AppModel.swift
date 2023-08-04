@@ -9,6 +9,9 @@ import SwiftUI
 
 class AppModel: ObservableObject {
 
+    @Published var isServerActive = false
+
+
     @Published var isShowingImmersiveWindow: Bool = false
     @Published var isShowingImmersiveScene: Bool = false
     @Published var isShowingImmersiveLogo: Bool = false

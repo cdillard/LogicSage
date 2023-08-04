@@ -117,7 +117,12 @@ struct TopBar: View {
                         }
                         else {
                             menu()
+#if os(xrOS)
+                .padding(.trailing,SettingsViewModel.shared.cornerHandleSize + 8 + 20)
+                            #else
                                 .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
+#endif
+
                                 .foregroundColor(SettingsViewModel.shared.buttonColor)
                         }
                     }
@@ -228,16 +233,6 @@ struct TopBar: View {
                 }
             }
             else {
-                //            Button {
-                //                isEditing.toggle()
-                //
-                //            } label: {
-                //                Label(isEditing ? "Done" : windowInfo.windowType == .chat ? "Select" : "Edit", systemImage: "pencil")
-                //                    .font(.body)
-                //                    .labelStyle(DemoStyle())
-                //                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                //            }
-                
                 let convoText = settingsViewModel.convoText(settingsViewModel.conversations, window: windowInfo)
 #if !os(tvOS)
                 ShareLink(item: "Check out LogicSage: AI Code & Chat on the AppStore for free now: \(appLink.absoluteString)\nHere is the chat I had with my GPT.\n\(convoText)", message: Text("LogicSage convo"))
@@ -281,7 +276,7 @@ struct TopBar: View {
 
         } label: {
             ZStack {
-                Label("", systemImage: "ellipsis")
+                Label("...", systemImage: "ellipsis")
                     .font(.title3)
                     .minimumScaleFactor(0.5)
                     .labelStyle(DemoStyle())
@@ -290,6 +285,8 @@ struct TopBar: View {
             }
             .padding(4)
         }
+        .frame(width: 30)
+
     }
 
     struct DemoStyle: LabelStyle {

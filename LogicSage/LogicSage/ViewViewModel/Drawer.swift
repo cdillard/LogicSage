@@ -72,8 +72,12 @@ struct DrawerContent: View {
 
                     ScrollView {
                         ForEach(Array(conversations.reversed().enumerated()), id: \.offset) { index, convo in
-                            Divider().foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
-                            HStack(spacing: 0) {
+
+                            Divider()
+                                .foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
+
+                            HStack(alignment: VerticalAlignment.lastTextBaseline) {
+                                Spacer()
                                 Button( action : {
                                     withAnimation {
                                         tabSelection = 1
@@ -230,6 +234,7 @@ struct DrawerContent: View {
                                     .buttonStyle(MyButtonStyle())
                                 }
                             }
+                
                             .padding(.horizontal)
                         }
                     }

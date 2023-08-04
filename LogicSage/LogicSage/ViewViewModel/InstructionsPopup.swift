@@ -45,7 +45,7 @@ struct InstructionsPopup: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
                             Group {
-                                Text("Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys).")
+                                Text("Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an AI Key.")
                                     .minimumScaleFactor(0.466)
                                 
                                 Text("Please enter your API Key (via copy and paste) and it will be stored securely offline in your devices keychain. (Check the source code if you want)")

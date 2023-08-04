@@ -1,0 +1,30 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/sprinchar/Library/Developer/Xcode/DerivedData/MacSageApp-hiifnuinhpcczchgccgdxchuqlmx/Build/Products/Release/SwiftSageStatusBar'
+relocations:
+  - { offsetInCU: 0x4F, offset: 0xC3675, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar9tickCountSivp', symObjAddr: 0x8F80, symBinAddr: 0x100008E20, symSize: 0x0 }
+  - { offsetInCU: 0x11E, offset: 0xC3744, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC29applicationDidFinishLaunchingyy10Foundation12NotificationVF', symObjAddr: 0xE0, symBinAddr: 0x100001980, symSize: 0x350 }
+  - { offsetInCU: 0x283, offset: 0xC38A9, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC29applicationDidFinishLaunchingyy10Foundation12NotificationVFTo', symObjAddr: 0x430, symBinAddr: 0x100001CD0, symSize: 0x80 }
+  - { offsetInCU: 0x2AE, offset: 0xC38D4, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC18handleNotificationyy10Foundation0H0VFTo', symObjAddr: 0x4B0, symBinAddr: 0x100001D50, symSize: 0x80 }
+  - { offsetInCU: 0x2E0, offset: 0xC3906, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC11updateTitleyyF', symObjAddr: 0x530, symBinAddr: 0x100001DD0, symSize: 0x160 }
+  - { offsetInCU: 0x381, offset: 0xC39A7, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC11updateTitleyyFTo', symObjAddr: 0x740, symBinAddr: 0x100001FE0, symSize: 0x30 }
+  - { offsetInCU: 0x3BB, offset: 0xC39E1, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC4quityyFTo', symObjAddr: 0x770, symBinAddr: 0x100002010, symSize: 0x30 }
+  - { offsetInCU: 0x402, offset: 0xC3A28, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC18createColoredImage4sizeSo7NSImageCSo6CGSizeV_tF', symObjAddr: 0x8A0, symBinAddr: 0x100002140, symSize: 0x360 }
+  - { offsetInCU: 0x5ED, offset: 0xC3C13, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateCACycfc', symObjAddr: 0xC00, symBinAddr: 0x1000024A0, symSize: 0x100 }
+  - { offsetInCU: 0x63C, offset: 0xC3C62, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateCACycfcTo', symObjAddr: 0xD00, symBinAddr: 0x1000025A0, symSize: 0x20 }
+  - { offsetInCU: 0x658, offset: 0xC3C7E, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateCfD', symObjAddr: 0xD20, symBinAddr: 0x1000025C0, symSize: 0x30 }
+  - { offsetInCU: 0x685, offset: 0xC3CAB, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateC18handleNotificationyy10Foundation0H0VFTf4nd_n', symObjAddr: 0xF50, symBinAddr: 0x1000027F0, symSize: 0x3D0 }
+  - { offsetInCU: 0x8BC, offset: 0xC3EE2, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x1000018A0, symSize: 0xC0 }
+  - { offsetInCU: 0x941, offset: 0xC3F67, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateCMa', symObjAddr: 0xC0, symBinAddr: 0x100001960, symSize: 0x20 }
+  - { offsetInCU: 0x976, offset: 0xC3F9C, size: 0x8, addend: 0x0, symName: '_$s18SwiftSageStatusBar11AppDelegateCfETo', symObjAddr: 0xD50, symBinAddr: 0x1000025F0, symSize: 0x50 }
+  - { offsetInCU: 0x9A5, offset: 0xC3FCB, size: 0x8, addend: 0x0, symName: ___swift_instantiateConcreteTypeFromMangledName, symObjAddr: 0xDA0, symBinAddr: 0x100002640, symSize: 0x40 }
+  - { offsetInCU: 0x9B9, offset: 0xC3FDF, size: 0x8, addend: 0x0, symName: '_$sSaySJGSayxGSTsWl', symObjAddr: 0xDE0, symBinAddr: 0x100002680, symSize: 0x40 }
+  - { offsetInCU: 0x9CD, offset: 0xC3FF3, size: 0x8, addend: 0x0, symName: ___swift_instantiateConcreteTypeFromMangledNameAbstract, symObjAddr: 0xE20, symBinAddr: 0x1000026C0, symSize: 0x40 }
+  - { offsetInCU: 0x9EC, offset: 0xC4012, size: 0x8, addend: 0x0, symName: '_$ss22__RawDictionaryStorageC4findys10_HashTableV6BucketV6bucket_Sb5foundtxSHRzlFs11AnyHashableV_Tg5', symObjAddr: 0xE60, symBinAddr: 0x100002700, symSize: 0x30 }
+  - { offsetInCU: 0xA24, offset: 0xC404A, size: 0x8, addend: 0x0, symName: '_$ss22__RawDictionaryStorageC4find_9hashValues10_HashTableV6BucketV6bucket_Sb5foundtx_SitSHRzlFs11AnyHashableV_Tg5', symObjAddr: 0xE90, symBinAddr: 0x100002730, symSize: 0xC0 }
+  - { offsetInCU: 0xAA9, offset: 0xC40CF, size: 0x8, addend: 0x0, symName: '_$ss11AnyHashableVWOh', symObjAddr: 0x1320, symBinAddr: 0x100002BC0, symSize: 0x30 }
+  - { offsetInCU: 0xABD, offset: 0xC40E3, size: 0x8, addend: 0x0, symName: '_$sypSgWOh', symObjAddr: 0x1350, symBinAddr: 0x100002BF0, symSize: 0x30 }
+  - { offsetInCU: 0xAD1, offset: 0xC40F7, size: 0x8, addend: 0x0, symName: '_$sypWOc', symObjAddr: 0x1380, symBinAddr: 0x100002C20, symSize: 0x30 }
+  - { offsetInCU: 0xAE5, offset: 0xC410B, size: 0x8, addend: 0x0, symName: '_$ss11AnyHashableVWOc', symObjAddr: 0x13B0, symBinAddr: 0x100002C50, symSize: 0x30 }
+  - { offsetInCU: 0xB5E, offset: 0xC4184, size: 0x8, addend: 0x0, symName: '_$sSa9repeating5countSayxGx_SitcfCSJ_Tg5', symObjAddr: 0x690, symBinAddr: 0x100001F30, symSize: 0xB0 }
+...

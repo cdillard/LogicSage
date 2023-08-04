@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-
+#if !os(tvOS)
 class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
     var keyboardShow: AnyCancellable?
@@ -23,3 +23,4 @@ class KeyboardResponder: ObservableObject {
             .assign(to: \.currentHeight, on: self)
     }
 }
+#endif

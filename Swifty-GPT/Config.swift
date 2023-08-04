@@ -7,12 +7,24 @@
 
 import Foundation
 
-// OPEN AI SETTIN
-//let gptModel = "gpt-4" // THANK YOU!!!!!!!!!!!!!
-let gptModel = "gpt-3.5-turbo" // THANK YOU!!!!!!!!!!!!!
 // OPEN AI SETTINGS
 
 // TODO: MOVE TO CONFIG
+let gptModel = "gpt-4-0314"
+
+//let gptModel = "gpt-4-0314-32k"
+
+//let gptModel = "gpt-4"
+
+//let gptModel = "gpt-4-32k"
+
+// == GPT 3.5 TURBO MODEL CHOICES ==
+
+//let gptModel = "gpt-3.5-turbo-16k-0613"
+
+//let gptModel = "gpt-3.5-turbo-16k"
+
+//let gptModel = "gpt-3.5-turbo"
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 

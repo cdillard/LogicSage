@@ -22,4 +22,4 @@ I reserve the right to update or change my Privacy Policy at any time and you sh
 
 ## Contact Information
 
-For any questions or concerns regarding the privacy policy, please send me an email to c_h_r_i_s_b_d_i_l_l_a_r_d@g_m_a_i_l.com w/ underscores removed..
+For any questions or concerns regarding the privacy policy, please send me an email to (chrisbdillard@gmail.com)

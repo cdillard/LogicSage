@@ -15,6 +15,10 @@ struct CommandButtonView: View {
     @State var textEditorHeight : CGFloat = 20
     @ObservedObject var windowManager: WindowManager
     @Binding var isInputViewShown: Bool
+
+//    @State private var isFilePickerShown = false
+//    @State private var picker = DocumentPicker()
+
     func openText() {
         isInputViewShown.toggle()
     }
@@ -23,9 +27,7 @@ struct CommandButtonView: View {
             VStack(spacing: 0)  {
                 HStack {
 #if os(xrOS)
-                    if windowManager.windows.count == 1 {
-                        ToggleImmersiveButton(idOfView: "ImmersiveSpaceVolume", name: "3D WindowSphere", showImmersiveLogo: $appModel.isShowingImmersiveWindow)
-                    }
+                    ToggleImmersiveButton(idOfView: "ImmersiveSpaceVolume", name: "3D WindowSphere", showImmersiveLogo: $appModel.isShowingImmersiveWindow)
                     ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Logo", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
                     //                    ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
 #endif
@@ -33,6 +35,51 @@ struct CommandButtonView: View {
                 Spacer()
                 HStack(spacing: 4) {
                     Spacer()
+
+
+#if targetEnvironment(macCatalyst)
+
+                    Button(action: {
+                        if !appModel.isServerActive {
+                            DispatchQueue.main.async {
+                                // Execute your action here
+                                
+                                Backend.doBackend(path: "~/LogicSage/")
+                                //appModel.isServerActive = true
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                               print("killall swifty-gpt")
+                            }
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+
+                            resizableButtonImage(systemName:
+                                                    "server.rack",
+                                                 size: geometry.size)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text( "Start server" )
+                          //  Text("\(appModel.isServerActive ? "Stop" : "Start") server" )
+                                .font(.caption)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+
+                        .background(settingsViewModel.buttonColor)
+#endif
+                    }
+                    .buttonStyle(MyButtonStyle())
+
+                    #endif
+
 
                     Button(action: {
                         DispatchQueue.main.async {
@@ -62,6 +109,7 @@ struct CommandButtonView: View {
                         .background(settingsViewModel.buttonColor)
 #endif
                     }
+                    .buttonStyle(MyButtonStyle())
 
 #if !os(tvOS)
                     Button(action: {
@@ -90,6 +138,8 @@ struct CommandButtonView: View {
 #endif
 
                     }
+                    .buttonStyle(MyButtonStyle())
+
 #endif
 
                     Button(action: {
@@ -124,11 +174,15 @@ struct CommandButtonView: View {
 #endif
 
                     }
+                    .buttonStyle(MyButtonStyle())
+
                 }
                 .padding()
             }
         }
     }
+
+
     struct ViewHeightKey: PreferenceKey {
         static var defaultValue: CGFloat { 0 }
         static func reduce(value: inout Value, nextValue: () -> Value) {
@@ -141,21 +195,18 @@ struct CommandButtonView: View {
             .resizable()
             .scaledToFit()
             .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+        // .background(settingsViewModel.buttonColor)
+
 #else
-        if #available(iOS 16.0, *) {
             return Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: max(30, size.width / 12), height: 32.666 )
                 .tint(settingsViewModel.appTextColor)
-            // .background(settingsViewModel.buttonColor)
-        } else {
-            return Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: max(30, size.width / 12), height: 32.666 )
-            //.background(settingsViewModel.buttonColor)
-        }
+#if targetEnvironment(macCatalyst)
+
+             .background(settingsViewModel.buttonColor)
+        #endif
 #endif
     }
 }
@@ -167,3 +218,81 @@ struct CustomFontSize: ViewModifier {
             .font(.system(size: CGFloat(size)))
     }
 }
+//final class DocumentPicker: NSObject, UIViewControllerRepresentable {
+//    typealias UIViewControllerType = UIDocumentPickerViewController
+//    
+//    lazy var viewController:UIDocumentPickerViewController = {
+//        // For picked only folder
+//        let vc = UIDocumentPickerViewController(documentTypes: ["public.folder"], in: .open)
+//        // For picked every document
+//        //        let vc = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .open)
+//        // For picked only images
+//        //        let vc = UIDocumentPickerViewController(documentTypes: ["public.image"], in: .open)
+//        vc.allowsMultipleSelection = false
+//        //        vc.accessibilityElements = [kFolderActionCode]
+//        //        vc.shouldShowFileExtensions = true
+//        vc.delegate = self
+//        return vc
+//    }()
+//    
+//    func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPicker>) -> UIDocumentPickerViewController {
+//        viewController.delegate = self
+//        return viewController
+//    }
+//    
+//    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: UIViewControllerRepresentableContext<DocumentPicker>) {
+//    }
+//}
+//
+//extension DocumentPicker: UIDocumentPickerDelegate {
+//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+//        print("\nThe url is: \(urls)")
+//
+//
+//        Backend.doBackend(path: urls.first?.path() ?? "")
+//
+//    }
+//
+//    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+//        controller.dismiss(animated: true) {
+//        }
+//        print("cancelled")
+//    }
+//}
+//struct DocPickerViewController: UIViewControllerRepresentable {
+//
+//private let docTypes: [String] = ["com.adobe.pdf", "public.text", "public.composite-content"]
+//var callback: (URL) -> ()
+//private let onDismiss: () -> Void
+//
+//init(callback: @escaping (URL) -> (), onDismiss: @escaping () -> Void) {
+//    self.callback = callback
+//    self.onDismiss = onDismiss
+//}
+//
+//func makeCoordinator() -> Coordinator { Coordinator(self) }
+//
+//func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: UIViewControllerRepresentableContext<DocPickerViewController>) {
+//}
+//
+//func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+//    let controller = UIDocumentPickerViewController(documentTypes: docTypes, in: .import)
+//    controller.allowsMultipleSelection = false
+//    controller.delegate = context.coordinator
+//    return controller
+//}
+//
+//class Coordinator: NSObject, UIDocumentPickerDelegate {
+//    var parent: DocPickerViewController
+//    init(_ pickerController: DocPickerViewController) {
+//        self.parent = pickerController
+//    }
+//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+//        parent.callback(urls[0])
+//        parent.onDismiss()
+//    }
+//    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+//        parent.onDismiss()
+//    }
+//}
+//}

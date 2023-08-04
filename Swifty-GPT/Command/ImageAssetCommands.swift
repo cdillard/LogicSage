@@ -64,6 +64,8 @@ func wallpaperCommand(input: String) {
 
         for file in files ?? [] {
             multiPrinter("- \(file.lastPathComponent)")
+            multiPrinter("\n")
+
         }
     }
     else if input == "random" || input == "rand" || input == "rand " || input == "random " {
@@ -117,7 +119,7 @@ func listFiles(at url: URL) throws -> [URL] {
             retDir.append(content)
         }
         else {
-            print("non supported image")
+           // print("non supported image")
         }
     }
     return retDir

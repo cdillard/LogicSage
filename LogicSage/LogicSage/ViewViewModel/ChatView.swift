@@ -228,7 +228,9 @@ struct ChatView: View {
                     }
                     editingSystemPrompt = false
                 }
-
+#if os(xrOS)
+                .padding(.trailing,20)
+#endif
         }
     }
 #endif

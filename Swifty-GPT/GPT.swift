@@ -55,10 +55,9 @@ class GPT {
 
         Task {
             do {
-                // TODO: CHECK OUT  "gpt4_32k" and support all future models easily
                 let model: Model = Model(gptModel)
 
-                var query = ChatQuery(model: model, messages: [.init(role: .user, content: manualPrompt ? config.manualPromptString : prompt)])
+                var query = ChatQuery(model: model, messages: [.init(role: .system, content: manualPrompt ? config.manualPromptString : prompt)])
                 query.stream = true
 
                 let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(

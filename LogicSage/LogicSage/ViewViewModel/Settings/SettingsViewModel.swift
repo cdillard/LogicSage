@@ -17,9 +17,12 @@ public class SettingsViewModel: ObservableObject {
 
     //preload webkit
 #if !os(tvOS)
+#if !targetEnvironment(macCatalyst)
+
     var _preLoadWebViewStore: WebViewStore = WebViewStore()
 #endif
-    
+#endif
+
     let speechSynthesizer = AVSpeechSynthesizer()
     let speakerDelegate = SpeakerDelegate()
     
@@ -27,8 +30,10 @@ public class SettingsViewModel: ObservableObject {
 
 // BEGIN TERMINAL ZONE **************************************************************************************
     func logText(_ text: String, terminator: String = "\n") {
-        consoleManagerText.append(text)
-        consoleManagerText.append(terminator)
+        DispatchQueue.main.async {
+            self.consoleManagerText.append(text)
+            self.consoleManagerText.append(terminator)
+        }
     }
     var consoleManagerText: String = ""
 // END TERMINAL ZONE **************************************************************************************
@@ -61,7 +66,7 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var showAudioSettings: Bool = false
     @AppStorage("autoCorrect") var autoCorrect: Bool = true
-    @AppStorage("defaultURL") var defaultURL = "https://chat.openai.com"
+    @AppStorage("defaultURL") var defaultURL = "https://www.google.com"
     @AppStorage("chatUpdateInterval") var chatUpdateInterval: Double = 0.5
 
     @Published var initalAnim: Bool = false
@@ -592,6 +597,10 @@ public class SettingsViewModel: ObservableObject {
     static let gitKeySeparator = "-sws-"
 
     func refreshDocuments() {
+
+// IF APP SANDBOX IS DISABLED ,
+#if !targetEnvironment(macCatalyst)
+
         let fileURL = getDocumentsDirectory()
         DispatchQueue.global(qos: .default).async {
             let files = getFiles(in: fileURL)
@@ -599,6 +608,7 @@ public class SettingsViewModel: ObservableObject {
                 self.root = RepoFile(name: fileRootName, url: fileURL, isDirectory: true, children: files)
             }
         }
+#endif
     }
 
     // START THEME ZONE

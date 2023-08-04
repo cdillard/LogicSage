@@ -123,6 +123,7 @@ AGI could change the game and push us to a new phase.
 func promptsCommand(input: String) {
     PromptLibrary.promptLib.forEach {
         multiPrinter($0)
+        multiPrinter("\n")
     }
 }
 

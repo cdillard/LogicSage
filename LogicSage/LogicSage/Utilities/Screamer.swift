@@ -34,7 +34,7 @@ class ScreamClient: WebSocketDelegate {
     = "START_OF_WORKSPACE_DATA"
     let workspaceEndSentinel
     = "END_OF_WORKSPACE_DATA"
-    var websocket: WebSocket!
+    var websocket: LocalWebSocket!
     var pingTimer: Timer?
     public private(set) var isViable = false
     
@@ -256,7 +256,7 @@ class ScreamClient: WebSocketDelegate {
         var request = URLRequest(url: url)
         request.timeoutInterval = timeoutInterval
         
-        websocket = WebSocket(request: request)
+        websocket = LocalWebSocket(request: request)
         websocket.callbackQueue = DispatchQueue(label: bundleID)
         websocket.delegate = self
         websocket.connect()
