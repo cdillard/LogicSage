@@ -12,110 +12,104 @@ import Combine
 struct ChatView: View {
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @ObservedObject var settingsViewModel: SettingsViewModel
-
+    
     @Binding var isEditing: Bool
     @State var isLockToBottom: Bool = true
-
+    
     @ObservedObject var windowManager: WindowManager
-
-    @State var chatText = ""
-    @State var textEditorHeight : CGFloat = 40
+    
+    @State var chatText = "" {
+        didSet {
+            
+        }
+    }
+    @State var textEditorHeight : CGFloat = 86
     @State var editingSystemPrompt: Bool = false
-
+    
     @Environment(\.dateProviderValue) var dateProvider
     @Environment(\.idProviderValue) var idProvider
-
+    
     @Binding var isMoveGestureActive: Bool
     @Binding var isResizeGestureActive: Bool
-
+    
     @Binding var keyboardHeight: CGFloat
-
+    
     @Binding var frame: CGRect
     @Binding var position: CGSize
     @Binding var resizeOffset: CGSize
     @State private var lastDragLocation: CGFloat = 0
     @State private var isDraggedDown: Bool = false
     @State private var showCheckmark: Bool = false
-
+    
     @State private var choseBuiltInPrompt: String = ""
     @FocusState var inFocus
-
+    @State var tokenCount: Int = 0
+    
     var body: some View {
         GeometryReader { geometry in
-            ScrollViewReader { sp in
-                ScrollView {
-                    VStack(spacing: 0) {
-                        let usableKeyboardHeight = sageMultiViewModel.frame.height > keyboardHeight ? (inFocus ? keyboardHeight : 0) : 0
-
+            VStack(spacing: 0) {
+                let usableKeyboardHeight = sageMultiViewModel.frame.height > keyboardHeight ? (inFocus ? keyboardHeight : 0) : 0
+                
 #if !os(tvOS)
-                        SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
-                                                SourceCodeTextEditor.Customization(didChangeText:
-                                                                                    { srcCodeTextEditor in
-                            // do nothing
-                        }, insertionPointColor: {
+                SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottom, customization:
+                                        SourceCodeTextEditor.Customization(didChangeText:
+                                                                            { srcCodeTextEditor in
+                    // do nothing
+                }, insertionPointColor: {
 #if !os(macOS)
-                            Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
+                    Colorv(cgColor: settingsViewModel.buttonColor.cgColor!)
 #else
-                            Colorv(.darkGreen)
+                    Colorv(.darkGreen)
 #endif
-                        }, lexerForSource: { lexer in
-                            SwiftLexer()
-                        }, textViewDidBeginEditing: { srcEditor in
-                            // do nothing
-                        }, theme: {
-                            ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
-                        }, overrideText:  {
-                            return sageMultiViewModel.getConvoText()
-                        }, codeDidCopy: {
-                            onCopy()
-                        }, windowType: {.chat }), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
-                        .onAppear {
-                            // TODO: Fix to use proper published.
-                            Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
-                                DispatchQueue.global(qos: .background).async {
-                                    if let convoId = sageMultiViewModel.windowInfo.convoId {
-                                        let convo = settingsViewModel.getConvo(convoId)
-                                        DispatchQueue.main.async {
-                                            sageMultiViewModel.conversation = convo
-                                        }
-                                    }
+                }, lexerForSource: { lexer in
+                    SwiftLexer()
+                }, textViewDidBeginEditing: { srcEditor in
+                    // do nothing
+                }, theme: {
+                    ChatSourceCodeTheme(settingsViewModel: settingsViewModel)
+                }, overrideText:  {
+                    return sageMultiViewModel.getConvoText()
+                }, codeDidCopy: {
+                    onCopy()
+                }, windowType: {.chat }), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
+                .onAppear {
+                    // TODO: Fix to use proper published.
+                    Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
+                        DispatchQueue.global(qos: .background).async {
+                            if let convoId = sageMultiViewModel.windowInfo.convoId {
+                                let convo = settingsViewModel.getConvo(convoId)
+                                DispatchQueue.main.async {
+                                    sageMultiViewModel.conversation = convo
+                                    tokenCount = sageMultiViewModel.conversation?.tokens ?? 0
                                 }
                             }
                         }
-                        .frame(height: geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight)
-
+                    }
+                }
+                .frame(height: geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight)
+                
 #endif
 #if !os(tvOS)
-                        
-                        messgeEntry(size: geometry.size)
-                            .padding(.trailing, settingsViewModel.cornerHandleSize)
-                                            .padding(.bottom, 0)
-                            .frame(height: textEditorHeight + 30)
-                            .background(settingsViewModel.backgroundColorSrcEditor)
+                
+                messgeEntry(size: geometry.size)
+                    .padding(.trailing, settingsViewModel.cornerHandleSize)
+                    .padding(.bottom,4)
+                    .frame(height: textEditorHeight + 30)
+                    .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
-                    }
-                    .overlay(CheckmarkView(text: "Copied", isVisible: $showCheckmark))
-                    .cornerRadius(16)
-
-                }
-                .onChange(of: inFocus) { id in
-                     withAnimation {
-                         sp.scrollTo(id)
-                     }
-                 }
-                .frame(height: geometry.size.height + 40)
-
             }
+            .overlay(CheckmarkView(text: "Copied", isVisible: $showCheckmark))
+            .clipShape(RoundedBottomCorners(cornerRadius: 16))
         }
     }
 #if !os(tvOS)
-
+    
     func messgeEntry(size: CGSize) -> some View {
         HStack(spacing: 0) {
             GeometryReader { innerReader in
-
+                
                 ZStack(alignment: .leading) {
-
+                    
                     Text(chatText)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(.clear)
@@ -123,44 +117,39 @@ struct ChatView: View {
                             Color.clear.preference(key: ViewHeightKey.self,
                                                    value: $0.frame(in: .local).size.height)
                         })
-                        TextEditor(text: $chatText)
-                            .lineLimit(nil)
-                            .font(.system(size: settingsViewModel.fontSizeSrcEditor))
-                            .foregroundColor(settingsViewModel.plainColorSrcEditor)
-                            .scrollContentBackground(.hidden)
-                            .background(settingsViewModel.backgroundColorSrcEditor)
-                            .frame(height: max( 40, textEditorHeight))
-#if !os(macOS)
-                            .autocorrectionDisabled(!settingsViewModel.autoCorrect)
-#endif
-#if !os(macOS)
-                            .autocapitalization(.none)
-#endif
-                            .cornerRadius(16)
-#if !os(xrOS)
-                            .scrollDismissesKeyboard(.interactively)
-#endif
-                            .focused($inFocus)
 
-                    Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
-                        .opacity(chatText.isEmpty ? 1.0 : 0.0 )
-                        .padding(.leading,4)
+                    TextEditor(text: $chatText)
+                        .lineLimit(nil)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor))
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
+                        .scrollContentBackground(.hidden)
+                        .background(settingsViewModel.backgroundColorSrcEditor)
+                        .frame(height: max( 40, textEditorHeight))
+#if !os(macOS)
+                        .autocorrectionDisabled(!settingsViewModel.autoCorrect)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+#if !os(xrOS)
+                        .scrollDismissesKeyboard(.interactively)
+#endif
+                        .lineLimit(20, reservesSpace: true)
+                        .focused($inFocus)
+                    
+                    Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
+                        .opacity(chatText.isEmpty && !inFocus ? 1.0 : 0.0 )
+                        .padding(.leading,4)
+                        .font(.system(size: settingsViewModel.fontSizeSrcEditor + 2))
+                        .foregroundColor(settingsViewModel.plainColorSrcEditor)
                         .allowsHitTesting(false)
-
+                    
                     if keyboardHeight != 0 && inFocus {
                         AnimatedArrow()
                             .zIndex(994)
-                            .simultaneousGesture(TapGesture().onEnded {
-#if !os(macOS)
-                                hideKeyboard()
-#endif
-                            })
                     }
                 }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                     .padding(.bottom, 0)
-                    .cornerRadius(16)
                     .gesture(
                         DragGesture(minimumDistance: 5, coordinateSpace: .local)
                             .onChanged { value in
@@ -172,7 +161,7 @@ struct ChatView: View {
                                 lastDragLocation = value.location.y
                             }
                             .onEnded { value in
-
+                                
                                 isDraggedDown = false
                             }
                     )
@@ -182,8 +171,23 @@ struct ChatView: View {
 #endif
                     }
             }
-            // BEGIN Chat bottom ... menu
-            // EXEC BUTTON
+
+
+            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt, tokens: $tokenCount)
+                .onChange(of: choseBuiltInPrompt) { value in
+                    
+                    logD("EDIT SYSTEM PROMPT TO \(choseBuiltInPrompt)")
+                    if let convoId = sageMultiViewModel.windowInfo.convoId {
+                        
+                        settingsViewModel.setConvoSystemMessage(convoId, newMessage: choseBuiltInPrompt)
+                        
+                    }
+                    editingSystemPrompt = false
+                }
+                .padding(.trailing,8)
+#if !os(macOS)
+                .hoverEffect(.automatic)
+#endif
             Button(action: {
                 doChat()
             }) {
@@ -192,69 +196,33 @@ struct ChatView: View {
                                      size: size)
                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                 .background(Color.clear)
-#if !os(macOS)
-                .hoverEffect(.automatic)
-#endif
+
             }
             .disabled(chatText.isEmpty)
-
-            //            if notAtBottom {
-            //                Button(action: {
-            //                    setLockToBottom()
-            //                }) {
-            //                    resizableButtonImage(systemName:"arrow.down",
-            //                                         size: size)
-            //                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-            //                    .lineLimit(1)
-            //                    //                    .foregroundColor(Color.white)
-            //                    .background(Color.clear)
-            //                    //#if !os(macOS)
-            //                    //                    .hoverEffect(.automatic)
-            //                    //#endif
-            //                }
-            //            }
-
-            Spacer()
-
-
-            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt)
-                .onChange(of: choseBuiltInPrompt) { value in
-
-                    logD("EDIT SYSTEM PROMPT TO \(choseBuiltInPrompt)")
-                    if let convoId = sageMultiViewModel.windowInfo.convoId {
-
-                        settingsViewModel.setConvoSystemMessage(convoId, newMessage: choseBuiltInPrompt)
-
-                    }
-                    editingSystemPrompt = false
-                }
 #if os(xrOS)
-                .padding(.trailing,20)
+            .padding(.trailing,20)
+#endif
+#if !os(macOS)
+                .hoverEffect(.automatic)
 #endif
         }
     }
 #endif
-
+    
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
 #if os(macOS) || os(tvOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-
+            .frame(width:  min(60.0, size.width * 0.5 * settingsViewModel.buttonScale), height: 100 * settingsViewModel.buttonScale)
+        
 #else
-        if #available(iOS 16.0, *) {
-            return Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-                .tint(settingsViewModel.appTextColor)
-        } else {
-            return Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
-        }
+        return Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: min(60.0, size.width * 0.5 * settingsViewModel.buttonScale), height: 100 * settingsViewModel.buttonScale)
+            .tint(settingsViewModel.appTextColor)
+        
 #endif
     }
     func doChat() {
@@ -265,13 +233,13 @@ struct ChatView: View {
 #if !os(macOS)
         hideKeyboard()
 #endif
-
+        
         if editingSystemPrompt {
             logD("EDIT SYSTEM PROMPT TO ")
             if let convoId = sageMultiViewModel.windowInfo.convoId {
-
+                
                 settingsViewModel.setConvoSystemMessage(convoId, newMessage: chatText)
-
+                
             }
             editingSystemPrompt = false
             chatText = ""
@@ -301,7 +269,7 @@ struct ChatView: View {
         withAnimation(Animation.easeInOut(duration: 0.666)) {
             showCheckmark = true
         }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
             withAnimation(Animation.easeInOut(duration: 0.6666)) {
                 showCheckmark = false
@@ -322,4 +290,5 @@ struct ChatView: View {
             }
         }
     }
+    
 }

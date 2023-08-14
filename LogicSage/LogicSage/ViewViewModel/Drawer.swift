@@ -288,30 +288,7 @@ struct DrawerContent: View {
     
     func topButtons(size: CGSize) -> some View {
         HStack(spacing: 0) {
-#if os(macOS)
-            NewViewerButton()
 
-                .foregroundColor(settingsViewModel.appTextColor)
-#else
-            
-            if UIDevice.current.userInterfaceIdiom != .phone {
-                if #available(iOS 16.0, *) {
-                    NewViewerButton()
-                        .buttonStyle(MyButtonStyle())
-
-                        .font(.body)
-                        .lineLimit(0)
-                        .minimumScaleFactor(0.1)
-//                        .padding()
-                        .border(.secondary)
-
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-                .hoverEffect(.automatic)
-#endif
-                }
-            }
-#endif
             Button( action : {
                 withAnimation {
                     tabSelection = 1

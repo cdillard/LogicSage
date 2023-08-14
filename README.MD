@@ -17,15 +17,15 @@
 - [Contact](#contact)
 - [Credits](#credits)
 
-## Getting Started with LogicSage iOS, iPadOS, and xrOS
+## Getting Started with LogicSage: iOS, iPadOS, MacOS
+0. Download LogicSage from the AppStore.[link](https://apps.apple.com/us/app/logicsage/id6448485441)
+0. LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
+    - it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code to verify this fact if you want).
 
-0. Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
-	- To use the LogicSage app with AI, You must copy and paste your AI key into the textfield on the info screen that shows on first install. The Settings screen also contains a field you can enter your AI key into.
-    - Please enter your API Key (via copy and paste) and it will be stored securely offline in your devices keychain. (Check the source code to verify this fact if you want).
+Optional steps:
 
-
-
-## Configuration of LogicSage for Mac
+If you'd like to use LogicSage for Mac:
+	- Using LogicSage for Mac allows to open / build AI geneaterated Xcode projects on your Mac.
 
 0. Go to the root of your MacOS user directory (~)
 	- `cd ~`
@@ -35,18 +35,15 @@
 3. Open `Swifty-GPT.xcworkspace` by double clicking it.
 4. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
 
-	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
+	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the LogicSageWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
 5. Run LogicSage.app
-
-
-Optional steps:
 
 CUSTOMIZABLE WALLPAPERS MAC -> LogicSage!!!!
 
 Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
-WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complete-collection-of-mac-os-wallpapers-updated.2036834/ download and unzip this bad boy to the `~/SwiftyGPTWorkspace/Wallpaper` folder.
+WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complete-collection-of-mac-os-wallpapers-updated.2036834/ download and unzip this bad boy to the `~/LogicSageWorkspace/Wallpaper` folder.
 
 Search the internet for "4K Wallapaper zip + Space" replacing Space with whatever type of background you want. Download the heic, jpeg, jpg, and png images you'd like to use as wallpapers.
 
@@ -106,6 +103,7 @@ Created by: Chris Dillard (chrisbdillard@gmail.com)
 - [nonstrict-hq ScreenCaptureKit-Recording-example](https://github.com/nonstrict-hq/ScreenCaptureKit-Recording-example/)
 - [KeyboardAvoidanceSwiftUI](https://github.com/V8tr/KeyboardAvoidanceSwiftUI)
 - [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
+- [Tikitoken](https://github.com/aespinilla/Tiktoken)
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

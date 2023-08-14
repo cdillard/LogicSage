@@ -107,6 +107,8 @@ extension SettingsView {
     }
     .padding(.leading, 8)
     .padding(.trailing, 8)
+    .foregroundColor(settingsViewModel.appTextColor)
+
 #endif
     }
 }

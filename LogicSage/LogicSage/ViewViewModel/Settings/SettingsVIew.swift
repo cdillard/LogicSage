@@ -22,7 +22,7 @@ struct SettingsView: View {
     let commandButtonRange: ClosedRange<Double> = 10...64
     let commandButtonSteps: Double = 1
 
-    let cornerHandleRange: ClosedRange<Double> = 18...48
+    let cornerHandleRange: ClosedRange<Double> = 28...80
     let cornerHandleSteps: Double = 1
 
     @Binding var showSettings: Bool
@@ -51,8 +51,8 @@ struct SettingsView: View {
     @State var presentUserAvatarRenamer: Bool = false
     @State var presentGptAvatarRenamer: Bool = false
 
-    @State var newUsersName: String = ""
-    @State var newGPTName: String = ""
+    @State var newUsersName: String = SettingsViewModel.shared.savedUserAvatar
+    @State var newGPTName: String = SettingsViewModel.shared.savedBotAvatar
     @Binding var tabSelection: Int
 
     var body: some View {
@@ -81,7 +81,7 @@ struct SettingsView: View {
 #endif
                                     }
                                 }
-
+                                
                                 Text("Settings:")
                                     .font(.title)
                                     .foregroundColor(settingsViewModel.appTextColor)
@@ -90,39 +90,40 @@ struct SettingsView: View {
                             .padding(.leading,8)
                             .padding(.trailing,8)
                         }
-
+                        
                         VStack {
                             HStack {
                                 infoAndHelpButtons(size: geometry.size)
                             }
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
-
+                            
                             Spacer()
                         }
-
-                        apiDisc()
-                            .font(.title3)
-
                         miscButtons(size: geometry.size)
 
-                        plugButton()
+                        colorDisc(size: geometry.size)
+                            .font(.title3)
+                            .padding(.leading, 8)
+                            .padding(.trailing, 8)
+                            .accentColor(settingsViewModel.buttonColor)
+                            .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                                            .hoverEffect(.lift)
+#endif
+                        nameChangeStack()
+                        
+                        apiDisc()
+                            .font(.title3)
+#if !os(macOS)
+                                            .hoverEffect(.lift)
+#endif
 
-                        VStack(alignment: .leading, spacing: 0) {
                             sizeSlidersDisc()
                                 .font(.title3)
-                        }
-                        .accentColor(settingsViewModel.buttonColor)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(macOS)
+                                            .hoverEffect(.lift)
+#endif
                     }
-                    colorDisc(size: geometry.size)
-                        .font(.title3)
-                        .padding(.leading, 8)
-                        .padding(.trailing, 8)
-                        .accentColor(settingsViewModel.buttonColor)
-                        .foregroundColor(settingsViewModel.appTextColor)
-
-                    nameChangeStack()
 
                     Button(action: {
                         withAnimation {
@@ -138,51 +139,40 @@ struct SettingsView: View {
                             .foregroundColor(settingsViewModel.appTextColor)
                             .background(settingsViewModel.buttonColor)
                             .cornerRadius(8)
+#if !os(macOS)
+                                            .hoverEffect(.lift)
+#endif
                     }
                     .padding(.bottom)
+                    
+                    .alert("Rename self", isPresented: $presentUserAvatarRenamer, actions: {
+                        TextField("New name", text: $newUsersName)
+                        
+                        Button("Rename", action: {
+                            settingsViewModel.savedUserAvatar = newUsersName
+                            
+                        })
+                        Button("Cancel", role: .cancel, action: {
+                            presentGptAvatarRenamer = false
+                        })
+                    }, message: {
+                        Text("Please enter new name for yourself")
+                    })
+                    
+                    .alert("Rename gpt", isPresented: $presentGptAvatarRenamer, actions: {
+                        TextField("New name", text: $newGPTName)
+                        
+                        Button("Rename", action: {
+                            settingsViewModel.savedBotAvatar = newGPTName
+                            
+                        })
+                        Button("Cancel", role: .cancel, action: {
+                            presentGptAvatarRenamer = false
+                        })
+                    }, message: {
+                        Text("Please enter new name for gpt")
+                    })
 
-                    .modify { view in
-
-                        if #available(iOS 16.0, *) {
-
-                            view.alert("Rename self", isPresented: $presentUserAvatarRenamer, actions: {
-                                TextField("New name", text: $newUsersName)
-
-                                Button("Rename", action: {
-                                    settingsViewModel.savedUserAvatar = newUsersName
-
-                                })
-                                Button("Cancel", role: .cancel, action: {
-                                    presentGptAvatarRenamer = false
-                                })
-                            }, message: {
-                                Text("Please enter new name for yourself")
-                            })
-                        }
-                        else {
-                        }
-                    }
-                    .modify { view in
-
-                        if #available(iOS 16.0, *) {
-                            view.alert("Rename gpt", isPresented: $presentGptAvatarRenamer, actions: {
-                                TextField("New name", text: $newGPTName)
-
-                                Button("Rename", action: {
-                                    settingsViewModel.savedBotAvatar = newGPTName
-
-                                })
-                                Button("Cancel", role: .cancel, action: {
-                                    presentGptAvatarRenamer = false
-                                })
-                            }, message: {
-                                Text("Please enter new name for gpt")
-                            })
-                        }
-                        else {
-                        }
-
-                    }
                     Spacer()
                 }
                 .frame( maxWidth: .infinity, maxHeight: .infinity)
@@ -335,7 +325,10 @@ struct SettingsView: View {
                         "",
                         text: $settingsViewModel.openAIKey
                     )
+                    .minimumScaleFactor(0.866)
                     .border(.secondary)
+                    .lineLimit(3)
+
                     .submitLabel(.done)
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
@@ -350,56 +343,51 @@ struct SettingsView: View {
                     .autocapitalization(.none)
 #endif
 
-
-                    Spacer()
-
-                    Text("A.I. model: ")
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-
-                    HStack {
-                        TextField(
-                            "",
-                            text: $settingsViewModel.openAIModel
-                        )
-                        .border(.secondary)
-                        .submitLabel(.done)
-                        .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
-                        .scrollDismissesKeyboard(.interactively)
-#endif
-                        .font(.title3)
-                        .foregroundColor(settingsViewModel.appTextColor)
-#if !os(macOS)
-
-                        .autocorrectionDisabled(!true)
-#endif
-#if !os(macOS)
-                        .autocapitalization(.none)
-#endif
-                        Menu {
-                            modelOptions()
-                        }
-                    label: {
-                        ZStack {
-
-                            Label("...", systemImage: "arrow.down")
-                                .font(.title3)
-                                .minimumScaleFactor(0.5)
-                                .labelStyle(DemoStyle())
-                                .background(Color.clear)
-                                .tint(settingsViewModel.appTextColor)
-
-                        }
-                        .padding(4)
-                    }
-                    .frame(width: 30)
-
-                    }
                     Group {
-                        Spacer()
-                            .padding(.leading, 8)
-                            .padding(.trailing, 8)
+                        Text("A.I. model: ")
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                        HStack {
+                            TextField(
+                                "",
+                                text: $settingsViewModel.openAIModel
+                            )
+                            .border(.secondary)
+                            .submitLabel(.done)
+                            .frame( maxWidth: .infinity, maxHeight: .infinity)
+    #if !os(xrOS)
+                            .scrollDismissesKeyboard(.interactively)
+    #endif
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+    #if !os(macOS)
+
+                            .autocorrectionDisabled(!true)
+    #endif
+    #if !os(macOS)
+                            .autocapitalization(.none)
+    #endif
+                            Menu {
+                                modelOptions()
+                            }
+                        label: {
+                            ZStack {
+
+                                Label("...", systemImage: "arrow.down")
+                                    .font(.title3)
+                                    .minimumScaleFactor(0.5)
+                                    .labelStyle(DemoStyle())
+                                    .background(Color.clear)
+                                    .tint(settingsViewModel.appTextColor)
+
+                            }
+                            .padding(4)
+                        }
+                        .frame(width: 30)
+
+                        }
+
 
                         Text("Github PAT: ")
                             .font(.title3)
@@ -408,6 +396,46 @@ struct SettingsView: View {
                         TextField(
                             "",
                             text: $settingsViewModel.ghaPat
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+
+                        Text("Google Search API Key: ")
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                        TextField(
+                            "",
+                            text: $settingsViewModel.googleKey
+                        )
+                        .border(.secondary)
+                        .submitLabel(.done)
+                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+                        .font(.title3)
+                        .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                        .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                        .autocapitalization(.none)
+#endif
+
+                        Text("Google Search ID: ")
+                            .font(.title3)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                        TextField(
+                            "",
+                            text: $settingsViewModel.googleSearchId
                         )
                         .border(.secondary)
                         .submitLabel(.done)
@@ -526,55 +554,8 @@ struct SettingsView: View {
 #endif
     }
 
-    func plugButton() -> some View {
-        Group {
-            HStack {
-                // PLugItIn BUTTON
-                Button("🔌:Reconnect") {
-                    logD("force reconnect")
-                    logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-
-                    serviceDiscovery?.startDiscovering()
-
-                    if settingsViewModel.ipAddress.isEmpty || settingsViewModel.port.isEmpty {
-#if !os(macOS)
-                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(url)
-                        }
-#endif
-                    }
-                    else {
-                        logD("If this is not working make sure that in Settings Allow LogicSage Access to Local Network is set tot true.")
-                    }
-                }
-                .font(.body)
-                .lineLimit(nil)
-                .foregroundColor(settingsViewModel.appTextColor)
-                .background(settingsViewModel.buttonColor)
-            }
-
-        }
-    }
-
     func miscButtons(size: CGSize) -> some View {
         Group {
-#if !os(macOS)
-            Toggle(isOn: $settingsViewModel.autoCorrect) {
-                Text("Autocorrect📙:")
-                    .font(.caption)
-                    .foregroundColor(settingsViewModel.appTextColor)
-            }
-            .frame( maxWidth: size.width / 3)
-#endif
-
-            if USE_CHATGPT {
-                Toggle(isOn: $settingsViewModel.chatGPTAuth) {
-                    Text("ChatGPT Auth:")
-                        .font(.caption)
-                        .foregroundColor(settingsViewModel.appTextColor)
-                }
-                .frame( maxWidth: size.width / 3)
-            }
 #if !os(macOS)
             if UIDevice.current.userInterfaceIdiom == .phone {
 

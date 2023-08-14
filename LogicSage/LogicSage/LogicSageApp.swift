@@ -40,18 +40,7 @@ struct LogicSageApp: App {
 
     init() {
         serviceDiscovery = ServiceDiscovery()
-        
-//#if targetEnvironment(macCatalyst)
-//        // start up websocket server
-//        Task {
-//            do {
-//                try await ServerEntrypoint.main()
-//            }
-//            catch {
-//                print("LogicSage server error = \(error)")
-//            }
-//        }
-//#endif
+
     }
     var body: some Scene {
         WindowGroup("LogicSage", id: "LogicSage-main") {
@@ -66,14 +55,7 @@ struct LogicSageApp: App {
                         settingsViewModel.printVoicesInMyDevice()
                         settingsViewModel.configureAudioSession()
                     }
-//#if targetEnvironment(macCatalyst)
-//                    Task {
-//                        
-//                        Backend.doBackend(path: "~/LogicSage/")
-//                        
-//                        appModel.isServerActive = true
-//                    }
-//#endif
+
                 }
 #if !os(macOS)
 #if !os(xrOS)
@@ -100,26 +82,31 @@ struct LogicSageApp: App {
 #endif
 #if os(xrOS)
 
-        ImmersiveSpace(id: "ImmersiveSpace") {
-            ImmersiveView(immersionMode: .immersive)
-                .environmentObject(appModel)
+//        ImmersiveSpace(id: "ImmersiveSpace") {
+//            ImmersiveView(immersionMode: .immersive)
+//                .environmentObject(appModel)
+//
+//        }
+//        .immersionStyle(selection: $immersionState, in: .mixed)
 
+
+        ImmersiveSpace(id: "ImmersiveSpace") {
+            Orbit()
+                .environmentObject(appModel)
         }
         .immersionStyle(selection: $immersionState, in: .mixed)
 
-        WindowGroup(id: "ImmersiveSpaceVolume") {
-            ImmersiveView(immersionMode: .volumetric)
-                .environmentObject(appModel)
-
-        }
-        .windowStyle(.volumetric)
-        .defaultSize(width: 2, height: 2.6, depth: 2.6, in: .meters)
+//        WindowGroup(id: "ImmersiveSpaceVolume") {
+//            ImmersiveView(immersionMode: .volumetric)
+//                .environmentObject(appModel)
+//        }
+//        .windowStyle(.volumetric)
+//        .defaultSize(width: 2, height: 2.6, depth: 2.6, in: .meters)
 
 
         WindowGroup(id: "LogoVolume") {
             ImmersiveLogoView()
                 .environmentObject(appModel)
-
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 1.6, height: 1.6, depth: 1.6, in: .meters)
@@ -127,13 +114,4 @@ struct LogicSageApp: App {
     }
 }
 
-class Backend {
-    static func doBackend(path: String) {
-#if targetEnvironment(macCatalyst)
-        // The LogicSage for Mac app handles starting the server and MacOS Binary.
-        Task {
-                PluginLoader.loadPlugin(path: path)
-        }
-#endif
-    }
-}
+

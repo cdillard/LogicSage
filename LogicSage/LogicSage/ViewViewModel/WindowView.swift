@@ -43,7 +43,11 @@ struct WindowView: View {
                 VStack {
                     windowContent()
                         .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint))
+#if os(xrOS)
+                        .background(settingsViewModel.backgroundColorSrcEditor)
+#endif
                 }
+                
 #if !os(macOS)
                 .border(.red, width: bumping ? 2.666 : 0)
                 .border(.blue, width: bumpingVertically ? 2.666 : 0)
@@ -52,6 +56,7 @@ struct WindowView: View {
                 .shadow(color:settingsViewModel.appTextColor, radius: 1)
                 .frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
                 .edgesIgnoringSafeArea(.bottom)
+
             }
             .offset(viewModel.position)
             .onAppear() {

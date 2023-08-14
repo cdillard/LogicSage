@@ -8,7 +8,7 @@
 
 #if !os(iOS)
 #if !os(tvOS)
-
+#if !os(xrOS)
 import AppKit
 extension NSTextView {
 	
@@ -21,5 +21,6 @@ extension NSTextView {
 		}
 	}
 }
+#endif
 #endif
 #endif

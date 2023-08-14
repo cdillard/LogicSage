@@ -11,8 +11,9 @@ let defaultTerminalFontSize: Double = 13.666
 let defaultCommandButtonSize: Double = 28
 let defaultToolbarButtonScale: Double = 0.27
 
-let defaultHandleSize: Double = 37
+let defaultHandleSize: Double = 40.0
 let defaultSourceEditorFontSize: Double = 12.666
+let email = "chrisbdillard@gmail.com"
 
 let defaultOwner = "cdillard"
 let defaultRepo = "LogicSage"
@@ -30,6 +31,6 @@ func logoAscii5(model: String = SettingsViewModel.shared.openAIModel) -> String 
 ┃┃╱╱╭━━┳━━┳┳━━┫╰━━┳━━┳━━┳━━╮
 ┃┃╱╭┫╭╮┃╭╮┣┫╭━┻━━╮┃╭╮┃╭╮┃┃━┫
 ┃╰━╯┃╰╯┃╰╯┃┃╰━┫╰━╯┃╭╮┃╰╯┃┃━┫
-╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯model: \(model)
+╰━━━┻━━┻━╮┣┻━━┻━━━┻╯╰┻━╮┣━━╯model:\(model)
 """
 }

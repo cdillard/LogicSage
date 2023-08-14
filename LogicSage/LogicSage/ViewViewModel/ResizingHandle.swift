@@ -36,9 +36,9 @@ struct ResizableViewModifier: ViewModifier {
                 }
                 
             )
-#if os(xrOS)
-        .glassBackgroundEffect()
-        #endif
+//#if os(xrOS)
+//        .glassBackgroundEffect()
+//        #endif
     }
 }
 
@@ -69,7 +69,7 @@ struct ResizingHandle: View {
         GeometryReader { reader in
             let point = positionPoint(for: positionLocation)
             ZStack {
-                if activeDragLocation == .zero {
+//                if activeDragLocation == .zero {
 
                     Circle()
                         .fill(SettingsViewModel.shared.buttonColor)
@@ -79,7 +79,7 @@ struct ResizingHandle: View {
 #if !os(macOS)
                         .hoverEffect(.lift)
 #endif
-                }
+//                }
 
 #if !os(macOS)
 #if !os(tvOS)
@@ -164,7 +164,7 @@ struct ResizingHandle: View {
         case .topTrailing:
             return CGPoint(x: frame.minX + frame.width - handleSize, y: 0)
         case .bottomTrailing:
-            return CGPoint(x: frame.width - handleSize, y: frame.height - handleSize - 30)
+            return CGPoint(x: frame.width - handleSize, y: frame.height - handleSize - 10)
         }
     }
 

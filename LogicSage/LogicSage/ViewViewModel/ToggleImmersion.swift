@@ -30,8 +30,6 @@ struct ToggleImmersion: View {
                         await dismissImmersiveSpace()
                     }
                     appModel.isShowingImmersiveScene = newValue
-//                    SettingsViewModel.shared.isShowingImmersiveScene = newValue
-
                 }
             }
         

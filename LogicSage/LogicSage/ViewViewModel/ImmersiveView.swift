@@ -22,12 +22,20 @@ enum ImmersionMode {
 
 struct ImmersiveView: View {
     var immersionMode: ImmersionMode
+    @State private var screenEntity: ModelEntity?
+    @State private var scale: Double = 1
+    @State private var startScale: Double? = nil
+    @State private var position: Point3D = .zero
+    @State private var startPosition: Point3D? = nil
+
+    @EnvironmentObject var appModel: AppModel
+    var initialPosition: Point3D = Point3D([0,1.9,1.2])
 
     var body: some View {
         RealityView { content in
 
-            content.add(spaceOrigin)
-            content.add(cameraAnchor)
+//            content.add(spaceOrigin)
+//            content.add(cameraAnchor)
 
             // Spherical 3D Screen
             let mesh = MeshResource.generateTwoSidedSphere(radius: 1.0)
@@ -42,24 +50,18 @@ struct ImmersiveView: View {
                 }
 
                 let modelEntity = ModelEntity(mesh: mesh, materials: [material2])
+//                let shape = ShapeResource.generateSphere(radius: 1)
+//                modelEntity.addCollision(shape: shape)
 
-                // In immersive
-                if immersionMode == .immersive {
-                     modelEntity.position = SIMD3(0,1.65,0.5)
-                }
-                // In volumerictric window mode
-///                modelEntity.position = SIMD3(0,0,0)
-                else if immersionMode == .volumetric {
-                    modelEntity.position = SIMD3(0,-0.30666,0.2)
-
-                }
+                modelEntity.generateCollisionShapes(recursive: true)
 
 
                 // DO OR DO NOT RORATE DEPENDING ON VOLUMETRIC
                 let rotationRadians = Float(-90.0) * .pi / 180 // 45 degrees converted to radians.
                 modelEntity.transform.rotation = simd_quatf(angle: rotationRadians, axis: SIMD3(x:0,y:1,z:0))//.degrees(43)
 
-                spaceOrigin.addChild(modelEntity)
+                content.add(modelEntity)
+                self.screenEntity = modelEntity
 
                 // Handle curved texture update
                 Timer.scheduledTimer(withTimeInterval: texUpdateInteral, repeats: true) { _ in
@@ -91,7 +93,47 @@ struct ImmersiveView: View {
                 print("Failed to create texture from image: \(error)")
 
             }
+        } update: { content in
+            screenEntity?.updateTransform(translation: SIMD3(position))
         }
+        .onAppear {
+            position = initialPosition
+        }
+//        .scaleEffect(scale)
+//        .position(x: position.x, y: position.y)
+//        .offset(z: position.z)
+
+        // Enable people to move the model anywhere in their space.
+        .gesture(DragGesture(minimumDistance: 0.0, coordinateSpace: .global)
+            .targetedToAnyEntity()
+            .onChanged { @MainActor drag in
+                if let startPosition {
+                    let delta = drag.location3D - drag.startLocation3D
+                    position = startPosition + delta
+                } else {
+                    startPosition = position
+                }
+            }
+            .onEnded { _ in
+                startPosition = nil
+            }
+        )
+
+        // Enable people to scale the model within certain bounds.
+//        .simultaneousGesture(MagnifyGesture()
+//            .targetedToAnyEntity()
+//            .onChanged { @MainActor drag in
+//                if let startScale {
+//                    scale = max(0.1, min(3, drag.magnification * startScale))
+//                } else {
+//                    startScale = scale
+//                }
+//            }
+//            .onEnded { value in
+//                startScale = scale
+//            }
+//        )
+
     }
 }
 
@@ -182,6 +224,12 @@ public extension MeshResource.Part {
             print("No normals to invert, returning nil")
             return nil
         }
+    }
+}
+
+extension ModelEntity {
+    func addCollision(shape: ShapeResource) {
+        self.collision = CollisionComponent(shapes: [shape])
     }
 }
 #endif

@@ -64,7 +64,7 @@ let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that 
 let xcodegenPath = "/opt/homebrew/bin/xcodegen"
 //
 //// WORKSPACE SETTING
-let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
+let swiftyGPTWorkspaceFirstName = "LogicSageWorkspace"
 //
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 

@@ -46,7 +46,7 @@ class GPT {
     // Function to send a prompt to GPT via the OpenAI API
     func sendPromptToGPT(conversationId: Conversation.ID,
                          prompt: String, currentRetry: Int, isFix: Bool = false, role: Chat.Role = .user,
-                         manualPrompt: Bool = false, voiceOverride: String? = nil,
+                         manualPrompt: Bool = false, voiceOverride: String? = nil, supressPromptLog: Bool = false,
                          completion: @escaping (String, Bool, Bool) -> Void) {
         if currentRetry == 0 {
             print("👨: \(prompt)")
@@ -73,10 +73,12 @@ class GPT {
         }
 
         Task {
+            let msgContent = manualPrompt ? config.manualPromptString : prompt;
+
             SettingsViewModel.shared.appendMessageToConvoIndex(index: conversationIndex, message: Message(
                 id: SettingsViewModel.shared.idProvider(),
                 role: role,
-                content: manualPrompt ? config.manualPromptString : prompt,
+                content: msgContent,
                 createdAt: SettingsViewModel.shared.dateProvider()
             ))
             guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
@@ -99,7 +101,9 @@ class GPT {
             do {
                 let existingModel = conversation.model ?? ""
 
-                let model: Model = Model(existingModel.isEmpty ? SettingsViewModel.shared.openAIModel : existingModel)
+                let newModel = SettingsViewModel.shared.openAIModel == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314" :  SettingsViewModel.shared.openAIModel
+
+                let model: Model = Model(existingModel.isEmpty ? SettingsViewModel.shared.openAIModel : newModel)
 
                 let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
                     query: ChatQuery(

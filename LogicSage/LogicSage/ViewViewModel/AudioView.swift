@@ -52,11 +52,28 @@ struct AudioView: View {
     }
     func audioSettingsArea(size: CGSize) -> some View {
         Group {
+            HStack {
+                Button(action: {
+                    withAnimation {
+                        tabSelection = 1
+                    }
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.body)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 8)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                        .cornerRadius(8)
+#if !os(macOS)
+                        .hoverEffect(.lift)
+#endif
+                }
+            
                 Text(audioSettingsTitleLabelString)
                     .font(.title)
                     .foregroundColor(settingsViewModel.appTextColor)
                     .padding(8)
-
+            }
             // TODO:Double check toggling ducing Audio and audio output this way works.
                 // IOS AUDIO SETTING ON/OFF
                 Toggle(isOn: $settingsViewModel.voiceOutputEnabled) {
@@ -99,7 +116,7 @@ struct AudioView: View {
 
             VStack {
                     VStack {
-                        Text("Pick iOS voice")
+                        Text("Pick voice")
                             .foregroundColor(settingsViewModel.appTextColor)
 
                         List {

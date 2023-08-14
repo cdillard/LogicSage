@@ -12,6 +12,7 @@ import SwiftUI
 struct ChatBotomMenu: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @Binding var chatText: String
+
     @ObservedObject var windowManager: WindowManager
     @Binding var windowInfo: WindowInfo
     @Binding var editingSystemPrompt: Bool
@@ -21,6 +22,7 @@ struct ChatBotomMenu: View {
     @State private var isModalPresented = false
     @State private var isSystemPromptSelectionPresented = false
 
+    @Binding var tokens: Int
 
     var body: some View {
                 Menu {
@@ -29,11 +31,10 @@ struct ChatBotomMenu: View {
                     }
                     // Normal chat // Allows changing system message / changing AI model.
                     else {
+                        Text("Tokens: \(tokens)")
                         Button(action: {
                             logD("selected Change AI model")
                             isModalPresented = true
-
-                            // display overlay sheet w/ the model group..
                         }) {
                             Text( "Change AI model")
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
@@ -42,17 +43,6 @@ struct ChatBotomMenu: View {
                                 .background(settingsViewModel.buttonColor)
                         }
                         
-                        Button(action: {
-                            logD("selected Change system prompt")
-                            editingSystemPrompt.toggle()
-                        }) {
-                            Text( editingSystemPrompt ? "Stop editing system message" :
-                                    "Edit system message")
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .foregroundColor(Color.white)
-                            .background(settingsViewModel.buttonColor)
-                        }
                         Button(action: {
                             logD("selected SELECT system prompt")
                             editingSystemPrompt = false
@@ -68,14 +58,25 @@ struct ChatBotomMenu: View {
                             .background(settingsViewModel.buttonColor)
                         }
                         
+
                     }
                 } label: {
                     ZStack {
+                        Circle()
+                            .strokeBorder(settingsViewModel.appTextColor, lineWidth: 1)
+
                             Label("...", systemImage: "ellipsis")
                                 .font(.title3)
                                 .minimumScaleFactor(0.5)
                                 .labelStyle(DemoStyle())
                                 .background(Color.clear)
+#if os(xrOS)
+
+                                .offset(x:6)
+                        #else
+                                .offset(x:3)
+
+                        #endif
                                 .tint(settingsViewModel.appTextColor)
 
                         

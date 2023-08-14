@@ -12,7 +12,6 @@ import Combine
 
 import UIKit
 #endif
-import ZIPFoundation
 
 // BEGIN GITHUB API HANDLING ZONE **************************************************************************************
 
@@ -195,5 +194,11 @@ extension SettingsViewModel {
 
 func getDocumentsDirectory() -> URL {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    #if targetEnvironment(macCatalyst)
+
+    return paths[0].appendingPathComponent("LogicSageWorkspace")
+    #else
+
     return paths[0]
+    #endif
 }

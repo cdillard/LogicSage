@@ -25,19 +25,21 @@ struct TopBar: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                ZStack {
-                    Capsule()
-                        .fill(.white.opacity(0.666))
-#if !os(xrOS)
-                        .frame(width: 200, height: 15)
-#else
-                        .frame(width: 200, height: 12)
-#endif
-                }
+            ZStack {
+                Capsule()
+                    .fill(.white.opacity(0.4))
+                    .frame(width: 200, height: 9)
+            }
 #if !os(macOS)
-                .hoverEffect(.automatic)
+            .hoverEffect(.automatic)
 #endif
+#if os(xrOS)
+            .offset(y: -20)
+#else
+            .offset(y: -14)
+#endif
+            VStack {
+
                 HStack(spacing: 0) {
                     Spacer()
                     Button(action: onClose) {
@@ -118,8 +120,8 @@ struct TopBar: View {
                         else {
                             menu()
 #if os(xrOS)
-                .padding(.trailing,SettingsViewModel.shared.cornerHandleSize + 8 + 20)
-                            #else
+                                .padding(.trailing,SettingsViewModel.shared.cornerHandleSize + 8 + 20)
+#else
                                 .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
 #endif
 
@@ -129,93 +131,94 @@ struct TopBar: View {
                 }
             }
         }
-        #if !os(xrOS)
+#if !os(xrOS)
         .background(SettingsViewModel.shared.backgroundColor)
 
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
-        #else
+#else
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize + 35)
-        #endif
+#endif
         .modify { view in
 
-                view.alert("Rename convo", isPresented: $presentRenamer, actions: {
-                    TextField("New name", text: $newName)
+            view.alert("Rename convo", isPresented: $presentRenamer, actions: {
+                TextField("New name", text: $newName)
 
-                    Button("Rename", action: {
-                        presentRenamer = false
-                        if let convoID = windowInfo.convoId {
-                            settingsViewModel.renameConvo(convoID, newName: newName)
-                        }
-                        else {
-                            logD("no rn")
-                        }
+                Button("Rename", action: {
+                    presentRenamer = false
+                    if let convoID = windowInfo.convoId {
+                        settingsViewModel.renameConvo(convoID, newName: newName)
+                    }
+                    else {
+                        logD("no rn")
+                    }
 
-                        newName = ""
-
-                    })
-                    Button("Cancel", role: .cancel, action: {
-                        presentRenamer = false
-                        newName = ""
-                    })
-                }, message: {
-                        Text("Please enter new name for convo")
+                    newName = ""
 
                 })
+                Button("Cancel", role: .cancel, action: {
+                    presentRenamer = false
+                    newName = ""
+                })
+            }, message: {
+                Text("Please enter new name for convo")
+
+            })
         }
 
         .modify { view in
 
 
-                view.alert("Delete convo?", isPresented: $presentDeleter, actions: {
-                    Button("Delete",role:.destructive,  action: {
+            view.alert("Delete convo?", isPresented: $presentDeleter, actions: {
+                Button("Delete",role:.destructive,  action: {
 
-                        presentDeleter = false
-                        if let convoID = windowInfo.convoId {
-                            settingsViewModel.deleteConversation(convoID)
+                    presentDeleter = false
+                    if let convoID = windowInfo.convoId {
+                        settingsViewModel.deleteConversation(convoID)
 
-                        }
-                        else {
-                            logD("no rn")
-                        }
+                    }
+                    else {
+                        logD("no rn")
+                    }
 
 
-                    })
-                    Button("Cancel", role: .cancel, action: {
-                        presentDeleter = false
-                    })
-                }, message: {
-                        Text("Would you like to delete the convo?")
                 })
-            }
+                Button("Cancel", role: .cancel, action: {
+                    presentDeleter = false
+                })
+            }, message: {
+                Text("Would you like to delete the convo?")
+            })
+        }
 
         .modify { view in
 
 
-                view.alert("Change URL?", isPresented: $presentURLChanger, actions: {
+            view.alert("Change URL?", isPresented: $presentURLChanger, actions: {
 
-                    TextField("New URL", text: $newURL)
-                        .autocorrectionDisabled()
+                TextField("New URL", text: $newURL)
+                    .autocorrectionDisabled()
 
-                    Button("Go",role:.destructive,  action: {
+                Button("Go",role:.destructive,  action: {
 
-                        presentURLChanger = false
-//                        if let convoID = windowInfo.convoId {
-//                            settingsViewModel.deleteConversation(convoID)
-//
-//                        }
-//                        else {
-//                            logD("no rn")
-//                        }
+                    presentURLChanger = false
+                    //                        if let convoID = windowInfo.convoId {
+                    //                            settingsViewModel.deleteConversation(convoID)
+                    //
+                    //                        }
+                    //                        else {
+                    //                            logD("no rn")
+                    //                        }
 
 
-                    })
-                    Button("Cancel", role: .cancel, action: {
-                        presentURLChanger = false
-                    })
-                }, message: {
-                        Text("Would you like to change the URL?")
                 })
-            }
+                Button("Cancel", role: .cancel, action: {
+                    presentURLChanger = false
+                })
+            }, message: {
+                Text("Would you like to change the URL?")
+            })
+        }
+        
     }
 
     func menu() -> some View {
@@ -224,7 +227,7 @@ struct TopBar: View {
                 Button {
 
 
-                        presentURLChanger = true
+                    presentURLChanger = true
                 } label: {
                     Label("Change URL", systemImage: "rectangle.and.pencil.and.ellipsis")
                         .font(.body)
@@ -239,13 +242,13 @@ struct TopBar: View {
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
 #endif
                 if windowInfo.convoId == Conversation.ID(-1) {
-                    
+
                 }
                 else {
                     Button {
                         // either renaming file or chat
                         if windowInfo.windowType == .file {
-                            
+
                         }
                         else if windowInfo.windowType == .chat {
                             presentRenamer = true
@@ -256,11 +259,11 @@ struct TopBar: View {
                             .labelStyle(DemoStyle())
                             .foregroundColor(SettingsViewModel.shared.buttonColor)
                     }
-                    
+
                     Button {
                         // either renaming file or chat
                         if windowInfo.windowType == .file {
-                            
+
                         }
                         else if windowInfo.windowType == .chat {
                             presentDeleter = true
@@ -276,15 +279,32 @@ struct TopBar: View {
 
         } label: {
             ZStack {
+
+                // Circular border
+                Circle()
+                    .strokeBorder(SettingsViewModel.shared.buttonColor, lineWidth: 1)
+
                 Label("...", systemImage: "ellipsis")
                     .font(.title3)
                     .minimumScaleFactor(0.5)
+#if os(xrOS)
+
+                                .offset(x:6)
+                        #else
+                                .offset(x:3)
+
+                        #endif
+
                     .labelStyle(DemoStyle())
                     .background(Color.clear)
 
             }
+            
             .padding(4)
         }
+#if !os(macOS)
+                .hoverEffect(.automatic)
+#endif
         .frame(width: 30)
 
     }

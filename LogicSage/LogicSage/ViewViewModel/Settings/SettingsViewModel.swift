@@ -216,6 +216,8 @@ public class SettingsViewModel: ObservableObject {
 // TODO: React to user name and password change
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
+    let googleKeyKey = "googleKey"
+    let googleSearchIDKey = "googleSearchId"
 
     @AppStorage("userName") var userName = "chris" {
         didSet {
@@ -262,7 +264,7 @@ public class SettingsViewModel: ObservableObject {
             let trimmedKey = ghaPat.trimmingCharacters(in: .whitespacesAndNewlines)
 #if os(xrOS)
 #if targetEnvironment(simulator)
-            UserDefaults.standard.set(trimmedKey, forKey: "ghaPat")
+            UserDefaults.standard.set(trimmedKey, forKey: ghaKeyKey)
 #endif
 #endif
             DispatchQueue.global(qos: .default).async {
@@ -281,6 +283,47 @@ public class SettingsViewModel: ObservableObject {
                 GPT.shared.resetOpenAI()
             }
         }
+    }
+
+    @Published var googleKey = ""  {
+        didSet {
+            let trimmedKey = googleKey.trimmingCharacters(in: .whitespacesAndNewlines)
+#if os(xrOS)
+#if targetEnvironment(simulator)
+            UserDefaults.standard.set(trimmedKey, forKey: googleKeyKey)
+#endif
+#endif
+            DispatchQueue.global(qos: .default).async {
+
+                if self.keychainManager.saveToKeychain(key: self.googleKeyKey, value: trimmedKey) {
+                    print("googleKey saved successfully")
+                } else {
+                    print("Error saving gha googleKey")
+                }
+            }
+        }
+    }
+
+    @Published var googleSearchId = ""  {
+        didSet {
+            let trimmedKey = googleSearchId.trimmingCharacters(in: .whitespacesAndNewlines)
+#if os(xrOS)
+#if targetEnvironment(simulator)
+            UserDefaults.standard.set(trimmedKey, forKey: googleSearchIDKey)
+#endif
+#endif
+            DispatchQueue.global(qos: .default).async {
+
+                if self.keychainManager.saveToKeychain(key: self.googleSearchIDKey, value: trimmedKey) {
+                    print("googleSearchId saved successfully")
+                } else {
+                    print("Error saving gha googleSearchId")
+                }
+            }
+        }
+    }
+    func googleAvailable() -> Bool {
+        !googleKey.isEmpty && !googleSearchId.isEmpty
     }
 
     @AppStorage("yourGitUser") var yourGitUser = "\(defaultYourGithubUsername)"
@@ -413,30 +456,25 @@ public class SettingsViewModel: ObservableObject {
 
 #if os(xrOS)
 #if targetEnvironment(simulator)
-        if let key = UserDefaults.standard.string(forKey: "ghaPat") {
+        if let key = UserDefaults.standard.string(forKey: ghaKeyKey) {
             self.ghaPat = key
         }
 #endif
 #endif
 
-        if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
-
-            self.password = key
-            //          print("Retrieved value: \(ghaPat)")
-            //  print("Retrieved value: swsPassword")
-
-        } else {
-            //         print("Error retrieving ghaPat == reset")
-            //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
+        if let key = keychainManager.retrieveFromKeychain(key: googleKeyKey) {
+            self.googleKey = key
         }
 
-        if let key = keychainManager.retrieveFromKeychain(key: aiAccessTokenKey) {
 
+        if let key = keychainManager.retrieveFromKeychain(key: googleSearchIDKey) {
+            self.googleSearchId = key
+        }
+        if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
+            self.password = key
+        }
+        if let key = keychainManager.retrieveFromKeychain(key: aiAccessTokenKey) {
             self.accessToken = key
-            //  print("Retrieved value: aiKey")
-        } else {
-            //            print("Error retrieving openAIKey")
-            //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
 // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
@@ -599,7 +637,7 @@ public class SettingsViewModel: ObservableObject {
     func refreshDocuments() {
 
 // IF APP SANDBOX IS DISABLED ,
-#if !targetEnvironment(macCatalyst)
+//#if !targetEnvironment(macCatalyst)
 
         let fileURL = getDocumentsDirectory()
         DispatchQueue.global(qos: .default).async {
@@ -608,7 +646,7 @@ public class SettingsViewModel: ObservableObject {
                 self.root = RepoFile(name: fileRootName, url: fileURL, isDirectory: true, children: files)
             }
         }
-#endif
+//#endif
     }
 
     // START THEME ZONE

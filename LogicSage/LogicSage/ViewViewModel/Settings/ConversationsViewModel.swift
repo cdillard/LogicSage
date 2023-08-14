@@ -12,6 +12,7 @@ struct Message {
     var role: Chat.Role
     var content: String
     var createdAt: Date
+    var culled: Bool?
 }
 
 extension Message: Equatable, Codable, Hashable, Identifiable {}
@@ -32,6 +33,10 @@ struct Conversation {
     var name: String?
     var model: String?
     var systemPrompt: String?
+    var tokens: Int?
+    var hasAddedToolPrompt: Bool?
+
+
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

@@ -151,15 +151,18 @@ struct SageMultiView: View {
                         recalculateWindowSize(size: geometry.size)
                     }
 #endif
-                    ZStack {
-                        Capsule()
-                            .fill(.white.opacity(0.666))
-                            .frame(width: 200, height: 15)
-                    }
+
+
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                Capsule()
+                    .fill(.white.opacity(0.4))
+                    .frame(width: 200, height: 14)
 #if !os(macOS)
                     .hoverEffect(.automatic)
 #endif
-                    .offset(y: -10 - (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
+                    .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
 #if !os(tvOS)
 
 
@@ -203,12 +206,7 @@ struct SageMultiView: View {
                         })
 
                     }
-                    #endif
-
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-
+#endif
             }
             curvedEdgeArcZone(size: geometry.size)
 
@@ -234,7 +232,7 @@ struct SageMultiView: View {
         }, lexerForSource: { lexer in
             SwiftLexer()
         }, textViewDidBeginEditing: { srcEditor in
-//                                        print("srcEditor textViewDidBeginEditing")
+            //                                        print("srcEditor textViewDidBeginEditing")
         }, theme: {
             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
         }, overrideText: { nil }, codeDidCopy: { }, windowType: { .file }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
@@ -251,7 +249,6 @@ struct SageMultiView: View {
                 Button(action: {
                     logD("on Back tap")
 #if !os(tvOS)
-
                     goBackward()
 #endif
                 }) {
@@ -267,7 +264,6 @@ struct SageMultiView: View {
                 Button(action: {
                     logD("on FWD tap")
 #if !os(tvOS)
-
                     goForward()
 #endif
                 }) {
@@ -284,7 +280,6 @@ struct SageMultiView: View {
                 Button(action: {
                     logD("on REFRESH tap")
 #if !os(tvOS)
-
                     reload()
 #endif
                 }) {
@@ -352,7 +347,7 @@ struct SageMultiView: View {
                         .allowsHitTesting(false)
                 }
                 .offset(x: size.width - settingsViewModel.cornerHandleSize,
-                        y: size.height - settingsViewModel.cornerHandleSize - 20 -  (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
+                        y: size.height - settingsViewModel.cornerHandleSize - 5 -  (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
         }
@@ -520,149 +515,12 @@ struct WebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             if let url = navigationAction.request.url {
                 parent.currentURL = url // Intercept URL
-                //           logD("Deciding policy for: \(url)")
-
-
-                //                webView.getCookies(for: "openai.com") { data in
-                //                      logD("cookies=========================================")
-                //                    for cookie in data {
-                //                        logD("\(cookie.key)")
-                //
-                //                    }
-                //                    SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-                //
-                //                }
-                //
-                //                let headers = navigationAction.request.allHTTPHeaderFields
-                //                logD("Headers: \(headers ?? [:])")
-
-
             }
             decisionHandler(.allow)
         }
-//
-//        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//            //     logD("Did start provisional navigation")
-//        }
-//
-//        func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-//            //    logD("Did receive server redirect for provisional navigation")
-//        }
-//
-//        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-//            //    logD("Did fail provisional navigation with error: \(error)")
-//        }
-//
-//        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-//            //    logD("Did commit navigation")
-//        }
-//
-//        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//            //    logD("Did finish navigation")
-//            // Evaluate JavaScript to get page content
-//            if SettingsViewModel.shared.chatGPTAuth {
-//                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()",
-//                                           completionHandler: { (html: Any?, error: Error?) in
-//                    if let error = error {
-//                        logD("Failed to get page HTML: \(error)")
-//                    } else if let htmlString = html as? String {
-//                        //logD("Page HTML: \(htmlString)")
-//
-//
-//                        //                        webView.getCookies(for: "openai.com") { data in
-//                        //                              logD("cookies=========================================")
-//                        //                            for cookie in data {
-//                        //                                logD("\(cookie.key)")
-//                        //
-//                        //                            }
-//                        //                            SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-//                        //                        }
-//
-//                        // First, we need to extract JSON string from the HTML.
-//                        if let startRange = htmlString.range(of: "{"),
-//                           let endRange = htmlString.range(of: "}", options: .backwards) {
-//                            var jsonString = String(htmlString[startRange.lowerBound...(endRange.upperBound)])
-//                            if jsonString.last == "<" {
-//                                jsonString.removeLast()
-//                            }
-//                            // Convert the JSON string to data
-//                            if let jsonData = jsonString.data(using: .utf8) {
-//                                struct AccessToken: Decodable {
-//                                    let accessToken: String
-//                                }
-//
-//                                // Parse the data as JSON
-//                                let decoder = JSONDecoder()
-//                                do {
-//                                    let result = try decoder.decode(AccessToken.self, from: jsonData)
-//                                    //logD("Access token: Aquired from chatGPT.") // Here's your access token.
-//                                    SettingsViewModel.shared.accessToken = result.accessToken
-//                                } catch {
-//                                    logD("Failed to parse JSON: \(error)")
-//                                }
-//                            }
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//
-//        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-//            //  logD("Did fail navigation with error: \(error)")
-//        }
-//
-//        func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-//            // logD("Deciding policy for navigation response")
-//            decisionHandler(.allow)
-//        }
-//
-//        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-//            // logD("Web content process did terminate")
-//        }
-//
-//        func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-//            // logD("Did receive authentication challenge")
-//
-//
-//            //            webView.getCookies(for: "openai.com") { data in
-//            //                  logD("cookies=========================================")
-//            //                for cookie in data {
-//            //                    logD("\(cookie.key)")
-//            //
-//            //                }
-//            //                SettingsViewModel.shared.cookies = data as? [String: String] ?? [:]
-//            //
-//            //            }
-//            completionHandler(.performDefaultHandling, nil)
-//        }
     }
 }
 
-
 #endif
 #endif
-#endif
-
-#if !os(tvOS)
-
-//extension WKWebView {
-//
-//    private var httpCookieStore: WKHTTPCookieStore  { return WKWebsiteDataStore.default().httpCookieStore }
-//
-//    func getCookies(for domain: String? = nil, completion: @escaping ([String : Any])->())  {
-//        var cookieDict = [String : AnyObject]()
-//        httpCookieStore.getAllCookies { cookies in
-//            for cookie in cookies {
-//                if let domain = domain {
-//                    if cookie.domain.contains(domain) {
-//                        cookieDict[cookie.name] = cookie.properties as AnyObject?
-//                    }
-//                } else {
-//                    cookieDict[cookie.name] = cookie.properties as AnyObject?
-//                }
-//            }
-//            completion(cookieDict)
-//        }
-//    }
-//}
 #endif

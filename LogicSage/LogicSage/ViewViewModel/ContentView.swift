@@ -64,6 +64,190 @@ struct ContentView: View {
             .padding(1)
 #if os(xrOS)
             .glassBackgroundEffect()
+        .toolbar {
+            ToolbarItem(placement: .bottomOrnament) {
+
+                HStack(spacing: 4) {
+
+                    ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Logo", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
+                    ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
+
+#if targetEnvironment(macCatalyst)
+
+                    Button(action: {
+                        if !appModel.isServerActive {
+                            DispatchQueue.main.async {
+                                // Execute your action here
+
+                                Backend.doBackend(path: "~/LogicSage/")
+                                //appModel.isServerActive = true
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                print("killall swifty-gpt")
+                            }
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+
+                            resizableButtonImage(systemName:
+                                                    "server.rack",
+                                                 size: geometry.size)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text( "Start server" )
+                            //  Text("\(appModel.isServerActive ? "Stop" : "Start") server" )
+                                .font(.caption)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+
+                        .background(settingsViewModel.buttonColor)
+#endif
+                    }
+                    .buttonStyle(MyButtonStyle())
+
+#endif
+
+                    // Add new App window
+
+#if os(macOS)
+                    NewViewerButton()
+
+                        .foregroundColor(settingsViewModel.appTextColor)
+#else
+
+                    if UIDevice.current.userInterfaceIdiom != .phone {
+                        if #available(iOS 16.0, *) {
+                            NewViewerButton(settingsViewModel: settingsViewModel)
+                            //                        .buttonStyle(MyButtonStyle())
+                            //                        .font(.body)
+                            //                        .lineLimit(0)
+                            //                        .minimumScaleFactor(0.1)
+                            //                        .border(.secondary)
+                                .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                                .hoverEffect(.automatic)
+#endif
+                        }
+                    }
+#endif
+
+                    Button(action: {
+                        DispatchQueue.main.async {
+                            // Execute your action here
+                            screamer.sendCommand(command: "st")
+                            isInputViewShown = false
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+
+                            resizableButtonImage(systemName:
+                                                    "stop.circle.fill",
+                                                 size: geometry.size)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text("Stop voice" )
+                                .font(.caption)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+
+                        .background(settingsViewModel.buttonColor)
+#endif
+                    }
+                    .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                    .hoverEffect(.automatic)
+#endif
+#if !os(tvOS)
+                    Button(action: {
+                        withAnimation {
+                            logD("open Webview")
+
+                            windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
+
+                            tabSelection = 1
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+                            resizableButtonImage(systemName:
+                                                    "network",
+                                                 size: geometry.size)
+                            .cornerRadius(8)
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text("Webview" )
+                                .font(.caption)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+                        .background(settingsViewModel.buttonColor)
+#endif
+
+                    }
+                    .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                    .hoverEffect(.automatic)
+#endif
+#endif
+
+
+                    Button(action: {
+                        DispatchQueue.main.async {
+                            settingsViewModel.latestWindowManager = windowManager
+
+                            settingsViewModel.createAndOpenNewConvo()
+
+                            playSelect()
+                            isInputViewShown = false
+                            tabSelection = 1
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+                            resizableButtonImage(systemName:
+                                                    "text.bubble.fill",
+                                                 size: geometry.size)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .font(.caption)
+
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text("New chat" )
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+
+                        .background(settingsViewModel.buttonColor)
+#endif
+
+                    }
+                    .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                    .hoverEffect(.automatic)
+#endif
+                }
+
+            }
+        }
 #endif
         }
     }
@@ -149,6 +333,8 @@ struct ContentView: View {
                     }
                 })
                 .zIndex(-999)
+#if !os(xrOS)
+
                 if keyboardHeight == 0 && !showInstructions {
                     // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
                     VStack {
@@ -162,6 +348,7 @@ struct ContentView: View {
                     .padding(.trailing, 8)
                     .animation(.easeIn(duration:0.25), value:keyboardHeight == 0)
                 }
+#endif
 #if !os(macOS)
 #if !os(tvOS)
                 // Handle dragging point for resize gesture.
@@ -215,6 +402,7 @@ struct ContentView: View {
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(1)
+
     }
     func tabTwo(size: CGSize) -> some View {
         ZStack {
@@ -288,6 +476,27 @@ struct ContentView: View {
                 logD("contentView viewSize update = \(viewSize)")
             }
         }
+#endif
+    }
+
+    private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
+#if os(macOS) || os(tvOS)
+        Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+        // .background(settingsViewModel.buttonColor)
+
+#else
+        return Image(systemName: systemName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: max(30, size.width / 12), height: 32.666 )
+            .tint(settingsViewModel.appTextColor)
+#if targetEnvironment(macCatalyst)
+
+            .background(settingsViewModel.buttonColor)
+#endif
 #endif
     }
 }

@@ -16,6 +16,7 @@ import Foundation
 
 #if !os(iOS)
 #if !os(tvOS)
+#if !os(xrOS)
 
 	class TextViewWrapperView: NSView {
 
@@ -107,5 +108,6 @@ import Foundation
 		
 	}
 	
+#endif
 #endif
 #endif

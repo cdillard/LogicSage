@@ -7,11 +7,11 @@
 
 import Foundation
 
-// OPEN AI SETTING
-// DEFAULT GPT MODEL ON CLIENT SIDE.
-// CONSTANTS FOR GPT in mobile mode
+// DEFAULT IS NOW GPT-4 (due to its general availability)
+let defaultGPTModel = "gpt-4-0314"
 //let defaultGPTModel = "gpt-4"
-let defaultGPTModel = "gpt-3.5-turbo"
+
+//let defaultGPTModel = "gpt-3.5-turbo"
 
 let apiEndpoint = "https://api.openai.com/v1/chat/completions"
 
@@ -21,13 +21,6 @@ let swiftyGPTWorkspaceFirstName = "SwiftyGPTWorkspace"
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 let builtInAppDesc = "a simple SwiftUI app that shows SFSymbols and Emojis that go together well on a scrollable grid"
-
-
-// I've tried to include the reverse engineered GPT SSE API as an option for thsose without API Keys. WIP.
-// WARNING: "OpenAI is using services from Arkose Labs to detect and prevent actions accessing ChatGPT's GPT-4 and GPT-4 Browsing models through Apps other than the official clients. Although ChatALL has successfully bypassed its protection, OpenAI can still easily identify you, increasing your risk of being banned. \n\nAre you sure to take this risk? (The risk of using GPT-4 Mobile V2 will be much lower)",
-// If USE_CHATGPT == true and accessToken is set via logging into https://chat.openai.com and going to  https://chat.openai.com/api/auth/session
-// WARNING: Using this method may/will flag your chatGPT account. It's hard to say. For PLUS members I'd say we are good.
-let USE_CHATGPT = false
 
 var config = Config(
     projectName: "MyApp",
@@ -42,13 +35,13 @@ var config = Config(
     appType: "iOS",
     appDesc: builtInAppDesc,
     language: "Swift",
-    conversational: false,
+    conversational: true,
     streak: 0,
     chosenTQ: nil,
     promptMode: .normal,
     // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
-    enableGoogle: false,
-    enableLink: false,
+    enableGoogle: true,
+    enableLink: true,
     loadMode: LoadMode.dots
 )
 
@@ -68,9 +61,7 @@ func generatedOpenLine(overrideV: Bool = false) -> String {
 }
 var openLinePrintCount = 0
 var openingLine = generatedOpenLine()
-func updateOpeningLine() {
-    openingLine = generatedOpenLine()
-}
+
 // END OPEN LINE ZONE
 
 // LOAD MOAD ZONE
@@ -155,7 +146,7 @@ func resetCommandWithConfig(config: inout Config) {
     config.appDesc = builtInAppDesc
     config.language = "Swift"
 
-    config.conversational = false
+    config.conversational = true
     config.manualPromptString = ""
 
     config.streak = 0

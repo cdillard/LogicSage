@@ -55,20 +55,18 @@ func search(query: String, apiKey: String, searchEngineId: String, completion: @
     task.resume()
 }
 
-
 func searchIt(query: String, completion: @escaping (String?) -> Void) {
     multiPrinter("Searching it... \(query)")
     search(query: query, apiKey: GOOGLE_KEY, searchEngineId: GOOGLE_ID) { result in
         switch result {
         case .success(let searchItems):
             multiPrinter("sucessfully fetched \(searchItems.count) from Google.")
-            break
-//            for item in searchItems {
-//                multiPrinter("Title: \(item.title ?? "none")")
-//                multiPrinter("Link: \(item.link ?? "none")")
-//                multiPrinter("Snippet: \(item.snippet ?? "none")")
-//                multiPrinter("\n")
-//            }
+            for item in searchItems {
+                multiPrinter("Title: \(item.title ?? "none")")
+                multiPrinter("Link: \(item.link ?? "none")")
+                multiPrinter("Snippet: \(item.snippet ?? "none")")
+                multiPrinter("\n")
+            }
 
             func searchItemsToJSONString(_ searchItems: [SearchItem]) -> String? {
                 let encoder = JSONEncoder()

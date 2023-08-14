@@ -8,6 +8,77 @@
 import Foundation
 import SwiftUI
 extension SettingsViewModel {
+
+    func cullToXTokens(_ convoId: Conversation.ID, limit: Int) async {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+            
+            return
+        }
+        let convo = conversations[conversationIndex]
+        var total = 0
+
+        let encoder = try? await Tiktoken.shared.getEncoding("gpt-4")
+        for msg in convo.messages {
+            if total < 5400 {
+                let encoded = encoder?.encode(value: msg.content)
+                let length = encoded?.count ?? 0
+                total += length
+
+            }
+            
+        }
+
+
+        saveConvosToDisk()
+
+    }
+
+     func tokens(_ convoId: Conversation.ID) async -> Int {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return 0
+        }
+        let convo = conversations[conversationIndex]
+         var total = 0
+         let encoder = try? await Tiktoken.shared.getEncoding("gpt-4")
+        for msg in convo.messages {
+            let encoded = encoder?.encode(value: msg.content)
+            let length = encoded?.count ?? 0
+            total += length
+        }
+         return total
+    }
+    func updateConvoTokenCount(_ convoId: Conversation.ID, tokenCount: Int) {
+        print("update convo id = \(convoId) token cnt \(tokenCount)")
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+            
+            return
+        }
+        SettingsViewModel.shared.conversations[conversationIndex].tokens = tokenCount
+    }
+
+    func setHasAddedToolPrompt(_ convoId: Conversation.ID, added: Bool) {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        SettingsViewModel.shared.conversations[conversationIndex].hasAddedToolPrompt = added
+    }
+
+    func getHasAddedToolPrompt(_ convoId: Conversation.ID) -> Bool {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return false
+        }
+        return SettingsViewModel.shared.conversations[conversationIndex].hasAddedToolPrompt ?? false
+    }
+
+
     func renameConvo(_ convoId: Conversation.ID, newName: String) {
         print("rename convo id = \(convoId) to \(newName)")
         guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
@@ -49,7 +120,8 @@ extension SettingsViewModel {
     }
 
     func sendChatText(_ convoID: Conversation.ID, chatText: String) {
-        gptCommand(conversationId: convoID, input: chatText)
+        let googleAvail = SettingsViewModel.shared.googleAvailable()
+        gptCommand(conversationId: convoID, input: chatText, useGoogle: googleAvail, useLink: googleAvail, qPrompt: googleAvail)
     }
     func createConversation() -> Conversation.ID {
         let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel)

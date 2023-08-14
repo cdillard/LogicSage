@@ -155,6 +155,28 @@ class InnerTextView: TextViewUIKit {
         }
         return codeBlocks
     }
+
+    struct Link {
+        let range: NSRange
+        let text: String
+    }
+
+    private func parseForHttpLinks() -> [Link] {
+        let text = self.attributedText.string
+        let pattern = #"https?:\/\/[-A-Za-z0-9._~:\/?#\[\]@!$&'()*\+,;=%]+"#
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let matches = regex.matches(in: text, options: [], range: NSRange(text.startIndex..., in: text))
+
+        var links = [Link]()
+        for match in matches {
+            if let range = Range(match.range, in: text) {
+                let link = String(text[range])
+                links.append(Link(range: match.range, text: link))
+            }
+        }
+        return links
+    }
+
     private func removeFirstAndLastLine(from string: String) -> String {
         var lines = string.split(separator: "\n", omittingEmptySubsequences: false)
         if !lines.isEmpty { lines.removeFirst() }
@@ -178,6 +200,24 @@ class InnerTextView: TextViewUIKit {
 
         return CGRect(origin: buttonOrigin, size: buttonSize)
     }
+
+    private func calculateButtonRect(for link: Link) -> CGRect {
+        // Get the bounding rectangle for the code block
+        let glyphRange = layoutManager.glyphRange(forCharacterRange: link.range, actualCharacterRange: nil)
+        var boundingRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+
+        // Convert the bounding rectangle's origin from text container coordinates to UITextView coordinates
+        boundingRect.origin.x += textContainerInset.left
+        boundingRect.origin.y += textContainerInset.top
+
+        // Calculate the position for the button
+        // For example, position the button at the top-right corner of the bounding rectangle
+        let buttonSize = CGSize(width: 158.6666, height: 39.666)
+        let buttonOrigin = CGPoint(x: boundingRect.maxX - buttonSize.width, y: boundingRect.minY)
+
+        return CGRect(origin: buttonOrigin, size: buttonSize)
+    }
+
     @objc private func copyCode(_ sender: UIButton) {
         // Get the index of the button that was tapped
         let index = sender.tag
@@ -198,7 +238,31 @@ class InnerTextView: TextViewUIKit {
             logD("failed to copy code block outisde bound \(index)")
         }
     }
+
+    @objc private func copyLink(_ sender: UIButton) {
+        // Get the index of the button that was tapped
+        let index = sender.tag
+
+        // Get the code blocks
+        let codeBlocks = parseForHttpLinks()
+
+        // Get the code for the tapped buttonx`
+        if index < codeBlocks.count {
+            let codeBlock = links[index]
+#if !os(macOS)
+            // Copy the code to the clipboard
+            UIPasteboard.general.string = codeBlock.text
+            innerDelegate?.didCopyCode()
+#endif
+        }
+        else {
+            logD("failed to copy code block outisde bound \(index)")
+        }
+    }
+
     var codeBlocks = [CodeBlock]()
+    var links = [Link]()
+
     var savedButtons = [UIButton]()
 
     override public func draw(_ rect: CGRect) {
@@ -239,6 +303,32 @@ class InnerTextView: TextViewUIKit {
                 button.setTitle( "Longpress to Copy code", for: .normal)
                 button.tag = index
                 button.addTarget(self, action: #selector(copyCode), for: .touchDown)
+                button.layer.opacity = 0.666
+#if !os(xrOS)
+
+                button.addInteraction(UIPointerInteraction(delegate: self))
+#endif
+                // Add the button to the text view
+                addSubview(button)
+                savedButtons.append(button)
+            }
+            links = parseForHttpLinks()
+            for (index, linkBlock) in links.enumerated() {
+                let copyCodeButtonFrame = calculateButtonRect(for: linkBlock)
+
+                let button = UIButton(frame: copyCodeButtonFrame)
+                if let image = UIImage(systemName: "link") { // Use the appropriate system symbol name
+                    button.setImage(image, for: .normal)
+                    button.tintColor = UIColor(SettingsViewModel.shared.plainColorSrcEditor)
+                }
+                button.backgroundColor = UIColor(SettingsViewModel.shared.buttonColor)
+                button.titleLabel?.textColor = UIColor(SettingsViewModel.shared.plainColorSrcEditor)
+                button.titleLabel?.font = .systemFont(ofSize: SettingsViewModel.shared.fontSizeSrcEditor)
+                button.titleLabel?.adjustsFontSizeToFitWidth = true
+                button.titleLabel?.numberOfLines = 1
+                button.setTitle( "Longpress to Copy link", for: .normal)
+                button.tag = index
+                button.addTarget(self, action: #selector(copyLink), for: .touchDown)
                 button.layer.opacity = 0.666
 #if !os(xrOS)
 

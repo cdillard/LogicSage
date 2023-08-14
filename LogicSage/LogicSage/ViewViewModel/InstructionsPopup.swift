@@ -24,44 +24,56 @@ import SwiftUI
 struct InstructionsPopup: View {
     @Binding var isPresented: Bool
     @ObservedObject var settingsViewModel: SettingsViewModel
-    let email = "chrisbdillard@gmail.com"
     @State private var showCheckmark: Bool = false
-    
+    @State private var showAPIKey: Bool = false
+
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack {
                     Text("Welcome to LogicSage!")
-                        .opacity(0.7)
-                        .font(.title2)
+                        .font(.title)
                         .lineLimit(nil)
                         .foregroundColor(settingsViewModel.appTextColor)
                     
                         .padding(geometry.size.width * 0.01)
+#if !os(xrOS)
+
                     Text("scroll down 📜⬇️4 more")
                         .font(.title2)
                         .foregroundColor(settingsViewModel.appTextColor)
-                    
+                    #endif
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
                             Group {
                                 Text("Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an AI Key.")
                                     .minimumScaleFactor(0.466)
                                 
-                                Text("Please enter your API Key (via copy and paste) and it will be stored securely offline in your devices keychain. (Check the source code if you want)")
+                                Text("Please enter your API Key (via copy and paste) and it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code to verify this fact if you want).")
                                     .minimumScaleFactor(0.466)
                                 
                                 VStack(spacing:2) {
-                                    Text("A.I. 🔑: ")
-                                        .font(.title3)
-                                        .foregroundColor(settingsViewModel.appTextColor)
-                                    TextField(
-                                        "",
-                                        text: $settingsViewModel.openAIKey
-                                    )
-                                    .border(.secondary)
-                                    .submitLabel(.done)
-                                    .frame( maxWidth: .infinity, maxHeight: .infinity)
+                                    HStack {Text("A.I. 🔑: ")
+                                            .font(.title3)
+                                            .foregroundColor(settingsViewModel.appTextColor)
+
+                                        Button(action: {
+                                            
+                                            showAPIKey.toggle()
+                                        }) {
+                                            Image(systemName: "eye")
+                                        }
+                                    }
+                                    if showAPIKey {
+                                        TextField(
+                                            "",
+                                            text: $settingsViewModel.openAIKey
+                                        )
+                                        .minimumScaleFactor(0.866)
+                                        .lineLimit(3)
+                                        .border(.secondary)
+                                        .submitLabel(.done)
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
 #if !os(xrOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
@@ -73,6 +85,33 @@ struct InstructionsPopup: View {
 #if !os(macOS)
                                     .autocapitalization(.none)
 #endif
+                                    }
+                                    else {
+                                        SecureField(
+                                            "",
+                                            text: $settingsViewModel.openAIKey
+                                        )
+                                        .minimumScaleFactor(0.866)
+                                        .lineLimit(3)
+
+                                        .border(.secondary)
+                                        .submitLabel(.done)
+                                        
+                                        .frame( maxWidth: .infinity, maxHeight: .infinity)
+#if !os(xrOS)
+                                    .scrollDismissesKeyboard(.interactively)
+#endif
+                                    .font(.title3)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+#if !os(macOS)
+                                    .autocorrectionDisabled(!true)
+#endif
+#if !os(macOS)
+                                    .autocapitalization(.none)
+#endif
+                                    }
+
+
                                 }
                                 Divider()
                                 Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and to post Github issues.")

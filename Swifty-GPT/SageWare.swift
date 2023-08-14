@@ -231,6 +231,8 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
     executeXcodeCommand(.buildProject(name: config.projectName)) { success, errors in
         stopRandomSpinner()
 
+        downloadCommand(input: "")
+
         if success {
             multiPrinter("Build successful.")
 

@@ -47,7 +47,7 @@ func pathToWallpapers() -> String {
    "\(getWorkspaceFolder())\(swiftyGPTWorkspaceFirstName)/\("Wallpaper")"
 }
 func wallpaperCommand(input: String) {
-    multiPrinter("Performing wallpaper command, this requires you have copied your macs Dynamic Wallpaper to the SWiftyGPTWorkspace/Wallpaper folder.")
+    multiPrinter("Performing wallpaper command, this requires you have copied your macs Dynamic Wallpaper to the LogicSageWorkspace/Wallpaper folder.")
 
     multiPrinter("Please copy image heic files from `/Users/$USERNAME/Library/Application Support/com.apple.mobileAssetDesktop` and `/System/Library/Desktop Pictures` into `SwiftyGPTWorkspace/Wallpaper`")
 
