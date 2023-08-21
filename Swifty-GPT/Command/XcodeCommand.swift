@@ -346,45 +346,74 @@ func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping 
             
             if simulator.name == "iPhone 14" {
                 print("UUID for the device is: \(simulator.UUID)")
-                runXCRUNSimulatorProject(projectPath: projectPath, scheme: scheme, deviceUUID: simulator.UUID)  { success, errors in
 
-                    buildProjectForSimulatorDestination(projectPath: projectPath, scheme: scheme, simUUID: simulator.UUID) { success, errors in
-                        
-                        findApp(projectPath: projectPath, scheme: scheme) { appPath, errors in
-                            if !appPath.isEmpty {
-                                
-                                // FOUND BUILT APP NAME
-                                installApp(appPath: appPath, simUUID: simulator.UUID) { success, errors in
-                                    if success {
-                                       // completion(true, [])
-                                        print("Successfully installed \(appPath) in \(simulator.UUID)")
-                                    } else {
-                                        print("Failed to install")
+                openSimulatorApp { success, errors in
+                    runXCRUNSimulatorProject(projectPath: projectPath, scheme: scheme, deviceUUID: simulator.UUID)  { success, errors in
 
-                                       // completion(false, errors)
-                                    }
+                        buildProjectForSimulatorDestination(projectPath: projectPath, scheme: scheme, simUUID: simulator.UUID) { success, errors in
+                            if success {
+                                findApp(projectPath: projectPath, scheme: scheme) { appPath, errors in
+                                    if !appPath.isEmpty {
+
+                                        // FOUND BUILT APP NAME
+                                        installApp(appPath: appPath, simUUID: simulator.UUID) { success, errors in
+                                            if success {
+                                                // completion(true, [])
+                                                print("Successfully installed \(appPath) in \(simulator.UUID)")
+                                            } else {
+                                                print("Failed to install")
+    //                                            return
+                                            }
+                                            // TODO: Fix to pass bundleID from on higher.
+                                            let bundleId = "com.example.\(scheme)"
+                                           // getBundleId(appPath: appPath, scheme: scheme) { bundleId, errors in
+                                             //   if !bundleId.isEmpty {
+                                                    print("Successfully RAN \(appPath) in \(simulator.UUID) and found bundleIO = \(bundleId)")
+
+                                                    runApp(appPath: appPath, simUUID: simulator.UUID, bundleId: bundleId)  { success, errors in
+                                                        if success {
+                                                            completion(true, [])
+                                                            print("Successfully RAN \(appPath) in \(simulator.UUID)")
 
 
-                                    runApp(appPath: appPath, simUUID: simulator.UUID)  { success, errors in
-                                        if success {
-                                            completion(true, [])
-                                            print("Successfully RAN \(appPath) in \(simulator.UUID)")
-                                        } else {
-                                            completion(false, errors)
+                                                            // if we get here... try to show simulator
+                                                            simulatorCommand(input: "")
+                                                        } else {
+                                                            completion(false, errors)
 
-                                            print("Failed to run.")
+                                                            print("Failed to run.")
 
+                                                        }
+                                                    }
+    //                                            }
+    //                                            else {
+    //                                                print("Failed to run simulator .app -- failing run")
+    //                                                return
+    //
+    //                                            }
+
+
+
+                                           // }
                                         }
+                                    }
+                                    else {
+                                        print("failed to find .app -- failing run")
+                                        return
+
                                     }
                                 }
                             }
                             else {
-                                print("failed to find .app -- failing run")
+                                print("failed to build project, failing run")
+                                return
+
                             }
+
                         }
-                        
                     }
                 }
+
 
                 return
 
@@ -450,11 +479,8 @@ func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping 
         
         let projectArgument = "-project"
         let schemeArgument = "-scheme"
-        task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "id=\(simUUID)", "-verbose"]
+        task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "id=\(simUUID)", "-verbose", "-derivedDataPath", "build", "clean", "build"]
 
-        // "-derivedDataPath","build"]
-        //  "-IDEBuildingContinueBuildingAfterErrors=YES",
-        
         let outputPipe = Pipe()
         task.standardOutput = outputPipe
         
@@ -538,6 +564,7 @@ func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping 
 }
 
 // *.app file name must match Xcode project name and scheme name for now.
+// TODO: Double check the case that the app name does not match the scheme name.
 func findApp(projectPath: String, scheme: String, completion: @escaping (String, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/find")
@@ -629,13 +656,13 @@ func installApp(appPath: String, simUUID: String, completion: @escaping (Bool, [
     completion(successful, config.globalErrors)
 }
 
-func runApp(appPath: String, simUUID: String, completion: @escaping (Bool, [String]) -> Void) {
+func runApp(appPath: String, simUUID: String, bundleId: String, completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
 
 
     // TODO: FIx to pass the correct Info.plist bundleID fore the chosen Project.
-    task.arguments = [ "simctl", "launch", simUUID, "com.example.GreenGradientApp"]
+    task.arguments = [ "simctl", "launch", simUUID, bundleId]
     //  "-IDEBuildingContinueBuildingAfterErrors=YES",
 
     let outputPipe = Pipe()
@@ -676,6 +703,100 @@ func runApp(appPath: String, simUUID: String, completion: @escaping (Bool, [Stri
 
     completion(successful, config.globalErrors)
 }
+
+
+func getBundleId(appPath: String, scheme: String, completion: @escaping (String, [String]) -> Void) {
+    let task = Process()
+    task.executableURL = URL(fileURLWithPath: "/usr/libexec/PlistBuddy")
+    
+    let infoPlistPath = appPath.trimmingCharacters(in: .whitespacesAndNewlines)+"/Info.plist"
+
+    task.arguments = [ "-c", "\"Print CFBundleIdentifier\"", infoPlistPath]
+
+    let outputPipe = Pipe()
+    task.standardOutput = outputPipe
+
+    let errorPipe = Pipe()
+    task.standardError = errorPipe
+
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    var successful = false
+    task.terminationHandler = { process in
+        let success = process.terminationStatus == 0
+        successful = success
+        dispatchSemaphore.signal()
+    }
+
+    do {
+        try task.run()
+    } catch {
+        multiPrinter("Error running xcodebuild: \(error)")
+        completion("", [])
+        dispatchSemaphore.signal()
+    }
+
+    // Wait for the terminationHandler to be called
+    dispatchSemaphore.wait()
+
+
+    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: outputData, encoding: .utf8) ?? ""
+
+    print("FIND PLIST output = " + output)
+
+    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+    print("FIND PLIST error output = " + errorOutput)
+
+    completion(output, config.globalErrors)
+}
+
+
+func openSimulatorApp(completion: @escaping (String, [String]) -> Void) {
+    let task = Process()
+    task.executableURL = URL(fileURLWithPath: "/usr/bin/open")
+
+    task.arguments = [ "-a", "Simulator"]
+
+    let outputPipe = Pipe()
+    task.standardOutput = outputPipe
+
+    let errorPipe = Pipe()
+    task.standardError = errorPipe
+
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    var successful = false
+    task.terminationHandler = { process in
+        let success = process.terminationStatus == 0
+        successful = success
+        dispatchSemaphore.signal()
+    }
+
+    do {
+        try task.run()
+    } catch {
+        multiPrinter("Error running xcodebuild: \(error)")
+        completion("", [])
+        dispatchSemaphore.signal()
+    }
+
+    // Wait for the terminationHandler to be called
+    dispatchSemaphore.wait()
+
+
+    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: outputData, encoding: .utf8) ?? ""
+
+    print("OPENSIM output = " + output)
+
+    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+    print("OPENSIM error output = " + errorOutput)
+
+    completion(output, config.globalErrors)
+}
+
+
 
 func parseProjectStructure(name: String) {
     let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(name).xcodeproj"
