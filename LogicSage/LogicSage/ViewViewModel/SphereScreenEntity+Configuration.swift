@@ -19,9 +19,8 @@ extension SphereScreenEntity {
         var position: SIMD3<Float> = .zero
 
         static var screenDefault: Configuration = .init(
-            scale: 1.0)
-//            speed: 0.1,
-//            date: Date())
+            scale: 1.0
+        )
     }
 }
 #endif

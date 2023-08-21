@@ -40,6 +40,8 @@ struct Config {
     var voiceInputEnabled: Bool
     var interactiveMode: Bool
 
+    var projectArray: [FileSystemItem]
+
 }
 func resetCommand(input: String) {
     // TODO: Reset for the right user.
@@ -70,5 +72,8 @@ func resetCommandWithConfig(config: inout Config) {
     config.promptMode = .normal
 
     config.loadMode = LoadMode.dots
+
+    config.projectArray = [FileSystemItem]()
+
     multiPrinter("🔁🔄♻️ Reset.")
 }

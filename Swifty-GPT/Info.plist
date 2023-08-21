@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SwiftSage</string>
+	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -41,6 +41,6 @@
 		<string>__sagess_tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Uses local network to communicate with SwiftSage</string>
+	<string>Uses local network to communicate with LogicSage</string>
 </dict>
 </plist>

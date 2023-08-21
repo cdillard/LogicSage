@@ -25,66 +25,66 @@ struct ChatBotomMenu: View {
     @Binding var tokens: Int
 
     var body: some View {
-                Menu {
-                    if windowInfo.convoId == Conversation.ID(-1) {
-                        serverChatOptions()
-                    }
-                    // Normal chat // Allows changing system message / changing AI model.
-                    else {
-                        Text("Tokens: \(tokens)")
-                        Button(action: {
-                            logD("selected Change AI model")
-                            isModalPresented = true
-                        }) {
-                            Text( "Change AI model")
-                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                                .lineLimit(1)
-                                .foregroundColor(Color.white)
-                                .background(settingsViewModel.buttonColor)
-                        }
-                        
-                        Button(action: {
-                            logD("selected SELECT system prompt")
-                            editingSystemPrompt = false
+        Menu {
+            if windowInfo.convoId == Conversation.ID(-1) {
+                serverChatOptions()
+            }
+            // Normal chat // Allows changing system message / changing AI model.
+            else {
+                Text("Tokens: \(tokens)")
+                Button(action: {
+                    logD("selected Change AI model")
+                    isModalPresented = true
+                }) {
+                    Text( "Change AI model")
+                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        .lineLimit(1)
+                        .foregroundColor(Color.white)
+                        .background(settingsViewModel.buttonColor)
+                }
 
-                            isSystemPromptSelectionPresented = true
+                Button(action: {
+                    logD("selected SELECT system prompt")
+                    editingSystemPrompt = false
 
-                        }) {
-                            Text(
-                                    "Choose from built-in system 🌱:")
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .foregroundColor(Color.white)
-                            .background(settingsViewModel.buttonColor)
-                        }
-                        
+                    isSystemPromptSelectionPresented = true
 
-                    }
-                } label: {
-                    ZStack {
-                        Circle()
-                            .strokeBorder(settingsViewModel.appTextColor, lineWidth: 1)
+                }) {
+                    Text(
+                        "Choose from built-in system prompt 🌱:")
+                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                    .lineLimit(1)
+                    .foregroundColor(Color.white)
+                    .background(settingsViewModel.buttonColor)
+                }
 
-                            Label("...", systemImage: "ellipsis")
-                                .font(.title3)
-                                .minimumScaleFactor(0.5)
-                                .labelStyle(DemoStyle())
-                                .background(Color.clear)
+
+            }
+        } label: {
+            ZStack {
+                Circle()
+                    .strokeBorder(SettingsViewModel.shared.buttonColor, lineWidth: 1)
+
+                Label("...", systemImage: "ellipsis")
+                    .font(.title3)
+                    .minimumScaleFactor(0.5)
+                    .labelStyle(DemoStyle())
+                    .background(Color.clear)
 #if os(xrOS)
 
-                                .offset(x:6)
-                        #else
-                                .offset(x:3)
+                    .offset(x:6)
+#else
+                    .offset(x:3)
 
-                        #endif
-                                .tint(settingsViewModel.appTextColor)
+#endif
+                    .tint(settingsViewModel.appTextColor)
 
-                        
-                    }
-                    .padding(4)
-                    
-                }
-                .frame(width: 30)
+
+            }
+            .padding(4)
+
+        }
+        .frame(width: 30)
 
         .sheet(isPresented: $isModalPresented) {
             ModalView(items: aiModelOptions)
@@ -93,7 +93,7 @@ struct ChatBotomMenu: View {
             ModalViewSystemPrompt(items: systemPromptOptions, choseBuiltInSystemPrompt: $choseBuiltInSystemPrompt)
         }
     }
-    
+
     func serverChatOptions() -> some View {
         Group {
             // Random Wallpaper BUTTON
@@ -111,39 +111,39 @@ struct ChatBotomMenu: View {
                     .foregroundColor(Color.white)
                     .background(settingsViewModel.buttonColor)
             }
-            
-//            // Simulator BUTTON
-//            Button(action: {
-//                logD("RUN SIMULATOR")
-//                
-//                settingsViewModel.latestWindowManager = windowManager
-//                
-//                DispatchQueue.main.async {
-//                    
-//                    // Execute your action here
-//                    screamer.sendCommand(command: "simulator")
-//                }
-//            }) {
-//                ZStack {
-//                    Text("📲 simulator")
-//                }
-//                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//                .lineLimit(1)
-//                .foregroundColor(Color.white)
-//                .background(settingsViewModel.buttonColor)
-//            }
-//            
-//            // Debate BUTTON
-//            Button(action: {
-//                chatText = "debate "
-//            }) {
-//                Text( "⚖️ debate")
-//                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-//                    .lineLimit(1)
-//                    .foregroundColor(Color.white)
-//                    .background(settingsViewModel.buttonColor)
-//            }
-//            
+
+            //            // Simulator BUTTON
+            //            Button(action: {
+            //                logD("RUN SIMULATOR")
+            //
+            //                settingsViewModel.latestWindowManager = windowManager
+            //
+            //                DispatchQueue.main.async {
+            //
+            //                    // Execute your action here
+            //                    screamer.sendCommand(command: "simulator")
+            //                }
+            //            }) {
+            //                ZStack {
+            //                    Text("📲 simulator")
+            //                }
+            //                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+            //                .lineLimit(1)
+            //                .foregroundColor(Color.white)
+            //                .background(settingsViewModel.buttonColor)
+            //            }
+            //
+            //            // Debate BUTTON
+            //            Button(action: {
+            //                chatText = "debate "
+            //            }) {
+            //                Text( "⚖️ debate")
+            //                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+            //                    .lineLimit(1)
+            //                    .foregroundColor(Color.white)
+            //                    .background(settingsViewModel.buttonColor)
+            //            }
+            //
             // i BUTTON
             Button(action: {
                 chatText = "i "
@@ -154,16 +154,16 @@ struct ChatBotomMenu: View {
                     .foregroundColor(Color.white)
                     .background(settingsViewModel.buttonColor)
             }
-            
+
             // Trash BUTTON
             Button(action: {
                 chatText = ""
                 screamer.sendCommand(command: "g end")
-                
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.333) {
                     settingsViewModel.consoleManagerText = ""
                 }
-                
+
             }) {
                 Text("🗑️ Reset")
                     .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))

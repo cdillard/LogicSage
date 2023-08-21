@@ -13,7 +13,7 @@ import AVFoundation
 import CoreMedia
 
 func deleteCommand(input: String) {
-    multiPrinter("backing up and deleting SwiftSage workspace, as requested")
+    multiPrinter("backing up and deleting LogicSage workspace, as requested")
 
     do {
         try backupAndDeleteWorkspace()
@@ -450,7 +450,11 @@ func gptVoiceCommand(input: String) {
 
 }
 func buildCommand(input: String) {
-    buildIt() { success, errrors in
+    var projName = input.trimmingCharacters(in: .whitespacesAndNewlines)
+    if projName.isEmpty {
+        projName = config.projectName
+    }
+    buildIt(name: projName) { success, errrors in
             // open it?
            // completion(success, errors)
         if success {
@@ -458,7 +462,22 @@ func buildCommand(input: String) {
         }
         else {
             multiPrinter("did not build")
-            doPrompting()
+           // doPrompting()
+        }
+    }
+}
+func runProjectCommand(input: String) {
+    var projName = input.trimmingCharacters(in: .whitespacesAndNewlines)
+    if projName.isEmpty {
+        projName = config.projectName
+    }
+    
+    runIt(name: projName) { success, errrors in
+        if success {
+            multiPrinter("successfully run")
+        }
+        else {
+            multiPrinter("did not run")
         }
     }
 }
@@ -496,20 +515,48 @@ func linkCommand(input: String) {
 }
 
 func globalsCommand(input: String) {
+    multiPrinter("\n")
     multiPrinter("projectName = \(config.projectName)")
+    multiPrinter("\n")
+
     multiPrinter("globalErrors = \(config.globalErrors)")
+    multiPrinter("\n")
+
     multiPrinter("manualPromptString = \(config.manualPromptString)")
+    multiPrinter("\n")
+
     multiPrinter("projectName = \(config.projectName)")
+    multiPrinter("\n")
+
     multiPrinter("BlockingInput = \(config.blockingInput)")
+    multiPrinter("\n")
+
     multiPrinter("promptingRetryNumber = \(config.promptingRetryNumber)")
+    multiPrinter("\n")
+
     multiPrinter("chosenTQ = \(config.chosenTQ.debugDescription)")
+    multiPrinter("\n")
+
     multiPrinter("lastFileContents = \(config.lastFileContents)")
+    multiPrinter("\n")
+
     multiPrinter("lastNameContents = \(config.lastNameContents)")
+    multiPrinter("\n")
+
     multiPrinter("searchResultHeadingGlobal = \(config.searchResultHeadingGlobal ?? "none")")
+    multiPrinter("\n")
+
     multiPrinter("linkResultGlobal = \(config.linkResultGlobal ?? "none")")
+    multiPrinter("\n")
+
     multiPrinter("appName = \(config.appName ?? "Default")")
+    multiPrinter("\n")
+
     multiPrinter("appType = \(config.appType)")
+    multiPrinter("\n")
+
     multiPrinter("language = \(config.language)")
+    multiPrinter("\n")
 }
 
 func voiceSettingsCommand(input: String) {

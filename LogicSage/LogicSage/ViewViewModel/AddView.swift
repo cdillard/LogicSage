@@ -97,7 +97,7 @@ struct AddView: View {
 #endif
             }
 
-            Text("Add:")
+            Text("Files/Git:")
                 .font(.title)
                 .foregroundColor(settingsViewModel.appTextColor)
 
@@ -110,26 +110,27 @@ struct AddView: View {
         HStack {
             // Button 1
 
-            //            Button(action: {
-            //                withAnimation {
-            //                    logD("open Working Changes View")
-            //                    tabSelection = 1
-            //                    windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
-            //                }
-            //            }) {
-            //                VStack {
-            //                    resizableButtonImage(systemName:
-            //                                            "lasso",
-            //                                         size: size)
-            //                    .cornerRadius(8)
-            //                    Text("Changes")
-            //                        .font(.caption)
-            //                        .foregroundColor(settingsViewModel.appTextColor)
-            //                }
-            //#if !os(macOS)
-            //                .hoverEffect(.lift)
-            //#endif
-            //            }
+                        Button(action: {
+                            withAnimation {
+                                logD("open Working Changes View")
+                                tabSelection = 1
+                                windowManager.addWindow(windowType: .workingChangesView, frame: defSize, zIndex: 0)
+                            }
+                        }) {
+                            VStack {
+                                resizableButtonImage(systemName:
+                                                        "lasso",
+                                                     size: size)
+                                .cornerRadius(8)
+                                Text("Changes")
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                            }
+            #if !os(macOS)
+                            .hoverEffect(.lift)
+            #endif
+                        }
+
             // Button 2
             Button(action: {
                 withAnimation {
@@ -154,6 +155,34 @@ struct AddView: View {
 
                 }
 
+#if !os(macOS)
+                .hoverEffect(.lift)
+#endif
+            }
+
+
+            // PROJECT/DEBUGGER WINDOW
+            Button(action: {
+                withAnimation {
+                    logD("open new project window")
+
+                    showAddView.toggle()
+                    tabSelection = 1
+
+                    windowManager.addWindow(windowType: .project, frame: defSize, zIndex: 0)
+                }
+            }) {
+                VStack {
+                    resizableButtonImage(systemName:
+                                            "target",
+                                         size: size)
+                    .cornerRadius(8)
+                    .foregroundColor(settingsViewModel.appTextColor)
+
+                    Text("Project")
+                        .font(.caption)
+                        .foregroundColor(settingsViewModel.appTextColor)
+                }
 #if !os(macOS)
                 .hoverEffect(.lift)
 #endif

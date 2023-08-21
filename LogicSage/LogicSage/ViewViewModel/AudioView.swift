@@ -39,6 +39,8 @@ struct AudioView: View {
 #endif
                     }
                 }
+                .padding(.top, 30)
+
                 .padding(.bottom, geometry.size.height / 8)
                 .cornerRadius(16)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -141,7 +143,7 @@ struct AudioView: View {
                             }
                         }
                         .listRowBackground(settingsViewModel.backgroundColor)
-                        .frame(height: CGFloat(settingsViewModel.installedVoices.count * 2))
+                        .frame(height: CGFloat(size.height / 2.5))
                     }
             }
             .frame( maxWidth: .infinity, maxHeight: .infinity)

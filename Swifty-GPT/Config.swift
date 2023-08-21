@@ -54,7 +54,8 @@ var config = Config(
     loadMode: LoadMode.dots,
     voiceOutputEnabled: false,
     voiceInputEnabled: false,
-    interactiveMode: true
+    interactiveMode: true,
+    projectArray: [FileSystemItem]()
 )
 
 //// Set builtInAppDesc
@@ -171,9 +172,7 @@ func asciAnimations() -> Bool {
 //
 let triviaEnabledSwift = true
 let triviaEnabledObjc = false
-//
-//let voiceOutputEnabled = true
-//var voiceInputEnabled = false
+
 
 // CEREPROC ZONE ///////////////////////////////
 // EXPERIMENTAL AUDIO
@@ -221,16 +220,9 @@ let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 //}
 // END CEREPROC ZONE ///////////////////////////////
 
-//https://github.com/suno-ai/bark   IN PROGRESS
-let barkVoicesEnabled = false
-
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS
 let enableMacSage = true
 let swiftSageIOSEnabled = true
-let swiftSageIOSAudioStreaming = false
-
-// DO NOT USE
-let enableAEyes = false
 
 var logV: LogVerbosity = .none
 

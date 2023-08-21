@@ -25,7 +25,7 @@ struct RepositoryTreeView: View {
 
     var body: some View {
         List(directory.children ?? [RepoFile]()) { file in
-            if file.isDirectory {
+            if file.isDirectory && !file.name.hasSuffix("xcodeproj") {
                 NavigationLink(destination: RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: file, window: window, windowManager: windowManager)) {
                     Text(file.name + " >")
                         .foregroundColor(settingsViewModel.appTextColor)
@@ -45,9 +45,8 @@ struct RepositoryTreeView: View {
         .listRowBackground(settingsViewModel.backgroundColor)
 #if !os(macOS)
 #if !os(tvOS)
-
         .navigationBarTitle(directory.name, displayMode: .inline)
-        #endif
+#endif
 #endif
 
     }
@@ -84,7 +83,7 @@ struct RepositoryTreeView: View {
 #if !os(macOS)
 
                 settingsViewModel.receivedImageData = fileData
-                #endif
+#endif
             }
             catch {
                 logD("fail to set wallpaper from disk w e \(error)")
@@ -92,13 +91,17 @@ struct RepositoryTreeView: View {
             return
 
         }
+        else if file.url.pathExtension == "xcodeproj" {
+            logD("tapped an xcodeproj, will attempt to open it")
+            return
+        }
 
 
         let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
 
         windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
 
-//        settingsViewModel.showAddView = false
+        //        settingsViewModel.showAddView = false
 
         //        // FETCH FILE FROM NETWORK, VS FETCH FILE FROM DISK
         //        SettingsViewModel.shared.fetchFileContent(accessToken: SettingsViewModel.shared.ghaPat, filePath: file.path) { result in

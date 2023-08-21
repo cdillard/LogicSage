@@ -17,7 +17,7 @@ extension SettingsView {
                 Text("Small")
                     .foregroundColor(settingsViewModel.appTextColor)
                 
-                Slider(value: $settingsViewModel.fontSizeSrcEditor, in: fontSizeSrcEditorRange, step: fontSizeSrceditorSteps)
+                Slider(value: $settingsViewModel.fontSizeSrcEditor, in: fontSizeSrcEditorRange) //step: fontSizeSrceditorSteps)
                     .accentColor(settingsViewModel.buttonColor)
                     .foregroundColor(settingsViewModel.appTextColor)
                 
@@ -25,6 +25,8 @@ extension SettingsView {
                     .foregroundColor(settingsViewModel.appTextColor)
                 
             }
+            .padding(.top,30)
+
             HStack {
                 Text("Text")
                     .fontWeight(.semibold)
@@ -37,7 +39,7 @@ extension SettingsView {
             HStack {
                 Text("Small")
                     .foregroundColor(settingsViewModel.appTextColor)
-                Slider(value: $settingsViewModel.buttonScale, in:  buttonScaleRange, step: buttonScaleSteps)
+                Slider(value: $settingsViewModel.buttonScale, in:  buttonScaleRange) //step: buttonScaleSteps)
                     .accentColor(settingsViewModel.buttonColor)
                     .foregroundColor(settingsViewModel.appTextColor)
                 Text("Large")
@@ -56,7 +58,7 @@ extension SettingsView {
                 Text("Small")
                     .foregroundColor(settingsViewModel.appTextColor)
                 
-                Slider(value: $settingsViewModel.commandButtonFontSize, in: commandButtonRange , step: commandButtonSteps)
+                Slider(value: $settingsViewModel.commandButtonFontSize, in: commandButtonRange) // step: commandButtonSteps)
                     .accentColor(settingsViewModel.buttonColor)
                     .foregroundColor(settingsViewModel.appTextColor)
                 Text("Large")
@@ -76,7 +78,7 @@ extension SettingsView {
                 Text("Small")
                     .foregroundColor(settingsViewModel.appTextColor)
                 
-                Slider(value: $settingsViewModel.cornerHandleSize, in:  cornerHandleRange, step: cornerHandleSteps)
+                Slider(value: $settingsViewModel.cornerHandleSize, in:  cornerHandleRange) //step: cornerHandleSteps)
                     .accentColor(settingsViewModel.buttonColor)
                     .foregroundColor(settingsViewModel.appTextColor)
                 

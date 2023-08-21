@@ -43,22 +43,16 @@ struct DrawerContent: View {
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
-            .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
+            .frame(width: max(44, size.width / 12), height: 32.666 )
+
 #else
-        if #available(iOS 16.0, *) {
-            return Image(systemName: systemName)
+        Image(systemName: systemName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: max(30, size.width / 12), height: 32.666 )
+                .frame(width: max(44, size.width / 12), height: 32.666 )
                 .tint(settingsViewModel.appTextColor)
                 .background(settingsViewModel.buttonColor)
-        } else {
-            return Image(systemName: systemName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: max(30, size.width / 12), height: 32.666 )
-                .background(settingsViewModel.buttonColor)
-        }
+
 #endif
     }
     var body: some View {
@@ -76,7 +70,7 @@ struct DrawerContent: View {
                             Divider()
                                 .foregroundColor(settingsViewModel.appTextColor.opacity(0.5))
 
-                            HStack(alignment: VerticalAlignment.lastTextBaseline) {
+                            HStack(alignment: VerticalAlignment.lastTextBaseline, spacing: 4) {
                                 Spacer()
                                 Button( action : {
                                     withAnimation {
@@ -138,7 +132,7 @@ struct DrawerContent: View {
                                         .hoverEffect(.lift)
 #endif
                                         .lineLimit(1)
-                                        .padding(.trailing, 4)
+//                                        .padding(.trailing, 4)
                                         .animation(.easeIn(duration: 0.25), value: isDeleting)
                                     }
                                     .buttonStyle(MyButtonStyle())
@@ -154,84 +148,86 @@ struct DrawerContent: View {
                                         .hoverEffect(.lift)
 #endif
                                         .lineLimit(1)
-                                        .padding(.trailing, 7)
+//                                        .padding(.trailing, 7)
                                         .animation(.easeIn(duration: 0.25), value: isDeleting)
                                     }
                                     .buttonStyle(MyButtonStyle())
                                 }
                                 else {
-                                    
-                                    // Generate name for convo
-                                    Button( action : {
-                                        logD("Doing chat title generation...")
 
-                                        settingsViewModel.genTitle(convo.id, force: true) { success in
-                                            // successfull renamed with AI
-                                            if success {
-                                                logD("successfully genn title")
-                                                isDeleting = true
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                                    onRename()
+                                    HStack(spacing: 5) {
+                                        // Generate name for convo
+                                        Button( action : {
+                                            logD("Doing chat title generation...")
 
-                                                    isDeleting = false
-                                                    isDeletingIndex = -1
+                                            settingsViewModel.genTitle(convo.id, force: true) { success in
+                                                // successfull renamed with AI
+                                                if success {
+                                                    logD("successfully genn title")
+                                                    isDeleting = true
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                        onRename()
+
+                                                        isDeleting = false
+                                                        isDeletingIndex = -1
+                                                    }
+
                                                 }
+                                                else {
+                                                    logD("fail gen title")
+                                                }
+                                            }
 
-                                            }
-                                            else {
-                                                logD("fail gen title")
-                                            }
+
+                                        }) {
+                                            resizableButtonImage(systemName:
+                                                                    "pencil.and.outline",
+                                                                 size: geometry.size)
+#if !os(macOS)
+                                            .hoverEffect(.lift)
+#endif
+                                            .lineLimit(1)
+//                                            .padding(.trailing, 7)
+                                            .animation(.easeIn(duration: 0.25), value: isDeleting)
                                         }
+                                        .buttonStyle(MyButtonStyle())
 
 
-                                    }) {
-                                        resizableButtonImage(systemName:
-                                                                "pencil.and.outline",
-                                                             size: geometry.size)
+
+                                        Button( action : {
+                                            renamingConvo = convo
+
+                                            presentRenamer = true
+
+                                        }) {
+                                            resizableButtonImage(systemName:
+                                                                    "rectangle.and.pencil.and.ellipsis",
+                                                                 size: geometry.size)
 #if !os(macOS)
-                                        .hoverEffect(.lift)
+                                            .hoverEffect(.lift)
 #endif
-                                        .lineLimit(1)
-                                        .padding(.trailing, 7)
-                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
-                                    }
-                                    .buttonStyle(MyButtonStyle())
-                                    
-                                    
-                                    
-                                    Button( action : {
-                                        renamingConvo = convo
-                                        
-                                        presentRenamer = true
-                                        
-                                    }) {
-                                        resizableButtonImage(systemName:
-                                                                "rectangle.and.pencil.and.ellipsis",
-                                                             size: geometry.size)
+                                            .lineLimit(1)
+//                                            .padding(.leading, 7)
+//                                            .padding(.trailing, 7)
+                                            .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                        }
+                                        .buttonStyle(MyButtonStyle())
+
+                                        Button( action : {
+                                            isDeleting = true
+                                            isDeletingIndex = index
+                                        }) {
+                                            resizableButtonImage(systemName:
+                                                                    "trash.circle.fill",
+                                                                 size: geometry.size)
 #if !os(macOS)
-                                        .hoverEffect(.lift)
+                                            .hoverEffect(.lift)
 #endif
-                                        .lineLimit(1)
-                                        .padding(.leading, 7)
-                                        .padding(.trailing, 7)
-                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                            .lineLimit(1)
+                                            .animation(.easeIn(duration: 0.25), value: isDeleting)
+                                        }
+                                        .buttonStyle(MyButtonStyle())
                                     }
-                                    .buttonStyle(MyButtonStyle())
-                                    
-                                    Button( action : {
-                                        isDeleting = true
-                                        isDeletingIndex = index
-                                    }) {
-                                        resizableButtonImage(systemName:
-                                                                "trash.circle.fill",
-                                                             size: geometry.size)
-#if !os(macOS)
-                                        .hoverEffect(.lift)
-#endif
-                                        .lineLimit(1)
-                                        .animation(.easeIn(duration: 0.25), value: isDeleting)
-                                    }
-                                    .buttonStyle(MyButtonStyle())
                                 }
                             }
                 
@@ -380,7 +376,7 @@ struct DrawerContent: View {
                     resizableButtonImage(systemName:
                                             "plus.rectangle",
                                          size: size)
-                    Text("Add")
+                    Text("Files/Git")
                         .font(.body)
                         .lineLimit(1)
                         .minimumScaleFactor(0.01)

@@ -37,33 +37,20 @@ func fullProjText() -> String {
   c     📲 List Commands
   st    🛑 Stop voices/commands
   sn    🎵 Sing a built-in song
-  t     🎤 Play iOS dev trivia
   rs    🔁 Reset prompt state
   del   🗑️ Backup & delete workspace
-  e     🚪 Exit the program
-  debate👥 Debate (`debate`, or `debate your topic`) [  MORE: ethics, movies, and encourage ]
 """
 }
 
 func generatedOpenLine(overrideV: Bool = false) -> String {
     let openLine = """
-    \(randomAscii())
+    \(logoAscii5)
     \((logV == .verbose && overrideV) ? commandsText() : "")
     🔍:
     """
     return openLine
 }
-func randomAscii() -> String {
-    let index = Int.random(in: 0..<4)
 
-    switch index {
-    case 0: return logoAscii2
-    case 1: return logoAscii5
-    case 2: return logoAscii2
-    case 3: return logoAscii5
-    default: return logoAscii2
-    }
-}
 var openLinePrintCount = 0
 
 var openingLine = generatedOpenLine()
@@ -75,8 +62,8 @@ func updateOpeningLine() {
 
 func afterBuildFailedLine() -> String {
 """
-Project creation failed. Check the Xcode project for simple mistakes [3] 🤔.
+Project creation failed. Open the Xcode project and check for simple mistakes AI may have made [o] 🤔.
 ❓ What would you like to do:
-🔍 Please choose an option [1-19, b, x, i, g, gv, (c) - list commands, ...]:
+🔍 Please choose an option [(r): Run loaded prompt, (s): Show loaded prompt, (o): Open Xcode Project, (del): Backup & Delete Workspace,  (c): list commands]:
 """
 }

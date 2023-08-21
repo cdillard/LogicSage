@@ -11,7 +11,18 @@ let defaultTerminalFontSize: Double = 13.666
 let defaultCommandButtonSize: Double = 28
 let defaultToolbarButtonScale: Double = 0.27
 
-let defaultHandleSize: Double = 40.0
+var defaultHandleSize: Double {
+#if os(xrOS)
+    return defaultHandleSizeVisionOS
+#else
+    return defaultHandleSizeOther
+#endif
+}
+
+let defaultHandleSizeOther: Double = 40.0
+
+let defaultHandleSizeVisionOS: Double = 60.0
+
 let defaultSourceEditorFontSize: Double = 12.666
 let email = "chrisbdillard@gmail.com"
 

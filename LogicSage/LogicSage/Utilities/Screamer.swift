@@ -34,10 +34,17 @@ class ScreamClient: WebSocketDelegate {
     = "START_OF_WORKSPACE_DATA"
     let workspaceEndSentinel
     = "END_OF_WORKSPACE_DATA"
+
+    let projectStartSentinel = "START_OF_PROJECT_DATA"
+    let projectEndSentinel   = "END_OF_PROJECT_DATA"
+
+
     var websocket: LocalWebSocket!
     var pingTimer: Timer?
     public private(set) var isViable = false
     
+    var receivedProjectData = Data()
+
     var receivedWorkspaceData = Data()
     var receivedSimData = Data()
     var receivedData = Data()
@@ -45,6 +52,8 @@ class ScreamClient: WebSocketDelegate {
     var isTransferringSim = false
     var isTransferringWallpaper = false
     var isTransferringWorkspace = false
+    var isTransferringProject = false
+
     var receivedWallpaperFileName: String?
     var receivedWallpaperFileSize: Int?
     
@@ -178,7 +187,24 @@ class ScreamClient: WebSocketDelegate {
 #endif
             }
             // END HANDLE WALLPAPER STREAM ZONE ******************************************************
-            
+
+            // BEGIN HANDLE SIM STREAM ZONE ******************************************************
+            else if data == projectStartSentinel.data(using: .utf8)! {
+                isTransferringProject = true
+                receivedProjectData = Data()
+            }
+            else if data == projectEndSentinel.data(using: .utf8)! {
+                isTransferringProject = false
+#if !os(macOS)
+
+                DispatchQueue.main.async {
+                    SettingsViewModel.shared.receivedProjectData = self.receivedProjectData
+                }
+#endif
+
+            }
+            // END HANDLE SIM STREAM ZONE ******************************************************
+
             // BEGIN DATA APPENDAGE ZONE ******************************************************
             else if isTransferringWorkspace {
                 receivedWorkspaceData.append(data)
@@ -195,6 +221,9 @@ class ScreamClient: WebSocketDelegate {
             }
             else if isTransferringSim {
                 receivedSimData.append(data)
+            }
+            else if isTransferringProject {
+                receivedProjectData.append(data)
             }
             // END DATA APPENDAGE ZONE ******************************************************
             

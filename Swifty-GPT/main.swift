@@ -26,14 +26,9 @@ func main() {
 
     resetCommandWithConfig(config: &config)
 
-    multiPrinter("SwiftSage is loading...")
+    multiPrinter("LogicSage is loading...")
 
     startRandomSpinner()
-
-    // TODOD:
-    // check for whisper files
-    // check for tessarect training files
-    // cause a more elegant failure if issues are detected wit xcodegen or xcodeproj
 
     refreshPrompt(appDesc: config.appDesc)
 
@@ -43,12 +38,12 @@ func main() {
     config.appType = arguments.contains("--type") ? arguments[arguments.firstIndex(of: "--type")! + 1] : "iOS"
     config.language = arguments.contains("--language") ? arguments[arguments.firstIndex(of: "--language")! + 1] : "Swift"
 
-    do {
-        try backupAndDeleteWorkspace()
-    }
-    catch {
-        multiPrinter("file error = \(error)")
-    }
+//    do {
+//        try backupAndDeleteWorkspace()
+//    }
+//    catch {
+//        multiPrinter("file error = \(error)")
+//    }
 
     // Reset the global stuff
     config.globalErrors.removeAll()
@@ -59,9 +54,6 @@ func main() {
     /*
      3. Run project
      5. Test project
-     6. Commit changes
-     7. Push changes
-     8. Send Slack message
      */
 
     if config.interactiveMode {
@@ -124,11 +116,6 @@ func main() {
             loadTriviaSystem()
         }
 
-        if enableAEyes {
-            startEyes()
-        }
-
-        // Roight time?
         if enableMacSage {
             runMacSage()
         }
@@ -150,6 +137,8 @@ func doPrompting(_ errors: [String] = [], overridePrompt: String = "") {
                 stopRandomSpinner()
                 if success {
                     multiPrinter("Parsed and executed code successfully. Opening project...")
+
+                    // This uses AppleScript to open the Project on the mac that is running the LogicSage command line app.
 
                     //textToSpeech(text: "Opening project...")
 

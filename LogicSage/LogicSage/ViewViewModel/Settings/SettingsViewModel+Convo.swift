@@ -104,7 +104,14 @@ extension SettingsViewModel {
             ), at: 0)
         }
     }
+    func cullEmptyConvos() {
+        var newConvos = [Conversation]()
 
+        for convo in conversations where !convo.messages.isEmpty {
+            newConvos.append(convo)
+        }
+        self.conversations = newConvos
+    }
     func appendMessageToConvoIndex(index: Int, message: Message) {
         self.conversations[index].model = openAIModel
         self.conversations[index].messages.append(message)

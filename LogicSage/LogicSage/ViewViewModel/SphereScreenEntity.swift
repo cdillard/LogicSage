@@ -38,10 +38,9 @@ class SphereScreenEntity: Entity {
             }
 
             let modelEntity = ModelEntity(mesh: mesh, materials: [material2])
-            //                                let shape = ShapeResource.generateSphere(radius: 1)
-            //                                modelEntity.addCollision(shape: shape)
-            //                modelEntity.generateCollisionShapes(recursive: true)
-            modelEntity.generateCollisionShapes(recursive: true)
+            let shape = ShapeResource.generateSphere(radius: 1)
+            modelEntity.addCollision(shape: shape)
+            //            modelEntity.generateCollisionShapes(recursive: true)
             modelEntity.components.set(InputTargetComponent())
             modelEntity.collision?.mode = .trigger
 
@@ -51,26 +50,32 @@ class SphereScreenEntity: Entity {
             modelEntity.transform.rotation = simd_quatf(angle: rotationRadians, axis: SIMD3(x:0,y:1,z:0))//.degrees(43)
 
             screen = modelEntity
+            modelEntity.components.set(GroundingShadowComponent(castsShadow: true))
 
             Timer.scheduledTimer(withTimeInterval: texUpdateInteral, repeats: true) { _ in
                 DispatchQueue.main.async {
                     Task {
                         var material2 = SimpleMaterial()
                         if let image = UIImage(data: lastTextureImageData ?? Data())?.cgImage {
-                            // FIX HUGE WINDOW WIDTH ISSUE L
-                            // -[MTLTextureDescriptorInternal validateWithDevice:]:1354: failed assertion `Texture Descriptor Validation
-                            // MTLTextureDescriptor has width (8357) greater than the maximum allowed size of 8192.
-                            let txtContent =  try await TextureResource.generate(from: image, options: .init(semantic: .normal))
+                            // tip: MTLTextureDescriptor has width greater than the maximum allowed size of 8192 will fail.
+                            if image.height < 8192 && image.width < 8192 {
 
-                            if let color =  try? PhysicallyBasedMaterial.BaseColor
-                                .init(tint: .white.withAlphaComponent(matAlphaComponent),
-                                      texture: .init(txtContent)) {
-                                material2.color = color
+                                let txtContent =  try await TextureResource.generate(from: image, options: .init(semantic: .normal))
+
+                                if let color =  try? PhysicallyBasedMaterial.BaseColor
+                                    .init(tint: .white.withAlphaComponent(matAlphaComponent),
+                                          texture: .init(txtContent)) {
+                                    material2.color = color
+                                }
+
+                                for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
+                                    modelEntity.model?.materials[i] = material2
+                                }
+                            }
+                            else {
+                                logD("image size exceeds 3D texture (MTLTextureDescriptor) limit")
                             }
 
-                            for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
-                                modelEntity.model?.materials[i] = material2
-                            }
                         }
                     }
                 }

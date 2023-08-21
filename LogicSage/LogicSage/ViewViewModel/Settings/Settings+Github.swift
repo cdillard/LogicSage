@@ -33,7 +33,7 @@ func getFiles(in directory: URL) -> [RepoFile] {
         return fileURLs.map { url -> RepoFile in
             var isDirectory: ObjCBool = false
             fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
-            // Recursively call getFiles or return file
+            // Recursively call getFiles or return file.
             return RepoFile(name: url.lastPathComponent, url: url, isDirectory: isDirectory.boolValue, children: isDirectory.boolValue
                             ? getFiles(in: url) : nil)
         }
@@ -196,7 +196,7 @@ func getDocumentsDirectory() -> URL {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     #if targetEnvironment(macCatalyst)
 
-    return paths[0].appendingPathComponent("LogicSageWorkspace")
+    return paths[0].appendingPathComponent("LogicSageForMacWorkspace")
     #else
 
     return paths[0]

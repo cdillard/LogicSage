@@ -16,12 +16,12 @@ public class SettingsViewModel: ObservableObject {
     public static let shared = SettingsViewModel()
 
     //preload webkit
-#if !os(tvOS)
-#if !targetEnvironment(macCatalyst)
-
-    var _preLoadWebViewStore: WebViewStore = WebViewStore()
-#endif
-#endif
+//#if !os(tvOS)
+//#if !targetEnvironment(macCatalyst)
+//
+//    var _preLoadWebViewStore: WebViewStore?// = WebViewStore()
+//#endif
+//#endif
 
     let speechSynthesizer = AVSpeechSynthesizer()
     let speakerDelegate = SpeakerDelegate()
@@ -108,6 +108,22 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             if let recievedWorkspaceData {
                 recieveWorkspaceData(receivedWorkspaceData: recievedWorkspaceData)
+            }
+        }
+    }
+
+    @Published var receivedProjectData: Data? = nil {
+        didSet {
+            if let receivedProjectData {
+
+                do {
+                    let object = try JSONDecoder().decode([FileSystemItem].self, from: receivedProjectData)
+                    // Handle the deserialized object here
+                    config.projectArray =  object
+                    logD("Received projectArray data successfully. Count = \(object.count).")
+                } catch {
+                    print("Error decoding projectArray object: \(error)")
+                }
             }
         }
     }
@@ -377,8 +393,8 @@ public class SettingsViewModel: ObservableObject {
 
 // START DEBUGGER VIEWMODEL ZONE ***********************************************************************
     @Published var isDebugging: Bool = false
-    @Published var targetName: String = "LogicSage"
-    @Published var deviceName: String = "Chris🚀🙌♾🦍"
+    @Published var targetName: String = "No scheme"
+    @Published var deviceName: String = "No device"
     @Published var debuggingStatus: String = ""
     @Published var warningCount: Int = 0
     @Published var errorCount: Int = 0
@@ -623,10 +639,22 @@ public class SettingsViewModel: ObservableObject {
         DispatchQueue.main.async {
             if let convos = self.retrieveConversationContentFromDisk(forKey: jsonFileName) {
                 self.conversations = convos
+
+                self.cullEmptyConvos()
             }
         }
 // END LOADING SAVED CONVO ZONE FROM DISK
 
+
+//        DispatchQueue.main.async {
+//#if !os(tvOS)
+//#if !targetEnvironment(macCatalyst)
+//
+//            self._preLoadWebViewStore  = WebViewStore()
+//#endif
+//#endif
+//
+//        }
     }
 
     func currentGitRepoKey() -> String {

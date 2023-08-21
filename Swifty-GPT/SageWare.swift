@@ -215,7 +215,7 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
         return completion(false, config.globalErrors)
     }
 
-    buildIt() { success, errrors in
+    buildIt(name: config.projectName) { success, errrors in
               // open it?
           completion(success, errors)
 
@@ -223,12 +223,12 @@ func parseAndExecuteGPTOutput(_ output: String, _ errors:[String] = [], completi
 }
 
 
-func buildIt(completion: @escaping (Bool, [String]) -> Void) {
+func buildIt(name: String, completion: @escaping (Bool, [String]) -> Void) {
     multiPrinter("Building project...")
     //textToSpeech(text: "Building project \(projectName)...")
 
     startRandomSpinner()
-    executeXcodeCommand(.buildProject(name: config.projectName)) { success, errors in
+    executeXcodeCommand(.buildProject(name: name)) { success, errors in
         stopRandomSpinner()
 
         downloadCommand(input: "")
@@ -280,6 +280,28 @@ func buildIt(completion: @escaping (Bool, [String]) -> Void) {
             }
 
             textToSpeech(text: failWord())
+
+            completion(false, errors)
+        }
+    }
+}
+func runIt(name: String, completion: @escaping (Bool, [String]) -> Void) {
+    multiPrinter("Running project...")
+    //textToSpeech(text: "Building project \(projectName)...")
+
+    startRandomSpinner()
+    executeXcodeCommand(.runProject(name: name)) { success, errors in
+        stopRandomSpinner()
+
+        downloadCommand(input: "")
+
+        if success {
+            multiPrinter("Run successful.")
+
+            completion(true, errors)
+        }
+        else {
+            multiPrinter("Run failed.")
 
             completion(false, errors)
         }

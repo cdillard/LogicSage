@@ -20,5 +20,7 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+	<key>com.apple.developer.group-session</key>
+	<true/>
 </dict>
 </plist>

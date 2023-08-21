@@ -25,13 +25,6 @@ struct CommandButtonView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0)  {
-                HStack {
-#if os(xrOS)
-//                    ToggleImmersiveButton(idOfView: "ImmersiveSpaceVolume", name: "3D WindowSphere", showImmersiveLogo: $appModel.isShowingImmersiveWindow)
-                    ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Logo", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
-                    ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
-#endif
-                }
                 Spacer()
                 HStack(spacing: 4) {
                     Spacer()
@@ -40,19 +33,13 @@ struct CommandButtonView: View {
 #if targetEnvironment(macCatalyst)
 
                     Button(action: {
-                        if !appModel.isServerActive {
                             DispatchQueue.main.async {
                                 // Execute your action here
 
                                 Backend.doBackend(path: "~/LogicSage/")
                                 //appModel.isServerActive = true
                             }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                print("killall swifty-gpt")
-                            }
-                        }
+
                     }) {
                         VStack(spacing: 0)  {
 
@@ -100,6 +87,7 @@ struct CommandButtonView: View {
 #if !os(macOS)
                                 .hoverEffect(.automatic)
 #endif
+                                .cornerRadius(8)
                         }
                     }
 #endif
@@ -136,38 +124,8 @@ struct CommandButtonView: View {
 #if !os(macOS)
                                 .hoverEffect(.automatic)
 #endif
-#if !os(tvOS)
-                    Button(action: {
-                        withAnimation {
-                            logD("open Webview")
+                                .cornerRadius(8)
 
-                            windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-                        }
-                    }) {
-                        VStack(spacing: 0)  {
-                            resizableButtonImage(systemName:
-                                                    "network",
-                                                 size: geometry.size)
-                            .cornerRadius(8)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            Text("Webview" )
-                                .font(.caption)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.01)
-
-                                .foregroundColor(settingsViewModel.appTextColor)
-                        }
-#if !os(xrOS)
-                        .background(settingsViewModel.buttonColor)
-#endif
-
-                    }
-                    .buttonStyle(MyButtonStyle())
-#if !os(macOS)
-                                .hoverEffect(.automatic)
-#endif
-#endif
 
                     Button(action: {
                         DispatchQueue.main.async {
@@ -205,6 +163,8 @@ struct CommandButtonView: View {
 #if !os(macOS)
                                 .hoverEffect(.automatic)
 #endif
+                                .cornerRadius(8)
+
                 }
                 .padding()
             }

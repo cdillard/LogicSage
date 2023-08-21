@@ -154,6 +154,7 @@
 		B7544E4B2A191BCE00961F4C /* URLRequestBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E262A191BCE00961F4C /* URLRequestBuildable.swift */; };
 		B7544E4C2A191BCE00961F4C /* JSONRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E272A191BCE00961F4C /* JSONRequest.swift */; };
 		B7544E4D2A191BCE00961F4C /* URLSessionDataTaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */; };
+		B75709C72A8E6C31003E5894 /* ProjectDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75709C62A8E6C31003E5894 /* ProjectDocumentPicker.swift */; };
 		B75880C92A489E56007A1179 /* AnimatedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75880C82A489E56007A1179 /* AnimatedArrow.swift */; };
 		B75880CB2A489E78007A1179 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75880CA2A489E78007A1179 /* CheckmarkView.swift */; };
 		B75B329329FA11870049EB55 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329229FA11870049EB55 /* AddView.swift */; };
@@ -186,6 +187,7 @@
 		B78EAF902A13B955003095A2 /* SwiftSageiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */; };
 		B78EDFF82A50B854007A8136 /* GPT.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78EDFF72A50B854007A8136 /* GPT.swift */; };
 		B79E49CB2A48047900771B7C /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79E49CA2A48047900771B7C /* View+If.swift */; };
+		B7A2B4742A8D1E4B00E0D033 /* LogicSageTogether.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A2B4732A8D1E4B00E0D033 /* LogicSageTogether.swift */; };
 		B7A5E4532A54CBA800D28D4C /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5E4522A54CBA800D28D4C /* UIView+Screenshot.swift */; };
 		B7A8A49A2A4517A000E897C5 /* ViewController+PointerInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8A4992A4517A000E897C5 /* ViewController+PointerInteraction.swift */; };
 		B7A8A49C2A4517F700E897C5 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A8A49B2A4517F700E897C5 /* ShapeView.swift */; };
@@ -198,13 +200,18 @@
 		B7BA52EC2A49D21A00D03DF0 /* KeyboardAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA52E92A49D21A00D03DF0 /* KeyboardAdaptive.swift */; };
 		B7BA52EE2A49D21A00D03DF0 /* KeyboardHeightPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA52EB2A49D21A00D03DF0 /* KeyboardHeightPublisher.swift */; };
 		B7BA52F02A4A141600D03DF0 /* NewViewerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BA52EF2A4A141600D03DF0 /* NewViewerButton.swift */; };
-		B7BD8E1A2A8723C4007E5ACD /* PlacementGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E192A8723C4007E5ACD /* PlacementGestureModifier.swift */; };
 		B7BD8E1C2A8739F3007E5ACD /* SphereScreenEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E1B2A8739F3007E5ACD /* SphereScreenEntity.swift */; };
 		B7BD8E1E2A87ECA2007E5ACD /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E1D2A87ECA2007E5ACD /* Backend.swift */; };
 		B7BD8E202A8813A1007E5ACD /* Entity+Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E1F2A8813A1007E5ACD /* Entity+Move.swift */; };
-		B7BD8E252A8921C0007E5ACD /* Orbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E242A8921C0007E5ACD /* Orbit.swift */; };
+		B7BD8E252A8921C0007E5ACD /* SphereScreenSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E242A8921C0007E5ACD /* SphereScreenSceneView.swift */; };
 		B7BD8E272A8922E2007E5ACD /* SphereScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E262A8922E2007E5ACD /* SphereScreenView.swift */; };
 		B7BD8E292A89241F007E5ACD /* SphereScreenEntity+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BD8E282A89241F007E5ACD /* SphereScreenEntity+Configuration.swift */; };
+		B7BE95322A8E7A720065A58B /* ProjectHierarchyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95312A8E7A720065A58B /* ProjectHierarchyView.swift */; };
+		B7BE95342A8E7B2B0065A58B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95332A8E7B2B0065A58B /* Project.swift */; };
+		B7BE95362A8E7C050065A58B /* MovableDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95352A8E7C050065A58B /* MovableDivider.swift */; };
+		B7BE95382A8EBCE80065A58B /* PlacementGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */; };
+		B7BE953C2A8EBDAC0065A58B /* GlobeControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */; };
+		B7BE953E2A8EC38A0065A58B /* DragRotationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
@@ -419,6 +426,7 @@
 		B7544E262A191BCE00961F4C /* URLRequestBuildable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestBuildable.swift; sourceTree = "<group>"; };
 		B7544E272A191BCE00961F4C /* JSONRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequest.swift; sourceTree = "<group>"; };
 		B7544E282A191BCE00961F4C /* URLSessionDataTaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskProtocol.swift; sourceTree = "<group>"; };
+		B75709C62A8E6C31003E5894 /* ProjectDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDocumentPicker.swift; sourceTree = "<group>"; };
 		B75880C82A489E56007A1179 /* AnimatedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArrow.swift; sourceTree = "<group>"; };
 		B75880CA2A489E78007A1179 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		B75B329229FA11870049EB55 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
@@ -453,6 +461,7 @@
 		B78EAF8F2A13B955003095A2 /* SwiftSageiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSageiOSUITests.swift; sourceTree = "<group>"; };
 		B78EDFF72A50B854007A8136 /* GPT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT.swift; sourceTree = "<group>"; };
 		B79E49CA2A48047900771B7C /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
+		B7A2B4732A8D1E4B00E0D033 /* LogicSageTogether.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicSageTogether.swift; sourceTree = "<group>"; };
 		B7A5E4522A54CBA800D28D4C /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
 		B7A8A4992A4517A000E897C5 /* ViewController+PointerInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+PointerInteraction.swift"; sourceTree = "<group>"; };
 		B7A8A49B2A4517F700E897C5 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
@@ -465,13 +474,18 @@
 		B7BA52E92A49D21A00D03DF0 /* KeyboardAdaptive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAdaptive.swift; sourceTree = "<group>"; };
 		B7BA52EB2A49D21A00D03DF0 /* KeyboardHeightPublisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeightPublisher.swift; sourceTree = "<group>"; };
 		B7BA52EF2A4A141600D03DF0 /* NewViewerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewViewerButton.swift; sourceTree = "<group>"; };
-		B7BD8E192A8723C4007E5ACD /* PlacementGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementGestureModifier.swift; sourceTree = "<group>"; };
 		B7BD8E1B2A8739F3007E5ACD /* SphereScreenEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereScreenEntity.swift; sourceTree = "<group>"; };
 		B7BD8E1D2A87ECA2007E5ACD /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		B7BD8E1F2A8813A1007E5ACD /* Entity+Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Move.swift"; sourceTree = "<group>"; };
-		B7BD8E242A8921C0007E5ACD /* Orbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orbit.swift; sourceTree = "<group>"; };
+		B7BD8E242A8921C0007E5ACD /* SphereScreenSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereScreenSceneView.swift; sourceTree = "<group>"; };
 		B7BD8E262A8922E2007E5ACD /* SphereScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereScreenView.swift; sourceTree = "<group>"; };
 		B7BD8E282A89241F007E5ACD /* SphereScreenEntity+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphereScreenEntity+Configuration.swift"; sourceTree = "<group>"; };
+		B7BE95312A8E7A720065A58B /* ProjectHierarchyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectHierarchyView.swift; sourceTree = "<group>"; };
+		B7BE95332A8E7B2B0065A58B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		B7BE95352A8E7C050065A58B /* MovableDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovableDivider.swift; sourceTree = "<group>"; };
+		B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlacementGestureModifier.swift; path = LogicSage/PlacementGestureModifier.swift; sourceTree = SOURCE_ROOT; };
+		B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeControls.swift; sourceTree = "<group>"; };
+		B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DragRotationModifier.swift; path = LogicSage/DragRotationModifier.swift; sourceTree = SOURCE_ROOT; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
@@ -675,7 +689,6 @@
 				B78EAF5D2A108516003095A2 /* Lists */,
 				B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */,
 				B7BA52EF2A4A141600D03DF0 /* NewViewerButton.swift */,
-				B70A00F92A20E0C900ADEF5A /* ProjectView.swift */,
 				B7E2A94B2A4CB6730050F995 /* SageMultiView */,
 				B78DA97B2A06F3E4002343AB /* Settings */,
 				B7E2A94D2A4CB6AB0050F995 /* Window */,
@@ -722,6 +735,8 @@
 		B746DFCC29F5E789002804EB /* LogicSage */ = {
 			isa = PBXGroup;
 			children = (
+				B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */,
+				B7A2B4732A8D1E4B00E0D033 /* LogicSageTogether.swift */,
 				B7F95D302A58B0020097FFC8 /* AppModel.swift */,
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
 				B7BD8E1D2A87ECA2007E5ACD /* Backend.swift */,
@@ -737,6 +752,7 @@
 				B746DFD429F5E78A002804EB /* Preview Content */,
 				B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */,
 				B78DA97C2A06F401002343AB /* Utilities */,
+				B75709C52A8E6C16003E5894 /* v2 */,
 				B72645312A0E814D00AE3668 /* ViewViewModel */,
 			);
 			path = LogicSage;
@@ -987,6 +1003,18 @@
 			path = Private;
 			sourceTree = "<group>";
 		};
+		B75709C52A8E6C16003E5894 /* v2 */ = {
+			isa = PBXGroup;
+			children = (
+				B75709C62A8E6C31003E5894 /* ProjectDocumentPicker.swift */,
+				B7BE95312A8E7A720065A58B /* ProjectHierarchyView.swift */,
+				B7BE95332A8E7B2B0065A58B /* Project.swift */,
+				B70A00F92A20E0C900ADEF5A /* ProjectView.swift */,
+				B7BE95352A8E7C050065A58B /* MovableDivider.swift */,
+			);
+			path = v2;
+			sourceTree = "<group>";
+		};
 		B78DA9602A02AF3A002343AB /* Loading */ = {
 			isa = PBXGroup;
 			children = (
@@ -1094,7 +1122,8 @@
 		B7BD8E182A8723AB007E5ACD /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				B7BD8E192A8723C4007E5ACD /* PlacementGestureModifier.swift */,
+				B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */,
+				B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */,
 			);
 			name = Modifiers;
 			path = Loading;
@@ -1111,7 +1140,7 @@
 				B7BD8E1B2A8739F3007E5ACD /* SphereScreenEntity.swift */,
 				B7BD8E282A89241F007E5ACD /* SphereScreenEntity+Configuration.swift */,
 				B7BD8E262A8922E2007E5ACD /* SphereScreenView.swift */,
-				B7BD8E242A8921C0007E5ACD /* Orbit.swift */,
+				B7BD8E242A8921C0007E5ACD /* SphereScreenSceneView.swift */,
 			);
 			name = XR;
 			sourceTree = "<group>";
@@ -1356,11 +1385,11 @@
 				B7544E422A191BCE00961F4C /* OpenAIProtocol.swift in Sources */,
 				B7A8A49C2A4517F700E897C5 /* ShapeView.swift in Sources */,
 				B710CEE72A7EDE91008C06CC /* Linker.swift in Sources */,
+				B75709C72A8E6C31003E5894 /* ProjectDocumentPicker.swift in Sources */,
 				B7B270792A5E534A002FB711 /* SettingsView+ColorDisc.swift in Sources */,
 				B7544E4A2A191BCE00961F4C /* MultipartFormDataBodyEncodable.swift in Sources */,
 				B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */,
 				B710CF022A7F5E65008C06CC /* String+Base64.swift in Sources */,
-				B7BD8E1A2A8723C4007E5ACD /* PlacementGestureModifier.swift in Sources */,
 				B7544E492A191BCE00961F4C /* URLSessionProtocol.swift in Sources */,
 				B7544E3B2A191BCE00961F4C /* ImagesQuery.swift in Sources */,
 				B7191F2629F9F09A00078D8D /* SyntaxTextView.swift in Sources */,
@@ -1412,6 +1441,7 @@
 				B710CEFF2A7F5E65008C06CC /* String+UInt8.swift in Sources */,
 				B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
+				B7BE95322A8E7A720065A58B /* ProjectHierarchyView.swift in Sources */,
 				B7A968682A4E176700C7B9BB /* SyntaxTextView+NonMacOS.swift in Sources */,
 				B75286012A848DAE007DCFF9 /* Archive+MemoryFile.swift in Sources */,
 				B7191F2829F9F09A00078D8D /* InnerTextView.swift in Sources */,
@@ -1423,6 +1453,7 @@
 				B7544E302A191BCE00961F4C /* AudioTranscriptionQuery.swift in Sources */,
 				B7A5E4532A54CBA800D28D4C /* UIView+Screenshot.swift in Sources */,
 				B7191F2C29F9F09A00078D8D /* Paragraphs.swift in Sources */,
+				B7A2B4742A8D1E4B00E0D033 /* LogicSageTogether.swift in Sources */,
 				B773B7242A47FF7200C1609D /* LogicSageSceneDelegate.swift in Sources */,
 				B7E098B12A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift in Sources */,
 				B75286022A848DAE007DCFF9 /* Archive+BackingConfiguration.swift in Sources */,
@@ -1461,21 +1492,25 @@
 				B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */,
 				B75286082A848DAE007DCFF9 /* Archive+WritingDeprecated.swift in Sources */,
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
-				B7BD8E252A8921C0007E5ACD /* Orbit.swift in Sources */,
+				B7BD8E252A8921C0007E5ACD /* SphereScreenSceneView.swift in Sources */,
 				B7BD8E1E2A87ECA2007E5ACD /* Backend.swift in Sources */,
 				B7347CD02A5CBEAA0055D8F7 /* AudioView.swift in Sources */,
 				B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */,
 				B710CF042A7F5E65008C06CC /* Tiktoken.swift in Sources */,
+				B7BE95342A8E7B2B0065A58B /* Project.swift in Sources */,
 				B7BD8E202A8813A1007E5ACD /* Entity+Move.swift in Sources */,
 				B74A2CD029F7F6990051DB52 /* Compression.swift in Sources */,
 				B70A00FA2A20E0CA00ADEF5A /* ProjectView.swift in Sources */,
+				B7BE95362A8E7C050065A58B /* MovableDivider.swift in Sources */,
 				B710CF052A7F5E65008C06CC /* Ranks.swift in Sources */,
 				B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */,
 				B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */,
+				B7BE953E2A8EC38A0065A58B /* DragRotationModifier.swift in Sources */,
 				B7BD8E272A8922E2007E5ACD /* SphereScreenView.swift in Sources */,
+				B7BE953C2A8EBDAC0065A58B /* GlobeControls.swift in Sources */,
 				B7544E322A191BCE00961F4C /* ModelsResult.swift in Sources */,
 				B75286112A848DAE007DCFF9 /* Archive+Progress.swift in Sources */,
 				B7AED3712A0AC0420013E8D9 /* SageMultiViewModel.swift in Sources */,
@@ -1489,6 +1524,7 @@
 				B74A2CCA29F7F6990051DB52 /* FoundationHTTPHandler.swift in Sources */,
 				B78EDFF82A50B854007A8136 /* GPT.swift in Sources */,
 				B71C62DF29FCAD3E004296E4 /* Screamer.swift in Sources */,
+				B7BE95382A8EBCE80065A58B /* PlacementGestureModifier.swift in Sources */,
 				B75286092A848DAE007DCFF9 /* Entry+Serialization.swift in Sources */,
 				B7544E3A2A191BCE00961F4C /* ChatResult.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,

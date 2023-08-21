@@ -19,8 +19,14 @@ struct ToggleImmersion: View {
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
     
     var body: some View {
-        
-        Toggle("\(showImmersiveSpace ? "Hide" : "Show") ImmersiveSpace", isOn: $showImmersiveSpace)
+
+        Toggle( isOn: $showImmersiveSpace) {
+            VStack {
+                Image(systemName: "circle.dashed")
+                Text("SphereScreen")
+                    .font(.caption)
+            }
+        }
             .toggleStyle(.button)
             .onChange(of: showImmersiveSpace) { _, newValue in
                 Task {
@@ -32,7 +38,8 @@ struct ToggleImmersion: View {
                     appModel.isShowingImmersiveScene = newValue
                 }
             }
-        
+
+
     }
 }
 #endif

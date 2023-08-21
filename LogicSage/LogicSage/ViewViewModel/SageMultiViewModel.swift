@@ -27,11 +27,6 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var frame: CGRect
     @Published var conversation: Conversation?
 
-    #if !os(tvOS)
-    @State var webViewStore: WebViewStore = WebViewStore()
-    #endif
-    @State var navigationInProgress = false
-
     static func convoText(_ settingsViewModel: SettingsViewModel, _ conversation: Conversation?, windowInfo: WindowInfo) -> String {
         if windowInfo.convoId == Conversation.ID(-1) {
             return settingsViewModel.consoleManagerText

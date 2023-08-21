@@ -44,7 +44,8 @@ struct ChatView: View {
     @State private var choseBuiltInPrompt: String = ""
     @FocusState var inFocus
     @State var tokenCount: Int = 0
-    
+    @Binding var focused: Bool
+
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -136,7 +137,10 @@ struct ChatView: View {
 #endif
                         .lineLimit(20, reservesSpace: true)
                         .focused($inFocus)
-                    
+                        .onChange(of: inFocus) { newValue in
+                            focused = inFocus
+                        }
+
                     Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
                         .opacity(chatText.isEmpty && !inFocus ? 1.0 : 0.0 )
                         .padding(.leading,4)
@@ -146,6 +150,7 @@ struct ChatView: View {
                     
                     if keyboardHeight != 0 && inFocus {
                         AnimatedArrow()
+                            .frame(width: 10, height: 10)
                             .zIndex(994)
                     }
                 }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
@@ -184,6 +189,8 @@ struct ChatView: View {
                     }
                     editingSystemPrompt = false
                 }
+                .foregroundColor(SettingsViewModel.shared.buttonColor)
+
                 .padding(.trailing,8)
 #if !os(macOS)
                 .hoverEffect(.automatic)
@@ -194,6 +201,8 @@ struct ChatView: View {
                 resizableButtonImage(systemName:
                                         "paperplane.fill",
                                      size: size)
+                .foregroundColor(SettingsViewModel.shared.buttonColor)
+
                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                 .background(Color.clear)
 

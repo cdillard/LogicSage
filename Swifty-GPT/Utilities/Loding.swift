@@ -28,6 +28,6 @@ func stopRandomSpinner() {
     spinner.stop()
 
     if asciAnimations() { animator.stop() }
-    multiPrinter("SWIFTSAGE:")
+    multiPrinter("LogicSage:")
 }
 

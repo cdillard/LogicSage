@@ -39,9 +39,9 @@ struct InstructionsPopup: View {
                         .padding(geometry.size.width * 0.01)
 #if !os(xrOS)
 
-                    Text("scroll down 📜⬇️4 more")
-                        .font(.title2)
-                        .foregroundColor(settingsViewModel.appTextColor)
+//                    Text("scroll down 📜⬇️4 more")
+//                        .font(.title2)
+//                        .foregroundColor(settingsViewModel.appTextColor)
                     #endif
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
@@ -180,6 +180,7 @@ struct InstructionsPopup: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .edgesIgnoringSafeArea(.all)
             }
+            .scrollIndicators(.visible)
             .overlay(CheckmarkView(text: "Copied", isVisible: $showCheckmark))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(settingsViewModel.backgroundColor)

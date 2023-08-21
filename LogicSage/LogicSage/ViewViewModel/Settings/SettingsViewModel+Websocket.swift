@@ -63,7 +63,7 @@ extension SettingsViewModel {
 
         }
         catch {
-            logD("fil enot exist or deketed")
+            logD("file not deleted\n")
         }
         do {
             try receivedWorkspaceData.write(to: fileURL)

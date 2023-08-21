@@ -32,7 +32,7 @@ struct ResizableViewModifier: ViewModifier {
                     ResizingHandle(positionLocation: .topTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
-                        .offset(y: -keyboardHeight)
+                        .offset(y: window.windowType == .chat ?  -keyboardHeight : 0)
                 }
                 
             )
@@ -171,7 +171,8 @@ struct ResizingHandle: View {
     private func updateFrame(with translation: CGSize, _ screenWidth: CGFloat, _ screenHeight: CGFloat, _  safeAreaInsets: EdgeInsets) {
         let newWidth: CGFloat
         let newHeight: CGFloat
-        let minSize: CGFloat = 199.666
+        let minSize: CGFloat = 269.666
+        let minSizeHeight: CGFloat = 299.666
 
 
         // Smoothly interpolate towards the new size
@@ -183,7 +184,7 @@ struct ResizingHandle: View {
             let lerpFactor: CGFloat = 0.09
 
             newWidth = translation.width < 0 ? max(minSize, frame.width + abs(translation.width)) : max(minSize, frame.width - translation.width)
-            newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
+            newHeight = translation.height < 0 ? max(minSizeHeight, frame.height + abs(translation.height)) : max(minSizeHeight, frame.height - translation.height)
 
             newOffsetX = (newWidth - frame.size.width) * lerpFactor
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
@@ -192,7 +193,7 @@ struct ResizingHandle: View {
             let lerpFactor: CGFloat = 0.02222
 
             newWidth = translation.width < 0 ? max(minSize, frame.width - abs(translation.width)) : max(minSize, frame.width + translation.width)
-            newHeight = translation.height < 0 ? max(minSize, frame.height + abs(translation.height)) : max(minSize, frame.height - translation.height)
+            newHeight = translation.height < 0 ? max(minSizeHeight, frame.height + abs(translation.height)) : max(minSizeHeight, frame.height - translation.height)
 
             newOffsetX = (newWidth - frame.size.width) * lerpFactor
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
@@ -201,7 +202,7 @@ struct ResizingHandle: View {
             let lerpFactor: CGFloat = 0.0222
 
             newWidth = max(minSize, frame.width + translation.width)
-            newHeight = max(minSize, frame.height + translation.height)
+            newHeight = max(minSizeHeight, frame.height + translation.height)
 
             newOffsetX = (newWidth - frame.size.width) * lerpFactor
             newOffsetY = (newHeight - frame.size.height) * lerpFactor
@@ -227,7 +228,7 @@ struct ResizingHandle: View {
 
             }
         }
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.045666 {
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.075666 {
         }
         else {
             resizeOffset.height += newOffsetY

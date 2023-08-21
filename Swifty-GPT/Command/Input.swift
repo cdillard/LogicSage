@@ -232,7 +232,7 @@ func handleUserInput() {
 
 func callCommandCommand(_ command: String, _ arg: String, recipient: String) {
     DispatchQueue.global(qos: .userInitiated).async {
-        multiPrinter("SWIFTSAGE: \(command)")
+        multiPrinter("LogicSage: \(command)")
 
         if command == "Hello" { return }
 

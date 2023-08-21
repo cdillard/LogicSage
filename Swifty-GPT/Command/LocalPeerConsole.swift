@@ -21,9 +21,13 @@ class LocalPeerConsole: NSObject {
     let workspaceStartSentinel = "START_OF_WORKSPACE_DATA"
     let workspaceEndSentinel   = "END_OF_WORKSPACE_DATA"
 
+    let projectStartSentinel = "START_OF_PROJECT_DATA"
+    let projectEndSentinel   = "END_OF_PROJECT_DATA"
+
     var isSendingSimulatorData = false
     var isSendingImageData = false
     var isSendingWorkspaceData = false
+    var isSendingProjectData = false
 
 // SEND TEXT OVER WEBSOCKET ZONE ***************************************
     func sendLog(to recipient: String, text: String) {
@@ -57,6 +61,7 @@ class LocalPeerConsole: NSObject {
         guard !isSendingImageData else { return multiPrinter("busy can't image ")}
         guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
         guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
+        guard !isSendingProjectData else { return multiPrinter("busy can't project ") }
 
         guard let data = imageData else {
             multiPrinter("failed to get img data")
@@ -93,6 +98,7 @@ class LocalPeerConsole: NSObject {
         guard !isSendingImageData else { return multiPrinter("busy can't image ")}
         guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
         guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
+        guard !isSendingProjectData else { return multiPrinter("busy can't project ") }
 
         guard let data = simData else {
             multiPrinter("failed to get sim data")
@@ -117,6 +123,7 @@ class LocalPeerConsole: NSObject {
         guard !isSendingImageData else { return multiPrinter("busy can't image ")}
         guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
         guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
+        guard !isSendingProjectData else { return multiPrinter("busy can't project ") }
 
         guard let data = workspaceData else {
             multiPrinter("failed to get workspace data")
@@ -136,6 +143,34 @@ class LocalPeerConsole: NSObject {
         let endMessage = workspaceEndSentinel.data(using: .utf8)!
         webSocketClient.websocket.write(data: endMessage)
         isSendingWorkspaceData = false
+
+        
+    }
+
+    func sendProjectData(_ projectData: Data?) {
+        guard !isSendingImageData else { return multiPrinter("busy can't image ")}
+        guard !isSendingSimulatorData else { return multiPrinter("busy can't simulator ") }
+        guard !isSendingWorkspaceData else { return multiPrinter("busy can't workspace ") }
+        guard !isSendingProjectData else { return multiPrinter("busy can't project ") }
+
+        guard let data = projectData else {
+            multiPrinter("failed to get project data")
+            return
+        }
+        isSendingProjectData = true
+
+        let startMessage = projectStartSentinel.data(using: .utf8)!
+        webSocketClient.websocket.write(data: startMessage)
+
+        var offset = 0
+        while offset < data.count {
+            let chunk = data.subdata(in: offset..<min(offset + chunkSize, data.count))
+            webSocketClient.websocket.write(data: chunk)
+            offset += chunkSize
+        }
+        let endMessage = projectEndSentinel.data(using: .utf8)!
+        webSocketClient.websocket.write(data: endMessage)
+        isSendingProjectData = false
     }
 // END SEND DATA OVER WEBSOCKET ZONE ***************************************
 }

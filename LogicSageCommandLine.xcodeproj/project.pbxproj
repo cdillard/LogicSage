@@ -46,6 +46,7 @@
 		B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620C29EFB61C0065DF88 /* StringSLug.swift */; };
 		B74E620F29F03EB90065DF88 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74E620E29F03EB90065DF88 /* Config.swift */; };
 		B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7538D1F29F41FA000243E9B /* AVVoice.swift */; };
+		B75709C42A8DE58F003E5894 /* XcodeProj in Frameworks */ = {isa = PBXBuildFile; productRef = B75709C32A8DE58F003E5894 /* XcodeProj */; };
 		B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4129EA7EF3003BA454 /* SpinnerThread.swift */; };
 		B75AFC4429EA8140003BA454 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75AFC4329EA8140003BA454 /* Input.swift */; };
 		B762E69F29FAB8AE00AC5150 /* DebatePrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B762E69E29FAB8AE00AC5150 /* DebatePrompts.swift */; };
@@ -64,6 +65,8 @@
 		B78C6C2729F3129300AA568A /* PNG in Frameworks */ = {isa = PBXBuildFile; productRef = B78C6C2629F3129300AA568A /* PNG */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
+		B7BE95402A8ED0BA0065A58B /* XcodeProjHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */; };
+		B7BE95422A8ED0DB0065A58B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95412A8ED0DB0065A58B /* Project.swift */; };
 		B7CA77A229F6A84500A9DBE6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = B7CA77A129F6A84500A9DBE6 /* Starscream */; };
 		B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B129F184F3006BFF8D /* WrapSoup.swift */; };
 		B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CB60B329F1884F006BFF8D /* Linker.swift */; };
@@ -164,7 +167,7 @@
 		B70CF18329F0985E00993AAF /* ApplescriptCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplescriptCommand.swift; sourceTree = "<group>"; };
 		B70FD6B629EBB3290099A0D1 /* SWWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWWrapper.swift; sourceTree = "<group>"; };
 		B713384D29ED80F000020CC9 /* app_screenshot.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = app_screenshot.applescript; sourceTree = "<group>"; };
-		B7139CDC29E147910049ADE1 /* Swifty-GPT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swifty-GPT"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7139CDC29E147910049ADE1 /* LogicSageCommandLine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LogicSageCommandLine; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7139CDF29E147910049ADE1 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swifty-GPT.entitlements"; sourceTree = "<group>"; };
 		B719B22829ECB8AF003358C2 /* AEyes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEyes.swift; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
 		B7BACF6029E25D03006B065B /* add_file_to_project.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = add_file_to_project.rb; sourceTree = "<group>"; };
 		B7BACF6129E25F4B006B065B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeProjHandler.swift; sourceTree = "<group>"; };
+		B7BE95412A8ED0DB0065A58B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		B7C446312A2A34E400B03FF5 /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = configure.swift; path = SwiftSageServer/Sources/App/configure.swift; sourceTree = "<group>"; };
 		B7CB60B129F184F3006BFF8D /* WrapSoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapSoup.swift; sourceTree = "<group>"; };
 		B7CB60B329F1884F006BFF8D /* Linker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
@@ -291,6 +296,7 @@
 				B768CE9F29EB3F8500B8A9E4 /* AudioVideoBridging.framework in Frameworks */,
 				B719B22C29ECBA24003358C2 /* SwiftyTesseract in Frameworks */,
 				B70FD6BA29EBB44D0099A0D1 /* AudioKit in Frameworks */,
+				B75709C42A8DE58F003E5894 /* XcodeProj in Frameworks */,
 				B768CE9E29EB3F8500B8A9E4 /* AudioToolbox.framework in Frameworks */,
 				B74A169429F1FA54006A0605 /* SourceKittenFramework in Frameworks */,
 				B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */,
@@ -316,7 +322,7 @@
 		B7139CDD29E147910049ADE1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B7139CDC29E147910049ADE1 /* Swifty-GPT */,
+				B7139CDC29E147910049ADE1 /* LogicSageCommandLine */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -380,6 +386,8 @@
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 				B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */,
+				B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */,
+				B7BE95412A8ED0DB0065A58B /* Project.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -614,9 +622,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B7139CDB29E147910049ADE1 /* Swifty-GPT */ = {
+		B7139CDB29E147910049ADE1 /* LogicSageCommandLine */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B7139CE329E147910049ADE1 /* Build configuration list for PBXNativeTarget "Swifty-GPT" */;
+			buildConfigurationList = B7139CE329E147910049ADE1 /* Build configuration list for PBXNativeTarget "LogicSageCommandLine" */;
 			buildPhases = (
 				B7139CD829E147910049ADE1 /* Sources */,
 				B7139CD929E147910049ADE1 /* Frameworks */,
@@ -628,7 +636,7 @@
 				B7225D7929F3A8AD001FCE33 /* PBXTargetDependency */,
 				B7C3889C29F225740074659D /* PBXTargetDependency */,
 			);
-			name = "Swifty-GPT";
+			name = LogicSageCommandLine;
 			packageProductDependencies = (
 				B70FD6B929EBB44D0099A0D1 /* AudioKit */,
 				B719B22B29ECBA24003358C2 /* SwiftyTesseract */,
@@ -637,9 +645,10 @@
 				B78C6C2629F3129300AA568A /* PNG */,
 				B7CA77A129F6A84500A9DBE6 /* Starscream */,
 				B71EB8792A21510D00D87C6F /* ZIPFoundation */,
+				B75709C32A8DE58F003E5894 /* XcodeProj */,
 			);
 			productName = "Swifty-GPT";
-			productReference = B7139CDC29E147910049ADE1 /* Swifty-GPT */;
+			productReference = B7139CDC29E147910049ADE1 /* LogicSageCommandLine */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -658,7 +667,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B7139CD729E147910049ADE1 /* Build configuration list for PBXProject "Swifty-GPT" */;
+			buildConfigurationList = B7139CD729E147910049ADE1 /* Build configuration list for PBXProject "LogicSageCommandLine" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -675,12 +684,13 @@
 				B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */,
 				B7CA77A029F6A84500A9DBE6 /* XCRemoteSwiftPackageReference "Starscream" */,
 				B71EB8782A21510D00D87C6F /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				B75709C22A8DE58F003E5894 /* XCRemoteSwiftPackageReference "XcodeProj" */,
 			);
 			productRefGroup = B7139CDD29E147910049ADE1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B7139CDB29E147910049ADE1 /* Swifty-GPT */,
+				B7139CDB29E147910049ADE1 /* LogicSageCommandLine */,
 			);
 		};
 /* End PBXProject section */
@@ -745,6 +755,7 @@
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B7E13A542A50B57D00C2B7C0 /* ModerationsResult.swift in Sources */,
 				B737F40529F8153B00E57577 /* Spotify.swift in Sources */,
+				B7BE95402A8ED0BA0065A58B /* XcodeProjHandler.swift in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
 				B7FB0BD029FC17F200421573 /* Reminders.swift in Sources */,
@@ -752,6 +763,7 @@
 				B7E13A412A50B57D00C2B7C0 /* AudioTranscriptionResult.swift in Sources */,
 				B7E13A5D2A50B57D00C2B7C0 /* MultipartFormDataEntry.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
+				B7BE95422A8ED0DB0065A58B /* Project.swift in Sources */,
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B7E13A612A50B57D00C2B7C0 /* JSONRequest.swift in Sources */,
@@ -991,7 +1003,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B7139CD729E147910049ADE1 /* Build configuration list for PBXProject "Swifty-GPT" */ = {
+		B7139CD729E147910049ADE1 /* Build configuration list for PBXProject "LogicSageCommandLine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7139CE129E147910049ADE1 /* Debug */,
@@ -1000,7 +1012,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B7139CE329E147910049ADE1 /* Build configuration list for PBXNativeTarget "Swifty-GPT" */ = {
+		B7139CE329E147910049ADE1 /* Build configuration list for PBXNativeTarget "LogicSageCommandLine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7139CE429E147910049ADE1 /* Debug */,
@@ -1042,6 +1054,14 @@
 			requirement = {
 				branch = main;
 				kind = branch;
+			};
+		};
+		B75709C22A8DE58F003E5894 /* XCRemoteSwiftPackageReference "XcodeProj" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tuist/XcodeProj.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.13.0;
 			};
 		};
 		B78C6C2529F3129300AA568A /* XCRemoteSwiftPackageReference "swift-png" */ = {
@@ -1094,6 +1114,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B74A169229F1FA54006A0605 /* XCRemoteSwiftPackageReference "SourceKitten" */;
 			productName = SourceKittenFramework;
+		};
+		B75709C32A8DE58F003E5894 /* XcodeProj */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B75709C22A8DE58F003E5894 /* XCRemoteSwiftPackageReference "XcodeProj" */;
+			productName = XcodeProj;
 		};
 		B78C6C2629F3129300AA568A /* PNG */ = {
 			isa = XCSwiftPackageProductDependency;

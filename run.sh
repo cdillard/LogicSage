@@ -6,7 +6,7 @@ cd  ~/LogicSage/
 lsof -i :8080 -sTCP:LISTEN | awk 'NR > 1 {print $2}' | xargs kill -15
 
 killall SwiftSageStatusBar
-killall Swifty-GPT
+killall LogicSageCommandLine
 
 ### USE THIS FOR Terminal.app
 cwd=$(pwd)
@@ -33,7 +33,7 @@ osascript -  "$cwd"  <<EOF
     on run argv
         tell application "Terminal"
 
-            do script( "cd " & quoted form of item 1 of argv & " ; xcodebuild -derivedDataPath dd -workspace Swifty-GPT.xcworkspace -scheme Swifty-GPT -configuration Debug clean build ; dd/Build/Products/Debug/Swifty-GPT")
+            do script( "cd " & quoted form of item 1 of argv & " ; xcodebuild -derivedDataPath dd -workspace LogicSageCommandLine.xcworkspace -scheme LogicSageCommandLine -configuration Debug clean build ; dd/Build/Products/Debug/LogicSageCommandLine")
 
         end tell
     end run

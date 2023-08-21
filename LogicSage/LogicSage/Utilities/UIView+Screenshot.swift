@@ -20,7 +20,9 @@ func addBorders(image: UIImage) -> UIImage? {
     let borderSize: CGFloat = 135 // border size
 
     let imageSize = image.size
-
+    if imageSize.width == 0 || imageSize.height == 0 {
+        return nil
+    }
     UIGraphicsBeginImageContextWithOptions(CGSize(width: imageSize.width, height: imageSize.height + borderSize * 2), false, image.scale)
 
     let origin = CGPoint(x: 0, y: borderSize)   // where the image starts

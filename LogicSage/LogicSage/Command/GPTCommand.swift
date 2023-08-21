@@ -34,10 +34,6 @@ func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool 
         - The link url command can be used to get more information by accessing a link. Example: "link: https://www.nytimes.com" would result in a message containing the text from the link.
         """
         
-//        let linkTextSegment = """
-//    \n-
-//    """
-        
         if config.enableGoogle && useGoogle {
             
             config.manualPromptString += """

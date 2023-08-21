@@ -60,15 +60,15 @@ struct LogicSageApp: App {
 #if !os(macOS)
 #if !os(xrOS)
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
-                    logD("didFinishLaunchingNotification")
+                    //logD("didFinishLaunchingNotification")
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                    logD("applicationWillEnterForeground")
+                   // logD("applicationWillEnterForeground")
 
                     screamer.discoReconnect()
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                    logD("didEnterBackgroundNotification")
+                   // logD("didEnterBackgroundNotification")
                 }
 #endif
 #endif
@@ -78,31 +78,15 @@ struct LogicSageApp: App {
         }
 
 #if os(xrOS)
-                .windowStyle(.plain)
+        .windowStyle(.plain)
 #endif
 #if os(xrOS)
 
-//        ImmersiveSpace(id: "ImmersiveSpace") {
-//            ImmersiveView(immersionMode: .immersive)
-//                .environmentObject(appModel)
-//
-//        }
-//        .immersionStyle(selection: $immersionState, in: .mixed)
-
-
         ImmersiveSpace(id: "ImmersiveSpace") {
-            Orbit()
+            SphereScreenSceneView()
                 .environmentObject(appModel)
         }
         .immersionStyle(selection: $immersionState, in: .mixed)
-
-//        WindowGroup(id: "ImmersiveSpaceVolume") {
-//            ImmersiveView(immersionMode: .volumetric)
-//                .environmentObject(appModel)
-//        }
-//        .windowStyle(.volumetric)
-//        .defaultSize(width: 2, height: 2.6, depth: 2.6, in: .meters)
-
 
         WindowGroup(id: "LogoVolume") {
             ImmersiveLogoView()
@@ -113,5 +97,3 @@ struct LogicSageApp: App {
 #endif
     }
 }
-
-

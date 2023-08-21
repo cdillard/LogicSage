@@ -58,7 +58,8 @@ class ServerWebSocketClient: WebSocketDelegate {
             }
 // END HANDLE MESSAGES *****************************************************************
         case .binary(let data):
-            print("Received binary data: \(data)")
+            break
+           // print("Received binary data: \(data)")
         case .pong( _):
             break
         case .ping( _):

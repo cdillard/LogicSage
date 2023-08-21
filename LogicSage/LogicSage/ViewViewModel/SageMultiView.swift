@@ -71,6 +71,8 @@ struct SageMultiView: View {
     @State var isLockToBottomEditor = false
     @State var currentURL = URL(string: "https:/www.google.com/")!
 
+    @State var focused = false
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -83,14 +85,22 @@ struct SageMultiView: View {
                         case .editor:
                             editorArea()
                         case .chat:
-                            ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset)
+                            ChatView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, isEditing: $isEditing, windowManager: windowManager, isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, frame: $frame, position: $position, resizeOffset: $resizeOffset, focused: $focused)
                                 .simultaneousGesture(TapGesture().onEnded { value in
                                     self.windowManager.bringWindowToFront(window: self.window)
                                 })
                         case .project:
-                            ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel)
+                            ProjectView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel,
+                                        project:
+                                            Project(name: "LogicalSage", organizationName: "CD", identifier: "com.chris.blag", projectTemplate: "template", location: "location",
+                                                    fileSystemItems: config.projectArray)
+                                        , openFileNames: [""]
+                            )
+
+
+
                         case .webView:
-                            webViewArea()
+                            ZStack { }
                         case .simulator:
                             ZStack {
 #if !os(macOS)
@@ -112,6 +122,8 @@ struct SageMultiView: View {
                                     Text("No root")
                                 }
                             }
+                            .clipShape(RoundedBottomCorners(cornerRadius: 16))
+
 #if !os(macOS)
                             .navigationViewStyle(StackNavigationViewStyle())
 #endif
@@ -154,20 +166,24 @@ struct SageMultiView: View {
 
 
                 }
+                
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                Capsule()
-                    .fill(.white.opacity(0.4))
-                    .frame(width: 200, height: 14)
+
+                ZStack {
+                    Capsule()
+                        .fill(.white.opacity(0.4))
+                        .frame(width: 180, height: 7.5, alignment: .topLeading)
+                    Capsule()
+                        .fill(.white.opacity(0.0))
+                        .frame(width: 200, height: 15, alignment: .topLeading)
+                }
 #if !os(macOS)
                     .hoverEffect(.automatic)
 #endif
-                    .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
+                    .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat && focused ? keyboardHeight : 0))
 #if !os(tvOS)
-
-
                     .if(!isDragDisabled) { view in
-
                         view.gesture(
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
@@ -209,13 +225,10 @@ struct SageMultiView: View {
 #endif
             }
             curvedEdgeArcZone(size: geometry.size)
-
         }
-
     }
     func editorArea() -> some View {
 #if !os(tvOS)
-
         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottomEditor, customization:
                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                     { srcCodeTextEditor in
@@ -242,69 +255,6 @@ struct SageMultiView: View {
 #else
         VStack { }
 #endif
-    }
-    func webViewArea() -> some View {
-        VStack(spacing:0) {
-            HStack(alignment: VerticalAlignment.firstTextBaseline) {
-                Button(action: {
-                    logD("on Back tap")
-#if !os(tvOS)
-                    goBackward()
-#endif
-                }) {
-                    Image(systemName: "backward.circle.fill")
-                        .font(.title)
-                        .minimumScaleFactor(0.75)
-#if !os(macOS)
-                        .hoverEffect(.lift)
-#endif
-                }
-                .foregroundColor(settingsViewModel.buttonColor)
-
-                Button(action: {
-                    logD("on FWD tap")
-#if !os(tvOS)
-                    goForward()
-#endif
-                }) {
-                    Image(systemName: "forward.circle.fill")
-                        .font(.title)
-                        .minimumScaleFactor(0.75)
-#if !os(macOS)
-                        .hoverEffect(.lift)
-#endif
-                }
-                .foregroundColor(settingsViewModel.buttonColor)
-
-
-                Button(action: {
-                    logD("on REFRESH tap")
-#if !os(tvOS)
-                    reload()
-#endif
-                }) {
-                    Image(systemName: "arrow.triangle.2.circlepath.circle")
-                        .font(.title)
-                        .minimumScaleFactor(0.75)
-#if !os(macOS)
-                        .hoverEffect(.lift)
-#endif
-                }
-                .foregroundColor(settingsViewModel.buttonColor)
-            }
-            .frame(maxWidth: .infinity)
-
-            .background(settingsViewModel.backgroundColor)
-#if !os(macOS)
-#if !os(tvOS)
-            WebView(url: getURL(), currentURL: $currentURL, webViewStore: sageMultiViewModel.webViewStore, request:URLRequest(url: getURL()) )
-                .simultaneousGesture(TapGesture().onEnded {
-                    self.windowManager.bringWindowToFront(window: self.window)
-                })
-#endif
-#endif
-
-        }
     }
 
     func curvedEdgeArcZone(size: CGSize) -> some View {
@@ -357,6 +307,11 @@ struct SageMultiView: View {
 
         TopBar(isEditing: $isEditing, onClose: {
             windowManager.removeWindow(window: window)
+
+            if windowManager.windowViewModels.count == 0 {
+                settingsViewModel.cullEmptyConvos()
+            }
+
         }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight)
 
         .if(!isDragDisabled) { view in
@@ -405,15 +360,7 @@ struct SageMultiView: View {
 
     }
 #if !os(tvOS)
-    private func goBackward() {
-        sageMultiViewModel.webViewStore.webView.goBack()
-    }
-    private func goForward() {
-        sageMultiViewModel.webViewStore.webView.goForward()
-    }
-    private func reload() {
-        sageMultiViewModel.webViewStore.webView.reload()
-    }
+
     func doSrcCode(newText: String) {
         let theNewtext = String(newText)
         sageMultiViewModel.refreshChanges(newText: theNewtext)
@@ -475,52 +422,52 @@ struct SageMultiView: View {
 #endif
 
 }
-#if !os(tvOS)
-
-class WebViewStore: ObservableObject {
-    @Published var webView: WKWebView = WKWebView()
-}
-#if !os(macOS)
-#if !os(tvOS)
-
-struct WebView: UIViewRepresentable {
-    let url: URL
-    @Binding var currentURL: URL
-
-    @ObservedObject var webViewStore: WebViewStore
-
-    let request: URLRequest
-
-    func makeUIView(context: Context) -> WKWebView {
-        webViewStore.webView.navigationDelegate = context.coordinator
-        return webViewStore.webView
-    }
-
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        if webView.url == nil {
-            webView.load(request)
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, WKNavigationDelegate {
-        var parent: WebView
-        init(_ parent: WebView) {
-            self.parent = parent
-        }
-
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            if let url = navigationAction.request.url {
-                parent.currentURL = url // Intercept URL
-            }
-            decisionHandler(.allow)
-        }
-    }
-}
-
-#endif
-#endif
-#endif
+//#if !os(tvOS)
+//
+//class WebViewStore: ObservableObject {
+//    @Published var webView: WKWebView = WKWebView()
+//}
+//#if !os(macOS)
+//#if !os(tvOS)
+//
+//struct WebView: UIViewRepresentable {
+//    let url: URL
+//    @Binding var currentURL: URL
+//
+//    @ObservedObject var webViewStore: WebViewStore
+//
+//    let request: URLRequest
+//
+//    func makeUIView(context: Context) -> WKWebView {
+//        webViewStore.webView.navigationDelegate = context.coordinator
+//        return webViewStore.webView
+//    }
+//
+//    func updateUIView(_ webView: WKWebView, context: Context) {
+//        if webView.url == nil {
+//            webView.load(request)
+//        }
+//    }
+//
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator(self)
+//    }
+//
+//    class Coordinator: NSObject, WKNavigationDelegate {
+//        var parent: WebView
+//        init(_ parent: WebView) {
+//            self.parent = parent
+//        }
+//
+//        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//            if let url = navigationAction.request.url {
+//                parent.currentURL = url // Intercept URL
+//            }
+//            decisionHandler(.allow)
+//        }
+//    }
+//}
+//
+//#endif
+//#endif
+//#endif

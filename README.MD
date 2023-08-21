@@ -104,6 +104,7 @@ Created by: Chris Dillard (chrisbdillard@gmail.com)
 - [KeyboardAvoidanceSwiftUI](https://github.com/V8tr/KeyboardAvoidanceSwiftUI)
 - [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
 - [Tikitoken](https://github.com/aespinilla/Tiktoken)
+- [XcodeProj](https://github.com/tuist/XcodeProj)
 ---
 Thanks to Mike Bruin for keeping the Plist safe.
 

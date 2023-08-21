@@ -72,49 +72,6 @@ struct ContentView: View {
                     ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Logo", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
                     ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
 
-#if targetEnvironment(macCatalyst)
-
-                    Button(action: {
-                        if !appModel.isServerActive {
-                            DispatchQueue.main.async {
-                                // Execute your action here
-
-                                Backend.doBackend(path: "~/LogicSage/")
-                                //appModel.isServerActive = true
-                            }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                print("killall swifty-gpt")
-                            }
-                        }
-                    }) {
-                        VStack(spacing: 0)  {
-
-                            resizableButtonImage(systemName:
-                                                    "server.rack",
-                                                 size: geometry.size)
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            Text( "Start server" )
-                            //  Text("\(appModel.isServerActive ? "Stop" : "Start") server" )
-                                .font(.caption)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.01)
-
-                                .foregroundColor(settingsViewModel.appTextColor)
-                        }
-#if !os(xrOS)
-
-                        .background(settingsViewModel.buttonColor)
-#endif
-                    }
-                    .buttonStyle(MyButtonStyle())
-
-#endif
-
                     // Add new App window
 
 #if os(macOS)
@@ -139,73 +96,40 @@ struct ContentView: View {
                     }
 #endif
 
-                    Button(action: {
-                        DispatchQueue.main.async {
-                            // Execute your action here
-                            screamer.sendCommand(command: "st")
-                            isInputViewShown = false
-                        }
-                    }) {
-                        VStack(spacing: 0)  {
-
-                            resizableButtonImage(systemName:
-                                                    "stop.circle.fill",
-                                                 size: geometry.size)
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            Text("Stop voice" )
-                                .font(.caption)
+                    if settingsViewModel.voiceOutputEnabled {
+                        Button(action: {
+                            DispatchQueue.main.async {
+                                // Execute your action here
+                                screamer.sendCommand(command: "st")
+                                isInputViewShown = false
+                            }
+                        }) {
+                            VStack(spacing: 0)  {
+                                
+                                resizableButtonImage(systemName:
+                                                        "stop.circle.fill",
+                                                     size: geometry.size)
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.01)
-
                                 .foregroundColor(settingsViewModel.appTextColor)
-                        }
+                                
+                                Text("Stop voice" )
+                                    .font(.caption)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
+                                
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                            }
 #if !os(xrOS)
-
-                        .background(settingsViewModel.buttonColor)
+                            
+                            .background(settingsViewModel.buttonColor)
+#endif
+                        }
+                        .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                        .hoverEffect(.automatic)
 #endif
                     }
-                    .buttonStyle(MyButtonStyle())
-#if !os(macOS)
-                    .hoverEffect(.automatic)
-#endif
-#if !os(tvOS)
-                    Button(action: {
-                        withAnimation {
-                            logD("open Webview")
-
-                            windowManager.addWindow(windowType: .webView, frame: defSize, zIndex: 0, url: settingsViewModel.defaultURL)
-
-                            tabSelection = 1
-                        }
-                    }) {
-                        VStack(spacing: 0)  {
-                            resizableButtonImage(systemName:
-                                                    "network",
-                                                 size: geometry.size)
-                            .cornerRadius(8)
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            Text("Webview" )
-                                .font(.caption)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.01)
-
-                                .foregroundColor(settingsViewModel.appTextColor)
-                        }
-#if !os(xrOS)
-                        .background(settingsViewModel.buttonColor)
-#endif
-
-                    }
-                    .buttonStyle(MyButtonStyle())
-#if !os(macOS)
-                    .hoverEffect(.automatic)
-#endif
-#endif
-
 
                     Button(action: {
                         DispatchQueue.main.async {
@@ -355,7 +279,7 @@ struct ContentView: View {
                 if dragCursorPoint != .zero {
                     BezierShape(bezierPath: Beziers.createTopLeft())
                         .fill(Color.white.opacity(0.5))
-                        .offset(x: dragCursorPoint.x, y: dragCursorPoint.y)
+                        .offset(x: min(max(dragCursorPoint.x, 0), size.width) , y: min(max(dragCursorPoint.y, 0), size.height))
                         .allowsTightening(false)
                 }
 #endif
@@ -437,7 +361,7 @@ struct ContentView: View {
         }
         .frame(minWidth: size.width, maxWidth: size.width , minHeight: 0, maxHeight: .infinity)
         .tabItem {
-            Label("Add", systemImage: "plus.rectangle")
+            Label("Files/Git", systemImage: "plus.rectangle")
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(3)

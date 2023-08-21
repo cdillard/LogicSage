@@ -11,7 +11,8 @@ class AppModel: ObservableObject {
 #if os(xrOS)
     var screen: SphereScreenEntity.Configuration = .screenDefault
 #endif
-
+    @Published var isTranslating: Bool = true
+    @Published var isRotating: Bool = false
 
     @Published var isShowingImmersiveWindow: Bool = false
     @Published var isShowingImmersiveScene: Bool = false

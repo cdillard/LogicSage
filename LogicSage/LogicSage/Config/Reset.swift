@@ -42,7 +42,9 @@ var config = Config(
     // EXPERIMENTAL: YE BEEN WARNED!!!!!!!!!!!!
     enableGoogle: true,
     enableLink: true,
-    loadMode: LoadMode.dots
+    loadMode: LoadMode.dots,
+    projectArray: [FileSystemItem]()
+
 )
 
 // Configurable settings for AI.
@@ -122,6 +124,8 @@ struct Config {
 
     var loadMode: LoadMode
 
+    var projectArray: [FileSystemItem]
+
 }
 func resetCommand(input: String) {
 
@@ -154,5 +158,8 @@ func resetCommandWithConfig(config: inout Config) {
     config.promptMode = .normal
 
     config.loadMode = LoadMode.dots
+
+    config.projectArray = [FileSystemItem]()
+
     logD("🔁🔄♻️ Reset.")
 }

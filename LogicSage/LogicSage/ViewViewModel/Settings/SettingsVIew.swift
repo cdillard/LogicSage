@@ -190,6 +190,8 @@ struct SettingsView: View {
                 UIScrollView.appearance().bounces = false
 #endif
             }
+            .scrollIndicators(.visible)
+
             .id(self.scrollViewID)
         }
     }
@@ -497,6 +499,7 @@ struct SettingsView: View {
                     //                    }
 
                 }
+                .padding(.top,30)
                 .padding(.leading, 8)
                 .padding(.trailing, 8)
             }

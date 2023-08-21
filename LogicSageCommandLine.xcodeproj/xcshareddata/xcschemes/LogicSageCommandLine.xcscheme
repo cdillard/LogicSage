@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B7139CDB29E147910049ADE1"
-               BuildableName = "Swifty-GPT"
-               BlueprintName = "Swifty-GPT"
-               ReferencedContainer = "container:Swifty-GPT.xcodeproj">
+               BuildableName = "LogicSageCommandLine"
+               BlueprintName = "LogicSageCommandLine"
+               ReferencedContainer = "container:LogicSageCommandLine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,9 +48,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B7139CDB29E147910049ADE1"
-            BuildableName = "Swifty-GPT"
-            BlueprintName = "Swifty-GPT"
-            ReferencedContainer = "container:Swifty-GPT.xcodeproj">
+            BuildableName = "LogicSageCommandLine"
+            BlueprintName = "LogicSageCommandLine"
+            ReferencedContainer = "container:LogicSageCommandLine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B7139CDB29E147910049ADE1"
-            BuildableName = "Swifty-GPT"
-            BlueprintName = "Swifty-GPT"
-            ReferencedContainer = "container:Swifty-GPT.xcodeproj">
+            BuildableName = "LogicSageCommandLine"
+            BlueprintName = "LogicSageCommandLine"
+            ReferencedContainer = "container:LogicSageCommandLine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

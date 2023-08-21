@@ -25,6 +25,7 @@ struct SphereScreenView: View {
             )
             content.add(screenEntity)
 
+
             // Store for later updates.
             self.screenEntity = screenEntity
 
