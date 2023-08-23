@@ -307,3 +307,27 @@ func runIt(name: String, completion: @escaping (Bool, [String]) -> Void) {
         }
     }
 }
+
+
+func testIt(name: String, completion: @escaping (Bool, [String]) -> Void) {
+    multiPrinter("Testing project...")
+    //textToSpeech(text: "Building project \(projectName)...")
+
+    startRandomSpinner()
+    executeXcodeCommand(.testProject(name: name)) { success, errors in
+        stopRandomSpinner()
+
+        downloadCommand(input: "")
+
+        if success {
+            multiPrinter("Run successful.")
+
+            completion(true, errors)
+        }
+        else {
+            multiPrinter("Run failed.")
+
+            completion(false, errors)
+        }
+    }
+}

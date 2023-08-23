@@ -28,6 +28,12 @@ class WindowManager: ObservableObject {
         bringWindowToFront(window: newWindow)
     }
     func removeWindow(window: WindowInfo) {
+
+        if window.windowType == .simulator {
+            SettingsViewModel.shared.actualReceivedSimulatorFrame = nil
+            SettingsViewModel.shared.receivedSimulatorFrameData = nil
+
+        }
         if let index = windows.firstIndex(of: window) {
             windows.remove(at: index)
         }

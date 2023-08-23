@@ -63,6 +63,8 @@
 		B775BF7929EB7A81007FA7AE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775BF7829EB78B0007FA7AE /* Command.swift */; };
 		B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */; };
 		B78C6C2729F3129300AA568A /* PNG in Frameworks */ = {isa = PBXBuildFile; productRef = B78C6C2629F3129300AA568A /* PNG */; };
+		B78F3AB22A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F3AB12A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift */; };
+		B78F3AB42A9463C30044B4A6 /* XcodeCommand+Xcrun.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F3AB32A9463C30044B4A6 /* XcodeCommand+Xcrun.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7BE95402A8ED0BA0065A58B /* XcodeProjHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */; };
@@ -211,6 +213,8 @@
 		B774605B29FBF12F00E7C46B /* StarTrekSimuilator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarTrekSimuilator.swift; sourceTree = "<group>"; };
 		B775BF7829EB78B0007FA7AE /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		B78AC0F229EE1A9400BC7227 /* PromptLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptLibrary.swift; sourceTree = "<group>"; };
+		B78F3AB12A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommand+XcodeBuild.swift"; sourceTree = "<group>"; };
+		B78F3AB32A9463C30044B4A6 /* XcodeCommand+Xcrun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommand+Xcrun.swift"; sourceTree = "<group>"; };
 		B791552C29EDBB0300DE34FC /* Speak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = createAppWithLibary_output.txt; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 				B71C62F12A00A47F004296E4 /* Multiprinter.swift */,
 				B71C62EF2A0063A4004296E4 /* Reset.swift */,
 				B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */,
+				B78F3AB12A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift */,
+				B78F3AB32A9463C30044B4A6 /* XcodeCommand+Xcrun.swift */,
 				B7E15E6D29E6F8920056A325 /* Xcodegen.swift */,
 				B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */,
 				B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */,
@@ -762,6 +768,7 @@
 				B768CE9829EB3EB300B8A9E4 /* AudioProcessor.swift in Sources */,
 				B7E13A412A50B57D00C2B7C0 /* AudioTranscriptionResult.swift in Sources */,
 				B7E13A5D2A50B57D00C2B7C0 /* MultipartFormDataEntry.swift in Sources */,
+				B78F3AB42A9463C30044B4A6 /* XcodeCommand+Xcrun.swift in Sources */,
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B7BE95422A8ED0DB0065A58B /* Project.swift in Sources */,
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
@@ -788,6 +795,7 @@
 				B7E13A422A50B57D00C2B7C0 /* ChatStreamResult.swift in Sources */,
 				B71EB8772A213F5400D87C6F /* WorkspaceCommands.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
+				B78F3AB22A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift in Sources */,
 				B774605A29FBE2FA00E7C46B /* Stocks.swift in Sources */,
 				B74486DE29E79D7D002D1D5A /* Prompt.swift in Sources */,
 				B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */,

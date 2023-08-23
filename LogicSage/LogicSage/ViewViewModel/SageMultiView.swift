@@ -156,9 +156,9 @@ struct SageMultiView: View {
                         Spacer()
                     }
 #if !os(tvOS)
-                    .onChange(of: viewSize) { newViewSize in
-                        recalculateWindowSize(size: newViewSize.size)
-                    }
+//                    .onChange(of: viewSize) { newViewSize in
+//                        recalculateWindowSize(size: newViewSize.size)
+//                    }
                     .onChange(of: geometry.size) { size in
                         recalculateWindowSize(size: geometry.size)
                     }
@@ -399,7 +399,7 @@ struct SageMultiView: View {
                 if keyboardHeight == 0 {
                     let hackedHeight = frame.size.height - size.height
                     print("Hacked height == \(hackedHeight)")
-                    position.height = max(60, position.height - hackedHeight)
+                    position.height =  max(size.height/2.2, position.height - hackedHeight)
                     frame.size.height = size.height
                 }
             }

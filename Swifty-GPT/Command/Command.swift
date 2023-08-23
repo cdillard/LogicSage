@@ -481,7 +481,21 @@ func runProjectCommand(input: String) {
         }
     }
 }
+func testProjectCommand(input: String) {
+    var projName = input.trimmingCharacters(in: .whitespacesAndNewlines)
+    if projName.isEmpty {
+        projName = config.projectName
+    }
 
+    testIt(name: projName) { success, errrors in
+        if success {
+            multiPrinter("successfully run")
+        }
+        else {
+            multiPrinter("did not run")
+        }
+    }
+}
 func commandsCommand(input: String) {
     multiPrinter(commandsText())
 }

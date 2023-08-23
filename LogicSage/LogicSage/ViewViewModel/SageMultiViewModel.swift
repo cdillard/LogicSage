@@ -25,7 +25,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     @Published var viewSize: CGRect = .zero
     @Published var resizeOffset: CGSize = .zero
     @Published var frame: CGRect
-    @Published var conversation: Conversation?
+    @Published var conversation: Conversation
 
     static func convoText(_ settingsViewModel: SettingsViewModel, _ conversation: Conversation?, windowInfo: WindowInfo) -> String {
         if windowInfo.convoId == Conversation.ID(-1) {
@@ -50,7 +50,7 @@ class SageMultiViewModel: ObservableObject, Identifiable {
         self.originalSourceCode = windowInfo.fileContents
         self.frame = frame
 
-        self.conversation = conversation
+        self.conversation = conversation ?? Conversation(id: "-1")
 
     }
 

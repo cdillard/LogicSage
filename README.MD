@@ -72,9 +72,10 @@ If you don't have Homebrew and Ruby installed, follow these steps:
 ---
 ## Disclaimer
 I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
+The developer of this project does not accept any responsibility or liability for any losses, damages, or other consequences that may occur as a result of using this software. You are solely responsible for any decisions and actions taken based on the information provided by LogicSage.
 
 ## Token Usage Warning
-Please be aware that this tool could generate many requests to the OpenAI API. This can use up a lot of tokens. Consider this aspect before using the tool extensively. OpenAI and the creators of this tool accept no responsibility for any damages or losses that may occur.
+Please note that the use of the GPT language model can be expensive due to its token usage. By utilizing this project, you acknowledge that you are responsible for monitoring and managing your own token usage and the associated costs. It is highly recommended to check your OpenAI API usage regularly and set up any necessary limits or alerts to prevent unexpected charges.
 
 ---
 

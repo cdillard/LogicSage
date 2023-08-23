@@ -16,19 +16,19 @@ public class SettingsViewModel: ObservableObject {
     public static let shared = SettingsViewModel()
 
     //preload webkit
-//#if !os(tvOS)
-//#if !targetEnvironment(macCatalyst)
-//
-//    var _preLoadWebViewStore: WebViewStore?// = WebViewStore()
-//#endif
-//#endif
+    //#if !os(tvOS)
+    //#if !targetEnvironment(macCatalyst)
+    //
+    //    var _preLoadWebViewStore: WebViewStore?// = WebViewStore()
+    //#endif
+    //#endif
 
     let speechSynthesizer = AVSpeechSynthesizer()
     let speakerDelegate = SpeakerDelegate()
-    
+
     let keychainManager = KeychainManager()
 
-// BEGIN TERMINAL ZONE **************************************************************************************
+    // BEGIN TERMINAL ZONE **************************************************************************************
     func logText(_ text: String, terminator: String = "\n") {
         DispatchQueue.main.async {
             self.consoleManagerText.append(text)
@@ -36,7 +36,7 @@ public class SettingsViewModel: ObservableObject {
         }
     }
     var consoleManagerText: String = ""
-// END TERMINAL ZONE **************************************************************************************
+    // END TERMINAL ZONE **************************************************************************************
 
     var latestWindowManager: WindowManager?
 
@@ -77,9 +77,9 @@ public class SettingsViewModel: ObservableObject {
 
     @AppStorage("chatGPTAuth") var chatGPTAuth: Bool = false
 
-// END SAVED UI SETTINGS ZONE **************************************************************************************
+    // END SAVED UI SETTINGS ZONE **************************************************************************************
 
-// BEGIN STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
+    // BEGIN STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
     @Published var receivedImageData: Data? = nil {
         didSet {
             recieveImageData(recievedImageData: receivedImageData)
@@ -94,8 +94,8 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
-                    if self.latestWindowManager?.windows.contains(where: {$0.windowType == .simulator }) != true {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
+                if self.latestWindowManager?.windows.contains(where: {$0.windowType == .simulator }) != true {
 
                     self.latestWindowManager?.addWindow(windowType: .simulator, frame: defSize, zIndex: 0)
                 }
@@ -128,9 +128,9 @@ public class SettingsViewModel: ObservableObject {
         }
     }
 #endif
-// END STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
+    // END STREAMING IMAGES/ZIPZ OVER WEBSOCKET ZONE *****************************************************************
 
-// BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
+    // BEGIN SAVED AUDIO SETTINS ZONE *****************************************************************
     @AppStorage("savedVoiceName") var voiceOutputSavedName: String = "" {
         didSet {
             if !installedVoices.isEmpty {
@@ -146,15 +146,15 @@ public class SettingsViewModel: ObservableObject {
     @Published var installedVoices = [VoicePair]()
     @Published var selectedVoice: VoicePair?
     @Published var isRecording = false
-// END SAVED AUDIO SETTINGS ZONE *****************************************************************
+    // END SAVED AUDIO SETTINGS ZONE *****************************************************************
 
-// BEGIN SAVED SIZES ZONE **************************************************************************************
+    // BEGIN SAVED SIZES ZONE **************************************************************************************
     @AppStorage("savedButtonSize") var buttonScale: Double = defaultToolbarButtonScale
     @AppStorage("commandButtonFontSize")var commandButtonFontSize: Double = defaultCommandButtonSize
     @AppStorage("cornerHandleSize")var cornerHandleSize: Double = defaultHandleSize
     @AppStorage("fontSizeSrcEditor") var fontSizeSrcEditor: Double = defaultSourceEditorFontSize
 
-// END SAVED SIZES ZONE ********************************************************************************************
+    // END SAVED SIZES ZONE ********************************************************************************************
 
     @Published var appTextColor: Color {
         didSet {
@@ -225,11 +225,11 @@ public class SettingsViewModel: ObservableObject {
 #endif
     }
 
-// END SUB ZONE FOR SRC EDITOR COLORS********************************************
-// END SAVED COLORS ZONE **************************************************************************************
+    // END SUB ZONE FOR SRC EDITOR COLORS********************************************
+    // END SAVED COLORS ZONE **************************************************************************************
 
-// BEGIN CLIENT API KEYS ZONE ******************************************************************************
-// TODO: React to user name and password change
+    // BEGIN CLIENT API KEYS ZONE ******************************************************************************
+    // TODO: React to user name and password change
     let aiKeyKey = "openAIKeySec"
     let ghaKeyKey = "ghaPat"
     let googleKeyKey = "googleKey"
@@ -242,7 +242,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var password = "swiftsage" {
         didSet {
             DispatchQueue.global(qos: .default).async {
-                
+
                 if self.keychainManager.saveToKeychain(key: "swsPassword", value: self.password) {
                     print("Key saved successfully")
                 } else {
@@ -263,7 +263,7 @@ public class SettingsViewModel: ObservableObject {
 #endif
 #endif
             DispatchQueue.global(qos: .default).async {
-                
+
                 if self.keychainManager.saveToKeychain(key:self.aiKeyKey, value: trimmedKey) {
                     print("openAIKey saved successfully")
                 } else {
@@ -284,7 +284,7 @@ public class SettingsViewModel: ObservableObject {
 #endif
 #endif
             DispatchQueue.global(qos: .default).async {
-                
+
                 if self.keychainManager.saveToKeychain(key: self.ghaKeyKey, value: trimmedKey) {
                     print("ghPat saved successfully")
                 } else {
@@ -353,7 +353,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
 
             DispatchQueue.global(qos: .default).async {
-                
+
                 if self.keychainManager.saveToKeychain(key: self.aiAccessTokenKey, value: self.accessToken) {
                     print("aiAccessTokenKey saved successfully")
                 } else {
@@ -368,13 +368,13 @@ public class SettingsViewModel: ObservableObject {
             logD("did set shared cookies")
         }
     }
-// END CLIENT APIS ZONE **************************************************************************************
+    // END CLIENT APIS ZONE **************************************************************************************
 
-// START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
+    // START GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
     let idProvider: () -> String
     let dateProvider: () -> Date
-// WAS @Published
+    // WAS @Published
     var conversations: [Conversation] = [] {
         didSet {
             //logD("new convo state:\n\(conversations)")
@@ -389,9 +389,9 @@ public class SettingsViewModel: ObservableObject {
     }
     @AppStorage("completedMessages") var completedMessages = 0
 
-// END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
+    // END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
-// START DEBUGGER VIEWMODEL ZONE ***********************************************************************
+    // START DEBUGGER VIEWMODEL ZONE ***********************************************************************
     @Published var isDebugging: Bool = false
     @Published var targetName: String = "No scheme"
     @Published var deviceName: String = "No device"
@@ -399,9 +399,9 @@ public class SettingsViewModel: ObservableObject {
     @Published var warningCount: Int = 0
     @Published var errorCount: Int = 0
 
-// END DEBUGGER VIEWMODEL ZONE ***********************************************************************
+    // END DEBUGGER VIEWMODEL ZONE ***********************************************************************
 
-// START STOREKIT ZONE ***********************************************************************
+    // START STOREKIT ZONE ***********************************************************************
     func requestReview() {
         DispatchQueue.main.async {
             self.completedMessages += 1
@@ -421,30 +421,30 @@ public class SettingsViewModel: ObservableObject {
 
         }
     }
-// END STOREKIT ZONE ***********************************************************************
+    // END STOREKIT ZONE ***********************************************************************
 
     init() {
         self.idProvider = { UUID().uuidString }
         self.dateProvider = Date.init
 
-// BEGIN SIZE SETTING LOAD ZONE FROM DISK *********************************
+        // BEGIN SIZE SETTING LOAD ZONE FROM DISK *********************************
         if UserDefaults.standard.double(forKey: "savedButtonSize") != 0 {
             self.buttonScale = UserDefaults.standard.double(forKey: "savedButtonSize")
         }
         else {
             self.buttonScale = defaultToolbarButtonScale
         }
-        
+
         if UserDefaults.standard.double(forKey: "commandButtonFontSize") != 0 {
             self.commandButtonFontSize = CGFloat(UserDefaults.standard.double(forKey: "commandButtonFontSize"))
         }
         else {
             self.commandButtonFontSize = defaultCommandButtonSize
         }
-        
+
         // END SIZE SETTING LOAD ZONE FROM DISK
 
-// BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
+        // BEGIN LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
         if let key = keychainManager.retrieveFromKeychain(key: aiKeyKey) {
 
             self.openAIKey = key
@@ -492,10 +492,10 @@ public class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: aiAccessTokenKey) {
             self.accessToken = key
         }
-// END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
+        // END LOAD CLIENT SECRET FROM KEYCHAIN ZONE ******************************
 
 #if !os(macOS)
-// BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
+        // BEGIN TERM / APP COLOR LOAD FROM DISK ZONE ******************************
         if let colorKey = UserDefaults.standard.string(forKey: "buttonColor") {
             self.buttonColor = Color(rawValue:colorKey) ?? .accentColor
         }
@@ -507,19 +507,19 @@ public class SettingsViewModel: ObservableObject {
 #if !os(tvOS)
 
             self.backgroundColor =  Color(rawValue:colorKey) ?? Color(UIColor.systemBackground)
-            #else
+#else
             self.backgroundColor =  Color(rawValue:colorKey) ?? Color(UIColor.black)
 
-            #endif
+#endif
         }
         else {
 #if !os(tvOS)
 
             self.backgroundColor =  Color(UIColor.systemBackground)
-            #else
+#else
             self.backgroundColor =  Color(UIColor.black)
 
-            #endif
+#endif
         }
 
         if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
@@ -534,7 +534,7 @@ public class SettingsViewModel: ObservableObject {
         self.appTextColor = .primary
 #endif
 
-// BEGIN SUB ZONE FOR LOADING TERM / CHAT / SRC COLORS FROM DISK ******************************
+        // BEGIN SUB ZONE FOR LOADING TERM / CHAT / SRC COLORS FROM DISK ******************************
         if UserDefaults.standard.double(forKey: "fontSizeSrcEditor") != 0 {
             self.fontSizeSrcEditor = UserDefaults.standard.double(forKey: "fontSizeSrcEditor")
         }
@@ -618,10 +618,10 @@ public class SettingsViewModel: ObservableObject {
         self.backgroundColorSrcEditor = .gray
         self.lineNumbersColorSrcEditor = .gray
 #endif
-// END SUB ZONE FOR LOADING  TERM / CHAT / SRC EDITOR COLORS FROM DISK ******************************
-// END COLOR LOAD FROM DISK ZONE ******************************
+        // END SUB ZONE FOR LOADING  TERM / CHAT / SRC EDITOR COLORS FROM DISK ******************************
+        // END COLOR LOAD FROM DISK ZONE ******************************
 
-// BEGIN AUDIO SETTING LOAD ZONE FROM DISK
+        // BEGIN AUDIO SETTING LOAD ZONE FROM DISK
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
         self.voiceOutputEnabled = UserDefaults.standard.bool(forKey: "voiceOutputEnabled")
         self.voiceOutputSavedName = UserDefaults.standard.string(forKey: "savedVoiceName") ?? ""
@@ -629,13 +629,13 @@ public class SettingsViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.configureAudioSession()
         }
-// END AUDIO SETTING LOAD ZONE FROM DISK
+        // END AUDIO SETTING LOAD ZONE FROM DISK
 
-// START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
+        // START LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
         refreshDocuments()
-// END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
+        // END LOADING SAVED GIT REPOS LOAD ZONE FROM DISK
 
-// START LOADING SAVED CONVO ZONE FROM DISK
+        // START LOADING SAVED CONVO ZONE FROM DISK
         DispatchQueue.main.async {
             if let convos = self.retrieveConversationContentFromDisk(forKey: jsonFileName) {
                 self.conversations = convos
@@ -643,18 +643,18 @@ public class SettingsViewModel: ObservableObject {
                 self.cullEmptyConvos()
             }
         }
-// END LOADING SAVED CONVO ZONE FROM DISK
+        // END LOADING SAVED CONVO ZONE FROM DISK
 
 
-//        DispatchQueue.main.async {
-//#if !os(tvOS)
-//#if !targetEnvironment(macCatalyst)
-//
-//            self._preLoadWebViewStore  = WebViewStore()
-//#endif
-//#endif
-//
-//        }
+        //        DispatchQueue.main.async {
+        //#if !os(tvOS)
+        //#if !targetEnvironment(macCatalyst)
+        //
+        //            self._preLoadWebViewStore  = WebViewStore()
+        //#endif
+        //#endif
+        //
+        //        }
     }
 
     func currentGitRepoKey() -> String {
@@ -664,8 +664,8 @@ public class SettingsViewModel: ObservableObject {
 
     func refreshDocuments() {
 
-// IF APP SANDBOX IS DISABLED ,
-//#if !targetEnvironment(macCatalyst)
+        // IF APP SANDBOX IS DISABLED ,
+        //#if !targetEnvironment(macCatalyst)
 
         let fileURL = getDocumentsDirectory()
         DispatchQueue.global(qos: .default).async {
@@ -674,44 +674,44 @@ public class SettingsViewModel: ObservableObject {
                 self.root = RepoFile(name: fileRootName, url: fileURL, isDirectory: true, children: files)
             }
         }
-//#endif
+        //#endif
     }
 
     // START THEME ZONE
 
     func applyTheme(theme: AppTheme) {
 #if os(macOS)
-//        switch theme {
-//        case .deepSpace:
-//            appTextColor = Colorv(hex: 0xF5FFFA, alpha: 1)
-//            buttonColor = Color(hex: 0x76D7EA, alpha: 1)
-//            backgroundColor = Color(hex: 0x008CB4, alpha: 1)
-//            plainColorSrcEditor = Color(hex: 0xBBD2D1, alpha: 1)
-//            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//            stringColorSrcEditor =  Color(hex: 0xC1D82F, alpha: 1)
-//            identifierColorSrcEditor = Color(hex: 0x188BC2, alpha: 1)
-//            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//            commentColorSrceEditor =  Color(hex: 0xE2062C, alpha: 1)
-//            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//            backgroundColorSrcEditor = Color(hex: 0x232C33, alpha: 1)
-//            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//
-//        case .hacker:
-//            appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
-//            buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
-//            backgroundColor = Color(hex: 0x2C3539, alpha: 1)
-//            plainColorSrcEditor = Color(hex: 0xF5F5F5, alpha: 1)
-//            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1)
-//            stringColorSrcEditor =  Color(hex: 0xCCFF00, alpha: 1) // FIND A NEW COLOR
-//            identifierColorSrcEditor = Color(hex: 0x006B3C, alpha: 1)
-//            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//            commentColorSrceEditor =  Color(hex: 0x808080, alpha: 1)
-//            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//            backgroundColorSrcEditor = Color(hex: 0x1A2421, alpha: 1)
-//            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
-//        }
+        //        switch theme {
+        //        case .deepSpace:
+        //            appTextColor = Colorv(hex: 0xF5FFFA, alpha: 1)
+        //            buttonColor = Color(hex: 0x76D7EA, alpha: 1)
+        //            backgroundColor = Color(hex: 0x008CB4, alpha: 1)
+        //            plainColorSrcEditor = Color(hex: 0xBBD2D1, alpha: 1)
+        //            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //            stringColorSrcEditor =  Color(hex: 0xC1D82F, alpha: 1)
+        //            identifierColorSrcEditor = Color(hex: 0x188BC2, alpha: 1)
+        //            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //            commentColorSrceEditor =  Color(hex: 0xE2062C, alpha: 1)
+        //            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //            backgroundColorSrcEditor = Color(hex: 0x232C33, alpha: 1)
+        //            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //
+        //        case .hacker:
+        //            appTextColor = Color(hex: 0xF5FFFA, alpha: 1) // FIND A NEW COLOR
+        //            buttonColor = Color(hex: 0x5F7D8E, alpha: 1)
+        //            backgroundColor = Color(hex: 0x2C3539, alpha: 1)
+        //            plainColorSrcEditor = Color(hex: 0xF5F5F5, alpha: 1)
+        //            numberColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1)
+        //            stringColorSrcEditor =  Color(hex: 0xCCFF00, alpha: 1) // FIND A NEW COLOR
+        //            identifierColorSrcEditor = Color(hex: 0x006B3C, alpha: 1)
+        //            keywordColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //            commentColorSrceEditor =  Color(hex: 0x808080, alpha: 1)
+        //            editorPlaceholderColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //            backgroundColorSrcEditor = Color(hex: 0x1A2421, alpha: 1)
+        //            lineNumbersColorSrcEditor = Color(hex: 0xC1D82F, alpha: 1) // FIND A NEW COLOR
+        //        }
 
-        #else
+#else
         switch theme {
         case .deepSpace:
             appTextColor = Color(hex: 0xF5FFFA, alpha: 1)

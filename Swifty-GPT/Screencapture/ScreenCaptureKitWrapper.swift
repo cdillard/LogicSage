@@ -98,7 +98,6 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             //
             for i in 0..<Int(displayCount) {
                 Task {
-                    //                    DispatchQueue.main.async {
                     do {
                         let displayID = onlineDisplays[i]
                         let recordURL = pathToRecordingAssets(name: "recording-sim-\(displayID).mov")
@@ -110,7 +109,6 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                         }
 
                         let screenRecorder = try await ScreenRecorder2(url: URL(fileURLWithPath: recordURL), displayID: displayID, cropRect: nil)
-                        // ...
 
                         multiPrinter("Starting screen recording of \(displayID) display")
 
@@ -133,11 +131,8 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                     catch {
                         multiPrinter("")
                     }
-                    //                    }
                 }
             }
-
-
         }
         catch {
             multiPrinter(error)

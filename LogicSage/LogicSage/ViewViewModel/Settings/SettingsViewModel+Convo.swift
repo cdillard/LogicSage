@@ -115,9 +115,15 @@ extension SettingsViewModel {
     func appendMessageToConvoIndex(index: Int, message: Message) {
         self.conversations[index].model = openAIModel
         self.conversations[index].messages.append(message)
+        
+        performConvoUpdate(index: index)
+
     }
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
         self.conversations[index].messages[existingMessageIndex] = message
+
+        performConvoUpdate(index: index)
+
     }
     func nilOutConversationErrorsAt(convoId: Conversation.ID) {
         self.conversationErrors[convoId] = nil
@@ -153,6 +159,18 @@ extension SettingsViewModel {
     func createAndOpenServerChat() {
 
         openConversation(Conversation.ID(-1))
+    }
+
+    func performConvoUpdate(index: Int) {
+        let convoId = self.conversations[index].id
+
+        for vm in self.latestWindowManager?.windowViewModels ?? [] {
+            if convoId == vm.conversation.id {
+                DispatchQueue.main.async {
+                    vm.conversation = self.conversations[index]
+                }
+            }
+        }
     }
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
 

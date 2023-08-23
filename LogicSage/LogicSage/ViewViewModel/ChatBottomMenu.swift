@@ -22,7 +22,7 @@ struct ChatBotomMenu: View {
     @State private var isModalPresented = false
     @State private var isSystemPromptSelectionPresented = false
 
-    @Binding var tokens: Int
+    @Binding var conversation: Conversation
 
     var body: some View {
         Menu {
@@ -31,7 +31,7 @@ struct ChatBotomMenu: View {
             }
             // Normal chat // Allows changing system message / changing AI model.
             else {
-                Text("Tokens: \(tokens)")
+                Text("Tokens: \(conversation.tokens ?? 0)")
                 Button(action: {
                     logD("selected Change AI model")
                     isModalPresented = true
@@ -90,7 +90,7 @@ struct ChatBotomMenu: View {
             ModalView(items: aiModelOptions)
         }
         .sheet(isPresented: $isSystemPromptSelectionPresented) {
-            ModalViewSystemPrompt(items: systemPromptOptions, choseBuiltInSystemPrompt: $choseBuiltInSystemPrompt)
+            ModalViewSystemPrompt(choseBuiltInSystemPrompt: $choseBuiltInSystemPrompt)
         }
     }
 
@@ -192,7 +192,9 @@ struct ModalView: View {
     var body: some View {
         NavigationView {
             List(items, id: \.self) { item in
-                Button(item) {
+        
+
+                Button(item == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314-ls-web-browsing*":item) {
                     presentationMode.wrappedValue.dismiss()
                     SettingsViewModel.shared.openAIModel = item
                 }
@@ -206,26 +208,46 @@ struct ModalView: View {
     }
 }
 struct ModalViewSystemPrompt: View {
+    @ObservedObject var viewModel = SystemPromptViewModel(items:systemPromptOptions)
     @Environment(\.presentationMode) var presentationMode
 
-    let items: [String: String]
+
     @Binding var choseBuiltInSystemPrompt: String
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(items.sorted(by: >), id: \.key) { key, value in
-                    Button("\(key) act: \(value)") {
+                ForEach(viewModel.items.indices, id: \.self) { index in
+                    let item = viewModel.items[index]
+                    Button("\(item.0) act: \(item.1)") {
                         presentationMode.wrappedValue.dismiss()
-                        choseBuiltInSystemPrompt = value
+                        choseBuiltInSystemPrompt = item.1
                     }
                     .padding()
                 }
+                .onDelete(perform: deleteItem)
+//                .onMove(perform: moveItem)
             }
             .navigationBarItems(trailing: Button("Dismiss") {
                 presentationMode.wrappedValue.dismiss()
             })
             .navigationTitle("Choose system msg:")
         }
+    }
+    func deleteItem(at offsets: IndexSet) {
+        viewModel.items.remove(atOffsets: offsets)
+    }
+
+    func moveItem(from source: IndexSet, to destination: Int) {
+        viewModel.items.move(fromOffsets: source, toOffset: destination)
+    }
+}
+
+
+class SystemPromptViewModel: ObservableObject {
+    @Published var items: [(String, String)]
+
+    init(items: [(String, String)]) {
+        self.items = items
     }
 }

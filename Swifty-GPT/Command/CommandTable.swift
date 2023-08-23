@@ -17,6 +17,7 @@ var commandTable: [String: (String) -> Void] = [
     "4": buildCommand,
     "build": buildCommand,    "Build": buildCommand,
     "run": runProjectCommand, "Run": runProjectCommand,
+    "test": testProjectCommand, "Test": testProjectCommand,
 
     "5": voiceSettingsCommand,
 

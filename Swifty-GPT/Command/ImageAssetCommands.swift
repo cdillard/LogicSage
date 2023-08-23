@@ -10,6 +10,14 @@ import Foundation
 func mirrorCommand(input: String) {
 
     let inputComps = input.components(separatedBy: " ")
+
+    if inputComps.count == 0 {
+        Task {
+           //w await VideoCapture.shared.listCapturableWindows()
+        }
+    }
+
+
     guard inputComps.count > 1 else {
         multiPrinter("Invalid `mirror` invocation.")
         multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
@@ -20,8 +28,8 @@ func mirrorCommand(input: String) {
 
     multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
     multiPrinter("If No screen recording permission it won't work.")
-    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
-    multiPrinter("* Only works running Swifty-GPT from Terminal or iTerm2 *")
+    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission to Terminal.app.")
+    multiPrinter("* Only works running LogicSageCommandLine from Terminal or iTerm2 *")
 
     Task {
         await VideoCapture.shared.captureAppWindow(applicationName: inputComps[0], windowName: inputComps[1])
@@ -32,14 +40,15 @@ func mirrorCommand(input: String) {
 
 func simulatorCommand(input: String) {
 
-    // TODO: ALLOW SELECTION, of simulator, start if not already running
+    // TODO: ALLOW SELECTION, of simulator
+    openSimulatorApp { success, errors in
+        multiPrinter("If No screen recording permission it won't work.")
+        multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission to Terminal.app.")
+        multiPrinter("* Only works running LogicSageCommandLine from Terminal or iTerm2 *")
 
-    multiPrinter("If No screen recording permission it won't work.")
-    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission.")
-    multiPrinter("* Only works running Swifty-GPT from Terminal or iTerm2 *")
-
-    Task {
-        await VideoCapture.shared.captureSimulatorWindow()
+        Task {
+            await VideoCapture.shared.captureSimulatorWindow()
+        }
     }
 
 }

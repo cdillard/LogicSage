@@ -690,7 +690,6 @@
 				B71EB87B2A21C29500D87C6F /* LoadingLogic.swift */,
 				B7BA52EF2A4A141600D03DF0 /* NewViewerButton.swift */,
 				B7E2A94B2A4CB6730050F995 /* SageMultiView */,
-				B78DA97B2A06F3E4002343AB /* Settings */,
 				B7E2A94D2A4CB6AB0050F995 /* Window */,
 			);
 			path = ViewViewModel;
@@ -1160,6 +1159,7 @@
 			isa = PBXGroup;
 			children = (
 				B7A968692A4E4B0A00C7B9BB /* ChatBottomMenu.swift */,
+				B78DA97B2A06F3E4002343AB /* Settings */,
 				B70A00F02A1EA23F00ADEF5A /* ChatView.swift */,
 				B777506D2A42AD6E00E836D3 /* CurvedEdgeArc.swift */,
 				B7BA52E92A49D21A00D03DF0 /* KeyboardAdaptive.swift */,

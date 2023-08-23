@@ -70,7 +70,7 @@ let swiftyGPTWorkspaceFirstName = "LogicSageWorkspace"
 let swiftyGPTWorkspaceName = "\(swiftyGPTWorkspaceFirstName)/Workspace"
 
 // SwiftyGPTWOrkspace/Wallpaper
-//let dynamicWallpaperFolder = "/Users/sprinchar/Library/Application Support/com.apple.mobileAssetDesktop"
+//let dynamicWallpaperFolder = "/Users/$USERNAME/Library/Application Support/com.apple.mobileAssetDesktop"
 //let staticWallpaperFolder = "/System/Library/Desktop Pictures"
 
 

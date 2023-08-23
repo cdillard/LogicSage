@@ -16,6 +16,7 @@ enum XcodeCommand {
     case createFile(fileName: String, fileContents: String)
     // Add other cases here
     case runProject(name: String)
+    case testProject(name: String)
 
     var appleScript: String {
         switch self {
@@ -53,97 +54,33 @@ enum XcodeCommand {
             return ""
         case .runProject(name:  _):
             return ""
+        case .testProject(name:  _):
+            return ""
         }
     }
 }
 
-func buildProject(projectPath: String, scheme: String, completion: @escaping (Bool, [String]) -> Void) {
-    let task = Process()
-    task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
-
-    let projectArgument = "-project"
-    let schemeArgument = "-scheme"
-    task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "name=iPhone 14", "-verbose"]
- //  "-IDEBuildingContinueBuildingAfterErrors=YES",
-
-    let outputPipe = Pipe()
-    task.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    task.standardError = errorPipe
-
-    let dispatchSemaphore = DispatchSemaphore(value: 1)
-    var successful = false
-    task.terminationHandler = { process in
-        let success = process.terminationStatus == 0
-        successful = success
-        dispatchSemaphore.signal()
-    }
-
+func parseProjectStructure(name: String) {
+    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(name).xcodeproj"
     do {
-        try task.run()
-    } catch {
-        multiPrinter("Error running xcodebuild: \(error)")
-        completion(false, [])
-        dispatchSemaphore.signal()
-    }
+        let results = try processXcodeProject(path: projectPath)
 
-    // Wait for the terminationHandler to be called
-    dispatchSemaphore.wait()
+        config.projectArray = results
+        multiPrinter("Parsed project w result count = \(config.projectArray.count)")
 
-    func getErrorLines(_ input: String) -> [String] {
-        let lines = input.split(separator: "\n")
-        let errorLinePattern = "^(\\/[^\\s]+):(\\d+):(\\d+):\\s+error:\\s+(.+)$"
-        let regex = try! NSRegularExpression(pattern: errorLinePattern, options: [])
-
-        var errorLines: [String] = []
-
-        for line in lines {
-            let nsLine = line as NSString
-            let matches = regex.matches(in: nsLine as String, options: [], range: NSRange(location: 0, length: nsLine.length))
-
-            if !matches.isEmpty {
-                errorLines.append(nsLine as String)
-            }
+        do {
+            let jsonData = try JSONEncoder().encode(config.projectArray)
+            localPeerConsole.sendProjectData(jsonData)
         }
-
-        return errorLines
-    }
-
-    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: outputData, encoding: .utf8) ?? ""
-    let errors = getErrorLines(output)
-
-
-    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-    let errors2 = getErrorLines(errorOutput)
-    if !errors2.isEmpty {
-        multiPrinter("Build Errors: \(  errors2)")
-    }
-    else {
-        if !errors.isEmpty {
-            multiPrinter("Error: \(errorOutput)")
+        catch {
+            print("error serializing projectArray")
         }
     }
-    if !errors.isEmpty {
-        multiPrinter("Build ❌ : \(  errors)")
+    catch {
+        print("error loading: \(error)")
     }
-    else {
-       // multiPrinter("Build Output: \(  output)")
-    }
-    var errorsCopy = Array(errors)
-    errorsCopy = errorsCopy.map {
-        $0.replacingOccurrences(of: getWorkspaceFolder(), with: "")
-    }
-    .map {
-        $0.replacingOccurrences(of: "\(swiftyGPTWorkspaceName)/\(config.projectName)/Sources/", with: "")
-    }
-    
-    config.globalErrors += Array(errorsCopy)
-    completion(successful, config.globalErrors)
 }
+
 
 
 func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [String]) -> Void) {
@@ -233,22 +170,37 @@ func executeXcodeCommand(_ command: XcodeCommand, completion: @escaping (Bool, [
             }
 
         }
+
+    case .testProject(name: let name):
+        let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(name).xcodeproj"
+
+        let nameSchemeComps = name.split(separator: "/")
+        var scheme = name
+        if nameSchemeComps.count > 1 {
+            scheme = String(nameSchemeComps.last ?? "")
+        }
+
+        runProject(projectPath: projectPath, scheme: scheme, command: "test") { success, errors in
+            if success {
+                completion(true, [])
+            } else {
+                completion(false, errors)
+            }
+
+        }
     }
 }
 
-func runProject(projectPath: String, scheme: String, completion: @escaping (Bool, [String]) -> Void) {
+func runProject(projectPath: String, scheme: String, command: String = "build", completion: @escaping (Bool, [String]) -> Void) {
 
-    runXCRUNProject(projectPath: projectPath, scheme: scheme) { success, errors in
+    runXCRUNProject(projectPath: projectPath, scheme: scheme, command: command) { success, errors in
         if success {
             completion(true, [])
 
         } else {
             completion(false, errors)
         }
-
     }
-
-
 }
 
 struct Simulator {
@@ -285,7 +237,7 @@ func parseSimulators(from output: String) -> [Simulator] {
 }
 
 
-func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping (Bool, [String]) -> Void) {
+func runXCRUNProject(projectPath: String, scheme: String, command: String, completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
     
@@ -370,21 +322,43 @@ func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping 
                                              //   if !bundleId.isEmpty {
                                                     print("Successfully RAN \(appPath) in \(simulator.UUID) and found bundleIO = \(bundleId)")
 
-                                                    runApp(appPath: appPath, simUUID: simulator.UUID, bundleId: bundleId)  { success, errors in
-                                                        if success {
-                                                            completion(true, [])
-                                                            print("Successfully RAN \(appPath) in \(simulator.UUID)")
+                                            switch command {
+                                            case "build":
+                                                runApp(appPath: appPath, simUUID: simulator.UUID, bundleId: bundleId)  { success, errors in
+                                                    if success {
+                                                        completion(true, [])
+                                                        print("Successfully RAN \(appPath) in \(simulator.UUID)")
 
 
-                                                            // if we get here... try to show simulator
-                                                            simulatorCommand(input: "")
-                                                        } else {
-                                                            completion(false, errors)
+                                                        // if we get here... try to show simulator
+                                                        simulatorCommand(input: "")
+                                                    } else {
+                                                        completion(false, errors)
 
-                                                            print("Failed to run.")
+                                                        print("Failed to run.")
 
-                                                        }
                                                     }
+                                                }
+                                            case "test":
+                                                testProjectForSimulatorDestination(projectPath: appPath, scheme: scheme, simUUID: simulator.UUID)  { success, errors in
+                                                    if success {
+                                                        completion(true, [])
+                                                        print("Successfully RAN \(appPath) in \(simulator.UUID)")
+
+
+                                                        // if we get here... try to show simulator
+                                                        simulatorCommand(input: "")
+                                                    } else {
+                                                        completion(false, errors)
+
+                                                        print("Failed to run.")
+
+                                                    }
+                                                }
+                                            default:
+                                                break
+                                            }
+
     //                                            }
     //                                            else {
     //                                                print("Failed to run simulator .app -- failing run")
@@ -422,145 +396,52 @@ func runXCRUNProject(projectPath: String, scheme: String, completion: @escaping 
         }
         
     }
-    func runXCRUNSimulatorProject(projectPath: String, scheme: String, deviceUUID: String, completion: @escaping (Bool, [String]) -> Void) {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
-        
-        
-        task.arguments = [ "simctl", "boot", deviceUUID]
-        //  "-IDEBuildingContinueBuildingAfterErrors=YES",
-        
-        let outputPipe = Pipe()
-        task.standardOutput = outputPipe
-        
-        let errorPipe = Pipe()
-        task.standardError = errorPipe
-        
-        let dispatchSemaphore = DispatchSemaphore(value: 1)
-        var successful = false
-        task.terminationHandler = { process in
-            let success = process.terminationStatus == 0
-            successful = success
-            dispatchSemaphore.signal()
-        }
-        
-        do {
-            try task.run()
-        } catch {
-            print("Error running xcrun boot sim: \(error)")
-            completion(false, [])
-            dispatchSemaphore.signal()
-        }
-        
-        // Wait for the terminationHandler to be called
-        dispatchSemaphore.wait()
-        
-        
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: outputData, encoding: .utf8) ?? ""
-        
-        print("xcrun output = " + output)
-        
-        let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-        
-        print("xcrun error output = " + errorOutput)
-        
-        completion(successful, config.globalErrors)
-    }
-    
-    
-    
-    // RUN BUILD FOR SIMULATOR 2 //
-    
-    func buildProjectForSimulatorDestination(projectPath: String, scheme: String, simUUID: String, completion: @escaping (Bool, [String]) -> Void) {
-        let task = Process()
-        task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
-        
-        let projectArgument = "-project"
-        let schemeArgument = "-scheme"
-        task.arguments = [projectArgument, projectPath, schemeArgument, scheme, "-sdk", "iphonesimulator", "-destination", "id=\(simUUID)", "-verbose", "-derivedDataPath", "build", "clean", "build"]
+}
+func runXCRUNSimulatorProject(projectPath: String, scheme: String, deviceUUID: String, completion: @escaping (Bool, [String]) -> Void) {
+    let task = Process()
+    task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
 
-        let outputPipe = Pipe()
-        task.standardOutput = outputPipe
-        
-        let errorPipe = Pipe()
-        task.standardError = errorPipe
-        
-        let dispatchSemaphore = DispatchSemaphore(value: 1)
-        var successful = false
-        task.terminationHandler = { process in
-            let success = process.terminationStatus == 0
-            successful = success
-            dispatchSemaphore.signal()
-        }
-        
-        do {
-            try task.run()
-        } catch {
-            multiPrinter("Error running xcodebuild: \(error)")
-            completion(false, [])
-            dispatchSemaphore.signal()
-        }
-        
-        // Wait for the terminationHandler to be called
-        dispatchSemaphore.wait()
-        
-        func getErrorLines(_ input: String) -> [String] {
-            let lines = input.split(separator: "\n")
-            let errorLinePattern = "^(\\/[^\\s]+):(\\d+):(\\d+):\\s+error:\\s+(.+)$"
-            let regex = try! NSRegularExpression(pattern: errorLinePattern, options: [])
-            
-            var errorLines: [String] = []
-            
-            for line in lines {
-                let nsLine = line as NSString
-                let matches = regex.matches(in: nsLine as String, options: [], range: NSRange(location: 0, length: nsLine.length))
-                
-                if !matches.isEmpty {
-                    errorLines.append(nsLine as String)
-                }
-            }
-            
-            return errorLines
-        }
-        
-        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: outputData, encoding: .utf8) ?? ""
-        let errors = getErrorLines(output)
-        
-        print("sim build output = " + output)
-        
-        let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-        print("sim build error output = " + errorOutput)
-        
-        let errors2 = getErrorLines(errorOutput)
-        if !errors2.isEmpty {
-            multiPrinter("Build Errors: \(  errors2)")
-        }
-        else {
-            if !errors.isEmpty {
-                multiPrinter("Error: \(errorOutput)")
-            }
-        }
-        if !errors.isEmpty {
-            multiPrinter("Build ❌ : \(  errors)")
-        }
-        else {
-            // multiPrinter("Build Output: \(  output)")
-        }
-        var errorsCopy = Array(errors)
-        errorsCopy = errorsCopy.map {
-            $0.replacingOccurrences(of: getWorkspaceFolder(), with: "")
-        }
-        .map {
-            $0.replacingOccurrences(of: "\(swiftyGPTWorkspaceName)/\(config.projectName)/Sources/", with: "")
-        }
-        
-        config.globalErrors += Array(errorsCopy)
-        completion(successful, config.globalErrors)
+
+    task.arguments = [ "simctl", "boot", deviceUUID]
+    //  "-IDEBuildingContinueBuildingAfterErrors=YES",
+
+    let outputPipe = Pipe()
+    task.standardOutput = outputPipe
+
+    let errorPipe = Pipe()
+    task.standardError = errorPipe
+
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    var successful = false
+    task.terminationHandler = { process in
+        let success = process.terminationStatus == 0
+        successful = success
+        dispatchSemaphore.signal()
     }
+
+    do {
+        try task.run()
+    } catch {
+        print("Error running xcrun boot sim: \(error)")
+        completion(false, [])
+        dispatchSemaphore.signal()
+    }
+
+    // Wait for the terminationHandler to be called
+    dispatchSemaphore.wait()
+
+
+    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: outputData, encoding: .utf8) ?? ""
+
+    print("xcrun output = " + output)
+
+    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+    print("xcrun error output = " + errorOutput)
+
+    completion(successful, config.globalErrors)
 }
 
 // *.app file name must match Xcode project name and scheme name for now.
@@ -609,100 +490,7 @@ func findApp(projectPath: String, scheme: String, completion: @escaping (String,
     completion(output, config.globalErrors)
 }
 
-func installApp(appPath: String, simUUID: String, completion: @escaping (Bool, [String]) -> Void) {
-    let task = Process()
-    task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
 
-
-    task.arguments = [ "simctl", "install", simUUID, "./"+appPath.trimmingCharacters(in: .whitespacesAndNewlines)]
-    //  "-IDEBuildingContinueBuildingAfterErrors=YES",
-
-    let outputPipe = Pipe()
-    task.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    task.standardError = errorPipe
-
-    let dispatchSemaphore = DispatchSemaphore(value: 1)
-    var successful = false
-    task.terminationHandler = { process in
-        let success = process.terminationStatus == 0
-        successful = success
-        dispatchSemaphore.signal()
-    }
-
-    do {
-        try task.run()
-    } catch {
-        print("Error running xcrun boot sim: \(error)")
-        completion(false, [])
-        dispatchSemaphore.signal()
-    }
-
-    // Wait for the terminationHandler to be called
-    dispatchSemaphore.wait()
-
-
-    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: outputData, encoding: .utf8) ?? ""
-
-    print("xcrun INSTALL output = " + output)
-
-    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-    print("xcrun INSTALL error output = " + errorOutput)
-
-    completion(successful, config.globalErrors)
-}
-
-func runApp(appPath: String, simUUID: String, bundleId: String, completion: @escaping (Bool, [String]) -> Void) {
-    let task = Process()
-    task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
-
-
-    // TODO: FIx to pass the correct Info.plist bundleID fore the chosen Project.
-    task.arguments = [ "simctl", "launch", simUUID, bundleId]
-    //  "-IDEBuildingContinueBuildingAfterErrors=YES",
-
-    let outputPipe = Pipe()
-    task.standardOutput = outputPipe
-
-    let errorPipe = Pipe()
-    task.standardError = errorPipe
-
-    let dispatchSemaphore = DispatchSemaphore(value: 1)
-    var successful = false
-    task.terminationHandler = { process in
-        let success = process.terminationStatus == 0
-        successful = success
-        dispatchSemaphore.signal()
-    }
-
-    do {
-        try task.run()
-    } catch {
-        print("Error running xcrun RUN: \(error)")
-        completion(false, [])
-        dispatchSemaphore.signal()
-    }
-
-    // Wait for the terminationHandler to be called
-    dispatchSemaphore.wait()
-
-
-    let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: outputData, encoding: .utf8) ?? ""
-
-    print("xcrun RUN output = " + output)
-
-    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-    let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-    print("xcrun RUN error output = " + errorOutput)
-
-    completion(successful, config.globalErrors)
-}
 
 
 func getBundleId(appPath: String, scheme: String, completion: @escaping (String, [String]) -> Void) {
@@ -798,23 +586,3 @@ func openSimulatorApp(completion: @escaping (String, [String]) -> Void) {
 
 
 
-func parseProjectStructure(name: String) {
-    let projectPath = "\(getWorkspaceFolder())\(swiftyGPTWorkspaceName)/\(name).xcodeproj"
-    do {
-        let results = try processXcodeProject(path: projectPath)
-
-        config.projectArray = results
-        multiPrinter("Parsed project w result count = \(config.projectArray.count)")
-
-        do {
-            let jsonData = try JSONEncoder().encode(config.projectArray)
-            localPeerConsole.sendProjectData(jsonData)
-        }
-        catch {
-            print("error serializing projectArray")
-        }
-    }
-    catch {
-        print("error loading: \(error)")
-    }
-}

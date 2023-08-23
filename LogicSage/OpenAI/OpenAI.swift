@@ -169,17 +169,11 @@ extension OpenAI {
 extension OpenAI {
     
     func buildURL(path: String) -> URL {
-
-//        if configuration.host.hasPrefix("localhost:") {
-//            return  URL(string: "http://\(configuration.host)\(path)")!
-//        }
-//        else {
-            var components = URLComponents()
-            components.scheme =  "https"
-            components.host = configuration.host
-            components.path = path
-            return components.url!
-  //      }
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = configuration.host
+        components.path = path
+        return components.url!
     }
 }
 
