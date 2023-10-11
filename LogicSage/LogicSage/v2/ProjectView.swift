@@ -24,29 +24,24 @@ struct ProjectView: View {
         ZStack {
             VStack(spacing: 0) {
                 HStack(spacing: 2) {
-                    HStack {
-                        Image(systemName: "target")
-                        Text("\(settingsViewModel.targetName) ")
-                    }
-                    .onTapGesture {
-                        logD("Target tapped")
-                    }
-                    Image(systemName: "arrow.right")
-                    HStack {
-                        Image(systemName: "iphone")
-                        Text("\(settingsViewModel.deviceName)")
-                    }
-                    .onTapGesture {
-                        logD("Device tapped")
-                    }
+//                    HStack {
+//                        Image(systemName: "target")
+//                        Text("\(settingsViewModel.targetName) ")
+//                    }
+//                    .onTapGesture {
+//                        logD("Target tapped")
+//                    }
+//                    Image(systemName: "arrow.right")
+//                    HStack {
+//                        Image(systemName: "iphone")
+//                        Text("\(settingsViewModel.deviceName)")
+//                    }
+//                    .onTapGesture {
+//                        logD("Device tapped")
+//                    }
 
                     Spacer()
 
-                    // This view shouls say....
-                    // INITIAL STATE:
-                    // Build succeeded | Today at 8:04 AM
-                    // AFter running a target debug
-                    // Finished running
                     Text("\(settingsViewModel.debuggingStatus)")
 
                     if settingsViewModel.errorCount > 0 {
@@ -69,16 +64,6 @@ struct ProjectView: View {
                     ProjectHierarchyView(project: project)
                         .frame(width: dividerWidth, alignment: .leading)
                         .background(Color(.systemGray6))
-
-                    MovableDivider(dividerWidth: $dividerWidth)
-//                    Divider()
-
-                    
-                    Spacer()
-
-    //                // Open Files Tabs View
-                    OpenFilesTabsView(openFileNames: openFileNames)
-
                 }
             }
 

@@ -66,6 +66,20 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     func getConvoText() -> String {
         SageMultiViewModel.convoText(settingsViewModel, conversation, windowInfo: windowInfo)
     }
+
+    func saveFileToDisk() {
+        let newCode = sourceCode
+        windowInfo.fileContents = newCode
+        if let url = windowInfo.file?.url {
+            do {
+                try newCode.write(to: url, atomically: true, encoding: String.Encoding.utf8)
+            }
+            catch {
+                print("error writing file= \(error)")
+            }
+        }
+
+    }
 }
 
 

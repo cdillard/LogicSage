@@ -237,7 +237,7 @@ func parseSimulators(from output: String) -> [Simulator] {
 }
 
 
-func runXCRUNProject(projectPath: String, scheme: String, command: String, completion: @escaping (Bool, [String]) -> Void) {
+func runXCRUNProject(projectPath: String, scheme: String, command: String, deviceName: String = "iPhone 14", completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
     
@@ -296,7 +296,7 @@ func runXCRUNProject(projectPath: String, scheme: String, command: String, compl
     else {
         for simulator in simulators {
             
-            if simulator.name == "iPhone 14" {
+            if simulator.name == deviceName {
                 print("UUID for the device is: \(simulator.UUID)")
 
                 openSimulatorApp { success, errors in

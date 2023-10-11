@@ -17,10 +17,13 @@ struct ChatBotomMenu: View {
     @Binding var windowInfo: WindowInfo
     @Binding var editingSystemPrompt: Bool
     @Binding var choseBuiltInSystemPrompt: String
+    @Binding var choseBuiltInModel: String
 
 
     @State private var isModalPresented = false
     @State private var isSystemPromptSelectionPresented = false
+    @State private var isTemperaturePromptShown = false
+    @State var newTemp: String = "0.7"
 
     @Binding var conversation: Conversation
 
@@ -37,6 +40,19 @@ struct ChatBotomMenu: View {
                     isModalPresented = true
                 }) {
                     Text( "Change AI model")
+                        .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                        .lineLimit(1)
+                        .foregroundColor(Color.white)
+                        .background(settingsViewModel.buttonColor)
+                }
+
+                Button(action: {
+                    logD("selected Change Chat temperature")
+                    isTemperaturePromptShown = true
+                }) {
+                    let disp = (conversation.temperature ?? 0.7).formatted(.number.precision(.fractionLength(2)))
+
+                    Text( "Change chat temperature: Current: \(disp)")
                         .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                         .lineLimit(1)
                         .foregroundColor(Color.white)
@@ -87,11 +103,26 @@ struct ChatBotomMenu: View {
         .frame(width: 30)
 
         .sheet(isPresented: $isModalPresented) {
-            ModalView(items: aiModelOptions)
+            ModalView(items: aiModelOptions, choseBuiltInModel: $choseBuiltInModel)
         }
         .sheet(isPresented: $isSystemPromptSelectionPresented) {
             ModalViewSystemPrompt(choseBuiltInSystemPrompt: $choseBuiltInSystemPrompt)
         }
+        .alert("Set Temp", isPresented: $isTemperaturePromptShown, actions: {
+            TextField("New Temp", text: $newTemp)
+
+            Button("Set", action: {
+                // convert double string to double
+                let double = Double(newTemp)
+                conversation.temperature = double ?? 0.7
+                SettingsViewModel.shared.setTemp(conversation.id, newTemp: double ?? 0.7)
+            })
+            Button("Cancel", role: .cancel, action: {
+                isTemperaturePromptShown = false
+            })
+        }, message: {
+            Text("Please enter temperature for chat")
+        })
     }
 
     func serverChatOptions() -> some View {
@@ -113,36 +144,36 @@ struct ChatBotomMenu: View {
             }
 
             //            // Simulator BUTTON
-            //            Button(action: {
-            //                logD("RUN SIMULATOR")
-            //
-            //                settingsViewModel.latestWindowManager = windowManager
-            //
-            //                DispatchQueue.main.async {
-            //
-            //                    // Execute your action here
-            //                    screamer.sendCommand(command: "simulator")
-            //                }
-            //            }) {
-            //                ZStack {
-            //                    Text("📲 simulator")
-            //                }
-            //                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-            //                .lineLimit(1)
-            //                .foregroundColor(Color.white)
-            //                .background(settingsViewModel.buttonColor)
-            //            }
-            //
-            //            // Debate BUTTON
-            //            Button(action: {
-            //                chatText = "debate "
-            //            }) {
-            //                Text( "⚖️ debate")
-            //                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-            //                    .lineLimit(1)
-            //                    .foregroundColor(Color.white)
-            //                    .background(settingsViewModel.buttonColor)
-            //            }
+                        Button(action: {
+                            logD("RUN SIMULATOR")
+            
+                            settingsViewModel.latestWindowManager = windowManager
+            
+                            DispatchQueue.main.async {
+            
+                                // Execute your action here
+                                screamer.sendCommand(command: "simulator")
+                            }
+                        }) {
+                            ZStack {
+                                Text("📲 simulator")
+                            }
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .foregroundColor(Color.white)
+                            .background(settingsViewModel.buttonColor)
+                        }
+            
+                        // Debate BUTTON
+                        Button(action: {
+                            chatText = "debate "
+                        }) {
+                            Text( "⚖️ debate")
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                .lineLimit(1)
+                                .foregroundColor(Color.white)
+                                .background(settingsViewModel.buttonColor)
+                        }
             //
             // i BUTTON
             Button(action: {
@@ -188,6 +219,7 @@ struct ModalView: View {
     @Environment(\.presentationMode) var presentationMode
 
     let items: [String]
+    @Binding var choseBuiltInModel: String
 
     var body: some View {
         NavigationView {
@@ -197,6 +229,7 @@ struct ModalView: View {
                 Button(item == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314-ls-web-browsing*":item) {
                     presentationMode.wrappedValue.dismiss()
                     SettingsViewModel.shared.openAIModel = item
+                    choseBuiltInModel = item
                 }
                 .padding()
             }

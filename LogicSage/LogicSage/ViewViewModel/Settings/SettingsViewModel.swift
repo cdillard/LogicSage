@@ -15,14 +15,6 @@ public class SettingsViewModel: ObservableObject {
 
     public static let shared = SettingsViewModel()
 
-    //preload webkit
-    //#if !os(tvOS)
-    //#if !targetEnvironment(macCatalyst)
-    //
-    //    var _preLoadWebViewStore: WebViewStore?// = WebViewStore()
-    //#endif
-    //#endif
-
     let speechSynthesizer = AVSpeechSynthesizer()
     let speakerDelegate = SpeakerDelegate()
 
@@ -391,6 +383,17 @@ public class SettingsViewModel: ObservableObject {
 
     // END GPT CONVERSATION VIEWMODEL ZONE ***********************************************************************
 
+    // BEGIN PROJECT VIEWMODEL ZONE ****
+    // Should it be @Published? WTF
+    var projects: [Project] = [] {
+        didSet {
+            //logD("new project state:\n\(projects)")
+        }
+    }
+
+    // END PROJECT VIEWMODEL ZONE ******
+
+
     // START DEBUGGER VIEWMODEL ZONE ***********************************************************************
     @Published var isDebugging: Bool = false
     @Published var targetName: String = "No scheme"
@@ -646,22 +649,17 @@ public class SettingsViewModel: ObservableObject {
         // END LOADING SAVED CONVO ZONE FROM DISK
 
 
-        //        DispatchQueue.main.async {
-        //#if !os(tvOS)
-        //#if !targetEnvironment(macCatalyst)
-        //
-        //            self._preLoadWebViewStore  = WebViewStore()
-        //#endif
-        //#endif
-        //
-        //        }
+        // START LOADING SAVED PROJECTS FROM DISK
+        self.projects = [Project(name: "LogicalSage", organizationName: "CD", identifier: "com.chris.blag", projectTemplate: "template", location: "location",
+                                fileSystemItems: config.projectArray)]
+        // END LOADING SAVED PROJECTS FROM DISK.
     }
 
     func currentGitRepoKey() -> String {
         "\(gitUser)\(SettingsViewModel.gitKeySeparator)\(gitRepo)\(SettingsViewModel.gitKeySeparator)\(gitBranch)"
     }
     static let gitKeySeparator = "-sws-"
-
+    
     func refreshDocuments() {
 
         // IF APP SANDBOX IS DISABLED ,

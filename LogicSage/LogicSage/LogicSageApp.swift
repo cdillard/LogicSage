@@ -51,7 +51,7 @@ struct LogicSageApp: App {
 
                         serviceDiscovery?.startDiscovering()
                     }
-                    DispatchQueue.main.async {
+                    DispatchQueue.global(qos: .default).async {
                         settingsViewModel.printVoicesInMyDevice()
                         settingsViewModel.configureAudioSession()
                     }

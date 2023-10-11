@@ -71,22 +71,6 @@ func searchIt(query: String, completion: @escaping (String?) -> Void) {
                     output += "\n"
                 }
 
-//                func searchItemsToJSONString(_ searchItems: [SearchItem]) -> String? {
-//                    let encoder = JSONEncoder()
-//                    encoder.outputFormatting = .prettyPrinted
-//
-//                    do {
-//                        let jsonData = try encoder.encode(searchItems)
-//                        if let jsonString = String(data: jsonData, encoding: .utf8) {
-//                            return jsonString
-//                        }
-//                    } catch {
-//                        logD("Error encoding SearchItem array to JSON: \(error.localizedDescription)")
-//                    }
-//
-//                    return nil
-//                }
-
                 completion(output)
             case .failure(let error):
                 logD("Error: \(error.localizedDescription)")

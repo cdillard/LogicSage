@@ -20,4 +20,6 @@ let aiModelOptions: [String] = [
     "gpt-3.5-turbo-0613",
     "gpt-3.5-turbo-16k",
     "gpt-3.5-turbo-16k-0613",
+//    "gpt-3.5-turbo-instruct-0914",
+//    "gpt-3.5-turbo-instruct"
 ]

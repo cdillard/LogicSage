@@ -79,7 +79,8 @@ class GPT {
                 id: SettingsViewModel.shared.idProvider(),
                 role: role,
                 content: msgContent,
-                createdAt: SettingsViewModel.shared.dateProvider()
+                createdAt: SettingsViewModel.shared.dateProvider(),
+                invisible: supressPromptLog
             ))
             guard let conversation = SettingsViewModel.shared.conversations.first(where: { $0.id == conversationId }) else {
                 logD("Unable to find conversations id == \(conversationId) ... failing")
@@ -104,13 +105,14 @@ class GPT {
                 let newModel = SettingsViewModel.shared.openAIModel == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314" :  SettingsViewModel.shared.openAIModel
 
                 let model: Model = Model(existingModel.isEmpty ? SettingsViewModel.shared.openAIModel : newModel)
-
+                let useTemp = conversation.temperature == nil ? 0.7 : conversation.temperature ?? 0.7
                 let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
                     query: ChatQuery(
                         model: model,
                         messages: conversation.messages.map { message in
                             Chat(role: message.role, content: message.content)
-                        }
+                        },
+                        temperature: useTemp
                     )
                 )
                 var completeMessage = ""

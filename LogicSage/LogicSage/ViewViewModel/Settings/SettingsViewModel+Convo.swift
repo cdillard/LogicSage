@@ -137,7 +137,7 @@ extension SettingsViewModel {
         gptCommand(conversationId: convoID, input: chatText, useGoogle: googleAvail, useLink: googleAvail, qPrompt: googleAvail)
     }
     func createConversation() -> Conversation.ID {
-        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel)
+        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel, temperature: 0.7)
         conversations.append(conversation)
         print("created new convo = \(conversation.id)")
         return conversation.id
@@ -239,8 +239,13 @@ extension SettingsViewModel {
     }
 
     func convoText(_ newConversation: Conversation) -> String {
-        var retString  = "model: \(newConversation.model ?? "")\nsystem 🌱: \(newConversation.systemPrompt ?? "")\n"
+        let sysText = ""//newConversation.systemPrompt == nil ? "" : "system 🌱: \(newConversation.systemPrompt ?? "")"
+        var retString  = "model: \(newConversation.model ?? "")\n\(sysText)\n"
         for msg in newConversation.messages {
+            if msg.role == .system && msg.content == "" { continue }
+            // TODO: Fix invisible messages
+           // if msg.invisible == true { continue }
+
             retString += "\(avatarTextForRole(role: msg.role)):\n\(msg.content.trimmingCharacters(in: .whitespacesAndNewlines))\n"
         }
         if newConversation.id == Conversation.ID(-1) {
@@ -303,5 +308,17 @@ extension SettingsViewModel {
                 completion(true)
             }
         }
+    }
+
+    func setTemp(_ convoId: Conversation.ID, newTemp: Double) {
+        print("Set convo id = \(convoId) temperature to \(newTemp)")
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        SettingsViewModel.shared.conversations[conversationIndex].temperature = newTemp
+
+        saveConvosToDisk()
     }
 }

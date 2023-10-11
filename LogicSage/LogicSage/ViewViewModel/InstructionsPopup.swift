@@ -43,15 +43,19 @@ struct InstructionsPopup: View {
 //                        .font(.title2)
 //                        .foregroundColor(settingsViewModel.appTextColor)
                     #endif
+
+                    gotItButton(size: geometry.size)
+
                     VStack(alignment: .leading, spacing: 8) {
                         Group {
+
                             Group {
                                 Text("Welcome to LogicSage, an AI coding and chatting app! LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an AI Key.")
-                                    .minimumScaleFactor(0.466)
-                                
-                                Text("Please enter your API Key (via copy and paste) and it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code to verify this fact if you want).")
-                                    .minimumScaleFactor(0.466)
-                                
+                                    .minimumScaleFactor(0.366)
+
+                                Text("Please enter your API Key (via copy and paste) and it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Source code availalbe on github). Visit settings tab to set your Google Search API Key and Secret.")
+                                    .minimumScaleFactor(0.366)
+
                                 VStack(spacing:2) {
                                     HStack {Text("A.I. 🔑: ")
                                             .font(.title3)
@@ -61,7 +65,7 @@ struct InstructionsPopup: View {
                                             
                                             showAPIKey.toggle()
                                         }) {
-                                            Image(systemName: "eye")
+                                            Image(systemName: showAPIKey ? "eye" : "eye.slash.fill")
                                         }
                                     }
                                     if showAPIKey {
@@ -69,7 +73,7 @@ struct InstructionsPopup: View {
                                             "",
                                             text: $settingsViewModel.openAIKey
                                         )
-                                        .minimumScaleFactor(0.866)
+                                        .minimumScaleFactor(0.666)
                                         .lineLimit(3)
                                         .border(.secondary)
                                         .submitLabel(.done)
@@ -115,11 +119,15 @@ struct InstructionsPopup: View {
                                 }
                                 Divider()
                                 Text("Check out LogicSage GitHub: https://github.com/cdillard/LogicSage#readme for more help and to post Github issues.")
+                                    .minimumScaleFactor(0.366)
+
                                     .accentColor(settingsViewModel.buttonColor)
                                 
                             }
                             
                             Text("Download repository from github and execute ./run.sh from project root to start LogicSage for Mac Server.")
+                                .minimumScaleFactor(0.366)
+
                         }
                         Divider()
                         
@@ -128,12 +136,13 @@ struct InstructionsPopup: View {
                             .accentColor(settingsViewModel.buttonColor)
                         
                         Text("Thank you!!! to the open source maintainers who created the MIT and Apache 2.0 Licensed source included in this project.")
+                            .minimumScaleFactor(0.366)
+
                         Divider()
                         
-                        Text("DISCLAIMER: I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.")
-                        Divider()
-                        
-                        Text("This app/project is an experiment. Email me with your issues, suggestions, or just to chat @")
+                        Text("DISCLAIMER: LogicSage is not responsible for any issues (legal or otherwise) that may arise from using this app or using the code in this repository. This is an experimental project.")
+                            .minimumScaleFactor(0.366)
+
                         Button(action: {
 #if !os(macOS)
 #if !os(tvOS)
@@ -155,25 +164,10 @@ struct InstructionsPopup: View {
                     .background(settingsViewModel.backgroundColor)
                     .padding(geometry.size.width * 0.01)
                     
-                    Button(action: {
-                        isPresented = false
-                        setHasSeenInstructions(true)
-                        if !hasSeenAnim() {
-                            settingsViewModel.initalAnim = true
-                        }
-                    }) {
-                        Text("Got it!")
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .padding(geometry.size.width * 0.01)
-                            .background(settingsViewModel.buttonColor)
-                            .cornerRadius(8)
-                            .minimumScaleFactor(0.466)
-                        
-                    }
-                    .padding(geometry.size.width * 0.01)
-                    .padding(.bottom, 20)
-                    
-                    .padding(.vertical, 20)
+                    gotItButton(size: geometry.size)
+                        .padding(.bottom, 20)
+
+                        .padding(.vertical, 20)
                 }
                 .padding(.top, 30)
                 .padding(.bottom, 30)
@@ -195,6 +189,27 @@ struct InstructionsPopup: View {
         .glassBackgroundEffect()
 #endif
     }
+
+    func gotItButton(size: CGSize) -> some View {
+        Button(action: {
+            isPresented = false
+            setHasSeenInstructions(true)
+            if !hasSeenAnim() {
+                settingsViewModel.initalAnim = true
+            }
+        }) {
+            Text("Got it!")
+                .foregroundColor(settingsViewModel.appTextColor)
+                .padding(size.width * 0.01)
+                .background(settingsViewModel.buttonColor)
+                .cornerRadius(8)
+                .minimumScaleFactor(0.466)
+
+        }
+        .padding(size.width * 0.01)
+
+    }
+
     private func onCopy() {
         withAnimation(Animation.easeInOut(duration: 0.666)) {
             showCheckmark = true

@@ -28,6 +28,7 @@ func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool 
 
     let hasAddedToolPromptBefore = SettingsViewModel.shared.getHasAddedToolPrompt(conversationId)
     var didAddToolPrompt = hasAddedToolPromptBefore
+    var addedToolPrompt = false
     if SettingsViewModel.shared.openAIModel == "gpt-4-0314-ls-web-browsing" && !hasAddedToolPromptBefore {
         let googleTextSegment = """
         - The google query command can be used if you need help or to find more information or if it requires information past your knowledge cutoff, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
@@ -44,6 +45,7 @@ Using the listed tools below, answer the question below "Question to Answer". Th
             }
 
             didAddToolPrompt = true
+            addedToolPrompt = true
         }
 //        if !config.manualPromptString.contains(linkTextSegment) && config.enableLink {
 //            
@@ -61,7 +63,7 @@ Using the listed tools below, answer the question below "Question to Answer". Th
 
     playMediunImpact()
 
-    GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0, manualPrompt: true, supressPromptLog: supressPromptLog) { content, success, isDone in
+    GPT.shared.sendPromptToGPT(conversationId: conversationId, prompt: config.manualPromptString, currentRetry: 0, manualPrompt: true, supressPromptLog: addedToolPrompt) { content, success, isDone in
 
         if !success {
             SettingsViewModel.shared.speak("A.P.I. error, try again.")

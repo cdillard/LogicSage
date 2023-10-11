@@ -31,8 +31,10 @@ struct ResizableViewModifier: ViewModifier {
                 ZStack {
                     ResizingHandle(positionLocation: .topTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
-                    ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
-                        .offset(y: window.windowType == .chat ?  -keyboardHeight : 0)
+                    if keyboardHeight == 0 {
+                        ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
+                            .offset(y: window.windowType == .chat ?  -keyboardHeight : 0)
+                    }
                 }
                 
             )
@@ -228,7 +230,8 @@ struct ResizingHandle: View {
 
             }
         }
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.075666 {
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.075666 ||
+            frame.size.height + newOffsetY < viewSize.height / 2 {
         }
         else {
             resizeOffset.height += newOffsetY

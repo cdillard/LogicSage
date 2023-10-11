@@ -15,3 +15,6 @@ dd
 SwiftSageServer/.build
 LogicSage/LogicSage.xcodeproj/project.xcworkspace/xcuserdata
 LogicSage/LogicSage.xcodeproj/xcuserdata
+LogicSageCommandLine.xcodeproj/project.xcworkspace/xcuserdata
+LogicSageCommandLine.xcodeproj/xcuserdata
+build

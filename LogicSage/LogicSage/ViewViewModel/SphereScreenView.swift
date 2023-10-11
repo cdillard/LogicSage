@@ -33,8 +33,6 @@ struct SphereScreenView: View {
             // Reconfigure everything when any configuration changes.
             screenEntity?.update(
                 configuration: screenConfiguration,
-//                satelliteConfiguration: satelliteConfiguration,
-//                moonConfiguration: moonConfiguration,
                 animateUpdates: animateUpdates)
         }
     }

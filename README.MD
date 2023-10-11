@@ -1,90 +1,67 @@
 
-# LogicSage: The GPT app for Apple platforms. (iPadOS, MacOS, and iOS) 
+# LogicSage: AI Code & Chat on Apple platforms. (iPadOS, MacOS, and iOS) 
 
-[LogicSage: The GPT app for Apple platforms. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
+[LogicSage: AI iOS Code & Chat. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-# LogicSage 1.2.4 (latest release)
-### What's New:
-- Automatically name convo after receiving AI response for better organization.
-- Easier window movement with handlebar.
-- Built in system prompts set the right stage for the conversation.
-- Improved Chat Interface. Perfected Keyboard Handling
+1.2.5 (latest)
 
-## Table of Contents
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Contact](#contact)
-- [Credits](#credits)
+---
 
-## Getting Started with LogicSage: iOS, iPadOS, MacOS
+### Use LogicSage without Mac
+
+Chat with GPT using tools (google, link) which allow incorporation of Google Search results into GPT responses.
+
+
+## Getting Started with LogicSage: iOS, iPadOS
+
+#### Chat and copy code snippets:
+
 0. Download LogicSage from the AppStore.[link](https://apps.apple.com/us/app/logicsage/id6448485441)
-0. LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
-    - it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code to verify this fact if you want).
+1. LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
+    - it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code in SettingsViewModel to check openAIKey handling.).
 
-Optional steps:
+## Optional steps for additional features:
 
-If you'd like to use LogicSage for Mac:
-	- Using LogicSage for Mac allows to open / build AI geneaterated Xcode projects on your Mac.
+### Google Search API Integration: 
 
-0. Go to the root of your MacOS user directory (~)
-	- `cd ~`
-1. Clone the repository: `git clone https://github.com/cdillard/LogicSage.git`
-	- You should now have the repository checked out in `~/LogicSage/`
-2. Open `~/LogicSage/` in Finder.
-3. Open `Swifty-GPT.xcworkspace` by double clicking it.
-4. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+- Create a Google Custom Search API Key here. 
 
-	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the LogicSageWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
+https://developers.google.com/custom-search/v1/introduction
 
-5. Run LogicSage.app
+- Get a Google Search API Key and Secret from Google Developer Console.
+- Enter Google Search API Key and GooglE Search API Secret in Settings tab of app.
+- Change model to `gpt-4-0314-web-browsing*` (this is added by LogicSage.)
 
-CUSTOMIZABLE WALLPAPERS MAC -> LogicSage!!!!
+### Use LogicSage with Mac by connecting to the LogicSageCommandLine app!
 
-Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the SwiftyGPTWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
+(WIP) MacOS / iOS GPT Middleware that allows GPT to build, run, and test Xcode projects. 
 
-WANT EVEN MORE BACKGROUNDS: https://forums.macrumors.com/threads/project-complete-collection-of-mac-os-wallpapers-updated.2036834/ download and unzip this bad boy to the `~/LogicSageWorkspace/Wallpaper` folder.
-
-Search the internet for "4K Wallapaper zip + Space" replacing Space with whatever type of background you want. Download the heic, jpeg, jpg, and png images you'd like to use as wallpapers.
-
-// For iOS Simulator viewing, Check for screen recording permission, make sure your Terminal.app or iTerm2.app has screen recording permission
-
-## Installation
-- [Homebrew](https://brew.sh/)
-- [Ruby](https://www.ruby-lang.org/en/)
-- [Xcode](https://developer.apple.com/xcode/)
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
-- [Xcodeproj](https://github.com/CocoaPods/Xcodeproj)
-- [Swift Toolchain Xcode 14.3](https://www.swift.org/download/)
-
-#### Installing Homebrew and Ruby
-If you don't have Homebrew and Ruby installed, follow these steps:
-1. Install Homebrew by running: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-2. Install Ruby by running: `brew install ruby`
-
-#### Installing XcodeGen and Xcodeproj
-1. Install XcodeGen: `brew install xcodegen`
-2. Install Xcodeproj: `gem install xcodeproj`
-
-![LogicSage for Mac](LogicSageForMacOS.png)
-
+When connected to the LogicSageCommandLine you can use the "Term" window from the LogicSage app, This allows you to invoke the commands on your mac from your device.
 
 ---
 ## Disclaimer
+
 I am not responsible for any issues (legal or otherwise) that may arise from using the code in this repository. This is an experimental project, and I cannot guarantee its contents.
 The developer of this project does not accept any responsibility or liability for any losses, damages, or other consequences that may occur as a result of using this software. You are solely responsible for any decisions and actions taken based on the information provided by LogicSage.
 
 ## Token Usage Warning
+
 Please note that the use of the GPT language model can be expensive due to its token usage. By utilizing this project, you acknowledge that you are responsible for monitoring and managing your own token usage and the associated costs. It is highly recommended to check your OpenAI API usage regularly and set up any necessary limits or alerts to prevent unexpected charges.
 
----
+You can get a key here https://platform.openai.com/account/api-keys
 
+LogicSage needs an API key to make requests to OpenAI's API. Note that you will be charged by OpenAI for your API usage when hitting the send/"paperairplane" button.
+
+Make sure to set usage limits! and keep an eye on your usage here: https://platform.openai.com/account/billing/limits
+
+---
 ## Contact
-Created by: Chris Dillard (chrisbdillard@gmail.com)
+Created by: Chris Dillard
 
-- With a little help from my GPT🤖. Thank you, OpenAI!
+Please raise Github issues or open a PR to discuss this project with me.
 
 ---
+
 ## Credits
 
 - [SwiftWhisper](https://github.com/exPHAT/SwiftWhisper)
@@ -107,7 +84,3 @@ Created by: Chris Dillard (chrisbdillard@gmail.com)
 - [Tikitoken](https://github.com/aespinilla/Tiktoken)
 - [XcodeProj](https://github.com/tuist/XcodeProj)
 ---
-Thanks to Mike Bruin for keeping the Plist safe.
-
----
-Unlocking the Power of the Future: Exploring the Intersection of Mobile and Artificial General Intelligence Programming. In this project, an expert in the field of mobile technology works on ways in which these two fields are converging and changing the way we interact with technology.

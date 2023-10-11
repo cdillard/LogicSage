@@ -68,6 +68,7 @@ public extension MeshResource.Part {
             let newNormals = normals.map { $0 * -1.0 }
             var newPart = self
 
+
             newPart.normals = .init(newNormals)
 
             // ordering of points in the triangles must be reversed,

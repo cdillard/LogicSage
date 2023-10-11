@@ -57,7 +57,7 @@ struct SageMultiView: View {
     @Binding var position: CGSize
     @Binding var isMoveGestureActivated: Bool
     @State var webViewURL: URL?
-    @State var isDragDisabled = false
+   // @State var isDragDisabled = false
     @Binding var viewSize: CGRect
     @Binding var resizeOffset: CGSize
     @Binding var bumping: Bool
@@ -169,22 +169,22 @@ struct SageMultiView: View {
                 
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-
-                ZStack {
-                    Capsule()
-                        .fill(.white.opacity(0.4))
-                        .frame(width: 180, height: 7.5, alignment: .topLeading)
-                    Capsule()
-                        .fill(.white.opacity(0.0))
-                        .frame(width: 200, height: 15, alignment: .topLeading)
-                }
+                if (!focused) {
+                    ZStack {
+                        Capsule()
+                            .fill(.white.opacity(0.4))
+                            .frame(width: 180, height: 7.5, alignment: .topLeading)
+                        Capsule()
+                            .fill(.white.opacity(0.0))
+                            .frame(width: 200, height: 15, alignment: .topLeading)
+                    }
 #if !os(macOS)
                     .hoverEffect(.automatic)
 #endif
                     .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat && focused ? keyboardHeight : 0))
 #if !os(tvOS)
-                    .if(!isDragDisabled) { view in
-                        view.gesture(
+//                    .if(!isDragDisabled) { view in
+                    .gesture(
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
                                     if keyboardHeight != 0 {
@@ -221,10 +221,12 @@ struct SageMultiView: View {
                             self.windowManager.bringWindowToFront(window: self.window)
                         })
 
-                    }
+//                    }
 #endif
+                }
+
             }
-            curvedEdgeArcZone(size: geometry.size)
+            curvedEdgeArcZone(size: geometry.size, focused: focused)
         }
     }
     func editorArea() -> some View {
@@ -257,7 +259,7 @@ struct SageMultiView: View {
 #endif
     }
 
-    func curvedEdgeArcZone(size: CGSize) -> some View {
+    func curvedEdgeArcZone(size: CGSize, focused: Bool) -> some View {
         Group {
             // TOP LEFT
             ZStack {
@@ -287,18 +289,20 @@ struct SageMultiView: View {
                 .offset(x: size.width - settingsViewModel.cornerHandleSize)
                 .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
-            // BOTTOM RIGHT
-            ZStack {
+            if !focused {
+                // BOTTOM RIGHT
                 ZStack {
-                    CurvedEdgeArc(cornerRadius: cornerRadius, curveSize: curveSize, position: .topRight)
-                        .stroke(settingsViewModel.appTextColor, lineWidth: lineWidth)
-                        .offset(x: 22.5, y: 17.75)
-                        .opacity(handleOpacity)
-                        .allowsHitTesting(false)
+                    ZStack {
+                        CurvedEdgeArc(cornerRadius: cornerRadius, curveSize: curveSize, position: .topRight)
+                            .stroke(settingsViewModel.appTextColor, lineWidth: lineWidth)
+                            .offset(x: 22.5, y: 17.75)
+                            .opacity(handleOpacity)
+                            .allowsHitTesting(false)
+                    }
+                    .offset(x: size.width - settingsViewModel.cornerHandleSize,
+                            y: size.height - settingsViewModel.cornerHandleSize - 5 -  (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
+                    .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
                 }
-                .offset(x: size.width - settingsViewModel.cornerHandleSize,
-                        y: size.height - settingsViewModel.cornerHandleSize - 5 -  (sageMultiViewModel.windowInfo.windowType == .chat ? keyboardHeight : 0))
-                .frame( maxWidth: settingsViewModel.cornerHandleSize, maxHeight: settingsViewModel.cornerHandleSize)
             }
         }
     }
@@ -312,11 +316,11 @@ struct SageMultiView: View {
                 settingsViewModel.cullEmptyConvos()
             }
 
-        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight)
+        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight, sageMultiViewModel: sageMultiViewModel)
 
-        .if(!isDragDisabled) { view in
+//        .if(!isDragDisabled) { view in
 
-            view.simultaneousGesture(
+            .simultaneousGesture(
                 DragGesture(minimumDistance: 3)
                     .onChanged { value in
                         if keyboardHeight != 0 {
@@ -353,7 +357,7 @@ struct SageMultiView: View {
                 self.windowManager.bringWindowToFront(window: self.window)
             })
 
-        }
+     //   }
 #else
         VStack {}
 #endif
@@ -397,10 +401,10 @@ struct SageMultiView: View {
             }
             if frame.size.height > size.height {
                 if keyboardHeight == 0 {
-                    let hackedHeight = frame.size.height - size.height
-                    print("Hacked height == \(hackedHeight)")
-                    position.height =  max(size.height/2.2, position.height - hackedHeight)
-                    frame.size.height = size.height
+//                    let hackedHeight = frame.size.height - size.height
+//                    print("Hacked height == \(hackedHeight)")
+//                    position.height =  max(size.height/2.2, position.height - hackedHeight)
+//                    frame.size.height = size.height
                 }
             }
 

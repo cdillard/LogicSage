@@ -25,6 +25,8 @@ struct TopBar: View {
     @State private var showDocumentPicker = false
     @State private var pickedDocumentURL: URL?
 
+    @ObservedObject var sageMultiViewModel: SageMultiViewModel
+
     var body: some View {
         ZStack {
             ZStack {
@@ -58,50 +60,7 @@ struct TopBar: View {
                     .foregroundColor(SettingsViewModel.shared.buttonColor)
                     .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
 
-                    if windowInfo.windowType == .project {
 
-                        Button(action: {
-                            logD("on side bar tap")
-                        }) {
-                            Image(systemName: "sidebar.left")
-                                .font(.title2)
-                                .minimumScaleFactor(0.01)
-#if !os(macOS)
-                                .hoverEffect(.lift)
-#endif
-                        }
-                        .foregroundColor(SettingsViewModel.shared.buttonColor)
-                        .padding(.leading, 15)
-
-
-                        // IF Debugger is running....
-                        if settingsViewModel.isDebugging {
-                            Button(action: {
-                                logD("on STOP tap")
-                            }) {
-                                Image(systemName: "stop.fill")
-                                    .font(.title2)
-                                    .minimumScaleFactor(0.01)
-#if !os(macOS)
-                                    .hoverEffect(.lift)
-#endif
-                            }
-                            .foregroundColor(SettingsViewModel.shared.buttonColor)
-                            .padding(.leading, 15)
-                        }
-                        Button(action: {
-                            logD("on PLAY tap")
-                        }) {
-                            Image(systemName: "play.fill")
-                                .font(.title2)
-                                .minimumScaleFactor(0.01)
-#if !os(macOS)
-                                .hoverEffect(.lift)
-#endif
-                        }
-                        .foregroundColor(SettingsViewModel.shared.buttonColor)
-                        .padding(.leading, 15)
-                    }
                     Text(getName())
                         .font(.body)
                         .minimumScaleFactor(0.75)
@@ -255,6 +214,20 @@ struct TopBar: View {
                         .labelStyle(DemoStyle())
                         .foregroundColor(SettingsViewModel.shared.buttonColor)
                 }
+
+                if windowInfo.windowType == .file {
+
+                    Button {
+                      // DO SAVE OF FILE TO DISK :D
+                        print("do save to disk")
+                        sageMultiViewModel.saveFileToDisk()
+                    } label: {
+                        Label("Save file", systemImage: "opticaldiscdrive")
+                            .font(.body)
+                            .labelStyle(DemoStyle())
+                            .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    }
+                }
             }
 
         } label: {
@@ -284,7 +257,7 @@ struct TopBar: View {
 #if !os(macOS)
         .hoverEffect(.automatic)
 #endif
-        .frame(width: 30)
+        .frame(width: 30, height: 30)
 
     }
 

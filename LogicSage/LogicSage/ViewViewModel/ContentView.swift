@@ -55,8 +55,9 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geometry in
             TabView(selection: $tabSelection) {
-                tabZero(size: geometry.size)
                 tabOne(size: geometry.size)
+//                tabProjects(size: geometry.size)
+                tabZero(size: geometry.size)
                 tabTwo(size: geometry.size)
                 tabThree(size: geometry.size)
                 tabFour(size: geometry.size)
@@ -64,66 +65,105 @@ struct ContentView: View {
             .padding(1)
 #if os(xrOS)
             .glassBackgroundEffect()
-        .toolbar {
-            ToolbarItem(placement: .bottomOrnament) {
+            .toolbar {
+                ToolbarItem(placement: .bottomOrnament) {
 
-                HStack(spacing: 4) {
+                    HStack(spacing: 4) {
 
-                    ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Logo", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
-                    ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
+                        ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Controls", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
+                        ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
 
-                    // Add new App window
+                        // Add new App window
 
 #if os(macOS)
-                    NewViewerButton()
+                        NewViewerButton()
 
-                        .foregroundColor(settingsViewModel.appTextColor)
+                            .foregroundColor(settingsViewModel.appTextColor)
 #else
 
-                    if UIDevice.current.userInterfaceIdiom != .phone {
-                        if #available(iOS 16.0, *) {
-                            NewViewerButton(settingsViewModel: settingsViewModel)
-                            //                        .buttonStyle(MyButtonStyle())
-                            //                        .font(.body)
-                            //                        .lineLimit(0)
-                            //                        .minimumScaleFactor(0.1)
-                            //                        .border(.secondary)
-                                .foregroundColor(settingsViewModel.appTextColor)
+                        if UIDevice.current.userInterfaceIdiom != .phone {
+                            if #available(iOS 16.0, *) {
+                                NewViewerButton(settingsViewModel: settingsViewModel)
+                                //                        .buttonStyle(MyButtonStyle())
+                                //                        .font(.body)
+                                //                        .lineLimit(0)
+                                //                        .minimumScaleFactor(0.1)
+                                //                        .border(.secondary)
+                                    .foregroundColor(settingsViewModel.appTextColor)
 #if !os(macOS)
-                                .hoverEffect(.automatic)
+                                    .hoverEffect(.automatic)
 #endif
+                            }
                         }
-                    }
 #endif
 
-                    if settingsViewModel.voiceOutputEnabled {
+                        if settingsViewModel.voiceOutputEnabled {
+                            Button(action: {
+                                DispatchQueue.main.async {
+                                    // Execute your action here
+                                    screamer.sendCommand(command: "st")
+                                    isInputViewShown = false
+                                }
+                            }) {
+                                VStack(spacing: 0)  {
+
+                                    resizableButtonImage(systemName:
+                                                            "stop.circle.fill",
+                                                         size: geometry.size)
+                                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                    .lineLimit(1)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+
+                                    Text("Stop voice" )
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.01)
+
+                                        .foregroundColor(settingsViewModel.appTextColor)
+                                }
+#if !os(xrOS)
+
+                                .background(settingsViewModel.buttonColor)
+#endif
+                            }
+                            .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                            .hoverEffect(.automatic)
+#endif
+                        }
+
                         Button(action: {
                             DispatchQueue.main.async {
-                                // Execute your action here
-                                screamer.sendCommand(command: "st")
+                                settingsViewModel.latestWindowManager = windowManager
+
+                                settingsViewModel.createAndOpenNewConvo()
+
+                                playSelect()
                                 isInputViewShown = false
+                                tabSelection = 1
                             }
                         }) {
                             VStack(spacing: 0)  {
-                                
                                 resizableButtonImage(systemName:
-                                                        "stop.circle.fill",
+                                                        "text.bubble.fill",
                                                      size: geometry.size)
                                 .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                                 .lineLimit(1)
+                                .font(.caption)
+
                                 .foregroundColor(settingsViewModel.appTextColor)
-                                
-                                Text("Stop voice" )
-                                    .font(.caption)
+
+                                Text("New chat" )
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.01)
-                                
+                                    .font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
 #if !os(xrOS)
-                            
+
                             .background(settingsViewModel.buttonColor)
 #endif
+
                         }
                         .buttonStyle(MyButtonStyle())
 #if !os(macOS)
@@ -131,47 +171,8 @@ struct ContentView: View {
 #endif
                     }
 
-                    Button(action: {
-                        DispatchQueue.main.async {
-                            settingsViewModel.latestWindowManager = windowManager
-
-                            settingsViewModel.createAndOpenNewConvo()
-
-                            playSelect()
-                            isInputViewShown = false
-                            tabSelection = 1
-                        }
-                    }) {
-                        VStack(spacing: 0)  {
-                            resizableButtonImage(systemName:
-                                                    "text.bubble.fill",
-                                                 size: geometry.size)
-                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                            .lineLimit(1)
-                            .font(.caption)
-
-                            .foregroundColor(settingsViewModel.appTextColor)
-
-                            Text("New chat" )
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.01)
-                                .font(.caption)
-                                .foregroundColor(settingsViewModel.appTextColor)
-                        }
-#if !os(xrOS)
-
-                        .background(settingsViewModel.buttonColor)
-#endif
-
-                    }
-                    .buttonStyle(MyButtonStyle())
-#if !os(macOS)
-                    .hoverEffect(.automatic)
-#endif
                 }
-
             }
-        }
 #endif
         }
     }
@@ -275,6 +276,9 @@ struct ContentView: View {
 #endif
 #if !os(macOS)
 #if !os(tvOS)
+
+#if os(xrOS)
+
                 // Handle dragging point for resize gesture.
                 if dragCursorPoint != .zero {
                     BezierShape(bezierPath: Beziers.createTopLeft())
@@ -282,6 +286,8 @@ struct ContentView: View {
                         .offset(x: min(max(dragCursorPoint.x, 0), size.width) , y: min(max(dragCursorPoint.y, 0), size.height))
                         .allowsTightening(false)
                 }
+#endif
+                
 #endif
 #endif
             }
@@ -382,6 +388,28 @@ struct ContentView: View {
         }
         .tag(4)
     }
+
+
+    func tabProjects(size: CGSize) -> some View {
+
+        ZStack {
+            VStack {
+                Text("Projects")
+                ProjectTab(settingsViewModel: settingsViewModel, windowManager: windowManager, projects: $settingsViewModel.projects, viewSize: $viewSize, showSettings: $showSettings, showAddView: $showAddView, tabSelection: $tabSelection)
+                    .transition(.move(edge: .leading))
+                    .background(settingsViewModel.buttonColor)
+                    .padding(.leading, 0)
+                    .zIndex(999)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            }
+        }
+        .tabItem {
+            Label("Projects", systemImage: "hammer.fill")
+                .accentColor(settingsViewModel.buttonColor)
+        }
+        .tag(-1)
+    }
+
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)
         if viewSize.size != size {

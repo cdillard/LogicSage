@@ -164,6 +164,7 @@
 		B77750702A4346ED00E836D3 /* CustomPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B777506F2A4346ED00E836D3 /* CustomPointerView.swift */; };
 		B779DE992A51F75200A90331 /* SettingsViewModel+Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B779DE982A51F75200A90331 /* SettingsViewModel+Model.swift */; };
 		B779DE9B2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B779DE9A2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift */; };
+		B78BE33A2AAE283100F1F001 /* ProjectTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78BE3392AAE283100F1F001 /* ProjectTab.swift */; };
 		B78DA95F2A02AF01002343AB /* InstructionsPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */; };
 		B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */; };
 		B78DA9662A02AF3A002343AB /* SpinnerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78DA9622A02AF3A002343AB /* SpinnerThread.swift */; };
@@ -318,7 +319,6 @@
 		B7191F1529F9F09A00078D8D /* SourceCodeTextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextEditor.swift; sourceTree = "<group>"; };
 		B71C62DE29FCAD3E004296E4 /* Screamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screamer.swift; sourceTree = "<group>"; };
 		B71C62E029FDE0D7004296E4 /* Speak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
-		B71C62E629FEB7BB004296E4 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/Speech.framework; sourceTree = DEVELOPER_DIR; };
 		B71C62EB2A00312A004296E4 /* BGHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGHandler.swift; sourceTree = "<group>"; };
 		B71C62F42A018B5B004296E4 /* GPTCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTCommand.swift; sourceTree = "<group>"; };
 		B71C62F72A018C6D004296E4 /* Reset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reset.swift; sourceTree = "<group>"; };
@@ -345,7 +345,6 @@
 		B746DFD129F5E78A002804EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B746DFD329F5E78A002804EB /* SwiftSageiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftSageiOS.entitlements; sourceTree = "<group>"; };
 		B746DFD529F5E78A002804EB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		B748C2FA29F5FF4A000F5F14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B74A2CA529F7F6990051DB52 /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		B74A2CA629F7F6990051DB52 /* FoundationTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationTransport.swift; sourceTree = "<group>"; };
@@ -436,6 +435,7 @@
 		B777506F2A4346ED00E836D3 /* CustomPointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointerView.swift; sourceTree = "<group>"; };
 		B779DE982A51F75200A90331 /* SettingsViewModel+Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Model.swift"; sourceTree = "<group>"; };
 		B779DE9A2A51F77100A90331 /* SettingsViewModel+SystemPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+SystemPrompt.swift"; sourceTree = "<group>"; };
+		B78BE3392AAE283100F1F001 /* ProjectTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTab.swift; sourceTree = "<group>"; };
 		B78DA95E2A02AF01002343AB /* InstructionsPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsPopup.swift; sourceTree = "<group>"; };
 		B78DA9612A02AF3A002343AB /* AsciiAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsciiAnimator.swift; sourceTree = "<group>"; };
 		B78DA9622A02AF3A002343AB /* SpinnerThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerThread.swift; sourceTree = "<group>"; };
@@ -673,10 +673,9 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B7347CCF2A5CBEAA0055D8F7 /* AudioView.swift */,
-				B7BD8E232A887C3D007E5ACD /* XR */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B75880C82A489E56007A1179 /* AnimatedArrow.swift */,
+				B7347CCF2A5CBEAA0055D8F7 /* AudioView.swift */,
 				B75880CA2A489E78007A1179 /* CheckmarkView.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
@@ -691,6 +690,7 @@
 				B7BA52EF2A4A141600D03DF0 /* NewViewerButton.swift */,
 				B7E2A94B2A4CB6730050F995 /* SageMultiView */,
 				B7E2A94D2A4CB6AB0050F995 /* Window */,
+				B7BD8E232A887C3D007E5ACD /* XR */,
 			);
 			path = ViewViewModel;
 			sourceTree = "<group>";
@@ -709,7 +709,6 @@
 		B746DFC129F5E789002804EB = {
 			isa = PBXGroup;
 			children = (
-				B748C2ED29F5EA4C000F5F14 /* Frameworks */,
 				B746DFCC29F5E789002804EB /* LogicSage */,
 				B7F3DDD52A512EDD00219886 /* LogicSage.xctestplan */,
 				B78EAF7F2A13B7D4003095A2 /* LogicSageTests */,
@@ -734,7 +733,6 @@
 		B746DFCC29F5E789002804EB /* LogicSage */ = {
 			isa = PBXGroup;
 			children = (
-				B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */,
 				B7A2B4732A8D1E4B00E0D033 /* LogicSageTogether.swift */,
 				B7F95D302A58B0020097FFC8 /* AppModel.swift */,
 				B746DFD129F5E78A002804EB /* Assets.xcassets */,
@@ -763,15 +761,6 @@
 				B746DFD529F5E78A002804EB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		B748C2ED29F5EA4C000F5F14 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B71C62E629FEB7BB004296E4 /* Speech.framework */,
-				B748C2EE29F5EA4C000F5F14 /* MultipeerConnectivity.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B74A2CA329F7F6990051DB52 /* Starscream */ = {
@@ -1068,6 +1057,7 @@
 		B78EAF5D2A108516003095A2 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
+				B78BE3392AAE283100F1F001 /* ProjectTab.swift */,
 				B78EAF5F2A117482003095A2 /* ChangeList.swift */,
 				B78DA9752A04A0A5002343AB /* RepositoryTreeView.swift */,
 				B78DA9892A080037002343AB /* WindowList.swift */,
@@ -1131,6 +1121,7 @@
 		B7BD8E232A887C3D007E5ACD /* XR */ = {
 			isa = PBXGroup;
 			children = (
+				B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */,
 				B7122A762A53E725005DCCE6 /* ToggleImmersion.swift */,
 				B7FFAAD82A5745CF00AB7590 /* ToggleImmersiveLogo.swift */,
 				B7FFAAD62A5744B300AB7590 /* ImmersiveLogoView.swift */,
@@ -1429,6 +1420,7 @@
 				B75286062A848DAE007DCFF9 /* Entry.swift in Sources */,
 				B7191F2329F9F09A00078D8D /* SyntaxColorTheme.swift in Sources */,
 				B710CF082A7F5E65008C06CC /* CoreBPE.swift in Sources */,
+				B78BE33A2AAE283100F1F001 /* ProjectTab.swift in Sources */,
 				B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */,
 				B7544E382A191BCE00961F4C /* AudioTranslationResult.swift in Sources */,
 				B7544E3F2A191BCE00961F4C /* ModerationsResult.swift in Sources */,

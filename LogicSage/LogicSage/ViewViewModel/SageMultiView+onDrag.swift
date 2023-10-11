@@ -18,7 +18,7 @@ import Combine
 extension SageMultiView {
     // WARNING: This code isn't great.
     func dragsOnChange(value: DragGesture.Value?, _ interactive: Bool = true) {
-        if !isDragDisabled {
+      //  if !isDragDisabled {
             if !isMoveGestureActivated {
                 if interactive {
                     self.windowManager.bringWindowToFront(window: self.window)
@@ -241,6 +241,6 @@ extension SageMultiView {
             position = CGSize(width:setX,height:setY)
 #endif
         }
-    }
+    //}
 }
 #endif

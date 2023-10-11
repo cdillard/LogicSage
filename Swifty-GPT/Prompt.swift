@@ -5,13 +5,6 @@
 //  Created by Chris Dillard on 4/12/23.
 //
 
-// TODO: SOURCE CODE SUMMARIZATION
-// Nex't w'll consider adding source code summarization when passing it back and forth aka
-// fileContents is substituted with this format placeholder.
-// [SymbolDetail.swift source code]
-// [Symbol.swift source code]
-
-
 func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
 
     let googleStringInclude = !noGoogle ? "{\"command\": \"Google\",\"name\": \"EXC_BAD_ACCESS\"}," : ""

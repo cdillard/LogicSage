@@ -13,15 +13,17 @@ struct Message {
     var content: String
     var createdAt: Date
     var culled: Bool?
+    var invisible: Bool?
 }
 
 extension Message: Equatable, Codable, Hashable, Identifiable {}
 
 struct Conversation {
-    init(id: String, messages: [Message] = [], model: String? = nil) {
+    init(id: String, messages: [Message] = [], model: String? = nil, temperature: Double? = nil) {
         self.id = id
         self.messages = messages
         self.model = model
+        self.temperature = temperature
     }
     
     typealias ID = String
@@ -35,7 +37,7 @@ struct Conversation {
     var systemPrompt: String?
     var tokens: Int?
     var hasAddedToolPrompt: Bool?
-
+    var temperature: Double?
 
 }
 

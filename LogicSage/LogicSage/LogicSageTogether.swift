@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The activity that users use to draw together.
-*/
-
 import Foundation
 import GroupActivities
 

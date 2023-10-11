@@ -11,17 +11,14 @@ import SwiftUI
 struct GlobeControls: View {
     @EnvironmentObject var appModel: AppModel
 
-
     var body: some View {
-
-
         HStack(spacing: 17) {
             Toggle(isOn:$appModel.isTranslating) {
-                Label("Translate", systemImage: "sun.max")
+                Label("Translate", systemImage: "move.3d")
             }
 
             .onChange(of: appModel.isTranslating) {
-                print("new trans value = \($appModel.isTranslating)")
+                print("new translate value = \($appModel.isTranslating)")
             }
 
             Toggle(isOn: $appModel.isRotating) {

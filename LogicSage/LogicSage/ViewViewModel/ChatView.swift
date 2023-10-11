@@ -42,6 +42,8 @@ struct ChatView: View {
     @State private var showCheckmark: Bool = false
 
     @State private var choseBuiltInPrompt: String = ""
+    @State private var choseBuiltInModel: String = ""
+
     @FocusState var inFocus
     @Binding var focused: Bool
 
@@ -92,13 +94,13 @@ struct ChatView: View {
                     //                    // TODO: Fix to use proper published.
 
                 }
-                .frame(height: geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight)
+                .frame(height: max(geometry.size.height/2,geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight))
 
 #endif
 #if !os(tvOS)
 
                 messgeEntry(size: geometry.size)
-                    .padding(.trailing, settingsViewModel.cornerHandleSize)
+                    .padding(.trailing, focused ? 0 : settingsViewModel.cornerHandleSize)
                     .padding(.bottom,4)
                     .frame(height: textEditorHeight + 30)
                     .background(settingsViewModel.backgroundColorSrcEditor)
@@ -152,38 +154,36 @@ struct ChatView: View {
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor + 2))
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
                         .allowsHitTesting(false)
+                }
+                .border(.secondary)
 
-                    if keyboardHeight != 0 && inFocus {
-                        AnimatedArrow()
-                            .frame(width: 10, height: 10)
-                            .zIndex(994)
-                    }
-                }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
-                    .padding(.bottom, 0)
-                    .gesture(
-                        DragGesture(minimumDistance: 5, coordinateSpace: .local)
-                            .onChanged { value in
-                                if value.startLocation.y < value.location.y {
-                                    isDraggedDown = true
-                                } else {
-                                    isDraggedDown = false
-                                }
-                                lastDragLocation = value.location.y
-                            }
-                            .onEnded { value in
-
+                .cornerRadius(8)
+                .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+                .padding(.bottom, 0)
+                .gesture(
+                    DragGesture(minimumDistance: 5, coordinateSpace: .local)
+                        .onChanged { value in
+                            if value.startLocation.y < value.location.y {
+                                isDraggedDown = true
+                            } else {
                                 isDraggedDown = false
                             }
-                    )
-                    .onChange(of: isDraggedDown) { isDraggedDown in
+                            lastDragLocation = value.location.y
+                        }
+                        .onEnded { value in
+
+                            isDraggedDown = false
+                        }
+                )
+                .onChange(of: isDraggedDown) { isDraggedDown in
 #if !os(macOS)
-                        hideKeyboard()
+                    hideKeyboard()
 #endif
-                    }
+                }
             }
 
 
-            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt, conversation: $sageMultiViewModel.conversation)
+            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt, choseBuiltInModel: $choseBuiltInModel, conversation: $sageMultiViewModel.conversation)
                 .onChange(of: choseBuiltInPrompt) { value in
 
                     logD("EDIT SYSTEM PROMPT TO \(choseBuiltInPrompt)")
@@ -193,9 +193,36 @@ struct ChatView: View {
 
                     }
                     editingSystemPrompt = false
+
+                    // UPDATE CHAT WHEN SETING built in prompt
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if let convoId = sageMultiViewModel.windowInfo.convoId {
+
+                            let convo = settingsViewModel.getConvo(convoId)
+                            DispatchQueue.main.async {
+                                sageMultiViewModel.conversation = convo ?? Conversation(id:"-1")
+                            }
+                        }
+
+                    }
+                }
+                .onChange(of: choseBuiltInModel) { value in
+                    // UPDATE CHAT WHEN SETING built in model
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if let convoId = sageMultiViewModel.windowInfo.convoId {
+
+                            var convo = settingsViewModel.getConvo(convoId)
+                            convo?.model = choseBuiltInModel
+                            DispatchQueue.main.async {
+                                sageMultiViewModel.conversation = convo ?? Conversation(id:"-1")
+                            }
+                        }
+
+                    }
                 }
                 .foregroundColor(SettingsViewModel.shared.buttonColor)
 
+                .padding(.leading,8)
                 .padding(.trailing,8)
 #if !os(macOS)
                 .hoverEffect(.automatic)
