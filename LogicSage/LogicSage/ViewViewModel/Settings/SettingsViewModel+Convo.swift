@@ -89,13 +89,16 @@ extension SettingsViewModel {
         SettingsViewModel.shared.conversations[conversationIndex].name = newName
 
         saveConvosToDisk()
+
+        performConvoUpdate(index: conversationIndex)
+
     }
     func saveConvosToDisk() {
         saveConversationContentToDisk(object: conversations, forKey: jsonFileName)
     }
     func setSystemPromptIfNeeded(index: Int, systemMessage: String) {
         let msgCount = self.conversations[index].messages.count
-        if msgCount == 1 {
+        if msgCount == 0 {
             self.conversations[index].messages.insert(Message(
                 id: SettingsViewModel.shared.idProvider(),
                 role: .system,
@@ -272,6 +275,12 @@ extension SettingsViewModel {
         SettingsViewModel.shared.conversations[conversationIndex].systemPrompt = newMessage
 
         saveConvosToDisk()
+
+        setSystemPromptIfNeeded(index: conversationIndex, systemMessage: newMessage)
+
+        performConvoUpdate(index: conversationIndex)
+
+
     }
 
     func avatarTextForRole(role: Chat.Role) -> String {

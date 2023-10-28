@@ -11,7 +11,6 @@
 
 Chat with GPT using tools (google, link) which allow incorporation of Google Search results into GPT responses.
 
-
 ## Getting Started with LogicSage: iOS, iPadOS
 
 #### Chat and copy code snippets:
@@ -29,7 +28,7 @@ Chat with GPT using tools (google, link) which allow incorporation of Google Sea
 https://developers.google.com/custom-search/v1/introduction
 
 - Get a Google Search API Key and Secret from Google Developer Console.
-- Enter Google Search API Key and GooglE Search API Secret in Settings tab of app.
+- Enter Google Search API Key and Google Search API Secret in Settings tab of app.
 - Change model to `gpt-4-0314-web-browsing*` (this is added by LogicSage.)
 
 ### Use LogicSage with Mac by connecting to the LogicSageCommandLine app!
@@ -37,6 +36,30 @@ https://developers.google.com/custom-search/v1/introduction
 (WIP) MacOS / iOS GPT Middleware that allows GPT to build, run, and test Xcode projects. 
 
 When connected to the LogicSageCommandLine you can use the "Term" window from the LogicSage app, This allows you to invoke the commands on your mac from your device.
+
+- Using LogicSage for Mac to launch the LogicSageCommandLine which allows 
+-	to open / build AI geneaterated Xcode projects on your Mac.
+-   open/run/edit Xcode projects on iOS. (Work in Progress)
+
+0. Go to the root of your MacOS user directory (~)
+	- `cd ~`
+
+1. Clone the repository: `git clone https://github.com/cdillard/LogicSage.git`
+	- You should now have the repository checked out in `~/LogicSage/`
+2. Open `~/LogicSage/` in Finder.
+3. Open `LogicSageCommandLine.xcworkspace` by double clicking it.
+4. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+
+	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the LogicSageWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
+
+5. Download and run LogicSage.app from Releases.
+
+6. Select `Start server` 
+
+7. Observe launched Terminal windows running LogicSageCommandLine.
+
+8. Create folder `~/Documents/LogicSageWorkspace`
+9. Create folder `~/Documents/LogicSageForMacWorkspace`
 
 ---
 ## Disclaimer

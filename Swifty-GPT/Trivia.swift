@@ -14,39 +14,6 @@ struct TriviaQuestion {
     let reference: String
 }
 
-func printRandomUnusedTrivia() {
-    guard !trivialQs.isEmpty else { print("nope no qs") ; return }
-    let randDex = Int.random(in: 0...trivialQs.count - 1)
-
-    config.chosenTQ = trivialQs[randDex]
-    guard let tq = config.chosenTQ else { return print("no q.. failed.") }
-
-    printTrivia(tq, index: randDex)
-}
-
-func printTrivia(_ trivia: TriviaQuestion, index: Int) {
-    multiPrinter("---------\n")
-    multiPrinter("Trivia Question:")
-    multiPrinter(trivia.question)
-
-    if trivia.code?.isEmpty == false {
-        multiPrinter("\nCode:")
-        multiPrinter(trivia.code ?? "")
-    }
-
-    multiPrinter("\nOptions:")
-
-    for (optionIndex, option) in trivia.options.enumerated() {
-        multiPrinter("\(optionIndex + 1). \(option)")
-    }
-    if !trivia.reference.isEmpty {
-        multiPrinter("\nReference:")
-        multiPrinter(trivia.reference)
-    }
-    multiPrinter("---------")
-    multiPrinter("Choose correct answer [1-4], or quit w/ `q`?")
-}
-
 func parseMarkdown(_ content: String) -> [TriviaQuestion] {
     let lines = content.components(separatedBy: .newlines)
     var questions: [TriviaQuestion] = []

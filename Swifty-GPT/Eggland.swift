@@ -13,9 +13,6 @@ func sageCommand(input: String) {
 func alienCommand(input: String) {
     multiPrinter(alien)
 }
-func triviaCommand(input: String) {
-    printRandomUnusedTrivia()
-}
 
 func encourageCommand(input: String) {
     let il = """

@@ -185,7 +185,7 @@ class GPT {
             existingMsgs += Array(conversation.messages.filter { $0.role != .system }.prefix(2))
 
 
-            guard force || conversation.messages.filter { $0.role != .system }.count <= 3 else {
+            guard force || conversation.messages.filter({ $0.role != .system }).count <= 3 else {
                 print("exit gen title because force or existing msg count")
                 return
             }

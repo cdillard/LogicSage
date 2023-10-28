@@ -143,7 +143,7 @@ struct AudioView: View {
                             }
                         }
                         .listRowBackground(settingsViewModel.backgroundColor)
-                        .frame(height: CGFloat(size.height / 2.5))
+                        .frame(height: CGFloat(size.height / 2))
                     }
             }
             .frame( maxWidth: .infinity, maxHeight: .infinity)

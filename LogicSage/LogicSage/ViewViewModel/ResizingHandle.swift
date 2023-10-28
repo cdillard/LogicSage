@@ -23,6 +23,7 @@ struct ResizableViewModifier: ViewModifier {
     @Binding var position: CGSize
     @Binding var keyboardHeight: CGFloat
     @Binding var dragCursorPoint: CGPoint
+    @Binding var focused: Bool
 
     func body(content: Content) -> some View {
         content
@@ -32,15 +33,13 @@ struct ResizableViewModifier: ViewModifier {
                     ResizingHandle(positionLocation: .topTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     ResizingHandle(positionLocation: .topLeading, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
                     if keyboardHeight == 0 {
-                        ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
-                            .offset(y: window.windowType == .chat ?  -keyboardHeight : 0)
+                        if !focused {
+                            ResizingHandle(positionLocation: .bottomTrailing, frame: $frame, handleSize: handleSize, windowManager: windowManager, window: window, resizeOffset: $resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewSize, position: $position,  keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
+                                .offset(y: window.windowType == .chat ?  -keyboardHeight : 0)
+                        }
                     }
                 }
-                
             )
-//#if os(xrOS)
-//        .glassBackgroundEffect()
-//        #endif
     }
 }
 
@@ -71,17 +70,15 @@ struct ResizingHandle: View {
         GeometryReader { reader in
             let point = positionPoint(for: positionLocation)
             ZStack {
-//                if activeDragLocation == .zero {
 
-                    Circle()
-                        .fill(SettingsViewModel.shared.buttonColor)
-                        .frame(width: handleSize, height: handleSize)
-                        .offset(CGSize(width: point.x, height: point.y))
-                        .opacity(0.06)
+                Circle()
+                    .fill(SettingsViewModel.shared.buttonColor)
+                    .frame(width: handleSize, height: handleSize)
+                    .offset(CGSize(width: point.x, height: point.y))
+                    .opacity(0.06)
 #if !os(macOS)
-                        .hoverEffect(.lift)
+                    .hoverEffect(.lift)
 #endif
-//                }
 
 #if !os(macOS)
 #if !os(tvOS)
@@ -176,7 +173,6 @@ struct ResizingHandle: View {
         let minSize: CGFloat = 269.666
         let minSizeHeight: CGFloat = 299.666
 
-
         // Smoothly interpolate towards the new size
         let newOffsetX: CGFloat
         let newOffsetY: CGFloat
@@ -247,7 +243,6 @@ struct ResizingHandle: View {
                 position.height += newOffsetY / 2
 
             }
-
         }
         //        print("resizeOffset = \(resizeOffset)")
     }

@@ -72,16 +72,10 @@ var commandTable: [String: (String) -> Void] = [
     "setVoice": setVoice,
 
 
-
-    "therapy": therapyCommand,
-
     "delete": deleteCommand,
     "del": deleteCommand,
     "globals": globalsCommand,
 
-    // Experimental
-    "trivia": triviaCommand,
-    "t": triviaCommand,
 
     // VERY Experimental
     "simulator": simulatorCommand,
@@ -91,10 +85,8 @@ var commandTable: [String: (String) -> Void] = [
     "upload": uploadCommand,
     "download": downloadCommand,
 
-
     // Testing
     "testLoad": testLoadCommand,
-
     "ethics": ethicsCommand,
     // Eggs
     "encourage": encourageCommand,

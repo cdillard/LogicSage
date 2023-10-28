@@ -87,12 +87,7 @@ struct ChatView: View {
                                 }
                             }
                         }
-                        //let convo = settingsViewModel.getConvo(convoId)
-                        //    sageMultiViewModel.conversation = convo
-                        //   tokenCount = sageMultiViewModel.conversation?.tokens ?? 0
                     }
-                    //                    // TODO: Fix to use proper published.
-
                 }
                 .frame(height: max(geometry.size.height/2,geometry.size.height - textEditorHeight - 30 - usableKeyboardHeight))
 

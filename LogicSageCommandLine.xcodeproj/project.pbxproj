@@ -33,7 +33,6 @@
 		B71EB8752A20F8D000D87C6F /* LogicWebsocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */; };
 		B71EB8772A213F5400D87C6F /* WorkspaceCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71EB8762A213F5400D87C6F /* WorkspaceCommands.swift */; };
 		B71EB87A2A21510D00D87C6F /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B71EB8792A21510D00D87C6F /* ZIPFoundation */; };
-		B729B14029F99DA800BA6752 /* Therapy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B729B13F29F99DA800BA6752 /* Therapy.swift */; };
 		B737F40529F8153B00E57577 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F40429F8153B00E57577 /* Spotify.swift */; };
 		B737F41529F8955100E57577 /* ScreenCaptureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B737F41429F8955100E57577 /* ScreenCaptureKit.framework */; };
 		B737F41B29F8961200E57577 /* ScreenCaptureKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737F41A29F8961200E57577 /* ScreenCaptureKitWrapper.swift */; };
@@ -178,7 +177,6 @@
 		B71C62F12A00A47F004296E4 /* Multiprinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiprinter.swift; sourceTree = "<group>"; };
 		B71EB8742A20F8D000D87C6F /* LogicWebsocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicWebsocketClient.swift; sourceTree = "<group>"; };
 		B71EB8762A213F5400D87C6F /* WorkspaceCommands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceCommands.swift; sourceTree = "<group>"; };
-		B729B13F29F99DA800BA6752 /* Therapy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Therapy.swift; sourceTree = "<group>"; };
 		B72CDF7129E72E3E0041D704 /* dots_boxes_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dots_boxes_prompt.txt; sourceTree = "<group>"; };
 		B737F40429F8153B00E57577 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
 		B737F41429F8955100E57577 /* ScreenCaptureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenCaptureKit.framework; path = System/Library/Frameworks/ScreenCaptureKit.framework; sourceTree = SDKROOT; };
@@ -361,7 +359,6 @@
 				B74B21D72A1D1D1100B3282E /* SwiftStageStatusBar */,
 				B7E576C629EBE74200CB6A10 /* Swifty-GPT-Bridging-Header.h */,
 				B7139CE729E1EDBA0049ADE1 /* Swifty-GPT.entitlements */,
-				B729B13F29F99DA800BA6752 /* Therapy.swift */,
 				B74B21D62A1D1CF700B3282E /* trivia */,
 				B729B14329F9B42800BA6752 /* Utilities */,
 				B7D6517329EC847E00ED8BAE /* whisper.h */,
@@ -724,7 +721,6 @@
 				B774605C29FBF12F00E7C46B /* StarTrekSimuilator.swift in Sources */,
 				B7E13A3F2A50B57D00C2B7C0 /* ModerationsQuery.swift in Sources */,
 				B7E13A502A50B57D00C2B7C0 /* ImagesQuery.swift in Sources */,
-				B729B14029F99DA800BA6752 /* Therapy.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B7E13A622A50B57D00C2B7C0 /* URLSessionDataTaskProtocol.swift in Sources */,
 				B7E13A462A50B57D00C2B7C0 /* EditsResult.swift in Sources */,

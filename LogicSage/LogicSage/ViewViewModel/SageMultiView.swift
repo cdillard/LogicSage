@@ -57,7 +57,6 @@ struct SageMultiView: View {
     @Binding var position: CGSize
     @Binding var isMoveGestureActivated: Bool
     @State var webViewURL: URL?
-   // @State var isDragDisabled = false
     @Binding var viewSize: CGRect
     @Binding var resizeOffset: CGSize
     @Binding var bumping: Bool
@@ -71,7 +70,7 @@ struct SageMultiView: View {
     @State var isLockToBottomEditor = false
     @State var currentURL = URL(string: "https:/www.google.com/")!
 
-    @State var focused = false
+    @Binding var focused: Bool
 
     var body: some View {
         GeometryReader { geometry in
@@ -156,9 +155,7 @@ struct SageMultiView: View {
                         Spacer()
                     }
 #if !os(tvOS)
-//                    .onChange(of: viewSize) { newViewSize in
-//                        recalculateWindowSize(size: newViewSize.size)
-//                    }
+
                     .onChange(of: geometry.size) { size in
                         recalculateWindowSize(size: geometry.size)
                     }
@@ -183,7 +180,6 @@ struct SageMultiView: View {
 #endif
                     .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat && focused ? keyboardHeight : 0))
 #if !os(tvOS)
-//                    .if(!isDragDisabled) { view in
                     .gesture(
                             DragGesture(minimumDistance: 3)
                                 .onChanged { value in
@@ -220,8 +216,6 @@ struct SageMultiView: View {
                         .simultaneousGesture(TapGesture().onEnded {
                             self.windowManager.bringWindowToFront(window: self.window)
                         })
-
-//                    }
 #endif
                 }
 
@@ -317,9 +311,6 @@ struct SageMultiView: View {
             }
 
         }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight, sageMultiViewModel: sageMultiViewModel)
-
-//        .if(!isDragDisabled) { view in
-
             .simultaneousGesture(
                 DragGesture(minimumDistance: 3)
                     .onChanged { value in
@@ -356,8 +347,6 @@ struct SageMultiView: View {
             .simultaneousGesture(TapGesture().onEnded {
                 self.windowManager.bringWindowToFront(window: self.window)
             })
-
-     //   }
 #else
         VStack {}
 #endif
@@ -426,52 +415,3 @@ struct SageMultiView: View {
 #endif
 
 }
-//#if !os(tvOS)
-//
-//class WebViewStore: ObservableObject {
-//    @Published var webView: WKWebView = WKWebView()
-//}
-//#if !os(macOS)
-//#if !os(tvOS)
-//
-//struct WebView: UIViewRepresentable {
-//    let url: URL
-//    @Binding var currentURL: URL
-//
-//    @ObservedObject var webViewStore: WebViewStore
-//
-//    let request: URLRequest
-//
-//    func makeUIView(context: Context) -> WKWebView {
-//        webViewStore.webView.navigationDelegate = context.coordinator
-//        return webViewStore.webView
-//    }
-//
-//    func updateUIView(_ webView: WKWebView, context: Context) {
-//        if webView.url == nil {
-//            webView.load(request)
-//        }
-//    }
-//
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//
-//    class Coordinator: NSObject, WKNavigationDelegate {
-//        var parent: WebView
-//        init(_ parent: WebView) {
-//            self.parent = parent
-//        }
-//
-//        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//            if let url = navigationAction.request.url {
-//                parent.currentURL = url // Intercept URL
-//            }
-//            decisionHandler(.allow)
-//        }
-//    }
-//}
-//
-//#endif
-//#endif
-//#endif

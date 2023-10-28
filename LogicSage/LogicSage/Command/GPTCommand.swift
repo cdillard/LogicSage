@@ -38,7 +38,7 @@ func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool 
         if config.enableGoogle && useGoogle {
             
             config.manualPromptString += """
-Using the listed tools below, answer the question below "Question to Answer". Think step by step.\n
+Using the link and google command up to 5 times each, answer the question below "Question to Answer". Think step by step.\n
 """
             if !config.manualPromptString.contains(googleTextSegment) {
                 config.manualPromptString += !useGoogle ? "" : googleTextSegment
