@@ -131,45 +131,6 @@ func handleUserInput() {
 
             }
 
-            if let tq = config.chosenTQ {
-                // Appearenlty questions have up to 8 multiple choice options.
-                if char >= "1" && char <= "8" {
-                    if Int(String(char)) ?? 0  == tq.correctOptionIndex + 1 {
-                        multiPrinter(" was correct! YAY")
-                        config.streak += 1
-                        printRandomUnusedTrivia()
-                    }
-                    else {
-                        if config.streak > 1 {
-                            multiPrinter("Incorrect! You better keep studying... you had a \(config.streak) q winning run!!!! GONE")
-
-                        }
-                        else if config.streak > 0 {
-                            multiPrinter("Incorrect! Keep studying...")
-
-                        }
-                        else {
-                            multiPrinter("Incorrect! Keep studying...")
-                        }
-                        config.streak = 0
-
-
-                    }
-                    config.chosenTQ = nil
-
-                }
-                else if char == "q" {
-                    multiPrinter("Exiting trivia...")
-
-                    config.chosenTQ = nil
-                }
-                else {
-                    multiPrinter("You are in trivia mode... exit with `q`")
-
-                }
-                continue
-            }
-
             if char == Character(UnicodeScalar(BACKSPACE)) {
                 if !parameter.isEmpty {
                     // Remove the last character from the parameter

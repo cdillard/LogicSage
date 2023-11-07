@@ -8,7 +8,9 @@
 import Foundation
 
 // DEFAULT IS NOW GPT-4 (due to its general availability)
-let defaultGPTModel = "gpt-4-0314"
+let defaultGPTModel = "gpt-4-1106-preview"
+
+//let defaultGPTModel = "gpt-4-0314"
 //let defaultGPTModel = "gpt-4"
 
 //let defaultGPTModel = "gpt-3.5-turbo"

@@ -29,6 +29,8 @@ var commandTable: [String: (String) -> Void] = [
 
     "xcode:": xcodeCommand,
     "idea:": ideaCommand,
+    "end": endCommand,
+
     "i": ideaCommand,  "I": ideaCommand,
 
     "google:": googleCommand,    "Google:": googleCommand,

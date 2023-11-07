@@ -246,6 +246,11 @@ func generateCodeUntilSuccessfulCompilation(prompt: String, retryLimit: Int, cur
     }
 }
 
+func endIdea() {
+    multiPrinter("Ending current idea - conversation history erased.")
+    conversation = nil
+}
+
 func logD(_ text: String) {
 //    SettingsViewModel.shared.logText(text)
     print(text)

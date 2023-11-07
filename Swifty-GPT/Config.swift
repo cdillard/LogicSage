@@ -10,7 +10,10 @@ import Foundation
 // OPEN AI SETTINGS
 
 // TODO: MOVE TO CONFIG
-let gptModel = "gpt-4-0314"
+
+let gptModel = "gpt-4-1106-preview"
+
+//let gptModel = "gpt-4-0314"
 
 //let gptModel = "gpt-4-0314-32k"
 

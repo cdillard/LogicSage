@@ -7,7 +7,7 @@
 
 import Foundation
 
-func buildProject(projectPath: String, scheme: String, device: String = "iPhone 14", completion: @escaping (Bool, [String]) -> Void) {
+func buildProject(projectPath: String, scheme: String, device: String = "iPhone 15 Pro Max", completion: @escaping (Bool, [String]) -> Void) {
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/bin/xcodebuild")
 
@@ -54,9 +54,9 @@ func buildProject(projectPath: String, scheme: String, device: String = "iPhone 
         multiPrinter("Build Errors: \(  errors2)")
     }
     else {
-        if !errors.isEmpty {
+       // if !errors.isEmpty {
             multiPrinter("Error: \(errorOutput)")
-        }
+       // }
     }
     if !errors.isEmpty {
         multiPrinter("Build ❌ : \(  errors)")

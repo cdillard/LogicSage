@@ -8,6 +8,7 @@
 import Foundation
 
 let aiModelOptions: [String] = [
+    "gpt-4-1106-preview",
     "gpt-4",
     "gpt-4-0314",
     "gpt-4-0314-ls-web-browsing",
@@ -20,6 +21,4 @@ let aiModelOptions: [String] = [
     "gpt-3.5-turbo-0613",
     "gpt-3.5-turbo-16k",
     "gpt-3.5-turbo-16k-0613",
-//    "gpt-3.5-turbo-instruct-0914",
-//    "gpt-3.5-turbo-instruct"
 ]

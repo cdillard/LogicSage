@@ -24,11 +24,8 @@ extension SettingsViewModel {
                 let encoded = encoder?.encode(value: msg.content)
                 let length = encoded?.count ?? 0
                 total += length
-
             }
-            
         }
-
 
         saveConvosToDisk()
 
@@ -259,7 +256,7 @@ extension SettingsViewModel {
 
     func convoName(_ convoId: Conversation.ID) -> String {
         if let conversation = conversations.first(where: { $0.id == convoId }) {
-            return conversation.name ?? String(convoId.prefix(4))
+            return conversation.name ?? "New Chat"//String(convoId.prefix(4))
         }
 
         return "Term"
@@ -279,8 +276,6 @@ extension SettingsViewModel {
         setSystemPromptIfNeeded(index: conversationIndex, systemMessage: newMessage)
 
         performConvoUpdate(index: conversationIndex)
-
-
     }
 
     func avatarTextForRole(role: Chat.Role) -> String {
