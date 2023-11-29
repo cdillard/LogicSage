@@ -16,16 +16,23 @@ struct Message {
     var invisible: Bool?
 }
 
+enum ConvoMode: Equatable, Codable, Hashable {
+    case chat
+    case assistant
+}
+
 extension Message: Equatable, Codable, Hashable, Identifiable {}
 
 struct Conversation {
-    init(id: String, messages: [Message] = [], model: String? = nil, temperature: Double? = nil) {
+    init(id: String, messages: [Message] = [], model: String? = nil, temperature: Double? = nil, mode: ConvoMode = .chat, assId: String? = nil) {
         self.id = id
         self.messages = messages
         self.model = model
         self.temperature = temperature
+        self.mode = mode
+        self.assId = assId
     }
-    
+
     typealias ID = String
     
     let id: String
@@ -38,6 +45,9 @@ struct Conversation {
     var tokens: Int?
     var hasAddedToolPrompt: Bool?
     var temperature: Double?
+    var mode: ConvoMode?
+    var assId: String?
+
 
 }
 

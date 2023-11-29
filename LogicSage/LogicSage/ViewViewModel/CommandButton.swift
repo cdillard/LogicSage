@@ -16,6 +16,12 @@ struct CommandButtonView: View {
     @ObservedObject var windowManager: WindowManager
     @Binding var isInputViewShown: Bool
 
+    // ASSISSTANT ATTRIB
+    @Binding  var showDialog: Bool
+    @Binding  var name: String
+    @Binding  var description: String
+    @Binding  var instructions: String
+
     //    @State private var isFilePickerShown = false
     //    @State private var picker = DocumentPicker()
 
@@ -126,6 +132,47 @@ struct CommandButtonView: View {
 #endif
                                 .cornerRadius(8)
 
+// NEW ASSISTANT BUTTON
+                    Button(action: {
+                        DispatchQueue.main.async {
+                            settingsViewModel.latestWindowManager = windowManager
+
+                            showDialog = true
+
+                            playSelect()
+                            isInputViewShown = false
+                        }
+                    }) {
+                        VStack(spacing: 0)  {
+                            resizableButtonImage(systemName:
+                                                    "face.dashed.fill",
+                                                 size: geometry.size)
+                            .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                            .lineLimit(1)
+                            .font(.caption)
+
+                            .foregroundColor(settingsViewModel.appTextColor)
+
+                            Text("New Assistant" )
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.01)
+                                .font(.caption)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                        }
+#if !os(xrOS)
+
+                        .background(settingsViewModel.buttonColor)
+#endif
+
+                    }
+                    .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                                .hoverEffect(.automatic)
+#endif
+                                .cornerRadius(8)
+
+
+// NEW CHAT BUTTON
 
                     Button(action: {
                         DispatchQueue.main.async {
@@ -169,6 +216,7 @@ struct CommandButtonView: View {
                 .padding()
             }
         }
+
     }
 
 

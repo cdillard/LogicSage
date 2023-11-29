@@ -53,6 +53,36 @@ public extension OpenAIProtocol {
             }
         }
     }
+    
+    func imageEdits(
+        query: ImageEditsQuery
+    ) async throws -> ImagesResult {
+        try await withCheckedThrowingContinuation { continuation in
+            imageEdits(query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+    
+    func imageVariations(
+        query: ImageVariationsQuery
+    ) async throws -> ImagesResult {
+        try await withCheckedThrowingContinuation { continuation in
+            imageVariations(query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
 
     func embeddings(
         query: EmbeddingsQuery
@@ -183,4 +213,115 @@ public extension OpenAIProtocol {
             }
         }
     }
+
+    // 1106
+    func assistants(
+        query: AssistantsQuery?,
+        method: String
+    ) async throws -> AssistantsResult {
+        try await withCheckedThrowingContinuation { continuation in
+            assistants(query: query, method: method) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func threads(
+        query: ThreadsQuery
+    ) async throws -> ThreadsResult {
+        try await withCheckedThrowingContinuation { continuation in
+            threads(query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func runs(
+        threadId: String,
+        query: RunsQuery
+    ) async throws -> RunsResult {
+        try await withCheckedThrowingContinuation { continuation in
+            runs(threadId: threadId, query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func runRetrieve(
+        threadId: String,
+        runId: String
+    ) async throws -> RunRetreiveResult {
+        try await withCheckedThrowingContinuation { continuation in
+            runRetrieve(threadId: threadId, runId: runId) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func threadsMessages(
+        threadId: String,
+        before: String?
+    ) async throws -> ThreadsMessagesResult {
+        try await withCheckedThrowingContinuation { continuation in
+            threadsMessages(threadId: threadId, before: before) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func threadsAddMessage(
+        threadId: String,
+        query: ThreadAddMessageQuery
+    ) async throws -> ThreadAddMessageResult {
+        try await withCheckedThrowingContinuation { continuation in
+            threadsAddMessage(threadId: threadId, query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+    func files(
+        query: FilesQuery
+    ) async throws -> FilesResult {
+        try await withCheckedThrowingContinuation { continuation in
+            files(query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+    // 1106 end
 }

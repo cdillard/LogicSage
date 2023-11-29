@@ -42,6 +42,20 @@ public extension OpenAIProtocol {
         }
         .eraseToAnyPublisher()
     }
+    
+    func imageEdits(query: ImageEditsQuery) -> AnyPublisher<ImagesResult, Error> {
+        Future<ImagesResult, Error> {
+            imageEdits(query: query, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func imageVariations(query: ImageVariationsQuery) -> AnyPublisher<ImagesResult, Error> {
+        Future<ImagesResult, Error> {
+            imageVariations(query: query, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
 
     func embeddings(query: EmbeddingsQuery) -> AnyPublisher<EmbeddingsResult, Error> {
         Future<EmbeddingsResult, Error> {
@@ -112,6 +126,44 @@ public extension OpenAIProtocol {
         }
         .eraseToAnyPublisher()
     }
+
+    // 1106
+    func assistants(query: AssistantsQuery?, method: String) -> AnyPublisher<AssistantsResult, Error> {
+        Future<AssistantsResult, Error> {
+            assistants(query: query, method: method, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func threads(query: ThreadsQuery) -> AnyPublisher<ThreadsResult, Error> {
+        Future<ThreadsResult, Error> {
+            threads(query: query, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func runs(threadId: String, query: RunsQuery) -> AnyPublisher<RunsResult, Error> {
+        Future<RunsResult, Error> {
+            runs(threadId: threadId, query: query, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func runRetrieve(threadId: String, runId: String) -> AnyPublisher<RunRetreiveResult, Error> {
+        Future<RunRetreiveResult, Error> {
+
+            runRetrieve(threadId: threadId, runId: runId, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func threadsMessages(threadId: String, before: String?) -> AnyPublisher<ThreadsMessagesResult, Error> {
+        Future<ThreadsMessagesResult, Error> {
+            threadsMessages(threadId: threadId, before: before, completion: $0)
+        }
+        .eraseToAnyPublisher()
+    }
+    // 1106 end
 }
 
 #endif

@@ -46,7 +46,7 @@ struct ChatView: View {
 
     @FocusState var inFocus
     @Binding var focused: Bool
-
+    @State private var isLoading = false
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -222,25 +222,31 @@ struct ChatView: View {
 #if !os(macOS)
                 .hoverEffect(.automatic)
 #endif
-            Button(action: {
-                doChat()
-            }) {
-                resizableButtonImage(systemName:
-                                        "paperplane.fill",
-                                     size: size)
-                .foregroundColor(SettingsViewModel.shared.buttonColor)
 
-                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
-                .background(Color.clear)
+            if isLoading {
+                     ProgressView()
+            } else {
 
-            }
-            .disabled(chatText.isEmpty)
+                Button(action: {
+                    doChat()
+                }) {
+                    resizableButtonImage(systemName:
+                                            "paperplane.fill",
+                                         size: size)
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+
+                    .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                    .background(Color.clear)
+
+                }
+                .disabled(chatText.isEmpty)
 #if os(xrOS)
-            .padding(.trailing,20)
+                .padding(.trailing,20)
 #endif
 #if !os(macOS)
-            .hoverEffect(.automatic)
+                .hoverEffect(.automatic)
 #endif
+            }
         }
     }
 #endif
@@ -286,7 +292,47 @@ struct ChatView: View {
                     screamer.sendCommand(command: chatText)
                 }
                 else {
-                    settingsViewModel.sendChatText(convoID, chatText: chatText)
+                    if sageMultiViewModel.conversation.mode == .assistant {
+                        // if assistant and do chat either start thread and or add message to assistant
+                        if sageMultiViewModel.conversation.messages.isEmpty {
+
+                            GPT.shared.createThread(messages: [Chat(role: .user, content: chatText)]) { resultId in
+
+                                if let threadId = resultId {
+                                    print("successfully created THREAD = \(threadId)")
+
+                                    print("Now lets do a run of thread")
+                                    
+                                    let runsQuery = RunsQuery(assistantId: sageMultiViewModel.conversation.assId ?? "")
+                                    GPT.shared.openAINonBg.runs(threadId: threadId, query: runsQuery) { result in
+                                        switch result {
+                                        case .success(let result):
+                                            print("Successfully started thread run \(result.id).. start polling")
+                                            isLoading = true
+
+                                            startPolling(threadId: threadId, runId: result.id)
+                                        case .failure(let error):
+                                            print("FAILED TO START thread run. error = \(error)")
+                                        }
+                                    }
+                                }
+                                else {
+                                    // FUCKING FAILURE
+                                    print("FAILED TO Create THREAD")
+                                }
+                            }
+                        }
+                        else {
+                            // Send msg to thread
+                            // TODO: HANDLE ADDING MESSAGES TO ALREADY CREATED THREAD
+                            print("Send msg to already created thread....")
+
+
+                        }
+                    }
+                    else {
+                        settingsViewModel.sendChatText(convoID, chatText: chatText)
+                    }
                 }
                 chatText = ""
             }
@@ -295,6 +341,59 @@ struct ChatView: View {
             }
         }
     }
+
+    func startPolling(threadId: String, runId: String) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+
+            GPT.shared.openAINonBg.runRetrieve(threadId: threadId, runId: runId) { retResult in
+                switch retResult {
+                case .success(let result):
+                    print(result.status)
+                    if result.status == "completed" {
+                        print("RUN COMPLETED - get messages")
+
+                        GPT.shared.openAINonBg.threadsMessages(threadId: threadId, before: nil) { result in
+                            switch result {
+                            case .success(let threadMessageResult):
+                                print("GOT THREADS MESSAGES = \(threadMessageResult)")
+
+                                for item in threadMessageResult.data.reversed() {
+                                    let role = item.role
+                                    for innerItem in item.content {
+
+                                        SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                                        message: Message(id: UUID().uuidString, role: Chat.Role(rawValue: role) ?? .user, content: innerItem.text.value, createdAt: Date()))
+
+                                    }
+                                }
+                                // IF we get here we need to parse the messages into the conversation tho keep in mind these are paginated results.
+
+                            case .failure(let error):
+                                print("ERROR GETTING MESSAGES = \(error.localizedDescription)")
+
+                            }
+                            isLoading = false
+
+                        }
+                    }
+                    else if result.status == "failed" {
+                        isLoading = false
+                    }
+                    else {
+                        isLoading = true
+                            startPolling(threadId: threadId, runId: runId)
+                    }
+                    break
+                case .failure(let error):
+                    print(error.localizedDescription)
+
+                    break
+                }
+            }
+        }
+    }
+
     func setLockToBottom() {
         isLockToBottom.toggle()
         if gestureDebugLogs {

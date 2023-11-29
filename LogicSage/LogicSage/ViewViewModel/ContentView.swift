@@ -45,6 +45,12 @@ struct ContentView: View {
     @State var keyboardHeight: CGFloat = 0
     @State var dragCursorPoint: CGPoint = .zero
 
+
+    @State  var showDialog: Bool = false
+    @State  var name: String = ""
+    @State  var description: String = ""
+    @State  var instructions: String = ""
+
 #if !os(macOS)
     let appearance: UITabBarAppearance = UITabBarAppearance()
     init(settingsViewModel: SettingsViewModel) {
@@ -132,6 +138,48 @@ struct ContentView: View {
 #endif
                         }
 
+
+// NEW ASSISTANT BUTTON
+
+                        Button(action: {
+                            DispatchQueue.main.async {
+                                settingsViewModel.latestWindowManager = windowManager
+
+                                showDialog = true
+                                
+                                playSelect()
+                                isInputViewShown = false
+                                tabSelection = 1
+                            }
+                        }) {
+                            VStack(spacing: 0)  {
+                                resizableButtonImage(systemName:
+                                                        "face.dashed.fill",
+                                                     size: geometry.size)
+                                .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
+                                .lineLimit(1)
+                                .font(.caption)
+
+                                .foregroundColor(settingsViewModel.appTextColor)
+
+                                Text("New Assistant")
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.01)
+                                    .font(.caption)
+                                    .foregroundColor(settingsViewModel.appTextColor)
+                            }
+#if !os(xrOS)
+
+                            .background(settingsViewModel.buttonColor)
+#endif
+
+                        }
+                        .buttonStyle(MyButtonStyle())
+#if !os(macOS)
+                        .hoverEffect(.automatic)
+#endif
+
+// NEW CHAT BUTTON
                         Button(action: {
                             DispatchQueue.main.async {
                                 settingsViewModel.latestWindowManager = windowManager
@@ -264,7 +312,7 @@ struct ContentView: View {
                     // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
                     VStack {
                         Spacer()
-                        CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown)
+                        CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, showDialog: $showDialog, name: $name, description: $description, instructions: $instructions)
                     }
                     .zIndex(-9)
                     .padding(.horizontal)
@@ -272,6 +320,7 @@ struct ContentView: View {
                     .padding(.leading, 8)
                     .padding(.trailing, 8)
                     .animation(.easeIn(duration:0.25), value:keyboardHeight == 0)
+
                 }
 #endif
 #if !os(macOS)
@@ -332,8 +381,49 @@ struct ContentView: View {
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(1)
+        .alert("Enter Assistant Details", isPresented: $showDialog) {
+            TextField("Name", text: $name)
+            TextField("Description", text: $description)
+            TextField("Instructions", text: $instructions)
+
+            Button("OK") {
+                // OK button tapped
+                handleOkTapped()
+            }
+            Button("Cancel", role: .cancel) {
+                // Cancel button tapped
+                // Usually no action is needed here as the button's default behavior is to dismiss the alert
+            }
+        } message: {
+            Text("Please enter the name and description.")
+        }
 
     }
+
+    private func handleOkTapped() {
+        // Perform the action when "OK" is tapped.
+        // You can include any logic here, such as validation and saving data.
+        if !name.isEmpty && !description.isEmpty {
+            // If the fields are not empty, handle the data.
+            print("Name: \(name), Description: \(description)")
+
+            GPT.shared.createAssistant(name: name, description: description, instructions: instructions) { resultId in
+
+                if let result = resultId {
+                    print("successfully created ass = \(result)")
+
+                    settingsViewModel.createAndOpenNewAssConvo(assId: result)
+                }
+                else {
+                    // FUCKING FAILURE
+                    print("FAILED TO LOAD ASS")
+                }
+            }
+
+        }
+        // Reset or handle empty fields if necessary.
+    }
+
     func tabTwo(size: CGSize) -> some View {
         ZStack {
             VStack {

@@ -4,12 +4,6 @@
 //
 //  Created by Chris Dillard on 5/2/23.
 //
-//
-//  GPT.swift
-//  Swifty-GPT
-//
-//  Created by Chris Dillard on 4/15/23.
-//
 
 import Foundation
 
@@ -17,6 +11,9 @@ class GPT {
     static let shared = GPT()
 
     var openAI: OpenAI
+
+    var openAINonBg: OpenAI
+
 
     init() {
         let host = SettingsViewModel.shared.openAIHost
@@ -27,6 +24,9 @@ class GPT {
         let session = URLSession(configuration: urlConfig)
 
         openAI = OpenAI(configuration: configuration, session: session)
+
+
+        openAINonBg = OpenAI(configuration: configuration, session: URLSession.shared)
 
         print("reset openAI global to host = \(host)")
 
@@ -40,6 +40,9 @@ class GPT {
         let session = URLSession(configuration: urlConfig)
 
         openAI = OpenAI(configuration: configuration, session: session)
+
+        openAINonBg = OpenAI(configuration: configuration, session: URLSession.shared)
+
         print("reset openAI global to host = \(host)")
     }
 

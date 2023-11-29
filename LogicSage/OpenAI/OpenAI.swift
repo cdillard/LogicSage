@@ -55,7 +55,38 @@ final public class OpenAI: OpenAIProtocol {
     public convenience init(configuration: Configuration, session: URLSession = URLSession.shared) {
         self.init(configuration: configuration, session: session as URLSessionProtocol)
     }
-    
+
+    // UPDATES FROM 11-06-23
+    public func threadsAddMessage(threadId: String, query: ThreadAddMessageQuery, completion: @escaping (Result<ThreadAddMessageResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<ThreadsMessagesResult>(body: query, url: buildRunsURL(path: .threadsMessages, threadId: threadId)), completion: completion)
+    }
+
+    public func threadsMessages(threadId: String, before: String?, completion: @escaping (Result<ThreadsMessagesResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<ThreadsMessagesResult>(body: nil, url: buildRunsURL(path: .threadsMessages, threadId: threadId, before: before), method: "GET"), completion: completion)
+    }
+
+    public func runRetrieve(threadId: String, runId: String, completion: @escaping (Result<RunRetreiveResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<RunRetreiveResult>(body: nil, url: buildRunRetrieveURL(path: .runRetrieve, threadId: threadId, runId: runId), method: "GET"), completion: completion)
+    }
+
+    public func runs(threadId: String, query: RunsQuery, completion: @escaping (Result<RunsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<RunsResult>(body: query, url: buildRunsURL(path: .runs, threadId: threadId)), completion: completion)
+    }
+
+    public func threads(query: ThreadsQuery, completion: @escaping (Result<ThreadsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<ThreadsResult>(body: query, url: buildURL(path: .threads)), completion: completion)
+    }
+
+    public func assistants(query: AssistantsQuery?, method: String, completion: @escaping (Result<AssistantsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<AssistantsResult>(body: query, url: buildURL(path: .assistants), method: method), completion: completion)
+    }
+
+    public func files(query: FilesQuery, completion: @escaping (Result<FilesResult, Error>) -> Void) {
+        performRequest(request: MultipartFormDataRequest<FilesResult>(body: query, url: buildURL(path: .files)), completion: completion)
+    }
+
+    // END UPDATES FROM 11-06-23
+
     public func completions(query: CompletionsQuery, completion: @escaping (Result<CompletionsResult, Error>) -> Void) {
         performRequest(request: JSONRequest<CompletionsResult>(body: query, url: buildURL(path: .completions)), completion: completion)
     }
@@ -66,6 +97,14 @@ final public class OpenAI: OpenAIProtocol {
     
     public func images(query: ImagesQuery, completion: @escaping (Result<ImagesResult, Error>) -> Void) {
         performRequest(request: JSONRequest<ImagesResult>(body: query, url: buildURL(path: .images)), completion: completion)
+    }
+    
+    public func imageEdits(query: ImageEditsQuery, completion: @escaping (Result<ImagesResult, Error>) -> Void) {
+        performRequest(request: MultipartFormDataRequest<ImagesResult>(body: query, url: buildURL(path: .imageEdits)), completion: completion)
+    }
+    
+    public func imageVariations(query: ImageVariationsQuery, completion: @escaping (Result<ImagesResult, Error>) -> Void) {
+        performRequest(request: MultipartFormDataRequest<ImagesResult>(body: query, url: buildURL(path: .imageVariations)), completion: completion)
     }
     
     public func embeddings(query: EmbeddingsQuery, completion: @escaping (Result<EmbeddingsResult, Error>) -> Void) {
@@ -122,6 +161,9 @@ extension OpenAI {
 
                 var apiError: Error? = nil
                 do {
+
+                    let errorText = String(data: data, encoding: .utf8)
+
                     let decoded = try JSONDecoder().decode(ResultType.self, from: data)
                     completion(.success(decoded))
                 } catch {
@@ -175,13 +217,43 @@ extension OpenAI {
         components.path = path
         return components.url!
     }
+
+    func buildRunsURL(path: String, threadId: String, before: String? = nil) -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = configuration.host
+        components.path = path.replacingOccurrences(of: "THREAD_ID", with: threadId)
+        if let before {
+            components.queryItems = [URLQueryItem(name: "before", value: before)]
+        }
+        return components.url!
+    }
+
+    func buildRunRetrieveURL(path: String, threadId: String, runId: String) -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = configuration.host
+        components.path = path.replacingOccurrences(of: "THREAD_ID", with: threadId)
+                              .replacingOccurrences(of: "RUN_ID", with: runId)
+        return components.url!
+    }
 }
 
 typealias APIPath = String
 extension APIPath {
-    
+    // 1106
+    static let assistants = "/v1/assistants"
+    // TODO: Implement Assistant Modify
+    static let assistantsModify = "/v1/assistants/ASST_ID"
+
+    static let threads = "/v1/threads"
+    static let runs = "/v1/threads/THREAD_ID/runs"
+    static let runRetrieve = "/v1/threads/THREAD_ID/runs/RUN_ID"
+    static let threadsMessages = "/v1/threads/THREAD_ID/messages"
+    static let files = "/v1/files"
+    // 1106 end
+
     static let completions = "/v1/completions"
-    static let images = "/v1/images/generations"
     static let embeddings = "/v1/embeddings"
     static let chats = "/v1/chat/completions"
     static let edits = "/v1/edits"
@@ -190,6 +262,10 @@ extension APIPath {
     
     static let audioTranscriptions = "/v1/audio/transcriptions"
     static let audioTranslations = "/v1/audio/translations"
+    
+    static let images = "/v1/images/generations"
+    static let imageEdits = "/v1/images/edits"
+    static let imageVariations = "/v1/images/variations"
     
     func withPath(_ path: String) -> String {
         self + "/" + path

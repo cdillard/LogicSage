@@ -119,6 +119,22 @@ extension SettingsViewModel {
         performConvoUpdate(index: index)
 
     }
+
+    func appendMessageToConvoId(_ convoId: Conversation.ID, message: Message) {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        self.conversations[conversationIndex].model = openAIModel
+        self.conversations[conversationIndex].messages.append(message)
+
+        performConvoUpdate(index: conversationIndex)
+
+        saveConvosToDisk()
+    }
+
+
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
         self.conversations[index].messages[existingMessageIndex] = message
 
@@ -136,8 +152,8 @@ extension SettingsViewModel {
         let googleAvail = SettingsViewModel.shared.googleAvailable()
         gptCommand(conversationId: convoID, input: chatText, useGoogle: googleAvail, useLink: googleAvail, qPrompt: googleAvail)
     }
-    func createConversation() -> Conversation.ID {
-        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel, temperature: 0.7)
+    func createConversation(mode: ConvoMode = .chat, assId: String? = nil) -> Conversation.ID {
+        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel, temperature: 0.7, mode: mode, assId: assId)
         conversations.append(conversation)
         print("created new convo = \(conversation.id)")
         return conversation.id
@@ -147,11 +163,21 @@ extension SettingsViewModel {
         latestWindowManager?.removeWindowsWithConvoId(convoID: conversationId)
         saveConvosToDisk()
     }
+
+    // NEW CONVERSATION (CHAT STREAM)
+
     func createAndOpenNewConvo() {
         let convo = createConversation()
         saveConvosToDisk()
         openConversation(convo)
     }
+
+    func createAndOpenNewAssConvo(assId: String) {
+        let convo = createConversation(mode: .assistant, assId: assId)
+        saveConvosToDisk()
+        openConversation(convo)
+    }
+
     func openConversation(_ convoId: Conversation.ID) {
         latestWindowManager?.removeWindowsWithConvoId(convoID: convoId)
         latestWindowManager?.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
@@ -241,6 +267,12 @@ extension SettingsViewModel {
     func convoText(_ newConversation: Conversation) -> String {
         let sysText = ""//newConversation.systemPrompt == nil ? "" : "system 🌱: \(newConversation.systemPrompt ?? "")"
         var retString  = "model: \(newConversation.model ?? "")\n\(sysText)\n"
+
+
+        if let assId = newConversation.assId {
+            retString += "Assistant Id: \(assId)\n"
+        }
+
         for msg in newConversation.messages {
             if msg.role == .system && msg.content == "" { continue }
             // TODO: Fix invisible messages
@@ -256,7 +288,17 @@ extension SettingsViewModel {
 
     func convoName(_ convoId: Conversation.ID) -> String {
         if let conversation = conversations.first(where: { $0.id == convoId }) {
-            return conversation.name ?? "New Chat"//String(convoId.prefix(4))
+            if let convoName = conversation.name {
+                return convoName
+            }
+            else {
+                if conversation.mode == .assistant {
+                    return "New Assistant"
+                }
+                else {
+                    return "New Chat"
+                }
+            }
         }
 
         return "Term"
