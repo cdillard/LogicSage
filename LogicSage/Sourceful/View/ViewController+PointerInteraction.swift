@@ -7,7 +7,7 @@
 
 import Foundation
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
 import UIKit

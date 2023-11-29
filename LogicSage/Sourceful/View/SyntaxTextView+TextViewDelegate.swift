@@ -64,7 +64,7 @@ extension SyntaxTextView {
 		
 		if let cachedTokens = cachedTokens {
 			
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 				if !textView.isCursorFloating {
 					updateEditorPlaceholders(cachedTokens: cachedTokens)
 				}

@@ -111,7 +111,7 @@ open class SyntaxTextView: NSView {
             }
 
             //            cachedThemeInfo = nil
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
             backgroundColor = theme.backgroundColor
 #endif
             textView.backgroundColor = theme.backgroundColor
@@ -167,7 +167,7 @@ open class SyntaxTextView: NSView {
         let containerSize = CGSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
 #endif
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
         let containerSize = CGSize(width: 0, height: 0)
 #endif
 
@@ -175,7 +175,7 @@ open class SyntaxTextView: NSView {
 
         textContainer.widthTracksTextView = true
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
         textContainer.heightTracksTextView = true
 #endif
         layoutManager.addTextContainer(textContainer)

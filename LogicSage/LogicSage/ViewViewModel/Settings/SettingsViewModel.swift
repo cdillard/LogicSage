@@ -249,7 +249,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var openAIKey = "" {
         didSet {
             let trimmedKey = openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
             UserDefaults.standard.set(trimmedKey, forKey: "openAIKey")
 #endif
@@ -270,7 +270,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var ghaPat = ""  {
         didSet {
             let trimmedKey = ghaPat.trimmingCharacters(in: .whitespacesAndNewlines)
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
             UserDefaults.standard.set(trimmedKey, forKey: ghaKeyKey)
 #endif
@@ -296,7 +296,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var googleKey = ""  {
         didSet {
             let trimmedKey = googleKey.trimmingCharacters(in: .whitespacesAndNewlines)
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
             UserDefaults.standard.set(trimmedKey, forKey: googleKeyKey)
 #endif
@@ -315,7 +315,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var googleSearchId = ""  {
         didSet {
             let trimmedKey = googleSearchId.trimmingCharacters(in: .whitespacesAndNewlines)
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
             UserDefaults.standard.set(trimmedKey, forKey: googleSearchIDKey)
 #endif
@@ -415,7 +415,7 @@ public class SettingsViewModel: ObservableObject {
                 return print("no review today")
             }
             print("SKStoreReviewController.requestReview")
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
             SKStoreReviewController.requestReview()
@@ -456,7 +456,7 @@ public class SettingsViewModel: ObservableObject {
             //            print("Error retrieving openAIKey")
             //            keychainManager.saveToKeychain(key:openAIKey, value: "")
         }
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
         if let key = UserDefaults.standard.string(forKey: "openAIKey") {
             self.openAIKey = key
@@ -473,7 +473,7 @@ public class SettingsViewModel: ObservableObject {
             //           keychainManager.saveToKeychain(key:ghaKeyKey, value: "")
         }
 
-#if os(xrOS)
+#if os(visionOS)
 #if targetEnvironment(simulator)
         if let key = UserDefaults.standard.string(forKey: ghaKeyKey) {
             self.ghaPat = key

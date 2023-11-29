@@ -333,7 +333,7 @@ struct SettingsView: View {
 
                     .submitLabel(.done)
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                     .scrollDismissesKeyboard(.interactively)
 #endif
                     .font(.title3)
@@ -358,7 +358,7 @@ struct SettingsView: View {
                             .border(.secondary)
                             .submitLabel(.done)
                             .frame( maxWidth: .infinity, maxHeight: .infinity)
-    #if !os(xrOS)
+    #if !os(visionOS)
                             .scrollDismissesKeyboard(.interactively)
     #endif
                             .font(.title3)
@@ -529,7 +529,7 @@ struct SettingsView: View {
 
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS) || os(xrOS)
+#if os(macOS) || os(tvOS) || os(visionOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()

@@ -44,7 +44,7 @@ struct WindowView: View {
                 VStack {
                     windowContent()
                         .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint, focused: $focused))
-#if os(xrOS)
+#if os(visionOS)
                         .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
                 }
@@ -63,7 +63,7 @@ struct WindowView: View {
             .onAppear() {
                 recalculateWindowSize(size: geometry.size)
             }
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(macOS)
 #if !os(tvOS)
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in

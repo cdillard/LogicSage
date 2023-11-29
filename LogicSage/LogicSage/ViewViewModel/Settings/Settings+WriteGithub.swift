@@ -23,7 +23,7 @@ extension SettingsViewModel {
     
     func actualCreateDraftPR(newBranchName: String = UUID().uuidString, titleOfPR: String = UUID().uuidString, completion: @escaping (Bool) -> Void) {
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
         
         var hasSentPRCreation = false
         logD("actually creating draft pr")

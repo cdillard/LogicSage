@@ -35,7 +35,7 @@ extension SettingsView {
                     .foregroundColor(settingsViewModel.appTextColor)
                     .lineLimit(nil)
             }
-#if !os(xrOS)
+#if !os(visionOS)
             HStack {
                 Text("Small")
                     .foregroundColor(settingsViewModel.appTextColor)

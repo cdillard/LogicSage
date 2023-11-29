@@ -27,7 +27,7 @@ extension SageMultiView {
         func doPostConstraint(vertical: Bool = false) {
             let now = Date()
             if now.timeIntervalSince(self.lastBumpFeedbackTime) >= 0.666 {
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(macOS)
                 playNot(type: .warning)
 #endif

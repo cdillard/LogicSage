@@ -27,13 +27,13 @@ struct ContentView: View {
 
     @EnvironmentObject var appModel: AppModel
 
-#if os(xrOS)
+#if os(visionOS)
 
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
 #endif
 
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 #if !os(tvOS)
@@ -69,7 +69,7 @@ struct ContentView: View {
                 tabFour(size: geometry.size)
             }
             .padding(1)
-#if os(xrOS)
+#if os(visionOS)
             .glassBackgroundEffect()
             .toolbar {
                 ToolbarItem(placement: .bottomOrnament) {
@@ -127,7 +127,7 @@ struct ContentView: View {
 
                                         .foregroundColor(settingsViewModel.appTextColor)
                                 }
-#if !os(xrOS)
+#if !os(visionOS)
 
                                 .background(settingsViewModel.buttonColor)
 #endif
@@ -168,7 +168,7 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
-#if !os(xrOS)
+#if !os(visionOS)
 
                             .background(settingsViewModel.buttonColor)
 #endif
@@ -207,7 +207,7 @@ struct ContentView: View {
                                     .font(.caption)
                                     .foregroundColor(settingsViewModel.appTextColor)
                             }
-#if !os(xrOS)
+#if !os(visionOS)
 
                             .background(settingsViewModel.buttonColor)
 #endif
@@ -306,7 +306,7 @@ struct ContentView: View {
                     }
                 })
                 .zIndex(-999)
-#if !os(xrOS)
+#if !os(visionOS)
 
                 if keyboardHeight == 0 && !showInstructions {
                     // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
@@ -326,7 +326,7 @@ struct ContentView: View {
 #if !os(macOS)
 #if !os(tvOS)
 
-#if os(xrOS)
+#if os(visionOS)
 
                 // Handle dragging point for resize gesture.
                 if dragCursorPoint != .zero {
@@ -351,7 +351,7 @@ struct ContentView: View {
             .onChange(of: size) { size in
                 recalculateWindowSize(size: size)
             }
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
             .onChange(of: keyboardResponder.currentHeight) { newKeyHeight in
                 keyboardHeight = newKeyHeight > 0 ? newKeyHeight - 33 : 0

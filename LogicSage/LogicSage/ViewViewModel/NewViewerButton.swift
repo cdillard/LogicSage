@@ -34,7 +34,7 @@ struct NewViewerButton: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.01)
             }
-#if !os(xrOS)
+#if !os(visionOS)
 
             .background(settingsViewModel.buttonColor)
 #endif

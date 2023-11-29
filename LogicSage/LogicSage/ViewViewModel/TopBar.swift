@@ -40,7 +40,7 @@ struct TopBar: View {
 #if !os(macOS)
             .hoverEffect(.automatic)
 #endif
-#if os(xrOS)
+#if os(visionOS)
             .offset(y: -settingsViewModel.cornerHandleSize / 1.566666)
 #else
             .offset(y: -14)
@@ -97,7 +97,7 @@ struct TopBar: View {
                         }
                         else {
                             menu()
-#if os(xrOS)
+#if os(visionOS)
                                 .padding(.trailing,SettingsViewModel.shared.cornerHandleSize + 8 + 20)
 #else
                                 .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
@@ -109,7 +109,7 @@ struct TopBar: View {
                 }
             }
         }
-#if !os(xrOS)
+#if !os(visionOS)
         .background(SettingsViewModel.shared.backgroundColor)
 
         .frame(maxWidth: .infinity, maxHeight: SettingsViewModel.shared.cornerHandleSize)
@@ -239,7 +239,7 @@ struct TopBar: View {
                 Label("...", systemImage: "ellipsis")
                     .font(.title3)
                     .minimumScaleFactor(0.5)
-#if os(xrOS)
+#if os(visionOS)
 
                     .offset(x:6)
 #else

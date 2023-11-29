@@ -4,7 +4,7 @@
 //
 //  Created by Chris Dillard on 7/3/23.
 //
-#if os(xrOS)
+#if os(visionOS)
 import SwiftUI
 import RealityKit
 import MetalKit

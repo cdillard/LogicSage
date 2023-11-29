@@ -39,7 +39,7 @@ struct DrawerContent: View {
     }
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS) || os(xrOS)
+#if os(macOS) || os(tvOS) || os(visionOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()
@@ -275,7 +275,7 @@ struct DrawerContent: View {
             }
             .zIndex(9)
         }
-#if !os(xrOS)
+#if !os(visionOS)
 
         .overlay(CheckmarkView(text: "Renamed", isVisible: $showRenamed))
 #endif

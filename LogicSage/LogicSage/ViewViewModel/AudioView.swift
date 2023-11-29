@@ -164,7 +164,7 @@ struct AudioView: View {
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.appTextColor)
                 .foregroundColor(settingsViewModel.appTextColor)
-            #if !os(xrOS)
+#if !os(visionOS)
                 .background(settingsViewModel.buttonColor)
 #endif
 
@@ -174,7 +174,7 @@ struct AudioView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .foregroundColor(settingsViewModel.appTextColor)
-#if !os(xrOS)
+#if !os(visionOS)
 
                 .background(settingsViewModel.buttonColor)
 #endif

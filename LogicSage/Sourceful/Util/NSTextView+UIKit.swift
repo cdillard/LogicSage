@@ -8,7 +8,7 @@
 
 #if !os(iOS)
 #if !os(tvOS)
-#if !os(xrOS)
+#if !os(visionOS)
 import AppKit
 extension NSTextView {
 	

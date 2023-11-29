@@ -13,7 +13,7 @@ import UIKit
 //light impatct
 
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
 func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1.0) {
@@ -30,7 +30,7 @@ func playType(impType: UIImpactFeedbackGenerator.FeedbackStyle, int: CGFloat = 1
 
 func playLightImpact() {
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
     playType(impType: .light)
@@ -41,7 +41,7 @@ func playLightImpact() {
 }
 func playSoftImpact() {
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
     playType(impType: .soft)
@@ -52,7 +52,7 @@ func playSoftImpact() {
 }
 func playMediunImpact() {
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
     playType(impType: .medium)
@@ -64,7 +64,7 @@ func playMediunImpact() {
 func checkBattery(minBatLevl: Float = 0.3) -> Bool {
     
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
     UIDevice.current.isBatteryMonitoringEnabled = true
@@ -88,7 +88,7 @@ func playMessagForString(message: String) {
     }
 }
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
 func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
@@ -107,7 +107,7 @@ func playNot(type: UINotificationFeedbackGenerator.FeedbackType) {
 
 func playSelect() {
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
 #if !os(tvOS)
 
     let hasBat = checkBattery()

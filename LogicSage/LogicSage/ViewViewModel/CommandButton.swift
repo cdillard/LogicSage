@@ -64,7 +64,7 @@ struct CommandButtonView: View {
 
                                 .foregroundColor(settingsViewModel.appTextColor)
                         }
-#if !os(xrOS)
+#if !os(visionOS)
 
                         .background(settingsViewModel.buttonColor)
 #endif
@@ -121,7 +121,7 @@ struct CommandButtonView: View {
 
                                 .foregroundColor(settingsViewModel.appTextColor)
                         }
-#if !os(xrOS)
+#if !os(visionOS)
 
                         .background(settingsViewModel.buttonColor)
 #endif
@@ -159,7 +159,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
                         }
-#if !os(xrOS)
+#if !os(visionOS)
 
                         .background(settingsViewModel.buttonColor)
 #endif
@@ -200,7 +200,7 @@ struct CommandButtonView: View {
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
                         }
-#if !os(xrOS)
+#if !os(visionOS)
 
                         .background(settingsViewModel.buttonColor)
 #endif

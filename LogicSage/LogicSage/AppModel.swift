@@ -8,7 +8,7 @@
 import SwiftUI
 
 class AppModel: ObservableObject {
-#if os(xrOS)
+#if os(visionOS)
     var screen: SphereScreenEntity.Configuration = .screenDefault
 #endif
     @Published var isTranslating: Bool = true {

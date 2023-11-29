@@ -12,7 +12,7 @@ let defaultCommandButtonSize: Double = 28
 let defaultToolbarButtonScale: Double = 0.27
 
 var defaultHandleSize: Double {
-#if os(xrOS)
+#if os(visionOS)
     return defaultHandleSizeVisionOS
 #else
     return defaultHandleSizeOther

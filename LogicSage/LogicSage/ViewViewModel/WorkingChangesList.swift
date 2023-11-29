@@ -92,7 +92,7 @@ struct WorkingChangesView: View {
         }
     }
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
-#if os(macOS) || os(tvOS) || os(xrOS)
+#if os(macOS) || os(tvOS) || os(visionOS)
         Image(systemName: systemName)
             .resizable()
             .scaledToFit()

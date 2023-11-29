@@ -11,7 +11,7 @@ import SwiftUI
 #if os(macOS)
 public typealias _ViewRepresentable = NSViewRepresentable
 #endif
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 public typealias _ViewRepresentable = UIViewRepresentable
 #endif
 #if !os(tvOS)
@@ -145,7 +145,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
                 context.coordinator.textDidChange()
             }
         }
-#if os(xrOS)
+#if os(visionOS)
         // TODO: DOUBLE CHECK WHEN TO UPDATE THIS
         if appModel.isShowingImmersiveScene || appModel.isShowingImmersiveWindow{
             DispatchQueue.global(qos: .default).async {

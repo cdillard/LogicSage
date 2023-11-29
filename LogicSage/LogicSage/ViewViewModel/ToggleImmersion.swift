@@ -6,10 +6,10 @@
 //
 
 
-#if os(xrOS)
+#if os(visionOS)
 import SwiftUI
 import RealityKit
-@available(xrOS 1.0, *)
+@available(visionOS 1.0, *)
 struct ToggleImmersion: View {
     @EnvironmentObject var appModel: AppModel
 

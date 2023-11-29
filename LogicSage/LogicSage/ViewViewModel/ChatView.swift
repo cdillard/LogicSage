@@ -134,7 +134,7 @@ struct ChatView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-#if !os(xrOS)
+#if !os(visionOS)
                         .scrollDismissesKeyboard(.interactively)
 #endif
                         .lineLimit(20, reservesSpace: true)
@@ -240,7 +240,7 @@ struct ChatView: View {
 
                 }
                 .disabled(chatText.isEmpty)
-#if os(xrOS)
+#if os(visionOS)
                 .padding(.trailing,20)
 #endif
 #if !os(macOS)

@@ -16,7 +16,7 @@ import Foundation
 
 #if !os(iOS)
 #if !os(tvOS)
-#if !os(xrOS)
+#if !os(visionOS)
 
 	class TextViewWrapperView: NSView {
 

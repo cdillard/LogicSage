@@ -37,7 +37,7 @@ struct InstructionsPopup: View {
                         .foregroundColor(settingsViewModel.appTextColor)
                     
                         .padding(geometry.size.width * 0.01)
-#if !os(xrOS)
+#if !os(visionOS)
 
 //                    Text("scroll down 📜⬇️4 more")
 //                        .font(.title2)
@@ -78,7 +78,7 @@ struct InstructionsPopup: View {
                                         .border(.secondary)
                                         .submitLabel(.done)
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
                                     .font(.title3)
@@ -102,7 +102,7 @@ struct InstructionsPopup: View {
                                         .submitLabel(.done)
                                         
                                         .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                                     .scrollDismissesKeyboard(.interactively)
 #endif
                                     .font(.title3)
@@ -184,7 +184,7 @@ struct InstructionsPopup: View {
 #endif
             }
         }
-#if os(xrOS)
+#if os(visionOS)
         .padding()
         .glassBackgroundEffect()
 #endif

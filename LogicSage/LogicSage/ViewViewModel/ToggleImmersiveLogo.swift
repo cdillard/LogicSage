@@ -5,11 +5,11 @@
 //  Created by Chris Dillard on 7/3/23.
 //
 
-#if os(xrOS)
+#if os(visionOS)
 
 import SwiftUI
 import RealityKit
-@available(xrOS 1.0, *)
+@available(visionOS 1.0, *)
 struct ToggleImmersiveButton: View {
     @EnvironmentObject var appModel: AppModel
 
@@ -20,7 +20,7 @@ struct ToggleImmersiveButton: View {
 
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismissWindow) private var dismissWindow
-#if os(xrOS)
+#if os(visionOS)
 
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
 #endif

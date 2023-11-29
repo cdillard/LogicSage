@@ -86,7 +86,7 @@ struct ChatBotomMenu: View {
                     .minimumScaleFactor(0.5)
                     .labelStyle(DemoStyle())
                     .background(Color.clear)
-#if os(xrOS)
+#if os(visionOS)
 
                     .offset(x:6)
 #else

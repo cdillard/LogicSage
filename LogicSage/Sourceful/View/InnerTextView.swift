@@ -70,7 +70,7 @@ class InnerTextView: TextViewv {
         }
     }
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
     override func caretRect(for position: UITextPosition) -> CGRect {
 
         var superRect = super.caretRect(for: position)
@@ -119,7 +119,7 @@ class InnerTextView: TextViewUIKit {
 
     }
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
     var isCursorFloating = false
 
     override func beginFloatingCursor(at point: CGPoint) {
@@ -304,7 +304,7 @@ class InnerTextView: TextViewUIKit {
                 button.tag = index
                 button.addTarget(self, action: #selector(copyCode), for: .touchDown)
                 button.layer.opacity = 0.666
-#if !os(xrOS)
+#if !os(visionOS)
 
                 button.addInteraction(UIPointerInteraction(delegate: self))
 #endif
@@ -330,7 +330,7 @@ class InnerTextView: TextViewUIKit {
                 button.tag = index
                 button.addTarget(self, action: #selector(copyLink), for: .touchDown)
                 button.layer.opacity = 0.666
-#if !os(xrOS)
+#if !os(visionOS)
 
                 button.addInteraction(UIPointerInteraction(delegate: self))
 #endif
@@ -394,7 +394,7 @@ class InnerTextView: TextViewUIKit {
         }
     }
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
     override func caretRect(for position: UITextPosition) -> CGRect {
 
         var superRect = super.caretRect(for: position)

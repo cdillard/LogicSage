@@ -34,7 +34,7 @@ struct LogicSageApp: App {
 
     @StateObject private var settingsViewModel = SettingsViewModel.shared
 
-#if os(xrOS)
+#if os(visionOS)
     @State var immersionState: ImmersionStyle = .mixed
 #endif
 
@@ -58,7 +58,7 @@ struct LogicSageApp: App {
 
                 }
 #if !os(macOS)
-#if !os(xrOS)
+#if !os(visionOS)
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
                     //logD("didFinishLaunchingNotification")
                 }
@@ -72,15 +72,15 @@ struct LogicSageApp: App {
                 }
 #endif
 #endif
-#if !os(xrOS)
+#if !os(visionOS)
                 .preferredColorScheme(.dark)
 #endif
         }
 
-#if os(xrOS)
+#if os(visionOS)
         .windowStyle(.plain)
 #endif
-#if os(xrOS)
+#if os(visionOS)
 
         ImmersiveSpace(id: "ImmersiveSpace") {
             SphereScreenSceneView()

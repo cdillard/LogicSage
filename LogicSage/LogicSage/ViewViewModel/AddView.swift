@@ -446,7 +446,7 @@ struct AddView: View {
                     .padding(.leading, 8)
                     .padding(.trailing, 8)
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                     .scrollDismissesKeyboard(.interactively)
 #endif
                     .font(.title3)
@@ -475,7 +475,7 @@ struct AddView: View {
                     .padding(.leading, 8)
                     .padding(.trailing, 8)
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                     .scrollDismissesKeyboard(.interactively)
 #endif
                     .font(.title3)
@@ -511,7 +511,7 @@ struct AddView: View {
                     .padding(.leading, 8)
                     .padding(.trailing, 8)
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
-#if !os(xrOS)
+#if !os(visionOS)
                     .scrollDismissesKeyboard(.interactively)
 #endif
                     .font(.title3)
@@ -568,7 +568,7 @@ struct AddView: View {
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .tint(settingsViewModel.appTextColor)
                 .foregroundColor(settingsViewModel.appTextColor)
-#if !os(xrOS)
+#if !os(visionOS)
                 .background(settingsViewModel.buttonColor)
 #endif
 
@@ -578,7 +578,7 @@ struct AddView: View {
                 .scaledToFit()
                 .frame(width: size.width * 0.5 * settingsViewModel.buttonScale, height: 100 * settingsViewModel.buttonScale)
                 .foregroundColor(settingsViewModel.appTextColor)
-#if !os(xrOS)
+#if !os(visionOS)
 
                 .background(settingsViewModel.buttonColor)
 #endif

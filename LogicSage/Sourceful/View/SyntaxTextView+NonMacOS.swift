@@ -37,7 +37,7 @@ open class SyntaxTextView: UIView {
     var ignoreSelectionChange = false
 
 
-#if os(iOS) || os(xrOS) || os(tvOS)
+#if os(iOS) || os(visionOS) || os(tvOS)
 
     public var contentInset: UIEdgeInsets = .zero {
         didSet {
@@ -89,7 +89,7 @@ open class SyntaxTextView: UIView {
 //        } else {
 //            // Fallback on earlier versions
 //        }
-#if !os(xrOS)
+#if !os(visionOS)
 
         textView.keyboardDismissMode = .interactive
 #endif
@@ -104,7 +104,7 @@ open class SyntaxTextView: UIView {
         let containerSize = CGSize(width: 0, height: CGFloat.greatestFiniteMagnitude)
 #endif
 
-#if os(iOS) || os(xrOS) || os(tvOS)
+#if os(iOS) || os(visionOS) || os(tvOS)
         let containerSize = CGSize(width: 0, height: 0)
 #endif
 
@@ -112,7 +112,7 @@ open class SyntaxTextView: UIView {
 
         textContainer.widthTracksTextView = true
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
         textContainer.heightTracksTextView = true
 #endif
         layoutManager.addTextContainer(textContainer)
@@ -129,11 +129,11 @@ open class SyntaxTextView: UIView {
 
         textView.gutterWidth = 20
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
         textView.translatesAutoresizingMaskIntoConstraints = false
 #endif
 
-#if  os(xrOS)
+#if  os(visionOS)
         textView.layer.wantsDynamicContentScaling = true
 #endif
 
@@ -158,7 +158,7 @@ open class SyntaxTextView: UIView {
 
         textView.text = ""
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 
         textView.autocapitalizationType = .none
         textView.keyboardType = .default
@@ -192,7 +192,7 @@ open class SyntaxTextView: UIView {
 
     // MARK: -
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 
     open override func becomeFirstResponder() -> Bool {
         return textView.becomeFirstResponder()
@@ -241,7 +241,7 @@ open class SyntaxTextView: UIView {
         }
     }
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.textView.setNeedsDisplay()
@@ -263,7 +263,7 @@ open class SyntaxTextView: UIView {
             }
 
             cachedThemeInfo = nil
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
             backgroundColor = theme.backgroundColor
 #endif
             textView.backgroundColor = theme.backgroundColor

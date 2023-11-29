@@ -132,7 +132,7 @@ class LineNumberLayoutManager: NSLayoutManager {
 			ln.draw(in: gutterRect.offsetBy(dx: gutterRect.width - 4 - size.width, dy: 0), withAttributes: atts)
 			
 		}
-#if !os(xrOS)
+#if !os(visionOS)
 
 		let rect = BezierPath(rect: CGRect(x: 0, y: 0, width: 200, height: 500))
 		Colorv.red.withAlphaComponent(0.5).setFill()
