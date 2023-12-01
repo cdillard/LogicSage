@@ -135,6 +135,22 @@ extension SettingsViewModel {
     }
 
 
+    func setMessageWithConvoId(_ convoId: Conversation.ID, localMessageIndex: Int, message: Message) {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        //TODO: Investigatge model update ass
+        
+//        self.conversations[conversationIndex].model = openAIModel
+        self.conversations[conversationIndex].messages[localMessageIndex] = message
+
+        performConvoUpdate(index: conversationIndex)
+
+        saveConvosToDisk()
+    }
+
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
         self.conversations[index].messages[existingMessageIndex] = message
 

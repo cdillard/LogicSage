@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-struct ChatBotomMenu: View {
+struct ChatBottomMenu: View {
     @ObservedObject var settingsViewModel: SettingsViewModel
     @Binding var chatText: String
 
@@ -90,7 +90,7 @@ struct ChatBotomMenu: View {
 
                     .offset(x:6)
 #else
-                    .offset(x:3)
+                    .offset(x:4)
 
 #endif
                     .tint(settingsViewModel.appTextColor)

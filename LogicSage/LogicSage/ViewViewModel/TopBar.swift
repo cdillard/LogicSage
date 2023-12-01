@@ -243,7 +243,7 @@ struct TopBar: View {
 
                     .offset(x:6)
 #else
-                    .offset(x:3)
+                    .offset(x:4)
 
 #endif
 

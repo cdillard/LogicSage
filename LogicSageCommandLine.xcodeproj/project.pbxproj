@@ -82,6 +82,21 @@
 		B7D2FD3229F18202003EBCA9 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B7D2FD3129F18202003EBCA9 /* SwiftSoup */; };
 		B7D6517529EC847E00ED8BAE /* ggml.c in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517029EC847E00ED8BAE /* ggml.c */; };
 		B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */; };
+		B7DF440D2B18158A006EC80A /* ImageVariationsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF43FE2B18158A006EC80A /* ImageVariationsQuery.swift */; };
+		B7DF440E2B18158A006EC80A /* ThreadsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF43FF2B18158A006EC80A /* ThreadsResult.swift */; };
+		B7DF440F2B18158A006EC80A /* ThreadAddMessageQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44002B18158A006EC80A /* ThreadAddMessageQuery.swift */; };
+		B7DF44102B18158A006EC80A /* RunRetrieveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44012B18158A006EC80A /* RunRetrieveResult.swift */; };
+		B7DF44112B18158A006EC80A /* RunsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44022B18158A006EC80A /* RunsResult.swift */; };
+		B7DF44122B18158A006EC80A /* ThreadsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44032B18158A006EC80A /* ThreadsQuery.swift */; };
+		B7DF44132B18158A006EC80A /* FilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44042B18158A006EC80A /* FilesResult.swift */; };
+		B7DF44142B18158A006EC80A /* AssistantsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44052B18158A006EC80A /* AssistantsQuery.swift */; };
+		B7DF44152B18158A006EC80A /* RunRetrieveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44062B18158A006EC80A /* RunRetrieveQuery.swift */; };
+		B7DF44162B18158A006EC80A /* ImageEditsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44072B18158A006EC80A /* ImageEditsQuery.swift */; };
+		B7DF44172B18158A006EC80A /* RunsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44082B18158A006EC80A /* RunsQuery.swift */; };
+		B7DF44182B18158A006EC80A /* FilesQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF44092B18158A006EC80A /* FilesQuery.swift */; };
+		B7DF44192B18158A006EC80A /* ThreadAddMessagesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF440A2B18158A006EC80A /* ThreadAddMessagesResult.swift */; };
+		B7DF441A2B18158A006EC80A /* ThreadsMessagesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF440B2B18158A006EC80A /* ThreadsMessagesResult.swift */; };
+		B7DF441B2B18158A006EC80A /* AssistantsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DF440C2B18158A006EC80A /* AssistantsResult.swift */; };
 		B7E13A3E2A50B57D00C2B7C0 /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E13A112A50B57D00C2B7C0 /* OpenAI.swift */; };
 		B7E13A3F2A50B57D00C2B7C0 /* ModerationsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E13A152A50B57D00C2B7C0 /* ModerationsQuery.swift */; };
 		B7E13A402A50B57D00C2B7C0 /* ChatQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E13A162A50B57D00C2B7C0 /* ChatQuery.swift */; };
@@ -237,6 +252,21 @@
 		B7D6517129EC847E00ED8BAE /* ggml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ggml.h; sourceTree = "<group>"; };
 		B7D6517329EC847E00ED8BAE /* whisper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = whisper.h; sourceTree = "<group>"; };
 		B7D6517829EC85F200ED8BAE /* whisper.MYFILE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = whisper.MYFILE.cpp; sourceTree = "<group>"; };
+		B7DF43FE2B18158A006EC80A /* ImageVariationsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVariationsQuery.swift; sourceTree = "<group>"; };
+		B7DF43FF2B18158A006EC80A /* ThreadsResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsResult.swift; sourceTree = "<group>"; };
+		B7DF44002B18158A006EC80A /* ThreadAddMessageQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadAddMessageQuery.swift; sourceTree = "<group>"; };
+		B7DF44012B18158A006EC80A /* RunRetrieveResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunRetrieveResult.swift; sourceTree = "<group>"; };
+		B7DF44022B18158A006EC80A /* RunsResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunsResult.swift; sourceTree = "<group>"; };
+		B7DF44032B18158A006EC80A /* ThreadsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsQuery.swift; sourceTree = "<group>"; };
+		B7DF44042B18158A006EC80A /* FilesResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesResult.swift; sourceTree = "<group>"; };
+		B7DF44052B18158A006EC80A /* AssistantsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistantsQuery.swift; sourceTree = "<group>"; };
+		B7DF44062B18158A006EC80A /* RunRetrieveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunRetrieveQuery.swift; sourceTree = "<group>"; };
+		B7DF44072B18158A006EC80A /* ImageEditsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditsQuery.swift; sourceTree = "<group>"; };
+		B7DF44082B18158A006EC80A /* RunsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunsQuery.swift; sourceTree = "<group>"; };
+		B7DF44092B18158A006EC80A /* FilesQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesQuery.swift; sourceTree = "<group>"; };
+		B7DF440A2B18158A006EC80A /* ThreadAddMessagesResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadAddMessagesResult.swift; sourceTree = "<group>"; };
+		B7DF440B2B18158A006EC80A /* ThreadsMessagesResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsMessagesResult.swift; sourceTree = "<group>"; };
+		B7DF440C2B18158A006EC80A /* AssistantsResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistantsResult.swift; sourceTree = "<group>"; };
 		B7E13A112A50B57D00C2B7C0 /* OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
 		B7E13A122A50B57D00C2B7C0 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B7E13A152A50B57D00C2B7C0 /* ModerationsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModerationsQuery.swift; sourceTree = "<group>"; };
@@ -537,6 +567,21 @@
 		B7E13A142A50B57D00C2B7C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B7DF44052B18158A006EC80A /* AssistantsQuery.swift */,
+				B7DF440C2B18158A006EC80A /* AssistantsResult.swift */,
+				B7DF44092B18158A006EC80A /* FilesQuery.swift */,
+				B7DF44042B18158A006EC80A /* FilesResult.swift */,
+				B7DF44072B18158A006EC80A /* ImageEditsQuery.swift */,
+				B7DF43FE2B18158A006EC80A /* ImageVariationsQuery.swift */,
+				B7DF44062B18158A006EC80A /* RunRetrieveQuery.swift */,
+				B7DF44012B18158A006EC80A /* RunRetrieveResult.swift */,
+				B7DF44082B18158A006EC80A /* RunsQuery.swift */,
+				B7DF44022B18158A006EC80A /* RunsResult.swift */,
+				B7DF44002B18158A006EC80A /* ThreadAddMessageQuery.swift */,
+				B7DF440A2B18158A006EC80A /* ThreadAddMessagesResult.swift */,
+				B7DF440B2B18158A006EC80A /* ThreadsMessagesResult.swift */,
+				B7DF44032B18158A006EC80A /* ThreadsQuery.swift */,
+				B7DF43FF2B18158A006EC80A /* ThreadsResult.swift */,
 				B7E13A152A50B57D00C2B7C0 /* ModerationsQuery.swift */,
 				B7E13A162A50B57D00C2B7C0 /* ChatQuery.swift */,
 				B7E13A172A50B57D00C2B7C0 /* AudioTranscriptionResult.swift */,
@@ -711,10 +756,12 @@
 				B75AFC4229EA7EF3003BA454 /* SpinnerThread.swift in Sources */,
 				B748C2F929F5F329000F5F14 /* LocalPeerConsole.swift in Sources */,
 				B713384E29ED80F000020CC9 /* app_screenshot.applescript in Sources */,
+				B7DF44182B18158A006EC80A /* FilesQuery.swift in Sources */,
 				B7E13A562A50B57D00C2B7C0 /* APIError.swift in Sources */,
 				B7E13A4D2A50B57D00C2B7C0 /* AudioTranslationResult.swift in Sources */,
 				B70B44D429EAD61900C45773 /* Text.swift in Sources */,
 				B70CF18429F0985E00993AAF /* ApplescriptCommand.swift in Sources */,
+				B7DF44102B18158A006EC80A /* RunRetrieveResult.swift in Sources */,
 				B7E13A5C2A50B57D00C2B7C0 /* StreamingSession.swift in Sources */,
 				B7E576C429EBE6B300CB6A10 /* LibWhisper.swift in Sources */,
 				B71BE6C82A1DB4E500DAEC34 /* PixelScan.swift in Sources */,
@@ -723,9 +770,12 @@
 				B7E13A502A50B57D00C2B7C0 /* ImagesQuery.swift in Sources */,
 				B74E620D29EFB61C0065DF88 /* StringSLug.swift in Sources */,
 				B7E13A622A50B57D00C2B7C0 /* URLSessionDataTaskProtocol.swift in Sources */,
+				B7DF440D2B18158A006EC80A /* ImageVariationsQuery.swift in Sources */,
 				B7E13A462A50B57D00C2B7C0 /* EditsResult.swift in Sources */,
 				B7E13A512A50B57D00C2B7C0 /* ImagesResult.swift in Sources */,
+				B7DF440F2B18158A006EC80A /* ThreadAddMessageQuery.swift in Sources */,
 				B76BF95E29E4AF5400F6420E /* SwiftyGPTUtilities.swift in Sources */,
+				B7DF44122B18158A006EC80A /* ThreadsQuery.swift in Sources */,
 				B7EE1FC229F4E351007A7B6B /* Debate.swift in Sources */,
 				71FD62B229EF75AC00C6EC34 /* plistHelper.swift in Sources */,
 				B7E13A4C2A50B57D00C2B7C0 /* EmbeddingsResult.swift in Sources */,
@@ -735,8 +785,10 @@
 				B74746A829F40FCD00075010 /* CommandTable.swift in Sources */,
 				B7E13A5F2A50B57D00C2B7C0 /* MultipartFormDataBodyEncodable.swift in Sources */,
 				B7E13A482A50B57D00C2B7C0 /* ModelQuery.swift in Sources */,
+				B7DF44162B18158A006EC80A /* ImageEditsQuery.swift in Sources */,
 				B7E13A3E2A50B57D00C2B7C0 /* OpenAI.swift in Sources */,
 				B7E13A5A2A50B57D00C2B7C0 /* MultipartFormDataRequest.swift in Sources */,
+				B7DF441A2B18158A006EC80A /* ThreadsMessagesResult.swift in Sources */,
 				B71C62F02A0063A4004296E4 /* Reset.swift in Sources */,
 				B7D6517929EC85F200ED8BAE /* whisper.MYFILE.cpp in Sources */,
 				B7139CE029E147910049ADE1 /* main.swift in Sources */,
@@ -753,6 +805,7 @@
 				B7CB60B429F1884F006BFF8D /* Linker.swift in Sources */,
 				B7E13A472A50B57D00C2B7C0 /* ModelsResult.swift in Sources */,
 				B775BF7929EB7A81007FA7AE /* Command.swift in Sources */,
+				B7DF44192B18158A006EC80A /* ThreadAddMessagesResult.swift in Sources */,
 				B7E13A492A50B57D00C2B7C0 /* Models.swift in Sources */,
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B7E13A542A50B57D00C2B7C0 /* ModerationsResult.swift in Sources */,
@@ -768,8 +821,12 @@
 				B719B22929ECB8AF003358C2 /* AEyes.swift in Sources */,
 				B7BE95422A8ED0DB0065A58B /* Project.swift in Sources */,
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
+				B7DF44112B18158A006EC80A /* RunsResult.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
 				B7E13A612A50B57D00C2B7C0 /* JSONRequest.swift in Sources */,
+				B7DF44172B18158A006EC80A /* RunsQuery.swift in Sources */,
+				B7DF44152B18158A006EC80A /* RunRetrieveQuery.swift in Sources */,
+				B7DF440E2B18158A006EC80A /* ThreadsResult.swift in Sources */,
 				B7538D2029F41FA000243E9B /* AVVoice.swift in Sources */,
 				B7E13A4E2A50B57D00C2B7C0 /* StreamableQuery.swift in Sources */,
 				B7E13A4A2A50B57D00C2B7C0 /* ModelResult.swift in Sources */,
@@ -782,13 +839,16 @@
 				B762E69F29FAB8AE00AC5150 /* DebatePrompts.swift in Sources */,
 				B7E13A452A50B57D00C2B7C0 /* AudioTranscriptionQuery.swift in Sources */,
 				B75AFC4429EA8140003BA454 /* Input.swift in Sources */,
+				B7DF44132B18158A006EC80A /* FilesResult.swift in Sources */,
 				B70CF18029F08C7C00993AAF /* Regex.swift in Sources */,
 				B70B44DB29EAF9B500C45773 /* Terminal.swift in Sources */,
 				B70B44D829EAD91900C45773 /* GPT.swift in Sources */,
 				B7CB60B229F184F3006BFF8D /* WrapSoup.swift in Sources */,
 				B7E13A5B2A50B57D00C2B7C0 /* MultipartFormDataBodyBuilder.swift in Sources */,
+				B7DF44142B18158A006EC80A /* AssistantsQuery.swift in Sources */,
 				B7E13A432A50B57D00C2B7C0 /* EditsQuery.swift in Sources */,
 				B7E13A422A50B57D00C2B7C0 /* ChatStreamResult.swift in Sources */,
+				B7DF441B2B18158A006EC80A /* AssistantsResult.swift in Sources */,
 				B71EB8772A213F5400D87C6F /* WorkspaceCommands.swift in Sources */,
 				B768CE9629EB163800B8A9E4 /* AsciiAnimator.swift in Sources */,
 				B78F3AB22A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift in Sources */,

@@ -47,6 +47,11 @@ struct ChatView: View {
     @FocusState var inFocus
     @Binding var focused: Bool
     @State private var isLoading = false
+
+    @State private var currentRunId: String?
+    @State private var currentThreadId: String?
+    @State private var currentConversationId: String?
+
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -150,8 +155,11 @@ struct ChatView: View {
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
                         .allowsHitTesting(false)
                 }
-                .border(.secondary)
-
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.secondary, lineWidth: 2)
+                )
+                //.border(.secondary)
                 .cornerRadius(8)
                 .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 .padding(.bottom, 0)
@@ -177,8 +185,7 @@ struct ChatView: View {
                 }
             }
 
-
-            ChatBotomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt, choseBuiltInModel: $choseBuiltInModel, conversation: $sageMultiViewModel.conversation)
+            ChatBottomMenu(settingsViewModel: settingsViewModel, chatText: $chatText, windowManager: windowManager, windowInfo: $sageMultiViewModel.windowInfo, editingSystemPrompt: $editingSystemPrompt, choseBuiltInSystemPrompt: $choseBuiltInPrompt, choseBuiltInModel: $choseBuiltInModel, conversation: $sageMultiViewModel.conversation)
                 .onChange(of: choseBuiltInPrompt) { value in
 
                     logD("EDIT SYSTEM PROMPT TO \(choseBuiltInPrompt)")
@@ -296,6 +303,9 @@ struct ChatView: View {
                         // if assistant and do chat either start thread and or add message to assistant
                         if sageMultiViewModel.conversation.messages.isEmpty {
 
+                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                            message: Message(id: UUID().uuidString, role: .user, content: chatText, createdAt: Date(), isLocal: true))
+
                             GPT.shared.createThread(messages: [Chat(role: .user, content: chatText)]) { resultId in
 
                                 if let threadId = resultId {
@@ -326,7 +336,40 @@ struct ChatView: View {
                             // Send msg to thread
                             // TODO: HANDLE ADDING MESSAGES TO ALREADY CREATED THREAD
                             print("Send msg to already created thread....")
+                            
+                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                            message: Message(id: UUID().uuidString, role: .user, content: chatText, createdAt: Date(), isLocal: true))
 
+                            guard let currentThreadId else { return print("No thread to add message to.")}
+
+                            GPT.shared.openAINonBg.threadsAddMessage(threadId: currentThreadId, query: ThreadAddMessageQuery(role: "user", content: chatText)) { result in
+                                
+                                switch result {
+                                case .success(_):
+
+                                    guard let currentAssistantId = sageMultiViewModel.conversation.assId else { return print("No assistant selected.")}
+
+                                    let runsQuery = RunsQuery(assistantId: currentAssistantId)
+
+                                    GPT.shared.openAINonBg.runs(threadId: currentThreadId, query: runsQuery) { result in
+                                        switch result {
+                                        case .success(let result):
+                                            print("Successfully started thread run \(result.id).. start polling")
+                                            isLoading = true
+
+                                            startPolling(threadId: currentThreadId, runId: result.id)
+                                        case .failure(let error):
+                                            print("FAILED TO START thread run. error = \(error)")
+                                        }
+                                    }
+                                    break
+                                case .failure(let error):
+
+                                    print("error: \(error) adding to thread w/ message")
+
+                                    break
+                                }
+                            }
 
                         }
                     }
@@ -343,7 +386,9 @@ struct ChatView: View {
     }
 
     func startPolling(threadId: String, runId: String) {
-        
+         currentRunId = runId
+         currentThreadId = threadId
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
 
             GPT.shared.openAINonBg.runRetrieve(threadId: threadId, runId: runId) { retResult in
@@ -353,7 +398,12 @@ struct ChatView: View {
                     if result.status == "completed" {
                         print("RUN COMPLETED - get messages")
 
-                        GPT.shared.openAINonBg.threadsMessages(threadId: threadId, before: nil) { result in
+                        var before: String?
+                        if let lastNonLocalMessage = sageMultiViewModel.conversation.messages.last(where: { $0.isLocal == false }) {
+                            before = lastNonLocalMessage.id
+                        }
+
+                        GPT.shared.openAINonBg.threadsMessages(threadId: threadId, before: before) { result in
                             switch result {
                             case .success(let threadMessageResult):
                                 print("GOT THREADS MESSAGES = \(threadMessageResult)")
@@ -361,9 +411,18 @@ struct ChatView: View {
                                 for item in threadMessageResult.data.reversed() {
                                     let role = item.role
                                     for innerItem in item.content {
+                                        let msg = Message(id: item.id, role: Chat.Role(rawValue: role) ?? .user, content: innerItem.text.value, createdAt: Date(), isLocal: false)
+                                        if let localMessageIndex = sageMultiViewModel.conversation.messages.firstIndex(where: { $0.isLocal == true }) {
+                                            SettingsViewModel.shared.setMessageWithConvoId(sageMultiViewModel.conversation.id,
+                                                                                           localMessageIndex: localMessageIndex,
+                                                                                            message: msg)
 
-                                        SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
-                                                                                        message: Message(id: UUID().uuidString, role: Chat.Role(rawValue: role) ?? .user, content: innerItem.text.value, createdAt: Date()))
+                                        }
+                                        else {
+
+                                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                                            message: msg)
+                                        }
 
                                     }
                                 }
@@ -382,7 +441,7 @@ struct ChatView: View {
                     }
                     else {
                         isLoading = true
-                            startPolling(threadId: threadId, runId: runId)
+                        startPolling(threadId: threadId, runId: runId)
                     }
                     break
                 case .failure(let error):

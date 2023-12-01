@@ -14,6 +14,8 @@ struct Message {
     var createdAt: Date
     var culled: Bool?
     var invisible: Bool?
+
+    var isLocal: Bool?
 }
 
 enum ConvoMode: Equatable, Codable, Hashable {
