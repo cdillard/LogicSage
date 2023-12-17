@@ -184,6 +184,21 @@ public extension OpenAIProtocol {
         }
     }
     
+    func audioCreateSpeech(
+        query: AudioSpeechQuery
+    ) async throws -> AudioSpeechResult {
+        try await withCheckedThrowingContinuation { continuation in
+            audioCreateSpeech(query: query) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+    
     func audioTranscriptions(
         query: AudioTranscriptionQuery
     ) async throws -> AudioTranscriptionResult {
@@ -217,10 +232,27 @@ public extension OpenAIProtocol {
     // 1106
     func assistants(
         query: AssistantsQuery?,
-        method: String
+        method: String,
+        after: String?
     ) async throws -> AssistantsResult {
         try await withCheckedThrowingContinuation { continuation in
-            assistants(query: query, method: method) { result in
+            assistants(query: query, method: method, after: after) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func assistantModify(
+        query: AssistantsQuery,
+        asstId: String
+    ) async throws -> AssistantsResult {
+        try await withCheckedThrowingContinuation { continuation in
+            assistantModify(query: query, asstId: asstId) { result in
                 switch result {
                 case let .success(success):
                     return continuation.resume(returning: success)
@@ -268,6 +300,23 @@ public extension OpenAIProtocol {
     ) async throws -> RunRetreiveResult {
         try await withCheckedThrowingContinuation { continuation in
             runRetrieve(threadId: threadId, runId: runId) { result in
+                switch result {
+                case let .success(success):
+                    return continuation.resume(returning: success)
+                case let .failure(failure):
+                    return continuation.resume(throwing: failure)
+                }
+            }
+        }
+    }
+
+    func runRetrieveSteps(
+        threadId: String,
+        runId: String,
+        before: String?
+    ) async throws -> RunRetreiveStepsResult {
+        try await withCheckedThrowingContinuation { continuation in
+            runRetrieveSteps(threadId: threadId, runId: runId, before: before) { result in
                 switch result {
                 case let .success(success):
                     return continuation.resume(returning: success)

@@ -12,7 +12,7 @@ extension GPT {
         // TODO Implement Tools.
 
         let assistantsQuery = AssistantsQuery(model: Model(model), name: name, description: description, instructions: instructions, tools: [])
-        self.openAINonBg.assistants(query: assistantsQuery, method: "POST") { result in
+        self.openAINonBg.assistants(query: assistantsQuery, method: "POST", after: nil) { result in
             switch result {
             case .success(let result):
                 print("Great successs creating assistant. \(result)")

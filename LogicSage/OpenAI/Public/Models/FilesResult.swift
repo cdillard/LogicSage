@@ -10,5 +10,6 @@ import Foundation
 public struct FilesResult: Codable, Equatable {
 
     public let id: String
+    public let name: String
 
 }

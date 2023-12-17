@@ -26,5 +26,16 @@ public struct AssistantsResult: Codable, Equatable {
         public let name: String
         public let description: String?
         public let instructions: String?
+        public let tools: [Tool]?
+        public let fileIds: [String]?
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case name
+            case description
+            case instructions
+            case tools
+            case fileIds = "file_ids"
+        }
     }
 }

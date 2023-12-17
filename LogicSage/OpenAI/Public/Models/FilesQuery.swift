@@ -1,5 +1,5 @@
 //
-//  AssistantsQuery.swift
+//  FilesQuery.swift
 //  
 //
 //  Created by Chris Dillard on 11/07/2023.

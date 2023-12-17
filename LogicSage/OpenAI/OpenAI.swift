@@ -66,7 +66,11 @@ final public class OpenAI: OpenAIProtocol {
     }
 
     public func runRetrieve(threadId: String, runId: String, completion: @escaping (Result<RunRetreiveResult, Error>) -> Void) {
-        performRequest(request: JSONRequest<RunRetreiveResult>(body: nil, url: buildRunRetrieveURL(path: .runRetrieve, threadId: threadId, runId: runId), method: "GET"), completion: completion)
+        performRequest(request: JSONRequest<RunRetreiveResult>(body: nil, url: buildRunRetrieveURL(path: .runRetrieve, threadId: threadId, runId: runId, before: nil), method: "GET"), completion: completion)
+    }
+
+    public func runRetrieveSteps(threadId: String, runId: String, before: String?, completion: @escaping (Result<RunRetreiveStepsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<RunRetreiveStepsResult>(body: nil, url: buildRunRetrieveURL(path: .runRetrieveSteps, threadId: threadId, runId: runId, before: before), method: "GET"), completion: completion)
     }
 
     public func runs(threadId: String, query: RunsQuery, completion: @escaping (Result<RunsResult, Error>) -> Void) {
@@ -77,14 +81,17 @@ final public class OpenAI: OpenAIProtocol {
         performRequest(request: JSONRequest<ThreadsResult>(body: query, url: buildURL(path: .threads)), completion: completion)
     }
 
-    public func assistants(query: AssistantsQuery?, method: String, completion: @escaping (Result<AssistantsResult, Error>) -> Void) {
-        performRequest(request: JSONRequest<AssistantsResult>(body: query, url: buildURL(path: .assistants), method: method), completion: completion)
+    public func assistants(query: AssistantsQuery?, method: String, after: String?, completion: @escaping (Result<AssistantsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<AssistantsResult>(body: query, url: buildURL(path: .assistants, after: after), method: method), completion: completion)
+    }
+
+    public func assistantModify(query: AssistantsQuery, asstId: String, completion: @escaping (Result<AssistantsResult, Error>) -> Void) {
+        performRequest(request: JSONRequest<AssistantsResult>(body: query, url: buildAssistantURL(path: .assistantsModify, assistantId: asstId)), completion: completion)
     }
 
     public func files(query: FilesQuery, completion: @escaping (Result<FilesResult, Error>) -> Void) {
         performRequest(request: MultipartFormDataRequest<FilesResult>(body: query, url: buildURL(path: .files)), completion: completion)
     }
-
     // END UPDATES FROM 11-06-23
 
     public func completions(query: CompletionsQuery, completion: @escaping (Result<CompletionsResult, Error>) -> Void) {
@@ -142,13 +149,20 @@ final public class OpenAI: OpenAIProtocol {
     public func audioTranslations(query: AudioTranslationQuery, completion: @escaping (Result<AudioTranslationResult, Error>) -> Void) {
         performRequest(request: MultipartFormDataRequest<AudioTranslationResult>(body: query, url: buildURL(path: .audioTranslations)), completion: completion)
     }
+    
+    public func audioCreateSpeech(query: AudioSpeechQuery, completion: @escaping (Result<AudioSpeechResult, Error>) -> Void) {
+        performSpeechRequest(request: JSONRequest<AudioSpeechResult>(body: query, url: buildURL(path: .audioSpeech)), completion: completion)
+    }
+    
 }
 
 extension OpenAI {
 
     func performRequest<ResultType: Codable>(request: any URLRequestBuildable, completion: @escaping (Result<ResultType, Error>) -> Void) {
         do {
-            let request = try request.build(token: configuration.token, organizationIdentifier: configuration.organizationIdentifier, timeoutInterval: configuration.timeoutInterval)
+            let request = try request.build(token: configuration.token, 
+                                            organizationIdentifier: configuration.organizationIdentifier,
+                                            timeoutInterval: configuration.timeoutInterval)
             let task = session.openAIdataTask(with: request) { data, _, error in
                 if let error = error {
                     completion(.failure(error))
@@ -187,13 +201,15 @@ extension OpenAI {
     
     func performSteamingRequest<ResultType: Codable>(request: any URLRequestBuildable, onResult: @escaping (Result<ResultType, Error>) -> Void, completion: ((Error?) -> Void)?) {
         do {
-            let request = try request.build(token: configuration.token, organizationIdentifier: configuration.organizationIdentifier, timeoutInterval: configuration.timeoutInterval)
+            let request = try request.build(token: configuration.token, 
+                                            organizationIdentifier: configuration.organizationIdentifier,
+                                            timeoutInterval: configuration.timeoutInterval)
             let session = StreamingSession<ResultType>(urlRequest: request)
             session.onReceiveContent = {_, object in
                 onResult(.success(object))
             }
             session.onProcessingError = {_, error in
-                logD("OpenAI API error = \(error.localizedDescription)")
+                print("OpenAI API error = \(error.localizedDescription)")
                 onResult(.failure(error))
             }
             session.onComplete = { [weak self] object, error in
@@ -206,15 +222,52 @@ extension OpenAI {
             completion?(error)
         }
     }
+    
+    func performSpeechRequest(request: any URLRequestBuildable, completion: @escaping (Result<AudioSpeechResult, Error>) -> Void) {
+        do {
+            let request = try request.build(token: configuration.token, 
+                                            organizationIdentifier: configuration.organizationIdentifier,
+                                            timeoutInterval: configuration.timeoutInterval)
+            
+            let task = session.openAIdataTask(with: request) { data, _, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                guard let data = data else {
+                    completion(.failure(OpenAIError.emptyData))
+                    return
+                }
+                
+                completion(.success(AudioSpeechResult(audioData: data)))
+                let apiError: Error? = nil
+                
+                if let apiError = apiError {
+                    do {
+                        let decoded = try JSONDecoder().decode(APIErrorResponse.self, from: data)
+                        completion(.failure(decoded))
+                    } catch {
+                        completion(.failure(apiError))
+                    }
+                }
+            }
+            task.resume()
+        } catch {
+            completion(.failure(error))
+        }
+    }
 }
 
 extension OpenAI {
     
-    func buildURL(path: String) -> URL {
+    func buildURL(path: String, after: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = configuration.host
         components.path = path
+        if let after {
+            components.queryItems = [URLQueryItem(name: "after", value: after)]
+        }
         return components.url!
     }
 
@@ -229,12 +282,24 @@ extension OpenAI {
         return components.url!
     }
 
-    func buildRunRetrieveURL(path: String, threadId: String, runId: String) -> URL {
+    func buildRunRetrieveURL(path: String, threadId: String, runId: String, before: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = configuration.host
         components.path = path.replacingOccurrences(of: "THREAD_ID", with: threadId)
                               .replacingOccurrences(of: "RUN_ID", with: runId)
+        if let before {
+            components.queryItems = [URLQueryItem(name: "before", value: before)]
+        }
+        return components.url!
+    }
+
+    func buildAssistantURL(path: String, assistantId: String) -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = configuration.host
+        components.path = path.replacingOccurrences(of: "ASST_ID", with: assistantId)
+
         return components.url!
     }
 }
@@ -243,12 +308,11 @@ typealias APIPath = String
 extension APIPath {
     // 1106
     static let assistants = "/v1/assistants"
-    // TODO: Implement Assistant Modify
     static let assistantsModify = "/v1/assistants/ASST_ID"
-
     static let threads = "/v1/threads"
     static let runs = "/v1/threads/THREAD_ID/runs"
     static let runRetrieve = "/v1/threads/THREAD_ID/runs/RUN_ID"
+    static let runRetrieveSteps = "/v1/threads/THREAD_ID/runs/RUN_ID/steps"
     static let threadsMessages = "/v1/threads/THREAD_ID/messages"
     static let files = "/v1/files"
     // 1106 end
@@ -260,6 +324,7 @@ extension APIPath {
     static let models = "/v1/models"
     static let moderations = "/v1/moderations"
     
+    static let audioSpeech = "/v1/audio/speech"
     static let audioTranscriptions = "/v1/audio/transcriptions"
     static let audioTranslations = "/v1/audio/translations"
     

@@ -40,7 +40,7 @@ struct Conversation {
     let id: String
     var messages: [Message]
     
-    //Everything fromt his point for must be OPtional so we retain compat with early LogicSage versions.
+    //Everything from this point for must be OPtional so we retain compat with early LogicSage versions.
     var name: String?
     var model: String?
     var systemPrompt: String?
@@ -49,8 +49,7 @@ struct Conversation {
     var temperature: Double?
     var mode: ConvoMode?
     var assId: String?
-
-
+    var threadId: String?
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

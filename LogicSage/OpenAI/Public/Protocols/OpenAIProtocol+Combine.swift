@@ -128,9 +128,9 @@ public extension OpenAIProtocol {
     }
 
     // 1106
-    func assistants(query: AssistantsQuery?, method: String) -> AnyPublisher<AssistantsResult, Error> {
+    func assistants(query: AssistantsQuery?, method: String, after: String?) -> AnyPublisher<AssistantsResult, Error> {
         Future<AssistantsResult, Error> {
-            assistants(query: query, method: method, completion: $0)
+            assistants(query: query, method: method, after: after, completion: $0)
         }
         .eraseToAnyPublisher()
     }

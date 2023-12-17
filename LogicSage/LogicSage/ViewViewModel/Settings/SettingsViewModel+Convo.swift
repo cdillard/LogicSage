@@ -142,9 +142,26 @@ extension SettingsViewModel {
             return
         }
         //TODO: Investigatge model update ass
-        
+
 //        self.conversations[conversationIndex].model = openAIModel
         self.conversations[conversationIndex].messages[localMessageIndex] = message
+
+        performConvoUpdate(index: conversationIndex)
+
+        saveConvosToDisk()
+    }
+
+
+    func setThreadIdWithConvoId(_ convoId: Conversation.ID, threadId: String) {
+        guard let conversationIndex = conversations.firstIndex(where: { $0.id == convoId }) else {
+            logD("Unable to find conversations id == \(convoId) ... failing")
+
+            return
+        }
+        //TODO: Investigatge model update ass
+
+//        self.conversations[conversationIndex].model = openAIModel
+        self.conversations[conversationIndex].threadId = threadId
 
         performConvoUpdate(index: conversationIndex)
 
@@ -287,6 +304,10 @@ extension SettingsViewModel {
 
         if let assId = newConversation.assId {
             retString += "Assistant Id: \(assId)\n"
+        }
+
+        if let threadId = newConversation.threadId {
+            retString += "Thread Id: \(threadId)\n"
         }
 
         for msg in newConversation.messages {
