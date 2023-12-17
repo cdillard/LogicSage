@@ -105,7 +105,7 @@ class GPT {
             do {
                 let existingModel = conversation.model ?? ""
 
-                let newModel = SettingsViewModel.shared.openAIModel == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314" :  SettingsViewModel.shared.openAIModel
+                let newModel = SettingsViewModel.shared.openAIModel == "gpt-4-1106-ls-web-browsing" ? "gpt-4-1106-preview" :  SettingsViewModel.shared.openAIModel
 
                 let model: Model = Model(existingModel.isEmpty ? SettingsViewModel.shared.openAIModel : newModel)
                 let useTemp = conversation.temperature == nil ? 0.7 : conversation.temperature ?? 0.7

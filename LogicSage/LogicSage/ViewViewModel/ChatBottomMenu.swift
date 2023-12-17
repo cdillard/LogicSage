@@ -226,7 +226,7 @@ struct ModalView: View {
             List(items, id: \.self) { item in
         
 
-                Button(item == "gpt-4-0314-ls-web-browsing" ? "gpt-4-0314-ls-web-browsing*":item) {
+                Button(item == "gpt-4-1106-ls-web-browsing" ? "gpt-4-1106-ls-web-browsing*":item) {
                     presentationMode.wrappedValue.dismiss()
                     SettingsViewModel.shared.openAIModel = item
                     choseBuiltInModel = item
