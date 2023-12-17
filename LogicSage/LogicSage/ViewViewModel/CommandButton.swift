@@ -17,7 +17,7 @@ struct CommandButtonView: View {
     @Binding var isInputViewShown: Bool
 
     // ASSISSTANT ATTRIB
-    @Binding  var showDialog: Bool
+    @Binding  var isModalPresented: Bool
     @Binding  var name: String
     @Binding  var description: String
     @Binding  var instructions: String
@@ -137,7 +137,7 @@ struct CommandButtonView: View {
                         DispatchQueue.main.async {
                             settingsViewModel.latestWindowManager = windowManager
 
-                            showDialog = true
+                            isModalPresented = true
 
                             playSelect()
                             isInputViewShown = false

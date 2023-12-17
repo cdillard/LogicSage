@@ -185,8 +185,8 @@ extension SettingsViewModel {
         let googleAvail = SettingsViewModel.shared.googleAvailable()
         gptCommand(conversationId: convoID, input: chatText, useGoogle: googleAvail, useLink: googleAvail, qPrompt: googleAvail)
     }
-    func createConversation(mode: ConvoMode = .chat, assId: String? = nil) -> Conversation.ID {
-        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel, temperature: 0.7, mode: mode, assId: assId)
+    func createConversation(mode: ConvoMode = .chat, assId: String? = nil, assName: String? = nil) -> Conversation.ID {
+        let conversation = Conversation(id: idProvider(), messages: [], model: openAIModel, temperature: 0.7, mode: mode, assId: assId, assName: assName)
         conversations.append(conversation)
         print("created new convo = \(conversation.id)")
         return conversation.id
@@ -205,8 +205,8 @@ extension SettingsViewModel {
         openConversation(convo)
     }
 
-    func createAndOpenNewAssConvo(assId: String) {
-        let convo = createConversation(mode: .assistant, assId: assId)
+    func createAndOpenNewAssConvo(assId: String, assName: String) {
+        let convo = createConversation(mode: .assistant, assId: assId, assName: assName)
         saveConvosToDisk()
         openConversation(convo)
     }
@@ -330,7 +330,7 @@ extension SettingsViewModel {
             }
             else {
                 if conversation.mode == .assistant {
-                    return "New Assistant"
+                    return conversation.assName ?? ""
                 }
                 else {
                     return "New Chat"

@@ -26,13 +26,14 @@ enum ConvoMode: Equatable, Codable, Hashable {
 extension Message: Equatable, Codable, Hashable, Identifiable {}
 
 struct Conversation {
-    init(id: String, messages: [Message] = [], model: String? = nil, temperature: Double? = nil, mode: ConvoMode = .chat, assId: String? = nil) {
+    init(id: String, messages: [Message] = [], model: String? = nil, temperature: Double? = nil, mode: ConvoMode = .chat, assId: String? = nil, assName: String? = nil) {
         self.id = id
         self.messages = messages
         self.model = model
         self.temperature = temperature
         self.mode = mode
         self.assId = assId
+        self.assName = assName
     }
 
     typealias ID = String
@@ -50,6 +51,7 @@ struct Conversation {
     var mode: ConvoMode?
     var assId: String?
     var threadId: String?
+    var assName: String?
 }
 
 extension Conversation: Equatable, Codable, Hashable, Identifiable {}

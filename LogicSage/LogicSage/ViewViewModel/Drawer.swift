@@ -84,7 +84,7 @@ struct DrawerContent: View {
                                     }
                                 }) {
                                     ZStack {
-                                        Text("\(convo.name ?? String(convo.id.prefix(4))) 💬")
+                                        Text(nameForConvo(convo:convo))
                                             .multilineTextAlignment(.trailing)
                                             .lineLimit(4)
                                             .minimumScaleFactor(0.69)
@@ -281,7 +281,15 @@ struct DrawerContent: View {
 #endif
 
     }
-    
+    func nameForConvo(convo: Conversation) -> String {
+        if let assistantName = convo.assName {
+            return "\(assistantName) :)"
+        }
+        else {
+            return "\(convo.name ?? String(convo.id.prefix(4))) 💬"
+        }
+
+    }
     func topButtons(size: CGSize) -> some View {
         HStack(spacing: 0) {
 

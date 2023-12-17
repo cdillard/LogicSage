@@ -10,6 +10,7 @@ import Foundation
 public struct AssistantsResult: Codable, Equatable {
 
     public let id: String?
+    public let name: String?
 
     public let data: [AssistantContent]?
     public let tools: [Tool]?
@@ -17,6 +18,7 @@ public struct AssistantsResult: Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case data
         case id
+        case name
         case tools
     }
 

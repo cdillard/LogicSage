@@ -46,11 +46,29 @@ struct ContentView: View {
     @State var dragCursorPoint: CGPoint = .zero
 
 
-    @State  var showDialog: Bool = false
+    //@State  var showDialog: Bool = false
     @State  var name: String = ""
     @State  var description: String = ""
     @State  var instructions: String = ""
 
+
+    @State private var isModalPresented = false
+    @State private var isUploading = false
+
+    //If a file is selected via the document picker, this is set.
+    @State var selectedFileURL: URL?
+    @State var uploadedFileId: String?
+    @State private var fileIds: [String] = []
+
+    @State private var codeInterpreter: Bool = false
+    @State private var retrieval: Bool = false
+
+    @State private var isPickerPresented: Bool = false
+    @State private var fileURL: URL?
+
+    @State var mode: AssistantModalContentView.Mode = .create
+
+    
 #if !os(macOS)
     let appearance: UITabBarAppearance = UITabBarAppearance()
     init(settingsViewModel: SettingsViewModel) {
@@ -145,8 +163,9 @@ struct ContentView: View {
                             DispatchQueue.main.async {
                                 settingsViewModel.latestWindowManager = windowManager
 
-                                showDialog = true
-                                
+                               // showDialog = true
+                                isModalPresented = true
+
                                 playSelect()
                                 isInputViewShown = false
                                 tabSelection = 1
@@ -312,7 +331,7 @@ struct ContentView: View {
                     // START TOOL BAR / COMMAND BAR ZONE ***************************************************************************
                     VStack {
                         Spacer()
-                        CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, showDialog: $showDialog, name: $name, description: $description, instructions: $instructions)
+                        CommandButtonView(settingsViewModel: settingsViewModel, windowManager: windowManager, isInputViewShown: $isInputViewShown, isModalPresented: $isModalPresented, name: $name, description: $description, instructions: $instructions)
                     }
                     .zIndex(-9)
                     .padding(.horizontal)
@@ -381,38 +400,90 @@ struct ContentView: View {
                 .accentColor(settingsViewModel.buttonColor)
         }
         .tag(1)
-        .alert("Enter Assistant Details", isPresented: $showDialog) {
-            TextField("Name", text: $name)
-            TextField("Description", text: $description)
-            TextField("Instructions", text: $instructions)
+        .sheet(isPresented: $isModalPresented, onDismiss: {
+            resetAssistantCreator()
+        }, content: {
+            AssistantModalContentView(name: $name, description: $description, customInstructions: $instructions,
+                                      codeInterpreter: $codeInterpreter, retrieval: $retrieval, fileIds: $fileIds,
+                                      isUploading: $isUploading, modify: mode == .modify, isPickerPresented: $isPickerPresented, selectedFileURL: $selectedFileURL) {
+                Task {
+                    await handleOkTapped()
+                }
+            } onFileUpload: {
+                Task {
+                    guard let selectedFileURL  else { return }
 
-            Button("OK") {
-                // OK button tapped
-                handleOkTapped()
-            }
-            Button("Cancel", role: .cancel) {
-                // Cancel button tapped
-                // Usually no action is needed here as the button's default behavior is to dismiss the alert
-            }
-        } message: {
-            Text("Please enter the name and description.")
-        }
+                    // TODO: Reenable file upload.
 
+//                    isUploading = true
+//                    let file = await assistantStore.uploadFile(url: selectedFileURL)
+//                    uploadedFileId =  file?.id
+//                    isUploading = false
+//
+//                    if uploadedFileId == nil {
+//                        print("Failed to upload")
+//                        self.selectedFileURL = nil
+//                    }
+//                    else {
+//                        // if successful upload , we can show it.
+//                        if let uploadedFileId = uploadedFileId {
+//                            self.selectedFileURL = nil
+//
+//                            fileIds += [uploadedFileId]
+//
+//                            print("Successful upload!")
+//                        }
+//                    }
+                }
+            }
+        })
+//        .alert("Enter Assistant Details", isPresented: $showDialog) {
+//            TextField("Name", text: $name)
+//            TextField("Description", text: $description)
+//            TextField("Instructions", text: $instructions)
+//
+//            Button("OK") {
+//                // OK button tapped
+//                handleOkTapped()
+//            }
+//            Button("Cancel", role: .cancel) {
+//                // Cancel button tapped
+//                // Usually no action is needed here as the button's default behavior is to dismiss the alert
+//            }
+//        } message: {
+//            Text("Please enter the name and description.")
+//        }
+
+    }
+
+    private func resetAssistantCreator() {
+        // Reset state for Assistant creator.
+        name = ""
+        description = ""
+        instructions = ""
+
+        codeInterpreter = false
+        retrieval = false
+        selectedFileURL = nil
+        uploadedFileId = nil
+        fileIds = []
     }
 
     private func handleOkTapped() {
         // Perform the action when "OK" is tapped.
         // You can include any logic here, such as validation and saving data.
-        if !name.isEmpty && !description.isEmpty {
+        if !name.isEmpty && !description.isEmpty && !instructions.isEmpty {
             // If the fields are not empty, handle the data.
-            print("Name: \(name), Description: \(description)")
+            print("Name: \(name), Description: \(description), Instructions: \(instructions)")
 
-            GPT.shared.createAssistant(name: name, description: description, instructions: instructions) { resultId in
+            // TODO: Re-hook up FileIDs for retrieval.
+            
+            GPT.shared.createAssistant(name: name, description: description, instructions: instructions, codeInterpreter: codeInterpreter, retrievel: retrieval, fileIds: []) { result in
 
-                if let result = resultId {
-                    print("successfully created ass = \(result)")
+                if let resultId = result?.id {
+                    print("successfully created ass = \(resultId), named = \(result?.name ?? "")")
 
-                    settingsViewModel.createAndOpenNewAssConvo(assId: result)
+                    settingsViewModel.createAndOpenNewAssConvo(assId: resultId, assName: result?.name ?? "")
                 }
                 else {
                     // FUCKING FAILURE

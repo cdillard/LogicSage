@@ -166,6 +166,9 @@
 		B75880C92A489E56007A1179 /* AnimatedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75880C82A489E56007A1179 /* AnimatedArrow.swift */; };
 		B75880CB2A489E78007A1179 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75880CA2A489E78007A1179 /* CheckmarkView.swift */; };
 		B75B329329FA11870049EB55 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75B329229FA11870049EB55 /* AddView.swift */; };
+		B764D7402B2F761F00768830 /* AssistantModalContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764D73F2B2F761E00768830 /* AssistantModalContentView.swift */; };
+		B764D7422B2F763E00768830 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764D7412B2F763E00768830 /* DocumentPicker.swift */; };
+		B764D7442B2F78A400768830 /* SupportedFileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B764D7432B2F78A400768830 /* SupportedFileType.swift */; };
 		B76AFCA52A15788100980EC7 /* Settings+ForkGithub.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */; };
 		B773B7242A47FF7200C1609D /* LogicSageSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B773B7232A47FF7200C1609D /* LogicSageSceneDelegate.swift */; };
 		B77551152B06937400420A76 /* FilesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B775510F2B06937400420A76 /* FilesResult.swift */; };
@@ -456,6 +459,9 @@
 		B75880C82A489E56007A1179 /* AnimatedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedArrow.swift; sourceTree = "<group>"; };
 		B75880CA2A489E78007A1179 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		B75B329229FA11870049EB55 /* AddView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		B764D73F2B2F761E00768830 /* AssistantModalContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistantModalContentView.swift; sourceTree = "<group>"; };
+		B764D7412B2F763E00768830 /* DocumentPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		B764D7432B2F78A400768830 /* SupportedFileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedFileType.swift; sourceTree = "<group>"; };
 		B76AFCA42A15788100980EC7 /* Settings+ForkGithub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+ForkGithub.swift"; sourceTree = "<group>"; };
 		B773B7232A47FF7200C1609D /* LogicSageSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicSageSceneDelegate.swift; sourceTree = "<group>"; };
 		B775510F2B06937400420A76 /* FilesResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesResult.swift; sourceTree = "<group>"; };
@@ -712,6 +718,9 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B764D7432B2F78A400768830 /* SupportedFileType.swift */,
+				B764D7412B2F763E00768830 /* DocumentPicker.swift */,
+				B764D73F2B2F761E00768830 /* AssistantModalContentView.swift */,
 				B75B329229FA11870049EB55 /* AddView.swift */,
 				B75880C82A489E56007A1179 /* AnimatedArrow.swift */,
 				B7347CCF2A5CBEAA0055D8F7 /* AudioView.swift */,
@@ -1547,6 +1556,7 @@
 				B7191F2D29F9F09A00078D8D /* SourceCodeTheme.swift in Sources */,
 				B746DFCE29F5E789002804EB /* LogicSageApp.swift in Sources */,
 				B78DA9882A07FEF3002343AB /* Settings+Github.swift in Sources */,
+				B764D7402B2F761F00768830 /* AssistantModalContentView.swift in Sources */,
 				B75880C92A489E56007A1179 /* AnimatedArrow.swift in Sources */,
 				B710CEFE2A7F5E65008C06CC /* FileDecoder.swift in Sources */,
 				B752860C2A848DAE007DCFF9 /* Data+CompressionDeprecated.swift in Sources */,
@@ -1557,6 +1567,7 @@
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
 				B7BD8E252A8921C0007E5ACD /* SphereScreenSceneView.swift in Sources */,
 				B7BD8E1E2A87ECA2007E5ACD /* Backend.swift in Sources */,
+				B764D7422B2F763E00768830 /* DocumentPicker.swift in Sources */,
 				B7347CD02A5CBEAA0055D8F7 /* AudioView.swift in Sources */,
 				B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */,
 				B710CF042A7F5E65008C06CC /* Tiktoken.swift in Sources */,
@@ -1594,6 +1605,7 @@
 				B75286092A848DAE007DCFF9 /* Entry+Serialization.swift in Sources */,
 				B7544E3A2A191BCE00961F4C /* ChatResult.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,
+				B764D7442B2F78A400768830 /* SupportedFileType.swift in Sources */,
 				B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */,
 				B752860A2A848DAE007DCFF9 /* URL+ZIP.swift in Sources */,
 				B7544E352A191BCE00961F4C /* ModelResult.swift in Sources */,

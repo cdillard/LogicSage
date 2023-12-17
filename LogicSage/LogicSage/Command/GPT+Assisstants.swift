@@ -8,15 +8,16 @@
 import Foundation
 
 extension GPT {
-    func createAssistant(name: String, description: String, instructions: String, model: String = "gpt-4-1106-preview", completion: @escaping (String?) -> Void) {
+    func createAssistant(name: String, description: String, instructions: String, codeInterpreter: Bool, retrievel: Bool, fileIds: [String]? = nil, completion: @escaping (AssistantsResult?) -> Void) {
         // TODO Implement Tools.
+        let tools = createToolsArray(codeInterpreter: codeInterpreter, retrieval: retrievel)
 
-        let assistantsQuery = AssistantsQuery(model: Model(model), name: name, description: description, instructions: instructions, tools: [])
+        let assistantsQuery = AssistantsQuery(model: Model.gpt4_1106_preview, name: name, description: description, instructions: instructions, tools: tools, fileIds: fileIds)
         self.openAINonBg.assistants(query: assistantsQuery, method: "POST", after: nil) { result in
             switch result {
-            case .success(let result):
-                print("Great successs creating assistant. \(result)")
-                completion(result.id)
+            case .success(let assistantResult):
+                print("Great successs creating assistant. \(assistantResult)")
+                completion(assistantResult)
 
             case .failure(let error):
                 print("FAILED  creating assistant.")
@@ -37,5 +38,16 @@ extension GPT {
                 completion(nil)
             }
         }
+    }
+
+    func createToolsArray(codeInterpreter: Bool, retrieval: Bool) -> [Tool] {
+        var tools = [Tool]()
+        if codeInterpreter {
+            tools.append(Tool(toolType: "code_interpreter"))
+        }
+        if retrieval {
+            tools.append(Tool(toolType: "retrieval"))
+        }
+        return tools
     }
 }
