@@ -415,25 +415,41 @@ struct ContentView: View {
 
                     // TODO: Reenable file upload.
 
-//                    isUploading = true
-//                    let file = await assistantStore.uploadFile(url: selectedFileURL)
-//                    uploadedFileId =  file?.id
-//                    isUploading = false
-//
-//                    if uploadedFileId == nil {
-//                        print("Failed to upload")
-//                        self.selectedFileURL = nil
-//                    }
-//                    else {
-//                        // if successful upload , we can show it.
-//                        if let uploadedFileId = uploadedFileId {
-//                            self.selectedFileURL = nil
-//
-//                            fileIds += [uploadedFileId]
-//
-//                            print("Successful upload!")
-//                        }
-//                    }
+                    isUploading = true
+
+
+                    do {
+
+                        let mimeType = selectedFileURL.mimeType()
+
+                        let fileData = try Data(contentsOf: selectedFileURL)
+                        
+                        let fileName = selectedFileURL.lastPathComponent
+
+                        let result = try await GPT.shared.openAINonBg.files(query: FilesQuery(purpose: "assistants", file: fileData, fileName: fileName, contentType: mimeType))
+                        uploadedFileId =  result.id
+                        isUploading = false
+
+                        if uploadedFileId == nil {
+                            print("Failed to upload")
+                            self.selectedFileURL = nil
+                        }
+                        else {
+                            // if successful upload , we can show it.
+                            if let uploadedFileId = uploadedFileId {
+                                self.selectedFileURL = nil
+
+                                fileIds += [uploadedFileId]
+
+                                print("Successful upload!")
+                            }
+                        }
+                    }
+                    catch {
+                        isUploading = false
+
+                        print("error = \(error)")
+                    }
                 }
             }
         })
@@ -478,7 +494,7 @@ struct ContentView: View {
 
             // TODO: Re-hook up FileIDs for retrieval.
             
-            GPT.shared.createAssistant(name: name, description: description, instructions: instructions, codeInterpreter: codeInterpreter, retrievel: retrieval, fileIds: []) { result in
+            GPT.shared.createAssistant(name: name, description: description, instructions: instructions, codeInterpreter: codeInterpreter, retrievel: retrieval, fileIds: fileIds) { result in
 
                 if let resultId = result?.id {
                     print("successfully created ass = \(resultId), named = \(result?.name ?? "")")

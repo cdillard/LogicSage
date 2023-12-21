@@ -16,6 +16,7 @@ struct Message {
     var invisible: Bool?
 
     var isLocal: Bool?
+    var isRunStep: Bool?
 }
 
 enum ConvoMode: Equatable, Codable, Hashable {

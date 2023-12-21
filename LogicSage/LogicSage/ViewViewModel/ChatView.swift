@@ -412,6 +412,11 @@ struct ChatView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
 
             GPT.shared.openAINonBg.runRetrieve(threadId: threadId, runId: runId) { retResult in
+
+                // TESTING RETRIEVAL OF RUN STEPS
+                handleRunRetrieveSteps()
+
+
                 switch retResult {
                 case .success(let result):
                     print(result.status)
@@ -477,6 +482,69 @@ struct ChatView: View {
             }
         }
     }
+
+    // The run retrieval steps are fetched in a separate task. This request is fetched, checking for new run steps, each time the run is fetched.
+    private func handleRunRetrieveSteps() {
+        Task {
+//            guard let conversationIndex = conversations.firstIndex(where: { $0.id == currentConversationId }) else {
+//                return
+//            }
+            var before: String?
+//            if let lastRunStepMessage = self.conversations[conversationIndex].messages.last(where: { $0.isRunStep == true }) {
+//                before = lastRunStepMessage.id
+//            }
+
+            let stepsResult = try await GPT.shared.openAINonBg.runRetrieveSteps(threadId: currentThreadId ?? "", runId: currentRunId ?? "", before: before)
+
+            for item in stepsResult.data.reversed() {
+                let toolCalls = item.stepDetails.toolCalls?.reversed() ?? []
+
+                for step in toolCalls {
+                    // TODO: Depending on the type of tool tha is used we can add additional information here
+                    // ie: if its a retrieval: add file information, code_interpreter: add inputs and outputs info, or function: add arguemts and additional info.
+                    let msgContent: String
+                    switch step.type {
+                    case "retrieval":
+                        msgContent = "RUN STEP: \(step.type)"
+
+                    case "code_interpreter":
+                        msgContent = "code_interpreter\ninput:\n\(step.code?.input ?? "")\noutputs: \(step.code?.outputs?.first?.logs ?? "")"
+
+                    default:
+                        msgContent = "RUN STEP: \(step.type)"
+
+                    }
+                    let runStepMessage = Message(
+                        id: step.id,
+                        role: .assistant,
+                        content: msgContent,
+                        createdAt: Date(),
+                        isRunStep: true
+                    )
+                    await MainActor.run {
+                        if let localMessageIndex = sageMultiViewModel.conversation.messages.firstIndex(where: { $0.isRunStep == true && $0.id == step.id }) {
+                           // self.conversations[conversationIndex].messages[localMessageIndex] = runStepMessage
+                            SettingsViewModel.shared.setMessageWithConvoId(sageMultiViewModel.conversation.id,
+                                                                           localMessageIndex: localMessageIndex,
+                                                                           message: runStepMessage)
+
+                        }
+                        else {
+                            //self.conversations[conversationIndex].messages.append(runStepMessage)
+
+                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                            message: runStepMessage)
+                            playSoftImpact()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    // UI Bullshit
 
     func setLockToBottom() {
         isLockToBottom.toggle()
