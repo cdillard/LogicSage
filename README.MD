@@ -3,7 +3,14 @@
 
 [LogicSage: AI iOS Code & Chat. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-1.2.5 (latest)
+## LogicSage 1.2.5 (latest)
+
+- Work with Assistants and a thread is persisted to disk.
+
+- Set Conversation temperature to control creativity of AI.
+
+- Set your google search api key and secret (see README) and use -web-browsing suffixed model to use experimental Search and Link Command.
+
 
 ---
 
@@ -29,7 +36,7 @@ https://developers.google.com/custom-search/v1/introduction
 
 - Get a Google Search API Key and Secret from Google Developer Console.
 - Enter Google Search API Key and Google Search API Secret in Settings tab of app.
-- Change model to `gpt-4-0314-web-browsing*` (this is added by LogicSage.)
+- Change model to `gpt-4-1106-web-browsing*` (this is added by LogicSage.)
 
 ### Use LogicSage with Mac by connecting to the LogicSageCommandLine app!
 
@@ -52,7 +59,7 @@ When connected to the LogicSageCommandLine you can use the "Term" window from th
 
 	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the LogicSageWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
-5. Download and run LogicSage.app from Releases.
+5. Open `LogicSage/LogicSage.xcodeproj` and run the Mac OS app.
 
 6. Select `Start server` 
 
@@ -75,7 +82,9 @@ You can get a key here https://platform.openai.com/account/api-keys
 
 LogicSage needs an API key to make requests to OpenAI's API. Note that you will be charged by OpenAI for your API usage when hitting the send/"paperairplane" button.
 
-Make sure to set usage limits! and keep an eye on your usage here: https://platform.openai.com/account/billing/limits
+Make sure to set usage limits! and keep an eye on your usage here:
+- https://platform.openai.com/usage
+- https://platform.openai.com/account/billing/limits
 
 ---
 ## Contact

@@ -421,50 +421,7 @@ struct ChatView: View {
                 case .success(let result):
                     print(result.status)
                     if result.status == "completed" {
-                        print("RUN COMPLETED - get messages")
-
-                        var before: String?
-                        if let lastNonLocalMessage = sageMultiViewModel.conversation.messages.last(where: { $0.isLocal == false }) {
-                            before = lastNonLocalMessage.id
-                        }
-
-                        GPT.shared.openAINonBg.threadsMessages(threadId: threadId, before: before) { result in
-                            switch result {
-                            case .success(let threadMessageResult):
-                                print("GOT THREADS MESSAGES = \(threadMessageResult)")
-                                
-                                for item in threadMessageResult.data.reversed() {
-                                    let role = item.role
-                                    for innerItem in item.content {
-                                        let msg = Message(id: item.id, role: Chat.Role(rawValue: role) ?? .user, content: innerItem.text?.value ?? "", createdAt: Date(), isLocal: false)
-                                        if let localMessageIndex = sageMultiViewModel.conversation.messages.firstIndex(where: { $0.isLocal == true }) {
-                                            SettingsViewModel.shared.setMessageWithConvoId(sageMultiViewModel.conversation.id,
-                                                                                           localMessageIndex: localMessageIndex,
-                                                                                           message: msg)
-
-                                        }
-                                        else {
-
-                                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
-                                                                                            message: msg)
-                                            playSoftImpact()
-
-                                            SettingsViewModel.shared.speak(msg.content)
-
-                                        }
-
-                                    }
-                                }
-                                SettingsViewModel.shared.setThreadIdWithConvoId(sageMultiViewModel.conversation.id,
-                                                                                threadId: threadId)
-                                
-                            case .failure(let error):
-                                print("ERROR GETTING MESSAGES = \(error.localizedDescription)")
-
-                            }
-                            isLoading = false
-
-                        }
+                        handleCompleted(threadId: threadId)
                     }
                     else if result.status == "failed" {
                         isLoading = false
@@ -480,6 +437,58 @@ struct ChatView: View {
                     break
                 }
             }
+        }
+    }
+
+    private func handleCompleted(threadId: String) {
+        print("RUN COMPLETED - get messages")
+
+        var before: String?
+        if let lastNonLocalMessage = sageMultiViewModel.conversation.messages.last(where: { $0.isLocal == false }) {
+            before = lastNonLocalMessage.id
+        }
+
+        GPT.shared.openAINonBg.threadsMessages(threadId: threadId, before: before) { result in
+            switch result {
+            case .success(let threadMessageResult):
+                print("GOT THREADS MESSAGES = \(threadMessageResult)")
+
+                for item in threadMessageResult.data.reversed() {
+                    let role = item.role
+                    for innerItem in item.content {
+
+                        let msg = Message(id: item.id, 
+                                          role: Chat.Role(rawValue: role) ?? .user,
+                                          content: innerItem.text?.value ?? "",
+                                          createdAt: Date(), isLocal: false)
+
+                        if let localMessageIndex = sageMultiViewModel.conversation.messages.firstIndex(where: { $0.isLocal == true }) {
+                            SettingsViewModel.shared.setMessageWithConvoId(sageMultiViewModel.conversation.id,
+                                                                           localMessageIndex: localMessageIndex,
+                                                                           message: msg)
+
+                        }
+                        else {
+
+                            SettingsViewModel.shared.appendMessageToConvoId(sageMultiViewModel.conversation.id,
+                                                                            message: msg)
+                            playSoftImpact()
+
+                            SettingsViewModel.shared.speak(msg.content)
+
+                        }
+
+                    }
+                }
+                SettingsViewModel.shared.setThreadIdWithConvoId(sageMultiViewModel.conversation.id,
+                                                                threadId: threadId)
+
+            case .failure(let error):
+                print("ERROR GETTING MESSAGES = \(error.localizedDescription)")
+
+            }
+            isLoading = false
+
         }
     }
 
