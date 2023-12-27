@@ -11,15 +11,22 @@
 
 ---
 
+## Table of Contents
+- [Getting Started (iOS/iPadOS)](#getting-started-with-logicsage-ios-ipados)
+- [Google Search API Integration](#google-search-api-integration)
+- [LogicSageCommandLine Installation Requirements](#logicsagecommandline-installation-requirements)
+- [Contact](#contact)
+- [Credits](#credits)
+
 ### Use LogicSage without Mac
 
 Chat with GPT using tools (google, link) which allow incorporation of Google Search results into GPT responses.
 
 ## Getting Started with LogicSage: iOS, iPadOS
-
+with LogicSage: iOS, iPadOS
 #### Chat and copy code snippets:
 
-0. Download LogicSage from the AppStore.[link](https://apps.apple.com/us/app/logicsage/id6448485441)
+0. Download LogicSage from the [App Store](https://apps.apple.com/us/app/logicsage/id6448485441)
 1. LogicSage is a 'Bring Your Own API Key' app. Before you can start chatting, you need to enter an OpenAI API Key (https://platform.openai.com/account/api-keys) in the apps UI. 
     - it will be stored securely in your devices keychain. It will only be used when sending request to Open AI server (Check the source code in SettingsViewModel to check openAIKey handling.).
 
@@ -35,6 +42,8 @@ https://developers.google.com/custom-search/v1/introduction
 - Enter Google Search API Key and Google Search API Secret in Settings tab of app.
 - Change model to `gpt-4-1106-web-browsing*` (this is added by LogicSage.)
 
+MacOS
+---
 ### Use LogicSage with Mac by connecting to the LogicSageCommandLine app!
 
 (Work in Progress) MacOS / iOS GPT Middleware that allows GPT to build, run, and test Xcode projects. 
@@ -64,6 +73,23 @@ When connected to the LogicSageCommandLine you can use the "Term" window from th
 
 8. Create folder `~/Documents/LogicSageWorkspace`
 9. Create folder `~/Documents/LogicSageForMacWorkspace`
+
+## LogicSageCommandLine Installation Requirements
+- [Homebrew](https://brew.sh/)
+- [Ruby](https://www.ruby-lang.org/en/)
+- [Xcode](https://developer.apple.com/xcode/)
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
+- [Xcodeproj](https://github.com/CocoaPods/Xcodeproj)
+- [Swift Toolchain Xcode 14.3](https://www.swift.org/download/)
+
+#### Installing Homebrew and Ruby
+If you don't have Homebrew and Ruby installed, follow these steps:
+1. Install Homebrew by running: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. Install Ruby by running: `brew install ruby`
+
+#### Installing XcodeGen and Xcodeproj
+1. Install XcodeGen: `brew install xcodegen`
+2. Install Xcodeproj: `gem install xcodeproj`
 
 ---
 ## Disclaimer
