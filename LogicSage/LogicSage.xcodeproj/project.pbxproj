@@ -1862,7 +1862,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1924,7 +1924,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;

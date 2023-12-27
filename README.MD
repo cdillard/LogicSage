@@ -3,14 +3,11 @@
 
 [LogicSage: AI iOS Code & Chat. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-## LogicSage 1.2.5 (latest)
-
-- Work with Assistants and a thread is persisted to disk.
-
+## [LogicSage 1.2.5](https://apps.apple.com/us/app/logicsage/id6448485441) (latest)
+- Bug fixes and App enhancements to provide a better Code & Chat experience. 
+- Work with Assistants backed by uploaded files. Upload file when creating assistant to chat about file data. 
 - Set Conversation temperature to control creativity of AI.
-
-- Set your google search api key and secret (see README) and use -web-browsing suffixed model to use experimental Search and Link Command.
-
+- Use -web-browsing suffixed model to use experimental Search and Link Command.
 
 ---
 
