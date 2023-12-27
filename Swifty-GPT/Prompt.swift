@@ -14,10 +14,10 @@ func promptText(noGoogle: Bool = true, noLink: Bool = true) -> String {
     - The Google query command can be used if you need help or to look up any bugs you encounter, this way you can find fixes on sites like stackoverflow.com. (In the example above EXC_BAD_ACCESS represents the search term you want more info for or the failing line you are trying to fix. I will reply with a message containing the search results in a JSON array below "Search Results:"
     """
 
-    let linkStringInclude = !noLink ? "{\"command\": \"Link\",\"name\": \"www.nytimes.com\"}," : ""
+    let linkStringInclude = !noLink ? "{\"command\": \"Link\",\"name\": \"www.google.com\"}," : ""
     let linkString =
     """
-    - The Link url command can be used to get more information by accessing a link. Pass the link: {\"command\": \"Link\",\"name\": \"www.nytimes.com\"}. I will reply with a message containing the text from the link.
+    - The Link url command can be used to get more information by accessing a link. Pass the link: {\"command\": \"Link\",\"name\": \"www.google.com\"}. I will reply with a message containing the text from the link.
     """
     let appName = config.appName
     let googSteps = !noGoogle  ? "Google, Link," : ""

@@ -65,6 +65,9 @@
 		B78F3AB22A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F3AB12A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift */; };
 		B78F3AB42A9463C30044B4A6 /* XcodeCommand+Xcrun.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78F3AB32A9463C30044B4A6 /* XcodeCommand+Xcrun.swift */; };
 		B791552D29EDBB0300DE34FC /* Speak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B791552C29EDBB0300DE34FC /* Speak.swift */; };
+		B798FFB12B3B7BF2001C1078 /* AudioSpeechResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798FFAE2B3B7BF2001C1078 /* AudioSpeechResult.swift */; };
+		B798FFB22B3B7BF2001C1078 /* AudioSpeechQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798FFAF2B3B7BF2001C1078 /* AudioSpeechQuery.swift */; };
+		B798FFB32B3B7BF2001C1078 /* RunRetrieveStepsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B798FFB02B3B7BF2001C1078 /* RunRetrieveStepsResult.swift */; };
 		B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */; };
 		B7BE95402A8ED0BA0065A58B /* XcodeProjHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953F2A8ED0BA0065A58B /* XcodeProjHandler.swift */; };
 		B7BE95422A8ED0DB0065A58B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95412A8ED0DB0065A58B /* Project.swift */; };
@@ -229,6 +232,9 @@
 		B78F3AB12A9462ED0044B4A6 /* XcodeCommand+XcodeBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommand+XcodeBuild.swift"; sourceTree = "<group>"; };
 		B78F3AB32A9463C30044B4A6 /* XcodeCommand+Xcrun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommand+Xcrun.swift"; sourceTree = "<group>"; };
 		B791552C29EDBB0300DE34FC /* Speak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speak.swift; sourceTree = "<group>"; };
+		B798FFAE2B3B7BF2001C1078 /* AudioSpeechResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSpeechResult.swift; sourceTree = "<group>"; };
+		B798FFAF2B3B7BF2001C1078 /* AudioSpeechQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSpeechQuery.swift; sourceTree = "<group>"; };
+		B798FFB02B3B7BF2001C1078 /* RunRetrieveStepsResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunRetrieveStepsResult.swift; sourceTree = "<group>"; };
 		B7A4404929E7438A00E7C065 /* example_mandlebrot_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example_mandlebrot_output.txt; sourceTree = "<group>"; };
 		B7A4404B29E749CB00E7C065 /* createAppWithLibary_output.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = createAppWithLibary_output.txt; sourceTree = "<group>"; };
 		B7B40F8529E4AC5300D2DDFC /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommand.swift; sourceTree = "<group>"; };
@@ -567,6 +573,9 @@
 		B7E13A142A50B57D00C2B7C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B798FFAF2B3B7BF2001C1078 /* AudioSpeechQuery.swift */,
+				B798FFAE2B3B7BF2001C1078 /* AudioSpeechResult.swift */,
+				B798FFB02B3B7BF2001C1078 /* RunRetrieveStepsResult.swift */,
 				B7DF44052B18158A006EC80A /* AssistantsQuery.swift */,
 				B7DF440C2B18158A006EC80A /* AssistantsResult.swift */,
 				B7DF44092B18158A006EC80A /* FilesQuery.swift */,
@@ -810,6 +819,7 @@
 				B7D6517529EC847E00ED8BAE /* ggml.c in Sources */,
 				B7E13A542A50B57D00C2B7C0 /* ModerationsResult.swift in Sources */,
 				B737F40529F8153B00E57577 /* Spotify.swift in Sources */,
+				B798FFB32B3B7BF2001C1078 /* RunRetrieveStepsResult.swift in Sources */,
 				B7BE95402A8ED0BA0065A58B /* XcodeProjHandler.swift in Sources */,
 				B74E620F29F03EB90065DF88 /* Config.swift in Sources */,
 				B7B40F8629E4AC5300D2DDFC /* XcodeCommand.swift in Sources */,
@@ -823,6 +833,7 @@
 				B737F41D29F897DE00E57577 /* Eggland.swift in Sources */,
 				B7DF44112B18158A006EC80A /* RunsResult.swift in Sources */,
 				B78AC0F329EE1A9400BC7227 /* PromptLibrary.swift in Sources */,
+				B798FFB12B3B7BF2001C1078 /* AudioSpeechResult.swift in Sources */,
 				B7E13A612A50B57D00C2B7C0 /* JSONRequest.swift in Sources */,
 				B7DF44172B18158A006EC80A /* RunsQuery.swift in Sources */,
 				B7DF44152B18158A006EC80A /* RunRetrieveQuery.swift in Sources */,
@@ -859,6 +870,7 @@
 				B7E13A592A50B57D00C2B7C0 /* OpenAIProtocol+Combine.swift in Sources */,
 				B70CF17C29F07ACD00993AAF /* Loding.swift in Sources */,
 				B74A169629F1FA63006A0605 /* SrcCat.swift in Sources */,
+				B798FFB22B3B7BF2001C1078 /* AudioSpeechQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

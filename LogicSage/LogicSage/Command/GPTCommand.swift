@@ -32,7 +32,7 @@ func gptCommand(conversationId: Conversation.ID, input: String, useGoogle: Bool 
     if SettingsViewModel.shared.openAIModel == "gpt-4-1106-ls-web-browsing" && !hasAddedToolPromptBefore {
         let googleTextSegment = """
         - The google query command can be used if you need help or to find more information or if it requires information past your knowledge cutoff, this way you can find fixes on sites like stackoverflow.com. I will reply with a message containing the search results in a JSON section labeled "Search Results:". Example: "google: drawing hands" would google for the query "drawing hands"
-        - The link url command can be used to get more information by accessing a link. Example: "link: https://www.nytimes.com" would result in a message containing the text from the link. Send the link and google commands one at a time please
+        - The link url command can be used to get more information by accessing a link. Example: "link: https://www.google.com" would result in a message containing the text from the link. Send the link and google commands one at a time please
         """
         
         if config.enableGoogle && useGoogle {

@@ -246,7 +246,7 @@ func gptCommand(input: String, useGoogle: Bool = false, useLink: Bool = false, q
 """
 
     let linkTextSegment = """
-3. The Link url command can be used to get more information by accessing a link. Pass the link: {"command": "Link","name": "www.nytimes.com"}. I will reply with a message containing the text from the link.
+3. The Link url command can be used to get more information by accessing a link. Pass the link: {"command": "Link","name": "www.google.com"}. I will reply with a message containing the text from the link.
 """
     if input == "end" {
         multiPrinter("Exited conversational mode.")

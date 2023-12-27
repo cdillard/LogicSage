@@ -113,7 +113,7 @@ let aaronVoice = "com.apple.ttsbundle.siri_Aaron_en-US_compact"
 var defaultMachineVoice = "com.apple.speech.synthesis.voice.Zarvox"
 
 // CHOOSE your default voice (if using built in Mac OS voice synthesis)
-// COMMENT OUT THE FOLLOWING LINE IF USING CEREPROC VOICES.
+// INCLUDE THE FOLLOWING LINE IF NOT USING CEREPROC VOICES.
 var defaultVoice = avaVoice//allisonVoice//aaronVoice//floVoice//sandyVoice//kathyVoice//sammyVoice//eddyVoice//sageVoice
 
 // PLIST SETTINGS
@@ -194,33 +194,33 @@ let meganVoice = "com.cereproc.tts.CereVoice6_alk"
 let katherineVoice = "com.cereproc.tts.CereVoice6_smo"
 // Don't check this in -- Chris
 // UNCOMMENT THIS LINE AND fill the below arrs with your purchased Cereproc voices.
-//var defaultVoice = cereprocVoices.randomElement() ?? heatherVoice
-//let cereprocVoices = [
-//    heatherVoice,
-//    hannahVoice,
-//    carolynVoice,
-//    samVoice,
-//    laurenVoice,
-//    isabellaVoice,
-//    meganVoice,
-//    katherineVoice
-//]
-//let cereprocVoicesNames = [
-//    "Heather",
-//    "Hannah",
-//    "Carolyn",
-//    "Sam",
-//    "Lauren",
-//    "Isabella",
-//    "Megan",
-//    "Katherine"
-//]
-//func currentCereprocVoiceName() -> String {
-//    cereprocVoicesNames[cereprocVoices.firstIndex(of: defaultVoice) ?? 0]
-//}
-//func getCereprocVoiceIdentifier(name: String) -> String {
-//    cereprocVoices[cereprocVoicesNames.firstIndex(of: name) ?? 0]
-//}
+// var defaultVoice =  cereprocVoices.randomElement() ?? heatherVoice
+let cereprocVoices = [
+    heatherVoice,
+    hannahVoice,
+    carolynVoice,
+    samVoice,
+    laurenVoice,
+    isabellaVoice,
+    meganVoice,
+    katherineVoice
+]
+let cereprocVoicesNames = [
+    "Heather",
+    "Hannah",
+    "Carolyn",
+    "Sam",
+    "Lauren",
+    "Isabella",
+    "Megan",
+    "Katherine"
+]
+func currentCereprocVoiceName() -> String {
+    cereprocVoicesNames[cereprocVoices.firstIndex(of: defaultVoice) ?? 0]
+}
+func getCereprocVoiceIdentifier(name: String) -> String {
+    cereprocVoices[cereprocVoicesNames.firstIndex(of: name) ?? 0]
+}
 // END CEREPROC ZONE ///////////////////////////////
 
 // VERY EXPERIMENTAL MACOS / IOS INTEGRATIONS

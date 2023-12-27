@@ -40,7 +40,7 @@ https://developers.google.com/custom-search/v1/introduction
 
 ### Use LogicSage with Mac by connecting to the LogicSageCommandLine app!
 
-(WIP) MacOS / iOS GPT Middleware that allows GPT to build, run, and test Xcode projects. 
+(Work in Progress) MacOS / iOS GPT Middleware that allows GPT to build, run, and test Xcode projects. 
 
 When connected to the LogicSageCommandLine you can use the "Term" window from the LogicSage app, This allows you to invoke the commands on your mac from your device.
 
@@ -79,6 +79,8 @@ The developer of this project does not accept any responsibility or liability fo
 Please note that the use of the GPT language model can be expensive due to its token usage. By utilizing this project, you acknowledge that you are responsible for monitoring and managing your own token usage and the associated costs. It is highly recommended to check your OpenAI API usage regularly and set up any necessary limits or alerts to prevent unexpected charges.
 
 You can get a key here https://platform.openai.com/account/api-keys
+
+* Keep in mind turbo model is cheaper. the OG gpt-4 model can be expensive, use carefully.
 
 LogicSage needs an API key to make requests to OpenAI's API. Note that you will be charged by OpenAI for your API usage when hitting the send/"paperairplane" button.
 
