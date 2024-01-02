@@ -20,7 +20,10 @@ struct MovableDivider: View {
                     .fill(Color.gray)
                     .frame(width: 8, height: geometry.size.height)
                     .contentShape(Rectangle())
+#if !os(tvOS)
+
                     .gesture(
+
                         DragGesture()
                            .onChanged { value in
                                let delta = value.location.x - value.startLocation.x
@@ -34,6 +37,8 @@ struct MovableDivider: View {
                                 tempWidth = currentWidth
                             }
                       )
+#endif
+
             }
             .frame(width: currentWidth, height: geometry.size.height, alignment: .leading)
             .position(x: currentWidth / 2)

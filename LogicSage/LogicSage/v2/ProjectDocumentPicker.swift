@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+#if !os(tvOS)
 
 struct ProjectDocumentPicker: UIViewControllerRepresentable {
     @Binding var pickedDocumentURL: URL?
@@ -44,3 +45,4 @@ struct ProjectDocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
+#endif

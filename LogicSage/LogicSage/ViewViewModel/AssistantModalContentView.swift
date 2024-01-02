@@ -39,6 +39,8 @@ struct AssistantModalContentView: View {
                 Section(header: Text("Name")) {
                     TextField("Name", text: $name)
                 }
+#if !os(tvOS)
+
                 Section(header: Text("Description")) {
                     TextEditor(text: $description)
                         .frame(minHeight: 50)
@@ -47,7 +49,7 @@ struct AssistantModalContentView: View {
                     TextEditor(text: $customInstructions)
                         .frame(minHeight: 100)
                 }
-
+                #endif
                 Toggle(isOn: $codeInterpreter, label: {
                     Text("Code interpreter")
                 })
@@ -90,10 +92,13 @@ struct AssistantModalContentView: View {
                         isPickerPresented = true
                     }
                     .sheet(isPresented: $isPickerPresented) {
+#if !os(tvOS)
+
                         DocumentPicker { url in
                             selectedFileURL = url
                             onFileUpload()
                         }
+                        #endif
                     }
                 }
             }

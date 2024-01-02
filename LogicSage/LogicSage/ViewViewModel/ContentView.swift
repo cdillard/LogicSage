@@ -95,7 +95,9 @@ struct ContentView: View {
                     HStack(spacing: 4) {
 
                         ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Controls", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
+                            .foregroundColor(settingsViewModel.appTextColor)
                         ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
+                            .foregroundColor(settingsViewModel.appTextColor)
 
                         // Add new App window
 
@@ -367,10 +369,15 @@ struct ContentView: View {
             .onAppear {
                 recalculateWindowSize(size: size)
             }
+#if os(visionOS)
+            .onChange(of: size) {
+                recalculateWindowSize(size: size)
+            }
+#endif
+#if !os(visionOS)
             .onChange(of: size) { size in
                 recalculateWindowSize(size: size)
             }
-#if !os(visionOS)
 #if !os(tvOS)
             .onChange(of: keyboardResponder.currentHeight) { newKeyHeight in
                 keyboardHeight = newKeyHeight > 0 ? newKeyHeight - 33 : 0

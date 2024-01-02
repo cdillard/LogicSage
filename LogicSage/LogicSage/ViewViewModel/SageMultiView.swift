@@ -155,12 +155,19 @@ struct SageMultiView: View {
                         Spacer()
                     }
 #if !os(tvOS)
+#if !os(visionOS)
+
 
                     .onChange(of: geometry.size) { size in
                         recalculateWindowSize(size: geometry.size)
                     }
+                    #endif
 #endif
-
+#if os(visionOS)
+                    .onChange(of: geometry.size) {
+                        recalculateWindowSize(size: geometry.size)
+                    }
+                    #endif
 
                 }
                 

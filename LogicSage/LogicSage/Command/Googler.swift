@@ -8,7 +8,7 @@
 import Foundation
 
 
-let resultCount = 5
+let resultCount = 10
 struct SearchResult: Codable {
     let items: [SearchItem]
 }

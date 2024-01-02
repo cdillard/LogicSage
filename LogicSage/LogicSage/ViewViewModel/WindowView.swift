@@ -81,6 +81,11 @@ struct WindowView: View {
 #endif
 #endif
 #endif
+#if os(visionOS)
+            .onChange(of: parentViewSize) {
+                recalculateWindowSize(size: parentViewSize.size)
+            }
+#endif
         }
     }
 

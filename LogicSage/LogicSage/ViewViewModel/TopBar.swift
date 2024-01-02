@@ -168,7 +168,10 @@ struct TopBar: View {
             })
         }
         .sheet(isPresented: $showDocumentPicker) {
+#if !os(tvOS)
+
             ProjectDocumentPicker(pickedDocumentURL: $pickedDocumentURL)
+            #endif
         }
 
     }

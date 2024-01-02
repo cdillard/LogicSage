@@ -8,6 +8,8 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+#if !os(tvOS)
+
 struct DocumentPicker: UIViewControllerRepresentable {
     var callback: (URL) -> Void
 
@@ -39,3 +41,4 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
+#endif

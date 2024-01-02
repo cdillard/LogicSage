@@ -10,5 +10,5 @@ import SwiftSoup
 
 func extractText(from html: String) throws -> String {
     let document = try SwiftSoup.parse(html)
-    return try String(document.text().prefix(2400))
+    return try String(document.text().prefix(10000))
 }

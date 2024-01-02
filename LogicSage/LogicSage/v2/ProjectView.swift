@@ -63,7 +63,10 @@ struct ProjectView: View {
                     // Sidebar - Project Hierarchy View
                     ProjectHierarchyView(project: project)
                         .frame(width: dividerWidth, alignment: .leading)
+#if !os(tvOS)
+
                         .background(Color(.systemGray6))
+                    #endif
                 }
             }
 

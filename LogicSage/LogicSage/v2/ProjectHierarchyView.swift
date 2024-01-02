@@ -47,6 +47,8 @@ struct ProjectHierarchyRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let children = item.children {
+#if !os(tvOS)
+
                     DisclosureGroup(content: {
                         ForEach(children, id: \.id) { child in
                             ProjectHierarchyRow(item: child)
@@ -65,6 +67,7 @@ struct ProjectHierarchyRow: View {
 
                     })
                     .padding(.leading,2)
+                #endif
             } else {
 
                 Button {
