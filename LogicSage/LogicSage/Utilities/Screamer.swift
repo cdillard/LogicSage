@@ -18,7 +18,6 @@ let messageJsonKey = "message"
 let usernameJsonKey = "username"
 let passwordJsonKey = "password"
 let commandJsonKey = "command"
-let serverUsernameValue = "SERVER"
 let filenameJsonKey = "filename"
 let filesizeJsonKey = "filesize"
 
@@ -310,7 +309,7 @@ class ScreamClient: WebSocketDelegate {
         if command == "st" || command == "stop" || command == "STOP" { SettingsViewModel.shared.stopVoice() ; stopRandomSpinner() ;  }
         
         if websocket != nil {
-            let messageData: [String: Any] = [recipientJsonKey: serverUsernameValue, commandJsonKey: command]
+            let messageData: [String: Any] = [recipientJsonKey: SettingsViewModel.SWIFTSAGE_SERVER_USERNAME, commandJsonKey: command]
             do {
                 let messageJSON = try JSONSerialization.data(withJSONObject: messageData, options: [.fragmentsAllowed])
                 let messageString = String(data: messageJSON, encoding: .utf8)

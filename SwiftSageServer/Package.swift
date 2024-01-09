@@ -16,6 +16,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Vapor", package: "vapor")
             ],
+            resources: [
+                .process("GPT-Info.plist")],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of
                 // the `.unsafeFlags` construct required by SwiftPM, this flag is recommended for Release

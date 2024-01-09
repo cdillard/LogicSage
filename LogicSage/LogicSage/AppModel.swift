@@ -35,6 +35,12 @@ class AppModel: ObservableObject {
     @AppStorage("savedSphereZ") var savedSphereZ: Double = -2000.0
     @AppStorage("savedSphereScale") var savedSphereScale: Double = 1.0
 
+    @AppStorage("savedSphereYaw") var savedSphereYaw: Double = 0.0
+    @AppStorage("savedSphereBaseYaw") var savedSphereBaseYaw: Double = 0.0
+
+    @AppStorage("savedSpherePitch") var savedSpherePitch: Double = 0.0
+    @AppStorage("savedSphereBasePitch") var savedSphereBasePitch: Double = 0.0
+
     /// Resets game state information.
     func reset() {
 

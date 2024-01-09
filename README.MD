@@ -3,7 +3,7 @@
 
 [LogicSage: AI iOS Code & Chat. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-## [LogicSage 1.2.5](https://apps.apple.com/us/app/logicsage/id6448485441) (latest)
+## [LogicSage 1.2.6](https://apps.apple.com/us/app/logicsage/id6448485441) (latest)
 - Bug fixes and App enhancements to provide a better Code & Chat experience. 
 - Work with Assistants backed by uploaded files. Upload file when creating assistant to chat about file data. 
 - Set Conversation temperature to control creativity of AI.
@@ -61,18 +61,31 @@ When connected to the LogicSageCommandLine you can use the "Term" window from th
 	- You should now have the repository checked out in `~/LogicSage/`
 2. Open `~/LogicSage/` in Finder.
 3. Open `LogicSageCommandLine.xcworkspace` by double clicking it.
-4. Set `OPEN_AI_KEY` in `GPT-Info.plist`.`
+4. Set `OPEN_AI_KEY` in `Swifty-GPT/GPT-Info.plist` within this Xcode project.
+
+	To use LogicSageCommandLine please set up your LogicSage passwords. Please choose and set values for 
+		- SWIFTSAGE_USERNAME, SWIFTSAGE_PASSWORD & SWIFTSAGE_SERVER_USERNAME, SWIFTSAGE_SERVER_PASSWORD
+	
+	Now set those values in the following .plist files in the repository. 
+
+	- `LogicSage/LogicSage/GPT-Info.plist`
+	- `SwiftSageServer/App/GPT-Info.plist`
+	- `Swifty-GPT/GPT-Info.plist`
+
 
 	- Optional for customizable bgs: Run `./copy_wallpapers.sh` to copy your existing Mac OS Desktops to the LogicSageWorkspace. This is where LogicSage will grab your desired wallpaper backgrounds from.
 
-5. Open `LogicSage/LogicSage.xcodeproj` and run the Mac OS app.
+5. Create folder `~/Documents/LogicSageWorkspace`
+6. Create folder `~/Documents/LogicSageForMacWorkspace`
 
-6. Select `Start server` 
+7. Open `LogicSage/LogicSage.xcodeproj` and run the Mac OS app.
 
-7. Observe launched Terminal windows running LogicSageCommandLine.
+8. Select `Start server` 
 
-8. Create folder `~/Documents/LogicSageWorkspace`
-9. Create folder `~/Documents/LogicSageForMacWorkspace`
+9. Observe launched Terminal windows running LogicSageCommandLine.
+
+10. How to use LogicSageCommandLine
+- If the server is running you can interact with the LogicSageCommandLine by using the "Term" window within a LogicSage app for Mac, iOS, iPadOS, or another supported platform. 
 
 ## LogicSageCommandLine Installation Requirements
 - [Homebrew](https://brew.sh/)

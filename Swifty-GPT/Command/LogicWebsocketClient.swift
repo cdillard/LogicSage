@@ -13,8 +13,7 @@ class ServerWebSocketClient: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("Conneted to server:  w/ headers \(headers))")
-            // TODO: FIX HARDCODE CREDZ
-            let authData: [String: String] = ["username": "SERVER", "password": "supers3cre3t"]
+            let authData: [String: String] = ["username": SWIFTSAGE_SERVER_USERNAME, "password": SWIFTSAGE_SERVER_PASSWORD]
             do {
                 let authJSON = try JSONSerialization.data(withJSONObject: authData, options: [.fragmentsAllowed])
                 let authString = String(data: authJSON, encoding: .utf8)

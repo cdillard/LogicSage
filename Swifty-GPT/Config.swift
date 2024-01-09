@@ -142,6 +142,26 @@ var GOOGLE_ID:String {
         keyForName(name: "GOOGLE_SEARCH_ID")
     }
 }
+var SWIFTSAGE_USERNAME:String {
+    get {
+        keyForName(name: "SWIFTSAGE_USERNAME")
+    }
+}
+var SWIFTSAGE_SERVER_USERNAME:String {
+    get {
+        keyForName(name: "SWIFTSAGE_SERVER_USERNAME")
+    }
+}
+var SWIFTSAGE_SERVER_PASSWORD:String {
+    get {
+        keyForName(name: "SWIFTSAGE_SERVER_PASSWORD")
+    }
+}
+var SWIFTSAGE_PASSWORD:String {
+    get {
+        keyForName(name: "SWIFTSAGE_PASSWORD")
+    }
+}
 var infoPlistPath:String {
     get {
         if let plistPath = Bundle.main.path(forResource: "Info", ofType: "plist") {

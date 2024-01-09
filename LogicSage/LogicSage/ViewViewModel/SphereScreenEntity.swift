@@ -25,8 +25,6 @@ class SphereScreenEntity: Entity {
         configuration: Configuration
     ) async {
         do { // Load assets.
-
-
             let mesh = MeshResource.generateTwoSidedSphere(radius: 1.0)
 
             var material2 = SimpleMaterial()
@@ -53,7 +51,6 @@ class SphereScreenEntity: Entity {
             let rotatedVertices2 = Self.rotateVerticesAroundXAxis(vertices: rotatedVertices, angle: angle2)
             let rotatedIndices2 = Self.rotateIndices(indices: rotatedIndices)  // Indices remain the same
 
-
             let shape = try await ShapeResource.generateStaticMesh(positions: rotatedVertices2, faceIndices: rotatedIndices2)
 
             modelEntity.addCollision(shape: shape)
@@ -68,10 +65,7 @@ class SphereScreenEntity: Entity {
             modelEntity.components.set(GroundingShadowComponent(castsShadow: true))
             modelEntity.components.set(HoverEffectComponent())
 
-
-
             super.init()
-
 
             Timer.scheduledTimer(withTimeInterval: texUpdateInteral, repeats: true) { [weak self] _ in
                 DispatchQueue.main.async { [weak self] in
@@ -234,8 +228,6 @@ class SphereScreenEntity: Entity {
         // The indices don't change when vertices are rotated
         return indices
     }
-
-
 }
 
 #endif

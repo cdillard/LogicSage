@@ -9,7 +9,7 @@
 import SwiftUI
 import RealityKit
 
-/// The model of the Earth.
+/// The model of the Sphere Screen.
 struct SphereScreenView: View {
     var screenConfiguration: SphereScreenEntity.Configuration = .init()
     var animateUpdates: Bool = false
@@ -24,7 +24,6 @@ struct SphereScreenView: View {
                 configuration: screenConfiguration
             )
             content.add(screenEntity)
-
 
             // Store for later updates.
             self.screenEntity = screenEntity

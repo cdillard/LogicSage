@@ -7,10 +7,31 @@ import var Darwin.stdout
 
 // Run with `./run.sh` in the LogicSage directory.
 
-let userName = "chris"
-let userPassword =  "swiftsage"
-let serverUsername = "SERVER"
-let serverPassword = "supers3cre3t"
+var SWIFTSAGE_USERNAME:String {
+    get {
+        keyForName(name: "SWIFTSAGE_USERNAME")
+    }
+}
+var SWIFTSAGE_SERVER_USERNAME:String {
+    get {
+        keyForName(name: "SWIFTSAGE_SERVER_USERNAME")
+    }
+}
+var SWIFTSAGE_SERVER_PASSWORD:String {
+    get {
+        keyForName(name: "SWIFTSAGE_SERVER_PASSWORD")
+    }
+}
+var SWIFTSAGE_PASSWORD:String {
+    get {
+        keyForName(name: "SWIFTSAGE_PASSWORD")
+    }
+}
+
+func keyForName(name: String) -> String {
+    guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
+    return apiKey
+}
 
 let debugging = false
 
@@ -163,9 +184,9 @@ public func configure(_ app: Application) throws {
                     }
                     // Validate username and password
                     if let user = json?["username"],  let password = json?["password"],
-                       (user == userName && password == userPassword)
+                       (user == SWIFTSAGE_USERNAME && password == SWIFTSAGE_PASSWORD)
                         ||
-                        (user == serverUsername && password == serverPassword) {
+                        (user == SWIFTSAGE_SERVER_USERNAME && password == SWIFTSAGE_SERVER_PASSWORD) {
                         clientsQueue.async {
                             // Authenticate the user
                             username = user
@@ -177,7 +198,7 @@ public func configure(_ app: Application) throws {
                                 print("Authentication of \(user):\(ws) succeeded")
                             }
 
-                            let resps = clients["SERVER"] ?? []
+                            let resps = clients[SWIFTSAGE_SERVER_USERNAME] ?? []
                             if debugging {
                                 print("auth resps = \(resps)")
                             }
@@ -186,7 +207,7 @@ public func configure(_ app: Application) throws {
                                     print("Received message fpr recipientSocket = \(recipientSocket)")
                                 }
                                 // send server auth cmd
-                                let logData: [String: String] = ["recipient": "SERVER", "message": "\(logoAscii5)"]
+                                let logData: [String: String] = ["recipient": SWIFTSAGE_SERVER_USERNAME, "message": "\(logoAscii5)"]
                                 do {
                                     let logJSON = try JSONSerialization.data(withJSONObject: logData, options: [.fragmentsAllowed])
                                     let logString = String(data: logJSON, encoding: .utf8)

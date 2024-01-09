@@ -142,7 +142,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         if let overrideText = overrideText {
             if overrideText != context.coordinator.wrappedView.text && isLocktoBottom {
                 context.coordinator.wrappedView.text = overrideText
-                context.coordinator.textDidChange()
+                //context.coordinator.textDidChange()
             }
         }
 #if os(visionOS)
@@ -204,18 +204,18 @@ extension SourceCodeTextEditor {
             parent.custom.codeDidCopy()
         }
 
-        @objc func textDidChange() {
-            if isLockToBottom {
-                let textView = wrappedView.textView
-#if !os(macOS)
-                textView.scrollRangeToVisible(NSMakeRange(textView.text.count - 1, 1))
-#endif
-                //print("scrolling chatview to bottom")
-            }
-            else {
-               // print("isLockToBottom false -- not scrolling")
-            }
-        }
+//        @objc func textDidChange() {
+//            if isLockToBottom {
+//                let textView = wrappedView.textView
+//#if !os(macOS)
+//                textView.scrollRangeToVisible(NSMakeRange(textView.text.count - 1, 1))
+//#endif
+//                //print("scrolling chatview to bottom")
+//            }
+//            else {
+//               // print("isLockToBottom false -- not scrolling")
+//            }
+//        }
     }
 }
 #endif

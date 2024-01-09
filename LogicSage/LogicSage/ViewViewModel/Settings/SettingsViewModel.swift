@@ -220,6 +220,34 @@ public class SettingsViewModel: ObservableObject {
     // END SUB ZONE FOR SRC EDITOR COLORS********************************************
     // END SAVED COLORS ZONE **************************************************************************************
 
+
+    static var SWIFTSAGE_USERNAME:String {
+        get {
+            keyForName(name: "SWIFTSAGE_USERNAME")
+        }
+    }
+    static var SWIFTSAGE_SERVER_USERNAME:String {
+        get {
+            keyForName(name: "SWIFTSAGE_SERVER_USERNAME")
+        }
+    }
+    static var SWIFTSAGE_SERVER_PASSWORD:String {
+        get {
+            keyForName(name: "SWIFTSAGE_SERVER_PASSWORD")
+        }
+    }
+    static var SWIFTSAGE_PASSWORD:String {
+        get {
+            keyForName(name: "SWIFTSAGE_PASSWORD")
+        }
+    }
+
+    static func keyForName(name: String) -> String {
+        guard let apiKey = plistHelper.objectFor(key: name, plist: "GPT-Info") as? String else { return "" }
+        return apiKey
+    }
+
+
     // BEGIN CLIENT API KEYS ZONE ******************************************************************************
     // TODO: React to user name and password change
     let aiKeyKey = "openAIKeySec"
@@ -227,11 +255,11 @@ public class SettingsViewModel: ObservableObject {
     let googleKeyKey = "googleKey"
     let googleSearchIDKey = "googleSearchId"
 
-    @AppStorage("userName") var userName = "chris" {
+    @AppStorage("userName") var userName = SettingsViewModel.SWIFTSAGE_USERNAME {
         didSet {
         }
     }
-    @Published var password = "swiftsage" {
+    @Published var password = SettingsViewModel.SWIFTSAGE_PASSWORD {
         didSet {
             DispatchQueue.global(qos: .default).async {
 
@@ -489,9 +517,10 @@ public class SettingsViewModel: ObservableObject {
         if let key = keychainManager.retrieveFromKeychain(key: googleSearchIDKey) {
             self.googleSearchId = key
         }
-        if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
-            self.password = key
-        }
+        self.userName = Self.SWIFTSAGE_USERNAME
+//        if let key = keychainManager.retrieveFromKeychain(key: "swsPassword") {
+        self.password = Self.SWIFTSAGE_PASSWORD
+  //      }
         if let key = keychainManager.retrieveFromKeychain(key: aiAccessTokenKey) {
             self.accessToken = key
         }

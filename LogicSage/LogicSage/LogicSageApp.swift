@@ -93,7 +93,7 @@ struct LogicSageApp: App {
                 .environmentObject(appModel)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1.6, height: 1.6, depth: 1.6, in: .meters)
+        .defaultSize(width: 0.6, height: 0.6, depth: 0.6, in: .meters)
 #endif
     }
 }

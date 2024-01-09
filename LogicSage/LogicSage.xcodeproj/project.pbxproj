@@ -235,6 +235,9 @@
 		B7BE95382A8EBCE80065A58B /* PlacementGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */; };
 		B7BE953C2A8EBDAC0065A58B /* GlobeControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */; };
 		B7BE953E2A8EC38A0065A58B /* DragRotationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */; };
+		B7BEA4882B48C70100F1F70A /* AltDragRotationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BEA4872B48C70100F1F70A /* AltDragRotationModifier.swift */; };
+		B7BEA4BB2B4C89A600F1F70A /* GPT-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7BEA4BA2B4C89A600F1F70A /* GPT-Info.plist */; };
+		B7BEA4BD2B4C8ABC00F1F70A /* plistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BEA4BC2B4C8ABC00F1F70A /* plistHelper.swift */; };
 		B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C11F2A2A01C62500701721 /* PTTWrapper.swift */; };
 		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
@@ -530,6 +533,9 @@
 		B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlacementGestureModifier.swift; path = LogicSage/PlacementGestureModifier.swift; sourceTree = SOURCE_ROOT; };
 		B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeControls.swift; sourceTree = "<group>"; };
 		B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DragRotationModifier.swift; path = LogicSage/DragRotationModifier.swift; sourceTree = SOURCE_ROOT; };
+		B7BEA4872B48C70100F1F70A /* AltDragRotationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AltDragRotationModifier.swift; path = LogicSage/AltDragRotationModifier.swift; sourceTree = SOURCE_ROOT; };
+		B7BEA4BA2B4C89A600F1F70A /* GPT-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GPT-Info.plist"; sourceTree = "<group>"; };
+		B7BEA4BC2B4C8ABC00F1F70A /* plistHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = plistHelper.swift; sourceTree = "<group>"; };
 		B7C11F2A2A01C62500701721 /* PTTWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTTWrapper.swift; sourceTree = "<group>"; };
 		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
@@ -788,6 +794,7 @@
 				B71C62F32A018B4A004296E4 /* Command */,
 				B71C62F62A018C4F004296E4 /* Config */,
 				B748C2FA29F5FF4A000F5F14 /* Info.plist */,
+				B7BEA4BA2B4C89A600F1F70A /* GPT-Info.plist */,
 				B78DA9602A02AF3A002343AB /* Loading */,
 				B746DFCD29F5E789002804EB /* LogicSageApp.swift */,
 				B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */,
@@ -1083,6 +1090,7 @@
 		B78DA97B2A06F3E4002343AB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B7BEA4BC2B4C8ABC00F1F70A /* plistHelper.swift */,
 				B70A00EE2A1E96BA00ADEF5A /* ConversationsViewModel.swift */,
 				B78EAF5E2A116D76003095A2 /* Github */,
 				B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */,
@@ -1177,6 +1185,7 @@
 		B7BD8E182A8723AB007E5ACD /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				B7BEA4872B48C70100F1F70A /* AltDragRotationModifier.swift */,
 				B7BE953D2A8EC38A0065A58B /* DragRotationModifier.swift */,
 				B7BE95372A8EBCE80065A58B /* PlacementGestureModifier.swift */,
 			);
@@ -1369,6 +1378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B746DFD629F5E78A002804EB /* Preview Assets.xcassets in Resources */,
+				B7BEA4BB2B4C89A600F1F70A /* GPT-Info.plist in Resources */,
 				B746DFD229F5E78A002804EB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1487,6 +1497,7 @@
 				B7544E402A191BCE00961F4C /* Utilities.swift in Sources */,
 				B74A2CCB29F7F6990051DB52 /* HTTPHandler.swift in Sources */,
 				B74B21DB2A1D452700B3282E /* Drawer.swift in Sources */,
+				B7BEA4882B48C70100F1F70A /* AltDragRotationModifier.swift in Sources */,
 				B78DA9652A02AF3A002343AB /* AsciiAnimator.swift in Sources */,
 				B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */,
 				B783AE2F2AFB29E400BCDE51 /* RunRetrieveQuery.swift in Sources */,
@@ -1569,6 +1580,7 @@
 				B7BD8E1E2A87ECA2007E5ACD /* Backend.swift in Sources */,
 				B764D7422B2F763E00768830 /* DocumentPicker.swift in Sources */,
 				B7347CD02A5CBEAA0055D8F7 /* AudioView.swift in Sources */,
+				B7BEA4BD2B4C8ABC00F1F70A /* plistHelper.swift in Sources */,
 				B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */,
 				B710CF042A7F5E65008C06CC /* Tiktoken.swift in Sources */,
 				B7BE95342A8E7B2B0065A58B /* Project.swift in Sources */,

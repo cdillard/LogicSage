@@ -14,17 +14,22 @@ import RealityKit
 struct SphereScreenSceneView: View {
     @EnvironmentObject var appModel: AppModel
 
+    @State var axRotateClockwise: Bool = false
+    @State var axRotateCounterClockwise: Bool = false
 
     var body: some View {
-        
         SphereScreenView(
             screenConfiguration: appModel.screen
         )
-        .placementGestures(initialPosition: Point3D([appModel.savedSphereX,appModel.savedSphereY,appModel.savedSphereZ]))
         .if(appModel.isRotating) { view in
-            view.dragRotation(yawLimit: .degrees(20), pitchLimit: .degrees(20))
+            view.dragRotation(
+                //pitchLimit: .degrees(90),
+                axRotateClockwise: axRotateClockwise,
+                axRotateCounterClockwise: axRotateCounterClockwise)
+
 
         }
+        .placementGestures(initialPosition: Point3D([appModel.savedSphereX,appModel.savedSphereY,appModel.savedSphereZ]))
     }
 }
 
