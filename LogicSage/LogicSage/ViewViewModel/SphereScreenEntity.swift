@@ -56,43 +56,27 @@ class SphereScreenEntity: Entity {
             modelEntity.addCollision(shape: shape)
             modelEntity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
             modelEntity.collision?.mode = .trigger
-//            modelEntity.transform.rotation = simd_quatf(angle: -rotationRadiansCol, axis: SIMD3(x:0,y:1,z:0))
+            //            modelEntity.transform.rotation = simd_quatf(angle: -rotationRadiansCol, axis: SIMD3(x:0,y:1,z:0))
 
             let rotationRadians = Float(-90.0) * .pi / 180 // 45 degrees converted to radians.
             modelEntity.transform.rotation = simd_quatf(angle: rotationRadians, axis: SIMD3(x:0,y:1,z:0))//.degrees(43)
 
             screen = modelEntity
+
+            // WHY DONT YOU WORK ShADOW?
             modelEntity.components.set(GroundingShadowComponent(castsShadow: true))
-            modelEntity.components.set(HoverEffectComponent())
+
+            if configuration.isHoverEffectEnabled {
+                modelEntity.components.set(HoverEffectComponent())
+            }
 
             super.init()
 
             Timer.scheduledTimer(withTimeInterval: texUpdateInteral, repeats: true) { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    Task { [weak self] in
-                        var material2 = SimpleMaterial()
-                        if let image = UIImage(data: lastTextureImageData ?? Data())?.cgImage {
-                            // tip: MTLTextureDescriptor has width greater than the maximum allowed size of 8192 will fail.
-                            if image.height < 8192 && image.width < 8192 {
+                Task { [weak self] in
 
-                                let txtContent =  try await TextureResource.generate(from: image, options: .init(semantic: .normal))
+                    try await self?.updateTexture(modelEntity)
 
-                                if let color =  try? PhysicallyBasedMaterial.BaseColor
-                                    .init(tint: .white.withAlphaComponent(matAlphaComponent),
-                                          texture: .init(txtContent)) {
-                                    material2.color = color
-                                }
-
-                                for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
-                                    modelEntity.model?.materials[i] = material2
-                                }
-                            }
-                            else {
-                                logD("image size exceeds 3D texture (MTLTextureDescriptor) limit")
-                            }
-
-                        }
-                    }
                 }
             }
 
@@ -120,7 +104,32 @@ class SphereScreenEntity: Entity {
             withAnimation: animateUpdates)
     }
 
-    
+    func updateTexture(_ modelEntity: ModelEntity) async throws {
+        var material2 = SimpleMaterial()
+        if let image = UIImage(data: lastTextureImageData ?? Data())?.cgImage {
+            // tip: MTLTextureDescriptor has width greater than the maximum allowed size of 8192 will fail.
+            if image.height < 8192 && image.width < 8192 {
+
+                let txtContent =  try await TextureResource.generate(from: image, options: .init(semantic: .normal))
+
+                if let color =  try? PhysicallyBasedMaterial.BaseColor
+                    .init(tint: .white.withAlphaComponent(matAlphaComponent),
+                          texture: .init(txtContent)) {
+                    material2.color = color
+                }
+
+                for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
+                    modelEntity.model?.materials[i] = material2
+                }
+            }
+            else {
+                logD("image size exceeds 3D texture (MTLTextureDescriptor) limit")
+            }
+
+        }
+    }
+
+
     static func generateWedge(radius: Float, phiStart: Float, phiEnd: Float, innerRadius: Float) -> ([SIMD3<Float>], [UInt16]) {
         var vertices: [SIMD3<Float>] = []
         var indices: [UInt16] = []

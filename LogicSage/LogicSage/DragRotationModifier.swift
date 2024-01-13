@@ -15,7 +15,7 @@ extension View {
     func dragRotation(
         yawLimit: Angle? = nil,
         pitchLimit: Angle? = nil,
-        sensitivity: Double = 10
+        sensitivity: Double = 1
     ) -> some View {
         self.modifier(
             DragRotationModifier(

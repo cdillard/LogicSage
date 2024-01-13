@@ -28,7 +28,13 @@ struct RepositoryTreeView: View {
             if file.isDirectory && !file.name.hasSuffix("xcodeproj") {
                 NavigationLink(destination: RepositoryTreeView(sageMultiViewModel: sageMultiViewModel, settingsViewModel: settingsViewModel, directory: file, window: window, windowManager: windowManager)) {
                     Text(file.name + " >")
+                    #if os(visionOS)
+                        .foregroundColor(.white)
+
+                    #else
                         .foregroundColor(settingsViewModel.appTextColor)
+#endif
+
                 }
             } else {
                 HStack {

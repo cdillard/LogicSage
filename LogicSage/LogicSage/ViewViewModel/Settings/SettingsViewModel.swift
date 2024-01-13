@@ -261,7 +261,7 @@ public class SettingsViewModel: ObservableObject {
     }
     @Published var password = SettingsViewModel.SWIFTSAGE_PASSWORD {
         didSet {
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key: "swsPassword", value: self.password) {
                     print("Key saved successfully")
@@ -282,7 +282,7 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: "openAIKey")
 #endif
 #endif
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key:self.aiKeyKey, value: trimmedKey) {
                     print("openAIKey saved successfully")
@@ -303,7 +303,7 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: ghaKeyKey)
 #endif
 #endif
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key: self.ghaKeyKey, value: trimmedKey) {
                     print("ghPat saved successfully")
@@ -329,7 +329,7 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: googleKeyKey)
 #endif
 #endif
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key: self.googleKeyKey, value: trimmedKey) {
                     print("googleKey saved successfully")
@@ -348,7 +348,7 @@ public class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(trimmedKey, forKey: googleSearchIDKey)
 #endif
 #endif
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key: self.googleSearchIDKey, value: trimmedKey) {
                     print("googleSearchId saved successfully")
@@ -372,7 +372,7 @@ public class SettingsViewModel: ObservableObject {
     @Published var accessToken = "" {
         didSet {
 
-            DispatchQueue.global(qos: .default).async {
+            Task {
 
                 if self.keychainManager.saveToKeychain(key: self.aiAccessTokenKey, value: self.accessToken) {
                     print("aiAccessTokenKey saved successfully")
@@ -553,13 +553,22 @@ public class SettingsViewModel: ObservableObject {
 
 #endif
         }
-
+#if os(visionOS)
+        if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
+            self.appTextColor =  Color(rawValue:colorKey) ?? .black
+        }
+        else {
+            self.appTextColor = .black
+        }
+#else
         if let colorKey = UserDefaults.standard.string(forKey: "appTextColor") {
             self.appTextColor =  Color(rawValue:colorKey) ?? .primary
         }
         else {
             self.appTextColor = .primary
         }
+#endif
+
 #else
         self.buttonColor = .green
         self.backgroundColor = .gray
@@ -695,9 +704,9 @@ public class SettingsViewModel: ObservableObject {
         //#if !targetEnvironment(macCatalyst)
 
         let fileURL = getDocumentsDirectory()
-        DispatchQueue.global(qos: .default).async {
+        Task {
             let files = getFiles(in: fileURL)
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.root = RepoFile(name: fileRootName, url: fileURL, isDirectory: true, children: files)
             }
         }

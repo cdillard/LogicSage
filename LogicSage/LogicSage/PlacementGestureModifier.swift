@@ -9,6 +9,10 @@
 import SwiftUI
 import RealityKit
 
+let minScale = 0.1
+
+let maxScale = 10.0
+
 extension View {
     /// Listens for gestures and places an item based on those inputs.
     func placementGestures(
@@ -38,6 +42,8 @@ private struct PlacementGesturesModifier: ViewModifier {
             .onAppear {
                 position = initialPosition
             }
+            .rotation3DEffect(.radians(appModel.savedSphereBaseYaw == 0 ? 0.01 : appModel.savedSphereBaseYaw), axis: .y)
+            .rotation3DEffect(.radians(appModel.savedSphereBasePitch == 0 ? 0.01 : appModel.savedSphereBasePitch), axis: .x)
             .scaleEffect(appModel.savedSphereScale)
             .position(x: position.x, y: position.y)
             .offset(z: position.z)
@@ -70,7 +76,7 @@ private struct PlacementGesturesModifier: ViewModifier {
                         .onChanged { value in
                             if let startScale {
                                 Task {
-                                    appModel.savedSphereScale = max(0.1, min(10, value.magnification * startScale))
+                                    appModel.savedSphereScale = max(minScale, min(maxScale, value.magnification * startScale))
                                 }
 
                             } else {

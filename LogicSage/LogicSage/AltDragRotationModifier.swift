@@ -15,7 +15,7 @@ extension View {
     func dragRotation(
         yawLimit: Angle? = nil,
         pitchLimit: Angle? = nil,
-        sensitivity: Double = 10,
+        sensitivity: Double = 1,
         axRotateClockwise: Bool = false,
         axRotateCounterClockwise: Bool = false
     ) -> some View {
@@ -81,11 +81,14 @@ private struct DragRotationModifier: ViewModifier {
                             predictedDisplacement: Double(predictedDelta.x),
                             base: baseYaw,
                             limit: yawLimit)
+                        yaw = appModel.savedSphereYaw
                         appModel.savedSpherePitch = finalSpin(
                             displacement: Double(delta.y),
                             predictedDisplacement: Double(predictedDelta.y),
                             base: basePitch,
                             limit: pitchLimit)
+                        pitch = appModel.savedSpherePitch
+
                     }
 
                     // Store the last value for use by the next gesture.
@@ -93,21 +96,9 @@ private struct DragRotationModifier: ViewModifier {
                     appModel.savedSphereBasePitch = pitch
                 }
             )
-            .onChange(of: axRotateClockwise) {
-                withAnimation(.spring) {
-                    yaw -= (.pi / 6)
-                    baseYaw = yaw
-                }
-            }
-            .onChange(of: axRotateCounterClockwise) {
-                withAnimation(.spring) {
-                    yaw += (.pi / 6)
-                    baseYaw = yaw
-                }
-            }
             .onAppear {
-                yaw = appModel.savedSphereYaw
-                pitch = appModel.savedSpherePitch
+                yaw = appModel.savedSphereBaseYaw
+                pitch = appModel.savedSphereBasePitch
             }
     }
 

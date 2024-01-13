@@ -242,7 +242,6 @@
 		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
 		B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */; };
-		B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */; };
 		B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */; };
 		B7DB97E12A32EABB00304B80 /* SettingsViewModel+Convo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */; };
 		B7E098B12A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */; };
@@ -540,7 +539,6 @@
 		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
 		B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizingHandle.swift; sourceTree = "<group>"; };
-		B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ColorGen.swift"; sourceTree = "<group>"; };
 		B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Websocket.swift"; sourceTree = "<group>"; };
 		B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Convo.swift"; sourceTree = "<group>"; };
 		B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogicSageiOSApp+UserDefaults.swift"; sourceTree = "<group>"; };
@@ -1093,7 +1091,6 @@
 				B7BEA4BC2B4C8ABC00F1F70A /* plistHelper.swift */,
 				B70A00EE2A1E96BA00ADEF5A /* ConversationsViewModel.swift */,
 				B78EAF5E2A116D76003095A2 /* Github */,
-				B7D7AD012A26ACFF003C9AFE /* Settings+ColorGen.swift */,
 				B737F40A29F837CE00E57577 /* SettingsVIew.swift */,
 				B7B270782A5E534A002FB711 /* SettingsView+ColorDisc.swift */,
 				B7B2707C2A5F4C27002FB711 /* SettingsView+SizeDisc.swift */,
@@ -1591,7 +1588,6 @@
 				B7BE95362A8E7C050065A58B /* MovableDivider.swift in Sources */,
 				B710CF052A7F5E65008C06CC /* Ranks.swift in Sources */,
 				B70A00F72A1EFB5600ADEF5A /* ChatSourceCodeTheme.swift in Sources */,
-				B7D7AD022A26ACFF003C9AFE /* Settings+ColorGen.swift in Sources */,
 				B78DA9762A04A0A5002343AB /* RepositoryTreeView.swift in Sources */,
 				B7C11F2B2A01C62500701721 /* PTTWrapper.swift in Sources */,
 				B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */,

@@ -55,9 +55,9 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     }
 
     func refreshChanges(newText: String) {
-        DispatchQueue.global(qos: .default).async {
+        Task {
             let calcChange = getLineChanges(original: self.originalSourceCode, edited: newText)
-           DispatchQueue.main.async {
+            await MainActor.run {
                 self.changes = calcChange
            }
         }

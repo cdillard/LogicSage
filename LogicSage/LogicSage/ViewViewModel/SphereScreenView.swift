@@ -11,16 +11,17 @@ import RealityKit
 
 /// The model of the Sphere Screen.
 struct SphereScreenView: View {
-    var screenConfiguration: SphereScreenEntity.Configuration = .init()
+    @State var screenConfiguration: SphereScreenEntity.Configuration = .init()
     var animateUpdates: Bool = false
 
     /// The Earth entity that the view creates and stores for later updates.
     @State private var screenEntity: SphereScreenEntity?
-
+    @EnvironmentObject var appModel: AppModel
     var body: some View {
         RealityView { content in
             // Create an earth entity with tilt, rotation, a moon, and so on.
             let screenEntity = await SphereScreenEntity(
+
                 configuration: screenConfiguration
             )
             content.add(screenEntity)
@@ -33,6 +34,9 @@ struct SphereScreenView: View {
             screenEntity?.update(
                 configuration: screenConfiguration,
                 animateUpdates: animateUpdates)
+        }
+        .onAppear {
+            screenConfiguration.isHoverEffectEnabled = appModel.isRotating || appModel.isTranslating
         }
     }
 }

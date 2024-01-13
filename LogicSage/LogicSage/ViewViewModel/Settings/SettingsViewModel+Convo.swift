@@ -225,8 +225,11 @@ extension SettingsViewModel {
 
         for vm in self.latestWindowManager?.windowViewModels ?? [] {
             if convoId == vm.conversation.id {
-                DispatchQueue.main.async {
-                    vm.conversation = self.conversations[index]
+                Task {
+                    await MainActor.run {
+
+                        vm.conversation = self.conversations[index]
+                    }
                 }
             }
         }
