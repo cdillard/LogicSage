@@ -46,15 +46,16 @@ class SyntaxTextViewLayoutManager: NSLayoutManager {
 
         var placeholders = [(CGRect, EditorPlaceholderState)]()
 
-        textStorage?.enumerateAttribute(.editorPlaceholder, in: range, options: [], using: { (value, range, stop) in
+        textStorage?.enumerateAttribute(.editorPlaceholder, in: range, options: [], using: { [weak self] (value, range, stop) in
 
             if let state = value as? EditorPlaceholderState {
 
                 // the color set above
-                let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
-                let container = self.textContainer(forGlyphAt: glyphRange.location, effectiveRange: nil)
+                let glyphRange = self?.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+                let container = self?.textContainer(forGlyphAt: glyphRange?.location ?? 0, effectiveRange: nil)
 
-                let rect = self.boundingRect(forGlyphRange: glyphRange, in: container ?? NSTextContainer())
+                let rect = self?.boundingRect(forGlyphRange: glyphRange ?? NSRange(location: 0, length: 0), in: container ?? NSTextContainer())
+                guard let rect = rect else { return }
 
                 placeholders.append((rect, state))
 

@@ -101,6 +101,7 @@ struct ChatBottomMenu: View {
 
         }
         .frame(width: 30)
+        .frame(height: 40)
 
         .sheet(isPresented: $isModalPresented) {
             ModalView(items: aiModelOptions, choseBuiltInModel: $choseBuiltInModel)

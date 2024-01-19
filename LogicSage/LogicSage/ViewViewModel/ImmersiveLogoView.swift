@@ -11,12 +11,13 @@ import MetalKit
 
 struct ImmersiveLogoView: View {
     @EnvironmentObject var appModel: AppModel
+    @ObservedObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
-        ZStack(alignment: Alignment(horizontal: .controlPanelGuide, vertical: .bottom)) {
+        ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
             RealityView { content in
                 let currentPosition = SIMD3<Float>(x:-0.025,y:-0.333,z:0.33)
-                let textEntity = ModelEntity(mesh: .generateText("___", extrusionDepth: 0.07, font: .monospacedSystemFont(ofSize: 0.02, weight: .bold)))
+                let textEntity = ModelEntity(mesh: .generateText("", extrusionDepth: 0.07, font: .monospacedSystemFont(ofSize: 0.02, weight: .bold)))
                 let material = SimpleMaterial(color: .green, isMetallic: true)
                 textEntity.model?.materials = [material]
                 textEntity.position = currentPosition
@@ -25,9 +26,10 @@ struct ImmersiveLogoView: View {
             }
             .offset(y: -200)
 
-            GlobeControls()
+            GlobeControls(settingsViewModel: settingsViewModel)
                 .offset(y: -70)
         }
+        
     }
 }
 

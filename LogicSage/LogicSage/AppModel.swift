@@ -41,15 +41,16 @@ class AppModel: ObservableObject {
     @AppStorage("savedSpherePitch") var savedSpherePitch: Double = 0.0
     @AppStorage("savedSphereBasePitch") var savedSphereBasePitch: Double = 0.0
 
+
     /// Resets game state information.
     func reset() {
 
     }
     
-    /// Preload assets when the app launches to avoid pop-in during the game.
-    init() {
-        Task { @MainActor in
-
-        }
-    }
+//    /// Preload assets when the app launches to avoid pop-in during the game.
+//    init() {
+//        Task {  @MainActor [weak self] in
+//
+//        }
+//    }
 }

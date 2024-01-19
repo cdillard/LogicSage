@@ -32,6 +32,8 @@ public class SettingsViewModel: ObservableObject {
 
     var latestWindowManager: WindowManager?
 
+    var windowManagers: [WindowManager]
+
     var serviceDiscovery: ServiceDiscovery?
 
     // BEGIN SAVED UI SETTINGS ZONE **************************************************************************************
@@ -63,6 +65,9 @@ public class SettingsViewModel: ObservableObject {
 
     @Published var initalAnim: Bool = false
 
+    @Published var projectedConvoId: String?
+
+
     func doDiscover() {
         serviceDiscovery?.startDiscovering()
     }
@@ -86,6 +91,7 @@ public class SettingsViewModel: ObservableObject {
         didSet {
             actualReceivedSimulatorFrame = UIImage(data: receivedSimulatorFrameData  ?? Data())
 
+            // TODO: Refix simulator
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
                 if self.latestWindowManager?.windows.contains(where: {$0.windowType == .simulator }) != true {
 
@@ -666,6 +672,10 @@ public class SettingsViewModel: ObservableObject {
         self.duckingAudio = UserDefaults.standard.bool(forKey: "duckingAudio")
         self.voiceOutputEnabled = UserDefaults.standard.bool(forKey: "voiceOutputEnabled")
         self.voiceOutputSavedName = UserDefaults.standard.string(forKey: "savedVoiceName") ?? ""
+        
+        
+        self.windowManagers = []
+
         configureAudioSession()
         DispatchQueue.main.async {
             self.configureAudioSession()
@@ -801,3 +811,12 @@ let cereprocVoicesNames = [
     "Katherine"
 ]
 // END CEREPROC VOICE ZONE
+
+class GlobalEventManager: ObservableObject {
+    static let shared = GlobalEventManager()
+
+    @Published var eventOccurred = false
+    @Published var frameUpdate = false
+
+    private init() {} // Private initializer to ensure singleton usage
+}

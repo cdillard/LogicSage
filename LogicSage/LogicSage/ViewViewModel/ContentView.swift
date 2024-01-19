@@ -15,10 +15,12 @@ import AppKit
 #endif
 
 struct ContentView: View {
+    @ObservedObject private var eventManager = GlobalEventManager.shared
+
     @State private var tabSelection = 1
     @State private var showAddView = false
     @State private var showSettings = false
-    @ObservedObject var settingsViewModel: SettingsViewModel = SettingsViewModel()
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @StateObject var windowManager = WindowManager()
     @State private var isInputViewShown = false
     @State var showInstructions: Bool = !hasSeenInstructions()
@@ -71,8 +73,7 @@ struct ContentView: View {
     
 #if !os(macOS)
     let appearance: UITabBarAppearance = UITabBarAppearance()
-    init(settingsViewModel: SettingsViewModel) {
-        self.settingsViewModel = settingsViewModel
+    init() {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 #endif
@@ -98,6 +99,12 @@ struct ContentView: View {
                             .foregroundColor(settingsViewModel.appTextColor)
                         ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
                             .foregroundColor(settingsViewModel.appTextColor)
+                            .onChange(of: appModel.isShowingImmersiveScene) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+
+                                    eventManager.frameUpdate = true
+                                }
+                            }
 
                         // Add new App window
 
@@ -460,6 +467,10 @@ struct ContentView: View {
                 }
             }
         })
+        .onAppear {
+            self.settingsViewModel.windowManagers.append(windowManager)
+
+        }
 //        .alert("Enter Assistant Details", isPresented: $showDialog) {
 //            TextField("Name", text: $name)
 //            TextField("Description", text: $description)

@@ -76,24 +76,29 @@ private struct DragRotationModifier: ViewModifier {
 
                     // Set the final spin value using a spring animation.
                     withAnimation(.spring) {
-                        appModel.savedSphereYaw = finalSpin(
+
+                        yaw = finalSpin(
                             displacement: Double(delta.x),
                             predictedDisplacement: Double(predictedDelta.x),
                             base: baseYaw,
                             limit: yawLimit)
-                        yaw = appModel.savedSphereYaw
-                        appModel.savedSpherePitch = finalSpin(
+
+                        pitch = finalSpin(
                             displacement: Double(delta.y),
                             predictedDisplacement: Double(predictedDelta.y),
                             base: basePitch,
                             limit: pitchLimit)
-                        pitch = appModel.savedSpherePitch
+                        Task {
+                            appModel.savedSphereYaw = yaw
 
+                            appModel.savedSpherePitch = pitch
+                        }
                     }
-
-                    // Store the last value for use by the next gesture.
-                    appModel.savedSphereBaseYaw = yaw
-                    appModel.savedSphereBasePitch = pitch
+                    Task {
+                        // Store the last value for use by the next gesture.
+                        appModel.savedSphereBaseYaw = yaw
+                        appModel.savedSphereBasePitch = pitch
+                    }
                 }
             )
             .onAppear {

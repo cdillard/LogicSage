@@ -4,12 +4,15 @@
 //
 //  Created by Chris Dillard on 7/3/23.
 //
+let scrollUpdateInteral: TimeInterval = 2.0
+
 #if os(visionOS)
 import SwiftUI
 import RealityKit
 import MetalKit
 
-let texUpdateInteral: TimeInterval = 0.57
+let texUpdateInteral: TimeInterval = 0.1
+
 let matAlphaComponent = 0.9999
 
 var lastTextureImageData: Data?

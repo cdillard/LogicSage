@@ -31,7 +31,6 @@ extension View {
 private struct PlacementGesturesModifier: ViewModifier {
     var initialPosition: Point3D
 
-   // @State private var scale: Double = 1
     @State private var startScale: Double? = nil
     @State private var position: Point3D = .zero
     @State private var startPosition: Point3D? = nil

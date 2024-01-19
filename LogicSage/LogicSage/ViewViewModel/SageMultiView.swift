@@ -235,7 +235,7 @@ struct SageMultiView: View {
         SourceCodeTextEditor(text: $sageMultiViewModel.sourceCode, isEditing: $isEditing, isLockToBottom: $isLockToBottomEditor, customization:
                                 SourceCodeTextEditor.Customization(didChangeText:
                                                                     { srcCodeTextEditor in
-            DispatchQueue.global(qos: .default).async {
+            Task {
                 doSrcCode(newText: srcCodeTextEditor.text)
             }
 
@@ -251,7 +251,7 @@ struct SageMultiView: View {
             //                                        print("srcEditor textViewDidBeginEditing")
         }, theme: {
             DefaultSourceCodeTheme(settingsViewModel: settingsViewModel)
-        }, overrideText: { nil }, codeDidCopy: { }, windowType: { .file }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive)
+        }, overrideText: { nil }, codeDidCopy: { }, windowType: { .file }), isMoveGestureActive: $isMoveGestureActivated, isResizeGestureActive: $isResizeGestureActive, convoId: Binding.constant(sageMultiViewModel.windowInfo.windowType == .file ? sageMultiViewModel.windowInfo.file?.name ?? "" : sageMultiViewModel.windowInfo.convoId ?? ""))
         .simultaneousGesture(TapGesture().onEnded {
             self.windowManager.bringWindowToFront(window: self.window)
         })
@@ -373,20 +373,24 @@ struct SageMultiView: View {
 
         for (index,fileChange) in settingsViewModel.unstagedFileChanges.enumerated() {
             if fileURL == fileChange.fileURL {
-                DispatchQueue.main.async {
-                    settingsViewModel.changes = sageMultiViewModel.changes
+                Task {
+                    await MainActor.run {
+                        settingsViewModel.changes = sageMultiViewModel.changes
 
-                    settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)])
+                        settingsViewModel.unstagedFileChanges.replaceSubrange(index...index, with: [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)])
+                    }
                 }
                 found = true
                 break
             }
         }
         if !found {
-            DispatchQueue.main.async {
-                settingsViewModel.changes = sageMultiViewModel.changes
-
-                settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)]
+            Task {
+                await MainActor.run {
+                    settingsViewModel.changes = sageMultiViewModel.changes
+                    
+                    settingsViewModel.unstagedFileChanges += [FileChange(fileURL: fileURL, status: "Modified", lineChanges: sageMultiViewModel.changes, newFileContents: newText)]
+                }
             }
         }
     }

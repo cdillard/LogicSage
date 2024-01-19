@@ -13,18 +13,23 @@ import SwiftUI
 import MetalKit
 
 class SphereScreenEntity: Entity {
-
-    private let screen: Entity
+    @ObservedObject private var eventManager = GlobalEventManager.shared
+    private let screen: ModelEntity
 
     @MainActor required init() {
-        screen = Entity()
+        screen = ModelEntity()
+        
         super.init()
     }
 
     init(
         configuration: Configuration
     ) async {
-        do { // Load assets.
+        do { 
+
+            print("Creating SphereSceenEntity")
+
+            // Load assets.
             let mesh = MeshResource.generateTwoSidedSphere(radius: 1.0)
 
             var material2 = SimpleMaterial()
@@ -73,10 +78,13 @@ class SphereScreenEntity: Entity {
             super.init()
 
             Timer.scheduledTimer(withTimeInterval: texUpdateInteral, repeats: true) { [weak self] _ in
-                Task { [weak self] in
-
-                    try await self?.updateTexture(modelEntity)
-
+                if self?.eventManager.eventOccurred == true {
+                    Task { [weak self] in
+                        try await self?.updateTexture(self?.screen ?? ModelEntity())
+                        DispatchQueue.main.async { [weak self] in
+                            self?.eventManager.eventOccurred = false
+                        }
+                    }
                 }
             }
 
@@ -88,7 +96,7 @@ class SphereScreenEntity: Entity {
                 animateUpdates: false)
         }
         catch {
-            screen = Entity()
+            screen = ModelEntity()
 
             super.init()
 
@@ -102,29 +110,36 @@ class SphereScreenEntity: Entity {
             scale: SIMD3(repeating: configuration.scale),
             translation: configuration.position,
             withAnimation: animateUpdates)
+// TODO: THIS WOULD BE PROPER RIGHT?
+//        Task { [weak self] in
+//            try await self?.updateTexture(self?.screen ?? ModelEntity())
+//        }
     }
 
     func updateTexture(_ modelEntity: ModelEntity) async throws {
         var material2 = SimpleMaterial()
-        if let image = UIImage(data: lastTextureImageData ?? Data())?.cgImage {
-            // tip: MTLTextureDescriptor has width greater than the maximum allowed size of 8192 will fail.
-            if image.height < 8192 && image.width < 8192 {
+        var image = UIImage(data: lastTextureImageData ?? Data())?.cgImage
 
-                let txtContent =  try await TextureResource.generate(from: image, options: .init(semantic: .normal))
+        guard image != nil else { return }
 
-                if let color =  try? PhysicallyBasedMaterial.BaseColor
-                    .init(tint: .white.withAlphaComponent(matAlphaComponent),
-                          texture: .init(txtContent)) {
-                    material2.color = color
-                }
+        lastTextureImageData = nil
+        // tip: MTLTextureDescriptor has width greater than the maximum allowed size of 8192 will fail.
+        if image?.height ?? 0 < 8192 && image?.width ?? 0 < 8192 {
 
-                for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
-                    modelEntity.model?.materials[i] = material2
-                }
+            let txtContent =  try await TextureResource.generate(from: image!, options: .init(semantic: .normal))
+
+            image = nil
+
+            if let color =  try? PhysicallyBasedMaterial.BaseColor
+                .init(tint: .white.withAlphaComponent(matAlphaComponent),
+                      texture: .init(txtContent)) {
+                material2.color = color
             }
-            else {
-                logD("image size exceeds 3D texture (MTLTextureDescriptor) limit")
+
+            for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
+                modelEntity.model?.materials[i] = material2
             }
+
 
         }
     }

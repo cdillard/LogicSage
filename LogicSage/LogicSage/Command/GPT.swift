@@ -112,7 +112,7 @@ class GPT {
                 let chatsStream: AsyncThrowingStream<ChatStreamResult, Error> = self.openAI.chatsStream(
                     query: ChatQuery(
                         model: model,
-                        messages: conversation.messages.map { message in
+                        messages: conversation.messages.map { [weak self] message in
                             Chat(role: message.role, content: message.content)
                         },
                         temperature: useTemp
@@ -138,9 +138,8 @@ class GPT {
                                 content: previousMessage.content + message.content,
                                 createdAt: message.createdAt
                             )
-                            //logD("melding to existing msg")
 
-                            SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+                            await SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
 
                         } else {
                             //logD("append to existing msg")

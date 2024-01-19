@@ -27,7 +27,7 @@ struct ToggleImmersiveButton: View {
 
     var body: some View {
         
-        Toggle("\(showImmersiveLogo ? "Hide" : "Show") \(name)", isOn: $showImmersiveLogo)
+        Toggle("\(name)", isOn: $showImmersiveLogo)
             .toggleStyle(.button)
             .onChange(of: showImmersiveLogo) { _, newValue in
                 Task {

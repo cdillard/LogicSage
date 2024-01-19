@@ -55,11 +55,13 @@ class SageMultiViewModel: ObservableObject, Identifiable {
     }
 
     func refreshChanges(newText: String) {
-        Task {
-            let calcChange = getLineChanges(original: self.originalSourceCode, edited: newText)
-            await MainActor.run {
-                self.changes = calcChange
-           }
+        Task { [weak self] in
+            if let orig = self?.originalSourceCode {
+                let calcChange = getLineChanges(original: orig, edited: newText)
+                await MainActor.run {
+                    self?.changes = calcChange
+                }
+            }
         }
     }
 

@@ -9,14 +9,16 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func screenshot() -> UIImage {
-        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
-            drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+    func screenshot() -> UIImage? {
+        return UIGraphicsImageRenderer(size: bounds.size).image { [weak self] _ in 
+            self?.drawHierarchy(in: CGRect(origin: .zero, size: self?.bounds.size ?? CGSizeZero), afterScreenUpdates: true)
         }
     }
 }
 
-func addBorders(image: UIImage) -> UIImage? {
+func addBorders(image: UIImage?) -> UIImage? {
+    guard let image = image else { return nil}
+
     let borderSize: CGFloat = 135 // border size
 
     let imageSize = image.size
@@ -28,15 +30,13 @@ func addBorders(image: UIImage) -> UIImage? {
     let origin = CGPoint(x: 0, y: borderSize)   // where the image starts
     image.draw(at: origin)
 
-    let newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    var newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
 
     // add the black border to the new image
-    if let newImage = newImage, let borderedImage = newImage.borderImage(borderInsets: UIEdgeInsets(top: borderSize, left: borderSize * 6, bottom: borderSize, right: borderSize * 9), color: .clear) {
-        return borderedImage
-    }
-
-    return nil
+    let borderedImage = newImage?.borderImage(borderInsets: UIEdgeInsets(top: borderSize, left: borderSize * 6, bottom: borderSize, right: borderSize * 9), color: .clear)
+    newImage = nil
+    return borderedImage
 }
 
 extension UIImage {

@@ -15,6 +15,9 @@ class WindowManager: ObservableObject {
     @Published var topWindow: WindowInfo?
 
     func addWindow(windowType: WindowInfo.WindowType, frame: CGRect, zIndex: Int, file: RepoFile? = nil, fileContents: String = "", url: String = "", convoId: Conversation.ID? = nil) {
+
+        let windowsWasEmpty = windows.filter { $0.windowType == .chat || $0.windowType == .file }.isEmpty
+
         // TODO: OFFSET NEW WINDOWS
         let newWindow = WindowInfo(frame: frame, zIndex: zIndex, windowType: windowType, fileContents: fileContents, file: file, url: url, convoId: convoId)
         windows.append(newWindow)
@@ -26,20 +29,32 @@ class WindowManager: ObservableObject {
 
         sortWindowsByZIndex()
         bringWindowToFront(window: newWindow)
+
+        if windowsWasEmpty && ( windowType == .chat || windowType == .file ){
+            if SettingsViewModel.shared.projectedConvoId == nil {
+                SettingsViewModel.shared.projectedConvoId = windowType == .file ? file?.name : convoId
+            }
+        }
     }
     func removeWindow(window: WindowInfo) {
-
         if window.windowType == .simulator {
             SettingsViewModel.shared.actualReceivedSimulatorFrame = nil
             SettingsViewModel.shared.receivedSimulatorFrameData = nil
+        }
 
-        }
-        if let index = windows.firstIndex(of: window) {
-            windows.remove(at: index)
-        }
         if let index = windowViewModels.firstIndex(where: { $0.windowInfo.id == window.id } ) {
+            windows.remove(at: index)
+
             windowViewModels.remove(at: index)
         }
+
+        let windowsWasEmpty = windows.filter { $0.windowType == .chat || $0.windowType == .file }.isEmpty
+
+        // Clear proejctedWindow if last window list clear
+        if windowsWasEmpty {
+            SettingsViewModel.shared.projectedConvoId = nil
+        }
+
     }
     func updateWindow(window: WindowInfo, frame: CGRect, zIndex: Int? = nil) {
         if let index = windows.firstIndex(of: window) {

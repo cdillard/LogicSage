@@ -44,7 +44,7 @@ struct LogicSageApp: App {
     }
     var body: some Scene {
         WindowGroup("LogicSage", id: "LogicSage-main") {
-            ContentView(settingsViewModel: settingsViewModel)
+            ContentView()
                 .environmentObject(appModel)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.666) {
@@ -57,6 +57,7 @@ struct LogicSageApp: App {
                     }
 
                 }
+                .environmentObject(settingsViewModel)
 #if !os(macOS)
 #if !os(visionOS)
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didFinishLaunchingNotification)) { _ in
@@ -89,7 +90,7 @@ struct LogicSageApp: App {
         .immersionStyle(selection: $immersionState, in: .mixed)
 
         WindowGroup(id: "LogoVolume") {
-            ImmersiveLogoView()
+            ImmersiveLogoView(settingsViewModel: settingsViewModel)
                 .environmentObject(appModel)
         }
         .windowStyle(.volumetric)

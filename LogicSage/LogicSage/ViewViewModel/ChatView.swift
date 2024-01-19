@@ -78,15 +78,15 @@ struct ChatView: View {
                     return sageMultiViewModel.getConvoText()
                 }, codeDidCopy: {
                     onCopy()
-                }, windowType: {.chat }), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive)
+                }, windowType: {.chat }), isMoveGestureActive: $isMoveGestureActive, isResizeGestureActive: $isResizeGestureActive, convoId: Binding.constant(sageMultiViewModel.windowInfo.windowType == .file ? sageMultiViewModel.windowInfo.file?.name ?? "" : sageMultiViewModel.windowInfo.convoId ?? ""))
                 .onAppear {
                     if let convoId = sageMultiViewModel.windowInfo.convoId {
 
                         if convoId == Conversation.ID(-1) {
                             Timer.scheduledTimer(withTimeInterval: settingsViewModel.chatUpdateInterval, repeats: true) { _ in
-                                DispatchQueue.global(qos: .background).async {
+                                Task {
                                     let convo = settingsViewModel.getConvo(convoId)
-                                    DispatchQueue.main.async {
+                                    await MainActor.run {
                                         sageMultiViewModel.conversation = convo ?? Conversation(id:"-1")
                                     }
                                 }
@@ -142,12 +142,14 @@ struct ChatView: View {
 #if !os(visionOS)
                         .scrollDismissesKeyboard(.interactively)
 #endif
-                        .lineLimit(20, reservesSpace: true)
+                        .lineLimit(30, reservesSpace: true)
                         .focused($inFocus)
+#if !targetEnvironment(macCatalyst)
+
                         .onChange(of: inFocus) { newValue in
                             focused = inFocus
                         }
-
+                    #endif
                     Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
                         .opacity(chatText.isEmpty && !inFocus ? 1.0 : 0.0 )
                         .padding(.leading,4)
@@ -163,6 +165,7 @@ struct ChatView: View {
                 .cornerRadius(8)
                 .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 .padding(.bottom, 0)
+                .frame(maxHeight: 200) // Set the maximum height to 200 points
                 .gesture(
                     DragGesture(minimumDistance: 5, coordinateSpace: .local)
                         .onChanged { value in
@@ -235,7 +238,13 @@ struct ChatView: View {
             } else {
 
                 Button(action: {
-                    doChat()
+                    if chatText.isEmpty {
+// scroll to bottom!
+
+                    }
+                    else {
+                        doChat()
+                    }
                 }) {
                     resizableButtonImage(systemName:
                                             "paperplane.fill",
@@ -246,7 +255,7 @@ struct ChatView: View {
                     .background(Color.clear)
 
                 }
-                .disabled(chatText.isEmpty)
+//                .disabled(chatText.isEmpty)
 #if os(visionOS)
                 .padding(.trailing,20)
 #endif
