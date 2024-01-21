@@ -83,7 +83,7 @@ var commandTable: [String: (String) -> Void] = [
     "simulator": simulatorCommand,
     "wallpaper": wallpaperCommand,
 
-    "mirror": mirrorCommand,
+//    "mirror": mirrorCommand,
     "upload": uploadCommand,
     "download": downloadCommand,
 

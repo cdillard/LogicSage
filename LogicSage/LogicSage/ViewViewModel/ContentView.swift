@@ -94,9 +94,10 @@ struct ContentView: View {
                 ToolbarItem(placement: .bottomOrnament) {
 
                     HStack(spacing: 4) {
-
+                        // 3D Controls for currently projected
                         ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Controls", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
                             .foregroundColor(settingsViewModel.appTextColor)
+                        // Show sphere Screen (SphereScreen)
                         ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
                             .foregroundColor(settingsViewModel.appTextColor)
                             .onChange(of: appModel.isShowingImmersiveScene) {

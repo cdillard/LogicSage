@@ -11,7 +11,7 @@ import SwiftUI
 import RealityKit
 import MetalKit
 
-let texUpdateInteral: TimeInterval = 0.1
+let texUpdateInteral: TimeInterval = 0.5
 
 let matAlphaComponent = 0.9999
 

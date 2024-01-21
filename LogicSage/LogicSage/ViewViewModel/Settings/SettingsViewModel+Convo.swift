@@ -86,8 +86,10 @@ extension SettingsViewModel {
         SettingsViewModel.shared.conversations[conversationIndex].name = newName
 
         saveConvosToDisk()
+        serialQueue.sync { [weak self] in
 
-        performConvoUpdate(index: conversationIndex)
+            self?.performConvoUpdate(index: conversationIndex)
+        }
 
     }
     func saveConvosToDisk() {
@@ -115,8 +117,10 @@ extension SettingsViewModel {
     func appendMessageToConvoIndex(index: Int, message: Message) {
         self.conversations[index].model = openAIModel
         self.conversations[index].messages.append(message)
-        
-        performConvoUpdate(index: index)
+        serialQueue.sync { [weak self] in
+
+            self?.performConvoUpdate(index: index)
+        }
 
     }
 
@@ -128,10 +132,12 @@ extension SettingsViewModel {
         }
         self.conversations[conversationIndex].model = openAIModel
         self.conversations[conversationIndex].messages.append(message)
+        serialQueue.sync { [weak self] in
 
-        performConvoUpdate(index: conversationIndex)
+            self?.performConvoUpdate(index: conversationIndex)
 
-        saveConvosToDisk()
+            self?.saveConvosToDisk()
+        }
     }
 
 
@@ -145,10 +151,12 @@ extension SettingsViewModel {
 
 //        self.conversations[conversationIndex].model = openAIModel
         self.conversations[conversationIndex].messages[localMessageIndex] = message
+        serialQueue.sync { [weak self] in
 
-        performConvoUpdate(index: conversationIndex)
+            self?.performConvoUpdate(index: conversationIndex)
 
-        saveConvosToDisk()
+            self?.saveConvosToDisk()
+        }
     }
 
 
@@ -163,16 +171,21 @@ extension SettingsViewModel {
 //        self.conversations[conversationIndex].model = openAIModel
         self.conversations[conversationIndex].threadId = threadId
 
-        performConvoUpdate(index: conversationIndex)
+        serialQueue.sync { [weak self] in
 
-        saveConvosToDisk()
+            self?.performConvoUpdate(index: conversationIndex)
+
+            self?.saveConvosToDisk()
+        }
     }
 
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
-        self.conversations[index].messages[existingMessageIndex] = message
+//        DispatchQueue.global(qos: .default).async {
+        serialQueue.sync { [weak self] in
+            self?.conversations[index].messages[existingMessageIndex] = message
 
-        performConvoUpdate(index: index)
-
+            self?.performConvoUpdate(index: index)
+        }
     }
     func nilOutConversationErrorsAt(convoId: Conversation.ID) {
         self.conversationErrors[convoId] = nil
@@ -221,17 +234,21 @@ extension SettingsViewModel {
     }
 
     func performConvoUpdate(index: Int) {
+//        DispatchQueue.global(qos: .default).async {
         let convoId = self.conversations[index].id
-
-        for vm in self.latestWindowManager?.windowViewModels ?? [] {
-            if convoId == vm.conversation.id {
-                Task {
-                    await MainActor.run {
-
-                        vm.conversation = self.conversations[index]
+            for wm in self.windowManagers {
+                for vm in wm.windowViewModels ?? [] {
+                    if convoId == vm.conversation.id {
+                        //                    Task {
+                        //                        await MainActor.run {
+                        DispatchQueue.main.async {
+                            vm.conversation = self.conversations[index]
+                        }
+                        //                      }
+                        //                }
                     }
                 }
-            }
+//            }
         }
     }
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {
@@ -356,8 +373,10 @@ extension SettingsViewModel {
         saveConvosToDisk()
 
         setSystemPromptIfNeeded(index: conversationIndex, systemMessage: newMessage)
+        serialQueue.sync { [weak self] in
 
-        performConvoUpdate(index: conversationIndex)
+            self?.performConvoUpdate(index: conversationIndex)
+        }
     }
 
     func avatarTextForRole(role: Chat.Role) -> String {

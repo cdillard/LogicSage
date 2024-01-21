@@ -7,35 +7,35 @@
 
 import Foundation
 
-func mirrorCommand(input: String) {
-
-    let inputComps = input.components(separatedBy: " ")
-
-    if inputComps.count == 0 {
-        Task {
-           //w await VideoCapture.shared.listCapturableWindows()
-        }
-    }
-
-
-    guard inputComps.count > 1 else {
-        multiPrinter("Invalid `mirror` invocation.")
-        multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
-
-        return
-    }
-    multiPrinter("mirror \(inputComps[0]) \(inputComps[1])")
-
-    multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
-    multiPrinter("If No screen recording permission it won't work.")
-    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission to Terminal.app.")
-    multiPrinter("* Only works running LogicSageCommandLine from Terminal or iTerm2 *")
-
-    Task {
-        await VideoCapture.shared.captureAppWindow(applicationName: inputComps[0], windowName: inputComps[1])
-    }
-
-}
+//func mirrorCommand(input: String) {
+//
+//    let inputComps = input.components(separatedBy: " ")
+//
+//    if inputComps.count == 0 {
+//        Task {
+//           //w await VideoCapture.shared.listCapturableWindows()
+//        }
+//    }
+//
+//
+//    guard inputComps.count > 1 else {
+//        multiPrinter("Invalid `mirror` invocation.")
+//        multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
+//
+//        return
+//    }
+//    multiPrinter("mirror \(inputComps[0]) \(inputComps[1])")
+//
+//    multiPrinter("Proper mirror syntax is: `mirror ApplicationName WindowName")
+//    multiPrinter("If No screen recording permission it won't work.")
+//    multiPrinter("Open System Settings and go to Privacy & Security > Screen Recording to grant permission to Terminal.app.")
+//    multiPrinter("* Only works running LogicSageCommandLine from Terminal or iTerm2 *")
+//
+//    Task {
+//        await VideoCapture.shared.captureAppWindow(applicationName: inputComps[0], windowName: inputComps[1])
+//    }
+//
+//}
 
 
 func simulatorCommand(input: String) {

@@ -24,7 +24,7 @@ struct SphereScreenSceneView: View {
         .if(appModel.isRotating) { view in
             view.dragRotation(
                // pitchLimit: .degrees(90),
-                sensitivity: 0.25,
+                sensitivity: 0.45,
                 axRotateClockwise: axRotateClockwise,
                 axRotateCounterClockwise: axRotateCounterClockwise)
         }

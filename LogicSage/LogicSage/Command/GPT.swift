@@ -14,6 +14,7 @@ class GPT {
 
     var openAINonBg: OpenAI
 
+    private let serialQueue = DispatchQueue(label: "com.chrisdillard.LogicSageConvoUpdates")
 
     init() {
         let host = SettingsViewModel.shared.openAIHost
@@ -138,8 +139,9 @@ class GPT {
                                 content: previousMessage.content + message.content,
                                 createdAt: message.createdAt
                             )
-
-                            await SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+                            serialQueue.sync { [weak self] in
+                                 SettingsViewModel.shared.setMessageAtConvoIndex(index: conversationIndex, existingMessageIndex: existingMessageIndex, message: combinedMessage)
+                           }
 
                         } else {
                             //logD("append to existing msg")

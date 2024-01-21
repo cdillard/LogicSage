@@ -33,6 +33,7 @@ struct NewViewerButton: View {
                     .font(.caption)
                     .lineLimit(1)
                     .minimumScaleFactor(0.01)
+                    .padding(3)
             }
 #if !os(visionOS)
 

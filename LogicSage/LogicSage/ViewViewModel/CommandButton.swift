@@ -93,7 +93,9 @@ struct CommandButtonView: View {
 #if !os(macOS)
                                 .hoverEffect(.automatic)
 #endif
+                                .padding()
                                 .cornerRadius(8)
+
                         }
                     }
 #endif
@@ -120,6 +122,8 @@ struct CommandButtonView: View {
                                 .minimumScaleFactor(0.01)
 
                                 .foregroundColor(settingsViewModel.appTextColor)
+                                .padding(3)
+
                         }
 #if !os(visionOS)
 
@@ -158,6 +162,8 @@ struct CommandButtonView: View {
                                 .minimumScaleFactor(0.01)
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
+                                .padding(3)
+
                         }
 #if !os(visionOS)
 
@@ -199,6 +205,7 @@ struct CommandButtonView: View {
                                 .minimumScaleFactor(0.01)
                                 .font(.caption)
                                 .foregroundColor(settingsViewModel.appTextColor)
+                                .padding(3)
                         }
 #if !os(visionOS)
 

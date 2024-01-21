@@ -26,7 +26,7 @@ struct GlobeControls: View {
                 }
 
                 .onChange(of: appModel.isTranslating) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
                         eventManager.frameUpdate = true
                     }
@@ -36,7 +36,7 @@ struct GlobeControls: View {
                     Label("Rotate", systemImage: "arrow.triangle.2.circlepath")
                 }
                 .onChange(of: appModel.isRotating) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
                         eventManager.frameUpdate = true
                     }

@@ -135,6 +135,14 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         context.coordinator.wrappedView.text = text
         wrappedView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         
+        let type = custom.windowType()
+
+        wrappedView.textView.isEditable = type == .file
+        wrappedView.contentTextView.isEditable = type == .file
+        wrappedView.isEditing = type == .file
+        wrappedView.textView.isSelectable = type == .file || type == .chat
+        wrappedView.contentTextView.isSelectable = type == .file || type == .chat
+
         if SettingsViewModel.shared.projectedConvoId == convoId {
             updateTexture(view: wrappedView)
         }
@@ -147,18 +155,14 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         }
 
         let overrideText = custom.overrideText()
-        let type = custom.windowType()
-        Task {
-            await MainActor.run {
+//        Task {
+//            await MainActor.run {
 
-                view.textView.isEditable = type == .file
-                view.contentTextView.isEditable = type == .file
-                view.isEditing = type == .file
-                view.textView.isSelectable = type == .file || type == .chat
-                view.contentTextView.isSelectable = type == .file || type == .chat
-            }
-        }
+//            }
+//        }
         if let overrideText = overrideText {
+            DispatchQueue.main.async {
+
             if overrideText != context.coordinator.wrappedView.text && isLocktoBottom {
                 context.coordinator.wrappedView.text = overrideText
                 context.coordinator.textDidChange()
@@ -166,11 +170,12 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
                 if SettingsViewModel.shared.projectedConvoId == convoId {
 
                     //updateTexture(view: view)
-                    Task {
-                        await MainActor.run {
-                            eventManager.frameUpdate = true
-                        }
+//                    Task {
+//                        await MainActor.run {
+                        eventManager.frameUpdate = true
                     }
+  //                      }
+  //                  }
                 }
             }
         }
@@ -179,26 +184,31 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         //updateTexture(view: view)
         if SettingsViewModel.shared.projectedConvoId == convoId {
 
-            Task {
-                await MainActor.run {
-                    if view.frame.size != lastSize {
+//            Task {
+//                await MainActor.run {
+            DispatchQueue.main.async {
 
-                        eventManager.frameUpdate = true
+                if view.frame.size != lastSize {
 
-                        lastSize = view.frame.size
-                    }
+                    eventManager.frameUpdate = true
+
+                    lastSize = view.frame.size
+                    //                    }
+                    //                }
                 }
-
             }
 
 
             if eventManager.frameUpdate {
                 updateTexture(view: view)
-                Task {
-                    await MainActor.run {
-                        eventManager.frameUpdate = false
-                    }
+//                Task {
+//                    await MainActor.run {
+                DispatchQueue.main.async {
+
+                    eventManager.frameUpdate = false
                 }
+                    //    }
+                //}
             }
 
         }
@@ -210,9 +220,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
         if appModel.isShowingImmersiveScene || appModel.isShowingImmersiveWindow {
             if SettingsViewModel.shared.projectedConvoId == convoId {
                 Task {
-
                     let now = Date()
-
                     if now.timeIntervalSince(self.lastScreenshot) >= texUpdateInteral {
                         self.lastScreenshot = now
 
@@ -303,11 +311,14 @@ extension SourceCodeTextEditor {
 
         // This method is called whenever the scroll view (UITextView in this case) is scrolled
         public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            Task {
-                await MainActor.run { [weak self] in
-                    self?.parent.eventManager.frameUpdate = true
-                }
+//            Task {
+//                await MainActor.run { [weak self] in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.parent.eventManager.frameUpdate = true
             }
+          //      }
+        //    }
         }
     }
 }

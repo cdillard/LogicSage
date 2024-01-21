@@ -68,32 +68,32 @@ private struct DragRotationModifier: ViewModifier {
                 }
                 .onEnded { value in
                     // Find the current and predicted final linear displacements.
-                    let location3D = value.convert(value.location3D, from: .local, to: .scene)
-                    let startLocation3D = value.convert(value.startLocation3D, from: .local, to: .scene)
-                    let predictedEndLocation3D = value.convert(value.predictedEndLocation3D, from: .local, to: .scene)
-                    let delta = location3D - startLocation3D
-                    let predictedDelta = predictedEndLocation3D - location3D
+//                    let location3D = value.convert(value.location3D, from: .local, to: .scene)
+//                    let startLocation3D = value.convert(value.startLocation3D, from: .local, to: .scene)
+//                    let predictedEndLocation3D = value.convert(value.predictedEndLocation3D, from: .local, to: .scene)
+//                    let delta = location3D - startLocation3D
+//                    let predictedDelta = predictedEndLocation3D - location3D
 
-                    // Set the final spin value using a spring animation.
-                    withAnimation(.spring) {
-
-                        yaw = finalSpin(
-                            displacement: Double(delta.x),
-                            predictedDisplacement: Double(predictedDelta.x),
-                            base: baseYaw,
-                            limit: yawLimit)
-
-                        pitch = finalSpin(
-                            displacement: Double(delta.y),
-                            predictedDisplacement: Double(predictedDelta.y),
-                            base: basePitch,
-                            limit: pitchLimit)
-                        Task {
-                            appModel.savedSphereYaw = yaw
-
-                            appModel.savedSpherePitch = pitch
-                        }
-                    }
+//                    // Set the final spin value using a spring animation.
+//                    withAnimation(.spring) {
+//
+//                        yaw = finalSpin(
+//                            displacement: Double(delta.x),
+//                            predictedDisplacement: Double(predictedDelta.x),
+//                            base: baseYaw,
+//                            limit: yawLimit)
+//
+//                        pitch = finalSpin(
+//                            displacement: Double(delta.y),
+//                            predictedDisplacement: Double(predictedDelta.y),
+//                            base: basePitch,
+//                            limit: pitchLimit)
+//                        Task {
+//                            appModel.savedSphereYaw = yaw
+//
+//                            appModel.savedSpherePitch = pitch
+//                        }
+//                    }
                     Task {
                         // Store the last value for use by the next gesture.
                         appModel.savedSphereBaseYaw = yaw

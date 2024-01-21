@@ -15,6 +15,8 @@ public class SettingsViewModel: ObservableObject {
 
     public static let shared = SettingsViewModel()
 
+    let serialQueue = DispatchQueue(label: "com.chrisdillard.LogicSageConvoUpdates2")
+
     let speechSynthesizer = AVSpeechSynthesizer()
     let speakerDelegate = SpeakerDelegate()
 

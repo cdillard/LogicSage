@@ -7,8 +7,9 @@
 
 import Foundation
 
+// this is better at 5 than 10, maybe impl paging via assistant func call? :boom:
+let resultCount = 5
 
-let resultCount = 10
 struct SearchResult: Codable {
     let items: [SearchItem]
 }
