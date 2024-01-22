@@ -1870,7 +1870,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1900,7 +1900,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.2.6;
+				MARKETING_VERSION = 1.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSageDev;
 				PRODUCT_MODULE_NAME = LogicSage;
 				PRODUCT_NAME = LogicSageDev;
@@ -1932,7 +1932,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1962,7 +1962,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.2.6;
+				MARKETING_VERSION = 1.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chrisdillard.SwiftSage;
 				PRODUCT_MODULE_NAME = LogicSage;
 				PRODUCT_NAME = LogicSage;
