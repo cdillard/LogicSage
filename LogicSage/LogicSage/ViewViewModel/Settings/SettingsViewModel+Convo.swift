@@ -181,11 +181,16 @@ extension SettingsViewModel {
 
     func setMessageAtConvoIndex(index: Int, existingMessageIndex: Int, message: Message) {
 //        DispatchQueue.global(qos: .default).async {
-        serialQueue.sync { [weak self] in
-            self?.conversations[index].messages[existingMessageIndex] = message
 
-            self?.performConvoUpdate(index: index)
-        }
+            self.conversations[index].messages[existingMessageIndex] = message
+
+
+            self.serialQueue.sync { [weak self] in
+
+
+                self?.performConvoUpdate(index: index)
+            }
+//        }
     }
     func nilOutConversationErrorsAt(convoId: Conversation.ID) {
         self.conversationErrors[convoId] = nil
@@ -229,26 +234,21 @@ extension SettingsViewModel {
         latestWindowManager?.addWindow(windowType: .chat, frame: defChatSize, zIndex: 0, url: defaultURL, convoId: convoId)
     }
     func createAndOpenServerChat() {
-
         openConversation(Conversation.ID(-1))
     }
 
     func performConvoUpdate(index: Int) {
-//        DispatchQueue.global(qos: .default).async {
         let convoId = self.conversations[index].id
             for wm in self.windowManagers {
-                for vm in wm.windowViewModels ?? [] {
+                for vm in wm.windowViewModels {
                     if convoId == vm.conversation.id {
-                        //                    Task {
-                        //                        await MainActor.run {
+
                         DispatchQueue.main.async {
                             vm.conversation = self.conversations[index]
                         }
-                        //                      }
-                        //                }
+
                     }
                 }
-//            }
         }
     }
     func saveConversationContentToDisk(object: [Conversation], forKey key: String) {

@@ -122,6 +122,12 @@ class GPT {
                 var completeMessage = ""
                 for try await partialChatResult in chatsStream {
                     for choice in partialChatResult.choices {
+                        guard let conversationIndex = SettingsViewModel.shared.conversations.firstIndex(where: { $0.id == conversationId }) else {
+                            logD("Unable to find conversations id == \(conversationId) ... failing")
+
+                            return
+                        }
+                        //No deleting chats while streaming . it could crash with index out of range if we dont update the conversationIndex
                         let existingMessages = SettingsViewModel.shared.conversations[conversationIndex].messages
 
                         let message = Message(

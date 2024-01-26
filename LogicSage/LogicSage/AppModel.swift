@@ -11,10 +11,29 @@ class AppModel: ObservableObject {
 #if os(visionOS)
     var screen: SphereScreenEntity.Configuration = .screenDefault
 #endif
+    @ObservedObject private var eventManager = GlobalEventManager.shared
+
     @Published var isTranslating: Bool = true {
         didSet {
             if isTranslating {
                 isRotating = false
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+
+                self?.eventManager.frameUpdate = true
+                self?.eventManager.eventOccurred = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+
+                    self?.eventManager.frameUpdate = true
+                    self?.eventManager.eventOccurred = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+
+                        self?.eventManager.frameUpdate = true
+                        self?.eventManager.eventOccurred = true
+
+                    }
+                }
             }
         }
     }
@@ -22,6 +41,22 @@ class AppModel: ObservableObject {
         didSet {
             if isRotating  {
                 isTranslating = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+
+                self?.eventManager.frameUpdate = true
+                self?.eventManager.eventOccurred = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+
+                    self?.eventManager.frameUpdate = true
+                    self?.eventManager.eventOccurred = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+
+                        self?.eventManager.frameUpdate = true
+                        self?.eventManager.eventOccurred = true
+
+                    }
+                }
             }
         }
     }

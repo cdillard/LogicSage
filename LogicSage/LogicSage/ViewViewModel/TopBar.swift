@@ -26,40 +26,44 @@ struct TopBar: View {
     @State private var pickedDocumentURL: URL?
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
+    @Binding var noBars: Bool
 
     var body: some View {
         ZStack {
-            ZStack {
-                Capsule()
-                    .fill(.white.opacity(0.4))
-                    .frame(width: 180, height: 4.5, alignment: .topLeading)
-                Capsule()
-                    .fill(.white.opacity(0.0))
-                    .frame(width: 200, height: 9, alignment: .topLeading)
-            }
+            if !noBars {
+                ZStack {
+                    Capsule()
+                        .fill(.white.opacity(0.4))
+                        .frame(width: 180, height: 4.5, alignment: .topLeading)
+                    Capsule()
+                        .fill(.white.opacity(0.0))
+                        .frame(width: 200, height: 9, alignment: .topLeading)
+                }
 #if !os(macOS)
-            .hoverEffect(.automatic)
+                .hoverEffect(.automatic)
 #endif
 #if os(visionOS)
-            .offset(y: -settingsViewModel.cornerHandleSize / 1.566666)
+                .offset(y: -settingsViewModel.cornerHandleSize / 1.566666)
 #else
-            .offset(y: -14)
+                .offset(y: -14)
 #endif
+            }
             VStack {
 
                 HStack(spacing: 0) {
                     Spacer()
-                    Button(action: onClose) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .minimumScaleFactor(0.01)
+                    if !noBars {
+                        Button(action: onClose) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.title3)
+                                .minimumScaleFactor(0.01)
 #if !os(macOS)
-                            .hoverEffect(.lift)
+                                .hoverEffect(.lift)
 #endif
+                        }
+                        .foregroundColor(SettingsViewModel.shared.buttonColor)
+                        .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
                     }
-                    .foregroundColor(SettingsViewModel.shared.buttonColor)
-                    .padding(.leading, SettingsViewModel.shared.cornerHandleSize + 8)
-
 
                     Text(getName())
                         .font(.body)

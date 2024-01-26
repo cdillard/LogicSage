@@ -139,8 +139,6 @@ class SphereScreenEntity: Entity {
             for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
                 modelEntity.model?.materials[i] = material2
             }
-
-
         }
     }
 

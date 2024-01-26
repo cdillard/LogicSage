@@ -3,7 +3,7 @@
 //  LogicSage
 //
 //  Created by Chris Dillard on 4/23/23.
-//████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+// ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
 // █░░░░░░█████████░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
 // █░░▄▀░░█████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
 // █░░▄▀░░█████████░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░░░░░█░░░░▄▀░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█
@@ -43,7 +43,7 @@ struct LogicSageApp: App {
 
     }
     var body: some Scene {
-        WindowGroup("LogicSage", id: "LogicSage-main") {
+        WindowGroup( id: "LogicSage-main") {
             ContentView()
                 .environmentObject(appModel)
                 .onAppear {
@@ -82,6 +82,11 @@ struct LogicSageApp: App {
         .windowStyle(.plain)
 #endif
 #if os(visionOS)
+        WindowGroup( id: "LogicSage-newWindow") {
+            NewWindowContentView()
+                .environmentObject(appModel)
+                .environmentObject(settingsViewModel)
+        }
 
         ImmersiveSpace(id: "ImmersiveSpace") {
             SphereScreenSceneView()

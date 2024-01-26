@@ -3,11 +3,8 @@
 
 [LogicSage: AI iOS Code & Chat. (iPadOS, MacOS, iOS and more platforms soon!)](https://apps.apple.com/us/app/logicsage/id6448485441) - on the AppStore for free now!
 
-## [LogicSage 1.2.6](https://apps.apple.com/us/app/logicsage/id6448485441) (latest)
-- Bug fixes and App enhancements to provide a better Code & Chat experience. 
-- Work with Assistants backed by uploaded files. Upload file when creating assistant to chat about file data. 
-- Set Conversation temperature to control creativity of AI.
-- Use -web-browsing suffixed model to use experimental Search and Link Command.
+## [LogicSage 1.2.7](https://apps.apple.com/us/app/logicsage/id6448485441) (latest)
+* visionOS support 
 
 ---
 
@@ -22,8 +19,8 @@
 
 Chat with GPT using tools (google, link) which allow incorporation of Google Search results into GPT responses.
 
-## Getting Started with LogicSage: iOS, iPadOS
-with LogicSage: iOS, iPadOS
+## Getting Started with LogicSage: visionOS
+with LogicSage: visionOS! (iOS, iPadOS)
 #### Chat and copy code snippets:
 
 0. Download LogicSage from the [App Store](https://apps.apple.com/us/app/logicsage/id6448485441)
@@ -84,8 +81,9 @@ When connected to the LogicSageCommandLine you can use the "Term" window from th
 
 9. Observe launched Terminal windows running LogicSageCommandLine.
 
-10. How to use LogicSageCommandLine
-- If the server is running you can interact with the LogicSageCommandLine by using the "Term" window within a LogicSage app for Mac, iOS, iPadOS, or another supported platform. 
+10. How to use LogicSageCommandLine: 
+
+- If the server is running you can interact with the LogicSageCommandLine by using the "Term" window within a LogicSage app for Mac, iOS, iPadOS, or another supported platform.
 
 ## LogicSageCommandLine Installation Requirements
 - [Homebrew](https://brew.sh/)

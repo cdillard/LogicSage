@@ -71,6 +71,7 @@ struct SageMultiView: View {
     @State var currentURL = URL(string: "https:/www.google.com/")!
 
     @Binding var focused: Bool
+    @Binding var noBars: Bool
 
     var body: some View {
         GeometryReader { geometry in
@@ -174,60 +175,66 @@ struct SageMultiView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 if (!focused) {
-                    ZStack {
-                        Capsule()
-                            .fill(.white.opacity(0.4))
-                            .frame(width: 180, height: 7.5, alignment: .topLeading)
-                        Capsule()
-                            .fill(.white.opacity(0.0))
-                            .frame(width: 200, height: 15, alignment: .topLeading)
-                    }
+                    if (!noBars) {
+                        ZStack {
+                            Capsule()
+                                .fill(.white.opacity(0.4))
+                                .frame(width: 180, height: 7.5, alignment: .topLeading)
+                            Capsule()
+                                .fill(.white.opacity(0.0))
+                                .frame(width: 200, height: 15, alignment: .topLeading)
+                        }
 #if !os(macOS)
-                    .hoverEffect(.automatic)
+                        .hoverEffect(.automatic)
 #endif
-                    .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat && focused ? keyboardHeight : 0))
+                        .offset(y: geometry.size.height / 2  - 10 - (sageMultiViewModel.windowInfo.windowType == .chat && focused ? keyboardHeight : 0))
 #if !os(tvOS)
-                    .gesture(
-                            DragGesture(minimumDistance: 3)
-                                .onChanged { value in
-                                    if keyboardHeight != 0 {
+                        .if(!noBars) { view in
+                            view.gesture(
+                                DragGesture(minimumDistance: 3)
+                                    .onChanged { value in
+                                        if keyboardHeight != 0 {
 #if !os(macOS)
-                                        hideKeyboard()
+                                            hideKeyboard()
 #endif
-                                    }
-                                    if gestureDebugLogs {
-
-                                        if isMoveGestureActivated == false {
-
-                                            print("MOVE gesture START = \(position)")
                                         }
-                                        else {
-                                            print("MOVE gesture update = \(position)")
+                                        if gestureDebugLogs {
+                                            
+                                            if isMoveGestureActivated == false {
+                                                
+                                                print("MOVE gesture START = \(position)")
+                                            }
+                                            else {
+                                                print("MOVE gesture update = \(position)")
+                                            }
+                                        }
+                                        let now = Date()
+                                        if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
+                                            self.lastDragTime = now
+                                            
+                                            dragsOnChange(value: value)
                                         }
                                     }
-                                    let now = Date()
-                                    if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
-                                        self.lastDragTime = now
-
-                                        dragsOnChange(value: value)
+                                    .onEnded { value in
+                                        if gestureDebugLogs {
+                                            
+                                            print("MOVE gesture ended new Pos = \(position)")
+                                        }
+                                        isMoveGestureActivated = false
                                     }
-                                }
-                                .onEnded { value in
-                                    if gestureDebugLogs {
-
-                                        print("MOVE gesture ended new Pos = \(position)")
-                                    }
-                                    isMoveGestureActivated = false
-                                }
-                        )
-                        .simultaneousGesture(TapGesture().onEnded {
-                            self.windowManager.bringWindowToFront(window: self.window)
-                        })
+                            )
+                            .simultaneousGesture(TapGesture().onEnded {
+                                self.windowManager.bringWindowToFront(window: self.window)
+                            })
+                        }
 #endif
+                    }
                 }
 
             }
-            curvedEdgeArcZone(size: geometry.size, focused: focused)
+            if !noBars {
+                curvedEdgeArcZone(size: geometry.size, focused: focused)
+            }
         }
     }
     func editorArea() -> some View {
@@ -317,43 +324,45 @@ struct SageMultiView: View {
                 settingsViewModel.cullEmptyConvos()
             }
 
-        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight, sageMultiViewModel: sageMultiViewModel)
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 3)
-                    .onChanged { value in
-                        if keyboardHeight != 0 {
+        }, windowInfo: window, webViewURL: getURL(), settingsViewModel: settingsViewModel, keyboardHeight: $keyboardHeight, sageMultiViewModel: sageMultiViewModel, noBars: $noBars)
+        .if(!noBars) { view in
+                view.simultaneousGesture(
+                    DragGesture(minimumDistance: 3)
+                        .onChanged { value in
+                            if keyboardHeight != 0 {
 #if !os(macOS)
-                            hideKeyboard()
+                                hideKeyboard()
 #endif
-                        }
-                        if gestureDebugLogs {
-
-                            if isMoveGestureActivated == false {
-
-                                print("MOVE gesture START = \(position)")
                             }
-                            else {
-                                print("MOVE gesture update = \(position)")
+                            if gestureDebugLogs {
+
+                                if isMoveGestureActivated == false {
+
+                                    print("MOVE gesture START = \(position)")
+                                }
+                                else {
+                                    print("MOVE gesture update = \(position)")
+                                }
+                            }
+                            let now = Date()
+                            if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
+                                self.lastDragTime = now
+
+                                dragsOnChange(value: value)
                             }
                         }
-                        let now = Date()
-                        if now.timeIntervalSince(self.lastDragTime) >= (1.0 / dragsPerSecond) {
-                            self.lastDragTime = now
+                        .onEnded { value in
+                            if gestureDebugLogs {
 
-                            dragsOnChange(value: value)
+                                print("MOVE gesture ended new Pos = \(position)")
+                            }
+                            isMoveGestureActivated = false
                         }
-                    }
-                    .onEnded { value in
-                        if gestureDebugLogs {
-
-                            print("MOVE gesture ended new Pos = \(position)")
-                        }
-                        isMoveGestureActivated = false
-                    }
-            )
-            .simultaneousGesture(TapGesture().onEnded {
-                self.windowManager.bringWindowToFront(window: self.window)
-            })
+                )
+                .simultaneousGesture(TapGesture().onEnded {
+                    self.windowManager.bringWindowToFront(window: self.window)
+                })
+        }
 #else
         VStack {}
 #endif

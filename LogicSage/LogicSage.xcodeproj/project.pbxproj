@@ -245,6 +245,7 @@
 		B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */; };
 		B7DB97E12A32EABB00304B80 /* SettingsViewModel+Convo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */; };
 		B7E098B12A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */; };
+		B7E44A732B60CB9000131948 /* NewWindowContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E44A722B60CB9000131948 /* NewWindowContentView.swift */; };
 		B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */; };
 		B7F3A11629F74C9E0006C837 /* NetServiceBrowserWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */; };
 		B7F3A11929F75EAB0006C837 /* CommandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F3A11829F75EAB0006C837 /* CommandButton.swift */; };
@@ -542,6 +543,7 @@
 		B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Websocket.swift"; sourceTree = "<group>"; };
 		B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Convo.swift"; sourceTree = "<group>"; };
 		B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogicSageiOSApp+UserDefaults.swift"; sourceTree = "<group>"; };
+		B7E44A722B60CB9000131948 /* NewWindowContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWindowContentView.swift; sourceTree = "<group>"; };
 		B7EF2A2A2A0C2D620048CFFC /* View+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Keyboard.swift"; sourceTree = "<group>"; };
 		B7F3A11529F74C9E0006C837 /* NetServiceBrowserWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceBrowserWrapper.swift; sourceTree = "<group>"; };
 		B7F3A11829F75EAB0006C837 /* CommandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandButton.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				B75880CA2A489E78007A1179 /* CheckmarkView.swift */,
 				B7F3A11829F75EAB0006C837 /* CommandButton.swift */,
 				B746DFCF29F5E789002804EB /* ContentView.swift */,
+				B7E44A722B60CB9000131948 /* NewWindowContentView.swift */,
 				B777506F2A4346ED00E836D3 /* CustomPointerView.swift */,
 				B70A00F42A1EB72900ADEF5A /* DateProvider.swift */,
 				B74B21DA2A1D452700B3282E /* Drawer.swift */,
@@ -1513,6 +1516,7 @@
 				B7A8A49A2A4517A000E897C5 /* ViewController+PointerInteraction.swift in Sources */,
 				B7544E412A191BCE00961F4C /* APIError.swift in Sources */,
 				B75286042A848DAE007DCFF9 /* Archive+Reading.swift in Sources */,
+				B7E44A732B60CB9000131948 /* NewWindowContentView.swift in Sources */,
 				B710CEFF2A7F5E65008C06CC /* String+UInt8.swift in Sources */,
 				B78EAF622A11ADA5003095A2 /* WorkingChangesList.swift in Sources */,
 				B7191F1629F9F09A00078D8D /* SourceCodeRegexLexer.swift in Sources */,
@@ -1870,7 +1874,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;
@@ -1932,7 +1936,7 @@
 				CODE_SIGN_ENTITLEMENTS = LogicSage/SwiftSageiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LogicSage/Preview Content\"";
 				DEVELOPMENT_TEAM = 72WEN2C47N;

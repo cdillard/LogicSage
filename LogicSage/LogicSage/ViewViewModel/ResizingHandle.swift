@@ -209,7 +209,7 @@ struct ResizingHandle: View {
         // Check global X postion
         //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
 
-        if frame.size.width + newOffsetX > viewSize.width - 3.5 {
+        if frame.size.width + newOffsetX > viewSize.width - 13.5 {
         }
         else {
             resizeOffset.width += newOffsetX
@@ -226,7 +226,12 @@ struct ResizingHandle: View {
 
             }
         }
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * 0.075666 ||
+        var heightScaleFactor = 0.075666
+#if os(visionOS)
+        heightScaleFactor = 0.07
+        #endif
+
+        if frame.size.height + newOffsetY > viewSize.height - screenHeight * heightScaleFactor ||
             frame.size.height + newOffsetY < viewSize.height / 2 {
         }
         else {

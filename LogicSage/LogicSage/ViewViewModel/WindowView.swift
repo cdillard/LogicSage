@@ -24,11 +24,13 @@ struct WindowView: View {
     @State private var isResizeGestureActive = false
     
     @State var bumping: Bool = false
+
     @State var bumpingVertically: Bool = false
 
     @Binding var parentViewSize: CGRect
     @Binding var keyboardHeight: CGFloat
     @Binding var dragCursorPoint: CGPoint
+    @Binding var noBars: Bool
 
 #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -43,7 +45,10 @@ struct WindowView: View {
             ZStack {
                 VStack {
                     windowContent()
-                        .modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint, focused: $focused))
+                        .if(!noBars){ view in
+
+                                view.modifier(ResizableViewModifier(frame: $viewModel.frame, window: viewModel.windowInfo, windowManager: windowManager, resizeOffset: $viewModel.resizeOffset, isResizeGestureActive: $isResizeGestureActive, viewSize: $viewModel.viewSize, position: $viewModel.position, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint, focused: $focused))
+                        }
 #if os(visionOS)
                         .background(settingsViewModel.backgroundColorSrcEditor)
 #endif
@@ -55,11 +60,20 @@ struct WindowView: View {
 #endif
                 .cornerRadius(16)
                 .shadow(color:settingsViewModel.appTextColor, radius: 1)
-                .frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
+                .if(noBars){ view in
+                    view  .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                }
+                .if(!noBars){ view in
+                    view.frame(width: viewModel.windowInfo.frame.width, height: viewModel.windowInfo.frame.height)
+
+                }
                 .edgesIgnoringSafeArea(.bottom)
 
             }
-            .offset(viewModel.position)
+            .if(!noBars) { view in
+                   view .offset(viewModel.position)
+            }
             .onAppear() {
                 recalculateWindowSize(size: geometry.size)
             }
@@ -96,7 +110,7 @@ struct WindowView: View {
     }
     private func windowContent() -> some View {
         return AnyView(
-            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping,bumpingVertically: $bumpingVertically, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, focused: $focused)
+            SageMultiView(showAddView: $showAddView, settingsViewModel: settingsViewModel, viewMode: windowTypeToViewMode(windowType: viewModel.windowInfo.windowType), windowManager: windowManager,  window: viewModel.windowInfo, sageMultiViewModel: viewModel, frame: $viewModel.frame, position: $viewModel.position,  isMoveGestureActivated: $isMoveGestureActivated, webViewURL: url, viewSize: $parentViewSize, resizeOffset: $viewModel.resizeOffset, bumping: $bumping,bumpingVertically: $bumpingVertically, isResizeGestureActive: $isResizeGestureActive, keyboardHeight: $keyboardHeight, focused: $focused, noBars: $noBars)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
     }

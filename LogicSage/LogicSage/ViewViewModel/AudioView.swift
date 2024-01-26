@@ -140,6 +140,9 @@ struct AudioView: View {
                                 .onTapGesture {
                                     settingsViewModel.voiceOutputSavedName = item.voiceName
                                 }
+#if !os(macOS)
+                            .hoverEffect(.lift)
+#endif
                             }
                         }
                         .listRowBackground(settingsViewModel.backgroundColor)

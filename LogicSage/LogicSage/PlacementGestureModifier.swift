@@ -11,7 +11,7 @@ import RealityKit
 
 let minScale = 0.1
 
-let maxScale = 10.0
+let maxScale = 6.0
 
 extension View {
     /// Listens for gestures and places an item based on those inputs.

@@ -25,22 +25,10 @@ struct GlobeControls: View {
                     Label("Translate", systemImage: "move.3d")
                 }
 
-                .onChange(of: appModel.isTranslating) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-
-                        eventManager.frameUpdate = true
-                    }
-                }
-
                 Toggle(isOn: $appModel.isRotating) {
                     Label("Rotate", systemImage: "arrow.triangle.2.circlepath")
                 }
-                .onChange(of: appModel.isRotating) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
-                        eventManager.frameUpdate = true
-                    }
-                }
 
                 HStack(spacing: 17) {
 

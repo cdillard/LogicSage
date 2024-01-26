@@ -9,6 +9,12 @@ import SwiftUI
 
 
 struct RepositoryTreeView: View {
+#if !os(tvOS)
+
+    @Environment(\.openWindow) private var openWindow
+#endif
+    @ObservedObject private var eventManager = GlobalEventManager.shared
+
     @ObservedObject var settingsViewModel: SettingsViewModel
     let directory: RepoFile
     @ObservedObject var windowManager: WindowManager
@@ -102,11 +108,18 @@ struct RepositoryTreeView: View {
             return
         }
 
-
+        
         let fileContent = readFileContents(url: file.url) ?? "Failed to read the file"
 
-        windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
 
+        #if os(visionOS )
+        eventManager.pendingFile = file
+        eventManager.pendingFileContent = fileContent
+
+        openWindow(id: "LogicSage-newWindow")
+#else
+        windowManager.addWindow(windowType: .file, frame: frame, zIndex: 0, file: file, fileContents: fileContent)
+        #endif
         //        settingsViewModel.showAddView = false
 
         //        // FETCH FILE FROM NETWORK, VS FETCH FILE FROM DISK

@@ -678,7 +678,7 @@ public class SettingsViewModel: ObservableObject {
         
         self.windowManagers = []
 
-        configureAudioSession()
+       // configureAudioSession()
         DispatchQueue.main.async {
             self.configureAudioSession()
         }
@@ -819,6 +819,10 @@ class GlobalEventManager: ObservableObject {
 
     @Published var eventOccurred = false
     @Published var frameUpdate = false
+
+
+    @Published var pendingFile: RepoFile?
+    @Published var pendingFileContent: String?
 
     private init() {} // Private initializer to ensure singleton usage
 }

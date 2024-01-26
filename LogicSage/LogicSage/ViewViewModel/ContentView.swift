@@ -15,6 +15,11 @@ import AppKit
 #endif
 
 struct ContentView: View {
+#if !os(tvOS)
+
+    @Environment(\.openWindow) private var openWindow
+#endif
+
     @ObservedObject private var eventManager = GlobalEventManager.shared
 
     @State private var tabSelection = 1
@@ -98,14 +103,16 @@ struct ContentView: View {
                         ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Controls", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
                             .foregroundColor(settingsViewModel.appTextColor)
                         // Show sphere Screen (SphereScreen)
-                        ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                            .onChange(of: appModel.isShowingImmersiveScene) {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if windowManager.windows.count >= 1 {
+                            ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
+                                .foregroundColor(settingsViewModel.appTextColor)
+                                .onChange(of: appModel.isShowingImmersiveScene) {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
-                                    eventManager.frameUpdate = true
+                                        eventManager.frameUpdate = true
+                                    }
                                 }
-                            }
+                        }
 
                         // Add new App window
 
@@ -211,13 +218,38 @@ struct ContentView: View {
 // NEW CHAT BUTTON
                         Button(action: {
                             DispatchQueue.main.async {
+
+#if os(visionOS)
+                                if windowManager.windows.isEmpty {
+                                    settingsViewModel.latestWindowManager = windowManager
+
+
+                                    settingsViewModel.createAndOpenNewConvo()
+
+                                    playSelect()
+                                    isInputViewShown = false
+                                    tabSelection = 1
+                                }
+                                else {
+                                    openWindow(id: "LogicSage-newWindow")
+                                }
+                                #else
+#if !os(tvOS)
+
                                 settingsViewModel.latestWindowManager = windowManager
+
 
                                 settingsViewModel.createAndOpenNewConvo()
 
                                 playSelect()
                                 isInputViewShown = false
                                 tabSelection = 1
+                                #endif
+                                #endif
+
+
+
+
                             }
                         }) {
                             VStack(spacing: 0)  {
@@ -274,9 +306,13 @@ struct ContentView: View {
                 // START WINDOW MANAGER ZONE *************************************************
                 ForEach(windowManager.windowViewModels  ) { windowViewModel in
 
-                    WindowView(window: windowViewModel.windowInfo, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: windowViewModel, parentViewSize: $viewSize, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint)
+                    WindowView(window: windowViewModel.windowInfo, settingsViewModel: settingsViewModel, windowManager: windowManager, viewModel: windowViewModel, parentViewSize: $viewSize, keyboardHeight: $keyboardHeight, dragCursorPoint: $dragCursorPoint, noBars: Binding.constant(false))
+
+#if !os(visionOS)
+
                         .padding(.top, 20)
                         .padding(.bottom, 0)
+                    #endif
                 }
                 // END WINDOW MANAGER ZONE *************************************************
                 ZStack {
@@ -609,6 +645,13 @@ struct ContentView: View {
     private func recalculateWindowSize(size: CGSize) {
 #if !os(macOS)
         if viewSize.size != size {
+
+#if os(visionOS)
+                // iOS
+                defSize = CGRectMake(0, 0, size.width - (size.width * 0.1), size.height - (size.height * 0.3))
+                defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.1), size.height - (size.height * 0.3))
+
+            #else
             if UIDevice.current.userInterfaceIdiom == .phone {
                 // iOS
                 defSize = CGRectMake(0, 0, size.width - (size.width * 0.1), size.height - (size.height * 0.2))
@@ -618,6 +661,8 @@ struct ContentView: View {
                 defSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.33))
                 defChatSize = CGRectMake(0, 0, size.width - (size.width * 0.32), size.height - (size.height * 0.33))
             }
+            #endif
+
             // set parentViewSize
             viewSize = CGRectMake(0, 0, size.width, size.height)
             if gestureDebugLogs {
