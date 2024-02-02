@@ -44,6 +44,7 @@ private struct PlacementGesturesModifier: ViewModifier {
             .rotation3DEffect(.radians(appModel.savedSphereBaseYaw == 0 ? 0.01 : appModel.savedSphereBaseYaw), axis: .y)
             .rotation3DEffect(.radians(appModel.savedSphereBasePitch == 0 ? 0.01 : appModel.savedSphereBasePitch), axis: .x)
             .scaleEffect(appModel.savedSphereScale)
+//            .scaleEffect(0.5)
             .position(x: position.x, y: position.y)
             .offset(z: position.z)
             .if(appModel.isTranslating) { view in
@@ -58,7 +59,7 @@ private struct PlacementGesturesModifier: ViewModifier {
                                     appModel.savedSphereY = position.y
                                     appModel.savedSphereZ = position.z
                                 }
-                                //                        print("new pos = \(position)")
+//                                                        print("new pos = \(position)")
                             } else {
                                 startPosition = position
                             }
@@ -81,6 +82,9 @@ private struct PlacementGesturesModifier: ViewModifier {
                             } else {
                                 startScale = appModel.savedSphereScale
                             }
+
+//                            print("new scale = \(appModel.savedSphereScale)")
+
                         }
                         .onEnded { value in
                             startScale = appModel.savedSphereScale

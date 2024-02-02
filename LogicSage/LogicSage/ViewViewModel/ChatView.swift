@@ -98,7 +98,6 @@ struct ChatView: View {
 
 #endif
 #if !os(tvOS)
-
                 messgeEntry(size: geometry.size)
                     .padding(.trailing, focused ? 0 : settingsViewModel.cornerHandleSize)
                     .padding(.bottom,4)
@@ -150,11 +149,17 @@ struct ChatView: View {
                             focused = inFocus
                         }
                     #endif
+//                    //                // TODO: LOOK TO DICTATE
+//                    #if os(visionOS)
+//                                    .searchable(text: $chatText)
+//                                            .searchDictationBehavior(.inline(activation: .onLook))
+//                    #endif
                     Text(editingSystemPrompt ? "Set system msg" : "Send a \(sageMultiViewModel.windowInfo.convoId == Conversation.ID(-1) ? "cmd" : "message")")
                         .opacity(chatText.isEmpty && !inFocus ? 1.0 : 0.0 )
                         .padding(.leading,4)
                         .font(.system(size: settingsViewModel.fontSizeSrcEditor + 2))
                         .foregroundColor(settingsViewModel.plainColorSrcEditor)
+
                         .allowsHitTesting(false)
                 }
                 .overlay(
@@ -166,6 +171,7 @@ struct ChatView: View {
                 .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
                 .padding(.bottom, 0)
                 .frame(maxHeight: 200) // Set the maximum height to 200 points
+
                 .gesture(
                     DragGesture(minimumDistance: 5, coordinateSpace: .local)
                         .onChanged { value in

@@ -27,6 +27,11 @@ struct TopBar: View {
 
     @ObservedObject var sageMultiViewModel: SageMultiViewModel
     @Binding var noBars: Bool
+    @EnvironmentObject var appModel: AppModel
+    @ObservedObject private var eventManager = GlobalEventManager.shared
+
+    @State private var isToggleOn: Bool = false
+
 
     var body: some View {
         ZStack {
@@ -84,6 +89,47 @@ struct TopBar: View {
                         .padding(.trailing, SettingsViewModel.shared.cornerHandleSize + 8)
 
                     }
+
+#if os(visionOS)
+                    if appModel.isShowingImmersiveLogo {
+
+
+
+                        Toggle(isOn: $isToggleOn) {
+                            Image(systemName: "circle.dashed")
+                        }
+                            .toggleStyle(.button)
+                            .padding()
+                            .onChange(of: settingsViewModel.projectedConvoId) { _, newValue in
+                                isToggleOn = newValue == windowInfo.convoId
+                            }
+                            .onChange(of: isToggleOn) {
+                                if isToggleOn {
+                                    settingsViewModel.projectedConvoId = windowInfo.convoId
+
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+
+                                        self.eventManager.frameUpdate = true
+                                        self.eventManager.eventOccurred = true
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+
+                                            self.eventManager.frameUpdate = true
+                                            self.eventManager.eventOccurred = true
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+
+                                                self.eventManager.frameUpdate = true
+                                                self.eventManager.eventOccurred = true
+
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    // if its turned off , we should huhhhh
+                                }
+                            }
+                    }
+                    #endif
 
                     if windowInfo.windowType == .chat || windowInfo.windowType == .file || windowInfo.windowType == .webView {
                         if windowInfo.windowType == .file && keyboardHeight != 0 {
@@ -265,6 +311,9 @@ struct TopBar: View {
         .hoverEffect(.automatic)
 #endif
         .frame(width: 30, height: 30)
+        .onAppear {
+            self.isToggleOn =  settingsViewModel.projectedConvoId == windowInfo.convoId
+        }
 
     }
 

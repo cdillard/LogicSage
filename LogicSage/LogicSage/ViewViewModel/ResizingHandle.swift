@@ -208,8 +208,8 @@ struct ResizingHandle: View {
 
         // Check global X postion
         //  print("rez globPos = \(position.width - resizeOffset.width + newOffsetX)")
-
-        if frame.size.width + newOffsetX > viewSize.width - 13.5 {
+        let maxWidther = viewSize.width - 13.5
+        if frame.size.width + newOffsetX > min(2000, maxWidther) {
         }
         else {
             resizeOffset.width += newOffsetX
@@ -231,7 +231,7 @@ struct ResizingHandle: View {
         heightScaleFactor = 0.07
         #endif
 
-        if frame.size.height + newOffsetY > viewSize.height - screenHeight * heightScaleFactor ||
+        if frame.size.height + newOffsetY > min(2000, viewSize.height - screenHeight * heightScaleFactor) ||
             frame.size.height + newOffsetY < viewSize.height / 2 {
         }
         else {

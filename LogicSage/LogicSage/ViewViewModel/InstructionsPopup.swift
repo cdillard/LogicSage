@@ -143,19 +143,7 @@ struct InstructionsPopup: View {
                         Text("DISCLAIMER: LogicSage is not responsible for any issues (legal or otherwise) that may arise from using this app or using the code in this repository. This is an experimental project.")
                             .minimumScaleFactor(0.366)
 
-                        Button(action: {
-#if !os(macOS)
-#if !os(tvOS)
-                            let pasteboard = UIPasteboard.general
-                            pasteboard.string = email
-                            onCopy()
-#endif
-#endif
-                            
-                        }) {
-                            Text(verbatim: "\(email) (Tap to Copy)")
-                                .foregroundColor(settingsViewModel.buttonColor)
-                        }
+
                         
                     }
                     .padding(.leading, 15)

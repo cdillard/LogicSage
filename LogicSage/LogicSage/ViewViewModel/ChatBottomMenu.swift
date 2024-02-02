@@ -52,7 +52,7 @@ struct ChatBottomMenu: View {
                 }) {
                     let disp = (conversation.temperature ?? 0.7).formatted(.number.precision(.fractionLength(2)))
 
-                    Text( "Change chat temperature: Current: \(disp)")
+                    Text( "Chat Temp: \(disp)")
                         .modifier(CustomFontSize(size: $settingsViewModel.commandButtonFontSize))
                         .lineLimit(1)
                         .foregroundColor(Color.white)

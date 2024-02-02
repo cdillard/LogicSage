@@ -59,8 +59,8 @@ extension StreamingSession {
     private func processJSON(from stringContent: String) {
         let jsonObjects = "\(previousChunkBuffer)\(stringContent)"
             .components(separatedBy: "data:")
-            .filter { $0.isEmpty == false }
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { $0.isEmpty == false }
         
         previousChunkBuffer = ""
         

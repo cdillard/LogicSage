@@ -12,7 +12,7 @@ import RealityKit
 extension View {
     /// Enables people to drag an entity to rotate it, with optional limitations
     /// on the rotation in yaw and pitch.
-    func dragRotation(
+    func dragRotation2(
         yawLimit: Angle? = nil,
         pitchLimit: Angle? = nil,
         sensitivity: Double = 1,

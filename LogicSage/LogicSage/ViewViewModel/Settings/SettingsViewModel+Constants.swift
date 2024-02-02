@@ -24,7 +24,6 @@ let defaultHandleSizeOther: Double = 40.0
 let defaultHandleSizeVisionOS: Double = 60.0
 
 let defaultSourceEditorFontSize: Double = 12.666
-let email = "chrisbdillard@gmail.com"
 
 let defaultOwner = "cdillard"
 let defaultRepo = "LogicSage"

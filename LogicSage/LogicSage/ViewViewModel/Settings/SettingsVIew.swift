@@ -320,6 +320,7 @@ struct SettingsView: View {
         DisclosureGroup( isExpanded: $apiSettingsExpanded) {
             Group {
                 VStack {
+                    // AI KEY
                     Text("A.I. 🔑: ")
                         .font(.title3)
                         .foregroundColor(settingsViewModel.appTextColor)
@@ -346,6 +347,7 @@ struct SettingsView: View {
 #endif
 
                     Group {
+                        // AI MODEL SELECTOR
                         Text("A.I. model: ")
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
@@ -391,7 +393,7 @@ struct SettingsView: View {
 
                         }
 
-
+                        // GITHUB PAT (for private repo checkout or PR push)
                         Text("Github PAT: ")
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
@@ -412,6 +414,7 @@ struct SettingsView: View {
                         .autocapitalization(.none)
 #endif
 
+                        // GOOGLE SEARCH API KEY
                         Text("Google Search API Key: ")
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)
@@ -431,7 +434,8 @@ struct SettingsView: View {
 #if !os(macOS)
                         .autocapitalization(.none)
 #endif
-
+                        
+                        // GOOGLE SEARCH ID
                         Text("Google Search ID: ")
                             .font(.title3)
                             .foregroundColor(settingsViewModel.appTextColor)

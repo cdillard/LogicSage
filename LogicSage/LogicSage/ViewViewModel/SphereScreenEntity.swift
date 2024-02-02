@@ -21,11 +21,36 @@ class SphereScreenEntity: Entity {
         
         super.init()
     }
+    
+    static var preloadedMesh: ShapeResource?
+
+    static func preloadResources() async {
+        let angleIncrement = -0.422 * Float.pi * 2
+        let phiStart: Float = 0.422 * Float.pi * 2
+        let phiEnd = phiStart + angleIncrement
+
+        let wedgeMeshPair = Self.generateWedge(radius: 1.0, phiStart: phiStart, phiEnd: phiEnd, innerRadius: 0.95)
+        let angle = -Float.pi / 4  // Rotate by 45 degrees
+        let rotatedVertices = Self.rotateVerticesAroundZAxis(vertices: wedgeMeshPair.0, angle: angle)
+        let rotatedIndices = Self.rotateIndices(indices: wedgeMeshPair.1)
+
+        let angle2 = -Float.pi / 2  // Rotate by 45 degrees
+        let rotatedVertices2 = Self.rotateVerticesAroundXAxis(vertices: rotatedVertices, angle: angle2)
+        let rotatedIndices2 = Self.rotateIndices(indices: rotatedIndices)
+
+        do {
+            let shape = try await ShapeResource.generateStaticMesh(positions: rotatedVertices2, faceIndices: rotatedIndices2)
+            preloadedMesh = shape
+        } catch {
+            // Handle errors or fallback
+            print("Failed to preload mesh: \(error)")
+        }
+    }
 
     init(
         configuration: Configuration
-    ) async {
-        do { 
+    ) {
+//        do { 
 
             print("Creating SphereSceenEntity")
 
@@ -34,35 +59,25 @@ class SphereScreenEntity: Entity {
 
             var material2 = SimpleMaterial()
 
-            if let color =  try? PhysicallyBasedMaterial.BaseColor
-                .init(tint: .white.withAlphaComponent(matAlphaComponent)) {
-                material2.color = color
-            }
+            let color =  PhysicallyBasedMaterial.BaseColor
+                .init(tint: .white.withAlphaComponent(matAlphaComponent))
+            
+            material2.color = color
             let modelEntity = ModelEntity(mesh: mesh, materials: [material2])
 
-            let angleIncrement = -0.422 * Float.pi * 2
-            let phiStart: Float = 0.422 * Float.pi * 2
-            let phiEnd = phiStart + angleIncrement
+            if let mesh = SphereScreenEntity.preloadedMesh {
+                // Use the preloaded mesh
+                modelEntity.addCollision(shape: mesh)
 
+            } else {
+                // Handle the case where the mesh has not been preloaded
+                print("failed to load mesh")
+            }
 
-            let wedgeMeshPair = Self.generateWedge(radius: 1.0, phiStart: phiStart, phiEnd: phiEnd, innerRadius: 0.95)
-
-            // Usage:
-            let angle = -Float.pi / 4  // Rotate by 45 degrees
-            let rotatedVertices = Self.rotateVerticesAroundZAxis(vertices: wedgeMeshPair.0, angle: angle)
-            let rotatedIndices = Self.rotateIndices(indices: wedgeMeshPair.1)  // Indices remain the same
-
-            let angle2 = -Float.pi / 2  // Rotate by 45 degrees
-            let rotatedVertices2 = Self.rotateVerticesAroundXAxis(vertices: rotatedVertices, angle: angle2)
-            let rotatedIndices2 = Self.rotateIndices(indices: rotatedIndices)  // Indices remain the same
-
-            let shape = try await ShapeResource.generateStaticMesh(positions: rotatedVertices2, faceIndices: rotatedIndices2)
-
-            modelEntity.addCollision(shape: shape)
             modelEntity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
             modelEntity.collision?.mode = .trigger
             //            modelEntity.transform.rotation = simd_quatf(angle: -rotationRadiansCol, axis: SIMD3(x:0,y:1,z:0))
-
+            
             let rotationRadians = Float(-90.0) * .pi / 180 // 45 degrees converted to radians.
             modelEntity.transform.rotation = simd_quatf(angle: rotationRadians, axis: SIMD3(x:0,y:1,z:0))//.degrees(43)
 
@@ -94,13 +109,13 @@ class SphereScreenEntity: Entity {
             update(
                 configuration: configuration,
                 animateUpdates: false)
-        }
-        catch {
-            screen = ModelEntity()
-
-            super.init()
-
-        }
+//        }
+//        catch {
+//            screen = ModelEntity()
+//
+//            super.init()
+//
+//        }
     }
     func update(
         configuration: Configuration,
@@ -130,15 +145,17 @@ class SphereScreenEntity: Entity {
 
             image = nil
 
-            if let color =  try? PhysicallyBasedMaterial.BaseColor
+            let color =  PhysicallyBasedMaterial.BaseColor
                 .init(tint: .white.withAlphaComponent(matAlphaComponent),
-                      texture: .init(txtContent)) {
+                      texture: .init(txtContent))
                 material2.color = color
-            }
 
-            for i in await 0..<(modelEntity.model?.materials.count ?? 0) {
+            for i in 0..<(modelEntity.model?.materials.count ?? 0) {
                 modelEntity.model?.materials[i] = material2
             }
+        }
+        else {
+            print("my texture is too big")
         }
     }
 

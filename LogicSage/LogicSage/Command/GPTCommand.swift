@@ -104,6 +104,27 @@ Using the link and google command up to 5 times each, answer the question below 
                 }
             }
 
+#if os(visionOS)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+
+                    GlobalEventManager.shared.frameUpdate = true
+                    GlobalEventManager.shared.eventOccurred = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+
+                        GlobalEventManager.shared.frameUpdate = true
+                        GlobalEventManager.shared.eventOccurred = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+
+                            GlobalEventManager.shared.frameUpdate = true
+                            GlobalEventManager.shared.eventOccurred = true
+
+                        }
+                    }
+                }
+            #endif
+
+
             if config.conversational {
                 let lastLine = content.lines.last ?? ""
 

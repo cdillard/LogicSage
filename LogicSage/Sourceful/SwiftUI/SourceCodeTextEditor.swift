@@ -217,7 +217,7 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     func updateTexture(view: SyntaxTextView) {
 #if os(visionOS)
         // TODO: DOUBLE CHECK WHEN TO UPDATE THIS
-        if appModel.isShowingImmersiveScene || appModel.isShowingImmersiveWindow {
+        if appModel.isShowingImmersiveScene || appModel.isShowingImmersiveWindow || appModel.isShowingImmersiveLogo {
             if SettingsViewModel.shared.projectedConvoId == convoId {
                 Task {
                     let now = Date()
@@ -241,6 +241,9 @@ public struct SourceCodeTextEditor: _ViewRepresentable {
     }
 #endif
 }
+
+let frameUpdateInterval: TimeInterval = 0.4
+
 extension SourceCodeTextEditor {
     public class Coordinator: NSObject, SyntaxTextViewDelegate, UITextViewDelegate {
         let parent: SourceCodeTextEditor

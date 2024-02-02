@@ -99,23 +99,14 @@ struct ContentView: View {
                 ToolbarItem(placement: .bottomOrnament) {
 
                     HStack(spacing: 4) {
-                        // 3D Controls for currently projected
-                        ToggleImmersiveButton(idOfView: "LogoVolume", name: "3D Controls", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
-                            .foregroundColor(settingsViewModel.appTextColor)
-                        // Show sphere Screen (SphereScreen)
                         if windowManager.windows.count >= 1 {
-                            ToggleImmersion(showImmersiveSpace: $appModel.isShowingImmersiveScene)
+                            
+                            // 3D Controls for currently projected
+                            ToggleImmersiveButton(idOfView: "SphereVolume", name: "SphereScreen", showImmersiveLogo: $appModel.isShowingImmersiveLogo)
                                 .foregroundColor(settingsViewModel.appTextColor)
-                                .onChange(of: appModel.isShowingImmersiveScene) {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-
-                                        eventManager.frameUpdate = true
-                                    }
-                                }
                         }
 
                         // Add new App window
-
 #if os(macOS)
                         NewViewerButton()
 

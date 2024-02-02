@@ -242,6 +242,11 @@
 		B7C2D9632A3A1CD60007164A /* SettingsViewModel+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */; };
 		B7C446332A2A917000B03FF5 /* SageMultiView+onDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */; };
 		B7C446352A2A91E600B03FF5 /* ResizingHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */; };
+		B7D26FE62B69B0C40074B309 /* ResponsiveBoxCornersEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D26FE52B69B0C40074B309 /* ResponsiveBoxCornersEntity.swift */; };
+		B7D26FE82B6AE9910074B309 /* SphereVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D26FE72B6AE9910074B309 /* SphereVolumeView.swift */; };
+		B7D26FEA2B6AFCD80074B309 /* AttachmentsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D26FE92B6AFCD80074B309 /* AttachmentsProvider.swift */; };
+		B7D26FED2B6AFE610074B309 /* BillboardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D26FEB2B6AFE610074B309 /* BillboardComponent.swift */; };
+		B7D26FEE2B6AFE610074B309 /* BillboardSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D26FEC2B6AFE610074B309 /* BillboardSystem.swift */; };
 		B7DB97DF2A32E1C600304B80 /* SettingsViewModel+Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */; };
 		B7DB97E12A32EABB00304B80 /* SettingsViewModel+Convo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */; };
 		B7E098B12A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */; };
@@ -540,6 +545,11 @@
 		B7C2D9622A3A1CD60007164A /* SettingsViewModel+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Constants.swift"; sourceTree = "<group>"; };
 		B7C446322A2A917000B03FF5 /* SageMultiView+onDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SageMultiView+onDrag.swift"; sourceTree = "<group>"; };
 		B7C446342A2A91E600B03FF5 /* ResizingHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizingHandle.swift; sourceTree = "<group>"; };
+		B7D26FE52B69B0C40074B309 /* ResponsiveBoxCornersEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponsiveBoxCornersEntity.swift; sourceTree = "<group>"; };
+		B7D26FE72B6AE9910074B309 /* SphereVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereVolumeView.swift; sourceTree = "<group>"; };
+		B7D26FE92B6AFCD80074B309 /* AttachmentsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentsProvider.swift; sourceTree = "<group>"; };
+		B7D26FEB2B6AFE610074B309 /* BillboardComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillboardComponent.swift; sourceTree = "<group>"; };
+		B7D26FEC2B6AFE610074B309 /* BillboardSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillboardSystem.swift; sourceTree = "<group>"; };
 		B7DB97DE2A32E1C600304B80 /* SettingsViewModel+Websocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Websocket.swift"; sourceTree = "<group>"; };
 		B7DB97E02A32EABB00304B80 /* SettingsViewModel+Convo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewModel+Convo.swift"; sourceTree = "<group>"; };
 		B7E098B02A50B0B900C3B247 /* LogicSageiOSApp+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogicSageiOSApp+UserDefaults.swift"; sourceTree = "<group>"; };
@@ -724,6 +734,10 @@
 		B72645312A0E814D00AE3668 /* ViewViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B7D26FEB2B6AFE610074B309 /* BillboardComponent.swift */,
+				B7D26FEC2B6AFE610074B309 /* BillboardSystem.swift */,
+				B7D26FE92B6AFCD80074B309 /* AttachmentsProvider.swift */,
+				B7D26FE72B6AE9910074B309 /* SphereVolumeView.swift */,
 				B764D7432B2F78A400768830 /* SupportedFileType.swift */,
 				B764D7412B2F763E00768830 /* DocumentPicker.swift */,
 				B764D73F2B2F761E00768830 /* AssistantModalContentView.swift */,
@@ -1196,6 +1210,7 @@
 		B7BD8E232A887C3D007E5ACD /* XR */ = {
 			isa = PBXGroup;
 			children = (
+				B7D26FE52B69B0C40074B309 /* ResponsiveBoxCornersEntity.swift */,
 				B7BE953B2A8EBDAC0065A58B /* GlobeControls.swift */,
 				B7122A762A53E725005DCCE6 /* ToggleImmersion.swift */,
 				B7FFAAD82A5745CF00AB7590 /* ToggleImmersiveLogo.swift */,
@@ -1429,6 +1444,7 @@
 				B779DE992A51F75200A90331 /* SettingsViewModel+Model.swift in Sources */,
 				B710CF032A7F5E65008C06CC /* Array+PrevCurrent.swift in Sources */,
 				B71C62F52A018B5B004296E4 /* GPTCommand.swift in Sources */,
+				B7D26FE82B6AE9910074B309 /* SphereVolumeView.swift in Sources */,
 				B7191F2F29F9F09A00078D8D /* DefaultSourceCodeTheme.swift in Sources */,
 				B7F95D312A58B0030097FFC8 /* AppModel.swift in Sources */,
 				B71C62F82A018C6D004296E4 /* Reset.swift in Sources */,
@@ -1561,6 +1577,7 @@
 				B710CF012A7F5E65008C06CC /* String+Substring.swift in Sources */,
 				B7191F2129F9F09A00078D8D /* Lexer.swift in Sources */,
 				B7544E3C2A191BCE00961F4C /* ImagesResult.swift in Sources */,
+				B7D26FEA2B6AFCD80074B309 /* AttachmentsProvider.swift in Sources */,
 				B7544E4D2A191BCE00961F4C /* URLSessionDataTaskProtocol.swift in Sources */,
 				B78EAF642A11C242003095A2 /* Settings+WriteGithub.swift in Sources */,
 				B7544E2B2A191BCE00961F4C /* ChatQuery.swift in Sources */,
@@ -1575,6 +1592,7 @@
 				B752860F2A848DAE007DCFF9 /* Data+Serialization.swift in Sources */,
 				B7544E2C2A191BCE00961F4C /* AudioTranscriptionResult.swift in Sources */,
 				B7EF2A2B2A0C2D620048CFFC /* View+Keyboard.swift in Sources */,
+				B7D26FE62B69B0C40074B309 /* ResponsiveBoxCornersEntity.swift in Sources */,
 				B75286082A848DAE007DCFF9 /* Archive+WritingDeprecated.swift in Sources */,
 				B7544E2E2A191BCE00961F4C /* EditsQuery.swift in Sources */,
 				B7BD8E252A8921C0007E5ACD /* SphereScreenSceneView.swift in Sources */,
@@ -1618,11 +1636,13 @@
 				B7544E3A2A191BCE00961F4C /* ChatResult.swift in Sources */,
 				B729B14229F9B25600BA6752 /* UIColorExt.swift in Sources */,
 				B764D7442B2F78A400768830 /* SupportedFileType.swift in Sources */,
+				B7D26FEE2B6AFE610074B309 /* BillboardSystem.swift in Sources */,
 				B7191F1729F9F09A00078D8D /* String+Range.swift in Sources */,
 				B752860A2A848DAE007DCFF9 /* URL+ZIP.swift in Sources */,
 				B7544E352A191BCE00961F4C /* ModelResult.swift in Sources */,
 				B7191F1829F9F09A00078D8D /* NSTextView+UIKit.swift in Sources */,
 				B710CF002A7F5E65008C06CC /* Character+Int.swift in Sources */,
+				B7D26FED2B6AFE610074B309 /* BillboardComponent.swift in Sources */,
 				B752860B2A848DAE007DCFF9 /* Archive+Writing.swift in Sources */,
 				B710CEFC2A7F5E65008C06CC /* Encoding.swift in Sources */,
 				B7544E442A191BCE00961F4C /* OpenAIProtocol+Combine.swift in Sources */,

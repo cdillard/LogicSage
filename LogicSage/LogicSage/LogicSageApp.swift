@@ -36,7 +36,11 @@ struct LogicSageApp: App {
 
 #if os(visionOS)
     @State var immersionState: ImmersionStyle = .mixed
+    //let defaultSize = Size3D(width: 1.0 * 3, height: 1.0 * 2, depth: 1.0)
+    let defaultSize = Size3D(width: 1.0 * 1.75, height: 1.0 * 1.75, depth: 1.0)
+
 #endif
+
 
     init() {
         serviceDiscovery = ServiceDiscovery()
@@ -88,18 +92,20 @@ struct LogicSageApp: App {
                 .environmentObject(settingsViewModel)
         }
 
-        ImmersiveSpace(id: "ImmersiveSpace") {
-            SphereScreenSceneView()
-                .environmentObject(appModel)
-        }
-        .immersionStyle(selection: $immersionState, in: .mixed)
-
         WindowGroup(id: "LogoVolume") {
-            ImmersiveLogoView(settingsViewModel: settingsViewModel)
+            ImmersiveLogoView(defaultSize: defaultSize, settingsViewModel: settingsViewModel)
                 .environmentObject(appModel)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 0.6, height: 0.6, depth: 0.6, in: .meters)
+        .defaultSize(defaultSize, in: .meters)
+
+
+        WindowGroup(id: "SphereVolume") {
+            SphereVolumeContentView(defaultSize: defaultSize)
+                            .environmentObject(appModel)
+        }
+        .windowStyle(.volumetric)
+        .defaultSize(defaultSize, in: .meters)
 #endif
     }
 }

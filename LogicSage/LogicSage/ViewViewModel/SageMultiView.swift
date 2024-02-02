@@ -202,10 +202,10 @@ struct SageMultiView: View {
                                             
                                             if isMoveGestureActivated == false {
                                                 
-                                                print("MOVE gesture START = \(position)")
+                                              //  print("MOVE gesture START = \(position)")
                                             }
                                             else {
-                                                print("MOVE gesture update = \(position)")
+                                               // print("MOVE gesture update = \(position)")
                                             }
                                         }
                                         let now = Date()
@@ -218,7 +218,7 @@ struct SageMultiView: View {
                                     .onEnded { value in
                                         if gestureDebugLogs {
                                             
-                                            print("MOVE gesture ended new Pos = \(position)")
+                                            //print("MOVE gesture ended new Pos = \(position)")
                                         }
                                         isMoveGestureActivated = false
                                     }

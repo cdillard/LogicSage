@@ -26,8 +26,13 @@ struct ToggleImmersiveButton: View {
 #endif
 
     var body: some View {
-        
-        Toggle("\(name)", isOn: $showImmersiveLogo)
+        Toggle( isOn: $showImmersiveLogo) {
+            VStack {
+                Image(systemName: "circle.dashed")
+                Text("SphereScreen")
+                    .font(.caption)
+            }
+        }
             .toggleStyle(.button)
             .onChange(of: showImmersiveLogo) { _, newValue in
                 Task {
@@ -40,7 +45,7 @@ struct ToggleImmersiveButton: View {
                         appModel.isShowingImmersiveWindow = newValue
 
                     }
-                    else if idOfView == "LogoVolume" {
+                    else if idOfView == "SphereVolume" {
                         appModel.isShowingImmersiveLogo = newValue
 
                     }

@@ -13,13 +13,13 @@ extension SphereScreenEntity {
     struct Configuration {
         var isHoverEffectEnabled: Bool = false
 
-        var scale: Float = 0.6
+        var scale: Float = 0.77
         var rotation: simd_quatf = .init(angle: 0, axis: [0, 1, 0])
         var speed: Float = 0
         var position: SIMD3<Float> = .zero
 
         static var screenDefault: Configuration = .init(
-            scale: 1.0
+            scale: 0.77
         )
     }
 }

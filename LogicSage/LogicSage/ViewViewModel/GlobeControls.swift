@@ -19,6 +19,7 @@ struct GlobeControls: View {
     @State var focused: Bool = false
 
     var body: some View {
+        
         VStack {
             HStack(spacing: 17) {
                 Toggle(isOn:$appModel.isTranslating) {
@@ -73,6 +74,8 @@ struct GlobeControls: View {
                             .opacity(entryText.isEmpty && !inFocus ? 1.0 : 0.0 )
                     }
                 }
+                .frame(width: 400, height: 60)
+
 
 
                 Button(action: {
@@ -103,7 +106,7 @@ struct GlobeControls: View {
 
 
         }
-        .frame(height: 60)
+        .frame( height: 60)
     }
 
     private func resizableButtonImage(systemName: String, size: CGSize) -> some View {
