@@ -18,6 +18,7 @@ struct TopBar: View {
 
     @State var presentRenamer: Bool = false
     @State var presentDeleter: Bool = false
+    @State private var isAnimatingButton: Bool = false // New state variable for animation
 
     @State private var newName: String = ""
     @State private var newURL: String = "https://"
@@ -70,6 +71,31 @@ struct TopBar: View {
                         .padding(.leading, 15)
 
                     Spacer()
+
+                    // New button added here
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            isAnimatingButton.toggle()
+                        }
+                        // Add a delayed task to reset the animation state, creating a "pulse"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isAnimatingButton.toggle()
+                            }
+                        }
+                    }) {
+                        Image(systemName: "star.fill")
+                            .font(.title3)
+                            .minimumScaleFactor(0.01)
+                            .scaleEffect(isAnimatingButton ? 1.5 : 1.0) // Scale up when animating
+                            .opacity(isAnimatingButton ? 0.5 : 1.0)     // Fade out slightly when animating
+#if !os(macOS)
+                            .hoverEffect(.lift)
+#endif
+                    }
+                    .foregroundColor(SettingsViewModel.shared.buttonColor)
+                    .padding(.trailing, 8) // Add some padding to separate from the next element
+                    .accessibilityIdentifier("newAnimatedButton") // Added accessibility identifier
 
                     if windowInfo.windowType == .repoTreeView {
                         Button(action: {
