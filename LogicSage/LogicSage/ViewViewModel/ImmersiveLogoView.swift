@@ -28,7 +28,7 @@ struct ImmersiveLogoView: View {
 //                    axRotateClockwise: axRotateClockwise,
 //                    axRotateCounterClockwise: axRotateCounterClockwise)
             }
-            .placementGestures(initialPosition: Point3D([appModel.savedSphereX,appModel.savedSphereY,appModel.savedSphereZ]))
+            .placementGestures(initialPosition: Point3D(x: Double(appModel.savedSphereX), y: Double(appModel.savedSphereY), z: Double(appModel.savedSphereZ)))
 //            .position(x: position.x, y: position.y)
 //            RealityView { content in
 //                let currentPosition = SIMD3<Float>(x:-0.025,y:-0.333,z:0.33)
@@ -53,3 +53,4 @@ struct ImmersiveLogoView: View {
 }
 
 #endif
+

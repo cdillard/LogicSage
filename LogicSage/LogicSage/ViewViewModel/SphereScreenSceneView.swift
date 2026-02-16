@@ -32,7 +32,7 @@ struct SphereScreenSceneView: View {
 //                axRotateCounterClockwise: axRotateCounterClockwise)
         }
        // .if(isImmersive) { view in
-        .placementGestures(initialPosition: Point3D([806.6176452636719,  858.8736877441406,  698.0616149902344]))
+        .placementGestures(initialPosition: Point3D(x: 806.6176452636719, y: 858.8736877441406, z: 698.0616149902344))
        // }
 //        .if(!isImmersive) { view in
 //            view.placementGestures(initialPosition: Point3D([0.0,0.0,0.0]))
@@ -43,3 +43,4 @@ struct SphereScreenSceneView: View {
 
 
 #endif
+

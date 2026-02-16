@@ -76,17 +76,19 @@ struct SphereVolumeContentView: View {
                 view.dragRotation2(
                     sensitivity: 0.75)
             }
-            .placementGestures(initialPosition: Point3D([appModel.savedSphereX,appModel.savedSphereY,appModel.savedSphereZ]))
+            .placementGestures(initialPosition: Point3D(x: Float(appModel.savedSphereX), y: Float(appModel.savedSphereY), z: Float(appModel.savedSphereZ)))
         }
     }
 
     func scale(entity: Entity, with content: RealityViewContent, for proxy: GeometryProxy3D, defaultSize: Size3D) {
         let scaledVolumeSize = content.convert(proxy.frame(in: .local), from: .local, to: .scene)
 
-        let scale = (scaledVolumeSize.extents/SIMD3<Float>(defaultSize)).min()
+        let defaultSizeVector = SIMD3<Float>(Float(defaultSize.width), Float(defaultSize.height), Float(defaultSize.depth))
+        let scale = (scaledVolumeSize.extents / defaultSizeVector).min()
 
         entity.scale = .one*scale
     }
 }
 
 #endif
+
